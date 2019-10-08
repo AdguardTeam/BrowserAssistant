@@ -1,0 +1,1 @@
+# AdGuard Browser Assistant
