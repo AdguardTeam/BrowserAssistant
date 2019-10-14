@@ -1,40 +1,31 @@
 import React from 'react';
-// import { observer } from 'mobx-react';
 import './header.pcss';
-// import rootStore from '../../stores';
 
 const Header = () => (
     <div className="widget-popup__header">
-        <div className="widget-popup__header-logo" />
-        <div className="widget-popup__header-btns" id="popup-header-buttons">
+        <div className="widget-popup__header-logo"/>
+        <div className="widget-popup__header-btns">
             <span className="widget-popup__header-title">Assistant</span>
             <button
-                i18n-title="context_disable_protection"
-                className="cir-btn pause changeProtectionStateDisable"
+                className="cir-btn"
                 title="Pause AdGuard protection"
             >
-                <img src="../../../assets/images/icon-pause.svg" alt="" />
+                <img src="../../../assets/images/icon-pause.svg" alt=""/>
             </button>
             <button
-                i18n-title="context_enable_protection"
-                className="cir-btn start changeProtectionStateEnable"
+                className="cir-btn"
                 title="Resume AdGuard protection"
             >
-                <img src="../../../assets/images/icon-start.svg" alt="" />
+                <img src="../../../assets/images/icon-start.svg" alt=""/>
             </button>
             <button
-                i18n-title="options_settings"
-                className="cir-btn settings openSettings"
+                className="cir-btn"
                 title="AdGuard Settings"
             >
-                <img src="../../../assets/images/icon-settings.svg" alt="" />
+                <img src="../../../assets/images/icon-settings.svg" alt=""/>
             </button>
         </div>
     </div>
 );
-
-Header.defaultProps = {
-    authenticated: false,
-};
 
 export default Header;
