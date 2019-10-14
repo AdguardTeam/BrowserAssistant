@@ -1,16 +1,16 @@
 import React from "react";
 import "./option.pcss"
 
-const Option = ({name, text}) => (
+const Option = ({iconName, text}) => (
     <div className="action">
-        <span className="act-icon">
+        <span className="action-icon">
             <img
-                src={`../../../assets/images/${name}.svg`}
+                src={`../../../assets/images/${iconName}.svg`}
                 alt=""
             />
         </span>
         <span
-            className="act-name"
+            className="action-name"
             role="button"
         >
             {text}

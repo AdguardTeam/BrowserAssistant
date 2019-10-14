@@ -4,27 +4,27 @@ import './options.pcss';
 
 const OPTIONS = [
     {
-        name: 'block-ad',
+        iconName: 'block-ad',
         text: 'Block ads\u00A0on\u00A0this website'
     },
     {
-        name: 'sandwich',
+        iconName: 'sandwich',
         text: 'Open the filtering log',
     },
     {
-        name: 'thumb-down',
+        iconName: 'thumb-down',
         text: 'Report\u00A0this website',
     },
     {
-        name: 'icon-cross',
+        iconName: 'icon-cross',
         text: 'Reset all custom rules for this page',
     }
 ]
 
 const Options = () =>
     <div className="actions">
-        {OPTIONS.map(({name, text}) => (
-            <Option name={name} text={text}/>))}
+        {OPTIONS.map(({iconName, text}) => (
+            <Option iconName={iconName} text={text}/>))}
     </div>
 
 
