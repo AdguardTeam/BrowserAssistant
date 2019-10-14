@@ -1,23 +1,22 @@
 .current-site {
+    &__container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     &__title {
         font-size: 1.6rem;
         padding: 0 0.6rem;
         max-width: 26rem;
         text-align: center;
         margin: 2rem auto 3rem;
-        //overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         font-weight: bold;
-        color: #4d4d4d;
+        color: var(--gray-base);
         position: relative;
         border-left: 1px solid var(--gray88);
         position: relative;
-    }
-
-    &__container {
-        display: flex;
-        justify-content: flex-end;
     }
 
     &__icon {
