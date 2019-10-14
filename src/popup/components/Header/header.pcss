@@ -1,0 +1,55 @@
+.widget-popup {
+    &__header {
+        min-height: 5rem;
+        background-color: #fff;
+        padding: 0 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-logo {
+            width: 11.3rem;
+            height: 2.5rem;
+            background-repeat: no-repeat;
+            background-image: url(./images/logo.svg);
+        }
+
+        &-btns {
+            display: flex;
+
+            .start {
+                display: none;
+            }
+        }
+
+        &-title {
+            position: absolute;
+            top:2rem;
+            left: 13rem;
+            font-size: 1rem;
+            color: var(--gray88);
+            text-transform: uppercase;
+        }
+    }
+}
+
+.cir-btn {
+    padding: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-right: 1.6rem;
+    background-color: rgba(255, 255, 255, 0.13);
+    opacity: 0.5;
+    border: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease opacity;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
