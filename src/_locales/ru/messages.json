@@ -1,11 +1,11 @@
 {
     "name": {
-        "message": "AdGuard шаблон для расширений"
+        "message": "AdGuard браузерный помощник"
     },
     "description": {
-        "message": "AdGuard описание шаблона для расширений"
+        "message": "AdGuard браузерный помощник"
     },
     "short_name": {
-        "message": "AG шаблон для расширений"
+        "message": "AG браузерный помощник"
     }
 }

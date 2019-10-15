@@ -2,18 +2,18 @@ import React from 'react';
 
 import './global-switcher.pcss';
 
-function GlobalSwitcher() {
+function GlobalSwitcher({ text, id }) {
     return (
         <div className="global-switcher">
             <input
                 className="global-switcher__checkbox"
                 type="checkbox"
-                id="global-switcher"
+                id={id}
             />
-            <div className="global-switcher__text">Enabled on this website</div>
+            <div className="global-switcher__text">{text}</div>
             <label
                 className="global-switcher__label"
-                htmlFor="global-switcher"
+                htmlFor={id}
             />
         </div>
     );

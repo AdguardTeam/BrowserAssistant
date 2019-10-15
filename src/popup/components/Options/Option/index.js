@@ -1,7 +1,7 @@
-import React from "react";
-import "./option.pcss"
+import React from 'react';
+import './option.pcss';
 
-const Option = ({iconName, text}) => (
+const Option = ({ iconName, text }) => (
     <div className="action">
         <span className="action-icon">
             <img
@@ -16,7 +16,6 @@ const Option = ({iconName, text}) => (
             {text}
         </span>
     </div>
-)
+);
 
 export default Option;
-

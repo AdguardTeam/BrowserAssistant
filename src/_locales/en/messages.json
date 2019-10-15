@@ -1,11 +1,11 @@
 {
     "name": {
-        "message": "AdGuard extension boilerplate"
+        "message": "AdGuard browser-assistant"
     },
     "description": {
-        "message": "AdGuard extension boilerplate description"
+        "message": "AdGuard browser-assistant description"
     },
     "short_name": {
-        "message": "AG extension boilerplate"
+        "message": "AG browser-assistant"
     }
 }
