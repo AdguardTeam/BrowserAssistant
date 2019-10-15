@@ -21,8 +21,6 @@ const OPTIONS = [
     },
 ];
 
-// OPTIONS.pop()
-
 const Options = () => (
     <div className="actions">
         {OPTIONS.map(({ iconName, text }) => (
