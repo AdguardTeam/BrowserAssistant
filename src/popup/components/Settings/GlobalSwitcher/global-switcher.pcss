@@ -21,7 +21,7 @@
     &__label:after {
         content: '';
         position: absolute;
-        z-index: 1;
+        z-index: var(--lower);
         border-radius: 100%;
         left: 0.14rem;
         top: 0.14rem;
@@ -32,17 +32,24 @@
     }
 
     &__text {
-        color: var(--gray88);
+        color: var(--gray-base);
         font-size: 1.7rem;
         font-family: var(--font-primary);
+
+        &--secure {
+            color: var(--gray88);
+        }
     }
 
     &__checkbox:checked ~ .global-switcher__label {
         background-color: var(--green74);
 
+        &--secure {
+            background-color: var(--green-pale);
+        }
+
         &:after {
             transform: translateX(2.0rem);
         }
     }
-
 }

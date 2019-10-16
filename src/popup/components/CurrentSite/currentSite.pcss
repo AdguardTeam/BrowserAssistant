@@ -2,6 +2,10 @@
     &__container {
         display: flex;
         justify-content: flex-end;
+        z-index: var(--higher);
+    }
+    &__name{
+        cursor: default;
     }
 
     &__title {
@@ -15,13 +19,25 @@
         font-weight: bold;
         color: var(--gray-base);
         position: relative;
-        border-left: 1px solid var(--gray88);
-        position: relative;
     }
 
     &__icon {
         position: absolute;
         top: 0.1rem;
         left: -2rem;
+        cursor: pointer;
+        border-right: 1px solid var(--gray88);
+        padding-right: 0.4rem;
     }
+   &__secure-status{
+       position: absolute;
+       left: 3rem;
+       color: var(--green-base);
+       font-size: 1.2rem;
+       font-weight: 100;
+       &:hover{
+           cursor: default;
+           text-decoration: underline;
+       }
+   }
 }

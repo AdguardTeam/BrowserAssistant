@@ -11,6 +11,11 @@
         &-icon {
             width: 1.9rem;
             flex-basis: 1.9rem;
+
+            &--disabled {
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
         }
 
         &-name {
@@ -21,12 +26,15 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
+
+            &--disabled {
+                cursor: not-allowed;
+                color: var(--gray88);
+            }
         }
 
         &:hover {
             background-color: var(--greyf3);
         }
     }
-
-
 }

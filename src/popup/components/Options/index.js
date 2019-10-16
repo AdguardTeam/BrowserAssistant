@@ -21,10 +21,10 @@ const OPTIONS = [
     },
 ];
 
-const Options = () => (
+const Options = ({ isDisabled }) => (
     <div className="actions">
         {OPTIONS.map(({ iconName, text }) => (
-            <Option key={iconName} iconName={iconName} text={text} />))}
+            <Option key={iconName} iconName={iconName} text={text} isDisabled={isDisabled} />))}
     </div>
 );
 
