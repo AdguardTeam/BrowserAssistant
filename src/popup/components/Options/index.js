@@ -21,9 +21,9 @@ const OPTIONS = [
     },
 ];
 
-const Options = ({ isDisabled }) => (
+const Options = ({ isDisabled, isChanged }) => (
     <div className="actions">
-        {OPTIONS.map(({ iconName, text }) => (
+        {OPTIONS.slice(0, isChanged ? 4 : 3).map(({ iconName, text }) => (
             <Option key={iconName} iconName={iconName} text={text} isDisabled={isDisabled} />))}
     </div>
 );

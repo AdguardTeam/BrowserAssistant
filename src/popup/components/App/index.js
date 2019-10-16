@@ -13,6 +13,7 @@ function App() {
     const [isCertificateExpired, toggleExpire] = useState(false);
     const [isDisabled, toggleDisable] = useState(false);
     const [isWorking, toggleWork] = useState(true);
+    const [isChanged, toggleChange] = useState(false);
     return (
         <Fragment>
             {isWorking && (
@@ -24,7 +25,7 @@ function App() {
                         isCertificateExpired={isCertificateExpired}
                     />
                     <Settings isSecure={isSecure} />
-                    <Options isDisabled={isDisabled} />
+                    <Options isDisabled={isDisabled} isChanged={isChanged} />
                 </Fragment>
             )}
             {!isWorking && (
@@ -35,10 +36,16 @@ function App() {
             )}
             <div className="TODO-delete-test-buttons">
                 <button
+                    onClick={() => toggleChange(!isChanged)}
+                    type="button"
+                >
+                    {isChanged ? 'Changed' : 'Normal'}
+                </button>
+                <button
                     onClick={() => toggleSecure(!isSecure)}
                     type="button"
                 >
-                    {isSecure ? 'insecure' : 'secure'}
+                    {isSecure ? 'secure' : 'normal'}
                 </button>
                 <button
                     onClick={() => toggleProtocol(!isSecureProtocol)}
@@ -51,6 +58,12 @@ function App() {
                     type="button"
                 >
                     {isCertificateExpired ? 'EXPIRED' : 'NOT EXPIRED'}
+                </button>
+                <button
+                    onClick={() => toggleDisable(!isDisabled)}
+                    type="button"
+                >
+                    {isDisabled ? 'Disabled' : 'Enabled'}
                 </button>
                 <button
                     onClick={() => toggleDisable(!isDisabled)}
