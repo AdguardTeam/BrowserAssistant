@@ -1,5 +1,38 @@
 
 .modal {
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: var(--white);
+    border: 0.1rem solid var(--gray-border);
+    z-index: 2;
+    width: 90%;
+    height: 50%;
+    left: 50%;
+    right: auto;
+    top: 60%;
+    margin-right: -50%;
+    transform: translate(5%, 60%);
+
+    &__certificate {
+        height: 50%;
+        top: 60%;
+        transform: translate(5%, 60%);
+    }
+
+    &__secure-page {
+        height: 20%;
+        top: 70%;
+        transform: translate(5%, 12rem);
+
+        &--bank {
+            height: 15rem;
+        }
+    }
+
     &__header {
         font-size: 1.6rem;
         color: var(--gray-base);
@@ -33,6 +66,11 @@
             width: auto;
         }
     }
+
+    &--expired {
+        height: 29.6rem;
+        transform: translate(5%, 12.5rem);
+    }
 }
 
 .arrow-up {
@@ -57,35 +95,13 @@
     }
 }
 
-.expired {
-   /* TODO: change padding*/
+.text-expired {
+    /* TODO: change padding*/
     padding: 0.2rem 0;
     color: var(--red);
+    //background-color: red;
 }
 
 .uppercase {
     text-transform: uppercase;
 }
-
-
-/*
-
-.ReactModal__Portal {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 2;
-    width: 90%;
-    height: 60%;
-    left: 50%;
-    right: auto;
-    top: 60%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-*/
-
-/*
-.ReactModal__Overlay {
-    background-color: transparent
-}*/

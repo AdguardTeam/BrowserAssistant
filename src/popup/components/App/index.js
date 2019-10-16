@@ -8,7 +8,7 @@ import AppClosed from './AppClosed';
 let status = 'isNotRunning';
 
 function App() {
-    const [isSecure, toggleSecure] = useState(true);
+    const [isSecure, toggleSecure] = useState(false);
     const [isSecureProtocol, toggleProtocol] = useState(false);
     const [isCertificateExpired, toggleExpire] = useState(false);
     const [isDisabled, toggleDisable] = useState(false);
@@ -45,7 +45,7 @@ function App() {
                     onClick={() => toggleSecure(!isSecure)}
                     type="button"
                 >
-                    {isSecure ? 'secure' : 'normal'}
+                    {isSecure ? 'normal' : 'secure'}
                 </button>
                 <button
                     onClick={() => toggleProtocol(!isSecureProtocol)}
@@ -64,12 +64,6 @@ function App() {
                     type="button"
                 >
                     {isDisabled ? 'Disabled' : 'Enabled'}
-                </button>
-                <button
-                    onClick={() => toggleDisable(!isDisabled)}
-                    type="button"
-                >
-                    {isDisabled ? 'Site Disabled' : 'Site Enabled'}
                 </button>
                 <br />
                 <button
