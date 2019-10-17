@@ -7,10 +7,10 @@ import AppClosed from './AppClosed';
 
 let status = 'isNotRunning';
 
-function App() {
-    const [isSecure, toggleSecure] = useState(false);
-    const [isSecureProtocol, toggleProtocol] = useState(false);
-    const [isCertificateExpired, toggleExpire] = useState(false);
+const App = () => {
+    const [isTrusted, toggleSecure] = useState(false);
+    const [isHTTPS, toggleProtocol] = useState(false);
+    const [isExpired, toggleExpire] = useState(false);
     const [isDisabled, toggleDisable] = useState(false);
     const [isWorking, toggleWork] = useState(true);
     const [isChanged, toggleChange] = useState(false);
@@ -20,11 +20,11 @@ function App() {
                 <Fragment>
                     <Header />
                     <CurrentSite
-                        isSecure={isSecure}
-                        isSecureProtocol={isSecureProtocol}
-                        isCertificateExpired={isCertificateExpired}
+                        isTrusted={isTrusted}
+                        isHTTPS={isHTTPS}
+                        isExpired={isExpired}
                     />
-                    <Settings isSecure={isSecure} />
+                    <Settings isTrusted={isTrusted} />
                     <Options isDisabled={isDisabled} isChanged={isChanged} />
                 </Fragment>
             )}
@@ -39,38 +39,38 @@ function App() {
                     onClick={() => toggleChange(!isChanged)}
                     type="button"
                 >
-                    {isChanged ? 'Changed' : 'Normal'}
+                    {isChanged ? 'changed' : 'default'}
                 </button>
                 <button
-                    onClick={() => toggleSecure(!isSecure)}
+                    onClick={() => toggleSecure(!isTrusted)}
                     type="button"
                 >
-                    {isSecure ? 'normal' : 'secure'}
+                    {isTrusted ? 'trusted' : 'usual'}
                 </button>
                 <button
-                    onClick={() => toggleProtocol(!isSecureProtocol)}
+                    onClick={() => toggleProtocol(!isHTTPS)}
                     type="button"
                 >
-                    {isSecureProtocol ? 'HTTPS' : 'HTTP'}
+                    {isHTTPS ? 'HTTPS' : 'HTTP'}
                 </button>
                 <button
-                    onClick={() => toggleExpire(!isCertificateExpired)}
+                    onClick={() => toggleExpire(!isExpired)}
                     type="button"
                 >
-                    {isCertificateExpired ? 'EXPIRED' : 'NOT EXPIRED'}
+                    {isExpired ? 'expired' : 'valid'}
                 </button>
                 <button
                     onClick={() => toggleDisable(!isDisabled)}
                     type="button"
                 >
-                    {isDisabled ? 'Disabled' : 'Enabled'}
+                    {isDisabled ? 'disabled' : 'enabled'}
                 </button>
                 <br />
                 <button
                     onClick={() => toggleWork(!isWorking)}
                     type="button"
                 >
-                    {isWorking ? 'App work' : 'App is not working'}
+                    {isWorking ? 'working' : 'not working'}
                 </button>
                 {isWorking && (
                     <select onChange={(e) => {
@@ -86,6 +86,6 @@ function App() {
             </div>
         </Fragment>
     );
-}
+};
 
 export default App;

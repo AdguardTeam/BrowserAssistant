@@ -21,15 +21,15 @@
         font-weight: bold;
         color: var(--gray-base);
         position: relative;
+        border-left: 1px solid var(--gray88);
     }
 
     &__icon {
         position: absolute;
         top: 0.1rem;
-        left: -2rem;
+        left: -2.4rem;
         cursor: pointer;
-        border-right: 1px solid var(--gray88);
-        padding-right: 0.4rem;
+        min-width: 1.5rem;
     }
    &__secure-status{
        cursor: default;
@@ -43,4 +43,8 @@
            text-decoration: underline;
        }
    }
+}
+.trusted{
+    border: none;
+    padding-left: 0.7rem;
 }

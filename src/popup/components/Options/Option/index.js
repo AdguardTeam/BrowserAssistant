@@ -7,6 +7,7 @@ const Option = ({ iconName, text, isDisabled }) => {
     const optionClass = classNames({
         [optionCSSName]: true,
         [`${optionCSSName}--disabled`]: isDisabled,
+        [iconName]: true,
     });
     const iconCSSName = 'action-icon';
     const iconClass = classNames({

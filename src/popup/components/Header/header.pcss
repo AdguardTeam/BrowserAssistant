@@ -16,10 +16,6 @@
 
         &-btns {
             display: flex;
-
-            .start {
-                display: none;
-            }
         }
 
         &-title {
@@ -47,6 +43,15 @@
     justify-content: center;
     align-items: center;
     transition: 0.3s ease opacity;
+    opacity: 0.5;
+
+    &:focus{
+        outline: none;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
 
     &:last-child {
         margin-right: 0;

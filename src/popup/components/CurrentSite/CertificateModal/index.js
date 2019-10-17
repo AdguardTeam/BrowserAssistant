@@ -3,8 +3,8 @@ import ReactModal from 'react-modal';
 import Switcher from '../../Settings/GlobalSwitcher';
 import './modal.pcss';
 
-const SertificateModal = ({
-    isOpen, onRequestClose, isCertificateExpired, cn,
+const CertificateModal = ({
+    isOpen, onRequestClose, isExpired, cn,
 }) => (
     <Fragment>
         {isOpen && <div className="arrow-up" />}
@@ -21,20 +21,20 @@ const SertificateModal = ({
                 </p>
                 <Switcher id="https-switcher" />
             </div>
-            {isCertificateExpired && (
+            {isExpired && (
             <p className="modal__text text-expired">
-                        AdGuard could not verify this website&apos;s
-                        certificate, because the root certificate has expired
+                    AdGuard could not verify this website&apos;s
+                    certificate, because the root certificate has expired
             </p>
             )}
             <div className="modal__info--lower">
                 <p className="modal__text">Verified by:</p>
                 <header className="modal__header">AdGuard Personal CA</header>
-                {isCertificateExpired && <p className="modal__text text-expired uppercase">expired</p>}
+                {isExpired && <p className="modal__text text-expired uppercase">expired</p>}
                 <p className="modal__text modal__link">More Information</p>
             </div>
         </ReactModal>
     </Fragment>
 );
 
-export default SertificateModal;
+export default CertificateModal;

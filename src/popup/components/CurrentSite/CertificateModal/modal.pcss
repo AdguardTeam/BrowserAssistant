@@ -9,24 +9,22 @@
     background-color: var(--white);
     border: 0.1rem solid var(--gray-border);
     z-index: 2;
-    width: 90%;
-    height: 50%;
-    left: 50%;
-    right: auto;
-    top: 60%;
-    margin-right: -50%;
-    transform: translate(5%, 60%);
 
     &__certificate {
-        height: 50%;
-        top: 60%;
-        transform: translate(5%, 60%);
+        height: 20.6rem;
+        width: 28.8rem;
+        transform: translate(1.5rem, 12rem);
+
+        &--expired {
+            height: 29.6rem;
+        }
     }
 
+
     &__secure-page {
-        height: 20%;
-        top: 70%;
-        transform: translate(5%, 12rem);
+        width: 28.8rem;
+        height: 8.7rem;
+        transform: translate(1.5rem, 12rem);
 
         &--bank {
             height: 15rem;
@@ -66,32 +64,27 @@
             width: auto;
         }
     }
-
-    &--expired {
-        height: 29.6rem;
-        transform: translate(5%, 12.5rem);
-    }
 }
 
 .arrow-up {
     z-index: 1;
     width: 0;
     height: 0;
-    border-left: 1.3rem solid transparent;
-    border-right: 1.3rem solid transparent;
-    border-bottom: 1.3rem solid var(--gray-border);
+    border-left: var(--trinagle-border-side);
+    border-right: var(--trinagle-border-side);
+    border-bottom: 1rem solid var(--gray-border);
     position: absolute;
-    top: 3.2rem;
-    left: -2.7rem;
+    top: 3rem;
+    left: -2.65rem;
 
     &:after {
         content: '';
-        border-left: 1.3rem solid transparent;
-        border-right: 1.3rem solid transparent;
-        border-bottom: 1.3rem solid var(--white);
+        border-left: var(--trinagle-border-side);
+        border-right: var(--trinagle-border-side);
+        border-bottom: 1rem solid var(--white);
         position: absolute;
-        top: 0.1rem;
-        left: -1.3rem;
+        top: 0.15rem;
+        left: -1rem;
     }
 }
 
@@ -99,7 +92,6 @@
     /* TODO: change padding*/
     padding: 0.2rem 0;
     color: var(--red);
-    //background-color: red;
 }
 
 .uppercase {

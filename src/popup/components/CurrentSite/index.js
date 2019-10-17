@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import './currentSite.pcss';
+import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
 import SecurePageModal from './SecurePageModal';
+import './currentSite.pcss';
 
-const CurrentSite = ({ isSecure, isSecureProtocol, isCertificateExpired }) => {
+
+const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
     const [isOpen, openModal] = useState(false);
     const [isInfoHovered, showInfo] = useState(false);
     const toggleOpenModal = () => openModal(!isOpen);
     const toggleShowInfo = () => showInfo(!isInfoHovered);
     const defineIcon = () => {
-        if (isCertificateExpired) return 'icon-warning';
-        if (isSecureProtocol) return 'icon-lock-danger';
+        if (isExpired) return 'icon-warning';
+        if (isHTTPS) return 'icon-lock-danger';
         return 'icon-lock';
     };
+    const expired = classNames({
+        '--expired': isExpired,
+    });
     return (
         <div
             className="current-site__container"
         >
-            <span className="current-site__title">
-                {!isSecure && (
+            <span className={`current-site__title ${isTrusted ? 'trusted' : ''}`}>
+                {!isTrusted && (
                     <img
                         className="current-site__icon"
                         src={`../../../assets/images/${defineIcon()}.svg`}
@@ -31,10 +36,10 @@ const CurrentSite = ({ isSecure, isSecureProtocol, isCertificateExpired }) => {
                     <CertificateModal
                         isOpen={isOpen}
                         onRequestClose={toggleOpenModal}
-                        isCertificateExpired={isCertificateExpired}
-                        cn={`modal modal__certificate modal${isCertificateExpired ? '--expired' : ''}`}
+                        isExpired={isExpired}
+                        cn={`modal modal__certificate modal__certificate${expired}`}
                     />
-                    {!isCertificateExpired && (isSecure || isSecureProtocol) && (
+                    {!isExpired && (isTrusted || isHTTPS) && (
                         <span
                             onMouseOver={toggleShowInfo}
                             onMouseLeave={toggleShowInfo}
@@ -44,15 +49,15 @@ const CurrentSite = ({ isSecure, isSecureProtocol, isCertificateExpired }) => {
                         </span>
                     )}
                     <SecurePageModal
-                        isOpen={isInfoHovered && !isSecureProtocol}
+                        isOpen={isInfoHovered && !isHTTPS}
                         cn="modal modal__secure-page"
                         message="Nothing to block here"
                     />
                     <SecurePageModal
-                        isOpen={isInfoHovered && isSecureProtocol}
+                        isOpen={isInfoHovered && isHTTPS}
                         cn="modal modal__secure-page modal__secure-page--bank"
-                        message={`By default, we don't filter HTTPS traffic for the payment system and bank websites.
-                         You can enable the filtering yourself: tap on the yellow 'lock' on the left.`}
+                        message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
+                         You can enable the filtering yourself: tap on the yellow 'lock' on the left."
                     />
                 </span>
             </span>
