@@ -3,17 +3,17 @@
     outline: none;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     border-radius: 0.5rem;
     padding: 1rem;
     background-color: var(--white);
     border: 0.1rem solid var(--gray-border);
-    z-index: 2;
+    width: 28.8rem;
+    transform: translate(1.5rem, 12rem);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
 
     &__certificate {
         height: 20.6rem;
-        width: 28.8rem;
-        transform: translate(1.5rem, 12rem);
 
         &--expired {
             height: 29.6rem;
@@ -22,9 +22,7 @@
 
 
     &__secure-page {
-        width: 28.8rem;
         height: 8.7rem;
-        transform: translate(1.5rem, 12rem);
 
         &--bank {
             height: 15rem;
@@ -45,12 +43,22 @@
         font-size: 1.2rem;
         max-width: 100%;
         color: var(--gray88);
+
+        &--expired {
+            padding: 0.2rem 0;
+            color: var(--red);
+        }
+
+        &--uppercase {
+            text-transform: uppercase;
+        }
+
+        &--link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 
-    &__link {
-        cursor: pointer;
-        text-decoration: underline;
-    }
 
     &__info {
         &--upper {
@@ -67,7 +75,7 @@
 }
 
 .arrow-up {
-    z-index: 1;
+    z-index: var(--higher);
     width: 0;
     height: 0;
     border-left: var(--trinagle-border-side);
@@ -86,14 +94,4 @@
         top: 0.15rem;
         left: -1rem;
     }
-}
-
-.text-expired {
-    /* TODO: change padding*/
-    padding: 0.2rem 0;
-    color: var(--red);
-}
-
-.uppercase {
-    text-transform: uppercase;
 }

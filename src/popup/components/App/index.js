@@ -5,7 +5,9 @@ import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 
-let status = 'isNotRunning';
+let STATES = ['isNotRunning', 'isNotInstalled', 'isPaused'];
+let status = STATES[0];
+
 
 const App = () => {
     const [isTrusted, toggleSecure] = useState(false);
@@ -14,6 +16,7 @@ const App = () => {
     const [isDisabled, toggleDisable] = useState(false);
     const [isWorking, toggleWork] = useState(true);
     const [isChanged, toggleChange] = useState(false);
+    const [isDevelopmentMode, toggleMode] = useState(true);
     return (
         <Fragment>
             {isWorking && (
@@ -34,7 +37,15 @@ const App = () => {
                     <AppClosed status={status} />
                 </Fragment>
             )}
-            <div className="TODO-delete-test-buttons">
+            <button
+                onClick={() => toggleMode(!isDevelopmentMode)}
+                type="button"
+            >
+                {`${isDevelopmentMode ? 'hide' : 'show'} development buttons`}
+            </button>
+            {isDevelopmentMode && (
+            <div className="TODO-DELETE-TEST-BUTTONS">
+                <h6>Current state:</h6>
                 <button
                     onClick={() => toggleChange(!isChanged)}
                     type="button"
@@ -70,20 +81,21 @@ const App = () => {
                     onClick={() => toggleWork(!isWorking)}
                     type="button"
                 >
-                    {isWorking ? 'working' : 'not working'}
+                    {`make window ${isWorking ? '' : 'working'}`}
                 </button>
                 {isWorking && (
-                    <select onChange={(e) => {
-                        status = e.target.value;
-                    }}
-                    >
-                        <option>isNotRunning</option>
-                        <option>isNotInstalled</option>
-                        <option>isPaused</option>
-                    </select>
+                <select onChange={(e) => {
+                    STATES = STATES.filter(el => el !== e.target.value);
+                    STATES.unshift(e.target.value);
+                    status = e.target.value;
+                }}
+                >
+                    {STATES.map(el => (<option key={el}>{el}</option>))}
+                </select>
                 )
                 }
             </div>
+            )}
         </Fragment>
     );
 };

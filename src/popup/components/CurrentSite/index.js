@@ -32,7 +32,7 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
                     />
                 )}
                 <span>
-                    <main className="current-site__name">fonts.google.com</main>
+                    <span className="current-site__name">fonts.google.com</span>
                     <CertificateModal
                         isOpen={isOpen}
                         onRequestClose={toggleOpenModal}
@@ -40,6 +40,7 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
                         cn={`modal modal__certificate modal__certificate${expired}`}
                     />
                     {!isExpired && (isTrusted || isHTTPS) && (
+                        // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
                         <span
                             onMouseOver={toggleShowInfo}
                             onMouseLeave={toggleShowInfo}

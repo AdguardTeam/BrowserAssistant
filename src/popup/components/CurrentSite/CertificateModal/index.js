@@ -10,9 +10,10 @@ const CertificateModal = ({
         {isOpen && <div className="arrow-up" />}
         <ReactModal
             isOpen={isOpen}
-            contentLabel="Security ReactModal"
-            onRequestClose={onRequestClose}
             className={cn}
+            style={{ overlay: { backgroundColor: 'transparent' } }}
+            contentLabel="Certificate Modal"
+            onRequestClose={onRequestClose}
         >
             <div className="modal__info--upper">
                 <p>
@@ -22,7 +23,7 @@ const CertificateModal = ({
                 <Switcher id="https-switcher" />
             </div>
             {isExpired && (
-            <p className="modal__text text-expired">
+            <p className="modal__text modal__text--expired">
                     AdGuard could not verify this website&apos;s
                     certificate, because the root certificate has expired
             </p>
@@ -30,8 +31,8 @@ const CertificateModal = ({
             <div className="modal__info--lower">
                 <p className="modal__text">Verified by:</p>
                 <header className="modal__header">AdGuard Personal CA</header>
-                {isExpired && <p className="modal__text text-expired uppercase">expired</p>}
-                <p className="modal__text modal__link">More Information</p>
+                {isExpired && <p className="modal__text modal__text--expired modal__text--uppercase">expired</p>}
+                <p className="modal__text modal__text--link">More Information</p>
             </div>
         </ReactModal>
     </Fragment>

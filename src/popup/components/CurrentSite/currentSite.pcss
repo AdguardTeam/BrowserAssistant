@@ -1,12 +1,14 @@
 .current-site {
     &__container {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-around;
         z-index: var(--higher);
         padding-top: 1rem;
         padding-bottom: 3rem;
     }
-    &__name{
+
+    &__name {
+        font-weight: 200;
         cursor: default;
     }
 
@@ -31,20 +33,24 @@
         cursor: pointer;
         min-width: 1.5rem;
     }
-   &__secure-status{
-       cursor: default;
-       position: absolute;
-       left: 3rem;
-       color: var(--green-base);
-       font-size: 1.2rem;
-       font-weight: 100;
-       &:hover{
-           cursor: default;
-           text-decoration: underline;
-       }
-   }
+
+    &__secure-status {
+        cursor: default;
+        position: absolute;
+        left: 3rem;
+        top: 2rem;
+        color: var(--green-base);
+        font-size: 1.2rem;
+        font-weight: 100;
+
+        &:hover {
+            cursor: default;
+            text-decoration: underline;
+        }
+    }
 }
-.trusted{
+
+.trusted {
     border: none;
     padding-left: 0.7rem;
 }

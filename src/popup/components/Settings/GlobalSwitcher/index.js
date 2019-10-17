@@ -27,7 +27,8 @@ const GlobalSwitcher = ({
                 id={id}
             />
             {!isControllable && text && <div className={switcherTextClass}>{text}</div>}
-            {isControllable && <div className={switcherTextClass}>{`${isEnabled ? 'Enabled' : 'Disabled'} on this website`}</div>}
+            {isControllable
+            && <div className={switcherTextClass}>{`${isEnabled ? 'Enabled' : 'Disabled'} on this website`}</div>}
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
