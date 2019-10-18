@@ -6,7 +6,7 @@ import GlobalSwitcher from './GlobalSwitcher';
 const Settings = ({ isTrusted }) => (
     <div className="settings">
         <div className="settings__main">
-            <GlobalSwitcher id="global-switcher" isTrusted={isTrusted} isControllable />
+            <GlobalSwitcher id="global-switcher" isTrusted={isTrusted} isDefaultText />
         </div>
     </div>
 );

@@ -4,7 +4,7 @@ import './global-switcher.pcss';
 
 
 const GlobalSwitcher = ({
-    text, id, isTrusted, isControllable,
+    text, id, isTrusted, isDefaultText,
 }) => {
     const [isEnabled, toggleEnable] = useState(false);
     const handleEnable = () => toggleEnable(!isEnabled);
@@ -19,6 +19,10 @@ const GlobalSwitcher = ({
         'global-switcher__label--trusted': isTrusted,
     });
 
+    const renderText = () => {
+        return isDefaultText ? `${isEnabled ? 'Enabled' : 'Disabled'} on this website` : text;
+    };
+
     return (
         <div className="global-switcher">
             <input
@@ -26,9 +30,9 @@ const GlobalSwitcher = ({
                 type="checkbox"
                 id={id}
             />
-            {!isControllable && text && <div className={switcherTextClass}>{text}</div>}
-            {isControllable
-            && <div className={switcherTextClass}>{`${isEnabled ? 'Enabled' : 'Disabled'} on this website`}</div>}
+            <div className={switcherTextClass}>
+                {renderText()}
+            </div>
             <label
                 className={switcherLabelClass}
                 htmlFor={id}

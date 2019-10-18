@@ -1,7 +1,7 @@
 {
-    "name": "extension-boilerplate",
+    "name": "browser-assistant",
     "version": "0.0.3",
-    "description": "AdGuard extensions boilerplate",
+    "description": "AdGuard browser extension",
     "author": "adguard@adguard.com",
     "license": "LGPL-3.0",
     "scripts": {

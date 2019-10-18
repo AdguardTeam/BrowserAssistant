@@ -8,21 +8,17 @@ const Option = ({ iconName, text, isDisabled }) => {
         'action--disabled': isDisabled,
     });
 
-    const iconClass = classNames({
-        'action-icon': true,
-        [iconName]: true,
-    });
-
     return (
         <div className={actionClass}>
-            <div className={iconClass} role="img" />
-            <div
+            <div className={`action-icon ${iconName}`} role="img" />
+            <divs
                 className="action-name"
                 role="button"
             >
                 {text}
-            </div>
+            </divs>
         </div>
+
     );
 };
 
