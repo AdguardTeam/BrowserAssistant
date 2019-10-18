@@ -14,20 +14,16 @@ const Header = () => {
             <div className="widget-popup__header-buttons" id="popup-header-buttons">
                 <span className="widget-popup__header-title">Assistant</span>
                 <button
-                    className="cir-btn"
+                    className={`cir-btn ${iconClass}`}
                     title="Pause AdGuard protection"
                     type="button"
                     onClick={() => pause(!isPaused)}
-                >
-                    <img src={`../../../assets/images/icon-${iconClass}.svg`} alt="" />
-                </button>
+                />
                 <button
                     className="cir-btn settings"
                     title="AdGuard Settings"
                     type="button"
-                >
-                    <img src="../../../assets/images/icon-settings.svg" alt="" />
-                </button>
+                />
             </div>
         </div>
     );

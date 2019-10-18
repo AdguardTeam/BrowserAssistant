@@ -3,32 +3,18 @@ import classNames from 'classnames';
 import './option.pcss';
 
 const Option = ({ iconName, text, isDisabled }) => {
-    const optionCSSName = 'action-name';
-    const optionClass = classNames({
-        [optionCSSName]: true,
-        [`${optionCSSName}--disabled`]: isDisabled,
-        [iconName]: true,
-    });
-    const iconCSSName = 'action-icon';
-    const iconClass = classNames({
-        [iconCSSName]: true,
-        [`${iconCSSName}--disabled`]: isDisabled,
-
+    const disabledClass = classNames({
+        'action--disabled': isDisabled,
     });
     return (
-        <div className="action">
-            <span className={iconClass}>
-                <img
-                    src={`../../../assets/images/${iconName}.svg`}
-                    alt=""
-                />
-            </span>
-            <span
-                className={optionClass}
+        <div className={`action ${disabledClass}`}>
+            <div className={`action-icon ${iconName}`} role="img" />
+            <div
+                className="action-name"
                 role="button"
             >
                 {text}
-            </span>
+            </div>
         </div>
     );
 };

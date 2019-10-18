@@ -1,21 +1,39 @@
 .actions {
     .action {
         display: flex;
-        align-items: center;
-        justify-content: flex-start;
         padding: 0.9rem 2rem;
         cursor: pointer;
         transition: 0.3s ease background-color;
         max-height: 3.5rem;
 
+        &--disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
         &-icon {
+            height: 1.9rem;
             width: 1.9rem;
             flex-basis: 1.9rem;
 
-            &--disabled {
-                cursor: not-allowed;
-                opacity: 0.5;
+            &.block-ad {
+                background: url('../../../../assets/images/block-ad.svg') no-repeat;
             }
+
+            &.sandwich {
+                background: url('../../../../assets/images/sandwich.svg') no-repeat;
+
+            }
+
+            &.thumb-down {
+                background: url('../../../../assets/images/thumb-down.svg') no-repeat;
+
+            }
+
+            &.icon-cross {
+                background: url('../../../../assets/images/icon-cross.svg') no-repeat;
+            }
+
         }
 
         &-name {
@@ -26,11 +44,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
-
-
-            &--disabled {
-                color: var(--gray88);
-            }
         }
 
         &:hover {

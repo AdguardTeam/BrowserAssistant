@@ -34,7 +34,6 @@
     width: 2.4rem;
     height: 2.4rem;
     margin-right: 1.6rem;
-    background-color: var(--black-transparent);
     opacity: 0.5;
     border: 0;
     cursor: pointer;
@@ -43,7 +42,6 @@
     justify-content: center;
     align-items: center;
     transition: 0.3s ease opacity;
-    opacity: 0.5;
 
     &:focus {
         outline: none;
@@ -56,5 +54,17 @@
     &:last-child {
         margin-right: 0;
     }
-}
 
+    &.pause {
+        background: url('../../../assets/images/icon-pause.svg');
+    }
+
+    &.start {
+        background: url('../../../assets/images/icon-start.svg');
+    }
+
+    &.settings {
+        background: url('../../../assets/images/icon-settings.svg') no-repeat;
+
+    }
+}

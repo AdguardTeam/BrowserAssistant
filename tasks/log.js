@@ -9,8 +9,10 @@ export default class Logs {
 
     info(text) {
         if (text) {
+            // eslint-disable-next-line no-console
             console.info(text);
         } else {
+            // eslint-disable-next-line no-console
             console.info('unknown info');
         }
     }

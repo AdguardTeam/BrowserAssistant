@@ -24,15 +24,42 @@
         color: var(--gray-base);
         position: relative;
         border-left: 1px solid var(--gray88);
+
+        &--trusted {
+            border-left: 1px solid transparent;
+        }
     }
 
     &__icon {
-        position: absolute;
-        top: 0.1rem;
-        left: -2.4rem;
-        cursor: pointer;
-        min-width: 1.5rem;
+        width: 2rem;
+        height: 2rem;
+
+
+        &--button {
+
+            outline: none;
+            position: absolute;
+            top: 0.1rem;
+            left: -2.4rem;
+            cursor: pointer;
+            padding: 0;
+            border: 0;
+
+            &.icon-lock {
+
+                background: url('../../../assets/images/icon-lock.svg') no-repeat;
+            }
+
+            &.icon-lock-danger {
+                background: url('../../../assets/images/icon-lock-danger.svg') no-repeat;
+            }
+
+            &.icon-warning {
+                background: url('../../../assets/images/icon-warning.svg') no-repeat;
+            }
+        }
     }
+
 
     &__secure-status {
         cursor: default;
@@ -48,9 +75,4 @@
             text-decoration: underline;
         }
     }
-}
-
-.trusted {
-    border: none;
-    padding-left: 0.7rem;
 }

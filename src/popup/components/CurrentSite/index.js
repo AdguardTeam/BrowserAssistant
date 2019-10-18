@@ -15,20 +15,24 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
         if (isHTTPS) return 'icon-lock-danger';
         return 'icon-lock';
     };
-    const expired = classNames({
-        '--expired': isExpired,
+    const expiredClass = classNames({
+        'modal__certificate--expired': isExpired,
     });
+
+    const trustedClass = classNames({
+        'current-site__title--trusted': isTrusted,
+    });
+
     return (
         <div
             className="current-site__container"
         >
-            <span className={`current-site__title ${isTrusted ? 'trusted' : ''}`}>
+            <span className={`current-site__title ${trustedClass}`}>
                 {!isTrusted && (
-                    <img
-                        className="current-site__icon"
-                        src={`../../../assets/images/${defineIcon()}.svg`}
-                        alt=" "
+                    <button
+                        type="button"
                         onClick={toggleOpenModal}
+                        className={`current-site__icon current-site__icon--button ${defineIcon()}`}
                     />
                 )}
                 <span>
@@ -37,7 +41,7 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
                         isOpen={isOpen}
                         onRequestClose={toggleOpenModal}
                         isExpired={isExpired}
-                        cn={`modal modal__certificate modal__certificate${expired}`}
+                        cn={`modal modal__certificate ${expiredClass}`}
                     />
                     {!isExpired && (isTrusted || isHTTPS) && (
                         // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events

@@ -52,7 +52,8 @@ const downloadMessagesByUrl = async (url) => {
             errorMessage = e.message;
         }
         log.error(`Error occurred: ${errorMessage}, while downloading: ${url}`);
-        // log.error(`Unable to download by url: ${url} with error ${JSON.stringify(e.response.data)}`);
+        // log.error(`Unable to download by url:
+        // ${url} with error ${JSON.stringify(e.response.data)}`);
     }
     return response.data;
 };
