@@ -33,30 +33,24 @@
     &__icon {
         width: 2rem;
         height: 2rem;
+        outline: none;
+        position: absolute;
+        top: 0.1rem;
+        left: -2.4rem;
+        cursor: pointer;
+        padding: 0;
+        border: 0;
 
+        &--lock {
+            background: url('../../../assets/images/icon-lock.svg') no-repeat;
+        }
 
-        &--button {
+        &--lock-danger {
+            background: url('../../../assets/images/icon-lock-danger.svg') no-repeat;
+        }
 
-            outline: none;
-            position: absolute;
-            top: 0.1rem;
-            left: -2.4rem;
-            cursor: pointer;
-            padding: 0;
-            border: 0;
-
-            &.icon-lock {
-
-                background: url('../../../assets/images/icon-lock.svg') no-repeat;
-            }
-
-            &.icon-lock-danger {
-                background: url('../../../assets/images/icon-lock-danger.svg') no-repeat;
-            }
-
-            &.icon-warning {
-                background: url('../../../assets/images/icon-warning.svg') no-repeat;
-            }
+        &--warning {
+            background: url('../../../assets/images/icon-warning.svg') no-repeat;
         }
     }
 

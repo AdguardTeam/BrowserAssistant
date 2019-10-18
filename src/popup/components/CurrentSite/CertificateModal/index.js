@@ -7,7 +7,6 @@ const CertificateModal = ({
     isOpen, onRequestClose, isExpired, cn,
 }) => (
     <Fragment>
-        {isOpen && <div className="arrow-up" />}
         <ReactModal
             isOpen={isOpen}
             className={cn}
@@ -16,6 +15,7 @@ const CertificateModal = ({
             onRequestClose={onRequestClose}
         >
             <div className="modal__info--upper">
+                <div className="arrow-up" />
                 <p>
                     <header className="modal__header">AdGuard HTTPS</header>
                     <p className="modal__text">Increases the quality of ad blocking</p>

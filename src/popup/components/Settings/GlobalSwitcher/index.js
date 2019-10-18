@@ -9,16 +9,16 @@ const GlobalSwitcher = ({
     const [isEnabled, toggleEnable] = useState(false);
     const handleEnable = () => toggleEnable(!isEnabled);
 
-    const switcherTextCSSName = 'global-switcher__text';
     const switcherTextClass = classNames({
-        [switcherTextCSSName]: true,
-        [`${switcherTextCSSName}--trusted`]: isTrusted,
+        'global-switcher__text': true,
+        'global-switcher__text--trusted': isTrusted,
     });
-    const switcherLabelCSSName = 'global-switcher__label';
+
     const switcherLabelClass = classNames({
-        [switcherLabelCSSName]: true,
-        [`${switcherLabelCSSName}--trusted`]: isTrusted,
+        'global-switcher__label': true,
+        'global-switcher__label--trusted': isTrusted,
     });
+
     return (
         <div className="global-switcher">
             <input
@@ -32,7 +32,7 @@ const GlobalSwitcher = ({
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
-                onMouseUp={() => handleEnable(!isEnabled)}
+                onMouseUp={handleEnable}
             />
         </div>
     );
