@@ -1,0 +1,14 @@
+[
+  {
+    "project_id": "browser-assistant",
+    "base_locale": "en",
+    "localizable_files": [
+      "src/_locales/en/messages.json"
+    ],
+    "languages": {
+      "de": "German",
+      "en": "English",
+      "ru": "Russian"
+    }
+  }
+]

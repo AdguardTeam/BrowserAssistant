@@ -1,0 +1,98 @@
+
+.modal {
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: var(--white);
+    border: 0.1rem solid var(--gray-border);
+    width: 28.8rem;
+    transform: translate(1.5rem, 11.5rem);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+
+    &__certificate {
+        height: 20.6rem;
+
+        &--expired {
+            height: 26.6rem;
+        }
+    }
+
+
+    &__secure-page {
+        height: 8.7rem;
+        transform: translate(1.5rem, 13rem);
+
+        &--bank {
+            height: 15rem;
+        }
+    }
+
+    &__header {
+        font-size: 1.6rem;
+        color: var(--gray-base);
+        line-height: 1;
+        font-family: var(--font-primary);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    &__text {
+        font-family: var(--font-primary);
+        font-size: 1.2rem;
+        max-width: 100%;
+        color: var(--gray88);
+
+        &--expired {
+            padding: 0.2rem 0;
+            color: var(--red);
+        }
+
+        &--uppercase {
+            text-transform: uppercase;
+        }
+
+        &--link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+
+    &__info {
+        &--upper {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        &--upper > .global-switcher {
+            width: auto;
+        }
+    }
+}
+
+.arrow-up {
+    z-index: var(--higher);
+    width: 0;
+    height: 0;
+    border-left: var(--trinagle-border-side);
+    border-right: var(--trinagle-border-side);
+    border-bottom: 1rem solid var(--gray-border);
+    position: absolute;
+    top: -1rem;
+    left: 4.75rem;
+
+    &:after {
+        content: '';
+        border-left: var(--trinagle-border-side);
+        border-right: var(--trinagle-border-side);
+        border-bottom: 1rem solid var(--white);
+        position: absolute;
+        top: 0.15rem;
+        left: -1rem;
+    }
+}

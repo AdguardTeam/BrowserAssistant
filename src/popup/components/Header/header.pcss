@@ -1,0 +1,69 @@
+.widget-popup {
+    &__header {
+        min-height: 5rem;
+        background-color: var(--white);
+        padding: 0 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-logo {
+            width: 11.3rem;
+            height: 2.5rem;
+            background-repeat: no-repeat;
+            background-image: url('./images/logo.svg');
+        }
+
+        &-buttons {
+            display: flex;
+        }
+
+        &-title {
+            position: absolute;
+            top: 2rem;
+            left: 13rem;
+            font-size: 1rem;
+            color: var(--gray88);
+            text-transform: uppercase;
+        }
+    }
+
+    &__buttons {
+        padding: 0;
+        width: 2.4rem;
+        height: 2.4rem;
+        margin-right: 1.6rem;
+        opacity: 0.5;
+        border: 0;
+        cursor: pointer;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s ease opacity;
+
+        &--pause {
+            background: url('../../../assets/images/icon-pause.svg') no-repeat;
+        }
+
+        &--start {
+            background: url('../../../assets/images/icon-start.svg') no-repeat;
+        }
+
+        &--settings {
+            background: url('../../../assets/images/icon-settings.svg') no-repeat;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

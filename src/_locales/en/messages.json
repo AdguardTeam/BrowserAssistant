@@ -1,0 +1,11 @@
+{
+    "name": {
+        "message": "AdGuard browser-assistant"
+    },
+    "description": {
+        "message": "AdGuard browser-assistant description"
+    },
+    "short_name": {
+        "message": "AG browser-assistant"
+    }
+}

@@ -1,0 +1,72 @@
+.current-site {
+    &__container {
+        display: flex;
+        justify-content: space-around;
+        z-index: var(--higher);
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+    }
+
+    &__name {
+        font-weight: 200;
+        cursor: default;
+    }
+
+    &__title {
+        font-size: 1.6rem;
+        padding: 0 0.6rem;
+        max-width: 26rem;
+        text-align: center;
+        margin: 2rem auto 3rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: bold;
+        color: var(--gray-base);
+        position: relative;
+        border-left: 1px solid var(--gray88);
+
+        &--trusted {
+            border-left: 1px solid transparent;
+        }
+    }
+
+    &__icon {
+        width: 2rem;
+        height: 2rem;
+        outline: none;
+        position: absolute;
+        top: 0.1rem;
+        left: -2.4rem;
+        cursor: pointer;
+        padding: 0;
+        border: 0;
+
+        &--lock {
+            background: url('../../../assets/images/icon-lock.svg') no-repeat;
+        }
+
+        &--lock-danger {
+            background: url('../../../assets/images/icon-lock-danger.svg') no-repeat;
+        }
+
+        &--warning {
+            background: url('../../../assets/images/icon-warning.svg') no-repeat;
+        }
+    }
+
+
+    &__secure-status {
+        cursor: default;
+        position: absolute;
+        left: 3rem;
+        top: 2rem;
+        color: var(--green-base);
+        font-size: 1.2rem;
+        font-weight: 100;
+
+        &:hover {
+            cursor: default;
+            text-decoration: underline;
+        }
+    }
+}
