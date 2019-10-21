@@ -5,7 +5,7 @@ import SecurePageModal from './SecurePageModal';
 import './currentSite.pcss';
 
 
-const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
+const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
     const [isOpen, openModal] = useState(false);
     const [isInfoHovered, showInfo] = useState(false);
 
@@ -15,8 +15,8 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
     const iconClass = classNames({
         'current-site__icon': true,
         'current-site__icon--warning': isExpired,
-        'current-site__icon--lock-danger': isHTTPS,
-        'current-site__icon--lock': !isHTTPS,
+        'current-site__icon--lock-danger': isHttpsFilteringEnabled,
+        'current-site__icon--lock': !isHttpsFilteringEnabled,
     });
 
     const expiredClass = classNames({
@@ -24,17 +24,17 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
         'modal__certificate--expired': isExpired,
     });
 
-    const trustedClass = classNames({
+    const securedClass = classNames({
         'current-site__title': true,
-        'current-site__title--trusted': isTrusted,
+        'current-site__title--secured': isPageSecured,
     });
 
     return (
         <div
             className="current-site__container"
         >
-            <span className={trustedClass}>
-                {!isTrusted && (
+            <span className={securedClass}>
+                {!isPageSecured && (
                     <button
                         type="button"
                         onClick={toggleOpenModal}
@@ -49,7 +49,7 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
                         isExpired={isExpired}
                         cn={expiredClass}
                     />
-                    {!isExpired && (isTrusted || isHTTPS) && (
+                    {!isExpired && (isPageSecured || isHttpsFilteringEnabled) && (
                         // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
                         <span
                             onMouseOver={toggleShowInfo}
@@ -60,12 +60,12 @@ const CurrentSite = ({ isTrusted, isHTTPS, isExpired }) => {
                         </span>
                     )}
                     <SecurePageModal
-                        isOpen={isInfoHovered && !isHTTPS}
+                        isOpen={isInfoHovered && !isHttpsFilteringEnabled}
                         cn="modal modal__secure-page"
                         message="Nothing to block here"
                     />
                     <SecurePageModal
-                        isOpen={isInfoHovered && isHTTPS}
+                        isOpen={isInfoHovered && isHttpsFilteringEnabled}
                         cn="modal modal__secure-page modal__secure-page--bank"
                         message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
                          You can enable the filtering yourself: tap on the yellow 'lock' on the left."
