@@ -10,13 +10,13 @@ const Option = ({ iconName, text, isDisabled }) => {
 
     return (
         <div className={actionClass}>
-            <div className={`action-icon ${iconName}`} role="img" />
-            <divs
-                className="action-name"
+            <div className={`action__icon action__icon--${iconName}`} role="img" />
+            <div
+                className="action__name"
                 role="button"
             >
                 {text}
-            </divs>
+            </div>
         </div>
 
     );

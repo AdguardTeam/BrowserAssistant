@@ -20,7 +20,8 @@ const GlobalSwitcher = ({
     });
 
     const renderText = () => {
-        return isDefaultText ? `${isEnabled ? 'Enabled' : 'Disabled'} on this website` : text;
+        const defaultText = `${isEnabled ? 'Enabled' : 'Disabled'} on this website`;
+        return isDefaultText ? defaultText : text;
     };
 
     return (
