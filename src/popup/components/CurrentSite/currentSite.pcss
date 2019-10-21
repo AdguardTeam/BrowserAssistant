@@ -3,24 +3,21 @@
         display: flex;
         justify-content: space-around;
         z-index: var(--higher);
-        padding-top: 1rem;
-        padding-bottom: 3rem;
     }
 
     &__name {
-        font-weight: 200;
+        font-weight: 400;
         cursor: default;
     }
 
     &__title {
         font-size: 1.6rem;
-        padding: 0 0.6rem;
+        padding: 0 0.8rem;
         max-width: 26rem;
         text-align: center;
-        margin: 2rem auto 3rem;
+        margin: 5.3rem 8.6rem 0 10.8rem;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-weight: bold;
         color: var(--gray-base);
         position: relative;
         border-left: 1px solid var(--gray88);
@@ -31,12 +28,12 @@
     }
 
     &__icon {
-        width: 2rem;
-        height: 2rem;
+        width: 1.2rem;
+        height: 1.5rem;
         outline: none;
         position: absolute;
-        top: 0.1rem;
-        left: -2.4rem;
+        bottom: 0;
+        left: -2.2rem;
         cursor: pointer;
         padding: 0;
         border: 0;
@@ -50,6 +47,10 @@
         }
 
         &--warning {
+            width: 2rem;
+            height: 2rem;
+            bottom: initial;
+            left: -2.7rem;
             background: url('../../../assets/images/icon-warning.svg') no-repeat;
         }
     }
@@ -67,6 +68,10 @@
         &:hover {
             cursor: default;
             text-decoration: underline;
+        }
+
+        &--hidden {
+            display: none;
         }
     }
 }

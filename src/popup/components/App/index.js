@@ -18,7 +18,7 @@ let status = STATES[0];
 
 const App = () => {
     const [isPageSecured, toggleSecure] = useState(false);
-    const [isHttpsFilteringEnabled, toggleHttpsFiltering] = useState(false);
+    const [isHttpsFilteringEnabled, toggleHttpsFiltering] = useState(true);
     const [isExpired, toggleExpire] = useState(false);
     const [isDisabled, toggleDisable] = useState(false);
     const [isWorking, toggleWork] = useState(true);
@@ -52,7 +52,7 @@ const App = () => {
             </button>
             {isDevelopmentMode && (
                 <div className="TODO-DELETE-TEST-BUTTONS">
-                    <h6>Current state:</h6>
+                    <span style={{ fontSize: '1.5rem' }}>Current state:</span>
                     <button
                         onClick={() => toggleChange(!isChanged)}
                         type="button"

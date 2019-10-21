@@ -28,7 +28,7 @@ const Options = ({ isDisabled, isChanged }) => (
                 key={iconName}
                 iconName={iconName}
                 text={text}
-                isDisabled={(i < 2) && isDisabled}
+                isDisabled={(i === 0) && isDisabled}
             />
         ))}
     </div>

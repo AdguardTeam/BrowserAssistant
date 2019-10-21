@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import './global-switcher.pcss';
 
-
 const GlobalSwitcher = ({
     text, id, isPageSecured, isDefaultText,
 }) => {

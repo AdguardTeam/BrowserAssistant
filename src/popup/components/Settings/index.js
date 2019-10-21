@@ -3,10 +3,10 @@ import './settings.pcss';
 
 import GlobalSwitcher from './GlobalSwitcher';
 
-const Settings = ({ isSecured }) => (
+const Settings = ({ isPageSecured }) => (
     <div className="settings">
         <div className="settings__main">
-            <GlobalSwitcher id="global-switcher" isSecured={isSecured} isDefaultText />
+            <GlobalSwitcher id="global-switcher" isPageSecured={isPageSecured} isDefaultText />
         </div>
     </div>
 );
