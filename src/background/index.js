@@ -1,7 +1,9 @@
 const port = window.chrome.runtime.connectNative('native_browser_assistant');
 
-port.onMessage.addListener((response) => {
-    console.log(`Received: id = ${response.id}, data = ${response.data}, parameters = ${JSON.stringify(response.parameters)}, appState = ${JSON.stringify(response.appState)}`, `, result = ${response.result}`);
+port.onMessage.addListener(({
+    id, data, parameters, appState, result,
+}) => {
+    console.log(`Received: id = ${id}, data = ${data || null}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}`);
 });
 
 window.chrome.browserAction.onClicked.addListener(() => {
@@ -10,6 +12,7 @@ window.chrome.browserAction.onClicked.addListener(() => {
     const requestMessage = {
         id,
         type: 'init',
+        data: '2019-10-20T08:00:00.000Z',
         parameters: {
             version: '1.2.3.5',
             apiVersion: '3',
