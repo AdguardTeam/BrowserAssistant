@@ -34,8 +34,16 @@ const App = () => {
                         isHttpsFilteringEnabled={isHttpsFilteringEnabled}
                         isExpired={isExpired}
                     />
-                    <Settings isPageSecured={isPageSecured} />
-                    <Options isDisabled={isDisabled} isChanged={isChanged} />
+                    <Settings
+                        isPageSecured={isPageSecured}
+                        isHttpsFilteringEnabled={isHttpsFilteringEnabled}
+                        isDisabled={isDisabled}
+                    />
+                    <Options
+                        isDisabled={isDisabled}
+                        isChanged={isChanged}
+                        isPageSecured={isPageSecured}
+                    />
                 </Fragment>
             )}
             {!isWorking && (
