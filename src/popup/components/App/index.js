@@ -52,7 +52,7 @@ const App = () => {
             </button>
             {isDevelopmentMode && (
                 <div className="TODO-DELETE-TEST-BUTTONS">
-                    <h6>Current state:</h6>
+                    <span style={{ fontSize: '1.5rem' }}>Current state:</span>
                     <button
                         onClick={() => toggleChange(!isChanged)}
                         type="button"
