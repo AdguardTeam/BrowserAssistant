@@ -49,7 +49,7 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
         <div
             className="current-site__container"
         >
-            <span className={securedClass}>
+            <div className={securedClass}>
                 {!isPageSecured && (
                     <button
                         type="button"
@@ -57,7 +57,7 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
                         className={iconClass}
                     />
                 )}
-                <span className="current-site__name">fonts.google.com</span>
+                <div className="current-site__name">fonts.google.com</div>
                 <CertificateModal
                     isOpen={isOpen}
                     onRequestClose={toggleOpenModal}
@@ -85,7 +85,7 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
                     message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
                          You can enable the filtering yourself: tap on the yellow 'lock' on the left."
                 />
-            </span>
+            </div>
         </div>
 
     );
