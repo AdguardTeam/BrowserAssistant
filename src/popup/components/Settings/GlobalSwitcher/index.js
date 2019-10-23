@@ -2,25 +2,25 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import './global-switcher.pcss';
 
-
 const GlobalSwitcher = ({
-    text, id, isTrusted, isDefaultText,
+    text, id, isPageSecured, isDefaultText, isDisabled,
 }) => {
-    const [isEnabled, toggleEnable] = useState(false);
-    const handleEnable = () => toggleEnable(!isEnabled);
+    const [isFilteringEnabled, toggleFiltering] = useState(false);
+    const handleFiltering = () => toggleFiltering(!isFilteringEnabled);
 
     const switcherTextClass = classNames({
         'global-switcher__text': true,
-        'global-switcher__text--trusted': isTrusted,
+        'global-switcher__text--secured': isPageSecured,
     });
 
     const switcherLabelClass = classNames({
         'global-switcher__label': true,
-        'global-switcher__label--trusted': isTrusted,
+        'global-switcher__label--secured': isPageSecured,
+        'global-switcher__label--disabled': isDisabled,
     });
 
     const renderText = () => {
-        const defaultText = `${isEnabled ? 'Enabled' : 'Disabled'} on this website`;
+        const defaultText = `${isFilteringEnabled ? 'Enabled' : 'Disabled'} on this website`;
         return isDefaultText ? defaultText : text;
     };
 
@@ -37,7 +37,7 @@ const GlobalSwitcher = ({
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
-                onMouseUp={handleEnable}
+                onClick={handleFiltering}
             />
         </div>
     );

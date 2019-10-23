@@ -1,29 +1,28 @@
-
 .modal {
     outline: none;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 2.4rem 1.5rem 3.9rem 1.5rem;
     background-color: var(--white);
-    border: 0.1rem solid var(--gray-border);
+    border: 0.1rem solid var(--greyf3);
     width: 28.8rem;
-    transform: translate(1.5rem, 11.5rem);
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    transform: translate(1.6rem, 14rem);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1), 0 3rem 6rem rgba(0, 0, 0, 0.1);
 
     &__certificate {
         height: 20.6rem;
 
         &--expired {
-            height: 26.6rem;
+            height: 29.6rem;
         }
     }
 
 
     &__secure-page {
         height: 8.7rem;
-        transform: translate(1.5rem, 13rem);
+        transform: translate(1.6rem, 15rem);
 
         &--bank {
             height: 15rem;
@@ -32,11 +31,10 @@
 
     &__header {
         font-size: 1.6rem;
+        margin-bottom: 0.9rem;
         color: var(--gray-base);
         line-height: 1;
         font-family: var(--font-primary);
-        padding-top: 1rem;
-        padding-bottom: 1rem;
     }
 
     &__text {
@@ -46,8 +44,16 @@
         color: var(--gray88);
 
         &--expired {
-            padding: 0.2rem 0;
+            margin: 0.7rem 0;
             color: var(--red);
+        }
+
+        &--additional {
+            max-width: 12.9rem;
+        }
+
+        &--warning {
+            margin-bottom: 1.6rem;
         }
 
         &--uppercase {
@@ -58,12 +64,17 @@
             cursor: pointer;
             text-decoration: underline;
         }
+
+        &--notion {
+            margin-top: 2.4rem;
+            margin-bottom: 0.7rem;
+        }
+
     }
 
 
     &__info {
         &--upper {
-            width: 100%;
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
@@ -72,6 +83,11 @@
         &--upper > .global-switcher {
             width: auto;
         }
+
+        &--lower .modal--text {
+            background-color: red;
+        }
+
     }
 }
 
@@ -81,10 +97,10 @@
     height: 0;
     border-left: var(--trinagle-border-side);
     border-right: var(--trinagle-border-side);
-    border-bottom: 1rem solid var(--gray-border);
+    border-bottom: 1rem solid var(--greyf3);
     position: absolute;
     top: -1rem;
-    left: 4.75rem;
+    left: 4.1rem;
 
     &:after {
         content: '';

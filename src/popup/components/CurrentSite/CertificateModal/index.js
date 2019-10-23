@@ -4,7 +4,7 @@ import Switcher from '../../Settings/GlobalSwitcher';
 import './modal.pcss';
 
 const CertificateModal = ({
-    isOpen, onRequestClose, isExpired, cn,
+    isOpen, onRequestClose, isExpired, cn, isDisabled,
 }) => (
     <Fragment>
         <ReactModal
@@ -18,9 +18,9 @@ const CertificateModal = ({
                 <div className="arrow-up" />
                 <p>
                     <header className="modal__header">AdGuard HTTPS</header>
-                    <p className="modal__text">Increases the quality of ad blocking</p>
+                    <p className="modal__text modal__text--additional">Increases the quality of ad blocking</p>
                 </p>
-                <Switcher id="https-switcher" />
+                <Switcher id="https-switcher" isDisabled={isDisabled} />
             </div>
             {isExpired && (
             <p className="modal__text modal__text--expired">
@@ -29,9 +29,10 @@ const CertificateModal = ({
             </p>
             )}
             <div className="modal__info--lower">
-                <p className="modal__text">Verified by:</p>
+                <p className="modal__text modal__text--notion">Verified by:</p>
                 <header className="modal__header">AdGuard Personal CA</header>
-                {isExpired && <p className="modal__text modal__text--expired modal__text--uppercase">expired</p>}
+                {isExpired
+                && <p className="modal__text modal__text--warning modal__text--expired modal__text--uppercase">expired</p>}
                 <p className="modal__text modal__text--link">More Information</p>
             </div>
         </ReactModal>

@@ -16,7 +16,7 @@ const edgeConfig = {
             {
                 from: path.resolve(__dirname, '../manifest.common.json'),
                 to: 'manifest.json',
-                // eslint-disable-next-line no-shadow, no-unused-vars
+                // eslint-disable-next-line no-unused-vars
                 transform: (content, path) => updateManifest(content, edgeManifestDiff),
             },
         ]),

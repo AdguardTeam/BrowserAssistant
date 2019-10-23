@@ -2,15 +2,15 @@ import React from 'react';
 import './AppClosed.pcss';
 
 const STATES = {
-    isNotRunning: {
+    isRunning: {
         title: 'AdGuard is not running',
         buttonText: 'run adguard',
     },
-    isNotInstalled: {
+    isInstalled: {
         title: 'AdGuard is not installed',
         buttonText: 'download',
     },
-    isPaused: {
+    isProtectionEnabled: {
         title: 'AdGuard protection is paused',
         buttonText: 'enable',
     },
