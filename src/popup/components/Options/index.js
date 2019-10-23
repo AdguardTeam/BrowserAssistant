@@ -23,7 +23,7 @@ const OPTIONS = [
 
 const Options = ({ isPageSecured, isDisabled, isChanged }) => (
     <div className="actions">
-        {OPTIONS.slice(0, isChanged ? 4 : 3).map(({ iconName, text }, i) => (
+        {OPTIONS.slice(0, isChanged ? OPTIONS.length : -1).map(({ iconName, text }, i) => (
             <Option
                 key={iconName}
                 iconName={iconName}

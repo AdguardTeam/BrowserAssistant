@@ -26,8 +26,8 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
     const iconClass = classNames({
         'current-site__icon': true,
         'current-site__icon--warning': isExpired,
-        'current-site__icon--lock-danger': isHttpsFilteringEnabled,
-        'current-site__icon--lock': !isHttpsFilteringEnabled,
+        'current-site__icon--lock-danger': !isHttpsFilteringEnabled,
+        'current-site__icon--lock': isHttpsFilteringEnabled,
     });
 
     const expiredClass = classNames({
@@ -75,12 +75,12 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
                     </span>
                 )}
                 <SecurePageModal
-                    isOpen={isInfoHovered && !isHttpsFilteringEnabled}
+                    isOpen={isInfoHovered && isHttpsFilteringEnabled}
                     cn="modal modal__secure-page"
                     message="Nothing to block here"
                 />
                 <SecurePageModal
-                    isOpen={isInfoHovered && isHttpsFilteringEnabled}
+                    isOpen={isInfoHovered && !isHttpsFilteringEnabled}
                     cn="modal modal__secure-page modal__secure-page--bank"
                     message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
                          You can enable the filtering yourself: tap on the yellow 'lock' on the left."

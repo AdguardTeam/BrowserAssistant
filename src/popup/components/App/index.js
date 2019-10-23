@@ -59,7 +59,14 @@ const App = () => {
                 {`${isDevelopmentMode ? 'hide' : 'show'} development buttons`}
             </button>
             {isDevelopmentMode && (
-                <div className="TODO-DELETE-TEST-BUTTONS">
+                <div
+                    className="TODO-DELETE-TEST-BUTTONS"
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
                     <span style={{ fontSize: '1.5rem' }}>Current state:</span>
                     <button
                         onClick={() => toggleChange(!isChanged)}
@@ -77,7 +84,7 @@ const App = () => {
                         onClick={() => toggleHttpsFiltering(!isHttpsFilteringEnabled)}
                         type="button"
                     >
-                        {isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP'}
+                        {isHttpsFilteringEnabled ? 'filtering HTTPS' : 'not filtering HTTPS'}
                     </button>
                     <button
                         onClick={() => toggleExpire(!isExpired)}
