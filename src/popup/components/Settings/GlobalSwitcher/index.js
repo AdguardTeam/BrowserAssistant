@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './global-switcher.pcss';
 
 const GlobalSwitcher = ({
-    text, id, isPageSecured, isDefaultText,
+    text, id, isPageSecured, isDefaultText, isDisabled,
 }) => {
     const [isFilteringEnabled, toggleFiltering] = useState(false);
     const handleFiltering = () => toggleFiltering(!isFilteringEnabled);
@@ -16,6 +16,7 @@ const GlobalSwitcher = ({
     const switcherLabelClass = classNames({
         'global-switcher__label': true,
         'global-switcher__label--secured': isPageSecured,
+        'global-switcher__label--disabled': isDisabled,
     });
 
     const renderText = () => {

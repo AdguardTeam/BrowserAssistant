@@ -9,14 +9,25 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
     const [isOpen, openModal] = useState(false);
     const [isInfoHovered, showInfo] = useState(false);
 
-    const toggleOpenModal = () => openModal(!isOpen);
     const toggleShowInfo = () => showInfo(!isInfoHovered);
+    const toggleOpenModal = () => {
+        let bodyHeight = '32rem';
+        if (isExpired && !isOpen) {
+            bodyHeight = '44rem';
+        }
+        if (isExpired && isOpen) {
+            bodyHeight = '32rem';
+        }
+        document.querySelector('body').style.height = bodyHeight;
+        return openModal(!isOpen);
+    };
+
 
     const iconClass = classNames({
         'current-site__icon': true,
         'current-site__icon--warning': isExpired,
-        'current-site__icon--lock-danger': isHttpsFilteringEnabled,
-        'current-site__icon--lock': !isHttpsFilteringEnabled,
+        'current-site__icon--lock-danger': !isHttpsFilteringEnabled,
+        'current-site__icon--lock': isHttpsFilteringEnabled,
     });
 
     const expiredClass = classNames({
@@ -32,13 +43,13 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
         'current-site__secure-status--hidden': isOpen,
-    })
+    });
 
     return (
         <div
             className="current-site__container"
         >
-            <span className={securedClass}>
+            <div className={securedClass}>
                 {!isPageSecured && (
                     <button
                         type="button"
@@ -46,7 +57,7 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
                         className={iconClass}
                     />
                 )}
-                <span className="current-site__name">fonts.google.com</span>
+                <div className="current-site__name">fonts.google.com</div>
                 <CertificateModal
                     isOpen={isOpen}
                     onRequestClose={toggleOpenModal}
@@ -64,17 +75,17 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
                     </span>
                 )}
                 <SecurePageModal
-                    isOpen={isInfoHovered && !isHttpsFilteringEnabled}
+                    isOpen={isInfoHovered && isHttpsFilteringEnabled}
                     cn="modal modal__secure-page"
                     message="Nothing to block here"
                 />
                 <SecurePageModal
-                    isOpen={isInfoHovered && isHttpsFilteringEnabled}
+                    isOpen={isInfoHovered && !isHttpsFilteringEnabled}
                     cn="modal modal__secure-page modal__secure-page--bank"
                     message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
                          You can enable the filtering yourself: tap on the yellow 'lock' on the left."
                 />
-            </span>
+            </div>
         </div>
 
     );

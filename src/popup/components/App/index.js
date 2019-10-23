@@ -18,7 +18,7 @@ let status = STATES[0];
 
 const App = () => {
     const [isPageSecured, toggleSecure] = useState(false);
-    const [isHttpsFilteringEnabled, toggleHttpsFiltering] = useState(true);
+    const [isHttpsFilteringEnabled, toggleHttpsFiltering] = useState(false);
     const [isExpired, toggleExpire] = useState(false);
     const [isDisabled, toggleDisable] = useState(false);
     const [isWorking, toggleWork] = useState(true);
@@ -34,8 +34,16 @@ const App = () => {
                         isHttpsFilteringEnabled={isHttpsFilteringEnabled}
                         isExpired={isExpired}
                     />
-                    <Settings isPageSecured={isPageSecured} />
-                    <Options isDisabled={isDisabled} isChanged={isChanged} />
+                    <Settings
+                        isPageSecured={isPageSecured}
+                        isHttpsFilteringEnabled={isHttpsFilteringEnabled}
+                        isDisabled={isDisabled}
+                    />
+                    <Options
+                        isDisabled={isDisabled}
+                        isChanged={isChanged}
+                        isPageSecured={isPageSecured}
+                    />
                 </Fragment>
             )}
             {!isWorking && (
@@ -51,7 +59,14 @@ const App = () => {
                 {`${isDevelopmentMode ? 'hide' : 'show'} development buttons`}
             </button>
             {isDevelopmentMode && (
-                <div className="TODO-DELETE-TEST-BUTTONS">
+                <div
+                    className="TODO-DELETE-TEST-BUTTONS"
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
                     <span style={{ fontSize: '1.5rem' }}>Current state:</span>
                     <button
                         onClick={() => toggleChange(!isChanged)}
@@ -69,7 +84,7 @@ const App = () => {
                         onClick={() => toggleHttpsFiltering(!isHttpsFilteringEnabled)}
                         type="button"
                     >
-                        {isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP'}
+                        {isHttpsFilteringEnabled ? 'filtering HTTPS' : 'not filtering HTTPS'}
                     </button>
                     <button
                         onClick={() => toggleExpire(!isExpired)}

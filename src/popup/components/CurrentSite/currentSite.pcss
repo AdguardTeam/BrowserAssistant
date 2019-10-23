@@ -3,24 +3,28 @@
         display: flex;
         justify-content: space-around;
         z-index: var(--higher);
+        padding-right: 7.6rem;
+        padding-left: 7.6rem;
     }
 
     &__name {
-        font-weight: 400;
+        text-align: center;
+        font-weight: bold;
         cursor: default;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__title {
+        max-width: 16.8rem;
         font-size: 1.6rem;
         padding: 0 0.8rem;
-        max-width: 26rem;
         text-align: center;
-        margin: 5.3rem 8.6rem 0 10.8rem;
-        text-overflow: ellipsis;
+        margin: 5rem 0 0 0;
         white-space: nowrap;
         color: var(--gray-base);
         position: relative;
-        border-left: 1px solid var(--gray88);
+        border-left: 1px solid var(--grayd8);
 
         &--secured {
             border-left: 1px solid transparent;
@@ -50,7 +54,7 @@
             width: 2rem;
             height: 2rem;
             bottom: initial;
-            left: -2.7rem;
+            left: -2.5rem;
             background: url('../../../assets/images/icon-warning.svg') no-repeat;
         }
     }
@@ -63,7 +67,7 @@
         top: 2rem;
         color: var(--green-base);
         font-size: 1.2rem;
-        font-weight: 100;
+        font-weight: bold;
 
         &:hover {
             cursor: default;

@@ -15,8 +15,12 @@
         width: 4.8rem;
         height: 2.8rem;
         border-radius: 1.6rem;
-        background-color: var(--grayd8);
+        background-color: var(--gray88);
         transition: var(--t3) background-color;
+
+        &--disabled {
+            background-color: var(--grayd8);
+        }
     }
 
     &__label:after {
@@ -28,13 +32,13 @@
         top: 0.1rem;
         width: 2.6rem;
         height: 2.6rem;
-        background-color: #fff;
+        background-color: var(--white);
         transition: var(--t3) transform;
     }
 
     &__text {
         color: var(--gray-base);
-        font-size: 1.7rem;
+        font-size: 1.6rem;
         font-family: var(--font-primary);
         text-align: center;
 
@@ -54,4 +58,5 @@
             transform: translateX(2.0rem);
         }
     }
+
 }
