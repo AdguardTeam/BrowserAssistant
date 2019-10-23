@@ -6,13 +6,7 @@ port.onMessage.addListener(({
     console.log(`ResponseId = ${id} - Received: id = ${requestId}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}, data = ${data || 'no additional data received'}`);
 });
 
-// chrome.browserAction.onClicked.addListener(() => {
-function log({ id, type }) {
-    console.log(`Sending:  id = ${id}, type= ${type}`);
-}
-
-// const id = Math.floor(Math.random() * 1000);
-const requestMessage = {
+const req0 = {
     id: 0,
     type: 'init',
     parameters: {
@@ -22,8 +16,7 @@ const requestMessage = {
         type: 'nativeAssistant',
     },
 };
-port.postMessage(requestMessage);
-// });
+port.postMessage(req0);
 
 const req1 = {
     type: 'getCurrentAppState',
@@ -52,17 +45,17 @@ const req3 = {
 
 port.postMessage(req3);
 
-// const req4 = {
-//     type: 'setHttpsFilteringStatus',
-//     id: 4,
-//     parameters: {
-//         isEnabled: true,
-//         isHttpsEnabled: true,
-//         url: 'https://yandex.ru',
-//     },
-// };
-//
-// port.postMessage(req4);
+const req4 = {
+    type: 'setFilteringStatus',
+    id: 4,
+    parameters: {
+        isEnabled: true,
+        isHttpsEnabled: true,
+        url: 'https://yandex.ru',
+    },
+};
+
+port.postMessage(req4);
 
 const req5 = {
     type: 'addRule',
@@ -124,6 +117,8 @@ const req10 = {
 
 port.postMessage(req10);
 
-const map = {};
-[requestMessage, req1, req2, req3, req5, req6, req7, req8, req9].forEach(({ id, type }) => { map[id] = type; });
-console.log(map);
+const mapIdToType = {};
+[req0, req1, req2, req3, req4, req5, req6, req7, req8, req9].forEach(({ id, type }) => {
+    mapIdToType[id] = type;
+});
+console.log(mapIdToType);
