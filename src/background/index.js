@@ -1,124 +1,185 @@
-const port = chrome.runtime.connectNative('native_browser_assistant');
+import browser from 'webextension-polyfill';
 
-port.onMessage.addListener(({
-    id, data, parameters, appState, result, requestId,
-}) => {
+const port = browser.runtime.connectNative('native_browser_assistant');
+
+port.onMessage.addListener((response) => {
+    const {
+        id, data, parameters, appState, result, requestId,
+    } = response;
     console.log(`ResponseId = ${id} - Received: id = ${requestId}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}, data = ${data || 'no additional data received'}`);
+    browser.runtime.sendMessage(response);
 });
 
-const req0 = {
-    id: 0,
-    type: 'init',
+const RequestTypes = {
+    init: 'init',
+    getCurrentAppState: 'getCurrentAppState',
+    getCurrentFilteringState: 'getCurrentFilteringState',
+    setProtectionStatus: 'setProtectionStatus',
+    setFilteringStatus: 'setFilteringStatus',
+    addRule: 'addRule',
+    removeRule: 'removeRule',
+    removeCustomRules: 'removeCustomRules',
+    openOriginCert: 'openOriginCert',
+    reportSite: 'reportSite',
+    openFilteringLog: 'openFilteringLog',
+    openSettings: 'openSettings',
+};
+
+const AssistantTypes = {
+    nativeAssistant: 'nativeAssistant',
+    assistant: 'assistant',
+};
+
+const init = ({ version, apiVersion, userAgent },
+    assistantType = AssistantTypes.nativeAssistant) => ({
+    type: RequestTypes.init,
     parameters: {
+        version,
+        apiVersion,
+        userAgent,
+        type: assistantType,
+    },
+});
+
+const getCurrentAppState = () => ({
+    type: RequestTypes.getCurrentAppState,
+});
+
+const getCurrentFilteringState = url => ({
+    type: RequestTypes.getCurrentFilteringState,
+    parameters: {
+        url,
+    },
+});
+
+const setProtectionStatus = isEnabled => ({
+    type: RequestTypes.setProtectionStatus,
+    parameters: {
+        isEnabled,
+    },
+});
+
+const setFilteringStatus = ({ isEnabled, isHttpsEnabled, url }) => ({
+    type: RequestTypes.setFilteringStatus,
+    parameters: { isEnabled, isHttpsEnabled, url },
+});
+
+const addRule = ruleText => ({
+    type: RequestTypes.addRule,
+    parameters: { ruleText },
+});
+
+const removeRule = ruleText => ({
+    type: RequestTypes.removeRule,
+    parameters: { ruleText },
+});
+
+const removeCustomRules = url => ({
+    type: RequestTypes.removeCustomRules,
+    parameters: { url },
+});
+
+const openOriginCert = domain => ({
+    type: RequestTypes.openOriginCert,
+    parameters: { domain },
+});
+
+
+const reportSite = ({ url, referrer, userAgent }) => ({
+    type: RequestTypes.reportSite,
+    parameters: { url, referrer, userAgent },
+});
+
+const openFilteringLog = () => ({
+    type: RequestTypes.openFilteringLog,
+});
+
+const openSettings = () => ({
+    type: RequestTypes.openSettings,
+});
+
+const requestsMap = {
+    init,
+    getCurrentAppState,
+    getCurrentFilteringState,
+    setProtectionStatus,
+    setFilteringStatus,
+    addRule,
+    removeRule,
+    removeCustomRules,
+    openOriginCert,
+    reportSite,
+    openFilteringLog,
+    openSettings,
+};
+
+const testReqParams = {
+    init: {
         version: '1.2.3.5',
         apiVersion: '3',
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
         type: 'nativeAssistant',
     },
-};
-port.postMessage(req0);
-
-const req1 = {
-    type: 'getCurrentAppState',
-    id: 1,
-};
-
-port.postMessage(req1);
-
-const req2 = {
-    type: 'getCurrentFilteringState',
-    id: 2,
-    parameters: {
-        url: 'https://yandex.ru',
-    },
-};
-
-port.postMessage(req2);
-
-const req3 = {
-    type: 'setProtectionStatus',
-    id: 3,
-    parameters: {
-        isEnabled: true,
-    },
-};
-
-port.postMessage(req3);
-
-const req4 = {
-    type: 'setFilteringStatus',
-    id: 4,
-    parameters: {
+    getCurrentAppState: null,
+    getCurrentFilteringState: 'https://yandex.ru',
+    setProtectionStatus: true,
+    setFilteringStatus: {
         isEnabled: true,
         isHttpsEnabled: true,
         url: 'https://yandex.ru',
     },
-};
-
-port.postMessage(req4);
-
-const req5 = {
-    type: 'addRule',
-    id: 5,
-    parameters: {
-        ruleText: '||yandex.ru^',
-    },
-};
-
-port.postMessage(req5);
-
-const req6 = {
-    type: 'removeRule',
-    id: 6,
-    parameters: {
-        ruleText: '||yandex.ru^',
-    },
-};
-
-port.postMessage(req6);
-
-const req7 = {
-    type: 'removeCustomRules',
-    id: 7,
-    parameters: {
-        url: 'https://yandex.ru',
-    },
-};
-
-port.postMessage(req7);
-
-const req8 = {
-    type: 'openOriginCert',
-    id: 8,
-    parameters: {
-        domain: 'yandex.ru',
-    },
-};
-
-port.postMessage(req8);
-
-
-const req9 = {
-    type: 'removeCustomRules',
-    id: 9,
-    parameters: {
+    addRule: '||yandex.ru^',
+    removeRule: '||yandex.ru^',
+    removeCustomRules: 'https://yandex.ru',
+    openOriginCert: 'yandex.ru',
+    reportSite: {
         url: 'https://habr.com',
         referrer: 'https://yandex.ru',
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
     },
+    openFilteringLog: null,
+    openSettings: null,
 };
 
-port.postMessage(req9);
+const generateRandomId = () => Math.floor(Math.random() * 1000);
 
-const req10 = {
-    type: 'openFilteringLog',
-    id: 10,
+const wrapper = (requestName) => {
+    const requestFunction = requestsMap[requestName];
+    const requestParams = testReqParams[requestName];
+    const request = requestFunction(requestParams);
+    request.id = generateRandomId();
+    console.log('request ', request);
+    return port.postMessage(request);
 };
 
-port.postMessage(req10);
+class Request {
+    init() { wrapper('init'); }
 
-const mapIdToType = {};
-[req0, req1, req2, req3, req4, req5, req6, req7, req8, req9].forEach(({ id, type }) => {
-    mapIdToType[id] = type;
-});
-console.log(mapIdToType);
+    getCurrentAppState() { wrapper('getCurrentAppState'); }
+
+    getCurrentFilteringState() { wrapper('getCurrentFilteringState'); }
+
+    setProtectionStatus() { wrapper('setProtectionStatus'); }
+
+    setFilteringStatus() { wrapper('setFilteringStatus'); }
+
+    addRule() { wrapper('addRule'); }
+
+    removeRule() { wrapper('removeRule'); }
+
+    removeCustomRules() { wrapper('removeCustomRules'); }
+
+    openOriginCert() { wrapper('openOriginCert'); }
+
+    reportSite() { wrapper('reportSite'); }
+
+    openFilteringLog() { wrapper('openFilteringLog'); }
+
+    openSettings() { wrapper('openSettings'); }
+}
+
+const request = new Request();
+
+global.adguard = {
+    request,
+};
