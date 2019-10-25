@@ -62,6 +62,7 @@
         "classnames": "^2.2.6",
         "mobx": "^5.14.2",
         "mobx-react": "^6.1.4",
+        "nanoid": "^2.1.6",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-modal": "^3.10.1",

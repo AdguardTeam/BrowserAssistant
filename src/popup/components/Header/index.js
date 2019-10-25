@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import './header.pcss';
 
-const Header = () => {
+const Header = ({ appState, changeAppState }) => {
     const [isPaused, pause] = useState(true);
-    const toggleIcon = () => pause(!isPaused);
+    const toggleIcon = () => {
+        changeAppState({ ...appState, isProtectionEnabled: !appState.isProtectionEnabled });
+        console.log('appState in Header', appState);
+        console.log('setProtectionStatus');
+        adguard.requests.setProtectionStatus();
+        pause(!isPaused);
+    };
+    const openSetting = () => {
+        console.log('openSettings');
+        adguard.requests.openSettings();
+    };
 
     const iconClass = classNames({
         'widget-popup__buttons': true,
@@ -19,7 +29,7 @@ const Header = () => {
                 <span className="widget-popup__header-title">Assistant</span>
                 <button
                     className={iconClass}
-                    title="AdGuard protection"
+                    title="AdGuard Protection"
                     type="button"
                     onClick={toggleIcon}
                 />
@@ -27,6 +37,7 @@ const Header = () => {
                     className="widget-popup__buttons widget-popup__buttons--settings"
                     title="AdGuard Settings"
                     type="button"
+                    onClick={openSetting}
                 />
             </div>
         </div>

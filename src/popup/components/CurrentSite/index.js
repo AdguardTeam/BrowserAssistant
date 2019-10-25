@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
 import SecurePageModal from './SecurePageModal';
 import './currentSite.pcss';
 
 
-const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
+const CurrentSite = ({
+    isPageSecured, isHttpsFilteringEnabled, toggleHttpsFiltering, isExpired,
+}) => {
     const [isOpen, openModal] = useState(false);
     const [isInfoHovered, showInfo] = useState(false);
+    const [currentSite, updateCurrentSite] = useState('pending');
+
+    useEffect(() => {
+        (async () => {
+            let currentSite = (await adguard.getCurrent()).url;
+            currentSite = currentSite.replace(/^(http(s)?:\/\/www\.)/, '');
+            updateCurrentSite(currentSite);
+        })();
+    });
 
     const toggleShowInfo = () => showInfo(!isInfoHovered);
     const toggleOpenModal = () => {
@@ -57,11 +68,13 @@ const CurrentSite = ({ isPageSecured, isHttpsFilteringEnabled, isExpired }) => {
                         className={iconClass}
                     />
                 )}
-                <div className="current-site__name">fonts.google.com</div>
+                <div className="current-site__name">{currentSite}</div>
                 <CertificateModal
                     isOpen={isOpen}
                     onRequestClose={toggleOpenModal}
                     isExpired={isExpired}
+                    isHttpsFilteringEnabled={isHttpsFilteringEnabled}
+                    toggleHttpsFiltering={toggleHttpsFiltering}
                     cn={expiredClass}
                 />
                 {(isPageSecured || (!isExpired && isHttpsFilteringEnabled)) && (

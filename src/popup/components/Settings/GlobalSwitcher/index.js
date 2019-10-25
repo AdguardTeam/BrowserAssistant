@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import './global-switcher.pcss';
 
 const GlobalSwitcher = ({
-    text, id, isPageSecured, isDefaultText, isDisabled,
+    text, id, isPageSecured, isDefaultText,
+    isFilteringEnabled,
+    toggleFiltering, isHttpsFilteringEnabled, toggleHttpsFiltering,
 }) => {
-    const [isFilteringEnabled, toggleFiltering] = useState(false);
-    const handleFiltering = () => toggleFiltering(!isFilteringEnabled);
+    const handleFiltering = () => {
+        console.log('setFilteringStatus');
+        adguard.requests.setFilteringStatus();
+        return !isPageSecured ? toggleFiltering(!isFilteringEnabled) : null;
+    };
+    const handleHttpsFiltering = () => {
+        console.log('setFilteringStatus');
+        adguard.requests.setFilteringStatus();
+        toggleHttpsFiltering(!isHttpsFilteringEnabled);
+    };
 
     const switcherTextClass = classNames({
         'global-switcher__text': true,
@@ -16,11 +26,11 @@ const GlobalSwitcher = ({
     const switcherLabelClass = classNames({
         'global-switcher__label': true,
         'global-switcher__label--secured': isPageSecured,
-        'global-switcher__label--disabled': isDisabled,
+        'global-switcher__label--disabled': !isFilteringEnabled,
     });
 
     const renderText = () => {
-        const defaultText = `${isFilteringEnabled ? 'Enabled' : 'Disabled'} on this website`;
+        const defaultText = `${isFilteringEnabled || isPageSecured ? 'Enabled' : 'Disabled'} on this website`;
         return isDefaultText ? defaultText : text;
     };
 
@@ -30,6 +40,8 @@ const GlobalSwitcher = ({
                 className="global-switcher__checkbox"
                 type="checkbox"
                 id={id}
+                readOnly
+                checked={id === 'global-switcher' ? isFilteringEnabled : isHttpsFilteringEnabled}
             />
             <div className={switcherTextClass}>
                 {renderText()}
@@ -37,7 +49,7 @@ const GlobalSwitcher = ({
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
-                onClick={handleFiltering}
+                onClick={id === 'global-switcher' ? handleFiltering : handleHttpsFiltering}
             />
         </div>
     );

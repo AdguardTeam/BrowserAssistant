@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import Settings from '../Settings';
 import Header from '../Header';
@@ -6,30 +7,59 @@ import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 
+Modal.setAppElement('#root');
+
 const App = () => {
     const [isWorking, toggleWork] = useState(true);
-    const [appState, changeAppWorkingState] = useState({
+    const [appState, changeAppState] = useState({
         isInstalled: true,
         isRunning: true,
         isProtectionEnabled: true,
     });
-    const [isPending, togglePending] = useState(true);
-    useEffect(() => {
-        adguard.request.init();
-        adguard.request.getCurrentAppState();
-        adguard.request.getCurrentFilteringState();
+    const [isPageSecured, toggleSecure] = useState(false);
+    const [isHttpsFilteringEnabled, toggleHttpsFiltering] = useState(false);
+    const [isExpired, toggleExpire] = useState(false);
+    const [isFilteringEnabled, toggleFiltering] = useState(true);
+    const [isChanged, toggleChange] = useState(false);
+    const [isDevelopmentMode, toggleMode] = useState(true);
+    const [isPending, makePending] = useState(true);
 
+    useEffect(() => {
+        adguard.requests.init();
+        adguard.requests.getCurrentAppState();
+        adguard.requests.getCurrentFilteringState();
         browser.runtime.onMessage.addListener(
             ({
                 id, data, parameters, appState, result, requestId,
             }) => {
                 console.log(`ResponseId = ${id} - Received: id = ${requestId}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}, data = ${data || 'no additional data received'}`);
 
+                makePending(false);
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
                 const workingState = [isInstalled, isRunning, isProtectionEnabled];
 
-                togglePending(false);
-                changeAppWorkingState(appState);
+                if (parameters.originCertStatus) {
+                    const {
+                        isFilteringEnabled,
+                        isHttpsFilteringEnabled,
+                        isPageSecured,
+                        blockedAdsCount,
+                        totalBlockedCount,
+                        originCertStatus,
+                    } = parameters;
+                    toggleSecure(isPageSecured);
+                    toggleHttpsFiltering(isHttpsFilteringEnabled);
+                    toggleFiltering(isFilteringEnabled);
+
+                    console.log(isFilteringEnabled,
+                        isHttpsFilteringEnabled,
+                        isPageSecured,
+                        blockedAdsCount,
+                        totalBlockedCount,
+                        originCertStatus);
+                }
+                changeAppState(appState);
+                console.log('workingState', workingState)
                 toggleWork(workingState.every(state => state === true));
             }
         );
@@ -38,32 +68,31 @@ const App = () => {
             browser.runtime.onMessage.removeListener(msg => console.log('remove runtime.onMessage listener in popup', msg));
         };
     }, [appState.isInstalled, appState.isRunning, appState.isProtectionEnabled]);
-
-    const [isPageSecured, toggleSecure] = useState(false);
-    const [isHttpsFilteringEnabled, toggleHttpsFiltering] = useState(false);
-    const [isExpired, toggleExpire] = useState(false);
-    const [isDisabled, toggleDisable] = useState(false);
-    const [isChanged, toggleChange] = useState(false);
-    const [isDevelopmentMode, toggleMode] = useState(true);
     return (
         <Fragment>
             {!isPending && (
                 <Fragment>
                     {isWorking && (
                         <Fragment>
-                            <Header />
+                            <Header
+                                changeAppState={changeAppState}
+                                appState={appState}
+                            />
                             <CurrentSite
                                 isPageSecured={isPageSecured}
                                 isHttpsFilteringEnabled={isHttpsFilteringEnabled}
+                                toggleHttpsFiltering={toggleHttpsFiltering}
                                 isExpired={isExpired}
                             />
                             <Settings
                                 isPageSecured={isPageSecured}
                                 isHttpsFilteringEnabled={isHttpsFilteringEnabled}
-                                isDisabled={isDisabled}
+                                isFilteringEnabled={isFilteringEnabled}
+                                toggleFiltering={toggleFiltering}
+                                toggleHttpsFiltering={toggleHttpsFiltering}
                             />
                             <Options
-                                isDisabled={isDisabled}
+                                isFilteringEnabled={isFilteringEnabled}
                                 isChanged={isChanged}
                                 isPageSecured={isPageSecured}
                             />
@@ -72,7 +101,7 @@ const App = () => {
                     {!isWorking && (
                         <Fragment>
                             <Header />
-                            <AppClosed appState={appState} />
+                            <AppClosed appState={appState} changeAppState={changeAppState} />
                         </Fragment>
                     )}
                     <button
@@ -116,10 +145,10 @@ const App = () => {
                                 {isExpired ? 'expired' : 'valid'}
                             </button>
                             <button
-                                onClick={() => toggleDisable(!isDisabled)}
+                                onClick={() => toggleFiltering(!isFilteringEnabled)}
                                 type="button"
                             >
-                                {isDisabled ? 'disabled' : 'enabled'}
+                                {isFilteringEnabled ? 'enabled' : 'disabled'}
                             </button>
                             <br />
                             <button
