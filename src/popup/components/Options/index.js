@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react';
 import Option from './Option';
+import rootStore from '../../stores';
 import './options.pcss';
 
 const OPTIONS = [
@@ -39,20 +41,24 @@ const OPTIONS = [
     },
 ];
 
-const Options = ({ isPageSecured, isFilteringEnabled, isChanged }) => (
-    <div className="actions">
-        {OPTIONS.slice(0, isChanged ? OPTIONS.length : -1)
-            .map(({ iconName, text, handleClick }, i) => (
-                <Option
-                    key={iconName}
-                    iconName={iconName}
-                    text={text}
-                    isFilteringEnabled={(i === 0 || i === 2) && isFilteringEnabled && isPageSecured}
-                    handleClick={handleClick}
-                />
-            ))}
-    </div>
-);
+const Options = observer(() => {
+    const { settingsStore, uiStore } = useContext(rootStore);
+    return (
+        <div className="actions">
+            {OPTIONS.slice(0, uiStore.isPageChanged ? OPTIONS.length : -1)
+                .map(({ iconName, text, handleClick }, i) => (
+                    <Option
+                        key={iconName}
+                        iconName={iconName}
+                        text={text}
+                        isFilteringEnabled={(i === 0 || i === 2)
+                        && settingsStore.isFilteringEnabled && settingsStore.isPageSecured}
+                        handleClick={handleClick}
+                    />
+                ))}
+        </div>
+    );
+});
 
 
 export default Options;

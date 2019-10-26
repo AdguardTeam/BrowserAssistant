@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
+import rootStore from '../../stores';
 import './header.pcss';
 
-const Header = ({ appState, changeAppState }) => {
-    const [isPaused, pause] = useState(true);
-    const toggleIcon = () => {
-        changeAppState({ ...appState, isProtectionEnabled: !appState.isProtectionEnabled });
-        console.log('appState in Header', appState);
+const Header = observer(() => {
+    const { settingsStore } = useContext(rootStore);
+    const toggleProtection = () => {
         console.log('setProtectionStatus');
         adguard.requests.setProtectionStatus();
-        pause(!isPaused);
+        return settingsStore.toggleProtection();
     };
     const openSetting = () => {
         console.log('openSettings');
@@ -18,8 +18,8 @@ const Header = ({ appState, changeAppState }) => {
 
     const iconClass = classNames({
         'widget-popup__buttons': true,
-        'widget-popup__buttons--pause': isPaused,
-        'widget-popup__buttons--start': !isPaused,
+        'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
+        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled,
     });
 
     return (
@@ -31,7 +31,7 @@ const Header = ({ appState, changeAppState }) => {
                     className={iconClass}
                     title="AdGuard Protection"
                     type="button"
-                    onClick={toggleIcon}
+                    onClick={toggleProtection}
                 />
                 <button
                     className="widget-popup__buttons widget-popup__buttons--settings"
@@ -42,6 +42,6 @@ const Header = ({ appState, changeAppState }) => {
             </div>
         </div>
     );
-};
+});
 
 export default Header;

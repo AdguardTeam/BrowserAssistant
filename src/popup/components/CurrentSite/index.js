@@ -1,59 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
 import SecurePageModal from './SecurePageModal';
+import rootStore from '../../stores';
 import './currentSite.pcss';
 
-
-const CurrentSite = ({
-    isPageSecured, isHttpsFilteringEnabled, toggleHttpsFiltering, isExpired,
-}) => {
-    const [isOpen, openModal] = useState(false);
-    const [isInfoHovered, showInfo] = useState(false);
-    const [currentSite, updateCurrentSite] = useState('pending');
+const CurrentSite = observer(() => {
+    const { settingsStore, uiStore } = useContext(rootStore);
 
     useEffect(() => {
         (async () => {
-            let currentSite = (await adguard.getCurrent()).url;
-            currentSite = currentSite.replace(/^(http(s)?:\/\/www\.)/, '');
-            updateCurrentSite(currentSite);
+            await settingsStore.getCurrentTabHostname();
         })();
     });
 
-    const toggleShowInfo = () => showInfo(!isInfoHovered);
-    const toggleOpenModal = () => {
+    const toggleShowInfo = () => uiStore.toggleShowInfo();
+    const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
-        if (isExpired && !isOpen) {
+        if (settingsStore.isExpired && !uiStore.isOpenCertificateModal) {
             bodyHeight = '44rem';
         }
-        if (isExpired && isOpen) {
+        if (settingsStore.isExpired && uiStore.isOpenCertificateModal) {
             bodyHeight = '32rem';
         }
         document.querySelector('body').style.height = bodyHeight;
-        return openModal(!isOpen);
+        return uiStore.toggleOpenCertificateModal();
     };
 
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--warning': isExpired,
-        'current-site__icon--lock-danger': !isHttpsFilteringEnabled,
-        'current-site__icon--lock': isHttpsFilteringEnabled,
+        'current-site__icon--warning': settingsStore.isExpired,
+        'current-site__icon--lock-danger': !settingsStore.isHttpsFilteringEnabled,
+        'current-site__icon--lock': settingsStore.isHttpsFilteringEnabled,
     });
 
     const expiredClass = classNames({
         'modal modal__certificate': true,
-        'modal__certificate--expired': isExpired,
+        'modal__certificate--expired': settingsStore.isExpired,
     });
 
     const securedClass = classNames({
         'current-site__title': true,
-        'current-site__title--secured': isPageSecured,
+        'current-site__title--secured': settingsStore.isPageSecured,
     });
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': isOpen,
+        'current-site__secure-status--hidden': uiStore.isOpenCertificateModal,
     });
 
     return (
@@ -61,47 +56,46 @@ const CurrentSite = ({
             className="current-site__container"
         >
             <div className={securedClass}>
-                {!isPageSecured && (
+                {!settingsStore.isPageSecured && (
                     <button
                         type="button"
-                        onClick={toggleOpenModal}
+                        onClick={toggleOpenAndResizeCertificateModal}
                         className={iconClass}
                     />
                 )}
-                <div className="current-site__name">{currentSite}</div>
+                <div className="current-site__name">{settingsStore.currentTabHostname}</div>
                 <CertificateModal
-                    isOpen={isOpen}
-                    onRequestClose={toggleOpenModal}
-                    isExpired={isExpired}
-                    isHttpsFilteringEnabled={isHttpsFilteringEnabled}
-                    toggleHttpsFiltering={toggleHttpsFiltering}
                     cn={expiredClass}
+                    onRequestClose={toggleOpenAndResizeCertificateModal}
                 />
-                {(isPageSecured || (!isExpired && isHttpsFilteringEnabled)) && (
+                {(settingsStore.isPageSecured
+                    || (!settingsStore.isExpired && settingsStore.isHttpsFilteringEnabled)) && (
                     // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
-                    <span
+                    <div
                         onMouseOver={toggleShowInfo}
                         onMouseLeave={toggleShowInfo}
+                        role="button"
+                        tabIndex="0"
                         className={secureStatusClass}
                     >
                         secure page
-                    </span>
+                    </div>
                 )}
+                {/* TODO: unite in one modal */}
                 <SecurePageModal
-                    isOpen={isInfoHovered && isHttpsFilteringEnabled}
+                    isOpen={uiStore.isInfoHovered && settingsStore.isHttpsFilteringEnabled}
                     cn="modal modal__secure-page"
                     message="Nothing to block here"
                 />
                 <SecurePageModal
-                    isOpen={isInfoHovered && !isHttpsFilteringEnabled}
+                    isOpen={uiStore.isInfoHovered && !settingsStore.isHttpsFilteringEnabled}
                     cn="modal modal__secure-page modal__secure-page--bank"
                     message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
                          You can enable the filtering yourself: tap on the yellow 'lock' on the left."
                 />
             </div>
         </div>
-
     );
-};
+});
 
 export default CurrentSite;

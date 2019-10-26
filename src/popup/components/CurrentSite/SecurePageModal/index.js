@@ -1,20 +1,19 @@
 import React, { Fragment } from 'react';
-import ReactModal from 'react-modal';
+import Modal from 'react-modal';
 
 const SecurePageModal = ({
-    isOpen, onRequestClose, message, cn,
+    isOpen, message, cn,
 }) => (
     <Fragment>
-        <ReactModal
+        <Modal
             isOpen={isOpen}
             className={cn}
             style={{ overlay: { backgroundColor: 'transparent' } }}
             contentLabel="Secure Page Modal"
-            onRequestClose={onRequestClose}
         >
             <header className="modal__header">Secure Page</header>
             <p className="modal__text">{message}</p>
-        </ReactModal>
+        </Modal>
     </Fragment>
 );
 

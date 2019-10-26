@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import './global-switcher.pcss';
+import rootStore from '../../../stores';
 
-const GlobalSwitcher = ({
-    text, id, isPageSecured, isDefaultText,
-    isFilteringEnabled,
-    toggleFiltering, isHttpsFilteringEnabled, toggleHttpsFiltering,
+const GlobalSwitcher = observer(({
+    text, id, isDefaultText,
 }) => {
+    const { settingsStore } = useContext(rootStore);
     const handleFiltering = () => {
         console.log('setFilteringStatus');
         adguard.requests.setFilteringStatus();
-        return !isPageSecured ? toggleFiltering(!isFilteringEnabled) : null;
+        return !settingsStore.isPageSecured ? settingsStore
+            .setFiltering(!settingsStore.isFilteringEnabled) : null;
     };
     const handleHttpsFiltering = () => {
         console.log('setFilteringStatus');
         adguard.requests.setFilteringStatus();
-        toggleHttpsFiltering(!isHttpsFilteringEnabled);
+        return settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
     };
 
     const switcherTextClass = classNames({
         'global-switcher__text': true,
-        'global-switcher__text--secured': isPageSecured,
+        'global-switcher__text--secured': settingsStore.isPageSecured,
     });
 
     const switcherLabelClass = classNames({
         'global-switcher__label': true,
-        'global-switcher__label--secured': isPageSecured,
-        'global-switcher__label--disabled': !isFilteringEnabled,
+        'global-switcher__label--secured': settingsStore.isPageSecured,
+        'global-switcher__label--disabled': !settingsStore.isFilteringEnabled,
     });
 
     const renderText = () => {
-        const defaultText = `${isFilteringEnabled || isPageSecured ? 'Enabled' : 'Disabled'} on this website`;
+        const defaultText = `${settingsStore.isFilteringEnabled || settingsStore.isPageSecured ? 'Enabled' : 'Disabled'} on this website`;
         return isDefaultText ? defaultText : text;
     };
 
@@ -41,7 +43,7 @@ const GlobalSwitcher = ({
                 type="checkbox"
                 id={id}
                 readOnly
-                checked={id === 'global-switcher' ? isFilteringEnabled : isHttpsFilteringEnabled}
+                checked={id === 'global-switcher' ? settingsStore.isFilteringEnabled : settingsStore.isHttpsFilteringEnabled}
             />
             <div className={switcherTextClass}>
                 {renderText()}
@@ -53,6 +55,6 @@ const GlobalSwitcher = ({
             />
         </div>
     );
-};
+});
 
 export default GlobalSwitcher;
