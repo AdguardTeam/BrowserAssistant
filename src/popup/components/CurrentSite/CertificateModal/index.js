@@ -10,7 +10,7 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
 
     const showCertificate = () => {
         console.log('showCertificate');
-        return adguard.requests.openOriginCert();
+        return adguard.requests.openOriginCert(settingsStore.currentTabHostname);
     };
 
     return (

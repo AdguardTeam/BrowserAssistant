@@ -1,6 +1,7 @@
 import {
     action,
     observable,
+    computed,
     runInAction,
 } from 'mobx';
 
@@ -9,6 +10,8 @@ import { getHostname } from '../../../lib/helpers';
 
 class SettingsStore {
     @observable currentTabHostname;
+
+    @observable currentURL;
 
     @observable isPageSecured = false;
 
@@ -24,11 +27,14 @@ class SettingsStore {
 
     @observable isProtectionEnabled = true;
 
+    @computed get filteringStatus() { return this.isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP'; }
+
     @action
     getCurrentTabHostname = async () => {
         try {
             const result = await tabs.getCurrent();
             runInAction(() => {
+                this.currentURL = result;
                 this.currentTabHostname = getHostname(result.url);
             });
         } catch (e) {

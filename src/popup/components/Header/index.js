@@ -8,7 +8,7 @@ const Header = observer(() => {
     const { settingsStore } = useContext(rootStore);
     const toggleProtection = () => {
         console.log('setProtectionStatus');
-        adguard.requests.setProtectionStatus();
+        adguard.requests.setProtectionStatus(settingsStore.isProtectionEnabled);
         return settingsStore.toggleProtection();
     };
     const openSetting = () => {

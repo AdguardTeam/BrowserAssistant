@@ -1,6 +1,6 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
-import { requestsMap, testReqParams } from './messaging';
+import { requestsMap } from './messaging';
 
 const port = browser.runtime.connectNative('native_browser_assistant');
 
@@ -12,38 +12,20 @@ port.onMessage.addListener((response) => {
     browser.runtime.sendMessage(response);
 });
 
-
-const wrap = (requestName) => {
-    const requestFunction = requestsMap[requestName];
-    const requestParams = testReqParams[requestName];
-    const request = requestFunction(requestParams);
-    request.id = nanoid();
-    console.log('request ', request);
-    return () => port.postMessage(request);
+const wrapRequest = (requestName) => {
+    return (params) => {
+        const requestFunction = requestsMap[requestName];
+        const request = requestFunction(params);
+        request.id = nanoid();
+        console.log('request ', request);
+        port.postMessage(request);
+    };
 };
 
-export default {
-    init: wrap('init'),
+const wrappedRequests = {};
+Object.keys(requestsMap).forEach((type) => {
+    wrappedRequests[type] = wrapRequest(type);
+})
+console.log(wrappedRequests);
 
-    getCurrentAppState: wrap('getCurrentAppState'),
-
-    getCurrentFilteringState: wrap('getCurrentFilteringState'),
-
-    setProtectionStatus: wrap('setProtectionStatus'),
-
-    setFilteringStatus: wrap('setFilteringStatus'),
-
-    addRule: wrap('addRule'),
-
-    removeRule: wrap('removeRule'),
-
-    removeCustomRules: wrap('removeCustomRules'),
-
-    openOriginCert: wrap('openOriginCert'),
-
-    reportSite: wrap('reportSite'),
-
-    openFilteringLog: wrap('openFilteringLog'),
-
-    openSettings: wrap('openSettings'),
-};
+export default wrappedRequests;

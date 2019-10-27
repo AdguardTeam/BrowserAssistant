@@ -10,14 +10,24 @@ const GlobalSwitcher = observer(({
     const { settingsStore } = useContext(rootStore);
     const handleFiltering = () => {
         console.log('setFilteringStatus');
-        adguard.requests.setFilteringStatus();
-        return !settingsStore.isPageSecured ? settingsStore
-            .setFiltering(!settingsStore.isFilteringEnabled) : null;
+        if (!settingsStore.isPageSecured) {
+            settingsStore
+                .setFiltering(!settingsStore.isFilteringEnabled);
+        }
+        return adguard.requests.setFilteringStatus({
+            url: settingsStore.currentURL,
+            isEnabled: settingsStore.isFilteringEnabled,
+            isHttpsEnabled: settingsStore.isHttpsFilteringEnabled,
+        });
     };
     const handleHttpsFiltering = () => {
         console.log('setFilteringStatus');
-        adguard.requests.setFilteringStatus();
-        return settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
+        settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
+        return adguard.requests.setFilteringStatus({
+            url: settingsStore.currentURL,
+            isEnabled: settingsStore.isFilteringEnabled,
+            isHttpsEnabled: settingsStore.isHttpsFilteringEnabled,
+        });
     };
 
     const switcherTextClass = classNames({

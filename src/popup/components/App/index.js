@@ -19,16 +19,14 @@ const App = () => {
     const [isDevelopmentMode, toggleMode] = useState(true);
 
     useEffect(() => {
-        adguard.requests.init();
         adguard.requests.getCurrentAppState();
-        adguard.requests.getCurrentFilteringState();
+        adguard.requests.getCurrentFilteringState(settingsStore.currentURL);
         browser.runtime.onMessage.addListener(
             ({
                 id, data, parameters, appState, result, requestId,
             }) => {
                 console.log(`ResponseId = ${id} - Received: id = ${requestId}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}, data = ${data || 'no additional data received'}`);
 
-                // makePending(false);
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
                 const workingState = [isInstalled, isRunning, isProtectionEnabled];
 

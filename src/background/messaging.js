@@ -1,26 +1,10 @@
+import { RequestTypes, AssistantTypes } from './types';
 
-const RequestTypes = {
-    init: 'init',
-    getCurrentAppState: 'getCurrentAppState',
-    getCurrentFilteringState: 'getCurrentFilteringState',
-    setProtectionStatus: 'setProtectionStatus',
-    setFilteringStatus: 'setFilteringStatus',
-    addRule: 'addRule',
-    removeRule: 'removeRule',
-    removeCustomRules: 'removeCustomRules',
-    openOriginCert: 'openOriginCert',
-    reportSite: 'reportSite',
-    openFilteringLog: 'openFilteringLog',
-    openSettings: 'openSettings',
-};
+const version = '1.2.3.5';
+const apiVersion = '3';
+const { userAgent } = window.navigator;
 
-const AssistantTypes = {
-    nativeAssistant: 'nativeAssistant',
-    assistant: 'assistant',
-};
-
-const init = ({ version, apiVersion, userAgent },
-    assistantType = AssistantTypes.nativeAssistant) => ({
+const init = (assistantType = AssistantTypes.nativeAssistant) => ({
     type: RequestTypes.init,
     parameters: {
         version,
@@ -53,14 +37,14 @@ const setFilteringStatus = ({ isEnabled, isHttpsEnabled, url }) => ({
     parameters: { isEnabled, isHttpsEnabled, url },
 });
 
-const addRule = ruleText => ({
+const addRule = hostname => ({
     type: RequestTypes.addRule,
-    parameters: { ruleText },
+    parameters: { ruleText: `||${hostname}^` },
 });
 
-const removeRule = ruleText => ({
+const removeRule = hostname => ({
     type: RequestTypes.removeRule,
-    parameters: { ruleText },
+    parameters: { ruleText: `||${hostname}^` },
 });
 
 const removeCustomRules = url => ({
@@ -68,13 +52,13 @@ const removeCustomRules = url => ({
     parameters: { url },
 });
 
+
 const openOriginCert = domain => ({
     type: RequestTypes.openOriginCert,
     parameters: { domain },
 });
 
-
-const reportSite = ({ url, referrer, userAgent }) => ({
+const reportSite = ({ url, referrer }) => ({
     type: RequestTypes.reportSite,
     parameters: { url, referrer, userAgent },
 });
@@ -100,32 +84,4 @@ export const requestsMap = {
     reportSite,
     openFilteringLog,
     openSettings,
-};
-
-export const testReqParams = {
-    init: {
-        version: '1.2.3.5',
-        apiVersion: '3',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-        type: 'nativeAssistant',
-    },
-    getCurrentAppState: null,
-    getCurrentFilteringState: 'https://yandex.ru',
-    setProtectionStatus: true,
-    setFilteringStatus: {
-        isEnabled: true,
-        isHttpsEnabled: true,
-        url: 'https://yandex.ru',
-    },
-    addRule: '||yandex.ru^',
-    removeRule: '||yandex.ru^',
-    removeCustomRules: 'https://yandex.ru',
-    openOriginCert: 'yandex.ru',
-    reportSite: {
-        url: 'https://habr.com',
-        referrer: 'https://yandex.ru',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-    },
-    openFilteringLog: null,
-    openSettings: null,
 };

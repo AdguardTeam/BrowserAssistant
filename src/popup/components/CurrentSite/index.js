@@ -8,6 +8,7 @@ import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
+    console.log('STAT', settingsStore.filteringStatus);
 
     useEffect(() => {
         (async () => {
@@ -18,6 +19,7 @@ const CurrentSite = observer(() => {
     const toggleShowInfo = () => uiStore.toggleShowInfo();
     const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
+
         if (settingsStore.isExpired && !uiStore.isOpenCertificateModal) {
             bodyHeight = '44rem';
         }
@@ -26,6 +28,18 @@ const CurrentSite = observer(() => {
         }
         document.querySelector('body').style.height = bodyHeight;
         return uiStore.toggleOpenCertificateModal();
+    };
+
+    const securityModalState = {
+        HTTP: {
+            cn: 'modal modal__secure-page',
+            message: 'Nothing to block here',
+        },
+        HTTPS: {
+            cn: 'modal modal__secure-page modal__secure-page--bank',
+            message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
+            You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
+        },
     };
 
 
@@ -81,21 +95,15 @@ const CurrentSite = observer(() => {
                         secure page
                     </div>
                 )}
-                {/* TODO: unite in one modal */}
+                {uiStore.isInfoHovered && (
                 <SecurePageModal
-                    isOpen={uiStore.isInfoHovered && settingsStore.isHttpsFilteringEnabled}
-                    cn="modal modal__secure-page"
-                    message="Nothing to block here"
+                    isOpen
+                    cn={securityModalState[settingsStore.filteringStatus].cn}
+                    message={securityModalState[settingsStore.filteringStatus].message}
                 />
-                <SecurePageModal
-                    isOpen={uiStore.isInfoHovered && !settingsStore.isHttpsFilteringEnabled}
-                    cn="modal modal__secure-page modal__secure-page--bank"
-                    message="By default, we don't filter HTTPS traffic for the payment system and bank websites.
-                         You can enable the filtering yourself: tap on the yellow 'lock' on the left."
-                />
+                )}
             </div>
         </div>
     );
 });
-
 export default CurrentSite;
