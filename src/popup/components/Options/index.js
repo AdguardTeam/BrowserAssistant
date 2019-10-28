@@ -5,7 +5,7 @@ import rootStore from '../../stores';
 import './options.pcss';
 
 const Options = observer(() => {
-    const { settingsStore, uiStore } = useContext(rootStore);
+    const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
     const OPTIONS = [
         {
             iconName: 'block-ad',
@@ -14,8 +14,8 @@ const Options = observer(() => {
                 console.log('addRule');
                 console.log('removeRule');
                 // TODO: implement rule management logic
-                adguard.requests.addRule(settingsStore.currentTabHostname);
-                adguard.requests.removeRule(settingsStore.currentTabHostname);
+                requestsStore.addRule();
+                requestsStore.removeRule();
             },
         },
         {
@@ -23,7 +23,7 @@ const Options = observer(() => {
             text: 'Open the filtering log',
             handleClick: () => {
                 console.log('openFilteringLog');
-                adguard.requests.openFilteringLog();
+                requestsStore.openFilteringLog();
             },
         },
         {
@@ -31,8 +31,7 @@ const Options = observer(() => {
             text: 'Report\u00A0this website',
             handleClick: () => {
                 console.log('reportSite');
-                // TODO: find out how to define referrer
-                adguard.requests.reportSite({ url: settingsStore.currentURL, referrer: 'https://yandex.ru' });
+                requestsStore.reportSite();
             },
         },
         {
@@ -40,7 +39,7 @@ const Options = observer(() => {
             text: 'Reset all custom rules for this page',
             handleClick: () => {
                 console.log('removeCustomRules');
-                adguard.requests.removeCustomRules(settingsStore.currentURL);
+                requestsStore.removeCustomRules();
             },
         },
     ];

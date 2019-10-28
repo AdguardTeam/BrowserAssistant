@@ -14,13 +14,13 @@ import { REQUEST_STATUSES } from '../../stores/consts';
 Modal.setAppElement('#root');
 
 const App = () => {
-    const { settingsStore, uiStore } = useContext(rootStore);
+    const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
     const [status, setRequestStatus] = useState(REQUEST_STATUSES.PENDING);
     const [isDevelopmentMode, toggleMode] = useState(true);
 
     useEffect(() => {
-        adguard.requests.getCurrentAppState();
-        adguard.requests.getCurrentFilteringState(settingsStore.currentURL);
+        requestsStore.getCurrentAppState();
+        requestsStore.getCurrentFilteringState();
         browser.runtime.onMessage.addListener(
             ({
                 id, data, parameters, appState, result, requestId,
@@ -129,6 +129,6 @@ const App = () => {
             )}
         </Fragment>
     );
-}
+};
 
 export default App;

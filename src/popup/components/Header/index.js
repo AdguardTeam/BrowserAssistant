@@ -5,15 +5,15 @@ import rootStore from '../../stores';
 import './header.pcss';
 
 const Header = observer(() => {
-    const { settingsStore } = useContext(rootStore);
+    const { settingsStore, requestsStore } = useContext(rootStore);
     const toggleProtection = () => {
         console.log('setProtectionStatus');
-        adguard.requests.setProtectionStatus(settingsStore.isProtectionEnabled);
+        requestsStore.setProtectionStatus();
         return settingsStore.toggleProtection();
     };
     const openSetting = () => {
         console.log('openSettings');
-        adguard.requests.openSettings();
+        requestsStore.openSettings();
     };
 
     const iconClass = classNames({

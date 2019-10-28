@@ -9,21 +9,21 @@ function defineWarning(settingsStore) {
         return {
             title: 'AdGuard is not installed',
             buttonText: 'download',
-            handleClick: () => settingsStore.setInstalled(),
+            handleClick: () => settingsStore.setInstalled(true),
         };
     }
     if (!isRunning) {
         return {
             title: 'AdGuard is not running',
             buttonText: 'run adguard',
-            handleClick: () => settingsStore.setRunning(),
+            handleClick: () => settingsStore.setRunning(true),
         };
     }
     if (!isProtectionEnabled) {
         return {
             title: 'AdGuard protection is paused',
             buttonText: 'enable',
-            handleClick: () => settingsStore.enableProtection(),
+            handleClick: () => settingsStore.setProtection(true),
         };
     }
     return {

@@ -7,27 +7,19 @@ import rootStore from '../../../stores';
 const GlobalSwitcher = observer(({
     text, id, isDefaultText,
 }) => {
-    const { settingsStore } = useContext(rootStore);
+    const { settingsStore, requestsStore } = useContext(rootStore);
     const handleFiltering = () => {
         console.log('setFilteringStatus');
         if (!settingsStore.isPageSecured) {
             settingsStore
                 .setFiltering(!settingsStore.isFilteringEnabled);
         }
-        return adguard.requests.setFilteringStatus({
-            url: settingsStore.currentURL,
-            isEnabled: settingsStore.isFilteringEnabled,
-            isHttpsEnabled: settingsStore.isHttpsFilteringEnabled,
-        });
+        return requestsStore.setFilteringStatus();
     };
     const handleHttpsFiltering = () => {
         console.log('setFilteringStatus');
         settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
-        return adguard.requests.setFilteringStatus({
-            url: settingsStore.currentURL,
-            isEnabled: settingsStore.isFilteringEnabled,
-            isHttpsEnabled: settingsStore.isHttpsFilteringEnabled,
-        });
+        return requestsStore.setFilteringStatus();
     };
 
     const switcherTextClass = classNames({

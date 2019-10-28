@@ -20,12 +20,15 @@ const CurrentSite = observer(() => {
     const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
 
-        if (settingsStore.isExpired && !uiStore.isOpenCertificateModal) {
-            bodyHeight = '44rem';
+        if (settingsStore.isExpired) {
+            if (!uiStore.isOpenCertificateModal) {
+                bodyHeight = '44rem';
+            }
+            if (uiStore.isOpenCertificateModal) {
+                bodyHeight = '32rem';
+            }
         }
-        if (settingsStore.isExpired && uiStore.isOpenCertificateModal) {
-            bodyHeight = '32rem';
-        }
+
         document.querySelector('body').style.height = bodyHeight;
         return uiStore.toggleOpenCertificateModal();
     };

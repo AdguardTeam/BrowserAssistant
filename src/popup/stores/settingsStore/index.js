@@ -9,6 +9,10 @@ import tabs from '../../../background/tabs';
 import { getHostname } from '../../../lib/helpers';
 
 class SettingsStore {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+    }
+
     @observable currentTabHostname;
 
     @observable currentURL;

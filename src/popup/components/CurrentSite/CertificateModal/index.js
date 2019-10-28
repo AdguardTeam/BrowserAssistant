@@ -6,11 +6,11 @@ import rootStore from '../../../stores';
 import './modal.pcss';
 
 const CertificateModal = observer(({ cn, onRequestClose }) => {
-    const { uiStore, settingsStore } = useContext(rootStore);
+    const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
 
     const showCertificate = () => {
         console.log('showCertificate');
-        return adguard.requests.openOriginCert(settingsStore.currentTabHostname);
+        return requestsStore.openOriginCert();
     };
 
     return (
