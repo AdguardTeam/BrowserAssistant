@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import './global-switcher.pcss';
+import './switcher.pcss';
 import rootStore from '../../../stores';
 
-const GlobalSwitcher = observer(({
-    text, id, isDefaultText,
+
+const Switcher = observer(({
+    text, id,
 }) => {
     const { settingsStore, requestsStore } = useContext(rootStore);
     const handleFiltering = () => {
@@ -23,40 +24,35 @@ const GlobalSwitcher = observer(({
     };
 
     const switcherTextClass = classNames({
-        'global-switcher__text': true,
-        'global-switcher__text--secured': settingsStore.isPageSecured,
+        switcher__text: true,
+        'switcher__text--secured': settingsStore.isPageSecured,
     });
 
     const switcherLabelClass = classNames({
-        'global-switcher__label': true,
-        'global-switcher__label--secured': settingsStore.isPageSecured,
-        'global-switcher__label--disabled': !settingsStore.isFilteringEnabled,
+        switcher__label: true,
+        'switcher__label--secured': settingsStore.isPageSecured,
+        'switcher__label--disabled': !settingsStore.isFilteringEnabled,
     });
 
-    const renderText = () => {
-        const defaultText = `${settingsStore.isFilteringEnabled || settingsStore.isPageSecured ? 'Enabled' : 'Disabled'} on this website`;
-        return isDefaultText ? defaultText : text;
-    };
-
     return (
-        <div className="global-switcher">
+        <div className="switcher">
             <input
-                className="global-switcher__checkbox"
+                className="switcher__checkbox"
                 type="checkbox"
                 id={id}
                 readOnly
-                checked={id === 'global-switcher' ? settingsStore.isFilteringEnabled : settingsStore.isHttpsFilteringEnabled}
+                checked={id === 'switcher' ? settingsStore.isFilteringEnabled : settingsStore.isHttpsFilteringEnabled}
             />
             <div className={switcherTextClass}>
-                {renderText()}
+                {text}
             </div>
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
-                onClick={id === 'global-switcher' ? handleFiltering : handleHttpsFiltering}
+                onClick={id === 'switcher' ? handleFiltering : handleHttpsFiltering}
             />
         </div>
     );
 });
 
-export default GlobalSwitcher;
+export default Switcher;

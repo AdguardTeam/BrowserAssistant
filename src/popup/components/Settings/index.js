@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import './settings.pcss';
-import GlobalSwitcher from './GlobalSwitcher';
+import Switcher from './Switcher';
+import rootStore from '../../stores';
 
-const Settings = observer(() => (
-    <div className="settings">
-        <div className="settings__main">
-            <GlobalSwitcher
-                id="global-switcher"
-                isDefaultText
-            />
+
+const Settings = observer(() => {
+    const { uiStore } = useContext(rootStore);
+    return (
+        <div className="settings">
+            <div className="settings__main">
+                <Switcher
+                    id="global-switcher"
+                    text={uiStore.switcherText}
+                />
+            </div>
         </div>
-    </div>
-))
+    );
+});
 
 export default Settings;

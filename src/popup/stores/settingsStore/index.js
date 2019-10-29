@@ -6,6 +6,7 @@ import {
 } from 'mobx';
 
 import tabs from '../../../background/tabs';
+import { ORIGIN_CERT_STATUS } from '../consts';
 import { getHostname } from '../../../lib/helpers';
 
 class SettingsStore {
@@ -16,6 +17,10 @@ class SettingsStore {
     @observable currentTabHostname;
 
     @observable currentURL;
+
+    @observable referrer;
+
+    @observable originCertStatus = ORIGIN_CERT_STATUS.invalid;
 
     @observable isPageSecured = false;
 
@@ -31,7 +36,20 @@ class SettingsStore {
 
     @observable isProtectionEnabled = true;
 
-    @computed get filteringStatus() { return this.isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP'; }
+    @computed get filteringStatus() {
+        return this.isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP';
+    }
+
+
+    @action
+    getReferrer = () => {
+        tabs.getReferrer();
+    }
+
+    @action
+    setReferrer = (referrer) => {
+        this.referrer = referrer;
+    }
 
     @action
     getCurrentTabHostname = async () => {
@@ -47,6 +65,11 @@ class SettingsStore {
     };
 
     @action
+    setOriginCertStatus = (status) => {
+        this.originCertStatus = ORIGIN_CERT_STATUS[status];
+    }
+
+    @action
     setSecure = (isPageSecured) => {
         this.isPageSecured = isPageSecured;
     };
@@ -57,13 +80,13 @@ class SettingsStore {
     };
 
     @action
-    setExpire = (isExpired) => {
-        this.isExpired = isExpired;
+    setFiltering = (isFilteringEnabled) => {
+        this.isFilteringEnabled = isFilteringEnabled;
     };
 
     @action
-    setFiltering = (isFilteringEnabled) => {
-        this.isFilteringEnabled = isFilteringEnabled;
+    setExpire = (isExpired) => {
+        this.isExpired = isExpired;
     };
 
     @action

@@ -18,10 +18,9 @@ const Option = ({
             role="menuitem"
             tabIndex="0"
         >
-            <div className={`action__icon action__icon--${iconName}`} role="img" />
+            <div className={`action__icon action__icon--${iconName}`} />
             <div
                 className="action__name"
-                role="button"
             >
                 {text}
             </div>

@@ -1,6 +1,10 @@
-import { action, observable } from 'mobx';
+import { action, observable, computed } from 'mobx';
 
 class UiStore {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+    }
+
     @observable isOpenCertificateModal = false;
 
     @observable isInfoHovered = false;
@@ -10,6 +14,10 @@ class UiStore {
     @observable isWorking = true;
 
     @observable isPending = true;
+
+    @computed get switcherText() {
+        return `${(this.rootStore.settingsStore.isFilteringEnabled || this.rootStore.settingsStore.isPageSecured) ? 'Enabled' : 'Disabled'} on this website`;
+    }
 
     @action
     toggleOpenCertificateModal = () => {

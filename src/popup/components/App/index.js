@@ -22,30 +22,35 @@ const App = () => {
         requestsStore.getCurrentAppState();
         requestsStore.getCurrentFilteringState();
         browser.runtime.onMessage.addListener(
-            ({
-                id, data, parameters, appState, result, requestId,
-            }) => {
+            (response) => {
+                const {
+                    id, data, parameters, appState, result, requestId,
+                } = response;
                 console.log(`ResponseId = ${id} - Received: id = ${requestId}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}, data = ${data || 'no additional data received'}`);
-
+                settingsStore.getReferrer();
+                if (!id) { return settingsStore.setReferrer(response.data.referrer); }
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
                 const workingState = [isInstalled, isRunning, isProtectionEnabled];
 
                 if (parameters && parameters.originCertStatus) {
+                    console.log('PARAMS=', parameters);
                     const {
                         isFilteringEnabled,
                         isHttpsFilteringEnabled,
                         isPageSecured,
+                        originCertStatus,
                     } = parameters;
                     settingsStore.setSecure(isPageSecured);
                     settingsStore.setHttpsFiltering(isHttpsFilteringEnabled);
                     settingsStore.setFiltering(isFilteringEnabled);
+                    settingsStore.setOriginCertStatus(originCertStatus);
                 }
                 settingsStore.setInstalled(isInstalled);
                 settingsStore.setRunning(isRunning);
                 settingsStore.setProtection(isProtectionEnabled);
                 console.log('workingState', workingState);
 
-                setRequestStatus(workingState.every(state => state === true)
+                return setRequestStatus(workingState.every(state => state === true)
                     ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR);
             }
         );
@@ -57,18 +62,18 @@ const App = () => {
     return (
         <Fragment>
             {status === 'success' && (
-            <Fragment>
-                <Header />
-                <CurrentSite />
-                <Settings />
-                <Options />
-            </Fragment>
+                <Fragment>
+                    <Header />
+                    <CurrentSite />
+                    <Settings />
+                    <Options />
+                </Fragment>
             )}
             {status === 'error' && (
-            <Fragment>
-                <Header />
-                <AppClosed />
-            </Fragment>
+                <Fragment>
+                    <Header />
+                    <AppClosed />
+                </Fragment>
             )}
             {status === 'pending' && (
                 <Fragment>
@@ -82,50 +87,51 @@ const App = () => {
                 {`${isDevelopmentMode ? 'hide' : 'show'} development buttons`}
             </button>
             {isDevelopmentMode && (
-            <div
-                className="TODO-DELETE-TEST-BUTTONS"
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <span style={{ fontSize: '1.5rem' }}>Current state:</span>
-                <button
-                    onClick={() => uiStore.toggleChange(!uiStore.isPageChanged)}
-                    type="button"
+                <div
+                    className="TODO-DELETE-TEST-BUTTONS"
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
                 >
-                    {uiStore.isPageChanged ? 'changed' : 'default'}
-                </button>
-                <button
-                    onClick={() => settingsStore
-                        .setSecure(!settingsStore.isPageSecured)}
-                    type="button"
-                >
-                    {settingsStore.isPageSecured ? 'secured' : 'usual'}
-                </button>
-                <button
-                    onClick={() => settingsStore
-                        .setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled)}
-                    type="button"
-                >
-                    {settingsStore.isHttpsFilteringEnabled ? 'filtering HTTPS' : 'not filtering HTTPS'}
-                </button>
-                <button
-                    onClick={() => settingsStore.setExpire(!settingsStore.isExpired)}
-                    type="button"
-                >
-                    {settingsStore.isExpired ? 'expired' : 'valid'}
-                </button>
-                <button
-                    onClick={() => settingsStore
-                        .setFiltering(!settingsStore.isFilteringEnabled)}
-                    type="button"
-                >
-                    {settingsStore.isFilteringEnabled ? 'enabled' : 'disabled'}
-                </button>
-                <br />
-            </div>
+                    <span style={{ fontSize: '1.5rem' }}>Current state:</span>
+                    <button
+                        onClick={() => uiStore.toggleChange(!uiStore.isPageChanged)}
+                        type="button"
+                    >
+                        {uiStore.isPageChanged ? 'changed' : 'default'}
+                    </button>
+                    <button
+                        onClick={() => settingsStore
+                            .setSecure(!settingsStore.isPageSecured)}
+                        type="button"
+                    >
+                        {settingsStore.isPageSecured ? 'secured' : 'usual'}
+                    </button>
+                    <button
+                        onClick={() => settingsStore
+                            .setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled)}
+                        type="button"
+                    >
+                        {settingsStore.isHttpsFilteringEnabled ? 'filtering HTTPS' : 'not filtering HTTPS'}
+                    </button>
+                    <button
+                        onClick={() => settingsStore.setExpire(!settingsStore.isExpired)}
+                        type="button"
+                    >
+                        {settingsStore.isExpired ? 'expired' : 'valid'}
+                    </button>
+                    <button
+                        onClick={() => settingsStore.setFiltering(
+                            !settingsStore.isFilteringEnabled
+                        )}
+                        type="button"
+                    >
+                        {settingsStore.isFilteringEnabled ? 'enabled' : 'disabled'}
+                    </button>
+                    <br />
+                </div>
             )}
         </Fragment>
     );

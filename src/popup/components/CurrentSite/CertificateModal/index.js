@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react';
 import Modal from 'react-modal';
-import Switcher from '../../Settings/GlobalSwitcher';
+import Switcher from '../../Settings/Switcher';
 import rootStore from '../../../stores';
 import './modal.pcss';
 
@@ -23,7 +23,6 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
                 onRequestClose={onRequestClose}
             >
                 <div className="modal__info--upper">
-                    <div className="arrow-up" />
                     <span>
                         <span className="modal__header">AdGuard HTTPS</span>
                         <p className="modal__text modal__text--additional">Increases the quality of ad blocking</p>

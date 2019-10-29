@@ -8,7 +8,7 @@ import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
-    console.log('STAT', settingsStore.filteringStatus);
+    console.log('filteringStatus', settingsStore.filteringStatus);
 
     useEffect(() => {
         (async () => {
@@ -65,7 +65,7 @@ const CurrentSite = observer(() => {
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': uiStore.isOpenCertificateModal,
+        'current-site__secure-status--hidden': uiStore.isOpenCertificateModal || (!settingsStore.isPageSecured && !(!settingsStore.isExpired && settingsStore.isHttpsFilteringEnabled)),
     });
 
     return (
@@ -74,33 +74,33 @@ const CurrentSite = observer(() => {
         >
             <div className={securedClass}>
                 {!settingsStore.isPageSecured && (
-                    <button
-                        type="button"
-                        onClick={toggleOpenAndResizeCertificateModal}
-                        className={iconClass}
-                    />
+                <button
+                    type="button"
+                    onClick={toggleOpenAndResizeCertificateModal}
+                    className={iconClass}
+                >
+                    {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
+                </button>
                 )}
                 <div className="current-site__name">{settingsStore.currentTabHostname}</div>
+                <div className="current-site__name">{settingsStore.referrer}</div>
+
                 <CertificateModal
                     cn={expiredClass}
                     onRequestClose={toggleOpenAndResizeCertificateModal}
                 />
-                {(settingsStore.isPageSecured
-                    || (!settingsStore.isExpired && settingsStore.isHttpsFilteringEnabled)) && (
-                    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
-                    <div
-                        onMouseOver={toggleShowInfo}
-                        onMouseLeave={toggleShowInfo}
-                        role="button"
-                        tabIndex="0"
-                        className={secureStatusClass}
-                    >
+                {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
+                <div
+                    onMouseOver={toggleShowInfo}
+                    onMouseLeave={toggleShowInfo}
+                    role="button"
+                    tabIndex="0"
+                    className={secureStatusClass}
+                >
                         secure page
-                    </div>
-                )}
+                </div>
                 {uiStore.isInfoHovered && (
                 <SecurePageModal
-                    isOpen
                     cn={securityModalState[settingsStore.filteringStatus].cn}
                     message={securityModalState[settingsStore.filteringStatus].message}
                 />

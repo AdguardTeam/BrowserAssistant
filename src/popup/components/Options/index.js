@@ -14,8 +14,9 @@ const Options = observer(() => {
                 console.log('addRule');
                 console.log('removeRule');
                 // TODO: implement rule management logic
-                requestsStore.addRule();
-                requestsStore.removeRule();
+                requestsStore.enableBlockingMode();
+                // requestsStore.addRule();
+                // requestsStore.removeRule();
             },
         },
         {
@@ -46,12 +47,12 @@ const Options = observer(() => {
     return (
         <div className="actions">
             {OPTIONS.slice(0, uiStore.isPageChanged ? OPTIONS.length : -1)
-                .map(({ iconName, text, handleClick }, i) => (
+                .map(({ iconName, text, handleClick }) => (
                     <Option
                         key={iconName}
                         iconName={iconName}
                         text={text}
-                        isFilteringEnabled={(i === 0 || i === 2)
+                        isFilteringEnabled={(iconName === 'block-ad' || iconName === 'thumb-down')
                         && settingsStore.isFilteringEnabled && settingsStore.isPageSecured}
                         handleClick={handleClick}
                     />

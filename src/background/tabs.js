@@ -6,6 +6,12 @@ class Tabs {
         const tabs = await browser.tabs.query({ active: true, windowId });
         return tabs[0];
     }
+
+
+    // TODO: refactor like in referrer
+    async getReferrer() {
+        browser.runtime.sendMessage({ type: 'getReferrer' });
+    }
 }
 
 const tabs = new Tabs();

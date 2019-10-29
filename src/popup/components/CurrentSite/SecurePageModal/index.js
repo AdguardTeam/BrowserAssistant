@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import Modal from 'react-modal';
 
 const SecurePageModal = ({
-    isOpen, message, cn,
+    message, cn,
 }) => (
     <Fragment>
         <Modal
-            isOpen={isOpen}
+            isOpen
             className={cn}
             style={{ overlay: { backgroundColor: 'transparent' } }}
             contentLabel="Secure Page Modal"

@@ -1,4 +1,6 @@
 import { action } from 'mobx';
+import browser from 'webextension-polyfill';
+import tabs from '../../../background/tabs';
 
 class RequestsStore {
     constructor(rootStore) {
@@ -6,9 +8,8 @@ class RequestsStore {
     }
 
     @action
-    getCurrentFilteringState = () => adguard.requests.getCurrentFilteringState(
-        this.rootStore.settingsStore.currentURL
-    );
+    getCurrentFilteringState = () => adguard.requests
+        .getCurrentFilteringState(this.rootStore.settingsStore.isFilteringEnabled);
 
     @action
     getCurrentAppState = () => adguard.requests.getCurrentAppState();
@@ -18,14 +19,12 @@ class RequestsStore {
         url: this.rootStore.settingsStore.currentURL,
         isEnabled: this.rootStore.settingsStore.isFilteringEnabled,
         isHttpsEnabled: this.rootStore.settingsStore.isHttpsFilteringEnabled,
-    })
+    });
 
     @action
     openOriginCert = () => adguard.requests.openOriginCert(
         this.rootStore.settingsStore.currentTabHostname
     );
-
-    // TODO: how to define referrer?
 
     @action
     removeCustomRules = () => adguard.requests
@@ -34,7 +33,7 @@ class RequestsStore {
     @action
     reportSite = () => adguard.requests.reportSite({
         url: this.rootStore.settingsStore.currentURL,
-        referrer: 'https://yandex.ru',
+        referrer: this.rootStore.settingsStore.referrer,
     });
 
     @action
@@ -53,6 +52,17 @@ class RequestsStore {
 
     @action
     openSettings = () => adguard.requests.openSettings();
+
+    @action
+    enableBlockingMode = async () => {
+        const currentTab = await tabs.getCurrent();
+        const { url, id } = currentTab;
+        console.log(`Opening Assistant UI for tab id=${id} url=${url}`);
+        const backgroundPage = browser.extension.getBackgroundPage();
+        const { adguardApi } = backgroundPage;
+        adguardApi.openAssistant(id);
+        window.close();
+    }
 }
 
 export default RequestsStore;

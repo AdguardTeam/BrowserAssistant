@@ -9,6 +9,7 @@
 
     &__name {
         text-align: center;
+        padding-left: 0.5rem;
         font-weight: bold;
         cursor: default;
         overflow: hidden;
@@ -24,7 +25,6 @@
         white-space: nowrap;
         color: var(--gray-base);
         position: relative;
-        border-left: 1px solid var(--grayd8);
 
         &--secured {
             border-left: 1px solid transparent;
@@ -36,11 +36,21 @@
         height: 1.5rem;
         outline: none;
         position: absolute;
-        bottom: 0;
-        left: -2.2rem;
+        top: 0.5rem;
+        left: -1.2rem;
         cursor: pointer;
-        padding: 0;
         border: 0;
+        padding-right: 1.8rem;
+        border-right: 1px solid var(--grayd8);
+
+        & ~ .current-site__name {
+            padding-left: 0.6rem;
+        }
+
+        & ~ .current-site__secure-status {
+            padding-left: 0.1rem;
+        }
+
 
         &--lock {
             background: url('../../../assets/images/icon-lock.svg') no-repeat;
@@ -51,20 +61,22 @@
         }
 
         &--warning {
+            padding-right: 2.2rem;
             width: 2rem;
             height: 2rem;
-            bottom: initial;
-            left: -2.5rem;
+            bottom: -0.4rem;
+            left: -1.2rem;
             background: url('../../../assets/images/icon-warning.svg') no-repeat;
+
+            & .arrow-up {
+                left: -0.1rem;
+            }
         }
     }
 
 
     &__secure-status {
         cursor: default;
-        position: absolute;
-        left: 3rem;
-        top: 2rem;
         color: var(--green-base);
         font-size: 1.2rem;
         font-weight: bold;
@@ -75,7 +87,30 @@
         }
 
         &--hidden {
-            display: none;
+            visibility: hidden;
         }
+    }
+}
+
+
+.arrow-up {
+    z-index: var(--higher);
+    width: 0;
+    height: 0;
+    border-left: var(--trinagle-border-side);
+    border-right: var(--trinagle-border-side);
+    border-bottom: 1rem solid var(--greyf3);
+    position: absolute;
+    top: 1.7rem;
+    left: -0.4rem;
+
+    &:after {
+        content: '';
+        border-left: var(--trinagle-border-side);
+        border-right: var(--trinagle-border-side);
+        border-bottom: 1rem solid var(--white);
+        position: absolute;
+        top: 0.15rem;
+        left: -1rem;
     }
 }

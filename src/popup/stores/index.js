@@ -10,7 +10,7 @@ configure({ enforceActions: 'observed' });
 
 class RootStore {
     constructor() {
-        this.uiStore = new UiStore();
+        this.uiStore = new UiStore(this);
         this.settingsStore = new SettingsStore(this);
         this.requestsStore = new RequestsStore(this);
     }
