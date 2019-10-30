@@ -1,14 +1,22 @@
 import browser from 'webextension-polyfill';
 import requests from './requestsApi';
+import { Api } from './Api';
 import tabs from './tabs';
 
-// TODO: make webpack load adguard api
-// TODO: content script should load document.referrer
+Api.init();
 requests.init();
-browser.runtime.onMessage.addListener((sender, data) => {
-    console.log('onMessage', sender, data);
-    if (sender.type === 'referrer') {
-        browser.runtime.sendMessage(data);
+
+browser.runtime.onMessage.addListener(async (sender, data, sendResponse) => {
+    if (sender.type === 'getReferrer') {
+        const tabs = await browser.tabs.query({});
+        for (let i = 0; i < tabs.length; i += 1) {
+            const tab = tabs[i];
+            // eslint-disable-next-line no-await-in-loop
+            const response = await browser.tabs.sendMessage(tab.id, { type: 'getReferrer' });
+            if (response) {
+                sendResponse(response);
+            }
+        }
     }
 });
 

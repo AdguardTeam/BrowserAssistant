@@ -11,19 +11,13 @@ const Options = observer(() => {
             iconName: 'block-ad',
             text: 'Block ads\u00A0on\u00A0this website',
             handleClick: () => {
-                console.log('addRule');
-                console.log('removeRule');
-                // TODO: implement rule management logic
                 requestsStore.enableBlockingMode();
-                // requestsStore.addRule();
-                // requestsStore.removeRule();
             },
         },
         {
             iconName: 'sandwich',
             text: 'Open the filtering log',
             handleClick: () => {
-                console.log('openFilteringLog');
                 requestsStore.openFilteringLog();
             },
         },
@@ -31,7 +25,6 @@ const Options = observer(() => {
             iconName: 'thumb-down',
             text: 'Report\u00A0this website',
             handleClick: () => {
-                console.log('reportSite');
                 requestsStore.reportSite();
             },
         },
@@ -39,7 +32,6 @@ const Options = observer(() => {
             iconName: 'icon-cross',
             text: 'Reset all custom rules for this page',
             handleClick: () => {
-                console.log('removeCustomRules');
                 requestsStore.removeCustomRules();
             },
         },

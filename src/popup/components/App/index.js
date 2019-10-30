@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
+import classNames from 'classnames';
 import Settings from '../Settings';
 import Header from '../Header';
 import Options from '../Options';
@@ -16,24 +17,27 @@ Modal.setAppElement('#root');
 const App = () => {
     const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
     const [status, setRequestStatus] = useState(REQUEST_STATUSES.PENDING);
-    const [isDevelopmentMode, toggleMode] = useState(true);
+    const [isDevelopmentMode, toggleMode] = useState(false);
+
+    const appClass = classNames({
+        'loading--pending': status === 'pending',
+        'loading--success': status === 'success',
+    });
 
     useEffect(() => {
         requestsStore.getCurrentAppState();
         requestsStore.getCurrentFilteringState();
+        settingsStore.getReferrer();
         browser.runtime.onMessage.addListener(
             (response) => {
-                const {
-                    id, data, parameters, appState, result, requestId,
-                } = response;
-                console.log(`ResponseId = ${id} - Received: id = ${requestId}, parameters = ${JSON.stringify(parameters)}, appState = ${JSON.stringify(appState)}, result = ${result}, data = ${data || 'no additional data received'}`);
-                settingsStore.getReferrer();
-                if (!id) { return settingsStore.setReferrer(response.data.referrer); }
+                const { parameters, appState, requestId } = response;
+                if (!requestId) {
+                    return null;
+                }
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
                 const workingState = [isInstalled, isRunning, isProtectionEnabled];
 
                 if (parameters && parameters.originCertStatus) {
-                    console.log('PARAMS=', parameters);
                     const {
                         isFilteringEnabled,
                         isHttpsFilteringEnabled,
@@ -48,7 +52,6 @@ const App = () => {
                 settingsStore.setInstalled(isInstalled);
                 settingsStore.setRunning(isRunning);
                 settingsStore.setProtection(isProtectionEnabled);
-                console.log('workingState', workingState);
 
                 return setRequestStatus(workingState.every(state => state === true)
                     ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR);
@@ -61,23 +64,19 @@ const App = () => {
     }, [settingsStore.isInstalled, settingsStore.isRunning, settingsStore.isProtectionEnabled]);
     return (
         <Fragment>
-            {status === 'success' && (
-                <Fragment>
-                    <Header />
-                    <CurrentSite />
-                    <Settings />
-                    <Options />
-                </Fragment>
+            {status !== 'error'
+            && (
+            <div className={appClass}>
+                <Header />
+                <CurrentSite />
+                <Settings />
+                <Options />
+            </div>
             )}
             {status === 'error' && (
                 <Fragment>
                     <Header />
                     <AppClosed />
-                </Fragment>
-            )}
-            {status === 'pending' && (
-                <Fragment>
-                    <div>pending</div>
                 </Fragment>
             )}
             <button

@@ -8,7 +8,6 @@ import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
-    console.log('filteringStatus', settingsStore.filteringStatus);
 
     useEffect(() => {
         (async () => {
@@ -17,6 +16,10 @@ const CurrentSite = observer(() => {
     });
 
     const toggleShowInfo = () => uiStore.toggleShowInfo();
+    const toggleShowInfoFocus = () => {
+        uiStore.toggleShowInfo();
+        setTimeout(() => uiStore.toggleShowInfo(), 5000);
+    };
     const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
 
@@ -65,7 +68,7 @@ const CurrentSite = observer(() => {
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': uiStore.isOpenCertificateModal || (!settingsStore.isPageSecured && !(!settingsStore.isExpired && settingsStore.isHttpsFilteringEnabled)),
+        'current-site__secure-status--hidden': uiStore.isSecureStatusHidden,
     });
 
     return (
@@ -74,36 +77,34 @@ const CurrentSite = observer(() => {
         >
             <div className={securedClass}>
                 {!settingsStore.isPageSecured && (
-                <button
-                    type="button"
-                    onClick={toggleOpenAndResizeCertificateModal}
-                    className={iconClass}
-                >
-                    {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
-                </button>
+                    <button
+                        type="button"
+                        onClick={toggleOpenAndResizeCertificateModal}
+                        className={iconClass}
+                    >
+                        {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
+                    </button>
                 )}
                 <div className="current-site__name">{settingsStore.currentTabHostname}</div>
-                <div className="current-site__name">{settingsStore.referrer}</div>
-
                 <CertificateModal
                     cn={expiredClass}
                     onRequestClose={toggleOpenAndResizeCertificateModal}
                 />
-                {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
                 <div
                     onMouseOver={toggleShowInfo}
                     onMouseLeave={toggleShowInfo}
+                    onFocus={toggleShowInfoFocus}
                     role="button"
                     tabIndex="0"
                     className={secureStatusClass}
                 >
-                        secure page
+                    secure page
                 </div>
                 {uiStore.isInfoHovered && (
-                <SecurePageModal
-                    cn={securityModalState[settingsStore.filteringStatus].cn}
-                    message={securityModalState[settingsStore.filteringStatus].message}
-                />
+                    <SecurePageModal
+                        cn={securityModalState[settingsStore.filteringStatus].cn}
+                        message={securityModalState[settingsStore.filteringStatus].message}
+                    />
                 )}
             </div>
         </div>

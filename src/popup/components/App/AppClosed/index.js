@@ -29,7 +29,7 @@ function defineWarning(settingsStore) {
     return {
         title: 'pending',
         buttonText: 'pending',
-        handleClick: () => console.log('pending clicked'),
+        handleClick: null
     };
 }
 

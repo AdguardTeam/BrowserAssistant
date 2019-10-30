@@ -5,7 +5,6 @@ import {
     runInAction,
 } from 'mobx';
 
-import tabs from '../../../background/tabs';
 import { ORIGIN_CERT_STATUS } from '../consts';
 import { getHostname } from '../../../lib/helpers';
 
@@ -14,15 +13,15 @@ class SettingsStore {
         this.rootStore = rootStore;
     }
 
-    @observable currentTabHostname;
+    @observable currentTabHostname = 'currentTabHostname';
 
-    @observable currentURL;
+    @observable currentURL = 'currentURL';
 
     @observable referrer;
 
     @observable originCertStatus = ORIGIN_CERT_STATUS.invalid;
 
-    @observable isPageSecured = false;
+    @observable isPageSecured = true;
 
     @observable isHttpsFilteringEnabled = false;
 
@@ -40,27 +39,29 @@ class SettingsStore {
         return this.isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP';
     }
 
-
     @action
-    getReferrer = () => {
-        tabs.getReferrer();
-    }
+    getReferrer = async () => {
+        const referrer = await adguard.tabs.getReferrer();
+        runInAction(() => {
+            this.referrer = referrer;
+        });
+    };
 
     @action
     setReferrer = (referrer) => {
         this.referrer = referrer;
-    }
+    };
 
     @action
     getCurrentTabHostname = async () => {
         try {
-            const result = await tabs.getCurrent();
+            const result = await adguard.tabs.getCurrent();
             runInAction(() => {
                 this.currentURL = result;
                 this.currentTabHostname = getHostname(result.url);
             });
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            console.error(error.message);
         }
     };
 

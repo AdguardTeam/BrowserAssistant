@@ -4,24 +4,13 @@ import { observer } from 'mobx-react';
 import './switcher.pcss';
 import rootStore from '../../../stores';
 
-
 const Switcher = observer(({
-    text, id,
+    id,
+    text,
+    checked,
+    onClick,
 }) => {
-    const { settingsStore, requestsStore } = useContext(rootStore);
-    const handleFiltering = () => {
-        console.log('setFilteringStatus');
-        if (!settingsStore.isPageSecured) {
-            settingsStore
-                .setFiltering(!settingsStore.isFilteringEnabled);
-        }
-        return requestsStore.setFilteringStatus();
-    };
-    const handleHttpsFiltering = () => {
-        console.log('setFilteringStatus');
-        settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
-        return requestsStore.setFilteringStatus();
-    };
+    const { settingsStore } = useContext(rootStore);
 
     const switcherTextClass = classNames({
         switcher__text: true,
@@ -41,7 +30,7 @@ const Switcher = observer(({
                 type="checkbox"
                 id={id}
                 readOnly
-                checked={id === 'switcher' ? settingsStore.isFilteringEnabled : settingsStore.isHttpsFilteringEnabled}
+                checked={checked}
             />
             <div className={switcherTextClass}>
                 {text}
@@ -49,7 +38,7 @@ const Switcher = observer(({
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
-                onClick={id === 'switcher' ? handleFiltering : handleHttpsFiltering}
+                onClick={onClick}
             />
         </div>
     );

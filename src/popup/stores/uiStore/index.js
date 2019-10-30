@@ -19,6 +19,19 @@ class UiStore {
         return `${(this.rootStore.settingsStore.isFilteringEnabled || this.rootStore.settingsStore.isPageSecured) ? 'Enabled' : 'Disabled'} on this website`;
     }
 
+    @computed get isSecureStatusHidden() {
+        if (this.rootStore.uiStore.isOpenCertificateModal) {
+            return true;
+        }
+        if (!this.rootStore.settingsStore.isPageSecured) {
+            if (this.rootStore.settingsStore.isExpired
+                || !this.rootStore.settingsStore.isHttpsFilteringEnabled) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @action
     toggleOpenCertificateModal = () => {
         this.isOpenCertificateModal = !this.isOpenCertificateModal;

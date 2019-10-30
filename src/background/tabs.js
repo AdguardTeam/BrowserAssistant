@@ -8,9 +8,18 @@ class Tabs {
     }
 
 
-    // TODO: refactor like in referrer
     async getReferrer() {
-        browser.runtime.sendMessage({ type: 'getReferrer' });
+        const tab = await this.getCurrent();
+        let response;
+        try {
+            response = await browser.tabs.sendMessage(tab.id, { type: 'getReferrer' });
+            if (response) {
+                return response;
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+        return '';
     }
 }
 

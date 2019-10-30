@@ -9,8 +9,12 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
     const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
 
     const showCertificate = () => {
-        console.log('showCertificate');
         return requestsStore.openOriginCert();
+    };
+
+    const handleHttpsFiltering = () => {
+        settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
+        return requestsStore.setFilteringStatus();
     };
 
     return (
@@ -27,7 +31,11 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
                         <span className="modal__header">AdGuard HTTPS</span>
                         <p className="modal__text modal__text--additional">Increases the quality of ad blocking</p>
                     </span>
-                    <Switcher id="https-switcher" />
+                    <Switcher
+                        id="https-switcher"
+                        checked={settingsStore.isHttpsFilteringEnabled}
+                        onClick={handleHttpsFiltering}
+                    />
                 </div>
                 {settingsStore.isExpired && (
                     <p className="modal__text modal__text--expired">

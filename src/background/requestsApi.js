@@ -1,9 +1,10 @@
 import { RequestTypes, AssistantTypes } from './types';
 import { Api } from './Api';
 
+const config = require('../../package.json');
+
 class RequestsApi extends Api {
     VERSIONS = {
-        extensionVersion: '1.2.3.5',
         apiVersion: '3',
         userAgent: window.navigator.userAgent,
     }
@@ -12,7 +13,7 @@ class RequestsApi extends Api {
         return this.makeRequest({
             type: RequestTypes.init,
             parameters: {
-                version: this.VERSIONS.extensionVersion,
+                version: config.version,
                 apiVersion: this.VERSIONS.apiVersion,
                 userAgent: this.VERSIONS.userAgent,
                 type: assistantType,
@@ -44,10 +45,17 @@ class RequestsApi extends Api {
         });
     }
 
-    setFilteringStatus({ isEnabled, isHttpsEnabled, url }) {
+    /**
+     * @param {object} parameters
+     * @param {boolean} parameters.isEnabled
+     * @param {boolean} parameters.isHttpsEnabled
+     * @param {string} parameters.url
+     * @returns {function}
+     */
+    setFilteringStatus(parameters) {
         return this.makeRequest({
             type: RequestTypes.setFilteringStatus,
-            parameters: { isEnabled, isHttpsEnabled, url },
+            parameters,
         });
     }
 
@@ -80,10 +88,16 @@ class RequestsApi extends Api {
         });
     }
 
-    reportSite({ url, referrer }) {
+    /**
+     * @param {object} params
+     * @param {string} params.url
+     * @param {string} params.referrer
+     * @returns {function}
+     */
+    reportSite(params) {
         return this.makeRequest({
             type: RequestTypes.reportSite,
-            parameters: { url, referrer, userAgent: this.VERSIONS.userAgent },
+            parameters: { ...params, userAgent: this.VERSIONS.userAgent },
         });
     }
 
