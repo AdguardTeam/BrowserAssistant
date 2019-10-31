@@ -12,7 +12,7 @@ const Settings = observer(() => {
             settingsStore
                 .setFiltering(!settingsStore.isFilteringEnabled);
         }
-        return requestsStore.setFilteringStatus();
+        requestsStore.setFilteringStatus();
     };
     return (
         <div className="settings">

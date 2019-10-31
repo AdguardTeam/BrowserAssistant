@@ -1,4 +1,4 @@
-import { RequestTypes, AssistantTypes } from './types';
+import { RequestTypes, AssistantTypes } from '../lib/types';
 import { Api } from './Api';
 
 const config = require('../../package.json');
@@ -114,4 +114,6 @@ class RequestsApi extends Api {
     }
 }
 
-export default new RequestsApi();
+const requests = new RequestsApi();
+
+export default requests;

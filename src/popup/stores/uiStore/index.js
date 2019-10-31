@@ -23,11 +23,10 @@ class UiStore {
         if (this.rootStore.uiStore.isOpenCertificateModal) {
             return true;
         }
-        if (!this.rootStore.settingsStore.isPageSecured) {
-            if (this.rootStore.settingsStore.isExpired
-                || !this.rootStore.settingsStore.isHttpsFilteringEnabled) {
-                return true;
-            }
+        if (!this.rootStore.settingsStore.isPageSecured
+            && (this.rootStore.settingsStore.isExpired
+            || !this.rootStore.settingsStore.isHttpsFilteringEnabled)) {
+            return true;
         }
         return false;
     }

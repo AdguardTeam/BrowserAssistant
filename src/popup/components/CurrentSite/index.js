@@ -85,7 +85,7 @@ const CurrentSite = observer(() => {
                         {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
                     </button>
                 )}
-                <div className="current-site__name">{settingsStore.currentTabHostname}</div>
+                <div className="current-site__name">{settingsStore.currentTabHostname || 'loading...'}</div>
                 <CertificateModal
                     cn={expiredClass}
                     onRequestClose={toggleOpenAndResizeCertificateModal}

@@ -20,8 +20,8 @@ const App = () => {
     const [isDevelopmentMode, toggleMode] = useState(false);
 
     const appClass = classNames({
-        'loading--pending': status === 'pending',
-        'loading--success': status === 'success',
+        'loading--pending': status === REQUEST_STATUSES.PENDING,
+        'loading--success': status === REQUEST_STATUSES.SUCCESS,
     });
 
     useEffect(() => {

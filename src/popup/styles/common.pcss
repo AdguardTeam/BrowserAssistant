@@ -18,10 +18,12 @@ body {
     font-weight: 400;
 }
 
-loading--success {
-    display: block;
-}
+loading {
+    &&--success {
+        display: block;
+    }
 
-loading--pending {
-    display: none;
+    &&--pending {
+        display: none;
+    }
 }

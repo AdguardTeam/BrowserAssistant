@@ -13,9 +13,9 @@ class SettingsStore {
         this.rootStore = rootStore;
     }
 
-    @observable currentTabHostname = 'currentTabHostname';
+    @observable currentTabHostname;
 
-    @observable currentURL = 'currentURL';
+    @observable currentURL;
 
     @observable referrer;
 

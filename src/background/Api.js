@@ -1,10 +1,15 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
+import { HostResponseTypes } from '../lib/types';
 
 export class Api {
-    static init() {
+    static get port() {
         const port = browser.runtime.connectNative('native_browser_assistant');
+        return port;
+    }
 
+    static init() {
+        const { port } = Api;
         port.onMessage.addListener((response) => {
             browser.runtime.sendMessage(response);
         });
@@ -13,7 +18,7 @@ export class Api {
     }
 
     async makeRequest(params) {
-        const port = Api.init();
+        const { port } = Api;
         const requestId = nanoid();
         return new Promise((resolve, reject) => {
             port.postMessage({ id: requestId, ...params });
@@ -21,10 +26,10 @@ export class Api {
             const messageHandler = ({ id, response, data }) => {
                 if (id === requestId) {
                     port.onMessage.removeListener(messageHandler);
-                    if (response === 'error') {
+                    if (response === HostResponseTypes.error) {
                         return reject(new Error('error'));
                     }
-                    if (response === 'ok') {
+                    if (response === HostResponseTypes.ok) {
                         return resolve(data);
                     }
                 }
