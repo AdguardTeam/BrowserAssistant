@@ -17,7 +17,18 @@
 
 /* global contentPage, adguardAssistant */
 
-(function () {
+import { initAssistant } from './assistant';
+
+export function startAssistant() {
+    initAssistant();
+    // const adg = document.querySelectorAll('');
+    console.dir('adg', document.getElementById('adg-accept'));
+    try {
+        console.log(global.contentPage);
+    } catch (e) {
+        console.error(e.message);
+    }
+    console.log('startAssistant');
     if (window.top !== window || !(document.documentElement instanceof HTMLElement)) {
         return;
     }
@@ -31,9 +42,9 @@
      * In the case of the FF browser, content scripts with the `document_start`
      * option won't injected into opened tabs, so we have to directly check this case.
      */
-    if (typeof contentPage === 'undefined') {
-        return;
-    }
+    // if (typeof contentPage === 'undefined') {
+    //     return;
+    // }
 
     let assistant;
 
@@ -44,8 +55,14 @@
             clickedEl = event.target;
         }
     });
+    assistant = adguardAssistant();
+    const selectedElement = null;
+    assistant.start(selectedElement, (rules) => {
+        contentPage.sendMessage({ type: 'bla', ruleText: rules });
+    });
 
     contentPage.onMessage.addListener((message) => {
+        console.log('message', message);
         switch (message.type) {
             case 'initAssistant': {
                 const { options } = message;
@@ -70,4 +87,4 @@
                 break;
         }
     });
-})();
+}

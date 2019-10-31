@@ -1,5 +1,6 @@
 export const RequestTypes = {
     init: 'init',
+    deinit: 'deinit',
     getCurrentAppState: 'getCurrentAppState',
     getCurrentFilteringState: 'getCurrentFilteringState',
     setProtectionStatus: 'setProtectionStatus',
@@ -17,3 +18,13 @@ export const AssistantTypes = {
     nativeAssistant: 'nativeAssistant',
     assistant: 'assistant',
 };
+
+export const ContentScriptRequestsTypes = {
+    getReferrer: 'getReferrer',
+    initAssistant: 'initAssistant',
+}
+
+export const HostResponseTypes = {
+    ok: 'ok',
+    error: 'error',
+}

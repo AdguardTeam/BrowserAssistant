@@ -1,5 +1,4 @@
 import { action } from 'mobx';
-import browser from 'webextension-polyfill';
 
 class RequestsStore {
     constructor(rootStore) {
@@ -54,15 +53,9 @@ class RequestsStore {
 
     @action
     enableBlockingMode = async () => {
-        const currentTab = await adguard.tabs.getCurrent();
-        const { url, id } = currentTab;
-        console.log(`Opening Assistant UI for tab id=${id} url=${url}`);
-        const backgroundPage = browser.extension.getBackgroundPage();
-        console.log('backgroundPage', backgroundPage);
-        const { adguardApi } = backgroundPage;
-        // adguardApi.openAssistant(id);
-        // window.close();
-    }
+        await adguard.tabs.initAssistant();
+        window.close();
+    };
 }
 
 export default RequestsStore;

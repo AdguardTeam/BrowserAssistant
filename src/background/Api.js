@@ -8,12 +8,19 @@ export class Api {
         return port;
     }
 
+    static initHandler(response) {
+        return browser.runtime.sendMessage(response);
+    }
+
     static init() {
         const { port } = Api;
-        port.onMessage.addListener((response) => {
-            browser.runtime.sendMessage(response);
-        });
+        port.onMessage.addListener(this.initHandler);
+        return port;
+    }
 
+    static deinit() {
+        const { port } = Api;
+        port.onMessage.removeListener(this.initHandler);
         return port;
     }
 
@@ -27,6 +34,8 @@ export class Api {
                 if (id === requestId) {
                     port.onMessage.removeListener(messageHandler);
                     if (response === HostResponseTypes.error) {
+                        console.log('deinit');
+                        Api.deinit();
                         return reject(new Error('error'));
                     }
                     if (response === HostResponseTypes.ok) {

@@ -21,6 +21,12 @@ class RequestsApi extends Api {
         });
     }
 
+    deinit() {
+        return this.makeRequest({
+            type: RequestTypes.deinit,
+        });
+    }
+
     getCurrentAppState() {
         return this.makeRequest({
             type: RequestTypes.getCurrentAppState,

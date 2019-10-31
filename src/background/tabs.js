@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { ContentScriptRequestsTypes } from './types';
+import { ContentScriptRequestsTypes } from '../lib/types';
 
 class Tabs {
     async getCurrent() {
@@ -8,12 +8,11 @@ class Tabs {
         return tabs[0];
     }
 
-    async getReferrer() {
+    async sendRequest(type) {
         const tab = await this.getCurrent();
         let response;
         try {
-            response = await browser.tabs.sendMessage(tab.id,
-                { type: ContentScriptRequestsTypes.getReferrer });
+            response = await browser.tabs.sendMessage(tab.id, { type });
             if (response) {
                 return response;
             }
@@ -21,6 +20,14 @@ class Tabs {
             console.error(error.message);
         }
         return 'no response';
+    }
+
+    async getReferrer() {
+        this.sendRequest(ContentScriptRequestsTypes.getReferrer);
+    }
+
+    async initAssistant() {
+        this.sendRequest(ContentScriptRequestsTypes.initAssistant);
     }
 }
 
