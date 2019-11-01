@@ -44,7 +44,7 @@ const Options = observer(() => {
                         key={iconName}
                         iconName={iconName}
                         text={text}
-                        isFilteringEnabled={(iconName === 'block-ad' || iconName === 'thumb-down')
+                        isFilteringEnabled={(iconName === 'block-ad' || iconName === 'thumb-down' || iconName === 'icon-cross')
                         && settingsStore.isFilteringEnabled && settingsStore.isPageSecured}
                         handleClick={handleClick}
                     />

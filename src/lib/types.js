@@ -19,7 +19,7 @@ export const AssistantTypes = {
     assistant: 'assistant',
 };
 
-export const ContentScriptRequestsTypes = {
+export const MessageTypes = {
     getReferrer: 'getReferrer',
     initAssistant: 'initAssistant',
 }

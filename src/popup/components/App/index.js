@@ -25,9 +25,13 @@ const App = () => {
     });
 
     useEffect(() => {
+        (async () => {
+            await settingsStore.getCurrentTabHostname();
+            await settingsStore.getReferrer();
+        })();
         requestsStore.getCurrentAppState();
         requestsStore.getCurrentFilteringState();
-        settingsStore.getReferrer();
+        uiStore.getStatusIsPageChanged();
         browser.runtime.onMessage.addListener(
             (response) => {
                 const { parameters, appState, requestId } = response;
@@ -96,7 +100,7 @@ const App = () => {
                 >
                     <span style={{ fontSize: '1.5rem' }}>Current state:</span>
                     <button
-                        onClick={() => uiStore.toggleChange(!uiStore.isPageChanged)}
+                        onClick={() => uiStore.setPageChanged(!uiStore.isPageChanged)}
                         type="button"
                     >
                         {uiStore.isPageChanged ? 'changed' : 'default'}

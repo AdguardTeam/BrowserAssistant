@@ -48,16 +48,11 @@ class SettingsStore {
     };
 
     @action
-    setReferrer = (referrer) => {
-        this.referrer = referrer;
-    };
-
-    @action
     getCurrentTabHostname = async () => {
         try {
             const result = await adguard.tabs.getCurrent();
             runInAction(() => {
-                this.currentURL = result;
+                this.currentURL = result.url;
                 this.currentTabHostname = getHostname(result.url);
             });
         } catch (error) {

@@ -1,4 +1,6 @@
-import { action, observable, computed } from 'mobx';
+import {
+    action, observable, computed, runInAction,
+} from 'mobx';
 
 class UiStore {
     constructor(rootStore) {
@@ -42,9 +44,17 @@ class UiStore {
     };
 
     @action
-    toggleChange = () => {
-        this.isPageChanged = !this.isPageChanged;
+    setPageChanged = (isPageChanged) => {
+        this.isPageChanged = isPageChanged;
     }
+
+    @action
+    getStatusIsPageChanged = () => {
+        const { isPageChanged } = adguard.tabs;
+        runInAction(() => {
+            this.isPageChanged = isPageChanged;
+        });
+    };
 }
 
 export default UiStore;

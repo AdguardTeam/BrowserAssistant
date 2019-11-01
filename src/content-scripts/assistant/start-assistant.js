@@ -15,20 +15,13 @@
  * along with Adguard Browser Extension.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global contentPage, adguardAssistant */
+/* global, adguardAssistant */
 
+import browser from 'webextension-polyfill';
 import { initAssistant } from './assistant';
 
 export function startAssistant() {
     initAssistant();
-    // const adg = document.querySelectorAll('');
-    console.dir('adg', document.getElementById('adg-accept'));
-    try {
-        console.log(global.contentPage);
-    } catch (e) {
-        console.error(e.message);
-    }
-    console.log('startAssistant');
     if (window.top !== window || !(document.documentElement instanceof HTMLElement)) {
         return;
     }
@@ -42,10 +35,6 @@ export function startAssistant() {
      * In the case of the FF browser, content scripts with the `document_start`
      * option won't injected into opened tabs, so we have to directly check this case.
      */
-    // if (typeof contentPage === 'undefined') {
-    //     return;
-    // }
-
     let assistant;
 
     // save right-clicked element for assistant
@@ -56,13 +45,8 @@ export function startAssistant() {
         }
     });
     assistant = adguardAssistant();
-    const selectedElement = null;
-    assistant.start(selectedElement, (rules) => {
-        contentPage.sendMessage({ type: 'bla', ruleText: rules });
-    });
 
-    contentPage.onMessage.addListener((message) => {
-        console.log('message', message);
+    browser.runtime.onMessage.addListener((message) => {
         switch (message.type) {
             case 'initAssistant': {
                 const { options } = message;
@@ -79,7 +63,7 @@ export function startAssistant() {
                 }
 
                 assistant.start(selectedElement, (rules) => {
-                    contentPage.sendMessage({ type: addRuleCallbackName, ruleText: rules });
+                    browser.runtime.sendMessage({ type: addRuleCallbackName, ruleText: rules });
                 });
                 break;
             }

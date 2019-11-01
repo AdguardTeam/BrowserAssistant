@@ -9,12 +9,6 @@ import './currentSite.pcss';
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
 
-    useEffect(() => {
-        (async () => {
-            await settingsStore.getCurrentTabHostname();
-        })();
-    });
-
     const toggleShowInfo = () => uiStore.toggleShowInfo();
     const toggleShowInfoFocus = () => {
         uiStore.toggleShowInfo();
@@ -85,7 +79,7 @@ const CurrentSite = observer(() => {
                         {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
                     </button>
                 )}
-                <div className="current-site__name">{settingsStore.currentTabHostname || 'loading...'}</div>
+                <div className="current-site__name">{settingsStore.currentTabHostname}</div>
                 <CertificateModal
                     cn={expiredClass}
                     onRequestClose={toggleOpenAndResizeCertificateModal}

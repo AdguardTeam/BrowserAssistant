@@ -2,40 +2,32 @@ import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import { HostResponseTypes } from '../lib/types';
 
-export class Api {
-    static get port() {
-        const port = browser.runtime.connectNative('native_browser_assistant');
-        return port;
-    }
-
-    static initHandler(response) {
+class Api {
+    initHandler(response) {
         return browser.runtime.sendMessage(response);
     }
 
-    static init() {
-        const { port } = Api;
-        port.onMessage.addListener(this.initHandler);
-        return port;
+    init = () => {
+        this.port = browser.runtime.connectNative('native_browser_assistant');
+        this.port.onMessage.addListener(this.initHandler);
+        return this.port;
     }
 
-    static deinit() {
-        const { port } = Api;
-        port.onMessage.removeListener(this.initHandler);
-        return port;
+    deinit = () => {
+        this.port.onMessage.removeListener(this.initHandler);
+        return this.port;
     }
 
-    async makeRequest(params) {
-        const { port } = Api;
+    makeRequest = async (params) => {
         const requestId = nanoid();
         return new Promise((resolve, reject) => {
-            port.postMessage({ id: requestId, ...params });
+            this.port.postMessage({ id: requestId, ...params });
             // eslint-disable-next-line consistent-return
             const messageHandler = ({ id, response, data }) => {
                 if (id === requestId) {
-                    port.onMessage.removeListener(messageHandler);
+                    this.port.onMessage.removeListener(messageHandler);
                     if (response === HostResponseTypes.error) {
-                        console.log('deinit');
-                        Api.deinit();
+                        this.deinit();
                         return reject(new Error('error'));
                     }
                     if (response === HostResponseTypes.ok) {
@@ -43,7 +35,12 @@ export class Api {
                     }
                 }
             };
-            port.onMessage.addListener(messageHandler);
+            this.port.onMessage.addListener(messageHandler);
         });
     }
 }
+
+
+const api = new Api();
+
+export default api;

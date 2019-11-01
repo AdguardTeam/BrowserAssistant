@@ -1,18 +1,22 @@
 import browser from 'webextension-polyfill';
-import { ContentScriptRequestsTypes } from '../lib/types';
+import { MessageTypes, RequestTypes } from '../lib/types';
 
 class Tabs {
+    constructor() {
+        this.isPageChanged = false;
+    }
+
     async getCurrent() {
         const { id: windowId } = await browser.windows.getCurrent();
         const tabs = await browser.tabs.query({ active: true, windowId });
         return tabs[0];
     }
 
-    async sendRequest(type) {
+    async sendMessage(type, options) {
         const tab = await this.getCurrent();
         let response;
         try {
-            response = await browser.tabs.sendMessage(tab.id, { type });
+            response = await browser.tabs.sendMessage(tab.id, { type, options });
             if (response) {
                 return response;
             }
@@ -23,11 +27,13 @@ class Tabs {
     }
 
     async getReferrer() {
-        this.sendRequest(ContentScriptRequestsTypes.getReferrer);
+        const referrer = await this.sendMessage(MessageTypes.getReferrer);
+        return referrer;
     }
 
     async initAssistant() {
-        this.sendRequest(ContentScriptRequestsTypes.initAssistant);
+        const options = { addRuleCallbackName: RequestTypes.addRule };
+        this.sendMessage(MessageTypes.initAssistant, options);
     }
 }
 

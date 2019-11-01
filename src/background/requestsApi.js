@@ -1,16 +1,16 @@
-import { RequestTypes, AssistantTypes } from '../lib/types';
-import { Api } from './Api';
+import {RequestTypes, AssistantTypes} from '../lib/types';
+import api from './Api';
 
 const config = require('../../package.json');
 
-class RequestsApi extends Api {
+class RequestsApi {
     VERSIONS = {
         apiVersion: '3',
         userAgent: window.navigator.userAgent,
     }
 
     init(assistantType = AssistantTypes.nativeAssistant) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.init,
             parameters: {
                 version: config.version,
@@ -22,19 +22,19 @@ class RequestsApi extends Api {
     }
 
     deinit() {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.deinit,
         });
     }
 
     getCurrentAppState() {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.getCurrentAppState,
         });
     }
 
     getCurrentFilteringState(url) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.getCurrentFilteringState,
             parameters: {
                 url,
@@ -43,7 +43,7 @@ class RequestsApi extends Api {
     }
 
     setProtectionStatus(isEnabled) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.setProtectionStatus,
             parameters: {
                 isEnabled,
@@ -59,38 +59,38 @@ class RequestsApi extends Api {
      * @returns {function}
      */
     setFilteringStatus(parameters) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.setFilteringStatus,
             parameters,
         });
     }
 
-    addRule(hostname) {
-        return this.makeRequest({
+    addRule(ruleText) {
+        return api.makeRequest({
             type: RequestTypes.addRule,
-            parameters: { ruleText: `||${hostname}^` },
+            parameters: {ruleText},
         });
     }
 
-    removeRule(hostname) {
-        return this.makeRequest({
+    removeRule(ruleText) {
+        return api.makeRequest({
             type: RequestTypes.removeRule,
-            parameters: { ruleText: `||${hostname}^` },
+            parameters: {ruleText},
         });
     }
 
     removeCustomRules(url) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.removeCustomRules,
-            parameters: { url },
+            parameters: {url},
         });
     }
 
 
     openOriginCert(domain) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.openOriginCert,
-            parameters: { domain },
+            parameters: {domain},
         });
     }
 
@@ -101,20 +101,20 @@ class RequestsApi extends Api {
      * @returns {function}
      */
     reportSite(params) {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.reportSite,
-            parameters: { ...params, userAgent: this.VERSIONS.userAgent },
+            parameters: {...params, userAgent: this.VERSIONS.userAgent},
         });
     }
 
     openFilteringLog() {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.openFilteringLog,
         });
     }
 
     openSettings() {
-        return this.makeRequest({
+        return api.makeRequest({
             type: RequestTypes.openSettings,
         });
     }

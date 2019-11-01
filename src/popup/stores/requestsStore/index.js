@@ -7,7 +7,7 @@ class RequestsStore {
 
     @action
     getCurrentFilteringState = () => adguard.requests
-        .getCurrentFilteringState(this.rootStore.settingsStore.isFilteringEnabled);
+        .getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
 
     @action
     getCurrentAppState = () => adguard.requests.getCurrentAppState();
@@ -25,8 +25,11 @@ class RequestsStore {
     );
 
     @action
-    removeCustomRules = () => adguard.requests
-        .removeCustomRules(this.rootStore.settingsStore.currentURL);
+    removeCustomRules = () => {
+        adguard.requests
+            .removeCustomRules(this.rootStore.settingsStore.currentURL);
+        adguard.tabs.isPageChanged = false;
+    }
 
     @action
     reportSite = () => adguard.requests.reportSite({
