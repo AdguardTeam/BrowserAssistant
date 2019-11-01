@@ -3,7 +3,7 @@
  * @param {string} url
  * @returns {string}
  */
-export const getHostname = (url) => {
+export const getUrlProperties = (url) => {
     let urlObj;
 
     try {
@@ -12,5 +12,5 @@ export const getHostname = (url) => {
         return url;
     }
 
-    return urlObj.hostname;
+    return urlObj;
 };

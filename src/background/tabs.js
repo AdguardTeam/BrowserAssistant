@@ -12,18 +12,13 @@ class Tabs {
         return tabs[0];
     }
 
+    // eslint-disable-next-line consistent-return
     async sendMessage(type, options) {
         const tab = await this.getCurrent();
-        let response;
-        try {
-            response = await browser.tabs.sendMessage(tab.id, { type, options });
-            if (response) {
-                return response;
-            }
-        } catch (error) {
-            console.error(error.message);
+        const response = await browser.tabs.sendMessage(tab.id, { type, options });
+        if (response) {
+            return response;
         }
-        return 'no response';
     }
 
     async getReferrer() {

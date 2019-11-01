@@ -9,7 +9,5 @@ startAssistant();
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === MessageTypes.getReferrer) {
         sendResponse(document.referrer);
-    } else {
-        sendResponse('no response from content page');
     }
 });

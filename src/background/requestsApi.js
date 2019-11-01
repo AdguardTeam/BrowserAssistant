@@ -1,4 +1,4 @@
-import {RequestTypes, AssistantTypes} from '../lib/types';
+import { RequestTypes, AssistantTypes } from '../lib/types';
 import api from './Api';
 
 const config = require('../../package.json');
@@ -68,21 +68,21 @@ class RequestsApi {
     addRule(ruleText) {
         return api.makeRequest({
             type: RequestTypes.addRule,
-            parameters: {ruleText},
+            parameters: { ruleText },
         });
     }
 
     removeRule(ruleText) {
         return api.makeRequest({
             type: RequestTypes.removeRule,
-            parameters: {ruleText},
+            parameters: { ruleText },
         });
     }
 
     removeCustomRules(url) {
         return api.makeRequest({
             type: RequestTypes.removeCustomRules,
-            parameters: {url},
+            parameters: { url },
         });
     }
 
@@ -90,7 +90,7 @@ class RequestsApi {
     openOriginCert(domain) {
         return api.makeRequest({
             type: RequestTypes.openOriginCert,
-            parameters: {domain},
+            parameters: { domain },
         });
     }
 
@@ -103,7 +103,7 @@ class RequestsApi {
     reportSite(params) {
         return api.makeRequest({
             type: RequestTypes.reportSite,
-            parameters: {...params, userAgent: this.VERSIONS.userAgent},
+            parameters: { ...params, userAgent: this.VERSIONS.userAgent },
         });
     }
 

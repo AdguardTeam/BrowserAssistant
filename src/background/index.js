@@ -6,15 +6,12 @@ import tabs from './tabs';
 
 api.init();
 requests.init();
-
 async function sendRequest(type, sender, sendResponse) {
     if (sender.type === type) {
         const tab = await adguard.tabs.getCurrent();
         const response = await browser.tabs.sendMessage(tab.id, { type });
         if (response) {
             sendResponse(response);
-        } else {
-            sendResponse('no response from background page');
         }
     }
 }
@@ -34,3 +31,5 @@ global.adguard = {
     requests,
     tabs,
 };
+
+adguard.tabs.getCurrent();

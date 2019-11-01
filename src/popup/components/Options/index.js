@@ -5,7 +5,7 @@ import rootStore from '../../stores';
 import './options.pcss';
 
 const Options = observer(() => {
-    const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
+    const { uiStore, requestsStore } = useContext(rootStore);
     const OPTIONS = [
         {
             iconName: 'block-ad',
@@ -44,8 +44,6 @@ const Options = observer(() => {
                         key={iconName}
                         iconName={iconName}
                         text={text}
-                        isFilteringEnabled={(iconName === 'block-ad' || iconName === 'thumb-down' || iconName === 'icon-cross')
-                        && settingsStore.isFilteringEnabled && settingsStore.isPageSecured}
                         handleClick={handleClick}
                     />
                 ))}

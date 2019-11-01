@@ -6,7 +6,7 @@ import {
 } from 'mobx';
 
 import { ORIGIN_CERT_STATUS } from '../consts';
-import { getHostname } from '../../../lib/helpers';
+import { getUrlProperties } from '../../../lib/helpers';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -16,6 +16,8 @@ class SettingsStore {
     @observable currentTabHostname;
 
     @observable currentURL;
+
+    @observable currentProtocol;
 
     @observable referrer;
 
@@ -36,7 +38,7 @@ class SettingsStore {
     @observable isProtectionEnabled = true;
 
     @computed get filteringStatus() {
-        return this.isHttpsFilteringEnabled ? 'HTTPS' : 'HTTP';
+        return (this.isHttpsFilteringEnabled || this.isPageSecured) || !this.isFilteringEnabled ? 'HTTPS' : 'HTTP';
     }
 
     @action
@@ -53,7 +55,8 @@ class SettingsStore {
             const result = await adguard.tabs.getCurrent();
             runInAction(() => {
                 this.currentURL = result.url;
-                this.currentTabHostname = getHostname(result.url);
+                this.currentTabHostname = getUrlProperties(result.url).hostname;
+                this.currentProtocol = getUrlProperties(result.url).protocol;
             });
         } catch (error) {
             console.error(error.message);
@@ -73,11 +76,21 @@ class SettingsStore {
     @action
     setHttpsFiltering = (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+        adguard.requests.setFilteringStatus({
+            isEnabled: this.isFilteringEnabled,
+            isHttpsEnabled: this.isFilteringEnabled,
+            url: this.currentURL,
+        });
     };
 
     @action
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
+        adguard.requests.setFilteringStatus({
+            isEnabled: this.isFilteringEnabled,
+            isHttpsEnabled: this.isFilteringEnabled,
+            url: this.currentURL,
+        });
     };
 
     @action

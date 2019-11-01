@@ -3,8 +3,8 @@ import browser from 'webextension-polyfill';
 import { HostResponseTypes } from '../lib/types';
 
 class Api {
-    initHandler(response) {
-        return browser.runtime.sendMessage(response);
+    async initHandler(response) {
+        browser.runtime.sendMessage(response);
     }
 
     init = () => {

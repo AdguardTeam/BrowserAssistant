@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
+import rootStore from '../../../stores';
 import './option.pcss';
 
-const Option = ({
-    iconName, text, isFilteringEnabled, handleClick,
+const Option = observer(({
+    iconName, text, handleClick,
 }) => {
+    const { settingsStore, uiStore } = useContext(rootStore);
     const actionClass = classNames({
         action: true,
-        'action--disabled': !isFilteringEnabled,
+        'action--disabled': ((iconName !== 'sandwich' && iconName !== 'icon-cross')
+            && !settingsStore.isFilteringEnabled),
     });
 
     return (
@@ -27,6 +31,6 @@ const Option = ({
         </div>
 
     );
-};
+});
 
 export default Option;

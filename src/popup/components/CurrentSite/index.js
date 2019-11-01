@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
@@ -31,11 +31,11 @@ const CurrentSite = observer(() => {
     };
 
     const securityModalState = {
-        HTTP: {
+        HTTPS: {
             cn: 'modal modal__secure-page',
             message: 'Nothing to block here',
         },
-        HTTPS: {
+        HTTP: {
             cn: 'modal modal__secure-page modal__secure-page--bank',
             message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
             You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
@@ -70,7 +70,7 @@ const CurrentSite = observer(() => {
             className="current-site__container"
         >
             <div className={securedClass}>
-                {!settingsStore.isPageSecured && (
+                {(!settingsStore.isPageSecured && settingsStore.isFilteringEnabled) && (
                     <button
                         type="button"
                         onClick={toggleOpenAndResizeCertificateModal}

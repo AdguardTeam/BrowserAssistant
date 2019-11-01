@@ -5,7 +5,7 @@ import rootStore from '../../stores';
 import './header.pcss';
 
 const Header = observer(() => {
-    const { settingsStore, requestsStore } = useContext(rootStore);
+    const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
     const toggleProtection = () => {
         requestsStore.setProtectionStatus();
         return settingsStore.toggleProtection();
@@ -18,6 +18,7 @@ const Header = observer(() => {
         'widget-popup__buttons': true,
         'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
         'widget-popup__buttons--start': !settingsStore.isProtectionEnabled,
+        'widget-popup__buttons--hidden': !uiStore.isAppWorking,
     });
 
     return (

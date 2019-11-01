@@ -32,7 +32,7 @@
                 "http://*/*",
                 "https://*/*"
             ],
-            "match_about_blank": true,
+            "match_about_blank": false,
             "run_at": "document_start"
         }
     ],

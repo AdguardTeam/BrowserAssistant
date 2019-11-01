@@ -13,24 +13,31 @@ class UiStore {
 
     @observable isPageChanged = false;
 
-    @observable isWorking = true;
+    @observable isAppWorking = true;
 
     @observable isPending = true;
 
     @computed get switcherText() {
-        return `${(this.rootStore.settingsStore.isFilteringEnabled || this.rootStore.settingsStore.isPageSecured) ? 'Enabled' : 'Disabled'} on this website`;
+        return `${(this.rootStore.settingsStore.isFilteringEnabled) ? 'Enabled' : 'Disabled'} on this website`;
     }
 
     @computed get isSecureStatusHidden() {
-        if (this.rootStore.uiStore.isOpenCertificateModal) {
+        if (this.rootStore.settingsStore.isPageSecured
+            && this.rootStore.settingsStore.isFilteringEnabled) { return false; }
+
+        if (this.rootStore.uiStore.isOpenCertificateModal
+            || this.rootStore.settingsStore.isHttpsFilteringEnabled
+            || this.rootStore.settingsStore.isExpired) {
             return true;
         }
-        if (!this.rootStore.settingsStore.isPageSecured
-            && (this.rootStore.settingsStore.isExpired
-            || !this.rootStore.settingsStore.isHttpsFilteringEnabled)) {
-            return true;
-        }
+
         return false;
+    }
+
+    @action
+    setAppWorkingStatus = (isWorking) => {
+        this.isAppWorking = isWorking;
+        return this.isAppWorking;
     }
 
     @action
@@ -53,6 +60,7 @@ class UiStore {
         const { isPageChanged } = adguard.tabs;
         runInAction(() => {
             this.isPageChanged = isPageChanged;
+            return this.isPageChanged;
         });
     };
 }
