@@ -2163,7 +2163,7 @@
             // EXTERNAL MODULE: ./locales/zh-TW/messages.json
             var zh_TW_messages = __webpack_require__(42);
 
-            // CONCATENATED MODULE: ./locales/index.js
+            // CONCATENATED MODULE: ./locales/runtime.js
 
 
             var locales = {

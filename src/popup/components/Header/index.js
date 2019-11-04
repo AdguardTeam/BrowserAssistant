@@ -31,12 +31,14 @@ const Header = observer(() => {
                     title="AdGuard Protection"
                     type="button"
                     onClick={toggleProtection}
+                    tabIndex="0"
                 />
                 <button
                     className="widget-popup__buttons widget-popup__buttons--settings"
                     title="AdGuard Settings"
                     type="button"
                     onClick={openSetting}
+                    tabIndex="0"
                 />
             </div>
         </div>

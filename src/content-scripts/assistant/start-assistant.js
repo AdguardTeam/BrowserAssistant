@@ -1,24 +1,8 @@
-/**
- * This file is part of Adguard Browser Extension (https://github.com/AdguardTeam/AdguardBrowserExtension).
- *
- * Adguard Browser Extension is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Adguard Browser Extension is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Adguard Browser Extension.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 /* global, adguardAssistant */
 
 import browser from 'webextension-polyfill';
 import { initAssistant } from './assistant';
+import browserApi from '../../background/browserApi/browserApiIndex';
 
 export function startAssistant() {
     initAssistant();
@@ -26,15 +10,6 @@ export function startAssistant() {
         return;
     }
 
-    /**
-     * `contentPage` may be undefined on the extension startup in FF browser.
-     *
-     * Different browsers have different strategies of the content scripts
-     * injections on extension startup.
-     * For example, FF injects content scripts in already opened tabs, but Chrome doesn't do it.
-     * In the case of the FF browser, content scripts with the `document_start`
-     * option won't injected into opened tabs, so we have to directly check this case.
-     */
     let assistant;
 
     // save right-clicked element for assistant
@@ -63,7 +38,7 @@ export function startAssistant() {
                 }
 
                 assistant.start(selectedElement, (rules) => {
-                    browser.runtime.sendMessage({ type: addRuleCallbackName, ruleText: rules });
+                    browserApi.runtime.sendMessage({ type: addRuleCallbackName, ruleText: rules });
                 });
                 break;
             }

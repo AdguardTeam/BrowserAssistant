@@ -5,7 +5,7 @@ import rootStore from '../../stores';
 import './options.pcss';
 
 const Options = observer(() => {
-    const { uiStore, requestsStore } = useContext(rootStore);
+    const { uiStore, requestsStore, settingsStore } = useContext(rootStore);
     const OPTIONS = [
         {
             iconName: 'block-ad',
@@ -13,6 +13,7 @@ const Options = observer(() => {
             handleClick: () => {
                 requestsStore.enableBlockingMode();
             },
+            isDisabled: !settingsStore.isFilteringEnabled,
         },
         {
             iconName: 'sandwich',
@@ -20,6 +21,7 @@ const Options = observer(() => {
             handleClick: () => {
                 requestsStore.openFilteringLog();
             },
+            isDisabled: false,
         },
         {
             iconName: 'thumb-down',
@@ -27,6 +29,7 @@ const Options = observer(() => {
             handleClick: () => {
                 requestsStore.reportSite();
             },
+            isDisabled: !settingsStore.isFilteringEnabled,
         },
         {
             iconName: 'icon-cross',
@@ -34,17 +37,22 @@ const Options = observer(() => {
             handleClick: () => {
                 requestsStore.removeCustomRules();
             },
+            isDisabled: false,
         },
     ];
     return (
         <div className="actions">
-            {OPTIONS.slice(0, uiStore.isPageChanged ? OPTIONS.length : -1)
-                .map(({ iconName, text, handleClick }) => (
+            {OPTIONS
+                .slice(0, uiStore.isPageChanged ? OPTIONS.length : -1)
+                .map(({
+                    iconName, text, handleClick, isDisabled,
+                }) => (
                     <Option
                         key={iconName}
                         iconName={iconName}
                         text={text}
                         handleClick={handleClick}
+                        isDisabled={isDisabled}
                     />
                 ))}
         </div>

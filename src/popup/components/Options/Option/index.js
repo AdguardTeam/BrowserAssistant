@@ -1,24 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import classNames from 'classnames';
-import { observer } from 'mobx-react';
-import rootStore from '../../../stores';
 import './option.pcss';
 
-const Option = observer(({
-    iconName, text, handleClick,
+const Option = ({
+    iconName, text, handleClick, isDisabled,
 }) => {
-    const { settingsStore, uiStore } = useContext(rootStore);
     const actionClass = classNames({
         action: true,
-        'action--disabled': ((iconName !== 'sandwich' && iconName !== 'icon-cross')
-            && !settingsStore.isFilteringEnabled),
+        'action--disabled': isDisabled,
     });
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && !isDisabled) {
+            handleClick();
+        }
+    };
 
     return (
         <div
             className={actionClass}
-            onClick={handleClick}
-            onKeyPress={e => console.log(e)}
+            onClick={!isDisabled && handleClick}
+            onKeyDown={handleKeyDown}
             role="menuitem"
             tabIndex="0"
         >
@@ -31,6 +33,6 @@ const Option = observer(({
         </div>
 
     );
-});
+};
 
 export default Option;

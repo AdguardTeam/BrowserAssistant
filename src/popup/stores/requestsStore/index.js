@@ -29,6 +29,7 @@ class RequestsStore {
         adguard.requests
             .removeCustomRules(this.rootStore.settingsStore.currentURL);
         adguard.tabs.isPageChanged = false;
+        this.rootStore.uiStore.setPageChanged(false);
     }
 
     @action

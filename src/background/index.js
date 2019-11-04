@@ -6,30 +6,38 @@ import tabs from './tabs';
 
 api.init();
 requests.init();
-async function sendRequest(type, sender, sendResponse) {
-    if (sender.type === type) {
-        const tab = await adguard.tabs.getCurrent();
-        const response = await browser.tabs.sendMessage(tab.id, { type });
-        if (response) {
-            sendResponse(response);
-        }
+
+async function sendMessage(sender, sendResponse) {
+    const { type } = sender;
+    const tab = await adguard.tabs.getCurrent();
+    const response = await browser.tabs.sendMessage(tab.id, { type });
+    if (response) {
+        sendResponse(response);
     }
 }
 
-browser.runtime.onMessage.addListener(async (sender, data, sendResponse) => {
-    await sendRequest(MessageTypes.initAssistant, sender, sendResponse);
-    await sendRequest(MessageTypes.getReferrer, sender, sendResponse);
+function addRule(sender) {
+    const { ruleText } = sender;
+    adguard.requests.addRule(ruleText);
+    adguard.tabs.isPageChanged = true;
+}
 
-    if (sender.type === RequestTypes.addRule) {
-        const { ruleText } = sender;
-        adguard.requests.addRule(ruleText);
-        adguard.tabs.isPageChanged = true;
+function handleMessage(sender, data, sendResponse) {
+    switch (sender.type) {
+        case MessageTypes.initAssistant:
+            return sendMessage(sender, sendResponse);
+        case MessageTypes.getReferrer:
+            return sendMessage(sender, sendResponse);
+        case RequestTypes.addRule:
+            return addRule(sender);
+        default:
+            return null;
     }
-});
+}
+
+browser.runtime.onMessage.addListener(handleMessage);
 
 global.adguard = {
     requests,
     tabs,
 };
-
-adguard.tabs.getCurrent();

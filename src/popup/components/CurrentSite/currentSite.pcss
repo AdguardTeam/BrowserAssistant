@@ -25,10 +25,7 @@
         white-space: nowrap;
         color: var(--gray-base);
         position: relative;
-
-        &--secured {
-            border-left: 1px solid transparent;
-        }
+        border-left: 1px solid transparent;
     }
 
     &__icon {
@@ -36,21 +33,12 @@
         height: 1.5rem;
         outline: none;
         position: absolute;
-        top: 0.5rem;
+        top: 0.3rem;
         left: -1.2rem;
         cursor: pointer;
         border: 0;
         padding-right: 1.8rem;
         border-right: 1px solid var(--grayd8);
-
-        & ~ .current-site__name {
-            padding-left: 0.6rem;
-        }
-
-        & ~ .current-site__secure-status {
-            padding-left: 0.1rem;
-        }
-
 
         &--lock {
             background: url('../../../assets/images/icon-lock.svg') no-repeat;
@@ -62,14 +50,15 @@
 
         &--warning {
             padding-right: 2.2rem;
-            width: 2rem;
-            height: 2rem;
-            bottom: -0.4rem;
-            left: -1.2rem;
+            width: 1.8rem;
+            height: 1.8rem;
+            top: 0;
+            left: -1.6rem;
             background: url('../../../assets/images/icon-warning.svg') no-repeat;
 
             & .arrow-up {
                 left: -0.1rem;
+                top: 2.2rem;
             }
         }
     }
@@ -101,7 +90,7 @@
     border-right: var(--trinagle-border-side);
     border-bottom: 1rem solid var(--greyf3);
     position: absolute;
-    top: 1.7rem;
+    top: 1.9rem;
     left: -0.4rem;
 
     &:after {
