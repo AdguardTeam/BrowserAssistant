@@ -1,7 +1,7 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import { HostResponseTypes } from '../lib/types';
-import browserApi from './browserApi/browserApiIndex';
+import browserApi from './browserApi';
 
 class Api {
     initHandler(response) {
@@ -21,7 +21,6 @@ class Api {
     };
 
     makeRequest = async (params) => {
-        console.log(params);
         const requestId = nanoid();
         return new Promise((resolve, reject) => {
             this.port.postMessage({ id: requestId, ...params });

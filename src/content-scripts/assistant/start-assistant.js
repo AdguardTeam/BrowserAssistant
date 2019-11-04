@@ -2,7 +2,7 @@
 
 import browser from 'webextension-polyfill';
 import { initAssistant } from './assistant';
-import browserApi from '../../background/browserApi/browserApiIndex';
+import browserApi from '../../background/browserApi';
 
 export function startAssistant() {
     initAssistant();

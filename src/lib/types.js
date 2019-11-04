@@ -22,9 +22,9 @@ export const AssistantTypes = {
 export const MessageTypes = {
     getReferrer: 'getReferrer',
     initAssistant: 'initAssistant',
-}
+};
 
 export const HostResponseTypes = {
     ok: 'ok',
     error: 'error',
-}
+};
