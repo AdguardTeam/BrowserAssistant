@@ -2,10 +2,6 @@ import browser from 'webextension-polyfill';
 import { MessageTypes, RequestTypes } from '../lib/types';
 
 class Tabs {
-    constructor() {
-        this.isPageChanged = false;
-    }
-
     async getCurrent() {
         const { id: windowId } = await browser.windows.getCurrent();
         const tabs = await browser.tabs.query({ active: true, windowId });

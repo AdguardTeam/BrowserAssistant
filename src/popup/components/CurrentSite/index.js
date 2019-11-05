@@ -30,24 +30,11 @@ const CurrentSite = observer(() => {
         return uiStore.toggleOpenCertificateModal();
     };
 
-    const securityModalState = {
-        HTTPS: {
-            cn: 'modal modal__secure-page',
-            message: 'Nothing to block here',
-        },
-        HTTP: {
-            cn: 'modal modal__secure-page modal__secure-page--bank',
-            message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
-            You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
-        },
-    };
-
-
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--warning': settingsStore.isExpired,
-        'current-site__icon--lock-danger': !settingsStore.isHttpsFilteringEnabled,
-        'current-site__icon--lock': settingsStore.isHttpsFilteringEnabled,
+        'current-site__icon--warning': settingsStore.isExpired && settingsStore.isFilteringEnabled,
+        'current-site__icon--lock--danger': !settingsStore.isHttpsFilteringEnabled && settingsStore.isFilteringEnabled && settingsStore.isHttps,
+        'current-site__icon--lock': (settingsStore.isHttpsFilteringEnabled && settingsStore.isFilteringEnabled) || !settingsStore.isFilteringEnabled || !settingsStore.isHttps,
     });
 
     const expiredClass = classNames({
@@ -70,14 +57,17 @@ const CurrentSite = observer(() => {
             className="current-site__container"
         >
             <div className={securedClass}>
-                {(!settingsStore.isPageSecured && settingsStore.isFilteringEnabled) && (
-                    <button
-                        type="button"
-                        onClick={toggleOpenAndResizeCertificateModal}
-                        className={iconClass}
-                    >
-                        {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
-                    </button>
+                {((!settingsStore.isPageSecured
+                    && settingsStore.isFilteringEnabled)
+                    || !settingsStore.isFilteringEnabled) && (
+                        <button
+                            type="button"
+                            onClick={settingsStore.isFilteringEnabled
+                            && toggleOpenAndResizeCertificateModal}
+                            className={iconClass}
+                        >
+                            {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
+                        </button>
                 )}
                 <div className="current-site__name">{settingsStore.currentTabHostname}</div>
                 <CertificateModal
@@ -96,8 +86,8 @@ const CurrentSite = observer(() => {
                 </div>
                 {uiStore.isInfoHovered && (
                     <SecurePageModal
-                        cn={securityModalState[settingsStore.filteringStatus].cn}
-                        message={securityModalState[settingsStore.filteringStatus].message}
+                        cn={uiStore.securityModalState.cn}
+                        message={uiStore.securityModalState.message}
                     />
                 )}
             </div>

@@ -28,3 +28,8 @@ export const HostResponseTypes = {
     ok: 'ok',
     error: 'error',
 };
+
+export const ProtocolTypes = {
+    HTTP: 'HTTP',
+    HTTPS: 'HTTPS',
+};

@@ -1,7 +1,6 @@
 import {
     action,
     observable,
-    computed,
     runInAction,
 } from 'mobx';
 
@@ -13,13 +12,13 @@ class SettingsStore {
         this.rootStore = rootStore;
     }
 
-    @observable currentTabHostname;
+    @observable currentTabHostname = '';
 
-    @observable currentURL;
+    @observable currentURL = '';
 
-    @observable currentProtocol;
+    @observable isHttps = false;
 
-    @observable referrer;
+    @observable referrer = '';
 
     @observable originCertStatus = ORIGIN_CERT_STATUS.invalid;
 
@@ -37,10 +36,6 @@ class SettingsStore {
 
     @observable isProtectionEnabled = true;
 
-    @computed get filteringStatus() {
-        return (this.isHttpsFilteringEnabled || this.isPageSecured) || !this.isFilteringEnabled ? 'HTTPS' : 'HTTP';
-    }
-
     @action
     getReferrer = async () => {
         const referrer = await adguard.tabs.getReferrer();
@@ -57,7 +52,7 @@ class SettingsStore {
                 this.currentURL = result.url;
                 const { hostname, protocol } = getUrlProperties(result.url);
                 this.currentTabHostname = hostname;
-                this.currentProtocol = protocol;
+                this.isHttps = protocol === 'https:';
             });
         } catch (error) {
             console.error(error.message);

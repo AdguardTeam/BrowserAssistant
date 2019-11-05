@@ -24,7 +24,7 @@ class RequestsStore {
             isEnabled: isFilteringEnabled,
             isHttpsEnabled: isHttpsFilteringEnabled,
         });
-    }
+    };
 
     @action
     openOriginCert = () => adguard.requests.openOriginCert(
@@ -35,9 +35,8 @@ class RequestsStore {
     removeCustomRules = () => {
         adguard.requests
             .removeCustomRules(this.rootStore.settingsStore.currentURL);
-        adguard.tabs.isPageChanged = false;
-        this.rootStore.uiStore.setPageChanged(false);
-    }
+        this.rootStore.uiStore.isPageChanged = false;
+    };
 
     @action
     reportSite = () => adguard.requests.reportSite({

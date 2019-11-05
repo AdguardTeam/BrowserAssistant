@@ -1,5 +1,5 @@
 import {
-    action, observable, computed, runInAction,
+    action, observable, computed,
 } from 'mobx';
 
 class UiStore {
@@ -15,27 +15,46 @@ class UiStore {
 
     @observable isAppWorking = true;
 
+    @computed get securityModalState() {
+        const {
+            isPageSecured, isProtectionEnabled, isHttps, isFilteringEnabled,
+            isHttpsFilteringEnabled,
+        } = this.rootStore.settingsStore;
+        if (isPageSecured || !isProtectionEnabled || !isHttps || !isFilteringEnabled
+            || (isFilteringEnabled && isHttpsFilteringEnabled)) {
+            return ({
+                cn: 'modal modal__secure-page',
+                message: 'Nothing to block here',
+            });
+        }
+        return ({
+            cn: 'modal modal__secure-page modal__secure-page--bank',
+            message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
+            You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
+        });
+    }
+
     @computed get switcherText() {
         return `${(this.rootStore.settingsStore.isFilteringEnabled) ? 'Enabled' : 'Disabled'} on this website`;
     }
 
     @computed get isSecureStatusHidden() {
         const {
-            isPageSecured, isFilteringEnabled, isHttpsFilteringEnabled, isExpired,
+            isPageSecured, isFilteringEnabled, isHttpsFilteringEnabled,
+            isExpired, isHttps,
         } = this.rootStore.settingsStore;
 
+        if (!isFilteringEnabled
+            || (!isFilteringEnabled && !isHttps)
+            || (!isPageSecured && !isHttps)) {
+            return true;
+        }
         if (isPageSecured
             && isFilteringEnabled) {
             return false;
         }
 
-        if (this.isOpenCertificateModal
-            || isHttpsFilteringEnabled
-            || isExpired) {
-            return true;
-        }
-
-        return false;
+        return this.isOpenCertificateModal || isHttpsFilteringEnabled || isExpired;
     }
 
     @action
@@ -57,15 +76,6 @@ class UiStore {
     @action
     setPageChanged = (isPageChanged) => {
         this.isPageChanged = isPageChanged;
-    }
-
-    @action
-    getStatusIsPageChanged = () => {
-        const { isPageChanged } = adguard.tabs;
-        runInAction(() => {
-            this.isPageChanged = isPageChanged;
-            return this.isPageChanged;
-        });
     };
 }
 

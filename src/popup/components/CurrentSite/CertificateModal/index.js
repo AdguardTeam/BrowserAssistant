@@ -31,10 +31,11 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
                     </span>
                     <Switcher
                         id="https-switcher"
-                        checked={settingsStore.isHttpsFilteringEnabled}
+                        checked={settingsStore.isHttpsFilteringEnabled && settingsStore.isHttps}
                         onClick={handleHttpsFiltering}
                         isPageSecured={settingsStore.isPageSecured}
                         isFilteringEnabled={settingsStore.isFilteringEnabled}
+                        isHttps={settingsStore.isHttps}
                     />
                 </div>
                 {settingsStore.isExpired && (

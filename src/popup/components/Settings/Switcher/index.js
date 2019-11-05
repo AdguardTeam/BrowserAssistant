@@ -9,7 +9,7 @@ const Switcher = ({
     onClick,
     isPageSecured,
     isFilteringEnabled,
-
+    isHttps,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,
@@ -19,7 +19,7 @@ const Switcher = ({
     const switcherLabelClass = classNames({
         switcher__label: true,
         'switcher__label--secured': isPageSecured,
-        'switcher__label--disabled': !isFilteringEnabled,
+        'switcher__label--disabled': !isFilteringEnabled || isHttps,
     });
 
     return (
