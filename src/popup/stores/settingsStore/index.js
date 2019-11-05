@@ -55,8 +55,9 @@ class SettingsStore {
             const result = await adguard.tabs.getCurrent();
             runInAction(() => {
                 this.currentURL = result.url;
-                this.currentTabHostname = getUrlProperties(result.url).hostname;
-                this.currentProtocol = getUrlProperties(result.url).protocol;
+                const { hostname, protocol } = getUrlProperties(result.url);
+                this.currentTabHostname = hostname;
+                this.currentProtocol = protocol;
             });
         } catch (error) {
             console.error(error.message);
@@ -76,21 +77,13 @@ class SettingsStore {
     @action
     setHttpsFiltering = (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        adguard.requests.setFilteringStatus({
-            isEnabled: this.isFilteringEnabled,
-            isHttpsEnabled: this.isFilteringEnabled,
-            url: this.currentURL,
-        });
+        this.rootStore.requestsStore.setFilteringStatus();
     };
 
     @action
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
-        adguard.requests.setFilteringStatus({
-            isEnabled: this.isFilteringEnabled,
-            isHttpsEnabled: this.isFilteringEnabled,
-            url: this.currentURL,
-        });
+        this.rootStore.requestsStore.setFilteringStatus();
     };
 
     @action

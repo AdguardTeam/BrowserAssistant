@@ -17,6 +17,12 @@ Modal.setAppElement('#root');
 const App = () => {
     const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
     const [status, setRequestStatus] = useState(REQUEST_STATUSES.PENDING);
+    const {
+        setSecure, setHttpsFiltering, setFiltering, setOriginCertStatus,
+        setInstalled, setRunning, setProtection, isInstalled, isRunning,
+        isProtectionEnabled, isPageSecured, isHttpsFilteringEnabled,
+        isFilteringEnabled, originCertStatus, getCurrentTabHostname, getReferrer,
+    } = settingsStore;
 
     const appClass = classNames({
         'loading--pending': status === REQUEST_STATUSES.PENDING,
@@ -25,15 +31,15 @@ const App = () => {
 
     useEffect(() => {
         (async () => {
-            await settingsStore.getCurrentTabHostname();
-            await settingsStore.getReferrer();
+            await getCurrentTabHostname();
+            await getReferrer();
             requestsStore.getCurrentAppState();
             requestsStore.getCurrentFilteringState();
             uiStore.getStatusIsPageChanged();
         })();
 
-
         browser.runtime.onMessage.addListener(
+            // eslint-disable-next-line consistent-return
             (response) => {
                 const { parameters, appState, requestId } = response;
                 if (!requestId) {
@@ -51,28 +57,28 @@ const App = () => {
                         isPageSecured,
                         originCertStatus,
                     } = parameters;
-                    settingsStore.setSecure(isPageSecured);
-                    settingsStore.setHttpsFiltering(isHttpsFilteringEnabled);
-                    settingsStore.setFiltering(isFilteringEnabled);
-                    settingsStore.setOriginCertStatus(originCertStatus);
+                    setSecure(isPageSecured);
+                    setHttpsFiltering(isHttpsFilteringEnabled);
+                    setFiltering(isFilteringEnabled);
+                    setOriginCertStatus(originCertStatus);
                 }
-                settingsStore.setInstalled(isInstalled);
-                settingsStore.setRunning(isRunning);
-                settingsStore.setProtection(isProtectionEnabled);
+                setInstalled(isInstalled);
+                setRunning(isRunning);
+                setProtection(isProtectionEnabled);
 
                 setRequestStatus(uiStore.isAppWorking
                     ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR);
-                return true;
             }
         );
 
         return () => {
-            browser.runtime.onMessage.removeListener(msg => console.log('remove runtime.onMessage listener in popup', msg));
+            browser.runtime.onMessage.removeListener();
         };
-    }, [settingsStore.isInstalled, settingsStore.isRunning, settingsStore.isProtectionEnabled]);
+    }, [isInstalled, isRunning, isProtectionEnabled, isPageSecured,
+        isHttpsFilteringEnabled, isFilteringEnabled, originCertStatus]);
     return (
         <Fragment>
-            {status !== 'error'
+            {status !== REQUEST_STATUSES.ERROR
             && (
                 <div className={appClass}>
                     <Header />
@@ -81,7 +87,7 @@ const App = () => {
                     <Options />
                 </div>
             )}
-            {status === 'error' && (
+            {status === REQUEST_STATUSES.ERROR && (
                 <Fragment>
                     <Header />
                     <AppClosed />

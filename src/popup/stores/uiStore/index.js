@@ -15,19 +15,23 @@ class UiStore {
 
     @observable isAppWorking = true;
 
-    @observable isPending = true;
-
     @computed get switcherText() {
         return `${(this.rootStore.settingsStore.isFilteringEnabled) ? 'Enabled' : 'Disabled'} on this website`;
     }
 
     @computed get isSecureStatusHidden() {
-        if (this.rootStore.settingsStore.isPageSecured
-            && this.rootStore.settingsStore.isFilteringEnabled) { return false; }
+        const {
+            isPageSecured, isFilteringEnabled, isHttpsFilteringEnabled, isExpired,
+        } = this.rootStore.settingsStore;
 
-        if (this.rootStore.uiStore.isOpenCertificateModal
-            || this.rootStore.settingsStore.isHttpsFilteringEnabled
-            || this.rootStore.settingsStore.isExpired) {
+        if (isPageSecured
+            && isFilteringEnabled) {
+            return false;
+        }
+
+        if (this.isOpenCertificateModal
+            || isHttpsFilteringEnabled
+            || isExpired) {
             return true;
         }
 

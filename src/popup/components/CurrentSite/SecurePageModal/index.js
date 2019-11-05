@@ -13,7 +13,9 @@ const SecurePageModal = observer(({ message, cn }) => {
                 className={cn}
                 style={{ overlay: { backgroundColor: 'transparent' } }}
                 contentLabel="Secure Page Modal"
-                onRequestClose={() => { uiStore.toggleShowInfo(false); }}
+                onRequestClose={() => {
+                    uiStore.toggleShowInfo();
+                }}
             >
                 <header
                     className="modal__header"

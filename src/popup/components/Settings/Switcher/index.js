@@ -1,26 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import classNames from 'classnames';
-import { observer } from 'mobx-react';
 import './switcher.pcss';
-import rootStore from '../../../stores';
 
-const Switcher = observer(({
+const Switcher = ({
     id,
     text,
     checked,
     onClick,
-}) => {
-    const { settingsStore } = useContext(rootStore);
+    isPageSecured,
+    isFilteringEnabled,
 
+}) => {
     const switcherTextClass = classNames({
         switcher__text: true,
-        'switcher__text--secured': settingsStore.isPageSecured,
+        'switcher__text--secured': isPageSecured,
     });
 
     const switcherLabelClass = classNames({
         switcher__label: true,
-        'switcher__label--secured': settingsStore.isPageSecured,
-        'switcher__label--disabled': !settingsStore.isFilteringEnabled,
+        'switcher__label--secured': isPageSecured,
+        'switcher__label--disabled': !isFilteringEnabled,
     });
 
     return (
@@ -42,6 +41,6 @@ const Switcher = observer(({
             />
         </div>
     );
-});
+};
 
 export default Switcher;

@@ -8,13 +8,11 @@ import './modal.pcss';
 const CertificateModal = observer(({ cn, onRequestClose }) => {
     const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
 
-    const showCertificate = () => {
-        return requestsStore.openOriginCert();
-    };
+    const showCertificate = () => requestsStore.openOriginCert();
 
     const handleHttpsFiltering = () => {
         settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
-        return requestsStore.setFilteringStatus();
+        requestsStore.setFilteringStatus();
     };
 
     return (
@@ -35,6 +33,8 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
                         id="https-switcher"
                         checked={settingsStore.isHttpsFilteringEnabled}
                         onClick={handleHttpsFiltering}
+                        isPageSecured={settingsStore.isPageSecured}
+                        isFilteringEnabled={settingsStore.isFilteringEnabled}
                     />
                 </div>
                 {settingsStore.isExpired && (

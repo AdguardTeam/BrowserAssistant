@@ -8,7 +8,7 @@ const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
     const toggleProtection = () => {
         requestsStore.setProtectionStatus();
-        return settingsStore.toggleProtection();
+        settingsStore.toggleProtection();
     };
     const openSetting = () => {
         requestsStore.openSettings();

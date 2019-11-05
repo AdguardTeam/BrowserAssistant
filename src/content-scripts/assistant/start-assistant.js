@@ -1,8 +1,7 @@
-/* global, adguardAssistant */
-
 import browser from 'webextension-polyfill';
 import { initAssistant } from './assistant';
 import browserApi from '../../background/browserApi';
+import { MessageTypes } from '../../lib/types';
 
 export function startAssistant() {
     initAssistant();
@@ -10,34 +9,20 @@ export function startAssistant() {
         return;
     }
 
-    let assistant;
-
-    // save right-clicked element for assistant
-    let clickedEl = null;
-    document.addEventListener('mousedown', (event) => {
-        if (event.button === 2) {
-            clickedEl = event.target;
-        }
-    });
-    assistant = adguardAssistant();
-
     browser.runtime.onMessage.addListener((message) => {
+        let assistant;
         switch (message.type) {
-            case 'initAssistant': {
+            case MessageTypes.initAssistant: {
                 const { options } = message;
                 const { addRuleCallbackName } = options;
-                let selectedElement = null;
-                if (clickedEl && options.selectElement) {
-                    selectedElement = clickedEl;
-                }
 
                 if (!assistant) {
-                    assistant = adguardAssistant();
+                    assistant = global.adguardAssistant();
                 } else {
                     assistant.close();
                 }
 
-                assistant.start(selectedElement, (rules) => {
+                assistant.start(null, (rules) => {
                     browserApi.runtime.sendMessage({ type: addRuleCallbackName, ruleText: rules });
                 });
                 break;

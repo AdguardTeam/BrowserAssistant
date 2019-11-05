@@ -11,7 +11,7 @@ const Options = observer(() => {
             iconName: 'block-ad',
             text: 'Block ads\u00A0on\u00A0this website',
             handleClick: () => {
-                requestsStore.enableBlockingMode();
+                requestsStore.startBlockingAd();
             },
             isDisabled: !settingsStore.isFilteringEnabled,
         },

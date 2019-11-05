@@ -22,6 +22,8 @@ const Settings = observer(() => {
                     text={uiStore.switcherText}
                     checked={settingsStore.isFilteringEnabled}
                     onClick={handleFiltering}
+                    isPageSecured={settingsStore.isPageSecured}
+                    isFilteringEnabled={settingsStore.isFilteringEnabled}
                 />
             </div>
         </div>

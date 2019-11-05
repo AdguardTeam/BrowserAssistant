@@ -23,7 +23,7 @@ class Tabs {
         } catch (error) {
             console.error(error.message);
         }
-        return 'no response';
+        return '';
     }
 
     async getReferrer() {

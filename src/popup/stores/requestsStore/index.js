@@ -13,11 +13,18 @@ class RequestsStore {
     getCurrentAppState = () => adguard.requests.getCurrentAppState();
 
     @action
-    setFilteringStatus = () => adguard.requests.setFilteringStatus({
-        url: this.rootStore.settingsStore.currentURL,
-        isEnabled: this.rootStore.settingsStore.isFilteringEnabled,
-        isHttpsEnabled: this.rootStore.settingsStore.isHttpsFilteringEnabled,
-    });
+    setFilteringStatus = () => {
+        const {
+            currentURL, isFilteringEnabled,
+            isHttpsFilteringEnabled,
+        } = this.rootStore.settingsStore;
+
+        adguard.requests.setFilteringStatus({
+            url: currentURL,
+            isEnabled: isFilteringEnabled,
+            isHttpsEnabled: isHttpsFilteringEnabled,
+        });
+    }
 
     @action
     openOriginCert = () => adguard.requests.openOriginCert(
@@ -56,7 +63,7 @@ class RequestsStore {
     openSettings = () => adguard.requests.openSettings();
 
     @action
-    enableBlockingMode = async () => {
+    startBlockingAd = async () => {
         await adguard.tabs.initAssistant();
         window.close();
     };
