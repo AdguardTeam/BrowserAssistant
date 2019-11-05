@@ -94,51 +94,6 @@ const App = () => {
                     <AppClosed />
                 </Fragment>
             )}
-            <div
-                className="TODO-DELETE-TEST-BUTTONS"
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <span style={{ fontSize: '1.5rem' }}>Current state:</span>
-                <button
-                    onClick={() => uiStore.setPageChanged(!uiStore.isPageChanged)}
-                    type="button"
-                >
-                    {uiStore.isPageChanged ? 'changed' : 'default'}
-                </button>
-                <button
-                    onClick={() => settingsStore
-                        .setSecure(!settingsStore.isPageSecured)}
-                    type="button"
-                >
-                    {settingsStore.isPageSecured ? 'secured' : 'usual'}
-                </button>
-                <button
-                    onClick={() => settingsStore
-                        .setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled)}
-                    type="button"
-                >
-                    {settingsStore.isHttpsFilteringEnabled ? 'filtering HTTPS' : 'not filtering HTTPS'}
-                </button>
-                <button
-                    onClick={() => settingsStore.setExpire(!settingsStore.isExpired)}
-                    type="button"
-                >
-                    {settingsStore.isExpired ? 'expired' : 'valid'}
-                </button>
-                <button
-                    onClick={() => settingsStore.setFiltering(
-                        !settingsStore.isFilteringEnabled
-                    )}
-                    type="button"
-                >
-                    {settingsStore.isFilteringEnabled ? 'enabled' : 'disabled'}
-                </button>
-                <br />
-            </div>
         </Fragment>
 
     );
