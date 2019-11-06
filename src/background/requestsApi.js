@@ -7,7 +7,7 @@ class RequestsApi {
     VERSIONS = {
         apiVersion: '3',
         userAgent: window.navigator.userAgent,
-    }
+    };
 
     init(assistantType = AssistantTypes.nativeAssistant) {
         return api.makeRequest({

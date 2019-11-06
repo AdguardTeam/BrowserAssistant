@@ -1,9 +1,6 @@
 import {
-    action,
-    observable,
-    runInAction,
+    action, observable, computed, runInAction,
 } from 'mobx';
-
 import { ORIGIN_CERT_STATUS } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 
@@ -20,13 +17,9 @@ class SettingsStore {
 
     @observable referrer = '';
 
-    @observable originCertStatus = ORIGIN_CERT_STATUS.invalid;
-
     @observable isPageSecured = true;
 
     @observable isHttpsFilteringEnabled = false;
-
-    @observable isExpired = this.originCertStatus === ORIGIN_CERT_STATUS.invalid;
 
     @observable isFilteringEnabled = true;
 
@@ -35,6 +28,12 @@ class SettingsStore {
     @observable isRunning = true;
 
     @observable isProtectionEnabled = true;
+
+    @observable originCertStatus = ORIGIN_CERT_STATUS.VALID;
+
+    @computed get isExpired() {
+        return (this.originCertStatus === ORIGIN_CERT_STATUS.INVALID);
+    }
 
     @action
     getReferrer = async () => {
@@ -52,7 +51,20 @@ class SettingsStore {
                 this.currentURL = result.url;
                 const { hostname, protocol } = getUrlProperties(result.url);
                 this.currentTabHostname = hostname;
-                this.isHttps = protocol === 'https:';
+
+                switch (protocol) {
+                    case 'https:':
+                        this.isHttps = true;
+                        this.setSecure(false);
+                        break;
+                    case 'http:':
+                        this.isHttps = false;
+                        this.setSecure(false);
+                        break;
+                    default:
+                        this.isHttps = false;
+                        this.setSecure(true);
+                }
             });
         } catch (error) {
             console.error(error.message);
@@ -78,36 +90,7 @@ class SettingsStore {
 
     @action
     setOriginCertStatus = (status) => {
-        this.originCertStatus = ORIGIN_CERT_STATUS[status];
-    };
-
-    @action
-    setCurrentFilteringState = (parameters) => {
-        const {
-            isFilteringEnabled,
-            isHttpsFilteringEnabled,
-            isPageSecured,
-            originCertStatus,
-            isPageFilteredByUserFilter,
-        } = parameters;
-        this.setSecure(isPageSecured);
-        this.setHttpsFiltering(isHttpsFilteringEnabled);
-        this.setFiltering(isFilteringEnabled);
-        this.setOriginCertStatus(originCertStatus);
-        this.rootStore.uiStore.setPageChanged(isPageFilteredByUserFilter);
-    };
-
-    @action
-    setCurrentAppState = (workingState) => {
-        const { isInstalled, isRunning, isProtectionEnabled } = workingState;
-        this.setInstalled(isInstalled);
-        this.setRunning(isRunning);
-        this.setProtection(isProtectionEnabled);
-    };
-
-    @action
-    setExpire = (isExpired) => {
-        this.isExpired = isExpired;
+        this.originCertStatus = ORIGIN_CERT_STATUS[status.toUpperCase()];
     };
 
     @action
@@ -126,15 +109,41 @@ class SettingsStore {
     };
 
     @action
+    setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
+        this.isFilteringEnabled = isFilteringEnabled;
+        this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+        this.rootStore.requestsStore.setFilteringStatus();
+    };
+
+    @action
+    setCurrentFilteringState = (parameters) => {
+        const {
+            isFilteringEnabled,
+            isHttpsFilteringEnabled,
+            originCertStatus,
+            isPageFilteredByUserFilter,
+        } = parameters;
+        this.setHttpAndHttpsFilteringActive(isFilteringEnabled, isHttpsFilteringEnabled);
+        this.setOriginCertStatus(originCertStatus);
+        this.rootStore.uiStore.setPageChanged(isPageFilteredByUserFilter);
+    };
+
+    @action
+    setCurrentAppState = (workingState) => {
+        const { isInstalled, isRunning, isProtectionEnabled } = workingState;
+        this.setInstalled(isInstalled);
+        this.setRunning(isRunning);
+        this.setProtection(isProtectionEnabled);
+    };
+
+    @action
     toggleProtection = () => {
         if (this.isProtectionEnabled === true) {
-            this.isProtectionEnabled = false;
-            this.isFilteringEnabled = false;
-            this.isHttpsFilteringEnabled = false;
+            this.setProtection(false);
+            this.setHttpAndHttpsFilteringActive(false, false);
         } else {
-            this.isProtectionEnabled = true;
-            this.isFilteringEnabled = true;
-            this.isHttpsFilteringEnabled = false;
+            this.setProtection(true);
+            this.setHttpAndHttpsFilteringActive(true, false);
         }
     }
 }

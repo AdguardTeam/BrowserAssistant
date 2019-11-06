@@ -13,7 +13,6 @@ import AppClosed from './AppClosed';
 import rootStore from '../../stores';
 import { REQUEST_STATUSES } from '../../stores/consts';
 
-
 Modal.setAppElement('#root');
 
 const App = observer(() => {
@@ -39,12 +38,13 @@ const App = observer(() => {
         })();
 
         browser.runtime.onMessage.addListener(
-            // eslint-disable-next-line consistent-return
             (response) => {
                 const { parameters, appState, requestId } = response;
+
                 if (!requestId) {
-                    return true;
+                    return;
                 }
+
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
                 const workingState = { isInstalled, isRunning, isProtectionEnabled };
 
@@ -54,14 +54,13 @@ const App = observer(() => {
                 if (parameters && parameters.originCertStatus) {
                     setCurrentFilteringState(parameters);
                 }
-                setCurrentAppState(workingState);
 
+                setCurrentAppState(workingState);
 
                 setRequestStatus(uiStore.isAppWorking
                     ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR);
             }
         );
-
 
         return () => {
             browser.runtime.onMessage.removeListener();

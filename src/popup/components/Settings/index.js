@@ -24,6 +24,7 @@ const Settings = observer(() => {
                     onClick={handleFiltering}
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}
+                    isHttps={settingsStore.isHttps}
                 />
             </div>
         </div>

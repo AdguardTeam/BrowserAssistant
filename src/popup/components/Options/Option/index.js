@@ -19,7 +19,7 @@ const Option = ({
     return (
         <div
             className={actionClass}
-            onClick={!isDisabled && handleClick}
+            onClick={!isDisabled ? handleClick : undefined}
             onKeyDown={handleKeyDown}
             role="menuitem"
             tabIndex="0"
