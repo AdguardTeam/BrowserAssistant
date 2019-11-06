@@ -11,6 +11,7 @@ module.exports = {
         'unlimitedStorage',
         'contextMenus',
         'cookies',
+        'nativeMessaging',
     ],
     optional_permissions: [
         'privacy',

@@ -1,21 +1,34 @@
-import React, { Fragment } from 'react';
-import ReactModal from 'react-modal';
+import React, { useContext, Fragment } from 'react';
+import Modal from 'react-modal';
+import { observer } from 'mobx-react';
+import rootStore from '../../../stores';
 
-const SecurePageModal = ({
-    isOpen, onRequestClose, message, cn,
-}) => (
-    <Fragment>
-        <ReactModal
-            isOpen={isOpen}
-            className={cn}
-            style={{ overlay: { backgroundColor: 'transparent' } }}
-            contentLabel="Secure Page Modal"
-            onRequestClose={onRequestClose}
-        >
-            <header className="modal__header">Secure Page</header>
-            <p className="modal__text">{message}</p>
-        </ReactModal>
-    </Fragment>
-);
+const SecurePageModal = observer(({ message, cn }) => {
+    const { uiStore } = useContext(rootStore);
+
+    return (
+        <Fragment>
+            <Modal
+                isOpen
+                className={cn}
+                style={{ overlay: { backgroundColor: 'transparent' } }}
+                contentLabel="Secure Page Modal"
+                onRequestClose={() => {
+                    uiStore.toggleShowInfo();
+                }}
+            >
+                <header
+                    className="modal__header"
+                    role="button"
+                    tabIndex="0"
+                    onFocus={() => uiStore.toggleShowInfo()}
+                >
+                    Secure Page
+                </header>
+                <p className="modal__text">{message}</p>
+            </Modal>
+        </Fragment>
+    );
+});
 
 export default SecurePageModal;

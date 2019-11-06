@@ -19,7 +19,6 @@
         }
     }
 
-
     &__secure-page {
         height: 8.7rem;
         transform: translate(1.6rem, 15rem);
@@ -30,6 +29,7 @@
     }
 
     &__header {
+        outline: none;
         font-size: 1.6rem;
         margin-bottom: 0.9rem;
         color: var(--gray-base);
@@ -80,7 +80,7 @@
             justify-content: space-between;
         }
 
-        &--upper > .global-switcher {
+        &--upper > .switcher {
             width: auto;
         }
 
@@ -88,27 +88,5 @@
             background-color: red;
         }
 
-    }
-}
-
-.arrow-up {
-    z-index: var(--higher);
-    width: 0;
-    height: 0;
-    border-left: var(--trinagle-border-side);
-    border-right: var(--trinagle-border-side);
-    border-bottom: 1rem solid var(--greyf3);
-    position: absolute;
-    top: -1rem;
-    left: 4.1rem;
-
-    &:after {
-        content: '';
-        border-left: var(--trinagle-border-side);
-        border-right: var(--trinagle-border-side);
-        border-bottom: 1rem solid var(--white);
-        position: absolute;
-        top: 0.15rem;
-        left: -1rem;
     }
 }

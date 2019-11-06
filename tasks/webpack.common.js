@@ -15,6 +15,8 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 const BUILD_PATH = '../build';
 const OUTPUT_PATH = getOutputPathByEnv(process.env.NODE_ENV);
 
+const cleanOptions = IS_DEV ? { cleanAfterEveryBuildPatterns: ['!**/*.json', '!assets/**/*'] } : {};
+
 const config = {
     mode: IS_DEV ? 'development' : 'production',
     devtool: IS_DEV ? 'cheap-module-eval-source-map' : false,
@@ -54,7 +56,7 @@ const config = {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin(cleanOptions),
         new CopyWebpackPlugin([
             {
                 context: 'src',

@@ -32,12 +32,13 @@
                 "http://*/*",
                 "https://*/*"
             ],
-            "match_about_blank": true,
+            "match_about_blank": false,
             "run_at": "document_start"
         }
     ],
     "permissions": [
         "tabs",
+        "activeTab",
         "<all_urls>",
         "webRequest",
         "webRequestBlocking",
@@ -45,6 +46,7 @@
         "storage",
         "unlimitedStorage",
         "contextMenus",
-        "cookies"
+        "cookies",
+        "nativeMessaging"
     ]
 }
