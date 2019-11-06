@@ -4,6 +4,7 @@ import React, {
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import Settings from '../Settings';
 import Header from '../Header';
 import Options from '../Options';
@@ -12,16 +13,16 @@ import AppClosed from './AppClosed';
 import rootStore from '../../stores';
 import { REQUEST_STATUSES } from '../../stores/consts';
 
+
 Modal.setAppElement('#root');
 
-const App = () => {
+const App = observer(() => {
     const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
     const [status, setRequestStatus] = useState(REQUEST_STATUSES.PENDING);
     const {
-        setSecure, setHttpsFiltering, setFiltering, setOriginCertStatus,
-        setInstalled, setRunning, setProtection, isInstalled, isRunning,
-        isProtectionEnabled, isPageSecured, isHttpsFilteringEnabled,
-        isFilteringEnabled, originCertStatus, getCurrentTabHostname, getReferrer,
+        setCurrentFilteringState,
+        setCurrentAppState,
+        getCurrentTabHostname, getReferrer,
     } = settingsStore;
 
     const appClass = classNames({
@@ -45,38 +46,27 @@ const App = () => {
                     return true;
                 }
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
-                const workingState = [isInstalled, isRunning, isProtectionEnabled];
+                const workingState = { isInstalled, isRunning, isProtectionEnabled };
 
-                uiStore.setAppWorkingStatus(workingState.every(state => state === true));
+                uiStore.setAppWorkingStatus(Object.values(workingState)
+                    .every(state => state === true));
 
                 if (parameters && parameters.originCertStatus) {
-                    const {
-                        isFilteringEnabled,
-                        isHttpsFilteringEnabled,
-                        isPageSecured,
-                        originCertStatus,
-                        isPageFilteredByUserFilter,
-                    } = parameters;
-                    setSecure(isPageSecured);
-                    setHttpsFiltering(isHttpsFilteringEnabled);
-                    setFiltering(isFilteringEnabled);
-                    setOriginCertStatus(originCertStatus);
-                    uiStore.setPageChanged(isPageFilteredByUserFilter);
+                    setCurrentFilteringState(parameters);
                 }
-                setInstalled(isInstalled);
-                setRunning(isRunning);
-                setProtection(isProtectionEnabled);
+                setCurrentAppState(workingState);
+
 
                 setRequestStatus(uiStore.isAppWorking
                     ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR);
             }
         );
 
+
         return () => {
             browser.runtime.onMessage.removeListener();
         };
-    }, [isInstalled, isRunning, isProtectionEnabled, isPageSecured,
-        isHttpsFilteringEnabled, isFilteringEnabled, originCertStatus]);
+    }, []);
     return (
         <Fragment>
             {status !== REQUEST_STATUSES.ERROR
@@ -97,6 +87,6 @@ const App = () => {
         </Fragment>
 
     );
-};
+});
 
 export default App;

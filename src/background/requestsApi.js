@@ -21,12 +21,6 @@ class RequestsApi {
         });
     }
 
-    deinit() {
-        return api.makeRequest({
-            type: RequestTypes.deinit,
-        });
-    }
-
     getCurrentAppState() {
         return api.makeRequest({
             type: RequestTypes.getCurrentAppState,

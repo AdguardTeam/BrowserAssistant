@@ -26,7 +26,7 @@ class SettingsStore {
 
     @observable isHttpsFilteringEnabled = false;
 
-    @observable isExpired = false;
+    @observable isExpired = this.originCertStatus === ORIGIN_CERT_STATUS.invalid;
 
     @observable isFilteringEnabled = true;
 
@@ -60,11 +60,6 @@ class SettingsStore {
     };
 
     @action
-    setOriginCertStatus = (status) => {
-        this.originCertStatus = ORIGIN_CERT_STATUS[status];
-    }
-
-    @action
     setSecure = (isPageSecured) => {
         this.isPageSecured = isPageSecured;
     };
@@ -79,6 +74,35 @@ class SettingsStore {
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
+    };
+
+    @action
+    setOriginCertStatus = (status) => {
+        this.originCertStatus = ORIGIN_CERT_STATUS[status];
+    };
+
+    @action
+    setCurrentFilteringState = (parameters) => {
+        const {
+            isFilteringEnabled,
+            isHttpsFilteringEnabled,
+            isPageSecured,
+            originCertStatus,
+            isPageFilteredByUserFilter,
+        } = parameters;
+        this.setSecure(isPageSecured);
+        this.setHttpsFiltering(isHttpsFilteringEnabled);
+        this.setFiltering(isFilteringEnabled);
+        this.setOriginCertStatus(originCertStatus);
+        this.rootStore.uiStore.setPageChanged(isPageFilteredByUserFilter);
+    };
+
+    @action
+    setCurrentAppState = (workingState) => {
+        const { isInstalled, isRunning, isProtectionEnabled } = workingState;
+        this.setInstalled(isInstalled);
+        this.setRunning(isRunning);
+        this.setProtection(isProtectionEnabled);
     };
 
     @action

@@ -1,6 +1,5 @@
 export const RequestTypes = {
     init: 'init',
-    deinit: 'deinit',
     getCurrentAppState: 'getCurrentAppState',
     getCurrentFilteringState: 'getCurrentFilteringState',
     setProtectionStatus: 'setProtectionStatus',

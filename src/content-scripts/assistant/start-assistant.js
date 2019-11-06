@@ -9,8 +9,9 @@ export function startAssistant() {
         return;
     }
 
+    let assistant = global.adguardAssistant();
+
     browser.runtime.onMessage.addListener((message) => {
-        let assistant;
         switch (message.type) {
             case MessageTypes.initAssistant: {
                 const { options } = message;

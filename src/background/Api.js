@@ -9,12 +9,14 @@ class Api {
     }
 
     init = () => {
+        console.log('init');
         this.port = browser.runtime.connectNative('native_browser_assistant');
         this.port.onMessage.addListener(this.initHandler);
         return this.port;
     };
 
     deinit = () => {
+        console.log('deinit');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.initHandler);
         return this.port;

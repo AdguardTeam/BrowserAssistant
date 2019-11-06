@@ -13,7 +13,7 @@ const Options = observer(() => {
             handleClick: () => {
                 requestsStore.startBlockingAd();
             },
-            isDisabled: !settingsStore.isFilteringEnabled,
+            isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
         },
         {
             iconName: 'sandwich',
@@ -29,7 +29,7 @@ const Options = observer(() => {
             handleClick: () => {
                 requestsStore.reportSite();
             },
-            isDisabled: !settingsStore.isFilteringEnabled,
+            isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
         },
         {
             iconName: 'icon-cross',
