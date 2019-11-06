@@ -27,3 +27,7 @@ export const HostResponseTypes = {
     ok: 'ok',
     error: 'error',
 };
+
+export const HostTypes = {
+    nativeBrowserAssistant: 'native_browser_assistant',
+};

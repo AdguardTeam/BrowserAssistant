@@ -1,6 +1,6 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
-import { HostResponseTypes } from '../lib/types';
+import { HostResponseTypes, HostTypes } from '../lib/types';
 import browserApi from './browserApi';
 
 class Api {
@@ -10,7 +10,7 @@ class Api {
 
     init = () => {
         console.log('init');
-        this.port = browser.runtime.connectNative('native_browser_assistant');
+        this.port = browser.runtime.connectNative(HostTypes.nativeBrowserAssistant);
         this.port.onMessage.addListener(this.initHandler);
         return this.port;
     };
