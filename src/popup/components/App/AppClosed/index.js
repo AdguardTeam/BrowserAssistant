@@ -25,7 +25,10 @@ function defineWarning(settingsStore) {
         return ({
             title: 'AdGuard protection is paused',
             buttonText: 'enable',
-            handleClick: () => settingsStore.setProtection(true),
+            handleClick: () => {
+                settingsStore.setProtection(true);
+                settingsStore.toggleProtection();
+            },
         });
     }
 
