@@ -106,6 +106,7 @@ class SettingsStore {
     @action
     setProtection = (isProtectionEnabled) => {
         this.isProtectionEnabled = isProtectionEnabled;
+        this.rootStore.requestsStore.setProtectionStatus();
     };
 
     @action
@@ -142,7 +143,7 @@ class SettingsStore {
             this.setHttpAndHttpsFilteringActive(false, false);
         } else {
             this.setProtection(true);
-            this.setHttpAndHttpsFilteringActive(true, this.isHttpsilteringEnabled);
+            this.setHttpAndHttpsFilteringActive(true, this.isHttpsFilteringEnabled);
         }
         this.rootStore.requestsStore.setProtectionStatus();
     }
