@@ -6,31 +6,34 @@ import './AppClosed.pcss';
 function defineWarning(settingsStore) {
     const { isInstalled, isRunning, isProtectionEnabled } = settingsStore;
     if (!isInstalled) {
-        return {
+        return ({
             title: 'AdGuard is not installed',
             buttonText: 'download',
             handleClick: () => settingsStore.setInstalled(true),
-        };
+        });
     }
+
     if (!isRunning) {
-        return {
+        return ({
             title: 'AdGuard is not running',
             buttonText: 'run adguard',
             handleClick: () => settingsStore.setRunning(true),
-        };
+        });
     }
+
     if (!isProtectionEnabled) {
-        return {
+        return ({
             title: 'AdGuard protection is paused',
             buttonText: 'enable',
             handleClick: () => settingsStore.setProtection(true),
-        };
+        });
     }
-    return {
+
+    return ({
         title: 'pending',
         buttonText: 'pending',
         handleClick: null,
-    };
+    });
 }
 
 const AppClosed = observer(() => {
@@ -38,7 +41,9 @@ const AppClosed = observer(() => {
     const { title, buttonText, handleClick } = defineWarning(settingsStore);
     return (
         <div className="app-closed__wrapper">
-            <header className="app-closed__status">{title}</header>
+            <div className="app-closed__status-wrapper">
+                <header className="app-closed__status">{title}</header>
+            </div>
             <button
                 className="app-closed__button"
                 type="button"

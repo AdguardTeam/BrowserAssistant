@@ -14,6 +14,7 @@ const CurrentSite = observer(() => {
         uiStore.toggleShowInfo();
         setTimeout(() => uiStore.toggleShowInfo(), 5000);
     };
+
     const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
 
@@ -21,13 +22,14 @@ const CurrentSite = observer(() => {
             if (!uiStore.isOpenCertificateModal) {
                 bodyHeight = '44rem';
             }
+
             if (uiStore.isOpenCertificateModal) {
                 bodyHeight = '32rem';
             }
         }
 
         document.querySelector('body').style.height = bodyHeight;
-        return uiStore.toggleOpenCertificateModal();
+        uiStore.toggleOpenCertificateModal();
     };
 
     const iconClass = classNames({
@@ -63,7 +65,7 @@ const CurrentSite = observer(() => {
                         <button
                             type="button"
                             onClick={settingsStore.isFilteringEnabled
-                            && toggleOpenAndResizeCertificateModal}
+                                ? toggleOpenAndResizeCertificateModal : undefined}
                             className={iconClass}
                         >
                             {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}

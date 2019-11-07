@@ -5,6 +5,6 @@ export const REQUEST_STATUSES = {
 };
 
 export const ORIGIN_CERT_STATUS = {
-    valid: 'valid',
-    invalid: 'invalid',
+    VALID: 'valid',
+    INVALID: 'invalid',
 };

@@ -3,13 +3,7 @@ import classNames from 'classnames';
 import './switcher.pcss';
 
 const Switcher = ({
-    id,
-    text,
-    checked,
-    onClick,
-    isPageSecured,
-    isFilteringEnabled,
-    isHttps,
+    id, text, checked, onClick, isPageSecured, isFilteringEnabled, isHttps,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,

@@ -54,14 +54,14 @@ class UiStore {
             return false;
         }
 
-        return this.isOpenCertificateModal || isHttpsFilteringEnabled || isExpired;
+        return (this.isOpenCertificateModal || isHttpsFilteringEnabled || isExpired);
     }
 
     @action
     setAppWorkingStatus = (isWorking) => {
         this.isAppWorking = isWorking;
         return this.isAppWorking;
-    }
+    };
 
     @action
     toggleOpenCertificateModal = () => {
