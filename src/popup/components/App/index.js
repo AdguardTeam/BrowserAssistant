@@ -33,7 +33,6 @@ const App = observer(() => {
         (async () => {
             await getCurrentTabHostname();
             await getReferrer();
-            requestsStore.getCurrentAppState();
             requestsStore.getCurrentFilteringState();
         })();
 
