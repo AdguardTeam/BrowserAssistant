@@ -106,7 +106,6 @@ class SettingsStore {
     @action
     setProtection = (isProtectionEnabled) => {
         this.isProtectionEnabled = isProtectionEnabled;
-        this.rootStore.requestsStore.setProtectionStatus();
     };
 
     @action
