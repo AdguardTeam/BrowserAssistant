@@ -142,8 +142,9 @@ class SettingsStore {
             this.setHttpAndHttpsFilteringActive(false, false);
         } else {
             this.setProtection(true);
-            this.setHttpAndHttpsFilteringActive(true, false);
+            this.setHttpAndHttpsFilteringActive(true, this.isHttpsilteringEnabled);
         }
+        this.rootStore.requestsStore.setProtectionStatus();
     }
 }
 

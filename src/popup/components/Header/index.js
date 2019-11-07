@@ -7,7 +7,6 @@ import './header.pcss';
 const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
     const toggleProtection = () => {
-        requestsStore.setProtectionStatus();
         settingsStore.toggleProtection();
     };
     const openSetting = () => {
