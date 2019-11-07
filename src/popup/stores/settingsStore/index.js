@@ -112,7 +112,6 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        this.rootStore.requestsStore.setFilteringStatus();
     };
 
     @action
