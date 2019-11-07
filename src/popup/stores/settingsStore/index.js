@@ -139,10 +139,8 @@ class SettingsStore {
     toggleProtection = () => {
         if (this.isProtectionEnabled === true) {
             this.setProtection(false);
-            this.setHttpAndHttpsFilteringActive(false, false);
         } else {
             this.setProtection(true);
-            this.setHttpAndHttpsFilteringActive(true, this.isHttpsFilteringEnabled);
         }
         this.rootStore.requestsStore.setProtectionStatus();
     }
