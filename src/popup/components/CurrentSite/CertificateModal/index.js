@@ -12,7 +12,6 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
 
     const handleHttpsFiltering = () => {
         settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
-        requestsStore.setFilteringStatus();
     };
 
     return (

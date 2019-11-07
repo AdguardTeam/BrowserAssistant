@@ -11,8 +11,9 @@ const Settings = observer(() => {
         if (!settingsStore.isPageSecured) {
             settingsStore
                 .setFiltering(!settingsStore.isFilteringEnabled);
+        } else {
+            requestsStore.setFilteringStatus();
         }
-        requestsStore.setFilteringStatus();
     };
     return (
         <div className="settings">
