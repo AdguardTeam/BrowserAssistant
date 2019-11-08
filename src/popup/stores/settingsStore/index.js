@@ -13,15 +13,15 @@ class SettingsStore {
 
     @observable currentURL = '';
 
-    @observable isHttps = false;
+    @observable isHttps = true;
 
     @observable referrer = '';
 
-    @observable isPageSecured = true;
+    @observable isPageSecured = false;
 
     @observable isHttpsFilteringEnabled = false;
 
-    @observable isFilteringEnabled = true;
+    @observable isFilteringEnabled = false;
 
     @observable isInstalled = true;
 
@@ -124,7 +124,7 @@ class SettingsStore {
         } = parameters;
         this.setHttpAndHttpsFilteringActive(isFilteringEnabled, isHttpsFilteringEnabled);
         this.setOriginCertStatus(originCertStatus);
-        this.rootStore.uiStore.setPageChanged(isPageFilteredByUserFilter);
+        this.rootStore.uiStore.setPageFilteredByUserFilter(isPageFilteredByUserFilter);
     };
 
     @action
@@ -137,7 +137,7 @@ class SettingsStore {
 
     @action
     toggleProtection = () => {
-        if (this.isProtectionEnabled === true) {
+        if (this.isProtectionEnabled) {
             this.setProtection(false);
         } else {
             this.setProtection(true);

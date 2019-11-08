@@ -5,7 +5,7 @@ const config = require('../../package.json');
 
 class RequestsApi {
     VERSIONS = {
-        apiVersion: '3',
+        apiVersion: '1',
         userAgent: window.navigator.userAgent,
     };
 

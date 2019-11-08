@@ -18,7 +18,7 @@ const CurrentSite = observer(() => {
     const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
 
-        if (settingsStore.isExpired) {
+        if (settingsStore.isExpired && settingsStore.isHttps) {
             if (!uiStore.isOpenCertificateModal) {
                 bodyHeight = '44rem';
             }
@@ -34,9 +34,10 @@ const CurrentSite = observer(() => {
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--warning': settingsStore.isExpired && settingsStore.isFilteringEnabled,
+        'current-site__icon--lock': settingsStore.isHttpsFilteringEnabled || !settingsStore.isFilteringEnabled,
         'current-site__icon--lock--danger': !settingsStore.isHttpsFilteringEnabled && settingsStore.isFilteringEnabled && settingsStore.isHttps,
-        'current-site__icon--lock': (settingsStore.isHttpsFilteringEnabled && settingsStore.isFilteringEnabled) || !settingsStore.isFilteringEnabled || !settingsStore.isHttps,
+        'current-site__icon--warning--http': !settingsStore.isHttps && !settingsStore.isPageSecured,
+        'current-site__icon--warning--expired': settingsStore.isExpired && settingsStore.isFilteringEnabled && !settingsStore.isHttpsFilteringEnabled,
     });
 
     const expiredClass = classNames({
@@ -59,22 +60,23 @@ const CurrentSite = observer(() => {
             className="current-site__container"
         >
             <div className={securedClass}>
-                {((!settingsStore.isPageSecured
-                    && settingsStore.isFilteringEnabled)
-                    || !settingsStore.isFilteringEnabled) && (
-                        <button
-                            type="button"
-                            onClick={settingsStore.isFilteringEnabled
-                                ? toggleOpenAndResizeCertificateModal : undefined}
-                            className={iconClass}
-                        >
-                            {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal) && <div className="arrow-up" />}
-                        </button>
+                {(!settingsStore.isPageSecured
+                ) && (
+                    <button
+                        type="button"
+                        onClick={settingsStore.isFilteringEnabled
+                            ? toggleOpenAndResizeCertificateModal : undefined}
+                        className={iconClass}
+                    >
+                        {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal)
+                        && <div className="arrow-up" />}
+                    </button>
                 )}
                 <div className="current-site__name">{settingsStore.currentTabHostname}</div>
                 <CertificateModal
                     cn={expiredClass}
                     onRequestClose={toggleOpenAndResizeCertificateModal}
+                    isOpen={settingsStore.isHttps && uiStore.isOpenCertificateModal}
                 />
                 <div
                     onMouseOver={toggleShowInfo}
@@ -86,12 +88,21 @@ const CurrentSite = observer(() => {
                 >
                     secure page
                 </div>
-                {uiStore.isInfoHovered && (
-                    <SecurePageModal
-                        cn={uiStore.securityModalState.cn}
-                        message={uiStore.securityModalState.message}
-                    />
-                )}
+                <SecurePageModal
+                    cn={uiStore.securityModalState.cn}
+                    message={uiStore.securityModalState.message}
+                    header={uiStore.securityModalState.header}
+                    isOpen={(uiStore.isInfoHovered)
+                    || (!settingsStore.isHttps && uiStore.isOpenCertificateModal)}
+                    onRequestClose={() => {
+                        if (settingsStore.isHttps) {
+                            uiStore.toggleShowInfo();
+                        }
+                        if (!settingsStore.isHttps) {
+                            uiStore.toggleOpenCertificateModal();
+                        }
+                    }}
+                />
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import {
     action, observable, computed,
 } from 'mobx';
+import { REQUEST_STATUSES } from '../consts';
 
 class UiStore {
     constructor(rootStore) {
@@ -11,26 +12,48 @@ class UiStore {
 
     @observable isInfoHovered = false;
 
-    @observable isPageChanged = false;
+    @observable isPageFilteredByUserFilter = false;
 
     @observable isAppWorking = true;
 
+    @observable requestStatus = REQUEST_STATUSES.PENDING;
+
+    @action
+    setRequestStatus = () => {
+        this.requestStatus = this.isAppWorking
+            ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR;
+    };
+
+    @action
+    test = () => {
+        (this.requestStatus = REQUEST_STATUSES.SUCCESS);
+    };
+
     @computed get securityModalState() {
         const {
-            isPageSecured, isProtectionEnabled, isHttps, isFilteringEnabled,
-            isHttpsFilteringEnabled,
+            isPageSecured, isHttps, isFilteringEnabled, isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
-        if (isPageSecured || !isProtectionEnabled || !isHttps || !isFilteringEnabled
-            || (isFilteringEnabled && isHttpsFilteringEnabled)) {
+
+        if (!isHttps && !isPageSecured) {
+            return ({
+                cn: 'modal modal__insecure-page',
+                message: 'The site isn\'t using a private connection. Someone might be able to see or change the information you send or get through the site.',
+                header: 'Not secure',
+            });
+        }
+
+        if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
             return ({
                 cn: 'modal modal__secure-page',
                 message: 'Nothing to block here',
+                header: 'Secure page',
             });
         }
         return ({
             cn: 'modal modal__secure-page modal__secure-page--bank',
             message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
             You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
+            header: 'Secure page',
         });
     }
 
@@ -44,23 +67,26 @@ class UiStore {
             isExpired, isHttps,
         } = this.rootStore.settingsStore;
 
-        if (!isFilteringEnabled
-            || (!isFilteringEnabled && !isHttps)
-            || (!isPageSecured && !isHttps)) {
-            return true;
-        }
-        if (isPageSecured
-            && isFilteringEnabled) {
-            return false;
-        }
+        return !!(!isPageSecured && (!isHttps || !isFilteringEnabled || isHttpsFilteringEnabled
+            || this.isOpenCertificateModal || isExpired));
+    }
 
-        return (this.isOpenCertificateModal || isHttpsFilteringEnabled || isExpired);
+    @computed get currentWorkingStatus() {
+        const { isInstalled, isRunning, isProtectionEnabled } = this.rootStore.settingsStore;
+        return { isInstalled, isRunning, isProtectionEnabled };
     }
 
     @action
-    setAppWorkingStatus = (isWorking) => {
-        this.isAppWorking = isWorking;
-        return this.isAppWorking;
+    setAppWorkingStatus = (workingStatus) => {
+        const status = workingStatus || this.currentWorkingStatus;
+        this.isAppWorking = Object.values(status)
+            .every(state => state === true);
+    };
+
+    @action
+    updateUi = () => {
+        this.setAppWorkingStatus();
+        this.setRequestStatus();
     };
 
     @action
@@ -74,8 +100,8 @@ class UiStore {
     };
 
     @action
-    setPageChanged = (isPageChanged) => {
-        this.isPageChanged = isPageChanged;
+    setPageFilteredByUserFilter = (isPageFilteredByUserFilter) => {
+        this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
     };
 }
 

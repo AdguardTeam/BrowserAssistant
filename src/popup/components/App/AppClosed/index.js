@@ -3,13 +3,17 @@ import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 
-function defineWarning(settingsStore) {
+function defineWarning() {
+    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
     const { isInstalled, isRunning, isProtectionEnabled } = settingsStore;
     if (!isInstalled) {
         return ({
             title: 'AdGuard is not installed',
             buttonText: 'download',
-            handleClick: () => settingsStore.setInstalled(true),
+            handleClick: () => {
+                settingsStore.setInstalled(true);
+                uiStore.updateUi();
+            },
         });
     }
 
@@ -17,7 +21,11 @@ function defineWarning(settingsStore) {
         return ({
             title: 'AdGuard is not running',
             buttonText: 'run adguard',
-            handleClick: () => settingsStore.setRunning(true),
+            handleClick: () => {
+                settingsStore.setRunning(true);
+                uiStore.updateUi();
+                requestsStore.runAdguard();
+            },
         });
     }
 
@@ -27,6 +35,7 @@ function defineWarning(settingsStore) {
             buttonText: 'enable',
             handleClick: () => {
                 settingsStore.toggleProtection();
+                uiStore.updateUi();
             },
         });
     }
@@ -39,8 +48,7 @@ function defineWarning(settingsStore) {
 }
 
 const AppClosed = observer(() => {
-    const { settingsStore } = useContext(rootStore);
-    const { title, buttonText, handleClick } = defineWarning(settingsStore);
+    const { title, buttonText, handleClick } = defineWarning();
     return (
         <div className="app-closed__wrapper">
             <div className="app-closed__status-wrapper">

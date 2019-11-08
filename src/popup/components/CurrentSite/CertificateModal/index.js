@@ -5,8 +5,8 @@ import Switcher from '../../Settings/Switcher';
 import rootStore from '../../../stores';
 import './modal.pcss';
 
-const CertificateModal = observer(({ cn, onRequestClose }) => {
-    const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
+const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
+    const { settingsStore, requestsStore } = useContext(rootStore);
 
     const showCertificate = () => requestsStore.openOriginCert();
 
@@ -17,7 +17,7 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
     return (
         <Fragment>
             <Modal
-                isOpen={uiStore.isOpenCertificateModal}
+                isOpen={isOpen}
                 className={cn}
                 style={{ overlay: { backgroundColor: 'transparent' } }}
                 contentLabel="Certificate Modal"
@@ -48,6 +48,7 @@ const CertificateModal = observer(({ cn, onRequestClose }) => {
                     <span className="modal__header">AdGuard Personal CA</span>
                     {settingsStore.isExpired
                     && <p className="modal__text modal__text--warning modal__text--expired modal__text--uppercase">expired</p>}
+                    {/* TODO: add keyboard handler */}
                     {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
                     <div
                         className="modal__text modal__text--link"

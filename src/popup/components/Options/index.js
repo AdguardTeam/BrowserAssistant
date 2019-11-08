@@ -43,7 +43,7 @@ const Options = observer(() => {
     return (
         <div className="actions">
             {OPTIONS
-                .slice(0, uiStore.isPageChanged ? OPTIONS.length : -1)
+                .slice(0, uiStore.isPageFilteredByUserFilter ? OPTIONS.length : -1)
                 .map(({
                     iconName, text, handleClick, isDisabled,
                 }) => (

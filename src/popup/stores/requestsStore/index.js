@@ -35,7 +35,7 @@ class RequestsStore {
     removeCustomRules = () => {
         adguard.requests
             .removeCustomRules(this.rootStore.settingsStore.currentURL);
-        this.rootStore.uiStore.isPageChanged = false;
+        this.rootStore.uiStore.isPageFilteredByUserFilter = false;
     };
 
     @action
@@ -57,6 +57,9 @@ class RequestsStore {
     setProtectionStatus = () => adguard.requests.setProtectionStatus(
         this.rootStore.settingsStore.isProtectionEnabled
     );
+
+    @action
+    runAdguard = () => adguard.requests.setProtectionStatus(true)
 
     @action
     openSettings = () => adguard.requests.openSettings();
