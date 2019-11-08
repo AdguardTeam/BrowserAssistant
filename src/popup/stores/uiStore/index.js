@@ -18,6 +18,8 @@ class UiStore {
 
     @observable requestStatus = REQUEST_STATUSES.PENDING;
 
+    @observable isValidatedOnHost = true;
+
     @action
     setRequestStatus = () => {
         this.requestStatus = this.isAppWorking
@@ -80,7 +82,7 @@ class UiStore {
     setAppWorkingStatus = (workingStatus) => {
         const status = workingStatus || this.currentWorkingStatus;
         this.isAppWorking = Object.values(status)
-            .every(state => state === true);
+            .every(state => state === true) && this.isValidatedOnHost;
     };
 
     @action

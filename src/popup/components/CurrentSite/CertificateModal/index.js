@@ -13,6 +13,11 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
     const handleHttpsFiltering = () => {
         settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
     };
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            showCertificate();
+        }
+    };
 
     return (
         <Fragment>
@@ -48,13 +53,12 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                     <span className="modal__header">AdGuard Personal CA</span>
                     {settingsStore.isExpired
                     && <p className="modal__text modal__text--warning modal__text--expired modal__text--uppercase">expired</p>}
-                    {/* TODO: add keyboard handler */}
-                    {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
                     <div
                         className="modal__text modal__text--link"
                         role="button"
                         tabIndex="0"
                         onClick={showCertificate}
+                        onKeyDown={handleKeyDown}
                     >
                         More Information
                     </div>

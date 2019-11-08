@@ -6,6 +6,9 @@ import './AppClosed.pcss';
 function defineWarning() {
     const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
     const { isInstalled, isRunning, isProtectionEnabled } = settingsStore;
+    const isAppUpdated = uiStore.isValidatedOnHost;
+    const isExtensionUpdated = uiStore.isValidatedOnHost;
+
     if (!isInstalled) {
         return ({
             title: 'AdGuard is not installed',
@@ -36,6 +39,26 @@ function defineWarning() {
             handleClick: () => {
                 settingsStore.toggleProtection();
                 uiStore.updateUi();
+            },
+        });
+    }
+
+    if (!isAppUpdated) {
+        return ({
+            title: 'AdGuard is not updated',
+            buttonText: 'update',
+            handleClick: () => {
+                console.log('UPDATING ADGUARD');
+            },
+        });
+    }
+
+    if (!isExtensionUpdated) {
+        return ({
+            title: 'Assistant is not updated',
+            buttonText: 'update',
+            handleClick: () => {
+                console.log('UPDATING ASSISTANT');
             },
         });
     }

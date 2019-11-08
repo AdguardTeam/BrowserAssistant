@@ -15,9 +15,6 @@ const SecurePageModal = ({
             >
                 <header
                     className="modal__header"
-                    role="button"
-                    tabIndex="0"
-                    onFocus={onRequestClose}
                 >
                     {header}
                 </header>

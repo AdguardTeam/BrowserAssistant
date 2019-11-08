@@ -8,51 +8,66 @@ import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
+    const {
+        isExpired,
+        isHttps,
+        isHttpsFilteringEnabled,
+        isFilteringEnabled,
+        isPageSecured,
+        currentTabHostname,
+    } = settingsStore;
 
-    const toggleShowInfo = () => uiStore.toggleShowInfo();
-    const toggleShowInfoFocus = () => {
-        uiStore.toggleShowInfo();
-        setTimeout(() => uiStore.toggleShowInfo(), 5000);
-    };
+    const {
+        toggleShowInfo,
+        toggleOpenCertificateModal,
+        isOpenCertificateModal,
+        isSecureStatusHidden,
+        securityModalState,
+        isInfoHovered,
+    } = uiStore;
+
+    const handleShowInfo = () => toggleShowInfo();
 
     const toggleOpenAndResizeCertificateModal = () => {
         let bodyHeight = '32rem';
 
-        if (settingsStore.isExpired && settingsStore.isHttps) {
-            if (!uiStore.isOpenCertificateModal) {
+        if (isExpired && isHttps) {
+            if (!isOpenCertificateModal) {
                 bodyHeight = '44rem';
             }
 
-            if (uiStore.isOpenCertificateModal) {
+            if (isOpenCertificateModal) {
                 bodyHeight = '32rem';
             }
         }
 
         document.querySelector('body').style.height = bodyHeight;
-        uiStore.toggleOpenCertificateModal();
+        toggleOpenCertificateModal();
     };
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--lock': settingsStore.isHttpsFilteringEnabled || !settingsStore.isFilteringEnabled,
-        'current-site__icon--lock--danger': !settingsStore.isHttpsFilteringEnabled && settingsStore.isFilteringEnabled && settingsStore.isHttps,
-        'current-site__icon--warning--http': !settingsStore.isHttps && !settingsStore.isPageSecured,
-        'current-site__icon--warning--expired': settingsStore.isExpired && settingsStore.isFilteringEnabled && !settingsStore.isHttpsFilteringEnabled,
+        'current-site__icon--lock': isHttpsFilteringEnabled || !isFilteringEnabled,
+        'current-site__icon--lock--danger': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps,
+        'current-site__icon--warning--http': !isHttps && !isPageSecured && !isHttps,
+        'current-site__icon--warning--expired': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps && isExpired,
+        'current-site__icon--warning': (!isHttpsFilteringEnabled && isFilteringEnabled
+            && isHttps && isExpired) || (!isHttps && !isPageSecured),
     });
 
     const expiredClass = classNames({
         'modal modal__certificate': true,
-        'modal__certificate--expired': settingsStore.isExpired,
+        'modal__certificate--expired': isExpired,
     });
 
     const securedClass = classNames({
         'current-site__title': true,
-        'current-site__title--secured': settingsStore.isPageSecured,
+        'current-site__title--secured': isPageSecured,
     });
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': uiStore.isSecureStatusHidden,
+        'current-site__secure-status--hidden': isSecureStatusHidden,
     });
 
     return (
@@ -60,46 +75,47 @@ const CurrentSite = observer(() => {
             className="current-site__container"
         >
             <div className={securedClass}>
-                {(!settingsStore.isPageSecured
+                {(!isPageSecured
                 ) && (
                     <button
                         type="button"
-                        onClick={settingsStore.isFilteringEnabled
+                        onClick={isFilteringEnabled
                             ? toggleOpenAndResizeCertificateModal : undefined}
                         className={iconClass}
                     >
-                        {(settingsStore.isInfoHovered || uiStore.isOpenCertificateModal)
+                        {(isInfoHovered || isOpenCertificateModal)
                         && <div className="arrow-up" />}
                     </button>
                 )}
-                <div className="current-site__name">{settingsStore.currentTabHostname}</div>
+                <div className="current-site__name">{currentTabHostname}</div>
                 <CertificateModal
                     cn={expiredClass}
                     onRequestClose={toggleOpenAndResizeCertificateModal}
-                    isOpen={settingsStore.isHttps && uiStore.isOpenCertificateModal}
+                    isOpen={isHttps && isOpenCertificateModal}
                 />
                 <div
-                    onMouseOver={toggleShowInfo}
-                    onMouseLeave={toggleShowInfo}
-                    onFocus={toggleShowInfoFocus}
+                    onMouseOver={handleShowInfo}
+                    onMouseLeave={handleShowInfo}
+                    onFocus={handleShowInfo}
                     role="button"
-                    tabIndex="0"
+                    tabIndex="-1"
                     className={secureStatusClass}
                 >
                     secure page
                 </div>
                 <SecurePageModal
-                    cn={uiStore.securityModalState.cn}
-                    message={uiStore.securityModalState.message}
-                    header={uiStore.securityModalState.header}
-                    isOpen={(uiStore.isInfoHovered)
-                    || (!settingsStore.isHttps && uiStore.isOpenCertificateModal)}
+                    cn={securityModalState.cn}
+                    message={securityModalState.message}
+                    header={securityModalState.header}
+                    isOpen={(isInfoHovered)
+                    || (!isHttps && isOpenCertificateModal)
+                    }
                     onRequestClose={() => {
-                        if (settingsStore.isHttps) {
-                            uiStore.toggleShowInfo();
+                        if (isHttps) {
+                            toggleShowInfo();
                         }
-                        if (!settingsStore.isHttps) {
-                            uiStore.toggleOpenCertificateModal();
+                        if (!isHttps) {
+                            toggleOpenCertificateModal();
                         }
                     }}
                 />

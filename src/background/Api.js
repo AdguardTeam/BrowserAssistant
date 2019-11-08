@@ -4,7 +4,10 @@ import { HostResponseTypes, HostTypes } from '../lib/types';
 import browserApi from './browserApi';
 
 class Api {
-    initHandler(response) {
+    initHandler = (response) => {
+        const { parameters } = response;
+        this.isValidatedOnHost = (parameters && parameters.isValidatedOnHost)
+            ? parameters.isValidatedOnHost : false;
         return browserApi.runtime.sendMessage(response);
     }
 
