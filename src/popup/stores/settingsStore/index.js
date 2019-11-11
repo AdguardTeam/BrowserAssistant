@@ -13,15 +13,15 @@ class SettingsStore {
 
     @observable currentURL = '';
 
-    @observable isHttps = false;
+    @observable isHttps = true;
 
     @observable referrer = '';
 
-    @observable isPageSecured = true;
+    @observable isPageSecured = false;
 
     @observable isHttpsFilteringEnabled = false;
 
-    @observable isFilteringEnabled = true;
+    @observable isFilteringEnabled = false;
 
     @observable isInstalled = true;
 
@@ -30,6 +30,10 @@ class SettingsStore {
     @observable isProtectionEnabled = true;
 
     @observable originCertStatus = ORIGIN_CERT_STATUS.VALID;
+
+    @observable isAppUpdated = adguard.isAppUpdated;
+
+    @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
     @computed get isExpired() {
         return (this.originCertStatus === ORIGIN_CERT_STATUS.INVALID);
@@ -112,7 +116,6 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        this.rootStore.requestsStore.setFilteringStatus();
     };
 
     @action
@@ -125,7 +128,7 @@ class SettingsStore {
         } = parameters;
         this.setHttpAndHttpsFilteringActive(isFilteringEnabled, isHttpsFilteringEnabled);
         this.setOriginCertStatus(originCertStatus);
-        this.rootStore.uiStore.setPageChanged(isPageFilteredByUserFilter);
+        this.rootStore.uiStore.setPageFilteredByUserFilter(isPageFilteredByUserFilter);
     };
 
     @action
@@ -138,14 +141,33 @@ class SettingsStore {
 
     @action
     toggleProtection = () => {
-        if (this.isProtectionEnabled === true) {
+        if (this.isProtectionEnabled) {
             this.setProtection(false);
-            this.setHttpAndHttpsFilteringActive(false, false);
         } else {
             this.setProtection(true);
-            this.setHttpAndHttpsFilteringActive(true, false);
         }
-    }
+        this.rootStore.requestsStore.setProtectionStatus();
+    };
+
+    @action
+    updateApp = () => {
+        // TODO: update app
+        const updateSuccess = true;
+        if (updateSuccess) {
+            adguard.isAppUpdated = true;
+            this.isAppUpdated = adguard.isAppUpdated;
+        }
+    };
+
+    @action
+    updateExtension = () => {
+        // TODO: update extension
+        const updateSuccess = true;
+        if (updateSuccess) {
+            adguard.isExtensionUpdated = true;
+            this.isExtensionUpdated = adguard.isExtensionUpdated;
+        }
+    };
 }
 
 export default SettingsStore;

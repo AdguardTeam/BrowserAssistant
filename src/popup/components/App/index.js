@@ -1,6 +1,4 @@
-import React, {
-    Fragment, useState, useEffect, useContext,
-} from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import classNames from 'classnames';
@@ -17,7 +15,6 @@ Modal.setAppElement('#root');
 
 const App = observer(() => {
     const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
-    const [status, setRequestStatus] = useState(REQUEST_STATUSES.PENDING);
     const {
         setCurrentFilteringState,
         setCurrentAppState,
@@ -25,15 +22,14 @@ const App = observer(() => {
     } = settingsStore;
 
     const appClass = classNames({
-        'loading--pending': status === REQUEST_STATUSES.PENDING,
-        'loading--success': status === REQUEST_STATUSES.SUCCESS,
+        'loading--pending': uiStore.requestStatus === REQUEST_STATUSES.PENDING,
+        'loading--success': uiStore.requestStatus === REQUEST_STATUSES.SUCCESS,
     });
 
     useEffect(() => {
         (async () => {
             await getCurrentTabHostname();
             await getReferrer();
-            requestsStore.getCurrentAppState();
             requestsStore.getCurrentFilteringState();
         })();
 
@@ -46,19 +42,16 @@ const App = observer(() => {
                 }
 
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
-                const workingState = { isInstalled, isRunning, isProtectionEnabled };
+                const workingStatus = { isInstalled, isRunning, isProtectionEnabled };
 
-                uiStore.setAppWorkingStatus(Object.values(workingState)
-                    .every(state => state === true));
+                uiStore.setAppWorkingStatus(workingStatus);
 
                 if (parameters && parameters.originCertStatus) {
                     setCurrentFilteringState(parameters);
                 }
 
-                setCurrentAppState(workingState);
-
-                setRequestStatus(uiStore.isAppWorking
-                    ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR);
+                setCurrentAppState(workingStatus);
+                uiStore.setRequestStatus();
             }
         );
 
@@ -68,7 +61,7 @@ const App = observer(() => {
     }, []);
     return (
         <Fragment>
-            {status !== REQUEST_STATUSES.ERROR
+            {uiStore.requestStatus === REQUEST_STATUSES.SUCCESS
             && (
                 <div className={appClass}>
                     <Header />
@@ -77,7 +70,7 @@ const App = observer(() => {
                     <Options />
                 </div>
             )}
-            {status === REQUEST_STATUSES.ERROR && (
+            {uiStore.requestStatus === REQUEST_STATUSES.ERROR && (
                 <Fragment>
                     <Header />
                     <AppClosed />

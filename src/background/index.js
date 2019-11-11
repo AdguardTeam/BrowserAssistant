@@ -19,7 +19,7 @@ async function sendMessage(sender, sendResponse) {
 function addRule(sender) {
     const { ruleText } = sender;
     adguard.requests.addRule(ruleText);
-    adguard.tabs.isPageChanged = true;
+    adguard.tabs.isPageFilteredByUserFilter = true;
 }
 
 function handleMessage(sender, data, sendResponse) {

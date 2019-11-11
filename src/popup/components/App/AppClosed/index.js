@@ -3,42 +3,79 @@ import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 
+const states = {
+    isNotInstalled: {
+        title: 'AdGuard is not installed',
+        buttonText: 'download',
+        updateStore: settingsStore => settingsStore.setInstalled(true),
+    },
+
+    isNotRunning: {
+        title: 'AdGuard is not running',
+        buttonText: 'run adguard',
+        updateStore: (settingsStore, requestsStore) => {
+            settingsStore.setRunning(true);
+            requestsStore.runAdguard();
+        },
+    },
+
+    isProtectionDisabled: {
+        title: 'AdGuard protection is paused',
+        buttonText: 'enable',
+        updateStore: settingsStore => settingsStore.toggleProtection(),
+    },
+
+    isAppNotUpdated: {
+        title: 'AdGuard is not updated',
+        buttonText: 'update',
+        updateStore: settingsStore => settingsStore.updateApp(),
+    },
+
+    isExtensionNotUpdated: {
+        title: 'Assistant is not updated',
+        buttonText: 'update',
+        updateStore: settingsStore => settingsStore.updateExtension(),
+    },
+
+    isPending: {
+        title: 'pending',
+        buttonText: 'pending',
+        updateStore: () => null,
+    },
+};
+
 function defineWarning(settingsStore) {
-    const { isInstalled, isRunning, isProtectionEnabled } = settingsStore;
+    const {
+        isInstalled, isRunning, isProtectionEnabled, isAppUpdated, isExtensionUpdated,
+    } = settingsStore;
+
     if (!isInstalled) {
-        return ({
-            title: 'AdGuard is not installed',
-            buttonText: 'download',
-            handleClick: () => settingsStore.setInstalled(true),
-        });
+        return states.isNotInstalled;
     }
 
     if (!isRunning) {
-        return ({
-            title: 'AdGuard is not running',
-            buttonText: 'run adguard',
-            handleClick: () => settingsStore.setRunning(true),
-        });
+        return states.isNotRunning;
     }
 
     if (!isProtectionEnabled) {
-        return ({
-            title: 'AdGuard protection is paused',
-            buttonText: 'enable',
-            handleClick: () => settingsStore.setProtection(true),
-        });
+        return states.isProtectionDisabled;
     }
 
-    return ({
-        title: 'pending',
-        buttonText: 'pending',
-        handleClick: null,
-    });
+    if (!isAppUpdated) {
+        return states.isAppNotUpdated;
+    }
+
+    if (!isExtensionUpdated) {
+        return states.isExtensionNotUpdated;
+    }
+
+    return states.isPending;
 }
 
 const AppClosed = observer(() => {
-    const { settingsStore } = useContext(rootStore);
-    const { title, buttonText, handleClick } = defineWarning(settingsStore);
+    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
+
+    const { title, buttonText, updateStore } = defineWarning(settingsStore);
     return (
         <div className="app-closed__wrapper">
             <div className="app-closed__status-wrapper">
@@ -47,7 +84,10 @@ const AppClosed = observer(() => {
             <button
                 className="app-closed__button"
                 type="button"
-                onClick={handleClick}
+                onClick={() => {
+                    updateStore(settingsStore, requestsStore);
+                    uiStore.updateUi();
+                }}
             >
                 {buttonText}
             </button>
