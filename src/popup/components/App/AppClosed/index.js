@@ -3,75 +3,79 @@ import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 
-function defineWarning() {
-    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
-    const { isInstalled, isRunning, isProtectionEnabled } = settingsStore;
-    const isAppUpdated = uiStore.isValidatedOnHost;
-    const isExtensionUpdated = uiStore.isValidatedOnHost;
+const states = {
+    isNotInstalled: {
+        title: 'AdGuard is not installed',
+        buttonText: 'download',
+        updateStore: settingsStore => settingsStore.setInstalled(true),
+    },
+
+    isNotRunning: {
+        title: 'AdGuard is not running',
+        buttonText: 'run adguard',
+        updateStore: (settingsStore, requestsStore) => {
+            settingsStore.setRunning(true);
+            requestsStore.runAdguard();
+        },
+    },
+
+    isProtectionDisabled: {
+        title: 'AdGuard protection is paused',
+        buttonText: 'enable',
+        updateStore: settingsStore => settingsStore.toggleProtection(),
+    },
+
+    isAppNotUpdated: {
+        title: 'AdGuard is not updated',
+        buttonText: 'update',
+        updateStore: settingsStore => settingsStore.updateApp(),
+    },
+
+    isExtensionNotUpdated: {
+        title: 'Assistant is not updated',
+        buttonText: 'update',
+        updateStore: settingsStore => settingsStore.updateExtension(),
+    },
+
+    isPending: {
+        title: 'pending',
+        buttonText: 'pending',
+        updateStore: () => null,
+    },
+};
+
+function defineWarning(settingsStore) {
+    const {
+        isInstalled, isRunning, isProtectionEnabled, isAppUpdated, isExtensionUpdated,
+    } = settingsStore;
 
     if (!isInstalled) {
-        return ({
-            title: 'AdGuard is not installed',
-            buttonText: 'download',
-            handleClick: () => {
-                settingsStore.setInstalled(true);
-                uiStore.updateUi();
-            },
-        });
+        return states.isNotInstalled;
     }
 
     if (!isRunning) {
-        return ({
-            title: 'AdGuard is not running',
-            buttonText: 'run adguard',
-            handleClick: () => {
-                settingsStore.setRunning(true);
-                uiStore.updateUi();
-                requestsStore.runAdguard();
-            },
-        });
+        return states.isNotRunning;
     }
 
     if (!isProtectionEnabled) {
-        return ({
-            title: 'AdGuard protection is paused',
-            buttonText: 'enable',
-            handleClick: () => {
-                settingsStore.toggleProtection();
-                uiStore.updateUi();
-            },
-        });
+        return states.isProtectionDisabled;
     }
 
     if (!isAppUpdated) {
-        return ({
-            title: 'AdGuard is not updated',
-            buttonText: 'update',
-            handleClick: () => {
-                console.log('UPDATING ADGUARD');
-            },
-        });
+        return states.isAppNotUpdated;
     }
 
     if (!isExtensionUpdated) {
-        return ({
-            title: 'Assistant is not updated',
-            buttonText: 'update',
-            handleClick: () => {
-                console.log('UPDATING ASSISTANT');
-            },
-        });
+        return states.isExtensionNotUpdated;
     }
 
-    return ({
-        title: 'pending',
-        buttonText: 'pending',
-        handleClick: null,
-    });
+    return states.isPending;
 }
 
 const AppClosed = observer(() => {
-    const { title, buttonText, handleClick } = defineWarning();
+    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
+
+    const { title, buttonText, updateStore } = defineWarning(settingsStore);
     return (
         <div className="app-closed__wrapper">
             <div className="app-closed__status-wrapper">
@@ -80,7 +84,10 @@ const AppClosed = observer(() => {
             <button
                 className="app-closed__button"
                 type="button"
-                onClick={handleClick}
+                onClick={() => {
+                    updateStore(settingsStore, requestsStore);
+                    uiStore.updateUi();
+                }}
             >
                 {buttonText}
             </button>

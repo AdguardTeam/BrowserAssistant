@@ -31,6 +31,10 @@ class SettingsStore {
 
     @observable originCertStatus = ORIGIN_CERT_STATUS.VALID;
 
+    @observable isAppUpdated = adguard.isAppUpdated;
+
+    @observable isExtensionUpdated = adguard.isExtensionUpdated;
+
     @computed get isExpired() {
         return (this.originCertStatus === ORIGIN_CERT_STATUS.INVALID);
     }
@@ -143,7 +147,27 @@ class SettingsStore {
             this.setProtection(true);
         }
         this.rootStore.requestsStore.setProtectionStatus();
-    }
+    };
+
+    @action
+    updateApp = () => {
+        // TODO: update app
+        const updateSuccess = true;
+        if (updateSuccess) {
+            adguard.isAppUpdated = true;
+            this.isAppUpdated = adguard.isAppUpdated;
+        }
+    };
+
+    @action
+    updateExtension = () => {
+        // TODO: update extension
+        const updateSuccess = true;
+        if (updateSuccess) {
+            adguard.isExtensionUpdated = true;
+            this.isExtensionUpdated = adguard.isExtensionUpdated;
+        }
+    };
 }
 
 export default SettingsStore;

@@ -2,14 +2,29 @@ import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import { HostResponseTypes, HostTypes } from '../lib/types';
 import browserApi from './browserApi';
+import versions from './versions';
 
 class Api {
+    isAppUpdated = false;
+
+    isExtensionUpdated = false;
+
     initHandler = (response) => {
         const { parameters } = response;
-        this.isValidatedOnHost = (parameters && parameters.isValidatedOnHost)
-            ? parameters.isValidatedOnHost : false;
+        if (parameters && parameters.isValidatedOnHost) {
+            if (parameters.isValidatedOnHost === false) {
+                // TODO: find out the format of version to compare them correctly
+                this.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
+                this.isExtensionUpdated = (versions.version >= parameters.version);
+            } else {
+                this.isAppUpdated = true;
+                this.isExtensionUpdated = true;
+            }
+            adguard.isAppUpdated = this.isAppUpdated;
+            adguard.isExtensionUpdated = this.isExtensionUpdated;
+        }
         return browserApi.runtime.sendMessage(response);
-    }
+    };
 
     init = () => {
         console.log('init');

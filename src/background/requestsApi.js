@@ -1,21 +1,13 @@
 import { RequestTypes, AssistantTypes } from '../lib/types';
 import api from './Api';
-
-const config = require('../../package.json');
+import versions from './versions';
 
 class RequestsApi {
-    VERSIONS = {
-        apiVersion: '1',
-        userAgent: window.navigator.userAgent,
-    };
-
     init(assistantType = AssistantTypes.nativeAssistant) {
         return api.makeRequest({
             type: RequestTypes.init,
             parameters: {
-                version: config.version,
-                apiVersion: this.VERSIONS.apiVersion,
-                userAgent: this.VERSIONS.userAgent,
+                ...versions,
                 type: assistantType,
             },
         });

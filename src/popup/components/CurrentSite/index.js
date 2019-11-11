@@ -75,8 +75,7 @@ const CurrentSite = observer(() => {
             className="current-site__container"
         >
             <div className={securedClass}>
-                {(!isPageSecured
-                ) && (
+                {!isPageSecured && (
                     <button
                         type="button"
                         onClick={isFilteringEnabled

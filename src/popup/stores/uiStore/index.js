@@ -18,17 +18,9 @@ class UiStore {
 
     @observable requestStatus = REQUEST_STATUSES.PENDING;
 
-    @observable isValidatedOnHost = true;
-
     @action
     setRequestStatus = () => {
-        this.requestStatus = this.isAppWorking
-            ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR;
-    };
-
-    @action
-    test = () => {
-        (this.requestStatus = REQUEST_STATUSES.SUCCESS);
+        this.requestStatus = this.isAppWorking ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR;
     };
 
     @computed get securityModalState() {
@@ -80,9 +72,11 @@ class UiStore {
 
     @action
     setAppWorkingStatus = (workingStatus) => {
+        const { isAppUpdated, isExtensionUpdated } = this.rootStore.settingsStore;
+
         const status = workingStatus || this.currentWorkingStatus;
-        this.isAppWorking = Object.values(status)
-            .every(state => state === true) && this.isValidatedOnHost;
+        this.isAppWorking = Object.values(status).every(state => state === true)
+            && isAppUpdated && isExtensionUpdated;
     };
 
     @action
