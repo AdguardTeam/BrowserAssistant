@@ -15,7 +15,7 @@ const states = {
         buttonText: 'run adguard',
         updateStore: (settingsStore, requestsStore) => {
             settingsStore.setRunning(true);
-            requestsStore.runAdguard();
+            requestsStore.startApp();
         },
     },
 

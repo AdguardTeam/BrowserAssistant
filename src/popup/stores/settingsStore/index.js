@@ -3,6 +3,7 @@ import {
 } from 'mobx';
 import { ORIGIN_CERT_STATUS } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
+import log from '../../../lib/logger';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -71,7 +72,7 @@ class SettingsStore {
                 }
             });
         } catch (error) {
-            console.error(error.message);
+            log.error(error.message);
         }
     };
 

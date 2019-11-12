@@ -59,7 +59,7 @@ class RequestsStore {
     );
 
     @action
-    runAdguard = () => adguard.requests.setProtectionStatus(true)
+    startApp = () => adguard.requests.startApp();
 
     @action
     openSettings = () => adguard.requests.openSettings();

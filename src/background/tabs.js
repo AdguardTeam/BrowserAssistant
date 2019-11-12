@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 import { MessageTypes, RequestTypes } from '../lib/types';
+import log from '../lib/logger';
 
 class Tabs {
     async getCurrent() {
@@ -17,7 +18,7 @@ class Tabs {
                 return response;
             }
         } catch (error) {
-            console.error(error.message);
+            log.error(error.message);
         }
         return '';
     }

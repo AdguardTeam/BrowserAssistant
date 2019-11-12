@@ -3,6 +3,7 @@ import browser from 'webextension-polyfill';
 import { HostResponseTypes, HostTypes } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
+import log from '../lib/logger';
 
 class Api {
     isAppUpdated = false;
@@ -27,20 +28,21 @@ class Api {
     };
 
     init = () => {
-        console.log('init');
+        log.info('init');
         this.port = browser.runtime.connectNative(HostTypes.nativeBrowserAssistant);
         this.port.onMessage.addListener(this.initHandler);
         return this.port;
     };
 
     deinit = () => {
-        console.log('deinit');
+        log.info('deinit');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.initHandler);
         return this.port;
     };
 
     makeRequest = async (params) => {
+        log.info(params);
         const requestId = nanoid();
         return new Promise((resolve, reject) => {
             this.port.postMessage({ id: requestId, ...params });
@@ -48,10 +50,13 @@ class Api {
             const messageHandler = ({ id, response, data }) => {
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
+                    setTimeout(() => reject(new Error('error')), 1000);
+
                     if (response === HostResponseTypes.error) {
                         this.deinit();
                         return reject(new Error('error'));
                     }
+
                     if (response === HostResponseTypes.ok) {
                         return resolve(data);
                     }

@@ -37,16 +37,7 @@
         }
     ],
     "permissions": [
-        "tabs",
         "activeTab",
-        "<all_urls>",
-        "webRequest",
-        "webRequestBlocking",
-        "webNavigation",
-        "storage",
-        "unlimitedStorage",
-        "contextMenus",
-        "cookies",
         "nativeMessaging"
     ]
 }

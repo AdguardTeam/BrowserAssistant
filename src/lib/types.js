@@ -11,6 +11,7 @@ export const RequestTypes = {
     reportSite: 'reportSite',
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
+    startApp: 'startApp',
 };
 
 export const AssistantTypes = {
