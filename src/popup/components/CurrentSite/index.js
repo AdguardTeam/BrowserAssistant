@@ -53,6 +53,7 @@ const CurrentSite = observer(() => {
         'current-site__icon--warning--expired': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps && isExpired,
         'current-site__icon--warning': (!isHttpsFilteringEnabled && isFilteringEnabled
             && isHttps && isExpired) || (!isHttps && !isPageSecured),
+        'current-site__icon--disabled-cursor': !isFilteringEnabled,
     });
 
     const expiredClass = classNames({

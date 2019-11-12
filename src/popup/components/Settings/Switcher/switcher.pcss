@@ -14,11 +14,11 @@
         width: 4.8rem;
         height: 2.8rem;
         border-radius: 1.6rem;
-        background-color: var(--gray88);
-        transition: var(--t3) background-color;
+        background-color: var(--grayd8);
 
-        &--disabled {
-            background-color: var(--grayd8);
+        &--secured {
+            cursor: not-allowed;
+            background-color: var(--gray88)
         }
     }
 
@@ -46,7 +46,7 @@
         }
     }
 
-    &__checkbox:checked ~ .switcher__label {
+    &__checkbox:checked ~ &__label {
         background-color: var(--green74);
 
         &--secured {

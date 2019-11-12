@@ -32,6 +32,10 @@ class Tabs {
         const options = { addRuleCallbackName: RequestTypes.addRule };
         this.sendMessage(MessageTypes.initAssistant, options);
     }
+
+    openDownloadPage() {
+        browser.tabs.create({ url: 'https://adguard.com/ru/download.html?os=windows' });
+    }
 }
 
 const tabs = new Tabs();

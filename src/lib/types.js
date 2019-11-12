@@ -14,6 +14,11 @@ export const RequestTypes = {
     startApp: 'startApp',
 };
 
+export const ResponseTypes = {
+    APP_STATE_RESPONSE_MESSAGE: 'APP_STATE_RESPONSE_MESSAGE',
+    INIT: 'INIT',
+};
+
 export const AssistantTypes = {
     nativeAssistant: 'nativeAssistant',
     assistant: 'assistant',

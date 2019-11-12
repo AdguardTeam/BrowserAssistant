@@ -77,6 +77,11 @@ class SettingsStore {
     };
 
     @action
+    openDownloadPage = () => {
+        adguard.tabs.openDownloadPage();
+    };
+
+    @action
     setSecure = (isPageSecured) => {
         this.isPageSecured = isPageSecured;
     };

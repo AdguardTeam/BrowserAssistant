@@ -1,30 +1,25 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
-import { HostResponseTypes, HostTypes } from '../lib/types';
+import { HostResponseTypes, HostTypes, ResponseTypes } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
 import log from '../lib/logger';
 
 class Api {
-    isAppUpdated = false;
-
-    isExtensionUpdated = false;
-
     initHandler = (response) => {
+        log.info('response', response);
         const { parameters } = response;
-        if (parameters && parameters.isValidatedOnHost) {
-            if (parameters.isValidatedOnHost === false) {
-                // TODO: find out the format of version to compare them correctly
-                this.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
-                this.isExtensionUpdated = (versions.version >= parameters.version);
-            } else {
-                this.isAppUpdated = true;
-                this.isExtensionUpdated = true;
-            }
-            adguard.isAppUpdated = this.isAppUpdated;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
+
+        if (response.requestId.startsWith(ResponseTypes.INIT)) {
+            adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
+            adguard.isExtensionUpdated = parameters.isValidatedOnHost;
         }
-        return browserApi.runtime.sendMessage(response);
+
+        if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
+            return;
+        }
+
+        browserApi.runtime.sendMessage(response);
     };
 
     init = () => {
@@ -41,9 +36,9 @@ class Api {
         return this.port;
     };
 
-    makeRequest = async (params) => {
+    makeRequest = async (params, idPrefix) => {
         log.info(params);
-        const requestId = nanoid();
+        const requestId = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         return new Promise((resolve, reject) => {
             this.port.postMessage({ id: requestId, ...params });
             // eslint-disable-next-line consistent-return

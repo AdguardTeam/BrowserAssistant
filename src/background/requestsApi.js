@@ -1,4 +1,4 @@
-import { RequestTypes, AssistantTypes } from '../lib/types';
+import { RequestTypes, ResponseTypes, AssistantTypes } from '../lib/types';
 import api from './Api';
 import versions from './versions';
 
@@ -10,7 +10,7 @@ class RequestsApi {
                 ...versions,
                 type: assistantType,
             },
-        });
+        }, ResponseTypes.INIT);
     }
 
     getCurrentAppState() {
