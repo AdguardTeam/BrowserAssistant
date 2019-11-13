@@ -7,12 +7,13 @@ import log from '../lib/logger';
 
 class Api {
     initHandler = (response) => {
-        log.info('response', response);
+        log.info(response);
         const { parameters } = response;
 
         if (response.requestId.startsWith(ResponseTypes.INIT)) {
             adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
             adguard.isExtensionUpdated = parameters.isValidatedOnHost;
+            return;
         }
 
         if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
