@@ -24,8 +24,7 @@ class Tabs {
     }
 
     async getReferrer() {
-        const referrer = await this.sendMessage(MessageTypes.getReferrer);
-        return referrer;
+        return this.sendMessage(MessageTypes.getReferrer);
     }
 
     async initAssistant() {

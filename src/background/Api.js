@@ -7,10 +7,10 @@ import log from '../lib/logger';
 
 class Api {
     initHandler = (response) => {
-        log.info(response);
+        log.info('response ', response);
         const { parameters } = response;
 
-        if (response.requestId.startsWith(ResponseTypes.INIT)) {
+        if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
             adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
             adguard.isExtensionUpdated = parameters.isValidatedOnHost;
             return;
@@ -38,26 +38,29 @@ class Api {
     };
 
     makeRequest = async (params, idPrefix) => {
-        log.info(params);
-        const requestId = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
+        log.info('request ', params);
+        const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         return new Promise((resolve, reject) => {
-            this.port.postMessage({ id: requestId, ...params });
-            // eslint-disable-next-line consistent-return
-            const messageHandler = ({ id, response, data }) => {
+            this.port.postMessage({ id, ...params });
+            const messageHandler = ({ requestId, result, data }) => {
+                const pendingTimer = setTimeout(() => reject(new Error('Native host is not responding.')), 60000);
+
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
-                    setTimeout(() => reject(new Error('error')), 1000);
+                    clearTimeout(pendingTimer);
 
-                    if (response === HostResponseTypes.error) {
+                    if (result === HostResponseTypes.error) {
                         this.deinit();
-                        return reject(new Error('error'));
+                        return reject(new Error(`Native host responded with status: ${result}.`));
                     }
 
-                    if (response === HostResponseTypes.ok) {
+                    if (result === HostResponseTypes.ok) {
                         return resolve(data);
                     }
                 }
+                return '';
             };
+
             this.port.onMessage.addListener(messageHandler);
         });
     };
