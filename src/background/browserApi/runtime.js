@@ -10,7 +10,7 @@ const sendMessage = async (...args) => {
     try {
         await browser.runtime.sendMessage(...args);
     } catch (e) {
-        log.error(e.message);
+        log.warn(e.message);
     }
 };
 

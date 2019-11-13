@@ -74,13 +74,21 @@
         }
 
     }
-
-
+    
     &__info {
         &--upper {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
+
+            & .switcher {
+                transform: translateY(-0.5rem);
+            }
+        }
+
+        &--lower {
+            display: flex;
+            flex-direction: column;
         }
 
         &--upper > .switcher {

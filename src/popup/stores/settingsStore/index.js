@@ -72,7 +72,7 @@ class SettingsStore {
                 }
             });
         } catch (error) {
-            log.error(error.message);
+            log.warn(error.message);
         }
     };
 
