@@ -13,7 +13,6 @@ class Api {
         if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
             adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
             adguard.isExtensionUpdated = parameters.isValidatedOnHost;
-            return;
         }
 
         if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
@@ -41,10 +40,19 @@ class Api {
         log.info('request ', params);
         const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         return new Promise((resolve, reject) => {
-            this.port.postMessage({ id, ...params });
-            const messageHandler = ({ requestId, result, data }) => {
-                const pendingTimer = setTimeout(() => reject(new Error('Native host is not responding.')), 60000);
+            try {
+                this.port.postMessage({ id, ...params });
+            } catch (e) {
+                this.init();
+            }
 
+            const messageHandler = ({ requestId, result, data }) => {
+                const oneMinute = 600000;
+
+                const pendingTimer = setTimeout(() => {
+                    reject(new Error('Native host is not responding.'));
+                    this.port.onMessage.removeListener(messageHandler);
+                }, oneMinute);
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(pendingTimer);
@@ -58,7 +66,7 @@ class Api {
                         return resolve(data);
                     }
                 }
-                return '';
+                return undefined;
             };
 
             this.port.onMessage.addListener(messageHandler);

@@ -59,26 +59,31 @@ class SettingsStore {
 
                 switch (protocol) {
                     case 'https:':
-                        this.isHttps = true;
+                        this.setIsHttps(true);
                         this.setSecure(false);
                         break;
                     case 'http:':
-                        this.isHttps = false;
+                        this.setIsHttps(false);
                         this.setSecure(false);
                         break;
                     default:
-                        this.isHttps = false;
+                        this.setIsHttps(false);
                         this.setSecure(true);
                 }
             });
         } catch (error) {
-            log.warn(error.message);
+            log.error(error.message);
         }
     };
 
     @action
     openDownloadPage = () => {
         adguard.tabs.openDownloadPage();
+    };
+
+    @action
+    setIsHttps = (isHttps) => {
+        this.isHttps = isHttps;
     };
 
     @action
