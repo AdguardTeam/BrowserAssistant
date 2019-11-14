@@ -50,7 +50,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                 )}
                 <div className="modal__info--lower">
                     <p className="modal__text modal__text--notion">Verified by:</p>
-                    <span className="modal__header">AdGuard Personal CA</span>
+                    <span className="modal__header modal__header--cert">AdGuard Personal CA</span>
                     {settingsStore.isExpired
                     && <p className="modal__text modal__text--warning modal__text--expired modal__text--uppercase">expired</p>}
                     <div

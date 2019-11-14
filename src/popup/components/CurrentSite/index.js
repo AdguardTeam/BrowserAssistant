@@ -83,8 +83,7 @@ const CurrentSite = observer(() => {
                             ? toggleOpenAndResizeCertificateModal : undefined}
                         className={iconClass}
                     >
-                        {(isInfoHovered || isOpenCertificateModal)
-                        && <div className="arrow-up" />}
+                        {isOpenCertificateModal && <div className="arrow-up" />}
                     </button>
                 )}
                 <div className="current-site__name">{currentTabHostname}</div>
@@ -93,10 +92,10 @@ const CurrentSite = observer(() => {
                     onRequestClose={toggleOpenAndResizeCertificateModal}
                     isOpen={isHttps && isOpenCertificateModal}
                 />
+                {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
                 <div
                     onMouseOver={handleShowInfo}
                     onMouseLeave={handleShowInfo}
-                    onFocus={handleShowInfo}
                     role="button"
                     tabIndex="-1"
                     className={secureStatusClass}
