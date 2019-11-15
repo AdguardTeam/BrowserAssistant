@@ -47,12 +47,12 @@ class Api {
             }
 
             const messageHandler = ({ requestId, result }) => {
-                const oneMinute = 600000;
+                const RESPONSE_TIMEOUT_MS = 60 * 1000;
 
                 const pendingTimer = setTimeout(() => {
                     reject(new Error('Native host is not responding.'));
                     this.port.onMessage.removeListener(messageHandler);
-                }, oneMinute);
+                }, RESPONSE_TIMEOUT_MS);
 
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
