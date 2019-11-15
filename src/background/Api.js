@@ -46,7 +46,9 @@ class Api {
                 this.init();
             }
 
-            const messageHandler = ({ requestId, result }) => {
+            const messageHandler = (msg) => {
+                const { requestId, result } = msg;
+
                 const RESPONSE_TIMEOUT_MS = 60 * 1000;
 
                 const pendingTimer = setTimeout(() => {
@@ -58,12 +60,16 @@ class Api {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(pendingTimer);
 
+                    if (result === HostResponseTypes.ok) {
+                        return resolve(msg);
+                    }
+
                     if (result === HostResponseTypes.error) {
                         this.deinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }
                 }
-                return undefined;
+                return '';
             };
 
             this.port.onMessage.addListener(messageHandler);

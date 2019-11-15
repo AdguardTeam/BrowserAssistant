@@ -21,6 +21,7 @@ module.exports = {
     },
     permissions: [
         'activeTab',
+        'tabs',
         'nativeMessaging',
     ],
 };
