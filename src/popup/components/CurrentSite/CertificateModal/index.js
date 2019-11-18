@@ -43,7 +43,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                     />
                 </div>
                 {settingsStore.isExpired && (
-                    <p className="modal__text modal__text--expired">
+                    <p className="modal__text modal__text--expired modal__text--expired--upper">
                         AdGuard could not verify this website&apos;s
                         certificate, because the root certificate has expired
                     </p>
@@ -52,7 +52,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                     <p className="modal__text modal__text--notion">Verified by:</p>
                     <span className="modal__header">AdGuard Personal CA</span>
                     {settingsStore.isExpired
-                    && <p className="modal__text modal__text--expired modal__text--uppercase">expired</p>}
+                    && <p className="modal__text modal__text--expired modal__text--expired--lower modal__text--uppercase">expired</p>}
                     <div
                         className="modal__text modal__text--link modal__text--cert"
                         role="button"

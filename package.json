@@ -16,7 +16,8 @@
         "test:watch": "jest --watch",
         "locales:download": "LOCALES=DOWNLOAD node tasks/locales.js",
         "locales:upload": "LOCALES=UPLOAD node tasks/locales.js",
-        "watch": "NODE_ENV=development run-s \"build:chrome --watch\""
+        "watch": "NODE_ENV=development run-s \"build:chrome --watch\"",
+        "watch:firefox": "NODE_ENV=development run-s \"build:firefox --watch\""
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",
