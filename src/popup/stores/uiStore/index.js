@@ -1,6 +1,4 @@
-import {
-    action, observable, computed,
-} from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { REQUEST_STATUSES } from '../consts';
 
 class UiStore {
@@ -88,6 +86,29 @@ class UiStore {
     @action
     toggleOpenCertificateModal = () => {
         this.isOpenCertificateModal = !this.isOpenCertificateModal;
+    };
+
+    resizeCertificateModal = () => {
+        const { isExpired, isHttps } = this.rootStore.settingsStore;
+        const { isOpenCertificateModal, isPageFilteredByUserFilter } = this;
+
+        let bodyHeight = document.querySelector('body').style.height;
+
+        if (isExpired && isHttps) {
+            if (!isOpenCertificateModal) {
+                bodyHeight = '44rem';
+            }
+
+            if (isOpenCertificateModal) {
+                bodyHeight = '32rem';
+            }
+
+            if (isOpenCertificateModal && isPageFilteredByUserFilter) {
+                bodyHeight = '39rem';
+            }
+        }
+
+        document.querySelector('body').style.height = bodyHeight;
     };
 
     @action

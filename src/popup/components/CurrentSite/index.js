@@ -22,26 +22,18 @@ const CurrentSite = observer(() => {
         toggleOpenCertificateModal,
         isOpenCertificateModal,
         isSecureStatusHidden,
-        securityModalState,
         isInfoHovered,
+        resizeCertificateModal,
+        securityModalState,
     } = uiStore;
 
-    const handleShowInfo = () => toggleShowInfo();
 
-    const toggleOpenAndResizeCertificateModal = () => {
-        let bodyHeight = '32rem';
+    const onInfoHovered = () => {
+        toggleShowInfo();
+    };
 
-        if (isExpired && isHttps) {
-            if (!isOpenCertificateModal) {
-                bodyHeight = '44rem';
-            }
-
-            if (isOpenCertificateModal) {
-                bodyHeight = '32rem';
-            }
-        }
-
-        document.querySelector('body').style.height = bodyHeight;
+    const handleOpenCertificateModal = () => {
+        resizeCertificateModal();
         toggleOpenCertificateModal();
     };
 
@@ -75,49 +67,52 @@ const CurrentSite = observer(() => {
         <div
             className="current-site__container"
         >
-            <div className={securedClass}>
+            <div
+                className={securedClass}
+            >
                 {!isPageSecured && (
+                    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
                     <button
                         type="button"
-                        onClick={isFilteringEnabled
-                            ? toggleOpenAndResizeCertificateModal : undefined}
+                        onClick={(isHttps && isFilteringEnabled)
+                            ? handleOpenCertificateModal : undefined}
+                        onMouseOver={(!isHttps && isFilteringEnabled) ? onInfoHovered : undefined}
+                        onMouseOut={(!isHttps && isFilteringEnabled) ? onInfoHovered : undefined}
                         className={iconClass}
                     >
-                        {isOpenCertificateModal && <div className="arrow-up" />}
+                        {(isOpenCertificateModal || (!isHttps && isInfoHovered))
+                        && <div className="arrow-up" />}
                     </button>
                 )}
-                <div className="current-site__name">{currentTabHostname}</div>
+
+                <div className="current-site__name">
+                    {currentTabHostname || 'hostname'}
+                </div>
+
                 <CertificateModal
                     cn={expiredClass}
-                    onRequestClose={toggleOpenAndResizeCertificateModal}
+                    onRequestClose={handleOpenCertificateModal}
                     isOpen={isHttps && isOpenCertificateModal}
                 />
+
                 {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
                 <div
-                    onMouseOver={handleShowInfo}
-                    onMouseLeave={handleShowInfo}
                     role="button"
                     tabIndex="-1"
                     className={secureStatusClass}
+                    onMouseOver={onInfoHovered}
+                    onMouseOut={onInfoHovered}
                 >
-                    secure page
+                        secure page
                 </div>
+
                 <SecurePageModal
                     cn={securityModalState.cn}
                     message={securityModalState.message}
+                    isOpen={isInfoHovered || (!isHttps && isOpenCertificateModal)}
                     header={securityModalState.header}
-                    isOpen={(isInfoHovered)
-                    || (!isHttps && isOpenCertificateModal)
-                    }
-                    onRequestClose={() => {
-                        if (isHttps) {
-                            toggleShowInfo();
-                        }
-                        if (!isHttps) {
-                            toggleOpenCertificateModal();
-                        }
-                    }}
                 />
+
             </div>
         </div>
     );

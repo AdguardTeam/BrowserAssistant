@@ -35,5 +35,5 @@ export const HostResponseTypes = {
 };
 
 export const HostTypes = {
-    nativeBrowserAssistant: 'native_browser_assistant',
+    browserExtensionHost: 'browser_extension_host',
 };

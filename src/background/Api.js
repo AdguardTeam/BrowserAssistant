@@ -24,7 +24,7 @@ class Api {
 
     init = () => {
         log.info('init');
-        this.port = browser.runtime.connectNative(HostTypes.nativeBrowserAssistant);
+        this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
         this.port.onMessage.addListener(this.initHandler);
         return this.port;
     };
@@ -71,7 +71,6 @@ class Api {
                 }
                 return '';
             };
-
             this.port.onMessage.addListener(messageHandler);
         });
     };
