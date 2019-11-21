@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import Option from './Option';
 import rootStore from '../../stores';
 import './options.pcss';
+import { BODY_SIZE_STATUS } from '../../stores/consts';
 
 const Options = observer(() => {
     const { uiStore, requestsStore, settingsStore } = useContext(rootStore);
@@ -35,7 +36,7 @@ const Options = observer(() => {
             iconName: 'icon-cross',
             text: 'Reset all custom rules for this page',
             handleClick: () => {
-                uiStore.resizeBody('36rem');
+                uiStore.resizeBody(BODY_SIZE_STATUS.NORMAL);
                 requestsStore.removeCustomRules();
             },
             isDisabled: false,

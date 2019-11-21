@@ -1,5 +1,5 @@
 import { action, observable, computed } from 'mobx';
-import { REQUEST_STATUSES } from '../consts';
+import { REQUEST_STATUSES, BODY_SIZE_STATUS } from '../consts';
 
 class UiStore {
     constructor(rootStore) {
@@ -95,15 +95,15 @@ class UiStore {
 
         if (isExpired && isHttps) {
             if (!isOpenCertificateModal) {
-                bodyHeight = '44rem';
+                bodyHeight = BODY_SIZE_STATUS.EXPIRED_CERTIFICATE;
             }
 
             if (isOpenCertificateModal) {
-                bodyHeight = '36rem';
+                bodyHeight = BODY_SIZE_STATUS.NORMAL;
             }
 
             if (isOpenCertificateModal && isPageFilteredByUserFilter) {
-                bodyHeight = '39.5rem';
+                bodyHeight = BODY_SIZE_STATUS.CHANGED;
             }
 
             document.querySelector('body').style.height = height || bodyHeight;
