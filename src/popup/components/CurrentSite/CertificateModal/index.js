@@ -23,9 +23,9 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
         <Modal
             isOpen={isOpen}
             className={cn}
-            style={{ overlay: { backgroundColor: 'transparent' } }}
+            overlayClassName="overlay overlay--fullscreen"
             contentLabel="Certificate Modal"
-            bodyOpenClassName="size--expanded"
+            bodyOpenClassName={settingsStore.isExpired ? 'size--expanded' : null}
             onRequestClose={onRequestClose}
         >
             <div className="modal__info--upper">

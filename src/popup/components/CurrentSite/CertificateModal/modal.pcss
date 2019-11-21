@@ -112,3 +112,31 @@
     height: 44rem;
 }
 
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+
+    &--after-open {
+        opacity: 1;
+    }
+
+    &--before-close {
+        opacity: 0;
+    }
+}
+
+.overlay {
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+
+    &--hidden {
+        width: 0;
+    }
+
+    &--fullscreen {
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

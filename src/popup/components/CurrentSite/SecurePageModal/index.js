@@ -7,7 +7,7 @@ const SecurePageModal = ({
     <Modal
         isOpen={isOpen}
         className={cn}
-        style={{ overlay: { backgroundColor: 'transparent', bottom: '37rem' } }}
+        overlayClassName="overlay overlay--hidden"
         contentLabel="Secure Page Modal"
     >
         <header
