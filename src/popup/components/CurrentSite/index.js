@@ -23,7 +23,7 @@ const CurrentSite = observer(() => {
         isOpenCertificateModal,
         isSecureStatusHidden,
         isInfoHovered,
-        resizeCertificateModal,
+        resizeBody,
         securityModalState,
     } = uiStore;
 
@@ -33,7 +33,7 @@ const CurrentSite = observer(() => {
     };
 
     const handleOpenCertificateModal = () => {
-        resizeCertificateModal();
+        resizeBody();
         toggleOpenCertificateModal();
     };
 
@@ -86,7 +86,7 @@ const CurrentSite = observer(() => {
                 )}
 
                 <div className="current-site__name">
-                    {currentTabHostname || 'hostname'}
+                    {currentTabHostname}
                 </div>
 
                 <CertificateModal

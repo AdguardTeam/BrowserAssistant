@@ -18,7 +18,7 @@ class Tabs {
                 return response;
             }
         } catch (error) {
-            log.warn('popup is closed: ', error.message);
+            log.warn(error.message);
         }
         return '';
     }

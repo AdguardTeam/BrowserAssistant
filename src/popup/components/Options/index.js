@@ -35,7 +35,7 @@ const Options = observer(() => {
             iconName: 'icon-cross',
             text: 'Reset all custom rules for this page',
             handleClick: () => {
-                document.querySelector('body').style.height = '32rem';
+                uiStore.resizeBody('36rem');
                 requestsStore.removeCustomRules();
             },
             isDisabled: false,

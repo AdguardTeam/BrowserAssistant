@@ -88,11 +88,10 @@ class UiStore {
         this.isOpenCertificateModal = !this.isOpenCertificateModal;
     };
 
-    resizeCertificateModal = () => {
+    resizeBody = (height) => {
         const { isExpired, isHttps } = this.rootStore.settingsStore;
         const { isOpenCertificateModal, isPageFilteredByUserFilter } = this;
-
-        let bodyHeight = document.querySelector('body').style.height;
+        let bodyHeight;
 
         if (isExpired && isHttps) {
             if (!isOpenCertificateModal) {
@@ -100,15 +99,15 @@ class UiStore {
             }
 
             if (isOpenCertificateModal) {
-                bodyHeight = '32rem';
+                bodyHeight = '36rem';
             }
 
             if (isOpenCertificateModal && isPageFilteredByUserFilter) {
-                bodyHeight = '39rem';
+                bodyHeight = '39.5rem';
             }
-        }
 
-        document.querySelector('body').style.height = bodyHeight;
+            document.querySelector('body').style.height = height || bodyHeight;
+        }
     };
 
     @action

@@ -20,7 +20,7 @@ module.exports = {
         open_in_tab: true,
     },
     permissions: [
-        'tabs',
+        'activeTab',
         'nativeMessaging',
     ],
 };

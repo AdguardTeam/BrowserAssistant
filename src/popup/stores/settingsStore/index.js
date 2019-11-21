@@ -55,7 +55,7 @@ class SettingsStore {
             runInAction(() => {
                 this.currentURL = result.url;
                 const { hostname, protocol } = getUrlProperties(result.url);
-                this.currentTabHostname = hostname;
+                this.currentTabHostname = hostname || this.currentURL;
 
                 switch (protocol) {
                     case 'https:':
