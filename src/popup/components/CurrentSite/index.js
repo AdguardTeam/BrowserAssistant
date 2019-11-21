@@ -23,7 +23,6 @@ const CurrentSite = observer(() => {
         isOpenCertificateModal,
         isSecureStatusHidden,
         isInfoHovered,
-        resizeBody,
         securityModalState,
     } = uiStore;
 
@@ -33,7 +32,6 @@ const CurrentSite = observer(() => {
     };
 
     const handleOpenCertificateModal = () => {
-        resizeBody();
         toggleOpenCertificateModal();
     };
 

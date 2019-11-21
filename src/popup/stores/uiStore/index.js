@@ -1,5 +1,5 @@
 import { action, observable, computed } from 'mobx';
-import { REQUEST_STATUSES, BODY_SIZE_STATUS } from '../consts';
+import { REQUEST_STATUSES } from '../consts';
 
 class UiStore {
     constructor(rootStore) {
@@ -86,28 +86,6 @@ class UiStore {
     @action
     toggleOpenCertificateModal = () => {
         this.isOpenCertificateModal = !this.isOpenCertificateModal;
-    };
-
-    resizeBody = (height) => {
-        const { isExpired, isHttps } = this.rootStore.settingsStore;
-        const { isOpenCertificateModal, isPageFilteredByUserFilter } = this;
-        let bodyHeight;
-
-        if (isExpired && isHttps) {
-            if (!isOpenCertificateModal) {
-                bodyHeight = BODY_SIZE_STATUS.EXPIRED_CERTIFICATE;
-            }
-
-            if (isOpenCertificateModal) {
-                bodyHeight = BODY_SIZE_STATUS.NORMAL;
-            }
-
-            if (isOpenCertificateModal && isPageFilteredByUserFilter) {
-                bodyHeight = BODY_SIZE_STATUS.CHANGED;
-            }
-
-            document.querySelector('body').style.height = height || bodyHeight;
-        }
     };
 
     @action

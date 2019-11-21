@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
-import { BODY_SIZE_STATUS } from '../../../stores/consts';
 
 const states = {
     isNotInstalled: {
@@ -78,7 +77,6 @@ function defineWarning(settingsStore) {
 
 const AppClosed = observer(() => {
     const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
-    uiStore.resizeBody(BODY_SIZE_STATUS.NORMAL);
 
     const { title, buttonText, updateStore } = defineWarning(settingsStore);
     return (

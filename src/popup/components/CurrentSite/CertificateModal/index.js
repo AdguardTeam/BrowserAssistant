@@ -25,6 +25,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
             className={cn}
             style={{ overlay: { backgroundColor: 'transparent' } }}
             contentLabel="Certificate Modal"
+            bodyOpenClassName="size--expanded"
             onRequestClose={onRequestClose}
         >
             <div className="modal__info--upper">
@@ -42,16 +43,16 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                 />
             </div>
             {settingsStore.isExpired && (
-            <p className="modal__text modal__text--expired modal__text--expired--upper">
-                        AdGuard could not verify this website&apos;s
-                        certificate, because the root certificate has expired
-            </p>
+                <p className="modal__text modal__text--expired modal__text--expired--upper">
+                    AdGuard could not verify this website&apos;s
+                    certificate, because the root certificate has expired
+                </p>
             )}
             <div className="modal__info--lower">
                 <p className="modal__text modal__text--notion">Verified by:</p>
                 <span className="modal__header">AdGuard Personal CA</span>
                 {settingsStore.isExpired
-                    && <p className="modal__text modal__text--expired modal__text--expired--lower modal__text--uppercase">expired</p>}
+                && <p className="modal__text modal__text--expired modal__text--expired--lower modal__text--uppercase">expired</p>}
                 <div
                     className="modal__text modal__text--link modal__text--cert"
                     role="button"
@@ -59,7 +60,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                     onClick={showCertificate}
                     onKeyDown={handleKeyDown}
                 >
-                        More Information
+                    More Information
                 </div>
             </div>
         </Modal>
