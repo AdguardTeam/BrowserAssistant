@@ -30,7 +30,7 @@
 
     &__icon {
         width: 1.2rem;
-        height: 1.5rem;
+        height: 1.8rem;
         outline: none;
         position: absolute;
         top: 0.3rem;
@@ -44,20 +44,21 @@
             background: url('../../../assets/images/icon-lock.svg') no-repeat;
 
             &--danger {
+                transition: background 0.3s ease;
                 background: url('../../../assets/images/icon-lock-danger.svg') no-repeat;
             }
         }
 
         &--warning {
+            transition: none;
             padding-right: 2.2rem;
             width: 1.8rem;
             height: 1.8rem;
-            top: 0;
+            top: 0.3rem;
             left: -1.6rem;
 
             & .arrow-up {
-                left: -0.1rem;
-                top: 2.2rem;
+                left: 0;
             }
 
             &--expired {
@@ -65,21 +66,25 @@
             }
 
             &--http {
+                cursor: help;
                 background: url('../../../assets/images/icon-http.svg') no-repeat;
             }
+        }
+
+        &--disabled-cursor {
+            cursor: not-allowed;
         }
 
     }
 
 
     &__secure-status {
-        cursor: default;
+        cursor: help;
         color: var(--green-base);
         font-size: 1.2rem;
         font-weight: bold;
 
         &:hover {
-            cursor: default;
             text-decoration: underline;
         }
 
@@ -98,7 +103,7 @@
     border-right: var(--trinagle-border-side);
     border-bottom: 1rem solid var(--greyf3);
     position: absolute;
-    top: 1.9rem;
+    top: 2rem;
     left: -0.4rem;
 
     &:after {

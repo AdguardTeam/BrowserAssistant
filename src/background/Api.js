@@ -1,61 +1,75 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
-import { HostResponseTypes, HostTypes } from '../lib/types';
+import { HostResponseTypes, HostTypes, ResponseTypes } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
+import log from '../lib/logger';
 
 class Api {
-    isAppUpdated = false;
-
-    isExtensionUpdated = false;
-
     initHandler = (response) => {
+        log.info('response ', response);
         const { parameters } = response;
-        if (parameters && parameters.isValidatedOnHost) {
-            if (parameters.isValidatedOnHost === false) {
-                // TODO: find out the format of version to compare them correctly
-                this.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
-                this.isExtensionUpdated = (versions.version >= parameters.version);
-            } else {
-                this.isAppUpdated = true;
-                this.isExtensionUpdated = true;
-            }
-            adguard.isAppUpdated = this.isAppUpdated;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
+
+        if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
+            adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
+            adguard.isExtensionUpdated = parameters.isValidatedOnHost;
         }
-        return browserApi.runtime.sendMessage(response);
+
+        if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
+            return;
+        }
+
+        browserApi.runtime.sendMessage(response);
     };
 
     init = () => {
-        console.log('init');
-        this.port = browser.runtime.connectNative(HostTypes.nativeBrowserAssistant);
+        log.info('init');
+        this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
         this.port.onMessage.addListener(this.initHandler);
         return this.port;
     };
 
     deinit = () => {
-        console.log('deinit');
+        log.info('deinit');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.initHandler);
         return this.port;
     };
 
-    makeRequest = async (params) => {
-        const requestId = nanoid();
+    makeRequest = async (params, idPrefix) => {
+        log.info('request ', params);
+        const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         return new Promise((resolve, reject) => {
-            this.port.postMessage({ id: requestId, ...params });
-            // eslint-disable-next-line consistent-return
-            const messageHandler = ({ id, response, data }) => {
+            try {
+                this.port.postMessage({ id, ...params });
+            } catch (e) {
+                this.init();
+            }
+
+            const messageHandler = (msg) => {
+                const { requestId, result } = msg;
+
+                const RESPONSE_TIMEOUT_MS = 60 * 1000;
+
+                const pendingTimer = setTimeout(() => {
+                    reject(new Error('Native host is not responding.'));
+                    this.port.onMessage.removeListener(messageHandler);
+                }, RESPONSE_TIMEOUT_MS);
+
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
-                    if (response === HostResponseTypes.error) {
-                        this.deinit();
-                        return reject(new Error('error'));
+                    clearTimeout(pendingTimer);
+
+                    if (result === HostResponseTypes.ok) {
+                        return resolve(msg);
                     }
-                    if (response === HostResponseTypes.ok) {
-                        return resolve(data);
+
+                    if (result === HostResponseTypes.error) {
+                        this.deinit();
+                        return reject(new Error(`Native host responded with status: ${result}.`));
                     }
                 }
+                return '';
             };
             this.port.onMessage.addListener(messageHandler);
         });

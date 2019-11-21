@@ -1,4 +1,4 @@
-import { RequestTypes, AssistantTypes } from '../lib/types';
+import { RequestTypes, ResponseTypes, AssistantTypes } from '../lib/types';
 import api from './Api';
 import versions from './versions';
 
@@ -10,7 +10,7 @@ class RequestsApi {
                 ...versions,
                 type: assistantType,
             },
-        });
+        }, ResponseTypes.INIT);
     }
 
     getCurrentAppState() {
@@ -89,7 +89,7 @@ class RequestsApi {
     reportSite(params) {
         return api.makeRequest({
             type: RequestTypes.reportSite,
-            parameters: { ...params, userAgent: this.VERSIONS.userAgent },
+            parameters: { ...params, userAgent: versions.userAgent },
         });
     }
 
@@ -102,6 +102,12 @@ class RequestsApi {
     openSettings() {
         return api.makeRequest({
             type: RequestTypes.openSettings,
+        });
+    }
+
+    startApp() {
+        return api.makeRequest({
+            type: RequestTypes.startApp,
         });
     }
 }

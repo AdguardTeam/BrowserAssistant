@@ -7,7 +7,10 @@ const states = {
     isNotInstalled: {
         title: 'AdGuard is not installed',
         buttonText: 'download',
-        updateStore: settingsStore => settingsStore.setInstalled(true),
+        updateStore: (settingsStore) => {
+            settingsStore.openDownloadPage();
+            window.close();
+        },
     },
 
     isNotRunning: {
@@ -15,7 +18,7 @@ const states = {
         buttonText: 'run adguard',
         updateStore: (settingsStore, requestsStore) => {
             settingsStore.setRunning(true);
-            requestsStore.runAdguard();
+            requestsStore.startApp();
         },
     },
 

@@ -33,8 +33,7 @@ class RequestsStore {
 
     @action
     removeCustomRules = () => {
-        adguard.requests
-            .removeCustomRules(this.rootStore.settingsStore.currentURL);
+        adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
         this.rootStore.uiStore.isPageFilteredByUserFilter = false;
     };
 
@@ -59,7 +58,7 @@ class RequestsStore {
     );
 
     @action
-    runAdguard = () => adguard.requests.setProtectionStatus(true)
+    startApp = () => adguard.requests.startApp();
 
     @action
     openSettings = () => adguard.requests.openSettings();

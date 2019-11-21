@@ -4,7 +4,6 @@ import './settings.pcss';
 import Switcher from './Switcher';
 import rootStore from '../../stores';
 
-
 const Settings = observer(() => {
     const { uiStore, settingsStore } = useContext(rootStore);
     const handleFiltering = () => {

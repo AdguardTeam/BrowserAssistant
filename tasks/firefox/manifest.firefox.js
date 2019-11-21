@@ -20,16 +20,7 @@ module.exports = {
         open_in_tab: true,
     },
     permissions: [
-        'tabs',
-        'http://*/*',
-        'https://*/*',
-        'webRequest',
-        'webRequestBlocking',
-        'webNavigation',
-        'storage',
-        'unlimitedStorage',
-        'contextMenus',
-        'cookies',
+        'activeTab',
         'nativeMessaging',
     ],
 };

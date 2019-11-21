@@ -7,23 +7,24 @@
 html {
     box-sizing: border-box;
     font-size: 10px;
-
 }
 
 body {
     font-family: var(--font-primary);
-    width: 32rem;
+    min-width: 32rem;
     min-height: 36rem;
     font-size: 2.5rem;
     font-weight: 400;
+    overflow: hidden;
+    transition: min-height 0.3s ease-in-out;
 }
 
 loading {
-    &&--success {
+    &--success {
         display: block;
     }
 
-    &&--pending {
+    &--pending {
         display: none;
     }
 }

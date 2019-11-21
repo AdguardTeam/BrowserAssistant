@@ -11,6 +11,12 @@ export const RequestTypes = {
     reportSite: 'reportSite',
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
+    startApp: 'startApp',
+};
+
+export const ResponseTypes = {
+    APP_STATE_RESPONSE_MESSAGE: 'APP_STATE_RESPONSE_MESSAGE',
+    INIT: 'INIT',
 };
 
 export const AssistantTypes = {
@@ -29,5 +35,5 @@ export const HostResponseTypes = {
 };
 
 export const HostTypes = {
-    nativeBrowserAssistant: 'native_browser_assistant',
+    browserExtensionHost: 'browser_extension_host',
 };

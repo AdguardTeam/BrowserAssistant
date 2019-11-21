@@ -3,6 +3,7 @@ import {
 } from 'mobx';
 import { ORIGIN_CERT_STATUS } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
+import log from '../../../lib/logger';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -54,25 +55,35 @@ class SettingsStore {
             runInAction(() => {
                 this.currentURL = result.url;
                 const { hostname, protocol } = getUrlProperties(result.url);
-                this.currentTabHostname = hostname;
+                this.currentTabHostname = hostname || this.currentURL;
 
                 switch (protocol) {
                     case 'https:':
-                        this.isHttps = true;
+                        this.setIsHttps(true);
                         this.setSecure(false);
                         break;
                     case 'http:':
-                        this.isHttps = false;
+                        this.setIsHttps(false);
                         this.setSecure(false);
                         break;
                     default:
-                        this.isHttps = false;
+                        this.setIsHttps(false);
                         this.setSecure(true);
                 }
             });
         } catch (error) {
-            console.error(error.message);
+            log.error(error.message);
         }
+    };
+
+    @action
+    openDownloadPage = () => {
+        adguard.tabs.openDownloadPage();
+    };
+
+    @action
+    setIsHttps = (isHttps) => {
+        this.isHttps = isHttps;
     };
 
     @action

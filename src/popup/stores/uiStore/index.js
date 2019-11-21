@@ -1,6 +1,4 @@
-import {
-    action, observable, computed,
-} from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { REQUEST_STATUSES } from '../consts';
 
 class UiStore {

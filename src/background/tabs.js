@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 import { MessageTypes, RequestTypes } from '../lib/types';
+import log from '../lib/logger';
 
 class Tabs {
     async getCurrent() {
@@ -17,19 +18,22 @@ class Tabs {
                 return response;
             }
         } catch (error) {
-            console.error(error.message);
+            log.warn(error.message);
         }
         return '';
     }
 
     async getReferrer() {
-        const referrer = await this.sendMessage(MessageTypes.getReferrer);
-        return referrer;
+        return this.sendMessage(MessageTypes.getReferrer);
     }
 
     async initAssistant() {
         const options = { addRuleCallbackName: RequestTypes.addRule };
         this.sendMessage(MessageTypes.initAssistant, options);
+    }
+
+    openDownloadPage() {
+        browser.tabs.create({ url: 'https://adguard.com/ru/download.html?os=windows' });
     }
 }
 
