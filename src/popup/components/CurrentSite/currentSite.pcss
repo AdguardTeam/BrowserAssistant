@@ -83,6 +83,8 @@
         color: var(--green-base);
         font-size: 1.2rem;
         font-weight: bold;
+        transition: opacity 0.3s ease;
+        opacity: 1;
 
         &:hover {
             text-decoration: underline;
@@ -90,6 +92,7 @@
 
         &--hidden {
             visibility: hidden;
+            opacity: 0;
         }
     }
 }

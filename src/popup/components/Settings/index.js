@@ -5,7 +5,7 @@ import Switcher from './Switcher';
 import rootStore from '../../stores';
 
 const Settings = observer(() => {
-    const { uiStore, settingsStore } = useContext(rootStore);
+    const { settingsStore } = useContext(rootStore);
     const handleFiltering = () => {
         settingsStore.setFiltering(!settingsStore.isFilteringEnabled);
     };
@@ -14,7 +14,6 @@ const Settings = observer(() => {
             <div className="settings__main">
                 <Switcher
                     id="global-switcher"
-                    text={uiStore.switcherText}
                     checked={settingsStore.isFilteringEnabled}
                     onClick={!settingsStore.isPageSecured ? handleFiltering : undefined}
                     isPageSecured={settingsStore.isPageSecured}

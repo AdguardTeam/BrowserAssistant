@@ -3,6 +3,7 @@
     align-items: flex-start;
     display: flex;
     justify-content: space-between;
+    flex-direction: row-reverse;
 
     &__checkbox {
         display: none;
@@ -15,24 +16,42 @@
         height: 2.8rem;
         border-radius: 1.6rem;
         background-color: var(--grayd8);
+        opacity: 1;
 
         &--secured {
             cursor: not-allowed;
             background-color: var(--gray88)
         }
+
+        &:before {
+            content: '';
+            position: absolute;
+            z-index: var(--lower);
+            border-radius: 100%;
+            left: 0.1rem;
+            top: 0.1rem;
+            width: 2.6rem;
+            height: 2.6rem;
+            background-color: var(--white);
+            transition: var(--t3) transform;
+        }
     }
 
-    &__label:after {
-        content: '';
-        position: absolute;
-        z-index: var(--lower);
-        border-radius: 100%;
-        left: 0.1rem;
-        top: 0.1rem;
-        width: 2.6rem;
-        height: 2.6rem;
-        background-color: var(--white);
-        transition: var(--t3) transform;
+    &__label:active ~ &__text {
+        transition: opacity 0.1s linear;
+        opacity: 0;
+    }
+
+    &__checkbox:checked ~ &__label {
+        background-color: var(--green74);
+
+        &--secured {
+            background-color: var(--green-pale);
+        }
+
+        &:before {
+            transform: translateX(2.0rem);
+        }
     }
 
     &__text {
@@ -45,18 +64,21 @@
         &--secured {
             color: var(--gray88);
         }
-    }
 
-    &__checkbox:checked ~ &__label {
-        background-color: var(--green74);
-
-        &--secured {
-            background-color: var(--green-pale);
-        }
-
-        &:after {
-            transform: translateX(2.0rem);
+        &:before {
+            content: 'Disabled on this website';
         }
     }
 
+    &__checkbox:checked ~ &__text {
+        &:before {
+            content: 'Enabled on this website';
+        }
+    }
+
+    #https-switcher ~ &__text {
+        &:before {
+            content: '' !important;
+        }
+    }
 }
