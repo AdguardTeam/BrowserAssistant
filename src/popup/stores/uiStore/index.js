@@ -49,10 +49,6 @@ class UiStore {
         });
     }
 
-    @computed get switcherText() {
-        return `${(this.rootStore.settingsStore.isFilteringEnabled) ? 'Enabled' : 'Disabled'} on this website`;
-    }
-
     @computed get isSecureStatusHidden() {
         const {
             isPageSecured, isFilteringEnabled, isHttpsFilteringEnabled,

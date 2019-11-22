@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, text, checked, onClick, isPageSecured,
+    id, checked, onClick, isPageSecured,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,
@@ -24,14 +24,12 @@ const Switcher = ({
                 readOnly
                 checked={checked}
             />
-            <div className={switcherTextClass}>
-                {text}
-            </div>
             <label
                 className={switcherLabelClass}
                 htmlFor={id}
                 onClick={onClick}
             />
+            <div className={switcherTextClass} />
         </div>
     );
 };

@@ -3,8 +3,10 @@
         display: flex;
         padding: 0.9rem 2rem;
         cursor: pointer;
-        transition: 0.3s ease background-color;
+        transition: all 0.3s ease;
+        transition-property: background, opacity;
         max-height: 3.5rem;
+        opacity: 1;
 
         &--disabled {
             cursor: not-allowed;
@@ -47,7 +49,7 @@
         }
 
         &:hover {
-            background-color: var(--greyf3);
+            background: var(--greyf3);
         }
     }
 }
