@@ -1,6 +1,8 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
-import { HostResponseTypes, HostTypes, ResponseTypes } from '../lib/types';
+import {
+    AssistantTypes, HostResponseTypes, HostTypes, RequestTypes, ResponseTypes,
+} from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
 import log from '../lib/logger';
@@ -26,14 +28,27 @@ class Api {
         log.info('init');
         this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
         this.port.onMessage.addListener(this.initHandler);
+
+        this.initRequest();
         return this.port;
+    };
+
+    initRequest = () => {
+        this.makeRequest({
+            type: RequestTypes.init,
+            parameters: {
+                ...versions,
+                type: AssistantTypes.nativeAssistant,
+            },
+        }, ResponseTypes.INIT);
     };
 
     deinit = () => {
         log.info('deinit');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.initHandler);
-        return this.port;
+
+        this.init();
     };
 
     makeRequest = async (params, idPrefix) => {

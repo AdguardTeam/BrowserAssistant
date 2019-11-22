@@ -1,18 +1,8 @@
-import { RequestTypes, ResponseTypes, AssistantTypes } from '../lib/types';
+import { RequestTypes } from '../lib/types';
 import api from './Api';
 import versions from './versions';
 
 class RequestsApi {
-    init(assistantType = AssistantTypes.nativeAssistant) {
-        return api.makeRequest({
-            type: RequestTypes.init,
-            parameters: {
-                ...versions,
-                type: assistantType,
-            },
-        }, ResponseTypes.INIT);
-    }
-
     getCurrentAppState() {
         return api.makeRequest({
             type: RequestTypes.getCurrentAppState,

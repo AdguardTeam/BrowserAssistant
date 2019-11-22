@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
+import { NOT_WORKING_STATES } from '../../../stores/consts';
 
 const states = {
     isNotInstalled: {
+        state: NOT_WORKING_STATES.isNotInstalled,
         title: 'AdGuard is not installed',
         buttonText: 'download',
         updateStore: (settingsStore) => {
@@ -14,6 +16,7 @@ const states = {
     },
 
     isNotRunning: {
+        state: NOT_WORKING_STATES.isNotRunning,
         title: 'AdGuard is not running',
         buttonText: 'run adguard',
         updateStore: (settingsStore, requestsStore) => {
@@ -23,25 +26,30 @@ const states = {
     },
 
     isProtectionDisabled: {
+        state: NOT_WORKING_STATES.isProtectionDisabled,
         title: 'AdGuard protection is paused',
         buttonText: 'enable',
         updateStore: settingsStore => settingsStore.toggleProtection(),
     },
 
     isAppNotUpdated: {
+        state: NOT_WORKING_STATES.isAppNotUpdated,
         title: 'AdGuard is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateApp(),
     },
 
     isExtensionNotUpdated: {
+        state: NOT_WORKING_STATES.isExtensionNotUpdated,
+        id: 'isExtensionNotUpdated',
         title: 'Assistant is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateExtension(),
     },
 
     isPending: {
-        title: 'pending',
+        state: NOT_WORKING_STATES.isPending,
+        title: 'Pending...',
         buttonText: 'pending',
         updateStore: () => null,
     },
@@ -78,22 +86,26 @@ function defineWarning(settingsStore) {
 const AppClosed = observer(() => {
     const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
 
-    const { title, buttonText, updateStore } = defineWarning(settingsStore);
+    const {
+        state, title, buttonText, updateStore,
+    } = defineWarning(settingsStore);
     return (
         <div className="app-closed__wrapper">
             <div className="app-closed__status-wrapper">
                 <header className="app-closed__status">{title}</header>
             </div>
-            <button
-                className="app-closed__button"
-                type="button"
-                onClick={() => {
-                    updateStore(settingsStore, requestsStore);
-                    uiStore.updateUi();
-                }}
-            >
-                {buttonText}
-            </button>
+            {(state !== NOT_WORKING_STATES.isPending) && (
+                <button
+                    className="app-closed__button"
+                    type="button"
+                    onClick={() => {
+                        updateStore(settingsStore, requestsStore);
+                        uiStore.updateUi();
+                    }}
+                >
+                    {buttonText}
+                </button>
+            )}
         </div>
     );
 });

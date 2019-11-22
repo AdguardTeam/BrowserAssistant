@@ -1,16 +1,29 @@
 import { action } from 'mobx';
+import log from '../../../lib/logger';
 
 class RequestsStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @action
-    getCurrentFilteringState = () => adguard.requests
-        .getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
+    handleError = (fn) => {
+        fn().catch((err) => {
+            log.warn(err.message);
+            this.rootStore.uiStore.setPending(true);
+            this.rootStore.uiStore.updateUi();
+        });
+    };
 
     @action
-    getCurrentAppState = () => adguard.requests.getCurrentAppState();
+    getCurrentFilteringState = () => {
+        this.handleError(() => adguard.requests
+            .getCurrentFilteringState(this.rootStore.settingsStore.currentURL));
+    };
+
+    @action
+    getCurrentAppState = () => {
+        this.handleError(() => adguard.requests.getCurrentAppState());
+    };
 
     @action
     setFilteringStatus = () => {
@@ -19,49 +32,71 @@ class RequestsStore {
             isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
 
-        adguard.requests.setFilteringStatus({
+        this.handleError(() => adguard.requests.setFilteringStatus({
             url: currentURL,
             isEnabled: isFilteringEnabled,
             isHttpsEnabled: isHttpsFilteringEnabled,
-        });
+        }));
     };
 
     @action
-    openOriginCert = () => adguard.requests.openOriginCert(
-        this.rootStore.settingsStore.currentTabHostname
-    );
+    openOriginCert = () => {
+        this.handleError(() => adguard.requests.openOriginCert(
+            this.rootStore.settingsStore.currentTabHostname
+        ));
+    };
 
     @action
     removeCustomRules = () => {
-        adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
+        this.handleError(() => adguard.requests.removeCustomRules(
+            this.rootStore.settingsStore.currentURL
+        ));
         this.rootStore.uiStore.isPageFilteredByUserFilter = false;
     };
 
     @action
-    reportSite = () => adguard.requests.reportSite({
-        url: this.rootStore.settingsStore.currentURL,
-        referrer: this.rootStore.settingsStore.referrer,
-    });
+    reportSite = () => {
+        this.handleError(() => adguard.requests.reportSite({
+            url: this.rootStore.settingsStore.currentURL,
+            referrer: this.rootStore.settingsStore.referrer,
+        }));
+    };
 
     @action
-    openFilteringLog = () => adguard.requests.openFilteringLog();
+    openFilteringLog = () => {
+        this.handleError(() => adguard.requests.openFilteringLog());
+    };
 
     @action
-    removeRule = () => adguard.requests.removeRule(this.rootStore.settingsStore.currentTabHostname);
+    removeRule = () => {
+        this.handleError(() => adguard.requests.removeRule(
+            this.rootStore.settingsStore.currentTabHostname
+        ));
+    };
 
     @action
-    addRule = () => adguard.requests.addRule(this.rootStore.settingsStore.currentTabHostname);
+    addRule = () => {
+        this.handleError(() => adguard.requests.addRule(
+            this.rootStore.settingsStore.currentTabHostname
+        ));
+    };
 
     @action
-    setProtectionStatus = () => adguard.requests.setProtectionStatus(
-        this.rootStore.settingsStore.isProtectionEnabled
-    );
+    setProtectionStatus = () => {
+        this.handleError(() => adguard.requests.setProtectionStatus(
+            this.rootStore.settingsStore.isProtectionEnabled
+        ));
+    };
 
     @action
-    startApp = () => adguard.requests.startApp();
+    startApp = () => {
+        this.handleError(() => adguard.requests.startApp());
+    };
 
     @action
-    openSettings = () => adguard.requests.openSettings();
+    openSettings = () => {
+        this.handleError(() => adguard.requests.openSettings());
+    };
 
     @action
     startBlockingAd = async () => {
