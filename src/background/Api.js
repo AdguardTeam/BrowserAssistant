@@ -31,7 +31,6 @@ class Api {
 
         this.port.onDisconnect.addListener(() => {
             log.info('Disconnected from native host');
-            window.close();
         });
 
         this.initRequest();
