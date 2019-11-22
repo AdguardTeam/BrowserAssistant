@@ -29,6 +29,11 @@ class Api {
         this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
         this.port.onMessage.addListener(this.initHandler);
 
+        this.port.onDisconnect.addListener(() => {
+            log.info('Disconnected from native host');
+            window.close();
+        });
+
         this.initRequest();
         return this.port;
     };
@@ -47,7 +52,10 @@ class Api {
         log.info('deinit');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.initHandler);
+    };
 
+    reinit = () => {
+        this.deinit();
         this.init();
     };
 
@@ -58,7 +66,7 @@ class Api {
             try {
                 this.port.postMessage({ id, ...params });
             } catch (e) {
-                this.init();
+                this.reinit();
             }
 
             const messageHandler = (msg) => {
@@ -80,7 +88,7 @@ class Api {
                     }
 
                     if (result === HostResponseTypes.error) {
-                        this.deinit();
+                        this.reinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }
                 }
