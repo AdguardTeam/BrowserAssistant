@@ -2,13 +2,12 @@
     outline: none;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     border-radius: 0.5rem;
-    padding: 2.4rem 1.5rem 3.9rem 1.5rem;
+    padding: 2.4rem 1.5rem;
     background-color: var(--white);
     border: 0.1rem solid var(--greyf3);
     width: 28.8rem;
-    transform: translate(1.6rem, 14rem);
+    transform: translate(1.6rem, 14.5rem);
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1), 0 3rem 6rem rgba(0, 0, 0, 0.1);
 
     &__certificate {
@@ -37,11 +36,14 @@
         color: var(--gray-base);
         margin-bottom: 0.9rem;
         line-height: 1;
-        font-family: var(--font-primary);
+
+        &--container {
+            display: flex;
+            flex-direction: column;
+        }
     }
 
     &__text {
-        font-family: var(--font-primary);
         font-size: 1.2rem;
         max-width: 100%;
         color: var(--gray88);
@@ -73,23 +75,14 @@
 
         &--notion {
             margin-top: 2.4rem;
-            margin-bottom: 0.7rem;
-        }
-
-        &--cert {
-            padding-top: 0.8rem;
+            margin-bottom: 0.8rem;
         }
     }
 
     &__info {
         &--upper {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-
-            & .switcher {
-                transform: translateY(-12.5%);
-            }
         }
 
         &--lower {

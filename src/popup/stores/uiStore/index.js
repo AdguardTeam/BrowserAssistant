@@ -16,7 +16,7 @@ class UiStore {
 
     @observable requestStatus = REQUEST_STATUSES.PENDING;
 
-    @observable isPending = false;
+    @observable isReloading = false;
 
     @action
     setRequestStatus = () => {
@@ -67,8 +67,8 @@ class UiStore {
     }
 
     @action
-    setPending = (isPending) => {
-        this.isPending = isPending;
+    setReloading = (isReloading) => {
+        this.isPending = isReloading;
     };
 
     @action

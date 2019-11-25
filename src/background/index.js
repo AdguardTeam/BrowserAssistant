@@ -39,4 +39,6 @@ browser.runtime.onMessage.addListener(handleMessage);
 global.adguard = {
     requests,
     tabs,
+    isAppUpdated: api.isExtensionUpdated,
+    isExtensionUpdated: api.isAppUpdated,
 };

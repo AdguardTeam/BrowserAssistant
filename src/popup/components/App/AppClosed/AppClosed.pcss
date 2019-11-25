@@ -7,24 +7,28 @@
         align-items: center;
     }
 
-    &__status-wrapper{
-        height: 20.8rem;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
     &__status {
         margin-right: auto;
         margin-left: auto;
-        font-size: 3rem;
         max-width: 22.8rem;
         text-align: center;
         color: var(--gray-base);
+        opacity: 100%;
+        font-family: "AkkuratPro-Bold";
+        font-size: 3rem;
+        line-height: 3.6rem;
+
+        &-wrapper {
+            height: 20.8rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
     }
 
     &__button {
+        font-family: "AkkuratPro-Bold";
         outline: none;
         border: none;
         background-color: var(--green74);

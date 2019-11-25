@@ -18,7 +18,9 @@ class Tabs {
                 return response;
             }
         } catch (err) {
-            if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
+            if (err.message === 'Could not establish connection. Receiving end does not exist.') {
+                log.warn('Webextension-polyfill internal resources exchange warning:', err.message);
+            } else {
                 log.error(err.message);
             }
         }

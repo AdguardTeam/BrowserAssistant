@@ -8,13 +8,22 @@ import versions from './versions';
 import log from '../lib/logger';
 
 class Api {
+    isAppUpdated = true;
+
+    isExtensionUpdated = true;
+
+    retryTimes = 5;
+
     initHandler = (response) => {
         log.info('response ', response);
         const { parameters } = response;
 
         if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
-            adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
-            adguard.isExtensionUpdated = parameters.isValidatedOnHost;
+            this.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
+            adguard.isAppUpdated = this.isAppUpdated;
+
+            this.isExtensionUpdated = parameters.isValidatedOnHost;
+            adguard.isExtensionUpdated = this.isExtensionUpdated;
         }
 
         if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
@@ -30,7 +39,16 @@ class Api {
         this.port.onMessage.addListener(this.initHandler);
 
         this.port.onDisconnect.addListener(() => {
-            log.info('Disconnected from native host');
+            this.retryTimes -= 1;
+
+            if (this.retryTimes) {
+                this.reinit();
+            } else {
+                this.deinit();
+                this.retryTimes = 5;
+
+                log.error('Disconnected from native host');
+            }
         });
 
         this.initRequest();
@@ -65,7 +83,11 @@ class Api {
             try {
                 this.port.postMessage({ id, ...params });
             } catch (e) {
-                this.reinit();
+                if (this.retryTimes) {
+                    this.reinit();
+                } else {
+                    this.deinit();
+                }
             }
 
             const messageHandler = (msg) => {

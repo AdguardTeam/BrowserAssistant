@@ -4,9 +4,9 @@ import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { NOT_WORKING_STATES } from '../../../stores/consts';
 
-const states = {
-    isNotInstalled: {
-        state: NOT_WORKING_STATES.isNotInstalled,
+const PROBLEM_STATES = {
+    [NOT_WORKING_STATES.IS_INSTALLED]: {
+        state: NOT_WORKING_STATES.IS_INSTALLED,
         title: 'AdGuard is not installed',
         buttonText: 'download',
         updateStore: (settingsStore) => {
@@ -15,8 +15,8 @@ const states = {
         },
     },
 
-    isNotRunning: {
-        state: NOT_WORKING_STATES.isNotRunning,
+    [NOT_WORKING_STATES.IS_RUNNING]: {
+        state: NOT_WORKING_STATES.IS_RUNNING,
         title: 'AdGuard is not running',
         buttonText: 'run adguard',
         updateStore: (settingsStore, requestsStore) => {
@@ -25,32 +25,32 @@ const states = {
         },
     },
 
-    isProtectionDisabled: {
-        state: NOT_WORKING_STATES.isProtectionDisabled,
+    [NOT_WORKING_STATES.IS_PROTECTION_ENABLED]: {
+        state: NOT_WORKING_STATES.IS_PROTECTION_ENABLED,
         title: 'AdGuard protection is paused',
         buttonText: 'enable',
         updateStore: settingsStore => settingsStore.toggleProtection(),
     },
 
-    isAppNotUpdated: {
-        state: NOT_WORKING_STATES.isAppNotUpdated,
+    [NOT_WORKING_STATES.IS_APP_UPDATED]: {
+        state: NOT_WORKING_STATES.IS_APP_UPDATED,
         title: 'AdGuard is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateApp(),
     },
 
-    isExtensionNotUpdated: {
-        state: NOT_WORKING_STATES.isExtensionNotUpdated,
+    [NOT_WORKING_STATES.IS_EXTENSION_UPDATED]: {
+        state: NOT_WORKING_STATES.IS_EXTENSION_UPDATED,
         id: 'isExtensionNotUpdated',
         title: 'Assistant is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateExtension(),
     },
 
-    isPending: {
-        state: NOT_WORKING_STATES.isPending,
-        title: 'Pending...',
-        buttonText: 'pending',
+    [NOT_WORKING_STATES.IS_RELOADING]: {
+        state: NOT_WORKING_STATES.IS_RELOADING,
+        title: 'Reloading...',
+        buttonText: 'reloading...',
         updateStore: () => null,
     },
 };
@@ -61,26 +61,26 @@ function defineWarning(settingsStore) {
     } = settingsStore;
 
     if (!isInstalled) {
-        return states.isNotInstalled;
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_INSTALLED];
     }
 
     if (!isRunning) {
-        return states.isNotRunning;
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_RUNNING];
     }
 
     if (!isProtectionEnabled) {
-        return states.isProtectionDisabled;
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_PROTECTION_ENABLED];
     }
 
     if (!isAppUpdated) {
-        return states.isAppNotUpdated;
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_APP_UPDATED];
     }
 
     if (!isExtensionUpdated) {
-        return states.isExtensionNotUpdated;
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_EXTENSION_UPDATED];
     }
 
-    return states.isPending;
+    return PROBLEM_STATES[NOT_WORKING_STATES.IS_RELOADING];
 }
 
 const AppClosed = observer(() => {
@@ -94,7 +94,7 @@ const AppClosed = observer(() => {
             <div className="app-closed__status-wrapper">
                 <header className="app-closed__status">{title}</header>
             </div>
-            {(state !== NOT_WORKING_STATES.isPending) && (
+            {(state !== NOT_WORKING_STATES.IS_RELOADING) && (
                 <button
                     className="app-closed__button"
                     type="button"

@@ -29,7 +29,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
             onRequestClose={onRequestClose}
         >
             <div className="modal__info--upper">
-                <span>
+                <span className="modal__header--container">
                     <span className="modal__header">AdGuard HTTPS</span>
                     <p className="modal__text modal__text--additional">Increases the quality of ad blocking</p>
                 </span>

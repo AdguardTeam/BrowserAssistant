@@ -31,17 +31,17 @@ const App = observer(() => {
         (async () => {
             await getCurrentTabHostname();
             await getReferrer();
-            requestsStore.getCurrentFilteringState();
+            await requestsStore.getCurrentFilteringState();
         })();
 
         browser.runtime.onMessage.addListener(
             (response) => {
                 if (response.result === HostResponseTypes.ok) {
-                    uiStore.setPending(false);
+                    uiStore.setReloading(false);
                 }
 
                 if (response.result === HostResponseTypes.error) {
-                    uiStore.setPending(true);
+                    uiStore.setReloading(true);
                 }
 
                 const { parameters, appState, requestId } = response;

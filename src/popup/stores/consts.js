@@ -10,10 +10,10 @@ export const ORIGIN_CERT_STATUS = {
 };
 
 export const NOT_WORKING_STATES = {
-    isNotInstalled: 'isNotInstalled',
-    isNotRunning: 'isNotRunning',
-    isProtectionDisabled: 'isProtectionDisabled',
-    isAppNotUpdated: 'isAppNotUpdated',
-    isExtensionNotUpdated: 'isExtensionNotUpdated',
-    isPending: 'isPending',
+    IS_INSTALLED: 'IS_INSTALLED',
+    IS_RUNNING: 'IS_RUNNING',
+    IS_PROTECTION_ENABLED: 'IS_PROTECTION_ENABLED',
+    IS_APP_UPDATED: 'IS_APP_UPDATED',
+    IS_EXTENSION_UPDATED: 'IS_EXTENSION_UPDATED',
+    IS_RELOADING: 'IS_RELOADING',
 };

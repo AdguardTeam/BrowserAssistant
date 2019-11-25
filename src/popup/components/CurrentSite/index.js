@@ -37,12 +37,11 @@ const CurrentSite = observer(() => {
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--lock': isHttpsFilteringEnabled || !isFilteringEnabled,
+        'current-site__icon--lock': !isExpired && (isHttpsFilteringEnabled || !isFilteringEnabled),
         'current-site__icon--lock--danger': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps,
         'current-site__icon--warning--http': !isHttps && !isPageSecured && !isHttps,
-        'current-site__icon--warning--expired': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps && isExpired,
-        'current-site__icon--warning': (!isHttpsFilteringEnabled && isFilteringEnabled
-            && isHttps && isExpired) || (!isHttps && !isPageSecured),
+        'current-site__icon--warning--expired': isHttps && isExpired,
+        'current-site__icon--warning': (isHttps && isExpired) || (!isHttps && !isPageSecured),
         'current-site__icon--disabled-cursor': !isFilteringEnabled,
     });
 

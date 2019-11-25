@@ -1,7 +1,7 @@
 .actions {
     .action {
         display: flex;
-        padding: 0.9rem 2rem;
+        padding: 0.9rem;
         cursor: pointer;
         transition: all 0.3s ease;
         transition-property: background, opacity;
@@ -19,16 +19,16 @@
             flex-basis: 1.9rem;
 
             &--block-ad {
-                background: url('../../../../assets/images/block-ad.svg') no-repeat;
+                background: url('../../../../assets/images/block-ad.svg') no-repeat center;
             }
 
             &--sandwich {
-                background: url('../../../../assets/images/sandwich.svg') no-repeat;
+                background: url('../../../../assets/images/sandwich.svg') no-repeat center;
 
             }
 
             &--thumb-down {
-                background: url('../../../../assets/images/thumb-down.svg') no-repeat;
+                background: url('../../../../assets/images/thumb-down.svg') no-repeat center;
 
             }
 
@@ -39,7 +39,8 @@
         }
 
         &__name {
-            padding-left: 1.5rem;
+            padding-left: 0.8rem;
+            padding-bottom: 0.5rem;
             font-size: 1.3rem;
             color: var(--gray-base);
             white-space: nowrap;
