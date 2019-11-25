@@ -6,24 +6,22 @@ class RequestsStore {
         this.rootStore = rootStore;
     }
 
-    handleError = async (fn) => {
+    @action
+    getCurrentFilteringState = async () => {
         try {
-            await fn();
+            adguard.requests.getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
         } catch (e) {
             log.error(e);
         }
     };
 
     @action
-    getCurrentFilteringState = async () => {
-        return this.handleError(() => adguard.requests.getCurrentFilteringState(
-            this.rootStore.settingsStore.currentURL
-        ));
-    };
-
-    @action
     getCurrentAppState = async () => {
-        return this.handleError(() => adguard.requests.getCurrentAppState());
+        try {
+            adguard.requests.getCurrentAppState();
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
@@ -33,76 +31,115 @@ class RequestsStore {
             isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
 
-        return this.handleError(() => adguard.requests.setFilteringStatus({
-            url: currentURL,
-            isEnabled: isFilteringEnabled,
-            isHttpsEnabled: isHttpsFilteringEnabled,
-        }));
+        try {
+            adguard.requests.setFilteringStatus({
+                url: currentURL,
+                isEnabled: isFilteringEnabled,
+                isHttpsEnabled: isHttpsFilteringEnabled,
+            });
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     openOriginCert = async () => {
-        return this.handleError(() => adguard.requests.openOriginCert(
-            this.rootStore.settingsStore.currentTabHostname
-        ));
+        try {
+            adguard.requests.openOriginCert(this.rootStore.settingsStore.currentTabHostname);
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     removeCustomRules = async () => {
-        this.handleError(() => adguard.requests.removeCustomRules(
-            this.rootStore.settingsStore.currentURL
-        ));
-        this.rootStore.uiStore.isPageFilteredByUserFilter = false;
-        return this.rootStore.uiStore.isPageFilteredByUserFilter;
+        try {
+            adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
+            this.rootStore.uiStore.isPageFilteredByUserFilter = false;
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     reportSite = async () => {
-        return this.handleError(() => adguard.requests.reportSite({
-            url: this.rootStore.settingsStore.currentURL,
-            referrer: this.rootStore.settingsStore.referrer,
-        }));
+        try {
+            adguard.requests.reportSite({
+                url: this.rootStore.settingsStore.currentURL,
+                referrer: this.rootStore.settingsStore.referrer,
+            });
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     openFilteringLog = async () => {
-        return this.handleError(() => adguard.requests.openFilteringLog());
+        try {
+            adguard.requests.openFilteringLog();
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     removeRule = async () => {
-        return this.handleError(() => adguard.requests.removeRule(
-            this.rootStore.settingsStore.currentTabHostname
-        ));
+        try {
+            adguard.requests.removeRule(
+                this.rootStore.settingsStore.currentTabHostname
+            );
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     addRule = async () => {
-        return this.handleError(() => adguard.requests.addRule(
-            this.rootStore.settingsStore.currentTabHostname
-        ));
+        try {
+            adguard.requests.addRule(
+                this.rootStore.settingsStore.currentTabHostname
+            );
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     setProtectionStatus = async () => {
-        return this.handleError(() => adguard.requests.setProtectionStatus(
-            this.rootStore.settingsStore.isProtectionEnabled
-        ));
+        try {
+            adguard.requests.setProtectionStatus(
+                this.rootStore.settingsStore.isProtectionEnabled
+            );
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     startApp = async () => {
-        return this.handleError(() => adguard.requests.startApp());
+        try {
+            adguard.requests.startApp();
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     openSettings = async () => {
-        return this.handleError(() => adguard.requests.openSettings());
+        try {
+            adguard.requests.openSettings();
+        } catch (e) {
+            log.error(e);
+        }
     };
 
     @action
     startBlockingAd = async () => {
-        await adguard.tabs.initAssistant();
+        try {
+            await adguard.tabs.initAssistant();
+        } catch (e) {
+            log.error(e);
+        }
         window.close();
     };
 }

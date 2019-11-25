@@ -8,7 +8,7 @@ import versions from './versions';
 import log from '../lib/logger';
 
 class Api {
-    isAppUpdated = true;
+    isAppUpToDate = true;
 
     isExtensionUpdated = true;
 
@@ -19,8 +19,8 @@ class Api {
         const { parameters } = response;
 
         if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
-            this.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
-            adguard.isAppUpdated = this.isAppUpdated;
+            this.isAppUpToDate = (versions.apiVersion >= parameters.apiVersion);
+            adguard.isAppUpToDate = this.isAppUpToDate;
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
             adguard.isExtensionUpdated = this.isExtensionUpdated;
@@ -80,16 +80,6 @@ class Api {
         log.info('request ', params);
         const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         return new Promise((resolve, reject) => {
-            try {
-                this.port.postMessage({ id, ...params });
-            } catch (e) {
-                if (this.retryTimes) {
-                    this.reinit();
-                } else {
-                    this.deinit();
-                }
-            }
-
             const messageHandler = (msg) => {
                 const { requestId, result } = msg;
 
@@ -115,6 +105,20 @@ class Api {
                 }
                 return '';
             };
+
+            try {
+                this.port.postMessage({ id, ...params });
+            } catch (e) {
+                log.error(e);
+
+                this.port.onMessage.removeListener(messageHandler);
+
+                if (this.retryTimes) {
+                    this.reinit();
+                } else {
+                    this.deinit();
+                }
+            }
             this.port.onMessage.addListener(messageHandler);
         });
     };

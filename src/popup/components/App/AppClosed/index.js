@@ -57,7 +57,7 @@ const PROBLEM_STATES = {
 
 function defineWarning(settingsStore) {
     const {
-        isInstalled, isRunning, isProtectionEnabled, isAppUpdated, isExtensionUpdated,
+        isInstalled, isRunning, isProtectionEnabled, isAppUpToDate, isExtensionUpdated,
     } = settingsStore;
 
     if (!isInstalled) {
@@ -72,8 +72,8 @@ function defineWarning(settingsStore) {
         return PROBLEM_STATES[NOT_WORKING_STATES.IS_PROTECTION_ENABLED];
     }
 
-    if (!isAppUpdated) {
-        return PROBLEM_STATES[NOT_WORKING_STATES.IS_APP_UPDATED];
+    if (!isAppUpToDate) {
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_APP_UP_TO_DATE];
     }
 
     if (!isExtensionUpdated) {

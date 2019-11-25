@@ -32,7 +32,7 @@ class SettingsStore {
 
     @observable originCertStatus = ORIGIN_CERT_STATUS.VALID;
 
-    @observable isAppUpdated = adguard.isAppUpdated;
+    @observable isAppUpToDate = adguard.isAppUpToDate;
 
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
@@ -165,8 +165,8 @@ class SettingsStore {
         // TODO: update app
         const updateSuccess = true;
         if (updateSuccess) {
-            adguard.isAppUpdated = true;
-            this.isAppUpdated = adguard.isAppUpdated;
+            adguard.isAppUpToDate = true;
+            this.isAppUpToDate = adguard.isAppUpToDate;
         }
     };
 
