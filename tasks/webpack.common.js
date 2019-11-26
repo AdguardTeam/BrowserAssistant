@@ -45,6 +45,11 @@ const config = {
                 options: { babelrc: true },
             },
             {
+                test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/,
+                exclude: /node_modules/,
+                loader: 'url-loader?limit=100000',
+            },
+            {
                 test: /\.(css|pcss)$/,
                 exclude: /node_modules/,
                 use: [

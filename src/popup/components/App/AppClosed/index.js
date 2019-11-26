@@ -32,8 +32,8 @@ const PROBLEM_STATES = {
         updateStore: settingsStore => settingsStore.toggleProtection(),
     },
 
-    [NOT_WORKING_STATES.IS_APP_UPDATED]: {
-        state: NOT_WORKING_STATES.IS_APP_UPDATED,
+    [NOT_WORKING_STATES.IS_APP_UP_TO_DATE]: {
+        state: NOT_WORKING_STATES.IS_APP_UP_TO_DATE,
         title: 'AdGuard is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateApp(),
