@@ -9,8 +9,12 @@ import log from '../../lib/logger';
 const sendMessage = async (...args) => {
     try {
         await browser.runtime.sendMessage(...args);
-    } catch (e) {
-        log.warn(e.message);
+    } catch (err) {
+        if (err.message === 'Could not establish connection. Receiving end does not exist.') {
+            log.warn('Internal messaging error:', err.message);
+        } else {
+            log.error(err.message);
+        }
     }
 };
 

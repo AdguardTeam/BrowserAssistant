@@ -10,6 +10,7 @@ import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import rootStore from '../../stores';
 import { REQUEST_STATUSES } from '../../stores/consts';
+import { HostResponseTypes } from '../../../lib/types';
 
 Modal.setAppElement('#root');
 
@@ -30,11 +31,19 @@ const App = observer(() => {
         (async () => {
             await getCurrentTabHostname();
             await getReferrer();
-            requestsStore.getCurrentFilteringState();
+            await requestsStore.getCurrentFilteringState();
         })();
 
         browser.runtime.onMessage.addListener(
             (response) => {
+                if (response.result === HostResponseTypes.ok) {
+                    uiStore.setReloading(false);
+                }
+
+                if (response.result === HostResponseTypes.error) {
+                    uiStore.setReloading(true);
+                }
+
                 const { parameters, appState, requestId } = response;
 
                 if (!requestId) {

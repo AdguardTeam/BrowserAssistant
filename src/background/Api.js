@@ -1,18 +1,29 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
-import { HostResponseTypes, HostTypes, ResponseTypes } from '../lib/types';
+import {
+    AssistantTypes, HostResponseTypes, HostTypes, RequestTypes, ResponseTypes,
+} from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
 import log from '../lib/logger';
 
 class Api {
+    isAppUpToDate = true;
+
+    isExtensionUpdated = true;
+
+    retryTimes = 5;
+
     initHandler = (response) => {
         log.info('response ', response);
         const { parameters } = response;
 
         if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
-            adguard.isAppUpdated = (versions.apiVersion >= parameters.apiVersion);
-            adguard.isExtensionUpdated = parameters.isValidatedOnHost;
+            this.isAppUpToDate = (versions.apiVersion >= parameters.apiVersion);
+            adguard.isAppUpToDate = this.isAppUpToDate;
+
+            this.isExtensionUpdated = parameters.isValidatedOnHost;
+            adguard.isExtensionUpdated = this.isExtensionUpdated;
         }
 
         if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
@@ -26,26 +37,49 @@ class Api {
         log.info('init');
         this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
         this.port.onMessage.addListener(this.initHandler);
+
+        this.port.onDisconnect.addListener(() => {
+            this.retryTimes -= 1;
+
+            if (this.retryTimes) {
+                this.reinit();
+            } else {
+                this.deinit();
+                this.retryTimes = 5;
+
+                log.error('Disconnected from native host');
+            }
+        });
+
+        this.initRequest();
         return this.port;
+    };
+
+    initRequest = () => {
+        this.makeRequest({
+            type: RequestTypes.init,
+            parameters: {
+                ...versions,
+                type: AssistantTypes.nativeAssistant,
+            },
+        }, ResponseTypes.INIT);
     };
 
     deinit = () => {
         log.info('deinit');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.initHandler);
-        return this.port;
+    };
+
+    reinit = () => {
+        this.deinit();
+        this.init();
     };
 
     makeRequest = async (params, idPrefix) => {
         log.info('request ', params);
         const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         return new Promise((resolve, reject) => {
-            try {
-                this.port.postMessage({ id, ...params });
-            } catch (e) {
-                this.init();
-            }
-
             const messageHandler = (msg) => {
                 const { requestId, result } = msg;
 
@@ -65,12 +99,26 @@ class Api {
                     }
 
                     if (result === HostResponseTypes.error) {
-                        this.deinit();
+                        this.reinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }
                 }
                 return '';
             };
+
+            try {
+                this.port.postMessage({ id, ...params });
+            } catch (e) {
+                log.error(e);
+
+                this.port.onMessage.removeListener(messageHandler);
+
+                if (this.retryTimes) {
+                    this.reinit();
+                } else {
+                    this.deinit();
+                }
+            }
             this.port.onMessage.addListener(messageHandler);
         });
     };

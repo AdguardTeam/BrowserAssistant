@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Option from './Option';
 import rootStore from '../../stores';
-import './options.pcss';
 
 const Options = observer(() => {
     const { uiStore, requestsStore, settingsStore } = useContext(rootStore);

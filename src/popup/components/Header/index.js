@@ -28,9 +28,11 @@ const Header = observer(() => {
 
     return (
         <div className="widget-popup__header">
-            <div className="widget-popup__header-logo" />
+            <div className="widget-popup__header-container">
+                <div className="widget-popup__header-logo" />
+                <div className="widget-popup__header-title">Assistant</div>
+            </div>
             <div className="widget-popup__header-buttons" id="popup-header-buttons">
-                <span className="widget-popup__header-title">Assistant</span>
                 <button
                     className={iconProtectionClass}
                     title="AdGuard Protection"

@@ -53,6 +53,7 @@
         "postcss-preset-env": "^6.7.0",
         "postcss-svg": "^3.0.0",
         "style-loader": "^1.0.0",
+        "url-loader": "^3.0.0",
         "webpack": "^4.35.2",
         "webpack-cli": "^3.3.5",
         "webpack-conditional-loader": "^1.0.12",

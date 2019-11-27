@@ -17,8 +17,12 @@ class Tabs {
             if (response) {
                 return response;
             }
-        } catch (error) {
-            log.warn(error.message);
+        } catch (err) {
+            if (err.message === 'Could not establish connection. Receiving end does not exist.') {
+                log.warn('Internal messaging error:', err.message);
+            } else {
+                log.error(err.message);
+            }
         }
         return '';
     }

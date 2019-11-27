@@ -32,7 +32,7 @@ const log = {
     },
 
     warn(...args) {
-        print('WARN', 'info', args);
+        print('WARN', 'warn', args);
     },
 
     error(...args) {

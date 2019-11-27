@@ -5,7 +5,6 @@ import { MessageTypes, RequestTypes } from '../lib/types';
 import tabs from './tabs';
 
 api.init();
-requests.init();
 
 async function sendMessage(sender, sendResponse) {
     const { type } = sender;
@@ -40,4 +39,6 @@ browser.runtime.onMessage.addListener(handleMessage);
 global.adguard = {
     requests,
     tabs,
+    isAppUpToDate: api.isAppUpToDate,
+    isExtensionUpdated: api.isExtensionUpdated,
 };
