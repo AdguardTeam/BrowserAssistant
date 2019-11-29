@@ -3,11 +3,12 @@ import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { NOT_WORKING_STATES } from '../../../stores/consts';
+import Loading from '../../ui/Loading';
 
 const PROBLEM_STATES = {
     [NOT_WORKING_STATES.IS_INSTALLED]: {
         state: NOT_WORKING_STATES.IS_INSTALLED,
-        title: 'AdGuard is not installed',
+        content: 'AdGuard is not installed',
         buttonText: 'download',
         updateStore: (settingsStore) => {
             settingsStore.openDownloadPage();
@@ -17,7 +18,7 @@ const PROBLEM_STATES = {
 
     [NOT_WORKING_STATES.IS_RUNNING]: {
         state: NOT_WORKING_STATES.IS_RUNNING,
-        title: 'AdGuard is not running',
+        content: 'AdGuard is not running',
         buttonText: 'run adguard',
         updateStore: (settingsStore, requestsStore) => {
             settingsStore.setRunning(true);
@@ -27,14 +28,14 @@ const PROBLEM_STATES = {
 
     [NOT_WORKING_STATES.IS_PROTECTION_ENABLED]: {
         state: NOT_WORKING_STATES.IS_PROTECTION_ENABLED,
-        title: 'AdGuard protection is paused',
+        content: 'AdGuard protection is paused',
         buttonText: 'enable',
         updateStore: settingsStore => settingsStore.toggleProtection(),
     },
 
     [NOT_WORKING_STATES.IS_APP_UP_TO_DATE]: {
         state: NOT_WORKING_STATES.IS_APP_UP_TO_DATE,
-        title: 'AdGuard is not updated',
+        content: 'AdGuard is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateApp(),
     },
@@ -42,14 +43,14 @@ const PROBLEM_STATES = {
     [NOT_WORKING_STATES.IS_EXTENSION_UPDATED]: {
         state: NOT_WORKING_STATES.IS_EXTENSION_UPDATED,
         id: 'isExtensionNotUpdated',
-        title: 'Assistant is not updated',
+        content: 'Assistant is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateExtension(),
     },
 
     [NOT_WORKING_STATES.IS_RELOADING]: {
         state: NOT_WORKING_STATES.IS_RELOADING,
-        title: 'Reloading...',
+        content: <Loading />,
         buttonText: 'reloading...',
         updateStore: () => null,
     },
@@ -87,12 +88,12 @@ const AppClosed = observer(() => {
     const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
 
     const {
-        state, title, buttonText, updateStore,
+        state, content, buttonText, updateStore,
     } = defineWarning(settingsStore);
     return (
         <div className="app-closed__wrapper">
             <div className="app-closed__status-wrapper">
-                <header className="app-closed__status">{title}</header>
+                <header className="app-closed__status">{content}</header>
             </div>
             {(state !== NOT_WORKING_STATES.IS_RELOADING) && (
                 <button
