@@ -68,7 +68,7 @@ class UiStore {
 
     @action
     setReloading = (isReloading) => {
-        this.isPending = isReloading;
+        this.isReloading = isReloading;
     };
 
     @action
@@ -77,11 +77,8 @@ class UiStore {
 
         const status = workingStatus || this.currentWorkingStatus;
         this.isAppWorking = (Object.values(status).every(state => state === true)
-            && isAppUpToDate && isExtensionUpdated && !this.isPending);
-    };
+            && isAppUpToDate && isExtensionUpdated && !this.isReloading);
 
-    updateUi = () => {
-        this.setAppWorkingStatus();
         this.setRequestStatus();
     };
 

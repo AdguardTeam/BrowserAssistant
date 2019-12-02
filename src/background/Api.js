@@ -55,14 +55,18 @@ class Api {
         return this.port;
     };
 
-    initRequest = () => {
-        this.makeRequest({
-            type: RequestTypes.init,
-            parameters: {
-                ...versions,
-                type: AssistantTypes.nativeAssistant,
-            },
-        }, ResponseTypes.INIT);
+    initRequest = async () => {
+        try {
+            await this.makeRequest({
+                type: RequestTypes.init,
+                parameters: {
+                    ...versions,
+                    type: AssistantTypes.nativeAssistant,
+                },
+            }, ResponseTypes.INIT);
+        } catch (error) {
+            log.error(error);
+        }
     };
 
     deinit = () => {
@@ -79,11 +83,11 @@ class Api {
     makeRequest = async (params, idPrefix) => {
         log.info('request ', params);
         const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
+        const RESPONSE_TIMEOUT_MS = 60 * 1000;
+
         return new Promise((resolve, reject) => {
             const messageHandler = (msg) => {
                 const { requestId, result } = msg;
-
-                const RESPONSE_TIMEOUT_MS = 60 * 1000;
 
                 const pendingTimer = setTimeout(() => {
                     reject(new Error('Native host is not responding.'));

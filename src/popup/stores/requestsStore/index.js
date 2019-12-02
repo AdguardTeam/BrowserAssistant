@@ -9,7 +9,8 @@ class RequestsStore {
     @action
     getCurrentFilteringState = async () => {
         try {
-            adguard.requests.getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
+            await adguard.requests
+                .getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
         } catch (e) {
             log.error(e);
         }
@@ -18,7 +19,7 @@ class RequestsStore {
     @action
     getCurrentAppState = async () => {
         try {
-            adguard.requests.getCurrentAppState();
+            await adguard.requests.getCurrentAppState();
         } catch (e) {
             log.error(e);
         }
@@ -32,7 +33,7 @@ class RequestsStore {
         } = this.rootStore.settingsStore;
 
         try {
-            adguard.requests.setFilteringStatus({
+            await adguard.requests.setFilteringStatus({
                 url: currentURL,
                 isEnabled: isFilteringEnabled,
                 isHttpsEnabled: isHttpsFilteringEnabled,
@@ -45,7 +46,8 @@ class RequestsStore {
     @action
     openOriginalCert = async () => {
         try {
-            adguard.requests.openOriginalCert(this.rootStore.settingsStore.currentTabHostname);
+            await adguard.requests
+                .openOriginalCert(this.rootStore.settingsStore.currentTabHostname);
         } catch (e) {
             log.error(e);
         }
@@ -54,7 +56,7 @@ class RequestsStore {
     @action
     removeCustomRules = async () => {
         try {
-            adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
+            await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
             this.rootStore.uiStore.isPageFilteredByUserFilter = false;
         } catch (e) {
             log.error(e);
@@ -64,7 +66,7 @@ class RequestsStore {
     @action
     reportSite = async () => {
         try {
-            adguard.requests.reportSite({
+            await adguard.requests.reportSite({
                 url: this.rootStore.settingsStore.currentURL,
                 referrer: this.rootStore.settingsStore.referrer,
             });
@@ -76,7 +78,7 @@ class RequestsStore {
     @action
     openFilteringLog = async () => {
         try {
-            adguard.requests.openFilteringLog();
+            await adguard.requests.openFilteringLog();
         } catch (e) {
             log.error(e);
         }
@@ -85,7 +87,7 @@ class RequestsStore {
     @action
     removeRule = async () => {
         try {
-            adguard.requests.removeRule(
+            await adguard.requests.removeRule(
                 this.rootStore.settingsStore.currentTabHostname
             );
         } catch (e) {
@@ -96,7 +98,7 @@ class RequestsStore {
     @action
     addRule = async () => {
         try {
-            adguard.requests.addRule(
+            await adguard.requests.addRule(
                 this.rootStore.settingsStore.currentTabHostname
             );
         } catch (e) {
@@ -107,7 +109,7 @@ class RequestsStore {
     @action
     setProtectionStatus = async () => {
         try {
-            adguard.requests.setProtectionStatus(
+            await adguard.requests.setProtectionStatus(
                 this.rootStore.settingsStore.isProtectionEnabled
             );
         } catch (e) {
@@ -118,7 +120,7 @@ class RequestsStore {
     @action
     startApp = async () => {
         try {
-            adguard.requests.startApp();
+            await adguard.requests.startApp();
         } catch (e) {
             log.error(e);
         }
@@ -127,7 +129,7 @@ class RequestsStore {
     @action
     openSettings = async () => {
         try {
-            adguard.requests.openSettings();
+            await adguard.requests.openSettings();
         } catch (e) {
             log.error(e);
         }

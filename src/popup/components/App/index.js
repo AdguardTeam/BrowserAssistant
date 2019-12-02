@@ -37,30 +37,26 @@ const App = observer(() => {
         browser.runtime.onMessage.addListener(
             (response) => {
                 const { parameters, appState, requestId } = response;
-
-                if (!requestId) {
-                    return;
-                }
-
-                const { isInstalled, isRunning, isProtectionEnabled } = appState;
-                const workingStatus = { isInstalled, isRunning, isProtectionEnabled };
-
-                uiStore.setAppWorkingStatus(workingStatus);
-
-                if (parameters && parameters.originalCertStatus) {
-                    setCurrentFilteringState(parameters);
-                }
-
                 if (response.result === HostResponseTypes.ok) {
                     uiStore.setReloading(false);
                 }
 
-                if (response.result === HostResponseTypes.error) {
+                if (!requestId) {
+                    return;
+                }
+                const { isInstalled, isRunning, isProtectionEnabled } = appState;
+                const workingStatus = { isInstalled, isRunning, isProtectionEnabled };
+
+                if (parameters && parameters.originalCertStatus) {
+                    setCurrentFilteringState(parameters);
+                }
+                setCurrentAppState(workingStatus);
+
+                if (response.result === HostResponseTypes.error
+                    && (Object.values(workingStatus).every(state => state === true))) {
                     uiStore.setReloading(true);
                 }
-
-                setCurrentAppState(workingStatus);
-                uiStore.setRequestStatus();
+                uiStore.setAppWorkingStatus(workingStatus);
             }
         );
 
