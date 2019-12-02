@@ -101,7 +101,7 @@ const AppClosed = observer(() => {
                     type="button"
                     onClick={() => {
                         updateStore(settingsStore, requestsStore);
-                        uiStore.updateUi();
+                        uiStore.setAppWorkingStatus();
                     }}
                 >
                     {buttonText}
