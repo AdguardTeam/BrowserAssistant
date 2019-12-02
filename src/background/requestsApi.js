@@ -63,9 +63,9 @@ class RequestsApi {
     }
 
 
-    openOriginCert(domain) {
+    openOriginalCert(domain) {
         return api.makeRequest({
-            type: RequestTypes.openOriginCert,
+            type: RequestTypes.openOriginalCert,
             parameters: { domain },
         });
     }

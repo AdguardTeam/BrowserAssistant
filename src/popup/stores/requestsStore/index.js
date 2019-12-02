@@ -43,9 +43,9 @@ class RequestsStore {
     };
 
     @action
-    openOriginCert = async () => {
+    openOriginalCert = async () => {
         try {
-            adguard.requests.openOriginCert(this.rootStore.settingsStore.currentTabHostname);
+            adguard.requests.openOriginalCert(this.rootStore.settingsStore.currentTabHostname);
         } catch (e) {
             log.error(e);
         }
