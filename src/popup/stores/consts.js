@@ -4,7 +4,7 @@ export const REQUEST_STATUSES = {
     ERROR: 'error',
 };
 
-export const ORIGIN_CERT_STATUS = {
+export const ORIGINAL_CERT_STATUS = {
     VALID: 'valid',
     INVALID: 'invalid',
 };

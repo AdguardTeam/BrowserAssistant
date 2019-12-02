@@ -36,14 +36,6 @@ const App = observer(() => {
 
         browser.runtime.onMessage.addListener(
             (response) => {
-                if (response.result === HostResponseTypes.ok) {
-                    uiStore.setReloading(false);
-                }
-
-                if (response.result === HostResponseTypes.error) {
-                    uiStore.setReloading(true);
-                }
-
                 const { parameters, appState, requestId } = response;
 
                 if (!requestId) {
@@ -55,8 +47,16 @@ const App = observer(() => {
 
                 uiStore.setAppWorkingStatus(workingStatus);
 
-                if (parameters && parameters.originCertStatus) {
+                if (parameters && parameters.originalCertStatus) {
                     setCurrentFilteringState(parameters);
+                }
+
+                if (response.result === HostResponseTypes.ok) {
+                    uiStore.setReloading(false);
+                }
+
+                if (response.result === HostResponseTypes.error) {
+                    uiStore.setReloading(true);
                 }
 
                 setCurrentAppState(workingStatus);

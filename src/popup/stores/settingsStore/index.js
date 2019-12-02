@@ -1,7 +1,7 @@
 import {
     action, observable, computed, runInAction,
 } from 'mobx';
-import { ORIGIN_CERT_STATUS } from '../consts';
+import { ORIGINAL_CERT_STATUS } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
@@ -18,6 +18,8 @@ class SettingsStore {
 
     @observable referrer = '';
 
+    @observable originalCertIssuer = '';
+
     @observable isPageSecured = false;
 
     @observable isHttpsFilteringEnabled = false;
@@ -30,14 +32,14 @@ class SettingsStore {
 
     @observable isProtectionEnabled = true;
 
-    @observable originCertStatus = ORIGIN_CERT_STATUS.VALID;
+    @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
     @observable isAppUpToDate = adguard.isAppUpToDate;
 
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
     @computed get isExpired() {
-        return (this.originCertStatus === ORIGIN_CERT_STATUS.INVALID);
+        return (this.originalCertStatus === ORIGINAL_CERT_STATUS.INVALID);
     }
 
     @action
@@ -104,8 +106,13 @@ class SettingsStore {
     };
 
     @action
-    setOriginCertStatus = (status) => {
-        this.originCertStatus = ORIGIN_CERT_STATUS[status.toUpperCase()];
+    setOriginalCertStatus = (status) => {
+        this.originalCertStatus = ORIGINAL_CERT_STATUS[status.toUpperCase()];
+    };
+
+    @action
+    setOriginalCertIssuer = (originalCertIssuer) => {
+        this.originalCertIssuer = originalCertIssuer;
     };
 
     @action
@@ -134,11 +141,13 @@ class SettingsStore {
         const {
             isFilteringEnabled,
             isHttpsFilteringEnabled,
-            originCertStatus,
+            originalCertStatus,
             isPageFilteredByUserFilter,
+            originalCertIssuer,
         } = parameters;
         this.setHttpAndHttpsFilteringActive(isFilteringEnabled, isHttpsFilteringEnabled);
-        this.setOriginCertStatus(originCertStatus);
+        this.setOriginalCertStatus(originalCertStatus);
+        this.setOriginalCertIssuer(originalCertIssuer);
         this.rootStore.uiStore.setPageFilteredByUserFilter(isPageFilteredByUserFilter);
     };
 

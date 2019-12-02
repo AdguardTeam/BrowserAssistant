@@ -8,7 +8,7 @@ import './modal.pcss';
 const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
     const { settingsStore, requestsStore } = useContext(rootStore);
 
-    const showCertificate = () => requestsStore.openOriginCert();
+    const showCertificate = () => requestsStore.openOriginalCert();
 
     const handleHttpsFiltering = () => {
         settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
@@ -50,7 +50,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
             )}
             <div className="modal__info--lower">
                 <p className="modal__text modal__text--notion">Verified by:</p>
-                <span className="modal__header">AdGuard Personal CA</span>
+                <span className="modal__header">{settingsStore.originalCertIssuer}</span>
                 {settingsStore.isExpired
                 && <p className="modal__text modal__text--expired modal__text--expired--lower modal__text--uppercase">expired</p>}
                 <div

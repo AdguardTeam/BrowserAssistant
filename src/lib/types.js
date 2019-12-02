@@ -7,7 +7,7 @@ export const RequestTypes = {
     addRule: 'addRule',
     removeRule: 'removeRule',
     removeCustomRules: 'removeCustomRules',
-    openOriginCert: 'openOriginCert',
+    openOriginalCert: 'openOriginalCert',
     reportSite: 'reportSite',
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
