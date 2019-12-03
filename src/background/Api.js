@@ -15,7 +15,7 @@ class Api {
     retryTimes = 5;
 
     initHandler = (response) => {
-        log.info('response ', response);
+        log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
         if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
@@ -81,9 +81,9 @@ class Api {
     };
 
     makeRequest = async (params, idPrefix) => {
-        log.info('request ', params);
         const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
+        log.info(`request ${id}`, params);
 
         return new Promise((resolve, reject) => {
             const messageHandler = (msg) => {
