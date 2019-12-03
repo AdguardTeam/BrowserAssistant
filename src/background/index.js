@@ -19,6 +19,7 @@ function addRule(sender) {
     const { ruleText } = sender;
     adguard.requests.addRule(ruleText);
     adguard.tabs.isPageFilteredByUserFilter = true;
+    adguard.tabs.reloadCurrentPage();
 }
 
 function handleMessage(sender, data, sendResponse) {
