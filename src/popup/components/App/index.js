@@ -52,6 +52,8 @@ const App = observer(() => {
                 }
                 setCurrentAppState(workingStatus);
 
+                // Show loading spinner when response status is error
+                // but there are no other problems of appState
                 if (response.result === HostResponseTypes.error
                     && (Object.values(workingStatus).every(state => state === true))) {
                     uiStore.setReloading(true);
