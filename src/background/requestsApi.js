@@ -100,6 +100,12 @@ class RequestsApi {
             type: RequestTypes.startApp,
         });
     }
+
+    updateApp() {
+        return api.makeRequest({
+            type: RequestTypes.updateApp,
+        });
+    }
 }
 
 const requests = new RequestsApi();

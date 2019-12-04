@@ -16,14 +16,21 @@ const PROBLEM_STATES = {
         },
     },
 
+    [NOT_WORKING_STATES.IS_APP_UP_TO_DATE]: {
+        state: NOT_WORKING_STATES.IS_APP_UP_TO_DATE,
+        content: 'AdGuard is not updated',
+        buttonText: 'update',
+        updateStore: (settingsStore, requestsStore) => {
+            requestsStore.updateApp();
+            window.close();
+        },
+    },
+
     [NOT_WORKING_STATES.IS_RUNNING]: {
         state: NOT_WORKING_STATES.IS_RUNNING,
         content: 'AdGuard is not running',
         buttonText: 'run adguard',
-        updateStore: (settingsStore, requestsStore) => {
-            settingsStore.setRunning(true);
-            requestsStore.startApp();
-        },
+        updateStore: (settingsStore, requestsStore) => requestsStore.startApp(),
     },
 
     [NOT_WORKING_STATES.IS_PROTECTION_ENABLED]: {
@@ -31,13 +38,6 @@ const PROBLEM_STATES = {
         content: 'AdGuard protection is paused',
         buttonText: 'enable',
         updateStore: settingsStore => settingsStore.toggleProtection(),
-    },
-
-    [NOT_WORKING_STATES.IS_APP_UP_TO_DATE]: {
-        state: NOT_WORKING_STATES.IS_APP_UP_TO_DATE,
-        content: 'AdGuard is not updated',
-        buttonText: 'update',
-        updateStore: settingsStore => settingsStore.updateApp(),
     },
 
     [NOT_WORKING_STATES.IS_EXTENSION_UPDATED]: {

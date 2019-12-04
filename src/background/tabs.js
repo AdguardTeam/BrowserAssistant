@@ -39,11 +39,6 @@ class Tabs {
     openDownloadPage() {
         browser.tabs.create({ url: 'https://adguard.com/ru/download.html?os=windows' });
     }
-
-    async reloadCurrentPage() {
-        const currentTab = await this.getCurrent();
-        browser.tabs.reload(currentTab.id);
-    }
 }
 
 const tabs = new Tabs();
