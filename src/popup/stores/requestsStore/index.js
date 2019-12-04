@@ -12,6 +12,7 @@ class RequestsStore {
             await adguard.requests
                 .getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -21,6 +22,7 @@ class RequestsStore {
         try {
             await adguard.requests.getCurrentAppState();
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -39,6 +41,7 @@ class RequestsStore {
                 isHttpsEnabled: isHttpsFilteringEnabled,
             });
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -49,6 +52,7 @@ class RequestsStore {
             await adguard.requests
                 .openOriginalCert(this.rootStore.settingsStore.currentTabHostname);
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -59,6 +63,7 @@ class RequestsStore {
             await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
             this.rootStore.uiStore.isPageFilteredByUserFilter = false;
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -71,6 +76,7 @@ class RequestsStore {
                 referrer: this.rootStore.settingsStore.referrer,
             });
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -80,6 +86,7 @@ class RequestsStore {
         try {
             await adguard.requests.openFilteringLog();
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -91,6 +98,7 @@ class RequestsStore {
                 this.rootStore.settingsStore.currentTabHostname
             );
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -102,6 +110,7 @@ class RequestsStore {
                 this.rootStore.settingsStore.currentTabHostname
             );
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -113,6 +122,7 @@ class RequestsStore {
                 this.rootStore.settingsStore.isProtectionEnabled
             );
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -122,6 +132,17 @@ class RequestsStore {
         try {
             await adguard.requests.startApp();
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
+            log.error(e);
+        }
+    };
+
+    @action
+    updateApp = async () => {
+        try {
+            await adguard.requests.updateApp();
+        } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -131,6 +152,7 @@ class RequestsStore {
         try {
             await adguard.requests.openSettings();
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
@@ -140,6 +162,7 @@ class RequestsStore {
         try {
             await adguard.tabs.initAssistant();
         } catch (e) {
+            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
         window.close();

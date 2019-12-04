@@ -10,7 +10,8 @@ import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import rootStore from '../../stores';
 import { REQUEST_STATUSES } from '../../stores/consts';
-import { HostResponseTypes } from '../../../lib/types';
+import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
+import Loading from '../ui/Loading';
 
 Modal.setAppElement('#root');
 
@@ -36,14 +37,27 @@ const App = observer(() => {
 
         browser.runtime.onMessage.addListener(
             (response) => {
-                const { parameters, appState, requestId } = response;
-                if (response.result === HostResponseTypes.ok) {
-                    uiStore.setReloading(false);
-                }
+                const {
+                    parameters, appState, requestId, result,
+                } = response;
+
 
                 if (!requestId) {
                     return;
                 }
+
+                if (response === BACKGROUND_COMMANDS.CLOSE_POPUP) {
+                    window.close();
+                }
+
+                if (response === BACKGROUND_COMMANDS.SHOW_RELOAD) {
+                    uiStore.setReloading(true);
+                }
+
+                if (result === HostResponseTypes.ok) {
+                    uiStore.setReloading(false);
+                }
+
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
                 const workingStatus = { isInstalled, isRunning, isProtectionEnabled };
 
@@ -51,13 +65,6 @@ const App = observer(() => {
                     setCurrentFilteringState(parameters);
                 }
                 setCurrentAppState(workingStatus);
-
-                // Show loading spinner when response status is error
-                // but there are no other problems of appState
-                if (response.result === HostResponseTypes.error
-                    && (Object.values(workingStatus).every(state => state === true))) {
-                    uiStore.setReloading(true);
-                }
                 uiStore.setAppWorkingStatus(workingStatus);
             }
         );
@@ -68,21 +75,17 @@ const App = observer(() => {
     }, []);
     return (
         <Fragment>
-            {uiStore.requestStatus === REQUEST_STATUSES.SUCCESS
-            && (
+            {uiStore.requestStatus !== REQUEST_STATUSES.PENDING && <Header />}
+            {uiStore.requestStatus === REQUEST_STATUSES.SUCCESS && (
                 <div className={appClass}>
-                    <Header />
                     <CurrentSite />
                     <Settings />
                     <Options />
                 </div>
             )}
-            {uiStore.requestStatus === REQUEST_STATUSES.ERROR && (
-                <Fragment>
-                    <Header />
-                    <AppClosed />
-                </Fragment>
-            )}
+            {uiStore.requestStatus === REQUEST_STATUSES.ERROR
+            && !uiStore.isReloading && <AppClosed />}
+            {uiStore.isReloading && <Loading />}
         </Fragment>
 
     );

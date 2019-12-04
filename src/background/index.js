@@ -3,8 +3,8 @@ import requests from './requestsApi';
 import api from './Api';
 import { MessageTypes, RequestTypes } from '../lib/types';
 import tabs from './tabs';
+import log from '../lib/logger';
 
-api.init();
 
 async function sendMessage(sender, sendResponse) {
     const { type } = sender;
@@ -19,7 +19,6 @@ function addRule(sender) {
     const { ruleText } = sender;
     adguard.requests.addRule(ruleText);
     adguard.tabs.isPageFilteredByUserFilter = true;
-    adguard.tabs.reloadCurrentPage();
 }
 
 function handleMessage(sender, data, sendResponse) {
@@ -35,7 +34,13 @@ function handleMessage(sender, data, sendResponse) {
     }
 }
 
-browser.runtime.onMessage.addListener(handleMessage);
+try {
+    api.init();
+
+    browser.runtime.onMessage.addListener(handleMessage);
+} catch (error) {
+    log.error(error);
+}
 
 global.adguard = {
     requests,

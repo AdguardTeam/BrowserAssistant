@@ -14,7 +14,7 @@ const Settings = observer(() => {
             <div className="settings__main">
                 <Switcher
                     id="global-switcher"
-                    checked={settingsStore.isFilteringEnabled}
+                    checked={settingsStore.isPageSecured ? false : settingsStore.isFilteringEnabled}
                     onClick={!settingsStore.isPageSecured ? handleFiltering : undefined}
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}

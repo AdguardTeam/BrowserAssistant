@@ -77,7 +77,7 @@ class UiStore {
 
         const status = workingStatus || this.currentWorkingStatus;
         this.isAppWorking = (Object.values(status).every(state => state === true)
-            && isAppUpToDate && isExtensionUpdated && !this.isReloading);
+            && isAppUpToDate && isExtensionUpdated);
 
         this.setRequestStatus();
     };

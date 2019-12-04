@@ -37,7 +37,10 @@ const Header = observer(() => {
                     className={iconProtectionClass}
                     title="AdGuard Protection"
                     type="button"
-                    onClick={toggleProtection}
+                    onClick={() => {
+                        toggleProtection();
+                        uiStore.setReloading(true);
+                    }}
                     tabIndex="0"
                 />
                 <button

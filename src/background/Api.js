@@ -1,7 +1,7 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import {
-    AssistantTypes, HostResponseTypes, HostTypes, RequestTypes, ResponseTypes,
+    AssistantTypes, BACKGROUND_COMMANDS, HostResponseTypes, HostTypes, RequestTypes, ResponseTypes,
 } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
@@ -18,16 +18,17 @@ class Api {
         log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
-        if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
-            this.isAppUpToDate = (versions.apiVersion >= parameters.apiVersion);
+        if (parameters && !(response.requestId.startsWith(ResponseTypes.ADG)
+            || response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE))) {
+            return;
+        }
+
+        if (parameters && response.requestId.startsWith(ResponseTypes.ADG_INIT)) {
+            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             adguard.isAppUpToDate = this.isAppUpToDate;
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
             adguard.isExtensionUpdated = this.isExtensionUpdated;
-        }
-
-        if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
-            return;
         }
 
         browserApi.runtime.sendMessage(response);
@@ -45,6 +46,7 @@ class Api {
                 this.reinit();
             } else {
                 this.deinit();
+                browserApi.runtime.sendMessage(BACKGROUND_COMMANDS.CLOSE_POPUP);
                 this.retryTimes = 5;
 
                 log.error('Disconnected from native host');
@@ -75,13 +77,14 @@ class Api {
         this.port.onMessage.removeListener(this.initHandler);
     };
 
-    reinit = () => {
+    reinit = async () => {
+        await browserApi.runtime.sendMessage(BACKGROUND_COMMANDS.SHOW_RELOAD);
         this.deinit();
         this.init();
     };
 
     makeRequest = async (params, idPrefix) => {
-        const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
+        const id = idPrefix ? `ADG_${idPrefix}_${nanoid()}` : `ADG_${nanoid()}`;
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
         log.info(`request ${id}`, params);
 
@@ -120,6 +123,7 @@ class Api {
                 if (this.retryTimes) {
                     this.reinit();
                 } else {
+                    browserApi.runtime.sendMessage(BACKGROUND_COMMANDS.CLOSE_POPUP);
                     this.deinit();
                 }
             }

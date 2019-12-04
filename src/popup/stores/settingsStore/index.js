@@ -170,16 +170,6 @@ class SettingsStore {
     };
 
     @action
-    updateApp = () => {
-        // TODO: update app
-        const updateSuccess = true;
-        if (updateSuccess) {
-            adguard.isAppUpToDate = true;
-            this.isAppUpToDate = adguard.isAppUpToDate;
-        }
-    };
-
-    @action
     updateExtension = () => {
         // TODO: update extension
         const updateSuccess = true;

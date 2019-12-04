@@ -12,11 +12,14 @@ export const RequestTypes = {
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
     startApp: 'startApp',
+    updateApp: 'updateApp',
 };
 
 export const ResponseTypes = {
     APP_STATE_RESPONSE_MESSAGE: 'APP_STATE_RESPONSE_MESSAGE',
     INIT: 'INIT',
+    ADG_INIT: 'ADG_INIT',
+    ADG: 'ADG',
 };
 
 export const AssistantTypes = {
@@ -36,4 +39,9 @@ export const HostResponseTypes = {
 
 export const HostTypes = {
     browserExtensionHost: 'browser_extension_host',
+};
+
+export const BACKGROUND_COMMANDS = {
+    CLOSE_POPUP: 'CLOSE_POPUP',
+    SHOW_RELOAD: 'SHOW_RELOAD',
 };
