@@ -46,7 +46,7 @@ class Api {
                 this.reinit();
             } else {
                 this.deinit();
-                browserApi.runtime.sendMessage(BACKGROUND_COMMANDS.CLOSE_POPUP);
+                browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.CLOSE_POPUP });
                 this.retryTimes = 5;
 
                 log.error('Disconnected from native host');
@@ -78,7 +78,7 @@ class Api {
     };
 
     reinit = async () => {
-        await browserApi.runtime.sendMessage(BACKGROUND_COMMANDS.SHOW_RELOAD);
+        await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
         this.deinit();
         this.init();
     };
@@ -123,7 +123,7 @@ class Api {
                 if (this.retryTimes) {
                     this.reinit();
                 } else {
-                    browserApi.runtime.sendMessage(BACKGROUND_COMMANDS.CLOSE_POPUP);
+                    browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.CLOSE_POPUP });
                     this.deinit();
                 }
             }

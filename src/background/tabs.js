@@ -37,7 +37,7 @@ class Tabs {
     }
 
     openDownloadPage() {
-        browser.tabs.create({ url: 'https://adguard.com/ru/download.html?os=windows' });
+        browser.tabs.create({ url: 'https://adguard.com/ru/download.html' });
     }
 }
 

@@ -41,21 +41,21 @@ const App = observer(() => {
                     parameters, appState, requestId, result,
                 } = response;
 
+                switch (result) {
+                    case BACKGROUND_COMMANDS.CLOSE_POPUP:
+                        window.close();
+                        break;
+                    case BACKGROUND_COMMANDS.SHOW_RELOAD:
+                        uiStore.setReloading(true);
+                        break;
+                    case HostResponseTypes.ok:
+                        uiStore.setReloading(false);
+                        break;
+                    default:
+                }
 
                 if (!requestId) {
                     return;
-                }
-
-                if (response === BACKGROUND_COMMANDS.CLOSE_POPUP) {
-                    window.close();
-                }
-
-                if (response === BACKGROUND_COMMANDS.SHOW_RELOAD) {
-                    uiStore.setReloading(true);
-                }
-
-                if (result === HostResponseTypes.ok) {
-                    uiStore.setReloading(false);
                 }
 
                 const { isInstalled, isRunning, isProtectionEnabled } = appState;
