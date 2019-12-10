@@ -29,6 +29,15 @@ if (process.env.NODE_ENV === 'beta') {
     );
 }
 
+if (process.env.NODE_ENV === 'release') {
+    plugins.push(
+        new ZipWebpackPlugin({
+            path: '../',
+            filename: `firefox-release-${pJson.version}.zip`,
+        })
+    );
+}
+
 const firefoxConfig = {
     output: {
         path: path.join(common.output.path, FIREFOX_PATH),
