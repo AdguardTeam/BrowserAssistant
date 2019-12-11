@@ -1,7 +1,12 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import {
-    AssistantTypes, BACKGROUND_COMMANDS, HostResponseTypes, HostTypes, RequestTypes, ResponseTypes,
+    AssistantTypes,
+    BACKGROUND_COMMANDS,
+    HostResponseTypes,
+    HostTypes,
+    RequestTypes,
+    ResponseTypesPrefixes,
 } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
@@ -18,12 +23,12 @@ class Api {
         log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
-        if (parameters && !(response.requestId.startsWith(ResponseTypes.ADG)
-            || response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE))) {
+        // Ignore requests without identifying prefix ADG
+        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(ResponseTypes.ADG_INIT)) {
+        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             adguard.isAppUpToDate = this.isAppUpToDate;
 
@@ -65,7 +70,7 @@ class Api {
                     ...versions,
                     type: AssistantTypes.nativeAssistant,
                 },
-            }, ResponseTypes.INIT);
+            }, ResponseTypesPrefixes.INIT);
         } catch (error) {
             log.error(error);
         }
