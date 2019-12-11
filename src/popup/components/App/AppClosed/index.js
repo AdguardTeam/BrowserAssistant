@@ -54,12 +54,32 @@ const PROBLEM_STATES = {
         buttonText: 'reloading...',
         updateStore: () => null,
     },
+
+    [NOT_WORKING_STATES.IS_SETUP_CORRECTLY]: {
+        state: NOT_WORKING_STATES.IS_SETUP_CORRECTLY,
+        id: 'isBroken',
+        content: 'Something went wrong',
+        buttonText: 'reinstall',
+        updateStore: (settingsStore) => {
+            settingsStore.openDownloadPage();
+            window.close();
+        },
+    },
 };
 
 function defineWarning(settingsStore) {
     const {
-        isInstalled, isRunning, isProtectionEnabled, isAppUpToDate, isExtensionUpdated,
+        isInstalled,
+        isRunning,
+        isProtectionEnabled,
+        isAppUpToDate,
+        isExtensionUpdated,
+        isSetupCorrectly,
     } = settingsStore;
+
+    if (!isSetupCorrectly) {
+        return PROBLEM_STATES[NOT_WORKING_STATES.IS_SETUP_CORRECTLY];
+    }
 
     if (!isInstalled) {
         return PROBLEM_STATES[NOT_WORKING_STATES.IS_INSTALLED];

@@ -51,10 +51,12 @@ class Api {
                 this.reinit();
             } else {
                 this.deinit();
-                browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.CLOSE_POPUP });
+                browserApi.runtime.sendMessage(
+                    { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
+                );
                 this.retryTimes = 5;
 
-                log.error('Disconnected from native host');
+                log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
             }
         });
 

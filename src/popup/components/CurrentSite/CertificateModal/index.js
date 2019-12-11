@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import Modal from 'react-modal';
 import Switcher from '../../Settings/Switcher';
 import rootStore from '../../../stores';
+import { SWITCHER_IDS } from '../../../stores/consts';
 import './modal.pcss';
 
 const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
@@ -34,12 +35,15 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                     <p className="modal__text modal__text--additional">Increases the quality of ad blocking</p>
                 </span>
                 <Switcher
-                    id="https-switcher"
-                    checked={settingsStore.isHttpsFilteringEnabled && settingsStore.isHttps}
+                    id={SWITCHER_IDS.HTTPS_SWITCHER}
+                    checked={!settingsStore.isExpired
+                    && settingsStore.isHttpsFilteringEnabled
+                    && settingsStore.isHttps}
                     onClick={handleHttpsFiltering}
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}
                     isHttps={settingsStore.isHttps}
+                    isExpired={settingsStore.isExpired}
                 />
             </div>
             {settingsStore.isExpired && (
@@ -51,8 +55,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
             <div className="modal__info--lower">
                 <p className="modal__text modal__text--notion">Verified by:</p>
                 <span className="modal__header">{settingsStore.originalCertIssuer}</span>
-                {settingsStore.isExpired
-                && <p className="modal__text modal__text--expired modal__text--expired--lower modal__text--uppercase">expired</p>}
+                {!settingsStore.isExpired && (
                 <div
                     className="modal__text modal__text--link modal__text--cert"
                     role="button"
@@ -62,6 +65,8 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                 >
                     More Information
                 </div>
+                )}
+                {settingsStore.isExpired && <div className="modal__text modal__text--cert modal__text--expired modal__text--uppercase">expired</div>}
             </div>
         </Modal>
     );
