@@ -38,6 +38,8 @@ class SettingsStore {
 
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
+    @observable isSetupCorrectly = true;
+
     @computed get isExpired() {
         return (this.originalCertStatus === ORIGINAL_CERT_STATUS.INVALID);
     }
@@ -157,6 +159,11 @@ class SettingsStore {
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+    };
+
+    @action
+    setSetupCorrectly = (isSetupCorrectly) => {
+        this.isSetupCorrectly = isSetupCorrectly;
     };
 
     @action

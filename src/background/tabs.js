@@ -1,12 +1,20 @@
 import browser from 'webextension-polyfill';
-import { MessageTypes, RequestTypes } from '../lib/types';
+import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
 import log from '../lib/logger';
+import browserApi from './browserApi';
 
 class Tabs {
     async getCurrent() {
-        const { id: windowId } = await browser.windows.getCurrent();
-        const tabs = await browser.tabs.query({ active: true, windowId });
-        return tabs[0];
+        const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
+        if (!tab.url) {
+            log.error('Browser tabs api error: no url property. Checkout activeTab permission in manifest.', tab);
+            browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
+            setTimeout(() => browserApi.runtime.sendMessage(
+                { result: BACKGROUND_COMMANDS.CLOSE_POPUP }
+            ),
+            1000);
+        }
+        return tab;
     }
 
     async sendMessage(type, options) {

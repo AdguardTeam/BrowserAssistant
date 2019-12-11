@@ -73,11 +73,15 @@ class UiStore {
 
     @action
     setAppWorkingStatus = (workingStatus) => {
-        const { isAppUpToDate, isExtensionUpdated } = this.rootStore.settingsStore;
+        const {
+            isAppUpToDate,
+            isExtensionUpdated,
+            isSetupCorrectly,
+        } = this.rootStore.settingsStore;
 
         const status = workingStatus || this.currentWorkingStatus;
         this.isAppWorking = (Object.values(status).every(state => state === true)
-            && isAppUpToDate && isExtensionUpdated);
+            && isAppUpToDate && isExtensionUpdated && isSetupCorrectly);
 
         this.setRequestStatus();
     };

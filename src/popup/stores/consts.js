@@ -16,4 +16,10 @@ export const NOT_WORKING_STATES = {
     IS_APP_UP_TO_DATE: 'IS_APP_UP_TO_DATE',
     IS_EXTENSION_UPDATED: 'IS_EXTENSION_UPDATED',
     IS_RELOADING: 'IS_RELOADING',
+    IS_SETUP_CORRECTLY: 'IS_SETUP_CORRECTLY',
+};
+
+export const SWITCHER_IDS = {
+    HTTPS_SWITCHER: 'https-switcher',
+    GLOBAL_SWITCHER: 'global-switcher',
 };

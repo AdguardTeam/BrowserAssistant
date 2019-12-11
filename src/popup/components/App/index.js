@@ -42,6 +42,10 @@ const App = observer(() => {
                 } = response;
 
                 switch (result) {
+                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
+                        settingsStore.setSetupCorrectly(false);
+                        uiStore.setAppWorkingStatus();
+                        break;
                     case BACKGROUND_COMMANDS.CLOSE_POPUP:
                         window.close();
                         break;
@@ -83,9 +87,8 @@ const App = observer(() => {
                     <Options />
                 </div>
             )}
-            {uiStore.requestStatus === REQUEST_STATUSES.ERROR
-            && !uiStore.isReloading && <AppClosed />}
-            {uiStore.isReloading && <Loading />}
+            {uiStore.requestStatus === REQUEST_STATUSES.ERROR && <AppClosed />}
+            {uiStore.requestStatus !== REQUEST_STATUSES.ERROR && uiStore.isReloading && <Loading />}
         </Fragment>
 
     );
