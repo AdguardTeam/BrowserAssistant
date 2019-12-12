@@ -14,7 +14,7 @@ class SettingsStore {
 
     @observable currentURL = '';
 
-    @observable currentPort = '';
+    @observable currentPort = 80;
 
     @observable isHttps = true;
 
@@ -59,24 +59,29 @@ class SettingsStore {
         try {
             const result = await adguard.tabs.getCurrent();
             runInAction(() => {
+                let standardPort;
                 this.currentURL = result.url;
                 const { hostname, port, protocol } = getUrlProperties(result.url);
                 this.currentTabHostname = hostname || this.currentURL;
-                this.currentPort = port;
 
                 switch (protocol) {
                     case 'https:':
                         this.setIsHttps(true);
                         this.setSecure(false);
+                        standardPort = 443;
                         break;
                     case 'http:':
                         this.setIsHttps(false);
                         this.setSecure(false);
+                        standardPort = 80;
                         break;
                     default:
                         this.setIsHttps(false);
                         this.setSecure(true);
+                        standardPort = 0;
                 }
+
+                this.currentPort = port !== '' ? Number(port) : standardPort;
             });
         } catch (error) {
             log.error(error.message);
