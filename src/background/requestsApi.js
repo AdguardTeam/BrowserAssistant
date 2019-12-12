@@ -9,11 +9,12 @@ class RequestsApi {
         });
     }
 
-    getCurrentFilteringState(url) {
+    getCurrentFilteringState(url, port) {
         return api.makeRequest({
             type: RequestTypes.getCurrentFilteringState,
             parameters: {
                 url,
+                port,
             },
         });
     }
