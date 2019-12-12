@@ -8,9 +8,9 @@ class RequestsStore {
 
     @action
     getCurrentFilteringState = async () => {
+        const { currentURL, currentPort } = this.rootStore.settingsStore;
         try {
-            await adguard.requests
-                .getCurrentFilteringState(this.rootStore.settingsStore.currentURL);
+            await adguard.requests.getCurrentFilteringState(currentURL, currentPort);
         } catch (e) {
             this.rootStore.uiStore.setReloading(true);
             log.error(e);

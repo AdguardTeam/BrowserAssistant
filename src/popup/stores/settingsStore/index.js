@@ -14,6 +14,8 @@ class SettingsStore {
 
     @observable currentURL = '';
 
+    @observable currentPort = '';
+
     @observable isHttps = true;
 
     @observable referrer = '';
@@ -58,8 +60,9 @@ class SettingsStore {
             const result = await adguard.tabs.getCurrent();
             runInAction(() => {
                 this.currentURL = result.url;
-                const { hostname, protocol } = getUrlProperties(result.url);
+                const { hostname, port, protocol } = getUrlProperties(result.url);
                 this.currentTabHostname = hostname || this.currentURL;
+                this.currentPort = port;
 
                 switch (protocol) {
                     case 'https:':
