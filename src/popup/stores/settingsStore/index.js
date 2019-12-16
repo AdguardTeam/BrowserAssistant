@@ -4,6 +4,7 @@ import {
 import { ORIGINAL_CERT_STATUS } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 import log from '../../../lib/logger';
+import { getPortByProtocol } from '../../helpers';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -14,7 +15,7 @@ class SettingsStore {
 
     @observable currentURL = '';
 
-    @observable currentPort = 80;
+    @observable currentPort = 0;
 
     @observable isHttps = true;
 
@@ -59,7 +60,6 @@ class SettingsStore {
         try {
             const result = await adguard.tabs.getCurrent();
             runInAction(() => {
-                let standardPort;
                 this.currentURL = result.url;
                 const { hostname, port, protocol } = getUrlProperties(result.url);
                 this.currentTabHostname = hostname || this.currentURL;
@@ -68,20 +68,17 @@ class SettingsStore {
                     case 'https:':
                         this.setIsHttps(true);
                         this.setSecure(false);
-                        standardPort = 443;
                         break;
                     case 'http:':
                         this.setIsHttps(false);
                         this.setSecure(false);
-                        standardPort = 80;
                         break;
                     default:
                         this.setIsHttps(false);
                         this.setSecure(true);
-                        standardPort = 0;
                 }
 
-                this.currentPort = port !== '' ? Number(port) : standardPort;
+                this.currentPort = port === '' ? getPortByProtocol(protocol) : Number(port);
             });
         } catch (error) {
             log.error(error.message);
