@@ -145,7 +145,6 @@ class SettingsStore {
 
     @action
     setCurrentFilteringState = (parameters) => {
-        console.log('parameters', parameters);
         const {
             isFilteringEnabled,
             isHttpsFilteringEnabled,
