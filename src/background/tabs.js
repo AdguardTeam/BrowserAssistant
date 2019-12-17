@@ -8,7 +8,7 @@ class Tabs {
         const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
         if (!tab.url) {
             log.error('Browser tabs api error: no url property. Checkout activeTab permission in manifest.', tab);
-            browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
+            await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
             setTimeout(() => browserApi.runtime.sendMessage(
                 { result: BACKGROUND_COMMANDS.CLOSE_POPUP }
             ),
@@ -19,20 +19,11 @@ class Tabs {
 
     async sendMessage(type, options) {
         const tab = await this.getCurrent();
-        let response;
-        try {
-            response = await browser.tabs.sendMessage(tab.id, { type, options });
-            if (response) {
-                return response;
-            }
-        } catch (err) {
-            if (err.message === 'Could not establish connection. Receiving end does not exist.') {
-                log.warn('Internal messaging error:', err.message);
-            } else {
+        return browser.tabs.sendMessage(tab.id, { type, options }).catch((err) => {
+            if (!browser.runtime.lastError) {
                 log.error(err.message);
             }
-        }
-        return '';
+        });
     }
 
     async getReferrer() {
