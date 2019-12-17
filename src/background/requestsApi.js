@@ -9,12 +9,13 @@ class RequestsApi {
         });
     }
 
-    getCurrentFilteringState(url, port) {
+    getCurrentFilteringState(url, port, forceStartApp = false) {
         return api.makeRequest({
             type: RequestTypes.getCurrentFilteringState,
             parameters: {
                 url,
                 port,
+                forceStartApp,
             },
         });
     }
@@ -93,12 +94,6 @@ class RequestsApi {
     openSettings() {
         return api.makeRequest({
             type: RequestTypes.openSettings,
-        });
-    }
-
-    startApp() {
-        return api.makeRequest({
-            type: RequestTypes.startApp,
         });
     }
 
