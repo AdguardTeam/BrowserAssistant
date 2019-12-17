@@ -61,7 +61,7 @@ class RequestsStore {
     removeCustomRules = async () => {
         try {
             await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
-            this.rootStore.uiStore.isPageFilteredByUserFilter = false;
+            this.rootStore.uiStore.setPageFilteredByUserFilter(false);
         } catch (e) {
             this.rootStore.uiStore.setReloading(true);
             log.error(e);
@@ -131,7 +131,7 @@ class RequestsStore {
     startApp = async () => {
         this.rootStore.uiStore.setReloading(true);
         try {
-            setTimeout(() => this.getCurrentFilteringState(true), 5000);
+            await this.getCurrentFilteringState(true);
         } catch (e) {
             log.error(e);
         }
