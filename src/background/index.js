@@ -5,7 +5,6 @@ import { MessageTypes, RequestTypes } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
 
-
 async function sendMessage(sender, sendResponse) {
     const { type } = sender;
     const tab = await adguard.tabs.getCurrent();

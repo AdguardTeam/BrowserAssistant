@@ -7,10 +7,10 @@ class RequestsStore {
     }
 
     @action
-    getCurrentFilteringState = async () => {
+    getCurrentFilteringState = async (forceStartApp = false) => {
         const { currentURL, currentPort } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.getCurrentFilteringState(currentURL, currentPort);
+            await adguard.requests.getCurrentFilteringState(currentURL, currentPort, forceStartApp);
         } catch (e) {
             this.rootStore.uiStore.setReloading(true);
             log.error(e);
@@ -129,10 +129,10 @@ class RequestsStore {
 
     @action
     startApp = async () => {
+        this.rootStore.uiStore.setReloading(true);
         try {
-            await adguard.requests.startApp();
+            setTimeout(() => this.getCurrentFilteringState(true), 5000);
         } catch (e) {
-            this.rootStore.uiStore.setReloading(true);
             log.error(e);
         }
     };
