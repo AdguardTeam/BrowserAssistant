@@ -1,14 +1,14 @@
 export const getPortByProtocol = (protocol) => {
-    let standardProtocol = protocol;
-    switch (standardProtocol) {
+    let defaultPort;
+    switch (protocol) {
         case 'https:':
-            standardProtocol = 443;
+            defaultPort = 443;
             break;
         case 'http:':
-            standardProtocol = 80;
+            defaultPort = 80;
             break;
         default:
-            standardProtocol = 0;
+            defaultPort = 0;
     }
-    return standardProtocol;
+    return defaultPort;
 };
