@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
-import { APP_WORKING_PROBLEMS } from '../../../stores/consts';
+import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 
-const PROBLEM_STATES = {
-    [APP_WORKING_PROBLEMS.IS_INSTALLED]: {
-        state: APP_WORKING_PROBLEMS.IS_INSTALLED,
+const STATES = {
+    [WORKING_STATES.IS_APP_INSTALLED]: {
+        state: WORKING_STATES.IS_APP_INSTALLED,
         content: 'AdGuard is not installed',
         buttonText: 'download',
         updateStore: (settingsStore) => {
@@ -16,8 +16,8 @@ const PROBLEM_STATES = {
         },
     },
 
-    [APP_WORKING_PROBLEMS.IS_APP_UP_TO_DATE]: {
-        state: APP_WORKING_PROBLEMS.IS_APP_UP_TO_DATE,
+    [WORKING_STATES.IS_APP_UP_TO_DATE]: {
+        state: WORKING_STATES.IS_APP_UP_TO_DATE,
         content: 'AdGuard is not updated',
         buttonText: 'update',
         updateStore: (settingsStore, requestsStore) => {
@@ -26,37 +26,37 @@ const PROBLEM_STATES = {
         },
     },
 
-    [APP_WORKING_PROBLEMS.IS_RUNNING]: {
-        state: APP_WORKING_PROBLEMS.IS_RUNNING,
+    [WORKING_STATES.IS_APP_RUNNING]: {
+        state: WORKING_STATES.IS_APP_RUNNING,
         content: 'AdGuard is not running',
         buttonText: 'run adguard',
         updateStore: (settingsStore, requestsStore) => requestsStore.startApp(),
     },
 
-    [APP_WORKING_PROBLEMS.IS_PROTECTION_ENABLED]: {
-        state: APP_WORKING_PROBLEMS.IS_PROTECTION_ENABLED,
+    [WORKING_STATES.IS_PROTECTION_ENABLED]: {
+        state: WORKING_STATES.IS_PROTECTION_ENABLED,
         content: 'AdGuard protection is paused',
         buttonText: 'enable',
         updateStore: settingsStore => settingsStore.toggleProtection(),
     },
 
-    [APP_WORKING_PROBLEMS.IS_EXTENSION_UPDATED]: {
-        state: APP_WORKING_PROBLEMS.IS_EXTENSION_UPDATED,
+    [WORKING_STATES.IS_EXTENSION_UPDATED]: {
+        state: WORKING_STATES.IS_EXTENSION_UPDATED,
         id: 'isExtensionNotUpdated',
         content: 'Assistant is not updated',
         buttonText: 'update',
         updateStore: settingsStore => settingsStore.updateExtension(),
     },
 
-    [APP_WORKING_PROBLEMS.IS_RELOADING]: {
-        state: APP_WORKING_PROBLEMS.IS_RELOADING,
+    [WORKING_STATES.IS_EXTENSION_RELOADING]: {
+        state: WORKING_STATES.IS_EXTENSION_RELOADING,
         content: <Loading />,
         buttonText: 'reloading...',
         updateStore: () => null,
     },
 
-    [APP_WORKING_PROBLEMS.IS_SETUP_CORRECTLY]: {
-        state: APP_WORKING_PROBLEMS.IS_SETUP_CORRECTLY,
+    [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
+        state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
         id: 'isBroken',
         content: 'Something went wrong',
         buttonText: 'reinstall',
@@ -78,30 +78,30 @@ function defineWarning(settingsStore) {
     } = settingsStore;
 
     if (!isSetupCorrectly) {
-        return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_SETUP_CORRECTLY];
+        return STATES[WORKING_STATES.IS_APP_SETUP_CORRECTLY];
     }
 
     if (!isInstalled) {
-        return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_INSTALLED];
+        return STATES[WORKING_STATES.IS_APP_INSTALLED];
     }
 
     if (!isRunning) {
-        return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_RUNNING];
+        return STATES[WORKING_STATES.IS_APP_RUNNING];
     }
 
     if (!isProtectionEnabled) {
-        return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_PROTECTION_ENABLED];
+        return STATES[WORKING_STATES.IS_PROTECTION_ENABLED];
     }
 
     if (!isAppUpToDate) {
-        return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_APP_UP_TO_DATE];
+        return STATES[WORKING_STATES.IS_APP_UP_TO_DATE];
     }
 
     if (!isExtensionUpdated) {
-        return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_EXTENSION_UPDATED];
+        return STATES[WORKING_STATES.IS_EXTENSION_UPDATED];
     }
 
-    return PROBLEM_STATES[APP_WORKING_PROBLEMS.IS_RELOADING];
+    return STATES[WORKING_STATES.IS_EXTENSION_RELOADING];
 }
 
 const AppClosed = observer(() => {
@@ -115,7 +115,7 @@ const AppClosed = observer(() => {
             <div className="app-closed__status-wrapper">
                 <header className="app-closed__status">{content}</header>
             </div>
-            {(state !== APP_WORKING_PROBLEMS.IS_RELOADING) && (
+            {(state !== WORKING_STATES.IS_EXTENSION_RELOADING) && (
                 <button
                     className="app-closed__button"
                     type="button"
@@ -127,7 +127,7 @@ const AppClosed = observer(() => {
                     {buttonText}
                 </button>
             )}
-            {state === APP_WORKING_PROBLEMS.IS_RUNNING && uiStore.isReloading && <Loading />}
+            {state === WORKING_STATES.IS_APP_RUNNING && uiStore.isReloading && <Loading />}
         </div>
     );
 });
