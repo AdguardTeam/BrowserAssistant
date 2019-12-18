@@ -173,6 +173,7 @@ class SettingsStore {
 
     @action
     toggleProtection = () => {
+        this.rootStore.uiStore.setReloading(true);
         if (this.isProtectionEnabled) {
             this.setProtection(false);
         } else {

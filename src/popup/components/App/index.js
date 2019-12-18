@@ -77,6 +77,11 @@ const App = observer(() => {
             browser.runtime.onMessage.removeListener();
         };
     }, []);
+
+    if (uiStore.isReloading) {
+        return <Loading />;
+    }
+
     return (
         <Fragment>
             {uiStore.requestStatus !== REQUEST_STATUSES.PENDING && <Header />}
@@ -88,7 +93,6 @@ const App = observer(() => {
                 </div>
             )}
             {uiStore.requestStatus === REQUEST_STATUSES.ERROR && <AppClosed />}
-            {uiStore.requestStatus !== REQUEST_STATUSES.ERROR && uiStore.isReloading && <Loading />}
         </Fragment>
 
     );

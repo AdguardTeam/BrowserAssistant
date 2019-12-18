@@ -78,10 +78,11 @@ class UiStore {
             isExtensionUpdated,
             isSetupCorrectly,
         } = this.rootStore.settingsStore;
+        const { isReloading } = this.rootStore.uiStore;
 
         const status = workingStatus || this.currentWorkingStatus;
         this.isAppWorking = (Object.values(status).every(state => state === true)
-            && isAppUpToDate && isExtensionUpdated && isSetupCorrectly);
+            && isAppUpToDate && isExtensionUpdated && isSetupCorrectly && !isReloading);
 
         this.setRequestStatus();
     };
