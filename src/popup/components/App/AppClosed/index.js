@@ -127,7 +127,6 @@ const AppClosed = observer(() => {
                     {buttonText}
                 </button>
             )}
-            {state === WORKING_STATES.IS_APP_RUNNING && uiStore.isReloading && <Loading />}
         </div>
     );
 });
