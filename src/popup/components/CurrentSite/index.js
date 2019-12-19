@@ -68,7 +68,6 @@ const CurrentSite = observer(() => {
                 className={securedClass}
             >
                 {!isPageSecured && (
-                    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
                     <button
                         type="button"
                         onClick={(isHttps && isFilteringEnabled)
@@ -100,7 +99,7 @@ const CurrentSite = observer(() => {
                     onMouseOver={onInfoHovered}
                     onMouseOut={onInfoHovered}
                 >
-                        secure page
+                    secure page
                 </div>
 
                 <SecurePageModal

@@ -10,7 +10,7 @@ const STATES = {
         state: WORKING_STATES.IS_APP_INSTALLED,
         content: 'AdGuard is not installed',
         buttonText: 'download',
-        updateStore: (settingsStore) => {
+        updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
         },
@@ -20,7 +20,7 @@ const STATES = {
         state: WORKING_STATES.IS_APP_UP_TO_DATE,
         content: 'AdGuard is not updated',
         buttonText: 'update',
-        updateStore: (settingsStore, requestsStore) => {
+        updateStore: ({ requestsStore }) => {
             requestsStore.updateApp();
             window.close();
         },
@@ -30,14 +30,14 @@ const STATES = {
         state: WORKING_STATES.IS_APP_RUNNING,
         content: 'AdGuard is not running',
         buttonText: 'run adguard',
-        updateStore: (settingsStore, requestsStore) => requestsStore.startApp(),
+        updateStore: ({ requestsStore }) => requestsStore.startApp(),
     },
 
     [WORKING_STATES.IS_PROTECTION_ENABLED]: {
         state: WORKING_STATES.IS_PROTECTION_ENABLED,
         content: 'AdGuard protection is paused',
         buttonText: 'enable',
-        updateStore: settingsStore => settingsStore.toggleProtection(),
+        updateStore: ({ requestsStore }) => requestsStore.setProtectionStatus(true),
     },
 
     [WORKING_STATES.IS_EXTENSION_UPDATED]: {
@@ -45,7 +45,7 @@ const STATES = {
         id: 'isExtensionNotUpdated',
         content: 'Assistant is not updated',
         buttonText: 'update',
-        updateStore: settingsStore => settingsStore.updateExtension(),
+        updateStore: ({ settingsStore }) => settingsStore.updateExtension(),
     },
 
     [WORKING_STATES.IS_EXTENSION_RELOADING]: {
@@ -60,7 +60,7 @@ const STATES = {
         id: 'isBroken',
         content: 'Something went wrong',
         buttonText: 'reinstall',
-        updateStore: (settingsStore) => {
+        updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
         },
@@ -110,6 +110,9 @@ const AppClosed = observer(() => {
     const {
         state, content, buttonText, updateStore,
     } = defineWarning(settingsStore);
+
+    const stores = { requestsStore, settingsStore };
+
     return (
         <div className="app-closed__wrapper">
             <div className="app-closed__status-wrapper">
@@ -120,7 +123,7 @@ const AppClosed = observer(() => {
                     className="app-closed__button"
                     type="button"
                     onClick={() => {
-                        updateStore(settingsStore, requestsStore);
+                        updateStore(stores);
                         uiStore.setAppWorkingStatus();
                     }}
                 >

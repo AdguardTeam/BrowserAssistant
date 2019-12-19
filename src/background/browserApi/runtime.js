@@ -6,9 +6,9 @@ import log from '../../lib/logger';
  * @param args
  * @returns {Promise<void>}
  */
-const sendMessage = (...args) => browser.runtime.sendMessage(...args).catch((err) => {
+const sendMessage = (...args) => browser.runtime.sendMessage(...args).catch((error) => {
     if (!browser.runtime.lastError) {
-        log.error(err.message);
+        log.error(error.message);
     }
 });
 

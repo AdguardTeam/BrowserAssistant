@@ -11,7 +11,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
 
     const showCertificate = () => requestsStore.openOriginalCert();
 
-    const handleHttpsFiltering = () => {
+    const toggleHttpsFiltering = () => {
         settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
     };
     const handleKeyDown = (e) => {
@@ -39,7 +39,7 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                     checked={!settingsStore.isExpired
                     && settingsStore.isHttpsFilteringEnabled
                     && settingsStore.isHttps}
-                    onClick={handleHttpsFiltering}
+                    onClick={toggleHttpsFiltering}
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}
                     isHttps={settingsStore.isHttps}

@@ -6,8 +6,8 @@ import './header.pcss';
 
 const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
-    const toggleProtection = () => {
-        settingsStore.toggleProtection();
+    const disableProtection = () => {
+        requestsStore.setProtectionStatus(false);
     };
     const openSetting = () => {
         requestsStore.openSettings();
@@ -37,7 +37,7 @@ const Header = observer(() => {
                     className={iconProtectionClass}
                     title="AdGuard Protection"
                     type="button"
-                    onClick={toggleProtection}
+                    onClick={disableProtection}
                     tabIndex="0"
                 />
                 <button

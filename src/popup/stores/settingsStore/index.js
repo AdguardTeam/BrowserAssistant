@@ -51,17 +51,17 @@ class SettingsStore {
     getReferrer = async () => {
         const referrer = await adguard.tabs.getReferrer();
         runInAction(() => {
-            this.referrer = referrer;
+            this.referrer = referrer || '';
         });
     };
 
     @action
     getCurrentTabHostname = async () => {
         try {
-            const result = await adguard.tabs.getCurrent();
+            const { url } = await adguard.tabs.getCurrent();
             runInAction(() => {
-                this.currentURL = result.url;
-                const { hostname, port, protocol } = getUrlProperties(result.url);
+                this.currentURL = url;
+                const { hostname, port, protocol } = getUrlProperties(url);
                 this.currentTabHostname = hostname || this.currentURL;
 
                 switch (protocol) {
@@ -169,17 +169,6 @@ class SettingsStore {
     @action
     setSetupCorrectly = (isSetupCorrectly) => {
         this.isSetupCorrectly = isSetupCorrectly;
-    };
-
-    @action
-    toggleProtection = () => {
-        this.rootStore.uiStore.setReloading(true);
-        if (this.isProtectionEnabled) {
-            this.setProtection(false);
-        } else {
-            this.setProtection(true);
-        }
-        this.rootStore.requestsStore.setProtectionStatus();
     };
 
     @action
