@@ -38,7 +38,7 @@ try {
 
     browser.runtime.onMessage.addListener(handleMessage);
 } catch (error) {
-    log.error(error);
+    log.error(error.message);
 }
 
 global.adguard = {

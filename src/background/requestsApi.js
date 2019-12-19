@@ -65,10 +65,10 @@ class RequestsApi {
     }
 
 
-    openOriginalCert(domain) {
+    openOriginalCert(domain, port) {
         return api.makeRequest({
             type: RequestTypes.openOriginalCert,
-            parameters: { domain },
+            parameters: { domain, port },
         });
     }
 

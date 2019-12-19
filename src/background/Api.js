@@ -74,7 +74,7 @@ class Api {
                 },
             }, ResponseTypesPrefixes.INIT);
         } catch (error) {
-            log.error(error);
+            log.error(error.message);
         }
     };
 
@@ -122,8 +122,8 @@ class Api {
 
             try {
                 this.port.postMessage({ id, ...params });
-            } catch (e) {
-                log.error(e);
+            } catch (error) {
+                log.error(error.message);
 
                 this.port.onMessage.removeListener(messageHandler);
 

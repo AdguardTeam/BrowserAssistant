@@ -44,6 +44,7 @@ const App = observer(() => {
                 switch (result) {
                     case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
                         settingsStore.setSetupCorrectly(false);
+                        uiStore.setReloading(false);
                         uiStore.setAppWorkingStatus();
                         break;
                     case BACKGROUND_COMMANDS.CLOSE_POPUP:
@@ -56,6 +57,7 @@ const App = observer(() => {
                         uiStore.setReloading(false);
                         break;
                     default:
+                        break;
                 }
 
                 if (!requestId) {
@@ -78,13 +80,10 @@ const App = observer(() => {
         };
     }, []);
 
-    if (uiStore.isReloading) {
-        return <Loading />;
-    }
-
     return (
         <Fragment>
             {uiStore.requestStatus !== REQUEST_STATUSES.PENDING && <Header />}
+            {uiStore.requestStatus === REQUEST_STATUSES.PENDING && <Loading title="Preparing..." />}
             {uiStore.requestStatus === REQUEST_STATUSES.SUCCESS && (
                 <div className={appClass}>
                     <CurrentSite />
@@ -93,6 +92,7 @@ const App = observer(() => {
                 </div>
             )}
             {uiStore.requestStatus === REQUEST_STATUSES.ERROR && <AppClosed />}
+            {uiStore.isLoading && <Loading />}
         </Fragment>
 
     );

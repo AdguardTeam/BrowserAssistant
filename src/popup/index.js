@@ -18,5 +18,5 @@ try {
         );
     })();
 } catch (error) {
-    log.error(error);
+    log.error(error.message);
 }

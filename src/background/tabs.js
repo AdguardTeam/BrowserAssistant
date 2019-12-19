@@ -19,9 +19,9 @@ class Tabs {
 
     async sendMessage(type, options) {
         const tab = await this.getCurrent();
-        return browser.tabs.sendMessage(tab.id, { type, options }).catch((err) => {
+        return browser.tabs.sendMessage(tab.id, { type, options }).catch((error) => {
             if (!browser.runtime.lastError) {
-                log.error(err.message);
+                log.error(error.message);
             }
         });
     }

@@ -7,7 +7,7 @@ import { SWITCHER_IDS } from '../../stores/consts';
 
 const Settings = observer(() => {
     const { settingsStore } = useContext(rootStore);
-    const handleFiltering = () => {
+    const toggleFiltering = () => {
         settingsStore.setFiltering(!settingsStore.isFilteringEnabled);
     };
     return (
@@ -16,7 +16,7 @@ const Settings = observer(() => {
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
                     checked={settingsStore.isPageSecured ? false : settingsStore.isFilteringEnabled}
-                    onClick={!settingsStore.isPageSecured ? handleFiltering : undefined}
+                    onClick={!settingsStore.isPageSecured ? toggleFiltering : undefined}
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}
                     isHttps={settingsStore.isHttps}
