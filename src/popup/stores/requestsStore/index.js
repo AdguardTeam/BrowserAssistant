@@ -118,6 +118,7 @@ class RequestsStore {
         try {
             const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
+            this.rootStore.uiStore.setPendingToggleProtection(false);
         } catch (error) {
             log.error(error.message);
         }

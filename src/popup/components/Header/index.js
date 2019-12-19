@@ -7,6 +7,7 @@ import './header.pcss';
 const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
     const disableProtection = () => {
+        uiStore.setPendingToggleProtection(true);
         requestsStore.setProtectionStatus(false);
     };
     const openSetting = () => {
@@ -16,7 +17,7 @@ const Header = observer(() => {
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
-        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled,
+        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled || uiStore.isPendingToggleProtection,
         'widget-popup__buttons--hidden': !uiStore.isAppWorking,
     });
 

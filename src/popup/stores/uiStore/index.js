@@ -18,6 +18,12 @@ class UiStore {
 
     @observable isLoading = false;
 
+    @observable isPendingToggleProtection = false;
+
+    @action setPendingToggleProtection = (isPendingToggleProtection) => {
+        this.isPendingToggleProtection = isPendingToggleProtection;
+    };
+
     @action
     setRequestStatus = () => {
         this.requestStatus = this.isAppWorking ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR;

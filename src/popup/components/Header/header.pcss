@@ -48,7 +48,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: 0.3s ease opacity;
+        transition: all 0.3s ease;
+        transition-property: background, opacity;
 
         &--pause {
             background: url('../../../assets/images/icon-pause.svg') no-repeat;
@@ -72,6 +73,10 @@
 
         &:last-child {
             margin-right: 0;
+        }
+
+        &:active {
+            cursor: wait;
         }
     }
 }
