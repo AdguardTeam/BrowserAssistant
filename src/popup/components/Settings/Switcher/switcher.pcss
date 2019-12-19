@@ -18,8 +18,12 @@
         background-color: var(--gray88);
         opacity: 1;
 
+        &:active {
+            cursor: wait;
+        }
+
         &--disabled {
-            cursor: not-allowed;
+            cursor: not-allowed !important;
             background-color: var(--grayd8)
         }
 
