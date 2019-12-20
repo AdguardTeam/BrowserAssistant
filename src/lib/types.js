@@ -36,7 +36,7 @@ export const HostResponseTypes = {
 };
 
 export const HostTypes = {
-    browserExtensionHost: 'browser_extension_host',
+    browserExtensionHost: 'com.adguard.browser_extension_host.nm',
 };
 
 export const BACKGROUND_COMMANDS = {
