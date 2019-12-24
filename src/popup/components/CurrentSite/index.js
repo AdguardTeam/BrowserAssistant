@@ -14,7 +14,6 @@ const CurrentSite = observer(() => {
         isHttpsFilteringEnabled,
         isFilteringEnabled,
         isPageSecured,
-        isPageTrusted,
         currentTabHostname,
     } = settingsStore;
 
@@ -57,7 +56,7 @@ const CurrentSite = observer(() => {
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': !isPageSecured || !isPageTrusted,
+        'current-site__secure-status--hidden': !isPageSecured,
     });
 
     return (
