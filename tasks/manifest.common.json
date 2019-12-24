@@ -8,6 +8,7 @@
     "description": "__MSG_description__",
     "icons": {
         "16": "assets/images/green-16.png",
+        "48": "assets/images/green-48.png",
         "128": "assets/images/green-128.png"
     },
     "browser_action": {
