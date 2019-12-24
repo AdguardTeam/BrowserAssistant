@@ -33,8 +33,9 @@ const Options = observer(() => {
         {
             iconName: 'icon-cross',
             text: 'Reset all custom rules for this page',
-            handleClick: () => {
-                requestsStore.removeCustomRules();
+            handleClick: async () => {
+                await requestsStore.removeCustomRules();
+                await requestsStore.getCurrentFilteringState();
             },
             isDisabled: false,
         },

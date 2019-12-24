@@ -43,6 +43,9 @@ class SettingsStore {
 
     @observable isSetupCorrectly = true;
 
+    // TODO: Enable for sites of banks and payment systems
+    @observable isPageTrusted = false;
+
     @computed get isExpired() {
         return (this.originalCertStatus === ORIGINAL_CERT_STATUS.INVALID);
     }
