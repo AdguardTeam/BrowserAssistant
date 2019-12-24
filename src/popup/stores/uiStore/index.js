@@ -57,16 +57,6 @@ class UiStore {
         });
     }
 
-    @computed get isSecureStatusHidden() {
-        const {
-            isPageSecured, isFilteringEnabled, isHttpsFilteringEnabled,
-            isExpired, isHttps,
-        } = this.rootStore.settingsStore;
-
-        return !!(!isPageSecured && (!isHttps || !isFilteringEnabled || isHttpsFilteringEnabled
-            || this.isOpenCertificateModal || isExpired));
-    }
-
     @computed get currentWorkingStatus() {
         const { isInstalled, isRunning, isProtectionEnabled } = this.rootStore.settingsStore;
         return { isInstalled, isRunning, isProtectionEnabled };

@@ -40,6 +40,7 @@ class RequestsStore {
                 isEnabled: isFilteringEnabled,
                 isHttpsEnabled: isHttpsFilteringEnabled,
             });
+            this.rootStore.uiStore.setPageFilteredByUserFilter(true);
         } catch (error) {
             log.error(error.message);
         }
