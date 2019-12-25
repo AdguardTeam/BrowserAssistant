@@ -81,7 +81,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
                 && (
                     <Fragment>
                         <p className="modal__text modal__text--notion">Verified by:</p>
-                        <span className="modal__header">{originalCertIssuer}</span>
+                        <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         {!certStatus.isInvalid && (
                             <div
                                 className="modal__text modal__text--link"
