@@ -70,7 +70,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
                     certStatus={certStatus}
                 />
             </div>
-            {!certStatus.isValid && (
+            {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
                 <p className="modal__text modal__text--red modal__text--upper">
                     {`AdGuard could not verify this website's
                     certificate, because ${CERT_STATES[originalCertStatus]}`}
