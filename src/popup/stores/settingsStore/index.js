@@ -1,5 +1,5 @@
 import {
-    action, observable, computed, runInAction,
+    action, observable, runInAction,
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
@@ -42,10 +42,6 @@ class SettingsStore {
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
     @observable isSetupCorrectly = true;
-
-    @computed get isExpired() {
-        return (this.originalCertStatus === ORIGINAL_CERT_STATUS.INVALID);
-    }
 
     @action
     getReferrer = async () => {

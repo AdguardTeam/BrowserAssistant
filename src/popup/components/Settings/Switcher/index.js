@@ -4,7 +4,7 @@ import { SWITCHER_IDS } from '../../../stores/consts';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, checked, onClick, isPageSecured, isExpired,
+    id, checked, onClick, isPageSecured, certStatus,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,
@@ -13,7 +13,7 @@ const Switcher = ({
 
     const switcherLabelClass = classNames({
         switcher__label: true,
-        'switcher__label--disabled': isPageSecured || (id === SWITCHER_IDS.HTTPS_SWITCHER && isExpired),
+        'switcher__label--disabled': isPageSecured || (id === SWITCHER_IDS.HTTPS_SWITCHER && certStatus.isInvalid),
     });
 
     return (

@@ -9,7 +9,6 @@ import './currentSite.pcss';
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
     const {
-        isExpired,
         isHttps,
         isHttpsFilteringEnabled,
         isFilteringEnabled,
@@ -23,6 +22,7 @@ const CurrentSite = observer(() => {
         isOpenCertificateModal,
         isInfoHovered,
         securityModalState,
+        certStatus,
     } = uiStore;
 
 
@@ -36,17 +36,13 @@ const CurrentSite = observer(() => {
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--lock': !isExpired && (isHttpsFilteringEnabled || !isFilteringEnabled),
-        'current-site__icon--lock--danger': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps,
-        'current-site__icon--warning--http': !isHttps && !isPageSecured && !isHttps,
-        'current-site__icon--warning--expired': isHttps && isExpired,
-        'current-site__icon--warning': (isHttps && isExpired) || (!isHttps && !isPageSecured),
+        'current-site__icon--lock': certStatus.isValid && (isHttpsFilteringEnabled || !isFilteringEnabled),
+        'current-site__icon--lock--yellow': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps,
+        'current-site__icon--warning--gray': !isHttps && !isPageSecured && !isHttps,
+        'current-site__icon--warning--red': isHttps && certStatus.isInvalid,
+        'current-site__icon--warning--yellow': isHttps && (certStatus.isBypassed || certStatus.isNotFound),
+        'current-site__icon--warning': (isHttps && !certStatus.isValid) || (!isHttps && !isPageSecured),
         'current-site__icon--disabled-cursor': !isFilteringEnabled,
-    });
-
-    const expiredClass = classNames({
-        'modal modal__certificate': true,
-        'modal__certificate--expired': isExpired,
     });
 
     const securedClass = classNames({
@@ -85,7 +81,6 @@ const CurrentSite = observer(() => {
                 </div>
 
                 <CertificateModal
-                    cn={expiredClass}
                     onRequestClose={handleOpenCertificateModal}
                     isOpen={isHttps && isOpenCertificateModal}
                 />

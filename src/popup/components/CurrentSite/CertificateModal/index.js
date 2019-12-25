@@ -1,18 +1,31 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react';
 import Modal from 'react-modal';
+import classNames from 'classnames';
 import Switcher from '../../Settings/Switcher';
 import rootStore from '../../../stores';
-import { SWITCHER_IDS } from '../../../stores/consts';
+import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
 import './modal.pcss';
 
-const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
-    const { settingsStore, requestsStore } = useContext(rootStore);
+const CertificateModal = observer(({ onRequestClose, isOpen }) => {
+    const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
+    const { certStatus } = uiStore;
+    const {
+        setHttpsFiltering,
+        isHttpsFilteringEnabled,
+        originalCertIssuer,
+        isHttps,
+        isPageSecured,
+        originalCertStatus,
+        isFilteringEnabled,
+    } = settingsStore;
 
     const showCertificate = () => requestsStore.openOriginalCert();
 
     const toggleHttpsFiltering = () => {
-        settingsStore.setHttpsFiltering(!settingsStore.isHttpsFilteringEnabled);
+        return !certStatus.isInvalid
+            ? setHttpsFiltering(!isHttpsFilteringEnabled)
+            : undefined;
     };
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -20,13 +33,26 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
         }
     };
 
+    const bodyClass = classNames({
+        'height--extended': certStatus.isInvalid && originalCertIssuer,
+    });
+
+    const modalClass = classNames({
+        'modal modal__certificate': true,
+        'modal__certificate--small': certStatus.isNotFound || certStatus.isBypassed
+            || (certStatus.isInvalid && !originalCertIssuer),
+        'modal__certificate--large': certStatus.isInvalid && originalCertIssuer,
+        // This case can happen only as result of host mistake
+        'modal__certificate--tiny': certStatus.isValid && !originalCertIssuer,
+    });
+
     return (
         <Modal
             isOpen={isOpen}
-            className={cn}
+            className={modalClass}
             overlayClassName="overlay overlay--fullscreen"
             contentLabel="Certificate Modal"
-            bodyOpenClassName={settingsStore.isExpired ? 'size--expanded' : null}
+            bodyOpenClassName={bodyClass}
             onRequestClose={onRequestClose}
         >
             <div className="modal__info--upper">
@@ -36,37 +62,39 @@ const CertificateModal = observer(({ cn, onRequestClose, isOpen }) => {
                 </span>
                 <Switcher
                     id={SWITCHER_IDS.HTTPS_SWITCHER}
-                    checked={!settingsStore.isExpired
-                    && settingsStore.isHttpsFilteringEnabled
-                    && settingsStore.isHttps}
+                    checked={!certStatus.isInvalid && isHttpsFilteringEnabled && isHttps}
                     onClick={toggleHttpsFiltering}
-                    isPageSecured={settingsStore.isPageSecured}
-                    isFilteringEnabled={settingsStore.isFilteringEnabled}
-                    isHttps={settingsStore.isHttps}
-                    isExpired={settingsStore.isExpired}
+                    isPageSecured={isPageSecured}
+                    isFilteringEnabled={isFilteringEnabled}
+                    isHttps={isHttps}
+                    certStatus={certStatus}
                 />
             </div>
-            {settingsStore.isExpired && (
-                <p className="modal__text modal__text--expired modal__text--expired--upper">
-                    AdGuard could not verify this website&apos;s
-                    certificate, because the root certificate has expired
+            {!certStatus.isValid && (
+                <p className="modal__text modal__text--red modal__text--upper">
+                    {`AdGuard could not verify this website's
+                    certificate, because ${CERT_STATES[originalCertStatus]}`}
                 </p>
             )}
             <div className="modal__info--lower">
-                <p className="modal__text modal__text--notion">Verified by:</p>
-                <span className="modal__header">{settingsStore.originalCertIssuer}</span>
-                {!settingsStore.isExpired && (
-                <div
-                    className="modal__text modal__text--link modal__text--cert"
-                    role="button"
-                    tabIndex="0"
-                    onClick={showCertificate}
-                    onKeyDown={handleKeyDown}
-                >
-                    More Information
-                </div>
+                {originalCertIssuer && (certStatus.isValid || certStatus.isInvalid)
+                && (
+                    <Fragment>
+                        <p className="modal__text modal__text--notion">Verified by:</p>
+                        <span className="modal__header">{originalCertIssuer}</span>
+                        {!certStatus.isInvalid && (
+                            <div
+                                className="modal__text modal__text--link"
+                                role="button"
+                                tabIndex="0"
+                                onClick={showCertificate}
+                                onKeyDown={handleKeyDown}
+                            >
+                                More Information
+                            </div>
+                        )}
+                    </Fragment>
                 )}
-                {settingsStore.isExpired && <div className="modal__text modal__text--cert modal__text--expired modal__text--uppercase">expired</div>}
             </div>
         </Modal>
     );

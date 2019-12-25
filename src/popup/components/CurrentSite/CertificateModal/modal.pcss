@@ -11,10 +11,18 @@
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1), 0 3rem 6rem rgba(0, 0, 0, 0.1);
 
     &__certificate {
-        height: 20.6rem;
+        height: 20.7rem;
 
-        &--expired {
-            height: 28rem;
+        &--large {
+            height: 23.7rem;
+        }
+
+        &--small {
+            height: 17.7rem;
+        }
+
+        &--tiny {
+            height: 10.7rem;
         }
     }
 
@@ -49,20 +57,16 @@
         max-width: 100%;
         color: var(--gray88);
 
-        &--expired {
+        &--red {
             color: var(--red);
+        }
 
-            &--upper {
-                margin: 1.8rem 0 0;
-            }
+        &--upper {
+            margin: 1.8rem 0 0;
         }
 
         &--additional {
             max-width: 12.9rem;
-        }
-
-        &--uppercase {
-            text-transform: uppercase;
         }
 
         &--link {
@@ -96,10 +100,6 @@
         }
 
     }
-}
-
-.size--expanded {
-    height: 44rem;
 }
 
 .ReactModal__Overlay {
