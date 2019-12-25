@@ -5,8 +5,17 @@ export const REQUEST_STATUSES = {
 };
 
 export const ORIGINAL_CERT_STATUS = {
-    VALID: 'valid',
-    INVALID: 'invalid',
+    VALID: 'VALID',
+    INVALID: 'INVALID',
+    BYPASSED: 'BYPASSED',
+    NOTFOUND: 'NOTFOUND',
+};
+
+export const CERT_STATES = {
+    VALID: 'VALID',
+    INVALID: 'the root certificate has expired',
+    BYPASSED: 'site was bypassed',
+    NOTFOUND: 'certificate wasn\'t found',
 };
 
 export const WORKING_STATES = {

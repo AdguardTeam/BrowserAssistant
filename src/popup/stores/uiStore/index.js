@@ -1,5 +1,5 @@
 import { action, observable, computed } from 'mobx';
-import { REQUEST_STATUSES } from '../consts';
+import { ORIGINAL_CERT_STATUS, REQUEST_STATUSES } from '../consts';
 
 class UiStore {
     constructor(rootStore) {
@@ -60,6 +60,16 @@ class UiStore {
     @computed get currentWorkingStatus() {
         const { isInstalled, isRunning, isProtectionEnabled } = this.rootStore.settingsStore;
         return { isInstalled, isRunning, isProtectionEnabled };
+    }
+
+    @computed get certStatus() {
+        const { originalCertStatus } = this.rootStore.settingsStore;
+        return ({
+            isValid: originalCertStatus === ORIGINAL_CERT_STATUS.VALID,
+            isInvalid: originalCertStatus === ORIGINAL_CERT_STATUS.INVALID,
+            isBypassed: originalCertStatus === ORIGINAL_CERT_STATUS.BYPASSED,
+            isNotFound: originalCertStatus === ORIGINAL_CERT_STATUS.NOTFOUND,
+        });
     }
 
     @action
