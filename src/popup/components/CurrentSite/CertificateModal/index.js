@@ -84,7 +84,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"
-                                tabIndex="0"
+                                tabIndex={uiStore.globalTabIndex}
                                 onClick={showCertificate}
                                 onKeyDown={handleKeyDown}
                             >

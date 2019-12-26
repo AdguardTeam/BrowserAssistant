@@ -76,7 +76,11 @@
         }
 
         &--disabled-cursor {
-            cursor: not-allowed;
+            cursor: not-allowed !important;
+        }
+
+        &:focus {
+            transform: scale(1.05);
         }
 
     }

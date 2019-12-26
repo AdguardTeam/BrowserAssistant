@@ -33,7 +33,6 @@
         text-overflow: ellipsis;
         font-family: inherit;
         font-weight: bold;
-        outline: none;
         border: none;
         background-color: var(--green74);
         text-transform: uppercase;
@@ -50,6 +49,10 @@
         &:active {
             transform: scale(0.98) translate(2px);
             cursor: wait;
+        }
+
+        &:focus {
+            transform: scale(0.98) translate(2px);
         }
     }
 }

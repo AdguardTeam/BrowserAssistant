@@ -11,7 +11,7 @@ class SettingsStore {
         this.rootStore = rootStore;
     }
 
-    @observable currentTabDomain = '';
+    @observable currentTabHostname = '';
 
     @observable currentURL = '';
 
@@ -59,9 +59,7 @@ class SettingsStore {
                 this.currentURL = url;
                 const { hostname, port, protocol } = getUrlProperties(url);
 
-                const domain = hostname.startsWith('www.') ? hostname.slice(4) : hostname;
-
-                this.currentTabDomain = domain || this.currentURL;
+                this.currentTabHostname = hostname || this.currentURL;
 
                 switch (protocol) {
                     case 'https:':

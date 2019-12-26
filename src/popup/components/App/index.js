@@ -1,12 +1,12 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import { observer } from 'mobx-react';
 import Settings from '../Settings';
-import Header from '../Header';
 import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
+import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
 import Loading from '../ui/Loading';
@@ -71,11 +71,9 @@ const App = observer(() => {
 
     if (uiStore.requestStatus.isError) {
         return (
-            <Fragment>
-                <Header />
+            <AppWrapper>
                 <AppClosed />
-                {uiStore.isLoading && <Loading />}
-            </Fragment>
+            </AppWrapper>
         );
     }
 
@@ -85,13 +83,11 @@ const App = observer(() => {
 
     if (uiStore.requestStatus.isSuccess) {
         return (
-            <Fragment>
-                <Header />
+            <AppWrapper>
                 <CurrentSite />
                 <Settings />
                 <Options />
-                {uiStore.isLoading && <Loading />}
-            </Fragment>
+            </AppWrapper>
         );
     }
 

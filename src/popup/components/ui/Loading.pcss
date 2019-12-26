@@ -4,10 +4,6 @@
     opacity: 0;
     animation: opacity 0.2s linear 0.2s forwards;
 
-    &:hover {
-        cursor: wait;
-    }
-
     &:before {
         content: "";
         position: fixed;
@@ -40,6 +36,10 @@
         position: relative;
         align-items: center;
         justify-content: center;
+
+        &:hover {
+            cursor: wait;
+        }
     }
 
     &--header {
