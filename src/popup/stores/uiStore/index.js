@@ -18,6 +18,10 @@ class UiStore {
 
     @observable isExtensionPending = true;
 
+    @computed get globalTabIndex() {
+        return (this.isLoading ? -1 : 0);
+    }
+
     @computed get requestStatus() {
         return ({
             isSuccess: this.isAppWorking === true,

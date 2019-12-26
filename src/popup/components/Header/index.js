@@ -6,9 +6,10 @@ import './header.pcss';
 
 const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
-    const disableProtection = () => {
+    const disableProtection = (e) => {
         uiStore.setProtectionTogglePending(true);
         requestsStore.setProtectionStatus(false);
+        e.currentTarget.blur();
     };
     const openSetting = () => {
         requestsStore.openSettings();
@@ -39,14 +40,14 @@ const Header = observer(() => {
                     title="AdGuard Protection"
                     type="button"
                     onClick={disableProtection}
-                    tabIndex="0"
+                    tabIndex={uiStore.globalTabIndex}
                 />
                 <button
                     className={iconSettingsClass}
                     title="AdGuard Settings"
                     type="button"
                     onClick={openSetting}
-                    tabIndex="0"
+                    tabIndex={uiStore.globalTabIndex}
                 />
             </div>
         </div>

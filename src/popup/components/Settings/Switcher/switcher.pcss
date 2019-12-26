@@ -17,14 +17,19 @@
         border-radius: 1.6rem;
         background-color: var(--gray88);
         opacity: 1;
+        border: 0;
 
         &:active {
             cursor: wait;
         }
 
+        &:focus {
+            transform: scale(1.04);
+        }
+
         &--disabled {
             cursor: not-allowed !important;
-            background-color: var(--grayd8)
+            background-color: var(--grayd8);
         }
 
         &:before {

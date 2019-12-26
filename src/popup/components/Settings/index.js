@@ -6,7 +6,7 @@ import rootStore from '../../stores';
 import { SWITCHER_IDS } from '../../stores/consts';
 
 const Settings = observer(() => {
-    const { settingsStore } = useContext(rootStore);
+    const { settingsStore, uiStore } = useContext(rootStore);
     const toggleFiltering = () => {
         settingsStore.setFiltering(!settingsStore.isFilteringEnabled);
     };
@@ -20,6 +20,7 @@ const Settings = observer(() => {
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}
                     isHttps={settingsStore.isHttps}
+                    tabIndex={uiStore.globalTabIndex}
                 />
             </div>
         </div>

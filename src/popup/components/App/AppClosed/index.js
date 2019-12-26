@@ -105,13 +105,18 @@ function defineWarning(settingsStore) {
 }
 
 const AppClosed = observer(() => {
-    const { requestsStore, settingsStore } = useContext(rootStore);
+    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
 
     const {
         state, content, buttonText, updateStore,
     } = defineWarning(settingsStore);
 
     const stores = { requestsStore, settingsStore };
+
+    const handleClick = (e) => {
+        updateStore(stores);
+        e.currentTarget.blur();
+    };
 
     return (
         <div className="app-closed__wrapper">
@@ -122,7 +127,8 @@ const AppClosed = observer(() => {
                 <button
                     className="app-closed__button"
                     type="button"
-                    onClick={() => updateStore(stores)}
+                    tabIndex={uiStore.globalTabIndex}
+                    onClick={handleClick}
                 >
                     {buttonText}
                 </button>

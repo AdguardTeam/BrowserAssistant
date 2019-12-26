@@ -47,9 +47,9 @@ class RequestsStore {
 
     @action
     openOriginalCert = async () => {
-        const { currentTabDomain, currentPort } = this.rootStore.settingsStore;
+        const { currentTabHostname, currentPort } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.openOriginalCert(currentTabDomain, currentPort);
+            await adguard.requests.openOriginalCert(currentTabHostname, currentPort);
         } catch (error) {
             this.rootStore.uiStore.setExtensionReloading(true);
             log.error(error.message);
@@ -94,7 +94,7 @@ class RequestsStore {
     removeRule = async () => {
         try {
             await adguard.requests.removeRule(
-                this.rootStore.settingsStore.currentTabDomain
+                this.rootStore.settingsStore.currentTabHostname
             );
         } catch (error) {
             log.error(error.message);
@@ -105,7 +105,7 @@ class RequestsStore {
     addRule = async () => {
         try {
             await adguard.requests.addRule(
-                this.rootStore.settingsStore.currentTabDomain
+                this.rootStore.settingsStore.currentTabHostname
             );
         } catch (error) {
             log.error(error.message);
