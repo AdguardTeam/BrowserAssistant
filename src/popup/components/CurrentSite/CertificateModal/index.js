@@ -23,9 +23,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
     const showCertificate = () => requestsStore.openOriginalCert();
 
     const toggleHttpsFiltering = () => {
-        return !certStatus.isInvalid
-            ? setHttpsFiltering(!isHttpsFilteringEnabled)
-            : undefined;
+        return !certStatus.isInvalid ? setHttpsFiltering(!isHttpsFilteringEnabled) : undefined;
     };
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {

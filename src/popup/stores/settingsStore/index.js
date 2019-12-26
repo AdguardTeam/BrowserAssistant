@@ -109,6 +109,7 @@ class SettingsStore {
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
+        this.rootStore.uiStore.setPageFilteredByUserFilter(true);
     };
 
     @action
