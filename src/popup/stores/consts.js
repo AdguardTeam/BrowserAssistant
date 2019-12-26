@@ -1,9 +1,3 @@
-export const REQUEST_STATUSES = {
-    SUCCESS: 'success',
-    PENDING: 'pending',
-    ERROR: 'error',
-};
-
 export const ORIGINAL_CERT_STATUS = {
     VALID: 'VALID',
     INVALID: 'INVALID',

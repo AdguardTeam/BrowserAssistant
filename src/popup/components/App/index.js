@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
-import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import Settings from '../Settings';
 import Header from '../Header';
@@ -9,7 +8,6 @@ import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import rootStore from '../../stores';
-import { REQUEST_STATUSES } from '../../stores/consts';
 import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
 import Loading from '../ui/Loading';
 
@@ -22,11 +20,6 @@ const App = observer(() => {
         setCurrentAppState,
         getCurrentTabHostname, getReferrer,
     } = settingsStore;
-
-    const appClass = classNames({
-        'loading--pending': uiStore.requestStatus === REQUEST_STATUSES.PENDING,
-        'loading--success': uiStore.requestStatus === REQUEST_STATUSES.SUCCESS,
-    });
 
     useEffect(() => {
         (async () => {
@@ -44,17 +37,16 @@ const App = observer(() => {
                 switch (result) {
                     case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
                         settingsStore.setSetupCorrectly(false);
-                        uiStore.setReloading(false);
-                        uiStore.setAppWorkingStatus();
+                        uiStore.setExtensionReloading(false);
                         break;
                     case BACKGROUND_COMMANDS.CLOSE_POPUP:
                         window.close();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
-                        uiStore.setReloading(true);
+                        uiStore.setExtensionReloading(true);
                         break;
                     case HostResponseTypes.ok:
-                        uiStore.setReloading(false);
+                        uiStore.setExtensionReloading(false);
                         break;
                     default:
                         break;
@@ -64,14 +56,11 @@ const App = observer(() => {
                     return;
                 }
 
-                const { isInstalled, isRunning, isProtectionEnabled } = appState;
-                const workingStatus = { isInstalled, isRunning, isProtectionEnabled };
-
                 if (parameters && parameters.originalCertStatus) {
                     setCurrentFilteringState(parameters);
                 }
-                setCurrentAppState(workingStatus);
-                uiStore.setAppWorkingStatus(workingStatus);
+
+                setCurrentAppState(appState);
             }
         );
 
@@ -80,22 +69,33 @@ const App = observer(() => {
         };
     }, []);
 
-    return (
-        <Fragment>
-            {uiStore.requestStatus !== REQUEST_STATUSES.PENDING && <Header />}
-            {uiStore.requestStatus === REQUEST_STATUSES.PENDING && <Loading title="Preparing..." />}
-            {uiStore.requestStatus === REQUEST_STATUSES.SUCCESS && (
-                <div className={appClass}>
-                    <CurrentSite />
-                    <Settings />
-                    <Options />
-                </div>
-            )}
-            {uiStore.requestStatus === REQUEST_STATUSES.ERROR && <AppClosed />}
-            {uiStore.isLoading && <Loading />}
-        </Fragment>
+    if (uiStore.requestStatus.isError) {
+        return (
+            <Fragment>
+                <Header />
+                <AppClosed />
+                {uiStore.isLoading && <Loading />}
+            </Fragment>
+        );
+    }
 
-    );
+    if (uiStore.requestStatus.isPending) {
+        return (<Loading title="Preparing..." />);
+    }
+
+    if (uiStore.requestStatus.isSuccess) {
+        return (
+            <Fragment>
+                <Header />
+                <CurrentSite />
+                <Settings />
+                <Options />
+                {uiStore.isLoading && <Loading />}
+            </Fragment>
+        );
+    }
+
+    return (<Loading />);
 });
 
 export default App;

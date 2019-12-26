@@ -13,7 +13,7 @@ const CurrentSite = observer(() => {
         isHttpsFilteringEnabled,
         isFilteringEnabled,
         isPageSecured,
-        currentTabHostname,
+        currentTabDomain,
     } = settingsStore;
 
     const {
@@ -77,7 +77,7 @@ const CurrentSite = observer(() => {
                 )}
 
                 <div className="current-site__name">
-                    {currentTabHostname}
+                    {currentTabDomain}
                 </div>
 
                 <CertificateModal
