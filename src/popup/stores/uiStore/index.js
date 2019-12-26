@@ -1,5 +1,5 @@
 import { action, observable, computed } from 'mobx';
-import { ORIGINAL_CERT_STATUS, REQUEST_STATUSES } from '../consts';
+import { ORIGINAL_CERT_STATUS } from '../consts';
 
 class UiStore {
     constructor(rootStore) {
@@ -12,22 +12,19 @@ class UiStore {
 
     @observable isPageFilteredByUserFilter = false;
 
-    @observable isAppWorking = true;
-
-    @observable requestStatus = REQUEST_STATUSES.PENDING;
-
     @observable isLoading = false;
 
-    @observable isPendingToggleProtection = false;
+    @observable isProtectionTogglePending = false;
 
-    @action setPendingToggleProtection = (isPendingToggleProtection) => {
-        this.isPendingToggleProtection = isPendingToggleProtection;
-    };
+    @observable isExtensionPending = true;
 
-    @action
-    setRequestStatus = () => {
-        this.requestStatus = this.isAppWorking ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR;
-    };
+    @computed get requestStatus() {
+        return ({
+            isSuccess: this.isAppWorking === true,
+            isError: this.isAppWorking === false,
+            isPending: this.isExtensionPending === true,
+        });
+    }
 
     @computed get securityModalState() {
         const {
@@ -57,11 +54,6 @@ class UiStore {
         });
     }
 
-    @computed get currentWorkingStatus() {
-        const { isInstalled, isRunning, isProtectionEnabled } = this.rootStore.settingsStore;
-        return { isInstalled, isRunning, isProtectionEnabled };
-    }
-
     @computed get certStatus() {
         const { originalCertStatus } = this.rootStore.settingsStore;
         return ({
@@ -72,24 +64,32 @@ class UiStore {
         });
     }
 
-    @action
-    setReloading = (isLoading) => {
-        this.isLoading = isLoading;
-    };
-
-    @action
-    setAppWorkingStatus = (workingStatus) => {
+    @computed get isAppWorking() {
         const {
             isAppUpToDate,
             isExtensionUpdated,
             isSetupCorrectly,
+            isInstalled,
+            isRunning,
+            isProtectionEnabled,
         } = this.rootStore.settingsStore;
 
-        const status = workingStatus || this.currentWorkingStatus;
-        this.isAppWorking = (Object.values(status).every(state => state === true)
-            && isAppUpToDate && isExtensionUpdated && isSetupCorrectly && !this.isLoading);
+        return [isInstalled,
+            isRunning,
+            isProtectionEnabled,
+            isAppUpToDate,
+            isExtensionUpdated,
+            isSetupCorrectly].every(state => state === true);
+    }
 
-        this.setRequestStatus();
+    @action
+    setExtensionReloading = (isLoading) => {
+        this.isLoading = isLoading;
+    };
+
+    @action
+    setExtensionPending = (isPending) => {
+        this.isExtensionPending = isPending;
     };
 
     @action
@@ -105,6 +105,11 @@ class UiStore {
     @action
     setPageFilteredByUserFilter = (isPageFilteredByUserFilter) => {
         this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
+    };
+
+    @action
+    setProtectionTogglePending = (isProtectionTogglePending) => {
+        this.isProtectionTogglePending = isProtectionTogglePending;
     };
 }
 

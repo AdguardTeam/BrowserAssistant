@@ -105,7 +105,7 @@ function defineWarning(settingsStore) {
 }
 
 const AppClosed = observer(() => {
-    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
+    const { requestsStore, settingsStore } = useContext(rootStore);
 
     const {
         state, content, buttonText, updateStore,
@@ -122,10 +122,7 @@ const AppClosed = observer(() => {
                 <button
                     className="app-closed__button"
                     type="button"
-                    onClick={() => {
-                        updateStore(stores);
-                        uiStore.setAppWorkingStatus();
-                    }}
+                    onClick={() => updateStore(stores)}
                 >
                     {buttonText}
                 </button>

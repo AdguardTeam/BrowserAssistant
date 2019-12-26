@@ -11,7 +11,7 @@ class SettingsStore {
         this.rootStore = rootStore;
     }
 
-    @observable currentTabHostname = '';
+    @observable currentTabDomain = '';
 
     @observable currentURL = '';
 
@@ -58,7 +58,10 @@ class SettingsStore {
             runInAction(() => {
                 this.currentURL = url;
                 const { hostname, port, protocol } = getUrlProperties(url);
-                this.currentTabHostname = hostname || this.currentURL;
+
+                const domain = hostname.startsWith('www.') ? hostname.slice(4) : hostname;
+
+                this.currentTabDomain = domain || this.currentURL;
 
                 switch (protocol) {
                     case 'https:':
@@ -155,11 +158,12 @@ class SettingsStore {
     };
 
     @action
-    setCurrentAppState = (workingState) => {
-        const { isInstalled, isRunning, isProtectionEnabled } = workingState;
+    setCurrentAppState = (appState) => {
+        const { isInstalled, isRunning, isProtectionEnabled } = appState;
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+        this.rootStore.uiStore.setExtensionPending(false);
     };
 
     @action
