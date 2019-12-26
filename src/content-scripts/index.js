@@ -6,9 +6,10 @@ import log from '../lib/logger';
 try {
     startAssistant();
 
-    browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // eslint-disable-next-line consistent-return
+    browser.runtime.onMessage.addListener((request) => {
         if (request.type === MessageTypes.getReferrer) {
-            sendResponse(document.referrer);
+            return Promise.resolve(document.referrer);
         }
     });
 } catch (error) {

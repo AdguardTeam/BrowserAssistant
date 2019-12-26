@@ -5,12 +5,13 @@ import { MessageTypes, RequestTypes } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
 
-async function sendMessage(sender, sendResponse) {
+// eslint-disable-next-line consistent-return
+async function sendMessage(sender) {
     const { type } = sender;
     const tab = await adguard.tabs.getCurrent();
     const response = await browser.tabs.sendMessage(tab.id, { type });
     if (response) {
-        sendResponse(response);
+        return Promise.resolve(response);
     }
 }
 
@@ -20,12 +21,12 @@ function addRule(sender) {
     adguard.tabs.isPageFilteredByUserFilter = true;
 }
 
-function handleMessage(sender, data, sendResponse) {
+function handleMessage(sender) {
     switch (sender.type) {
         case MessageTypes.initAssistant:
-            return sendMessage(sender, sendResponse);
+            return sendMessage(sender);
         case MessageTypes.getReferrer:
-            return sendMessage(sender, sendResponse);
+            return sendMessage(sender);
         case RequestTypes.addRule:
             return addRule(sender);
         default:
