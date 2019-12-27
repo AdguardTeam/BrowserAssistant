@@ -1,15 +1,13 @@
 .current-site {
     &__container {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
         z-index: var(--higher);
-        padding-right: 7.6rem;
-        padding-left: 7.6rem;
     }
 
     &__name {
         text-align: center;
-        padding-left: 0.5rem;
+        margin-left: 0.5rem;
         font-weight: bold;
         cursor: default;
         overflow: hidden;
@@ -17,7 +15,8 @@
     }
 
     &__title {
-        max-width: 16.8rem;
+        display: flex;
+        max-width: 25rem;
         font-size: 1.6rem;
         padding: 0 0.8rem;
         text-align: center;
@@ -29,70 +28,54 @@
     }
 
     &__icon {
-        width: 1.2rem;
-        height: 1.8rem;
-        outline: none;
-        position: absolute;
-        top: 0.3rem;
-        left: -1.2rem;
+        width: 1.6rem;
+        height: 100%;
         cursor: pointer;
         border: 0;
-        padding-right: 1.8rem;
+        padding: 0 1.2rem;
         border-right: 1px solid var(--grayd8);
 
         &--lock {
-            background: url('../../../assets/images/icon__lock--green.svg') no-repeat;
+            background: url('../../../assets/images/icon__lock--green.svg') no-repeat center;
 
             &--yellow {
                 transition: background 0.3s ease;
-                background: url('../../../assets/images/icon__lock--yellow.svg') no-repeat;
+                background: url('../../../assets/images/icon__lock--yellow.svg') no-repeat center;
             }
         }
 
         &--warning {
             transition: none;
-            padding-right: 2.2rem;
-            width: 1.8rem;
-            height: 1.8rem;
-            top: 0.3rem;
-            left: -1.6rem;
-
-            & .arrow-up {
-                left: -0.2rem;
-            }
 
             &--red {
-                background: url('../../../assets/images/icon__exclamation-point--red.svg') no-repeat;
+                background: url('../../../assets/images/icon__exclamation-point--red.svg') no-repeat center;
             }
 
             &--yellow {
-                background: url('../../../assets/images/icon__exclamation-point--yellow.svg') no-repeat;
+                background: url('../../../assets/images/icon__exclamation-point--yellow.svg') no-repeat center;
             }
 
             &--gray {
                 cursor: help;
-                background: url('../../../assets/images/icon__exclamation-point--gray.svg') no-repeat;
+                background: url('../../../assets/images/icon__exclamation-point--gray.svg') no-repeat center;
             }
         }
 
         &--disabled-cursor {
             cursor: not-allowed !important;
         }
-
-        &:focus {
-            transform: scale(1.05);
-        }
-
     }
 
 
     &__secure-status {
+        width: fit-content;
         cursor: help;
         color: var(--green-base);
         font-size: 1.2rem;
         font-weight: bold;
         transition: opacity 0.3s ease;
         opacity: 1;
+        margin: 0 auto;
 
         &:hover {
             text-decoration: underline;
@@ -114,8 +97,8 @@
     border-right: var(--trinagle-border-side);
     border-bottom: 1rem solid var(--greyf3);
     position: absolute;
-    top: 2.2rem;
-    left: -0.4rem;
+    top: 2.7rem;
+    left: 1rem;
 
     &:after {
         content: '';

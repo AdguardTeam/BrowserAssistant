@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
@@ -30,8 +30,22 @@ const CurrentSite = observer(() => {
         toggleShowInfo();
     };
 
-    const handleOpenCertificateModal = () => {
+    const onOpenCertModal = () => {
         toggleOpenCertificateModal();
+    };
+
+    const onKeyboardOpenCertModal = (e) => {
+        if (e.key === 'Enter') {
+            onOpenCertModal();
+        }
+    };
+
+    const onlyHttps = (handler) => {
+        return (isHttps && isFilteringEnabled) ? handler : undefined;
+    };
+
+    const onlyHttp = (handler) => {
+        return (!isHttps && isFilteringEnabled) ? handler : undefined;
     };
 
     const iconClass = classNames({
@@ -56,55 +70,51 @@ const CurrentSite = observer(() => {
     });
 
     return (
-        <div
-            className="current-site__container"
-        >
-            <div
-                className={securedClass}
-            >
-                {!isPageSecured && (
-                    <button
-                        type="button"
-                        onClick={(isHttps && isFilteringEnabled)
-                            ? handleOpenCertificateModal : undefined}
-                        onMouseOver={(!isHttps && isFilteringEnabled) ? onInfoHovered : undefined}
-                        onMouseOut={(!isHttps && isFilteringEnabled) ? onInfoHovered : undefined}
+        <Fragment>
+            <div className="current-site__container">
+                <div className={securedClass}>
+                    {!isPageSecured && (
+                    <div
+                        role="menu"
+                        tabIndex={uiStore.globalTabIndex}
+                        onClick={onlyHttps(onOpenCertModal)}
+                        onKeyDown={onlyHttps(onKeyboardOpenCertModal)}
+                        onMouseOver={onlyHttp(onInfoHovered)}
+                        onMouseOut={onlyHttp(onInfoHovered)}
                         className={iconClass}
                     >
                         {(isOpenCertificateModal || (!isHttps && isInfoHovered))
-                        && <div className="arrow-up" />}
-                    </button>
-                )}
+                            && <div className="arrow-up" />}
+                    </div>
+                    )}
 
-                <div className="current-site__name">
-                    {currentTabHostname}
+                    <div className="current-site__name">
+                        {currentTabHostname}
+                    </div>
+
+                    <CertificateModal
+                        onRequestClose={onOpenCertModal}
+                        isOpen={isHttps && isOpenCertificateModal}
+                    />
+                    <SecurePageModal
+                        cn={securityModalState.cn}
+                        message={securityModalState.message}
+                        isOpen={isInfoHovered || (!isHttps && isOpenCertificateModal)}
+                        header={securityModalState.header}
+                    />
                 </div>
-
-                <CertificateModal
-                    onRequestClose={handleOpenCertificateModal}
-                    isOpen={isHttps && isOpenCertificateModal}
-                />
-
-                {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-                <div
-                    role="button"
-                    tabIndex="-1"
-                    className={secureStatusClass}
-                    onMouseOver={onInfoHovered}
-                    onMouseOut={onInfoHovered}
-                >
-                    secure page
-                </div>
-
-                <SecurePageModal
-                    cn={securityModalState.cn}
-                    message={securityModalState.message}
-                    isOpen={isInfoHovered || (!isHttps && isOpenCertificateModal)}
-                    header={securityModalState.header}
-                />
-
             </div>
-        </div>
+            {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
+            <div
+                role="button"
+                tabIndex="-1"
+                className={secureStatusClass}
+                onMouseOver={onInfoHovered}
+                onMouseOut={onInfoHovered}
+            >
+                secure page
+            </div>
+        </Fragment>
     );
 });
 export default CurrentSite;
