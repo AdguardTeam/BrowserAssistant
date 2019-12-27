@@ -15,6 +15,7 @@ const Option = ({
             onClick();
         }
     };
+
     const handleWhileEnabled = handler => (isDisabled ? undefined : handler);
 
     return (

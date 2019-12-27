@@ -18,7 +18,7 @@ const Switcher = ({
 
     const onKeyDown = (e) => {
         if (e.key === 'Enter') {
-            return () => onClick();
+            onClick();
         }
         return undefined;
     };
