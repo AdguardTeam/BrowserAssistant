@@ -20,7 +20,9 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
         isFilteringEnabled,
     } = settingsStore;
 
-    const showCertificate = () => requestsStore.openOriginalCert();
+    const showCertificate = () => {
+        requestsStore.openOriginalCert();
+    };
 
     const toggleHttpsFiltering = () => {
         return !certStatus.isInvalid ? setHttpsFiltering(!isHttpsFilteringEnabled) : undefined;
@@ -80,7 +82,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
                     <Fragment>
                         <p className="modal__text modal__text--notion">Verified by:</p>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
-                        {!certStatus.isInvalid && (
+                        {certStatus.isValid && (
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"

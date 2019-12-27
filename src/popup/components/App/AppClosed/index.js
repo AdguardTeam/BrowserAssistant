@@ -113,25 +113,25 @@ const AppClosed = observer(() => {
 
     const stores = { requestsStore, settingsStore };
 
-    const handleClick = (e) => {
+    const onClick = (e) => {
         updateStore(stores);
         e.currentTarget.blur();
     };
 
     return (
-        <div className="app-closed__wrapper">
-            <div className="app-closed__status-wrapper">
+        <div className="app-closed__container">
+            <div className="app-closed__status-container">
                 <header className="app-closed__status">{content}</header>
             </div>
             {(state !== WORKING_STATES.IS_EXTENSION_RELOADING) && (
-                <button
-                    className="app-closed__button"
-                    type="button"
-                    tabIndex={uiStore.globalTabIndex}
-                    onClick={handleClick}
-                >
-                    {buttonText}
-                </button>
+            <button
+                className="app-closed__button"
+                type="button"
+                tabIndex={uiStore.globalTabIndex}
+                onClick={onClick}
+            >
+                {buttonText}
+            </button>
             )}
         </div>
     );

@@ -36,11 +36,11 @@ const CurrentSite = observer(() => {
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--lock': certStatus.isValid && (isHttpsFilteringEnabled || !isFilteringEnabled),
-        'current-site__icon--lock--yellow': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps,
-        'current-site__icon--warning--gray': !isHttps && !isPageSecured && !isHttps,
+        'current-site__icon--lock': isHttps && certStatus.isValid,
+        'current-site__icon--lock--yellow': isHttps && !isHttpsFilteringEnabled,
         'current-site__icon--warning--red': isHttps && certStatus.isInvalid,
         'current-site__icon--warning--yellow': isHttps && (certStatus.isBypassed || certStatus.isNotFound),
+        'current-site__icon--warning--gray': !isHttps && !isPageSecured,
         'current-site__icon--warning': (isHttps && !certStatus.isValid) || (!isHttps && !isPageSecured),
         'current-site__icon--disabled-cursor': !isFilteringEnabled,
     });
