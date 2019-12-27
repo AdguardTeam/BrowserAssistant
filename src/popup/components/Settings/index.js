@@ -16,7 +16,7 @@ const Settings = observer(() => {
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
                     checked={settingsStore.isPageSecured ? false : settingsStore.isFilteringEnabled}
-                    onClick={!settingsStore.isPageSecured ? toggleFiltering : undefined}
+                    onClick={settingsStore.isPageSecured ? undefined : toggleFiltering}
                     isPageSecured={settingsStore.isPageSecured}
                     isFilteringEnabled={settingsStore.isFilteringEnabled}
                     isHttps={settingsStore.isHttps}
