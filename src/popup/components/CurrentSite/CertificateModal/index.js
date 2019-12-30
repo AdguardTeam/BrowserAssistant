@@ -8,7 +8,7 @@ import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
 import './modal.pcss';
 
 const CertificateModal = observer(({
-    onRequestClose, isOpen, onAfterOpen,
+    onRequestClose, isOpen, onAfterOpen, ...otherProps
 }) => {
     const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
     const { certStatus } = uiStore;
@@ -57,6 +57,7 @@ const CertificateModal = observer(({
             bodyOpenClassName={bodyClass}
             onRequestClose={onRequestClose}
             onAfterOpen={onAfterOpen}
+            {...otherProps}
         >
             <div className="modal__info--upper">
                 <span className="modal__header modal__header--container">

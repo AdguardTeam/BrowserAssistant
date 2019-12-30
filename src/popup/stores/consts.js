@@ -25,3 +25,8 @@ export const SWITCHER_IDS = {
     HTTPS_SWITCHER: 'https-switcher',
     GLOBAL_SWITCHER: 'global-switcher',
 };
+
+export const SHOW_MODAL_TIME = {
+    SHORT: 3000,
+    LONG: 10000,
+};

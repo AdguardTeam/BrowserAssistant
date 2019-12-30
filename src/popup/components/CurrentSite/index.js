@@ -4,7 +4,9 @@ import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
 import SecurePageModal from './SecurePageModal';
 import rootStore from '../../stores';
+import { handleFocusOnce, invokeAfterDelay } from '../../helpers';
 import './currentSite.pcss';
+import { SHOW_MODAL_TIME } from '../../stores/consts';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
@@ -18,8 +20,8 @@ const CurrentSite = observer(() => {
 
     const {
         togglePageStatusModal,
-        toggleCertificateModal,
-        isCertificateModalOpen,
+        toggleCertStatusModal,
+        isCertStatusModalOpen,
         isPageStatusModalOpen,
         setCanOpenPageStatusModalOnFocus,
         canOpenPageStatusModalOnFocus,
@@ -29,50 +31,32 @@ const CurrentSite = observer(() => {
         certStatus,
     } = uiStore;
 
+    const closePageStatusModal = invokeAfterDelay(togglePageStatusModal);
 
-    const handlePageStatusModal = () => {
-        togglePageStatusModal();
-    };
+    // eslint-disable-next-line no-unused-vars
+    const autoClosePageStatusModal = invokeAfterDelay(togglePageStatusModal, SHOW_MODAL_TIME.SHORT);
 
-    const closePageStatusModal = () => {
-        setTimeout(togglePageStatusModal, 2000);
-    };
-
-    const onPageStatusFocus = () => {
-        if (canOpenPageStatusModalOnFocus) {
-            handlePageStatusModal();
-            setTimeout(handlePageStatusModal, 2000);
-        }
-    };
+    const onPageStatusFocus = handleFocusOnce(
+        canOpenPageStatusModalOnFocus,
+        togglePageStatusModal,
+        closePageStatusModal
+    );
 
     const onPageStatusBlur = () => {
         setCanOpenPageStatusModalOnFocus(false);
     };
 
+    const closeCertStatusModal = invokeAfterDelay(toggleCertStatusModal);
 
-    const handleCertModal = () => {
-        toggleCertificateModal();
-    };
-
-    const closeCertModal = () => {
-        setTimeout(toggleCertificateModal, 2000);
-    };
-
-    const autoCloseCertModal = () => {
-        setTimeout(toggleCertificateModal, 10000);
-    };
-
-    const onCertIconFocus = () => {
-        if (canOpenCertModalOnFocus) {
-            handleCertModal();
-            setTimeout(handleCertModal, 2000);
-        }
-    };
+    const onCertIconFocus = handleFocusOnce(
+        canOpenCertModalOnFocus,
+        toggleCertStatusModal,
+        closeCertStatusModal
+    );
 
     const onCertIconBlur = () => {
         setCanOpenCertModalOnFocus(false);
     };
-
 
     const onSpecificKeyDown = (handler, specificKey = 'Enter') => (e) => {
         if (e.key === specificKey) {
@@ -95,7 +79,7 @@ const CurrentSite = observer(() => {
             return;
         }
         if (!isHttps && !canOpenCertModalOnFocus) {
-            closeCertModal();
+            closeCertStatusModal();
         }
     };
 
@@ -129,14 +113,14 @@ const CurrentSite = observer(() => {
                             role="menu"
                             className={iconClass}
                             tabIndex={uiStore.globalTabIndex}
-                            onClick={httpsSite(handleCertModal)}
-                            onKeyDown={onSpecificKeyDown(handleCertModal)}
-                            onMouseOver={httpSite(handleCertModal)}
-                            onMouseOut={httpSite(handleCertModal)}
+                            onClick={httpsSite(toggleCertStatusModal)}
+                            onKeyDown={onSpecificKeyDown(toggleCertStatusModal)}
+                            onMouseOver={httpSite(toggleCertStatusModal)}
+                            onMouseOut={httpSite(toggleCertStatusModal)}
                             onFocus={httpSite(onCertIconFocus)}
                             onBlur={httpSite(onCertIconBlur)}
                         >
-                            {(isCertificateModalOpen
+                            {(isCertStatusModalOpen
                                 || (!isHttps && isPageStatusModalOpen))
                             && <div className="arrow-up" />}
                         </div>
@@ -147,14 +131,14 @@ const CurrentSite = observer(() => {
                     </div>
 
                     <CertificateModal
-                        isOpen={isHttps && isCertificateModalOpen}
-                        onRequestClose={handleCertModal}
-                        onAfterOpen={autoCloseCertModal}
+                        isOpen={isHttps && isCertStatusModalOpen}
+                        onRequestClose={toggleCertStatusModal}
+                        onAfterOpen={() => setTimeout(toggleCertStatusModal, SHOW_MODAL_TIME.LONG)}
                     />
 
                     <SecurePageModal
                         isOpen={(isPageSecured && isPageStatusModalOpen)
-                        || (!isHttps && isCertificateModalOpen)}
+                        || (!isHttps && isCertStatusModalOpen)}
                         cn={securePageModalState.cn}
                         message={securePageModalState.message}
                         header={securePageModalState.header}
@@ -166,9 +150,9 @@ const CurrentSite = observer(() => {
                 role="menu"
                 tabIndex={uiStore.globalTabIndex}
                 className={secureStatusClass}
-                onMouseOver={handlePageStatusModal}
-                onMouseOut={handlePageStatusModal}
-                onKeyDown={onSpecificKeyDown(handlePageStatusModal)}
+                onMouseOver={togglePageStatusModal}
+                onMouseOut={togglePageStatusModal}
+                onKeyDown={onSpecificKeyDown(togglePageStatusModal)}
                 onFocus={onPageStatusFocus}
                 onBlur={onPageStatusBlur}
             >
