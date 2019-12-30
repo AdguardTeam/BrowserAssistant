@@ -10,7 +10,7 @@ class Tabs {
             log.error('Browser tabs api error: no url property. Checkout activeTab permission in manifest.', tab);
             await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
             setTimeout(() => browserApi.runtime.sendMessage(
-                { result: BACKGROUND_COMMANDS.CLOSE_POPUP }
+                { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
             ),
             1000);
         }

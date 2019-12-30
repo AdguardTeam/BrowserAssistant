@@ -6,9 +6,13 @@ class UiStore {
         this.rootStore = rootStore;
     }
 
-    @observable isOpenCertificateModal = false;
+    @observable isCertificateModalOpen = false;
 
-    @observable isInfoHovered = false;
+    @observable isPageStatusModalOpen = false;
+
+    @observable canOpenPageStatusModalOnFocus = true;
+
+    @observable canOpenCertModalOnFocus = true;
 
     @observable isPageFilteredByUserFilter = false;
 
@@ -30,7 +34,7 @@ class UiStore {
         });
     }
 
-    @computed get securityModalState() {
+    @computed get securePageModalState() {
         const {
             isPageSecured, isHttps, isFilteringEnabled, isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
@@ -97,13 +101,23 @@ class UiStore {
     };
 
     @action
-    toggleOpenCertificateModal = () => {
-        this.isOpenCertificateModal = !this.isOpenCertificateModal;
+    toggleCertificateModal = () => {
+        this.isCertificateModalOpen = !this.isCertificateModalOpen;
     };
 
     @action
-    toggleShowInfo = () => {
-        this.isInfoHovered = !this.isInfoHovered;
+    togglePageStatusModal = () => {
+        this.isPageStatusModalOpen = !this.isPageStatusModalOpen;
+    };
+
+    @action
+    setCanOpenPageStatusModalOnFocus = (canOpenPageStatusModalOnFocus) => {
+        this.canOpenPageStatusModalOnFocus = canOpenPageStatusModalOnFocus;
+    };
+
+    @action
+    setCanOpenCertModalOnFocus = (canOpenCertModalOnFocus) => {
+        this.canOpenCertModalOnFocus = canOpenCertModalOnFocus;
     };
 
     @action

@@ -2,13 +2,14 @@ import React from 'react';
 import Modal from 'react-modal';
 
 const SecurePageModal = ({
-    header, message, cn, isOpen,
+    header, message, cn, isOpen, onAfterOpen,
 }) => (
     <Modal
         isOpen={isOpen}
         className={cn}
         overlayClassName="overlay overlay--hidden"
         contentLabel="Secure Page Modal"
+        onAfterOpen={onAfterOpen}
     >
         <header
             className="modal__header"

@@ -115,7 +115,7 @@ const AppClosed = observer(() => {
 
     const onClick = (e) => {
         updateStore(stores);
-        e.currentTarget.blur();
+        e.target.blur();
     };
 
     return (

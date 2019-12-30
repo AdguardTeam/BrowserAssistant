@@ -9,7 +9,7 @@ const Header = observer(() => {
     const disableProtection = (e) => {
         uiStore.setProtectionTogglePending(true);
         requestsStore.setProtectionStatus(false);
-        e.currentTarget.blur();
+        e.target.blur();
     };
     const openSetting = () => {
         requestsStore.openSettings();

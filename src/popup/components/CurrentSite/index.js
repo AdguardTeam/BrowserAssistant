@@ -17,35 +17,86 @@ const CurrentSite = observer(() => {
     } = settingsStore;
 
     const {
-        toggleShowInfo,
-        toggleOpenCertificateModal,
-        isOpenCertificateModal,
-        isInfoHovered,
-        securityModalState,
+        togglePageStatusModal,
+        toggleCertificateModal,
+        isCertificateModalOpen,
+        isPageStatusModalOpen,
+        setCanOpenPageStatusModalOnFocus,
+        canOpenPageStatusModalOnFocus,
+        setCanOpenCertModalOnFocus,
+        canOpenCertModalOnFocus,
+        securePageModalState,
         certStatus,
     } = uiStore;
 
 
-    const onInfoHovered = () => {
-        toggleShowInfo();
+    const handlePageStatusModal = () => {
+        togglePageStatusModal();
     };
 
-    const onOpenCertModal = () => {
-        toggleOpenCertificateModal();
+    const closePageStatusModal = () => {
+        setTimeout(togglePageStatusModal, 2000);
     };
 
-    const onKeyboardOpenCertModal = (e) => {
-        if (e.key === 'Enter') {
-            onOpenCertModal();
+    const onPageStatusFocus = () => {
+        if (canOpenPageStatusModalOnFocus) {
+            handlePageStatusModal();
+            setTimeout(handlePageStatusModal, 2000);
         }
     };
 
-    const onlyHttps = (handler) => {
+    const onPageStatusBlur = () => {
+        setCanOpenPageStatusModalOnFocus(false);
+    };
+
+
+    const handleCertModal = () => {
+        toggleCertificateModal();
+    };
+
+    const closeCertModal = () => {
+        setTimeout(toggleCertificateModal, 2000);
+    };
+
+    const autoCloseCertModal = () => {
+        setTimeout(toggleCertificateModal, 10000);
+    };
+
+    const onCertIconFocus = () => {
+        if (canOpenCertModalOnFocus) {
+            handleCertModal();
+            setTimeout(handleCertModal, 2000);
+        }
+    };
+
+    const onCertIconBlur = () => {
+        setCanOpenCertModalOnFocus(false);
+    };
+
+
+    const onSpecificKeyDown = (handler, specificKey = 'Enter') => (e) => {
+        if (e.key === specificKey) {
+            return handler();
+        }
+        return undefined;
+    };
+
+    const httpsSite = (handler) => {
         return (isHttps && isFilteringEnabled) ? handler : undefined;
     };
 
-    const onlyHttp = (handler) => {
+    const httpSite = (handler) => {
         return (!isHttps && isFilteringEnabled) ? handler : undefined;
+    };
+
+    const onAfterOpen = () => {
+        if (isPageSecured && !canOpenPageStatusModalOnFocus) {
+            closePageStatusModal();
+            return;
+        }
+        if (!isHttps && !canOpenCertModalOnFocus) {
+            closeCertModal();
+        }
     };
 
     const iconClass = classNames({
@@ -74,18 +125,21 @@ const CurrentSite = observer(() => {
             <div className="current-site__container">
                 <div className={securedClass}>
                     {!isPageSecured && (
-                    <div
-                        role="menu"
-                        tabIndex={uiStore.globalTabIndex}
-                        onClick={onlyHttps(onOpenCertModal)}
-                        onKeyDown={onlyHttps(onKeyboardOpenCertModal)}
-                        onMouseOver={onlyHttp(onInfoHovered)}
-                        onMouseOut={onlyHttp(onInfoHovered)}
-                        className={iconClass}
-                    >
-                        {(isOpenCertificateModal || (!isHttps && isInfoHovered))
+                        <div
+                            role="menu"
+                            className={iconClass}
+                            tabIndex={uiStore.globalTabIndex}
+                            onClick={httpsSite(handleCertModal)}
+                            onKeyDown={onSpecificKeyDown(handleCertModal)}
+                            onMouseOver={httpSite(handleCertModal)}
+                            onMouseOut={httpSite(handleCertModal)}
+                            onFocus={httpSite(onCertIconFocus)}
+                            onBlur={httpSite(onCertIconBlur)}
+                        >
+                            {(isCertificateModalOpen
+                                || (!isHttps && isPageStatusModalOpen))
                             && <div className="arrow-up" />}
-                    </div>
+                        </div>
                     )}
 
                     <div className="current-site__name">
@@ -93,24 +147,30 @@ const CurrentSite = observer(() => {
                     </div>
 
                     <CertificateModal
-                        onRequestClose={onOpenCertModal}
-                        isOpen={isHttps && isOpenCertificateModal}
+                        isOpen={isHttps && isCertificateModalOpen}
+                        onRequestClose={handleCertModal}
+                        onAfterOpen={autoCloseCertModal}
                     />
+
                     <SecurePageModal
-                        cn={securityModalState.cn}
-                        message={securityModalState.message}
-                        isOpen={isInfoHovered || (!isHttps && isOpenCertificateModal)}
-                        header={securityModalState.header}
+                        isOpen={(isPageSecured && isPageStatusModalOpen)
+                        || (!isHttps && isCertificateModalOpen)}
+                        cn={securePageModalState.cn}
+                        message={securePageModalState.message}
+                        header={securePageModalState.header}
+                        onAfterOpen={onAfterOpen}
                     />
                 </div>
             </div>
-            {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
             <div
-                role="button"
-                tabIndex="-1"
+                role="menu"
+                tabIndex={uiStore.globalTabIndex}
                 className={secureStatusClass}
-                onMouseOver={onInfoHovered}
-                onMouseOut={onInfoHovered}
+                onMouseOver={handlePageStatusModal}
+                onMouseOut={handlePageStatusModal}
+                onKeyDown={onSpecificKeyDown(handlePageStatusModal)}
+                onFocus={onPageStatusFocus}
+                onBlur={onPageStatusBlur}
             >
                 secure page
             </div>
