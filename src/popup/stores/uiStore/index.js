@@ -6,7 +6,7 @@ class UiStore {
         this.rootStore = rootStore;
     }
 
-    @observable isCertificateModalOpen = false;
+    @observable isCertStatusModalOpen = false;
 
     @observable isPageStatusModalOpen = false;
 
@@ -101,8 +101,8 @@ class UiStore {
     };
 
     @action
-    toggleCertificateModal = () => {
-        this.isCertificateModalOpen = !this.isCertificateModalOpen;
+    toggleCertStatusModal = () => {
+        this.isCertStatusModalOpen = !this.isCertStatusModalOpen;
     };
 
     @action
