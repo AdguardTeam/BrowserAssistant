@@ -20,7 +20,6 @@ const App = observer(() => {
         setCurrentAppState,
         getCurrentTabHostname, getReferrer,
     } = settingsStore;
-
     useEffect(() => {
         (async () => {
             await getCurrentTabHostname();
