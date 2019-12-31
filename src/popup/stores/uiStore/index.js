@@ -1,18 +1,13 @@
-import { action, observable, computed } from 'mobx';
+import {
+    action, observable, computed,
+} from 'mobx';
 import { ORIGINAL_CERT_STATUS } from '../consts';
+import { defineNewState } from '../../helpers';
 
 class UiStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
-
-    @observable isCertStatusModalOpen = false;
-
-    @observable isPageStatusModalOpen = false;
-
-    @observable canOpenPageStatusModalOnFocus = true;
-
-    @observable canOpenCertModalOnFocus = true;
 
     @observable isPageFilteredByUserFilter = false;
 
@@ -21,6 +16,28 @@ class UiStore {
     @observable isProtectionTogglePending = false;
 
     @observable isExtensionPending = true;
+
+    @observable certStatusModalState = {
+        isHovered: false,
+        isFocused: false,
+        isEntered: false,
+        isClicked: false,
+    };
+
+    @observable secureStatusModalState = {
+        isHovered: false,
+        isFocused: false,
+        isEntered: false,
+        isClicked: false,
+    };
+
+    @computed get isCertStatusModalOpen() {
+        return (Object.values(this.certStatusModalState).some(state => state === true));
+    }
+
+    @computed get isPageStatusModalOpen() {
+        return (Object.values(this.secureStatusModalState).some(state => state === true));
+    }
 
     @computed get globalTabIndex() {
         return (this.isLoading ? -1 : 0);
@@ -90,6 +107,30 @@ class UiStore {
             isSetupCorrectly].every(state => state === true);
     }
 
+    @action updateCertStatusModalState = (eventType, payload) => {
+        let defaultState;
+        if (!payload) {
+            defaultState = defineNewState(eventType);
+        }
+        const newState = payload || defaultState;
+        this.certStatusModalState = {
+            ...this.certStatusModalState,
+            ...newState,
+        };
+    };
+
+    @action updateSecureStatusModalState = (eventType, payload) => {
+        let defaultState;
+        if (!payload) {
+            defaultState = defineNewState(eventType);
+        }
+        const newState = payload || defaultState;
+        this.secureStatusModalState = {
+            ...this.secureStatusModalState,
+            ...newState,
+        };
+    };
+
     @action
     setExtensionReloading = (isLoading) => {
         this.isLoading = isLoading;
@@ -98,26 +139,6 @@ class UiStore {
     @action
     setExtensionPending = (isPending) => {
         this.isExtensionPending = isPending;
-    };
-
-    @action
-    toggleCertStatusModal = () => {
-        this.isCertStatusModalOpen = !this.isCertStatusModalOpen;
-    };
-
-    @action
-    togglePageStatusModal = () => {
-        this.isPageStatusModalOpen = !this.isPageStatusModalOpen;
-    };
-
-    @action
-    setCanOpenPageStatusModalOnFocus = (canOpenPageStatusModalOnFocus) => {
-        this.canOpenPageStatusModalOnFocus = canOpenPageStatusModalOnFocus;
-    };
-
-    @action
-    setCanOpenCertModalOnFocus = (canOpenCertModalOnFocus) => {
-        this.canOpenCertModalOnFocus = canOpenCertModalOnFocus;
     };
 
     @action

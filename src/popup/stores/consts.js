@@ -27,6 +27,6 @@ export const SWITCHER_IDS = {
 };
 
 export const SHOW_MODAL_TIME = {
-    SHORT: 3000,
-    LONG: 10000,
+    SHORT: 1000,
+    LONG: 5000,
 };
