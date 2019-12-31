@@ -1,5 +1,3 @@
-import { SHOW_MODAL_TIME } from '../stores/consts';
-
 export const getPortByProtocol = (protocol) => {
     let defaultPort;
     switch (protocol) {
@@ -15,15 +13,26 @@ export const getPortByProtocol = (protocol) => {
     return defaultPort;
 };
 
-export const invokeAfterDelay = (func, time = SHOW_MODAL_TIME.SHORT) => {
-    return () => setTimeout(func, time);
-};
-
-export const handleFocusOnce = (flag, open, close) => {
-    return () => {
-        if (flag) {
-            open();
-            close();
-        }
-    };
+export const defineNewState = (eventType) => {
+    let defaultState;
+    switch (eventType) {
+        case 'mouseover':
+            defaultState = { isHovered: true };
+            break;
+        case 'mouseout':
+            defaultState = { isHovered: false };
+            break;
+        case 'focus':
+            defaultState = { isFocused: true };
+            break;
+        case 'blur':
+            defaultState = { isFocused: false };
+            break;
+        case 'keydown':
+            defaultState = { isEntered: true };
+            break;
+        default:
+            break;
+    }
+    return defaultState;
 };

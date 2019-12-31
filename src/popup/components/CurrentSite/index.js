@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import CertificateModal from './CertificateModal';
 import SecurePageModal from './SecurePageModal';
 import rootStore from '../../stores';
-import { handleFocusOnce, invokeAfterDelay } from '../../helpers';
-import './currentSite.pcss';
 import { SHOW_MODAL_TIME } from '../../stores/consts';
+import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
@@ -19,51 +18,13 @@ const CurrentSite = observer(() => {
     } = settingsStore;
 
     const {
-        togglePageStatusModal,
-        toggleCertStatusModal,
+        updateCertStatusModalState,
+        updateSecureStatusModalState,
         isCertStatusModalOpen,
         isPageStatusModalOpen,
-        setCanOpenPageStatusModalOnFocus,
-        canOpenPageStatusModalOnFocus,
-        setCanOpenCertModalOnFocus,
-        canOpenCertModalOnFocus,
         securePageModalState,
         certStatus,
     } = uiStore;
-
-    const closePageStatusModal = invokeAfterDelay(togglePageStatusModal);
-
-    // eslint-disable-next-line no-unused-vars
-    const autoClosePageStatusModal = invokeAfterDelay(togglePageStatusModal, SHOW_MODAL_TIME.SHORT);
-
-    const onPageStatusFocus = handleFocusOnce(
-        canOpenPageStatusModalOnFocus,
-        togglePageStatusModal,
-        closePageStatusModal
-    );
-
-    const onPageStatusBlur = () => {
-        setCanOpenPageStatusModalOnFocus(false);
-    };
-
-    const closeCertStatusModal = invokeAfterDelay(toggleCertStatusModal);
-
-    const onCertIconFocus = handleFocusOnce(
-        canOpenCertModalOnFocus,
-        toggleCertStatusModal,
-        closeCertStatusModal
-    );
-
-    const onCertIconBlur = () => {
-        setCanOpenCertModalOnFocus(false);
-    };
-
-    const onSpecificKeyDown = (handler, specificKey = 'Enter') => (e) => {
-        if (e.key === specificKey) {
-            return handler();
-        }
-        return undefined;
-    };
 
     const httpsSite = (handler) => {
         return (isHttps && isFilteringEnabled) ? handler : undefined;
@@ -71,16 +32,6 @@ const CurrentSite = observer(() => {
 
     const httpSite = (handler) => {
         return (!isHttps && isFilteringEnabled) ? handler : undefined;
-    };
-
-    const onAfterOpen = () => {
-        if (isPageSecured && !canOpenPageStatusModalOnFocus) {
-            closePageStatusModal();
-            return;
-        }
-        if (!isHttps && !canOpenCertModalOnFocus) {
-            closeCertStatusModal();
-        }
     };
 
     const iconClass = classNames({
@@ -104,6 +55,34 @@ const CurrentSite = observer(() => {
         'current-site__secure-status--hidden': !isPageSecured,
     });
 
+    const handleCertStatusModalState = (event, payload) => {
+        return updateCertStatusModalState(event.type, payload);
+    };
+
+    const onKeyEnterDown = (event) => {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        handleCertStatusModalState(event);
+        event.persist();
+        setTimeout(() => handleCertStatusModalState(event,
+            { isEntered: false }), SHOW_MODAL_TIME.LONG);
+    };
+
+    const handleSecureStatusModalState = (event, payload) => {
+        return updateSecureStatusModalState(event.type, payload);
+    };
+
+    const onKeyEnterDownSecure = (event) => {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        handleSecureStatusModalState(event);
+        event.persist();
+        setTimeout(() => handleSecureStatusModalState(event,
+            { isEntered: false }), SHOW_MODAL_TIME.SHORT);
+    };
+
     return (
         <Fragment>
             <div className="current-site__container">
@@ -113,12 +92,11 @@ const CurrentSite = observer(() => {
                             role="menu"
                             className={iconClass}
                             tabIndex={uiStore.globalTabIndex}
-                            onClick={httpsSite(toggleCertStatusModal)}
-                            onKeyDown={onSpecificKeyDown(toggleCertStatusModal)}
-                            onMouseOver={httpSite(toggleCertStatusModal)}
-                            onMouseOut={httpSite(toggleCertStatusModal)}
-                            onFocus={httpSite(onCertIconFocus)}
-                            onBlur={httpSite(onCertIconBlur)}
+                            onKeyDown={onKeyEnterDown}
+                            onMouseOver={httpSite(handleCertStatusModalState)}
+                            onMouseOut={httpSite(handleCertStatusModalState)}
+                            onFocus={handleCertStatusModalState}
+                            onBlur={httpSite(handleCertStatusModalState)}
                         >
                             {(isCertStatusModalOpen
                                 || (!isHttps && isPageStatusModalOpen))
@@ -132,8 +110,8 @@ const CurrentSite = observer(() => {
 
                     <CertificateModal
                         isOpen={isHttps && isCertStatusModalOpen}
-                        onRequestClose={toggleCertStatusModal}
-                        onAfterOpen={() => setTimeout(toggleCertStatusModal, SHOW_MODAL_TIME.LONG)}
+                        onRequestClose={httpsSite(() => handleCertStatusModalState('blur',
+                            { isFocused: false }))}
                     />
 
                     <SecurePageModal
@@ -142,7 +120,6 @@ const CurrentSite = observer(() => {
                         cn={securePageModalState.cn}
                         message={securePageModalState.message}
                         header={securePageModalState.header}
-                        onAfterOpen={onAfterOpen}
                     />
                 </div>
             </div>
@@ -150,11 +127,11 @@ const CurrentSite = observer(() => {
                 role="menu"
                 tabIndex={uiStore.globalTabIndex}
                 className={secureStatusClass}
-                onMouseOver={togglePageStatusModal}
-                onMouseOut={togglePageStatusModal}
-                onKeyDown={onSpecificKeyDown(togglePageStatusModal)}
-                onFocus={onPageStatusFocus}
-                onBlur={onPageStatusBlur}
+                onMouseOver={handleSecureStatusModalState}
+                onMouseOut={handleSecureStatusModalState}
+                onKeyDown={onKeyEnterDownSecure}
+                onFocus={handleSecureStatusModalState}
+                onBlur={handleSecureStatusModalState}
             >
                 secure page
             </div>

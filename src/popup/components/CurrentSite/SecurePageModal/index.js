@@ -11,6 +11,7 @@ const SecurePageModal = ({
         contentLabel="Secure Page Modal"
         onAfterOpen={onAfterOpen}
         {...otherProps}
+        shouldFocusAfterRender={false}
     >
         <header
             className="modal__header"

@@ -57,6 +57,7 @@ const CertificateModal = observer(({
             bodyOpenClassName={bodyClass}
             onRequestClose={onRequestClose}
             onAfterOpen={onAfterOpen}
+            shouldFocusAfterRender={false}
             {...otherProps}
         >
             <div className="modal__info--upper">
