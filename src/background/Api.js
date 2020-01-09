@@ -72,7 +72,7 @@ class Api {
                     ...versions,
                     type: AssistantTypes.nativeAssistant,
                 },
-            }, ResponseTypesPrefixes.INIT);
+            }, ResponseTypesPrefixes.ADG_INIT);
         } catch (error) {
             log.error(error.message);
         }
@@ -90,8 +90,9 @@ class Api {
         this.init();
     };
 
-    makeRequest = async (params, idPrefix) => {
-        const id = idPrefix ? `ADG_${idPrefix}_${nanoid()}` : `ADG_${nanoid()}`;
+    makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
+        const id = `${idPrefix}_${nanoid()}`;
+
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
         log.info(`request ${id}`, params);
 

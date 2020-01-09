@@ -26,12 +26,25 @@ const CurrentSite = observer(() => {
         certStatus,
     } = uiStore;
 
-    const httpsSite = (handler) => {
-        return (isHttps && isFilteringEnabled) ? handler : undefined;
+    const isFilteringEnabledOnSite = (handler) => {
+        if (isFilteringEnabled) {
+            return handler;
+        }
+        return undefined;
     };
 
-    const httpSite = (handler) => {
-        return (!isHttps && isFilteringEnabled) ? handler : undefined;
+    const isHttpsSite = (handler) => {
+        if (isHttps && isFilteringEnabled) {
+            return handler;
+        }
+        return undefined;
+    };
+
+    const isHttpSite = (handler) => {
+        if (!isHttps && isFilteringEnabled) {
+            return handler;
+        }
+        return undefined;
     };
 
     const iconClass = classNames({
@@ -83,6 +96,9 @@ const CurrentSite = observer(() => {
             { isEntered: false }), SHOW_MODAL_TIME.SHORT);
     };
 
+    const onBlur = () => handleCertStatusModalState('blur',
+        { isFocused: false });
+
     return (
         <Fragment>
             <div className="current-site__container">
@@ -92,11 +108,11 @@ const CurrentSite = observer(() => {
                             role="menu"
                             className={iconClass}
                             tabIndex={uiStore.globalTabIndex}
-                            onKeyDown={onKeyEnterDown}
-                            onMouseOver={httpSite(handleCertStatusModalState)}
-                            onMouseOut={httpSite(handleCertStatusModalState)}
+                            onKeyDown={isFilteringEnabledOnSite(onKeyEnterDown)}
+                            onMouseOver={isHttpSite(handleCertStatusModalState)}
+                            onMouseOut={isHttpSite(handleCertStatusModalState)}
                             onFocus={handleCertStatusModalState}
-                            onBlur={httpSite(handleCertStatusModalState)}
+                            onBlur={isHttpSite(handleCertStatusModalState)}
                         >
                             {(isCertStatusModalOpen
                                 || (!isHttps && isPageStatusModalOpen))
@@ -110,8 +126,7 @@ const CurrentSite = observer(() => {
 
                     <CertificateModal
                         isOpen={isHttps && isCertStatusModalOpen}
-                        onRequestClose={httpsSite(() => handleCertStatusModalState('blur',
-                            { isFocused: false }))}
+                        onRequestClose={isHttpsSite(onBlur)}
                     />
 
                     <SecurePageModal

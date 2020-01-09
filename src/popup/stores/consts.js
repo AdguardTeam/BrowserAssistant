@@ -26,6 +26,12 @@ export const SWITCHER_IDS = {
     GLOBAL_SWITCHER: 'global-switcher',
 };
 
+export const SECURE_PAGE_MODAL_IDS = {
+    SECURE: 'SECURE',
+    NOT_SECURE: 'NOT_SECURE',
+    BANK: 'BANK',
+};
+
 export const SHOW_MODAL_TIME = {
     SHORT: 1000,
     LONG: 5000,

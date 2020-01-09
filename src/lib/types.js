@@ -16,7 +16,6 @@ export const RequestTypes = {
 
 export const ResponseTypesPrefixes = {
     ADG: 'ADG',
-    INIT: 'INIT',
     ADG_INIT: 'ADG_INIT',
 };
 
