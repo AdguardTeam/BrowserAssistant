@@ -1,7 +1,7 @@
 import {
     action, observable, computed,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS } from '../consts';
+import { ORIGINAL_CERT_STATUS, SECURE_PAGE_MODAL_IDS } from '../consts';
 import { defineNewState } from '../../helpers';
 
 class UiStore {
@@ -58,7 +58,7 @@ class UiStore {
 
         if (!isHttps && !isPageSecured) {
             return ({
-                cn: 'modal modal__insecure-page',
+                id: SECURE_PAGE_MODAL_IDS.NOT_SECURE,
                 message: 'The site isn\'t using a private connection. Someone might be able to see or change the information you send or get through the site.',
                 header: 'Not secure',
             });
@@ -66,13 +66,13 @@ class UiStore {
 
         if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
             return ({
-                cn: 'modal modal__secure-page',
+                id: SECURE_PAGE_MODAL_IDS.SECURE,
                 message: 'Nothing to block here',
                 header: 'Secure page',
             });
         }
         return ({
-            cn: 'modal modal__secure-page modal__secure-page--bank',
+            id: SECURE_PAGE_MODAL_IDS.BANK,
             message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
             You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
             header: 'Secure page',

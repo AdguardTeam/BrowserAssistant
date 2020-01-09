@@ -7,9 +7,7 @@ import rootStore from '../../../stores';
 import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
 import './modal.pcss';
 
-const CertificateModal = observer(({
-    onRequestClose, isOpen, onAfterOpen, ...otherProps
-}) => {
+const CertificateModal = observer(({ onRequestClose, isOpen }) => {
     const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
     const { certStatus } = uiStore;
     const {
@@ -19,7 +17,6 @@ const CertificateModal = observer(({
         isHttps,
         isPageSecured,
         originalCertStatus,
-        isFilteringEnabled,
     } = settingsStore;
 
     const showCertificate = () => {
@@ -27,8 +24,11 @@ const CertificateModal = observer(({
     };
 
     const toggleHttpsFiltering = () => {
-        return !certStatus.isInvalid ? setHttpsFiltering(!isHttpsFilteringEnabled) : undefined;
+        if (!certStatus.isInvalid) {
+            setHttpsFiltering(!isHttpsFilteringEnabled);
+        }
     };
+
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             showCertificate();
@@ -56,9 +56,7 @@ const CertificateModal = observer(({
             contentLabel="Certificate Modal"
             bodyOpenClassName={bodyClass}
             onRequestClose={onRequestClose}
-            onAfterOpen={onAfterOpen}
             shouldFocusAfterRender={false}
-            {...otherProps}
         >
             <div className="modal__info--upper">
                 <span className="modal__header modal__header--container">
@@ -70,9 +68,7 @@ const CertificateModal = observer(({
                     checked={!certStatus.isInvalid && isHttpsFilteringEnabled && isHttps}
                     onClick={toggleHttpsFiltering}
                     isPageSecured={isPageSecured}
-                    isFilteringEnabled={isFilteringEnabled}
-                    isHttps={isHttps}
-                    certStatus={certStatus}
+                    isDisabled={certStatus.isInvalid}
                 />
             </div>
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (

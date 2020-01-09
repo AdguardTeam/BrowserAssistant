@@ -13,6 +13,7 @@ const Options = observer(() => {
                 requestsStore.startBlockingAd();
             },
             isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
+            isDisplayed: true,
         },
         {
             iconName: 'sandwich',
@@ -21,6 +22,7 @@ const Options = observer(() => {
                 requestsStore.openFilteringLog();
             },
             isDisabled: false,
+            isDisplayed: true,
         },
         {
             iconName: 'thumb-down',
@@ -29,6 +31,7 @@ const Options = observer(() => {
                 requestsStore.reportSite();
             },
             isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
+            isDisplayed: true,
         },
         {
             iconName: 'icon-cross',
@@ -38,23 +41,25 @@ const Options = observer(() => {
                 await requestsStore.getCurrentFilteringState();
             },
             isDisabled: false,
+            isDisplayed: uiStore.isPageFilteredByUserFilter,
         },
     ];
     return (
         <div className="actions">
             {OPTIONS
-                .slice(0, uiStore.isPageFilteredByUserFilter ? OPTIONS.length : -1)
                 .map(({
-                    iconName, text, onClick, isDisabled,
+                    iconName, text, onClick, isDisabled, isDisplayed,
                 }) => (
-                    <Option
-                        key={iconName}
-                        iconName={iconName}
-                        text={text}
-                        onClick={onClick}
-                        isDisabled={isDisabled}
-                        tabIndex={uiStore.globalTabIndex}
-                    />
+                    isDisplayed && (
+                        <Option
+                            key={iconName}
+                            iconName={iconName}
+                            text={text}
+                            onClick={onClick}
+                            isDisabled={isDisabled}
+                            tabIndex={uiStore.globalTabIndex}
+                        />
+                    )
                 ))}
         </div>
     );

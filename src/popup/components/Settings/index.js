@@ -10,16 +10,21 @@ const Settings = observer(() => {
     const toggleFiltering = () => {
         settingsStore.setFiltering(!settingsStore.isFilteringEnabled);
     };
+    const onClick = () => {
+        if (settingsStore.isPageSecured) {
+            return;
+        }
+        toggleFiltering();
+    };
     return (
         <div className="settings">
             <div className="settings__main">
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
                     checked={settingsStore.isPageSecured ? false : settingsStore.isFilteringEnabled}
-                    onClick={settingsStore.isPageSecured ? undefined : toggleFiltering}
+                    onClick={onClick}
                     isPageSecured={settingsStore.isPageSecured}
-                    isFilteringEnabled={settingsStore.isFilteringEnabled}
-                    isHttps={settingsStore.isHttps}
+                    isDisabled={settingsStore.isPageSecured}
                     tabIndex={uiStore.globalTabIndex}
                 />
             </div>

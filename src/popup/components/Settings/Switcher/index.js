@@ -1,10 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
-import { SWITCHER_IDS } from '../../../stores/consts';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, checked, onClick, isPageSecured, certStatus, tabIndex,
+    id, checked, onClick, isPageSecured, tabIndex, isDisabled,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,
@@ -13,7 +12,7 @@ const Switcher = ({
 
     const switcherClass = classNames({
         switcher__label: true,
-        'switcher__label--disabled': isPageSecured || (id === SWITCHER_IDS.HTTPS_SWITCHER && certStatus.isInvalid),
+        'switcher__label--disabled': isDisabled,
     });
 
     const onKeyDown = (e) => {
@@ -36,7 +35,6 @@ const Switcher = ({
                 className={switcherClass}
                 type="button"
                 tabIndex={tabIndex}
-                htmlFor={id}
                 onClick={onClick}
                 onKeyDown={onKeyDown}
             />
