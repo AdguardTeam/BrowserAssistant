@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import CertificateModal from './CertificateModal';
-import SecurePageModal from './SecurePageModal';
+import CertStatusModal from './CertStatusModal';
+import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
 import { SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
@@ -22,23 +22,9 @@ const CurrentSite = observer(() => {
         updateSecureStatusModalState,
         isCertStatusModalOpen,
         isPageStatusModalOpen,
-        securePageModalState,
+        secureStatusModalInfo,
         certStatus,
     } = uiStore;
-
-    const isFilteringEnabledOnSite = (handler) => {
-        if (isFilteringEnabled) {
-            return handler;
-        }
-        return undefined;
-    };
-
-    const isHttpsSite = (handler) => {
-        if (isHttps && isFilteringEnabled) {
-            return handler;
-        }
-        return undefined;
-    };
 
     const isHttpSite = (handler) => {
         if (!isHttps && isFilteringEnabled) {
@@ -73,7 +59,7 @@ const CurrentSite = observer(() => {
     };
 
     const onKeyEnterDown = (event) => {
-        if (event.key !== 'Enter') {
+        if (isFilteringEnabled && event.key !== 'Enter') {
             return;
         }
         handleCertStatusModalState(event);
@@ -108,7 +94,7 @@ const CurrentSite = observer(() => {
                             role="menu"
                             className={iconClass}
                             tabIndex={uiStore.globalTabIndex}
-                            onKeyDown={isFilteringEnabledOnSite(onKeyEnterDown)}
+                            onKeyDown={onKeyEnterDown}
                             onMouseOver={isHttpSite(handleCertStatusModalState)}
                             onMouseOut={isHttpSite(handleCertStatusModalState)}
                             onFocus={handleCertStatusModalState}
@@ -124,17 +110,16 @@ const CurrentSite = observer(() => {
                         {currentTabHostname}
                     </div>
 
-                    <CertificateModal
+                    <CertStatusModal
                         isOpen={isHttps && isCertStatusModalOpen}
-                        onRequestClose={isHttpsSite(onBlur)}
+                        onRequestClose={onBlur}
                     />
 
-                    <SecurePageModal
+                    <SecureStatusModal
                         isOpen={(isPageSecured && isPageStatusModalOpen)
                         || (!isHttps && isCertStatusModalOpen)}
-                        cn={securePageModalState.cn}
-                        message={securePageModalState.message}
-                        header={securePageModalState.header}
+                        message={secureStatusModalInfo.message}
+                        header={secureStatusModalInfo.header}
                     />
                 </div>
             </div>

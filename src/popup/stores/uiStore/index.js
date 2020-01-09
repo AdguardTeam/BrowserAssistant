@@ -1,8 +1,8 @@
 import {
     action, observable, computed,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, SECURE_PAGE_MODAL_IDS } from '../consts';
-import { defineNewState } from '../../helpers';
+import { defaultModalState, ORIGINAL_CERT_STATUS, SECURE_STATUS_MODAL_IDS } from '../consts';
+import { checkSomeIsTrue, defineNewState } from '../../helpers';
 
 class UiStore {
     constructor(rootStore) {
@@ -17,26 +17,16 @@ class UiStore {
 
     @observable isExtensionPending = true;
 
-    @observable certStatusModalState = {
-        isHovered: false,
-        isFocused: false,
-        isEntered: false,
-        isClicked: false,
-    };
+    @observable certStatusModalState = { ...defaultModalState };
 
-    @observable secureStatusModalState = {
-        isHovered: false,
-        isFocused: false,
-        isEntered: false,
-        isClicked: false,
-    };
+    @observable secureStatusModalState = { ...defaultModalState };
 
     @computed get isCertStatusModalOpen() {
-        return (Object.values(this.certStatusModalState).some(state => state === true));
+        return checkSomeIsTrue(this.certStatusModalState);
     }
 
     @computed get isPageStatusModalOpen() {
-        return (Object.values(this.secureStatusModalState).some(state => state === true));
+        return checkSomeIsTrue(this.secureStatusModalState);
     }
 
     @computed get globalTabIndex() {
@@ -51,14 +41,14 @@ class UiStore {
         });
     }
 
-    @computed get securePageModalState() {
+    @computed get secureStatusModalInfo() {
         const {
             isPageSecured, isHttps, isFilteringEnabled, isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
 
         if (!isHttps && !isPageSecured) {
             return ({
-                id: SECURE_PAGE_MODAL_IDS.NOT_SECURE,
+                id: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
                 message: 'The site isn\'t using a private connection. Someone might be able to see or change the information you send or get through the site.',
                 header: 'Not secure',
             });
@@ -66,13 +56,14 @@ class UiStore {
 
         if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
             return ({
-                id: SECURE_PAGE_MODAL_IDS.SECURE,
+                id: SECURE_STATUS_MODAL_IDS.SECURE,
                 message: 'Nothing to block here',
                 header: 'Secure page',
             });
         }
+        // TODO: get information about bank page (from host)
         return ({
-            id: SECURE_PAGE_MODAL_IDS.BANK,
+            id: SECURE_STATUS_MODAL_IDS.BANK,
             message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
             You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
             header: 'Secure page',
@@ -107,24 +98,14 @@ class UiStore {
             isSetupCorrectly].every(state => state === true);
     }
 
-    @action updateCertStatusModalState = (eventType, payload) => {
-        let defaultState;
-        if (!payload) {
-            defaultState = defineNewState(eventType);
-        }
-        const newState = payload || defaultState;
+    @action updateCertStatusModalState = (eventType, newState = defineNewState(eventType)) => {
         this.certStatusModalState = {
             ...this.certStatusModalState,
             ...newState,
         };
     };
 
-    @action updateSecureStatusModalState = (eventType, payload) => {
-        let defaultState;
-        if (!payload) {
-            defaultState = defineNewState(eventType);
-        }
-        const newState = payload || defaultState;
+    @action updateSecureStatusModalState = (eventType, newState = defineNewState(eventType)) => {
         this.secureStatusModalState = {
             ...this.secureStatusModalState,
             ...newState,

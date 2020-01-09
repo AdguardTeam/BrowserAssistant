@@ -7,7 +7,7 @@ import rootStore from '../../../stores';
 import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
 import './modal.pcss';
 
-const CertificateModal = observer(({ onRequestClose, isOpen }) => {
+const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
     const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
     const { certStatus } = uiStore;
     const {
@@ -19,7 +19,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
         originalCertStatus,
     } = settingsStore;
 
-    const showCertificate = () => {
+    const showCert = () => {
         requestsStore.openOriginalCert();
     };
 
@@ -31,7 +31,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            showCertificate();
+            showCert();
         }
     };
 
@@ -40,12 +40,12 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
     });
 
     const modalClass = classNames({
-        'modal modal__certificate': true,
-        'modal__certificate--small': certStatus.isNotFound || certStatus.isBypassed
+        'modal modal__cert-status': true,
+        'modal__cert-status--small': certStatus.isNotFound || certStatus.isBypassed
             || (certStatus.isInvalid && !originalCertIssuer),
-        'modal__certificate--large': certStatus.isInvalid && originalCertIssuer,
+        'modal__cert-status--large': certStatus.isInvalid && originalCertIssuer,
         // This case can happen only as result of host mistake
-        'modal__certificate--tiny': certStatus.isValid && !originalCertIssuer,
+        'modal__cert-status--tiny': certStatus.isValid && !originalCertIssuer,
     });
 
     return (
@@ -88,7 +88,7 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
                                 className="modal__text modal__text--link"
                                 role="button"
                                 tabIndex={uiStore.globalTabIndex}
-                                onClick={showCertificate}
+                                onClick={showCert}
                                 onKeyDown={handleKeyDown}
                             >
                                 More Information
@@ -101,4 +101,4 @@ const CertificateModal = observer(({ onRequestClose, isOpen }) => {
     );
 });
 
-export default CertificateModal;
+export default CertStatusModal;

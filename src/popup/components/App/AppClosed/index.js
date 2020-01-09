@@ -124,14 +124,16 @@ const AppClosed = observer(() => {
                 <header className="app-closed__status">{content}</header>
             </div>
             {(state !== WORKING_STATES.IS_EXTENSION_RELOADING) && (
-            <button
-                className="app-closed__button"
-                type="button"
-                tabIndex={uiStore.globalTabIndex}
-                onClick={onClick}
-            >
-                {buttonText}
-            </button>
+                <div>
+                    <button
+                        className="app-closed__button"
+                        type="button"
+                        tabIndex={uiStore.globalTabIndex}
+                        onClick={onClick}
+                    >
+                        {buttonText}
+                    </button>
+                </div>
             )}
         </div>
     );

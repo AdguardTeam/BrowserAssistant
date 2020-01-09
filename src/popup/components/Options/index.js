@@ -13,7 +13,7 @@ const Options = observer(() => {
                 requestsStore.startBlockingAd();
             },
             isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
-            isDisplayed: true,
+            isVisible: true,
         },
         {
             iconName: 'sandwich',
@@ -22,7 +22,7 @@ const Options = observer(() => {
                 requestsStore.openFilteringLog();
             },
             isDisabled: false,
-            isDisplayed: true,
+            isVisible: true,
         },
         {
             iconName: 'thumb-down',
@@ -31,7 +31,7 @@ const Options = observer(() => {
                 requestsStore.reportSite();
             },
             isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
-            isDisplayed: true,
+            isVisible: true,
         },
         {
             iconName: 'icon-cross',
@@ -41,16 +41,16 @@ const Options = observer(() => {
                 await requestsStore.getCurrentFilteringState();
             },
             isDisabled: false,
-            isDisplayed: uiStore.isPageFilteredByUserFilter,
+            isVisible: uiStore.isPageFilteredByUserFilter,
         },
     ];
     return (
         <div className="actions">
             {OPTIONS
                 .map(({
-                    iconName, text, onClick, isDisabled, isDisplayed,
+                    iconName, text, onClick, isDisabled, isVisible,
                 }) => (
-                    isDisplayed && (
+                    isVisible && (
                         <Option
                             key={iconName}
                             iconName={iconName}
