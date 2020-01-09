@@ -36,3 +36,7 @@ export const defineNewState = (eventType) => {
     }
     return defaultState;
 };
+
+export const checkSomeIsTrue = (modalState) => {
+    return (Object.values(modalState).some(state => state === true));
+};
