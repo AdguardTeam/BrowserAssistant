@@ -1,3 +1,5 @@
+import { modalStatesNames } from '../stores/consts';
+
 export const getPortByProtocol = (protocol) => {
     let defaultPort;
     switch (protocol) {
@@ -17,19 +19,22 @@ export const defineNewState = (eventType) => {
     let defaultState;
     switch (eventType) {
         case 'mouseover':
-            defaultState = { isHovered: true };
+            defaultState = { [modalStatesNames.isHovered]: true };
             break;
         case 'mouseout':
-            defaultState = { isHovered: false };
+            defaultState = { [modalStatesNames.isHovered]: false };
             break;
         case 'focus':
-            defaultState = { isFocused: true };
+            defaultState = { [modalStatesNames.isFocused]: true };
             break;
         case 'blur':
-            defaultState = { isFocused: false };
+            defaultState = { [modalStatesNames.isFocused]: false };
             break;
         case 'keydown':
-            defaultState = { isEntered: true };
+            defaultState = { [modalStatesNames.isEntered]: true };
+            break;
+        case 'mousedown':
+            defaultState = { [modalStatesNames.isClicked]: true };
             break;
         default:
             break;
@@ -37,6 +42,10 @@ export const defineNewState = (eventType) => {
     return defaultState;
 };
 
+/**
+ * @param {object} params
+ * @returns {boolean}
+ */
 export const checkSomeIsTrue = (modalState) => {
     return (Object.values(modalState).some(state => state === true));
 };
