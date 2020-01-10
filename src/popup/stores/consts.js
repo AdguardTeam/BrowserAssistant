@@ -1,3 +1,8 @@
+export const protocolToPortMap = {
+    'https:': 443,
+    'http:': 80,
+};
+
 export const ORIGINAL_CERT_STATUS = {
     VALID: 'VALID',
     INVALID: 'INVALID',
@@ -49,3 +54,13 @@ export const defaultModalState = Object.values(modalStatesNames).reduce((states,
     states[name] = false;
     return states;
 }, {});
+
+
+export const eventTypeToModalStateMap = {
+    mouseover: { [modalStatesNames.isHovered]: true },
+    mouseout: { [modalStatesNames.isHovered]: false },
+    focus: { [modalStatesNames.isFocused]: true },
+    blur: { [modalStatesNames.isFocused]: false },
+    keydown: { [modalStatesNames.isEntered]: true },
+    mousedown: { [modalStatesNames.isClicked]: true },
+};

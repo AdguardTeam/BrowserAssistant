@@ -1,8 +1,10 @@
 import {
     action, observable, computed,
 } from 'mobx';
-import { defaultModalState, ORIGINAL_CERT_STATUS, SECURE_STATUS_MODAL_IDS } from '../consts';
-import { checkSomeIsTrue, defineNewState } from '../../helpers';
+import {
+    defaultModalState, eventTypeToModalStateMap, ORIGINAL_CERT_STATUS, SECURE_STATUS_MODAL_IDS,
+} from '../consts';
+import { checkSomeIsTrue } from '../../helpers';
 
 class UiStore {
     constructor(rootStore) {
@@ -99,7 +101,7 @@ class UiStore {
     }
 
     @action
-    updateCertStatusModalState = (eventType, newState = defineNewState(eventType)) => {
+    updateCertStatusModalState = (eventType, newState = eventTypeToModalStateMap[eventType]) => {
         this.certStatusModalState = {
             ...this.certStatusModalState,
             ...newState,
@@ -112,7 +114,7 @@ class UiStore {
     };
 
     @action
-    updateSecureStatusModalState = (eventType, newState = defineNewState(eventType)) => {
+    updateSecureStatusModalState = (eventType, newState = eventTypeToModalStateMap[eventType]) => {
         this.secureStatusModalState = {
             ...this.secureStatusModalState,
             ...newState,

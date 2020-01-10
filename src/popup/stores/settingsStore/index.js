@@ -1,10 +1,9 @@
 import {
     action, observable, runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS } from '../consts';
+import { ORIGINAL_CERT_STATUS, protocolToPortMap } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 import log from '../../../lib/logger';
-import { getPortByProtocol } from '../../helpers';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -75,7 +74,9 @@ class SettingsStore {
                         this.setSecure(true);
                 }
 
-                this.currentPort = port === '' ? getPortByProtocol(protocol) : Number(port);
+                const defaultPort = protocolToPortMap[protocol] || 0;
+
+                this.currentPort = port === '' ? defaultPort : Number(port);
             });
         } catch (error) {
             log.error(error.message);
