@@ -98,14 +98,21 @@ class UiStore {
             isSetupCorrectly].every(state => state === true);
     }
 
-    @action updateCertStatusModalState = (eventType, newState = defineNewState(eventType)) => {
+    @action
+    updateCertStatusModalState = (eventType, newState = defineNewState(eventType)) => {
         this.certStatusModalState = {
             ...this.certStatusModalState,
             ...newState,
         };
     };
 
-    @action updateSecureStatusModalState = (eventType, newState = defineNewState(eventType)) => {
+    @action
+    resetCertStatusModalState = () => {
+        this.certStatusModalState = defaultModalState;
+    };
+
+    @action
+    updateSecureStatusModalState = (eventType, newState = defineNewState(eventType)) => {
         this.secureStatusModalState = {
             ...this.secureStatusModalState,
             ...newState,

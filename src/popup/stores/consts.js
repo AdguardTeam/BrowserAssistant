@@ -37,8 +37,15 @@ export const SHOW_MODAL_TIME = {
     LONG: 5000,
 };
 
-export const defaultModalState = {
-    isHovered: false,
-    isFocused: false,
-    isEntered: false,
+export const modalStatesNames = {
+    isHovered: 'isHovered',
+    isFocused: 'isFocused',
+    isEntered: 'isEntered',
+    isClicked: 'isClicked',
 };
+
+export const defaultModalState = Object.values(modalStatesNames).reduce((states, name) => {
+    // eslint-disable-next-line no-param-reassign
+    states[name] = false;
+    return states;
+}, {});

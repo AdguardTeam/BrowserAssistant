@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
-import { SHOW_MODAL_TIME } from '../../stores/consts';
+import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
@@ -19,6 +19,7 @@ const CurrentSite = observer(() => {
 
     const {
         updateCertStatusModalState,
+        resetCertStatusModalState,
         updateSecureStatusModalState,
         isCertStatusModalOpen,
         isPageStatusModalOpen,
@@ -26,8 +27,15 @@ const CurrentSite = observer(() => {
         certStatus,
     } = uiStore;
 
+    const isHttpsSite = (handler) => {
+        if (isHttps) {
+            return handler;
+        }
+        return undefined;
+    };
+
     const isHttpSite = (handler) => {
-        if (!isHttps && isFilteringEnabled) {
+        if (!isHttps) {
             return handler;
         }
         return undefined;
@@ -55,7 +63,10 @@ const CurrentSite = observer(() => {
     });
 
     const handleCertStatusModalState = (event, payload) => {
-        return updateCertStatusModalState(event.type, payload);
+        if (!isFilteringEnabled) {
+            return;
+        }
+        updateCertStatusModalState(event.type, payload);
     };
 
     const onKeyEnterDown = (event) => {
@@ -65,7 +76,7 @@ const CurrentSite = observer(() => {
         handleCertStatusModalState(event);
         event.persist();
         setTimeout(() => handleCertStatusModalState(event,
-            { isEntered: false }), SHOW_MODAL_TIME.LONG);
+            { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.LONG);
     };
 
     const handleSecureStatusModalState = (event, payload) => {
@@ -79,11 +90,12 @@ const CurrentSite = observer(() => {
         handleSecureStatusModalState(event);
         event.persist();
         setTimeout(() => handleSecureStatusModalState(event,
-            { isEntered: false }), SHOW_MODAL_TIME.SHORT);
+            { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.SHORT);
     };
 
-    const onBlur = () => handleCertStatusModalState('blur',
-        { isFocused: false });
+    const resetCertStatusState = () => {
+        resetCertStatusModalState();
+    };
 
     return (
         <Fragment>
@@ -95,10 +107,11 @@ const CurrentSite = observer(() => {
                             className={iconClass}
                             tabIndex={uiStore.globalTabIndex}
                             onKeyDown={onKeyEnterDown}
+                            onMouseDown={isHttpsSite(handleCertStatusModalState)}
+                            onFocus={handleCertStatusModalState}
+                            onBlur={handleCertStatusModalState}
                             onMouseOver={isHttpSite(handleCertStatusModalState)}
                             onMouseOut={isHttpSite(handleCertStatusModalState)}
-                            onFocus={handleCertStatusModalState}
-                            onBlur={isHttpSite(handleCertStatusModalState)}
                         >
                             {(isCertStatusModalOpen
                                 || (!isHttps && isPageStatusModalOpen))
@@ -112,7 +125,7 @@ const CurrentSite = observer(() => {
 
                     <CertStatusModal
                         isOpen={isHttps && isCertStatusModalOpen}
-                        onRequestClose={onBlur}
+                        onRequestClose={resetCertStatusState}
                     />
 
                     <SecureStatusModal
