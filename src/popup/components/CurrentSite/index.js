@@ -27,14 +27,14 @@ const CurrentSite = observer(() => {
         certStatus,
     } = uiStore;
 
-    const isHttpsSite = (handler) => {
+    const getHandlerForHttpsSite = (handler) => {
         if (isHttps) {
             return handler;
         }
         return undefined;
     };
 
-    const isHttpSite = (handler) => {
+    const getHandlerForHttpSite = (handler) => {
         if (!isHttps) {
             return handler;
         }
@@ -93,10 +93,6 @@ const CurrentSite = observer(() => {
             { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.SHORT);
     };
 
-    const resetCertStatusState = () => {
-        resetCertStatusModalState();
-    };
-
     return (
         <Fragment>
             <div className="current-site__container">
@@ -107,11 +103,11 @@ const CurrentSite = observer(() => {
                             className={iconClass}
                             tabIndex={uiStore.globalTabIndex}
                             onKeyDown={onKeyEnterDown}
-                            onMouseDown={isHttpsSite(handleCertStatusModalState)}
+                            onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
                             onFocus={handleCertStatusModalState}
                             onBlur={handleCertStatusModalState}
-                            onMouseOver={isHttpSite(handleCertStatusModalState)}
-                            onMouseOut={isHttpSite(handleCertStatusModalState)}
+                            onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
+                            onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
                         >
                             {(isCertStatusModalOpen
                                 || (!isHttps && isPageStatusModalOpen))
@@ -125,7 +121,7 @@ const CurrentSite = observer(() => {
 
                     <CertStatusModal
                         isOpen={isHttps && isCertStatusModalOpen}
-                        onRequestClose={resetCertStatusState}
+                        onRequestClose={resetCertStatusModalState}
                     />
 
                     <SecureStatusModal
