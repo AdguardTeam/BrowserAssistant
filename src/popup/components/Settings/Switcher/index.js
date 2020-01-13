@@ -1,10 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
+import { useIntl } from 'react-intl';
 import './switcher.pcss';
 
 const Switcher = ({
     id, checked, onClick, isPageSecured, tabIndex, isDisabled,
 }) => {
+    const { formatMessage: f } = useIntl();
+
     const switcherTextClass = classNames({
         switcher__text: true,
         'switcher__text--secured': isPageSecured,
@@ -38,7 +41,7 @@ const Switcher = ({
                 onClick={onClick}
                 onKeyDown={onKeyDown}
             />
-            <div className={switcherTextClass} />
+            <div className={switcherTextClass}>{checked ? f({ id: 'enabled' }) : f({ id: 'disabled' })}</div>
         </div>
     );
 };

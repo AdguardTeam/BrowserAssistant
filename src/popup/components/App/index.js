@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import { observer } from 'mobx-react';
+import { useIntl } from 'react-intl';
 import Settings from '../Settings';
 import Options from '../Options';
 import CurrentSite from '../CurrentSite';
@@ -15,6 +16,7 @@ Modal.setAppElement('#root');
 
 const App = observer(() => {
     const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
+    const { formatMessage: f } = useIntl();
     const {
         setCurrentFilteringState,
         setCurrentAppState,
@@ -77,7 +79,7 @@ const App = observer(() => {
     }
 
     if (uiStore.requestStatus.isPending) {
-        return (<Loading title="Preparing..." />);
+        return (<Loading title={f({ id: 'preparing' })} />);
     }
 
     if (uiStore.requestStatus.isSuccess) {

@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
+import { useIntl } from 'react-intl';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 
-const STATES = {
+const getStates = f => ({
     [WORKING_STATES.IS_APP_INSTALLED]: {
         state: WORKING_STATES.IS_APP_INSTALLED,
-        content: 'AdGuard is not installed',
-        buttonText: 'download',
+        content: f({ id: 'adg_is_not_installed' }),
+        buttonText: f({ id: 'download' }),
         updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
@@ -18,8 +19,8 @@ const STATES = {
 
     [WORKING_STATES.IS_APP_UP_TO_DATE]: {
         state: WORKING_STATES.IS_APP_UP_TO_DATE,
-        content: 'AdGuard is not updated',
-        buttonText: 'update',
+        content: f({ id: 'adg_is_not_updated' }),
+        buttonText: f({ id: 'update' }),
         updateStore: ({ requestsStore }) => {
             requestsStore.updateApp();
             window.close();
@@ -28,46 +29,44 @@ const STATES = {
 
     [WORKING_STATES.IS_APP_RUNNING]: {
         state: WORKING_STATES.IS_APP_RUNNING,
-        content: 'AdGuard is not running',
-        buttonText: 'run adguard',
+        content: f({ id: 'adg_is_not_running' }),
+        buttonText: f({ id: 'run_adg' }),
         updateStore: ({ requestsStore }) => requestsStore.startApp(),
     },
 
     [WORKING_STATES.IS_PROTECTION_ENABLED]: {
         state: WORKING_STATES.IS_PROTECTION_ENABLED,
-        content: 'AdGuard protection is paused',
-        buttonText: 'enable',
+        content: f({ id: 'adg_is_paused' }),
+        buttonText: f({ id: 'enable' }),
         updateStore: ({ requestsStore }) => requestsStore.setProtectionStatus(true),
     },
 
     [WORKING_STATES.IS_EXTENSION_UPDATED]: {
         state: WORKING_STATES.IS_EXTENSION_UPDATED,
-        id: 'isExtensionNotUpdated',
-        content: 'Assistant is not updated',
-        buttonText: 'update',
+        content: f({ id: 'assistant_is_not_updated' }),
+        buttonText: f({ id: 'update' }),
         updateStore: ({ settingsStore }) => settingsStore.updateExtension(),
     },
 
     [WORKING_STATES.IS_EXTENSION_RELOADING]: {
         state: WORKING_STATES.IS_EXTENSION_RELOADING,
         content: <Loading />,
-        buttonText: 'reloading...',
+        buttonText: f({ id: 'reloading' }),
         updateStore: () => null,
     },
 
     [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
         state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
-        id: 'isBroken',
-        content: 'Something went wrong',
-        buttonText: 'reinstall',
+        content: f({ id: 'something_went_wrong' }),
+        buttonText: f({ id: 'reinstall' }),
         updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
         },
     },
-};
+});
 
-function defineWarning(settingsStore) {
+function defineWarning(settingsStore, f) {
     const {
         isInstalled,
         isRunning,
@@ -76,6 +75,8 @@ function defineWarning(settingsStore) {
         isExtensionUpdated,
         isSetupCorrectly,
     } = settingsStore;
+
+    const STATES = getStates(f);
 
     if (!isInstalled || !isSetupCorrectly) {
         return STATES[WORKING_STATES.IS_APP_INSTALLED];
@@ -102,10 +103,11 @@ function defineWarning(settingsStore) {
 
 const AppClosed = observer(() => {
     const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
+    const { formatMessage: f } = useIntl();
 
     const {
         state, content, buttonText, updateStore,
-    } = defineWarning(settingsStore);
+    } = defineWarning(settingsStore, f);
 
     const stores = { requestsStore, settingsStore };
 

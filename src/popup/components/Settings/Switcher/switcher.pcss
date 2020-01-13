@@ -73,21 +73,9 @@
         &--secured {
             color: var(--gray88);
         }
-
-        &:before {
-            content: 'Disabled on this website';
-        }
-    }
-
-    &__checkbox:checked ~ &__text {
-        &:before {
-            content: 'Enabled on this website';
-        }
     }
 
     #https-switcher ~ &__text {
-        &:before {
-            content: '' !important;
-        }
+        display: none;
     }
 }
