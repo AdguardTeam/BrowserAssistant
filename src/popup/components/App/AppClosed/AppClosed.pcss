@@ -1,6 +1,6 @@
 .app-closed {
-    &__wrapper {
-        height: 30.4rem;
+    &__container {
+        height: 30.05rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -19,7 +19,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
-        &-wrapper {
+        &-container {
             height: 20.8rem;
             text-align: center;
             display: flex;
@@ -33,7 +33,6 @@
         text-overflow: ellipsis;
         font-family: inherit;
         font-weight: bold;
-        outline: none;
         border: none;
         background-color: var(--green74);
         text-transform: uppercase;
@@ -45,10 +44,16 @@
         font-size: 1.5rem;
         margin: 0 6rem 4.8rem;
         transform: scale(1);
-        transition: transform 50ms;
+        transition: 50ms;
+        transition-property: scale, background-color;
+
+        &:focus {
+            transform: scale(1.02);
+            background-color: var(--green78);
+        }
 
         &:active {
-            transform: scale(0.98) translate(2px);
+            cursor: wait;
         }
     }
 }

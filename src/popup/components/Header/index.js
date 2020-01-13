@@ -6,8 +6,10 @@ import './header.pcss';
 
 const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
-    const toggleProtection = () => {
-        settingsStore.toggleProtection();
+    const disableProtection = (e) => {
+        uiStore.setProtectionTogglePending(true);
+        requestsStore.setProtectionStatus(false);
+        e.target.blur();
     };
     const openSetting = () => {
         requestsStore.openSettings();
@@ -16,7 +18,7 @@ const Header = observer(() => {
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
-        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled,
+        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled || uiStore.isProtectionTogglePending,
         'widget-popup__buttons--hidden': !uiStore.isAppWorking,
     });
 
@@ -37,15 +39,15 @@ const Header = observer(() => {
                     className={iconProtectionClass}
                     title="AdGuard Protection"
                     type="button"
-                    onClick={toggleProtection}
-                    tabIndex="0"
+                    onClick={disableProtection}
+                    tabIndex={uiStore.globalTabIndex}
                 />
                 <button
                     className={iconSettingsClass}
                     title="AdGuard Settings"
                     type="button"
                     onClick={openSetting}
-                    tabIndex="0"
+                    tabIndex={uiStore.globalTabIndex}
                 />
             </div>
         </div>

@@ -3,26 +3,28 @@ import classNames from 'classnames';
 import './option.pcss';
 
 const Option = ({
-    iconName, text, handleClick, isDisabled,
+    iconName, text, onClick, isDisabled, tabIndex,
 }) => {
     const actionClass = classNames({
         action: true,
         'action--disabled': isDisabled,
     });
 
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter' && !isDisabled) {
-            handleClick();
+    const onKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            onClick();
         }
     };
+
+    const handleWhileEnabled = handler => (isDisabled ? undefined : handler);
 
     return (
         <div
             className={actionClass}
-            onClick={!isDisabled ? handleClick : undefined}
-            onKeyDown={handleKeyDown}
+            onClick={handleWhileEnabled(onClick)}
+            onKeyDown={handleWhileEnabled(onKeyDown)}
             role="menuitem"
-            tabIndex="0"
+            tabIndex={tabIndex}
         >
             <span className={`action__icon action__icon--${iconName}`} />
             <span className="action__name">

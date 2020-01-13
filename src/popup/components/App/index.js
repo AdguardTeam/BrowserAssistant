@@ -1,16 +1,15 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
-import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import Settings from '../Settings';
-import Header from '../Header';
 import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
+import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
-import { REQUEST_STATUSES } from '../../stores/consts';
-import { HostResponseTypes } from '../../../lib/types';
+import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
+import Loading from '../ui/Loading';
 
 Modal.setAppElement('#root');
 
@@ -21,12 +20,6 @@ const App = observer(() => {
         setCurrentAppState,
         getCurrentTabHostname, getReferrer,
     } = settingsStore;
-
-    const appClass = classNames({
-        'loading--pending': uiStore.requestStatus === REQUEST_STATUSES.PENDING,
-        'loading--success': uiStore.requestStatus === REQUEST_STATUSES.SUCCESS,
-    });
-
     useEffect(() => {
         (async () => {
             await getCurrentTabHostname();
@@ -36,31 +29,37 @@ const App = observer(() => {
 
         browser.runtime.onMessage.addListener(
             (response) => {
-                if (response.result === HostResponseTypes.ok) {
-                    uiStore.setReloading(false);
-                }
+                const {
+                    parameters, appState, requestId, result,
+                } = response;
 
-                if (response.result === HostResponseTypes.error) {
-                    uiStore.setReloading(true);
+                switch (result) {
+                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
+                        settingsStore.setSetupCorrectly(false);
+                        uiStore.setExtensionReloading(false);
+                        break;
+                    case BACKGROUND_COMMANDS.CLOSE_POPUP:
+                        window.close();
+                        break;
+                    case BACKGROUND_COMMANDS.SHOW_RELOAD:
+                        uiStore.setExtensionReloading(true);
+                        break;
+                    case HostResponseTypes.ok:
+                        uiStore.setExtensionReloading(false);
+                        break;
+                    default:
+                        break;
                 }
-
-                const { parameters, appState, requestId } = response;
 
                 if (!requestId) {
                     return;
                 }
 
-                const { isInstalled, isRunning, isProtectionEnabled } = appState;
-                const workingStatus = { isInstalled, isRunning, isProtectionEnabled };
-
-                uiStore.setAppWorkingStatus(workingStatus);
-
-                if (parameters && parameters.originCertStatus) {
+                if (parameters && parameters.originalCertStatus) {
                     setCurrentFilteringState(parameters);
                 }
 
-                setCurrentAppState(workingStatus);
-                uiStore.setRequestStatus();
+                setCurrentAppState(appState);
             }
         );
 
@@ -68,26 +67,30 @@ const App = observer(() => {
             browser.runtime.onMessage.removeListener();
         };
     }, []);
-    return (
-        <Fragment>
-            {uiStore.requestStatus === REQUEST_STATUSES.SUCCESS
-            && (
-                <div className={appClass}>
-                    <Header />
-                    <CurrentSite />
-                    <Settings />
-                    <Options />
-                </div>
-            )}
-            {uiStore.requestStatus === REQUEST_STATUSES.ERROR && (
-                <Fragment>
-                    <Header />
-                    <AppClosed />
-                </Fragment>
-            )}
-        </Fragment>
 
-    );
+    if (uiStore.requestStatus.isError) {
+        return (
+            <AppWrapper>
+                <AppClosed />
+            </AppWrapper>
+        );
+    }
+
+    if (uiStore.requestStatus.isPending) {
+        return (<Loading title="Preparing..." />);
+    }
+
+    if (uiStore.requestStatus.isSuccess) {
+        return (
+            <AppWrapper>
+                <CurrentSite />
+                <Settings />
+                <Options />
+            </AppWrapper>
+        );
+    }
+
+    return (<Loading />);
 });
 
 export default App;

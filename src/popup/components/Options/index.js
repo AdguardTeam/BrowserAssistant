@@ -9,50 +9,57 @@ const Options = observer(() => {
         {
             iconName: 'block-ad',
             text: 'Block ads\u00A0on\u00A0this website',
-            handleClick: () => {
+            onClick: () => {
                 requestsStore.startBlockingAd();
             },
             isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
+            isVisible: true,
         },
         {
             iconName: 'sandwich',
             text: 'Open the filtering log',
-            handleClick: () => {
+            onClick: () => {
                 requestsStore.openFilteringLog();
             },
             isDisabled: false,
+            isVisible: true,
         },
         {
             iconName: 'thumb-down',
             text: 'Report\u00A0this website',
-            handleClick: () => {
+            onClick: () => {
                 requestsStore.reportSite();
             },
             isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
+            isVisible: true,
         },
         {
             iconName: 'icon-cross',
             text: 'Reset all custom rules for this page',
-            handleClick: () => {
-                requestsStore.removeCustomRules();
+            onClick: async () => {
+                await requestsStore.removeCustomRules();
+                await requestsStore.getCurrentFilteringState();
             },
             isDisabled: false,
+            isVisible: uiStore.isPageFilteredByUserFilter,
         },
     ];
     return (
         <div className="actions">
             {OPTIONS
-                .slice(0, uiStore.isPageFilteredByUserFilter ? OPTIONS.length : -1)
                 .map(({
-                    iconName, text, handleClick, isDisabled,
+                    iconName, text, onClick, isDisabled, isVisible,
                 }) => (
-                    <Option
-                        key={iconName}
-                        iconName={iconName}
-                        text={text}
-                        handleClick={handleClick}
-                        isDisabled={isDisabled}
-                    />
+                    isVisible && (
+                        <Option
+                            key={iconName}
+                            iconName={iconName}
+                            text={text}
+                            onClick={onClick}
+                            isDisabled={isDisabled}
+                            tabIndex={uiStore.globalTabIndex}
+                        />
+                    )
                 ))}
         </div>
     );

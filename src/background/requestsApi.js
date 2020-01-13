@@ -9,11 +9,13 @@ class RequestsApi {
         });
     }
 
-    getCurrentFilteringState(url) {
+    getCurrentFilteringState(url, port, forceStartApp = false) {
         return api.makeRequest({
             type: RequestTypes.getCurrentFilteringState,
             parameters: {
                 url,
+                port,
+                forceStartApp,
             },
         });
     }
@@ -63,10 +65,10 @@ class RequestsApi {
     }
 
 
-    openOriginCert(domain) {
+    openOriginalCert(domain, port) {
         return api.makeRequest({
-            type: RequestTypes.openOriginCert,
-            parameters: { domain },
+            type: RequestTypes.openOriginalCert,
+            parameters: { domain, port },
         });
     }
 
@@ -95,9 +97,9 @@ class RequestsApi {
         });
     }
 
-    startApp() {
+    updateApp() {
         return api.makeRequest({
-            type: RequestTypes.startApp,
+            type: RequestTypes.updateApp,
         });
     }
 }

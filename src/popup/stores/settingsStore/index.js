@@ -1,7 +1,7 @@
 import {
-    action, observable, computed, runInAction,
+    action, observable, runInAction,
 } from 'mobx';
-import { ORIGIN_CERT_STATUS } from '../consts';
+import { ORIGINAL_CERT_STATUS, protocolToPortMap } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
@@ -14,9 +14,13 @@ class SettingsStore {
 
     @observable currentURL = '';
 
+    @observable currentPort = 0;
+
     @observable isHttps = true;
 
     @observable referrer = '';
+
+    @observable originalCertIssuer = '';
 
     @observable isPageSecured = false;
 
@@ -30,31 +34,30 @@ class SettingsStore {
 
     @observable isProtectionEnabled = true;
 
-    @observable originCertStatus = ORIGIN_CERT_STATUS.VALID;
+    @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
     @observable isAppUpToDate = adguard.isAppUpToDate;
 
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
-    @computed get isExpired() {
-        return (this.originCertStatus === ORIGIN_CERT_STATUS.INVALID);
-    }
+    @observable isSetupCorrectly = true;
 
     @action
     getReferrer = async () => {
         const referrer = await adguard.tabs.getReferrer();
         runInAction(() => {
-            this.referrer = referrer;
+            this.referrer = referrer || '';
         });
     };
 
     @action
     getCurrentTabHostname = async () => {
         try {
-            const result = await adguard.tabs.getCurrent();
+            const { url } = await adguard.tabs.getCurrent();
             runInAction(() => {
-                this.currentURL = result.url;
-                const { hostname, protocol } = getUrlProperties(result.url);
+                this.currentURL = url;
+                const { hostname, port, protocol } = getUrlProperties(url);
+
                 this.currentTabHostname = hostname || this.currentURL;
 
                 switch (protocol) {
@@ -70,6 +73,10 @@ class SettingsStore {
                         this.setIsHttps(false);
                         this.setSecure(true);
                 }
+
+                const defaultPort = protocolToPortMap[protocol] || 0;
+
+                this.currentPort = port === '' ? defaultPort : Number(port);
             });
         } catch (error) {
             log.error(error.message);
@@ -101,11 +108,17 @@ class SettingsStore {
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
+        this.rootStore.uiStore.setPageFilteredByUserFilter(true);
     };
 
     @action
-    setOriginCertStatus = (status) => {
-        this.originCertStatus = ORIGIN_CERT_STATUS[status.toUpperCase()];
+    setOriginalCertStatus = (status) => {
+        this.originalCertStatus = ORIGINAL_CERT_STATUS[status.toUpperCase()];
+    };
+
+    @action
+    setOriginalCertIssuer = (originalCertIssuer) => {
+        this.originalCertIssuer = originalCertIssuer;
     };
 
     @action
@@ -134,40 +147,28 @@ class SettingsStore {
         const {
             isFilteringEnabled,
             isHttpsFilteringEnabled,
-            originCertStatus,
+            originalCertStatus,
             isPageFilteredByUserFilter,
+            originalCertIssuer,
         } = parameters;
         this.setHttpAndHttpsFilteringActive(isFilteringEnabled, isHttpsFilteringEnabled);
-        this.setOriginCertStatus(originCertStatus);
+        this.setOriginalCertStatus(originalCertStatus);
+        this.setOriginalCertIssuer(originalCertIssuer);
         this.rootStore.uiStore.setPageFilteredByUserFilter(isPageFilteredByUserFilter);
     };
 
     @action
-    setCurrentAppState = (workingState) => {
-        const { isInstalled, isRunning, isProtectionEnabled } = workingState;
+    setCurrentAppState = (appState) => {
+        const { isInstalled, isRunning, isProtectionEnabled } = appState;
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+        this.rootStore.uiStore.setExtensionPending(false);
     };
 
     @action
-    toggleProtection = () => {
-        if (this.isProtectionEnabled) {
-            this.setProtection(false);
-        } else {
-            this.setProtection(true);
-        }
-        this.rootStore.requestsStore.setProtectionStatus();
-    };
-
-    @action
-    updateApp = () => {
-        // TODO: update app
-        const updateSuccess = true;
-        if (updateSuccess) {
-            adguard.isAppUpToDate = true;
-            this.isAppUpToDate = adguard.isAppUpToDate;
-        }
+    setSetupCorrectly = (isSetupCorrectly) => {
+        this.isSetupCorrectly = isSetupCorrectly;
     };
 
     @action

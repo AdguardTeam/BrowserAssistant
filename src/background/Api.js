@@ -1,7 +1,12 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import {
-    AssistantTypes, HostResponseTypes, HostTypes, RequestTypes, ResponseTypes,
+    AssistantTypes,
+    BACKGROUND_COMMANDS,
+    HostResponseTypes,
+    HostTypes,
+    RequestTypes,
+    ResponseTypesPrefixes,
 } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
@@ -15,19 +20,20 @@ class Api {
     retryTimes = 5;
 
     initHandler = (response) => {
-        log.info('response ', response);
+        log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
-        if (parameters && response.requestId.startsWith(ResponseTypes.INIT)) {
-            this.isAppUpToDate = (versions.apiVersion >= parameters.apiVersion);
+        // Ignore requests without identifying prefix ADG
+        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
+            return;
+        }
+
+        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
+            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             adguard.isAppUpToDate = this.isAppUpToDate;
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
             adguard.isExtensionUpdated = this.isExtensionUpdated;
-        }
-
-        if (response.requestId.startsWith(ResponseTypes.APP_STATE_RESPONSE_MESSAGE)) {
-            return;
         }
 
         browserApi.runtime.sendMessage(response);
@@ -45,9 +51,12 @@ class Api {
                 this.reinit();
             } else {
                 this.deinit();
+                browserApi.runtime.sendMessage(
+                    { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
+                );
                 this.retryTimes = 5;
 
-                log.error('Disconnected from native host');
+                log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
             }
         });
 
@@ -55,14 +64,18 @@ class Api {
         return this.port;
     };
 
-    initRequest = () => {
-        this.makeRequest({
-            type: RequestTypes.init,
-            parameters: {
-                ...versions,
-                type: AssistantTypes.nativeAssistant,
-            },
-        }, ResponseTypes.INIT);
+    initRequest = async () => {
+        try {
+            await this.makeRequest({
+                type: RequestTypes.init,
+                parameters: {
+                    ...versions,
+                    type: AssistantTypes.nativeAssistant,
+                },
+            }, ResponseTypesPrefixes.ADG_INIT);
+        } catch (error) {
+            log.error(error.message);
+        }
     };
 
     deinit = () => {
@@ -71,19 +84,21 @@ class Api {
         this.port.onMessage.removeListener(this.initHandler);
     };
 
-    reinit = () => {
+    reinit = async () => {
+        await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
         this.deinit();
         this.init();
     };
 
-    makeRequest = async (params, idPrefix) => {
-        log.info('request ', params);
-        const id = idPrefix ? `${idPrefix}_${nanoid()}` : nanoid();
+    makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
+        const id = `${idPrefix}_${nanoid()}`;
+
+        const RESPONSE_TIMEOUT_MS = 60 * 1000;
+        log.info(`request ${id}`, params);
+
         return new Promise((resolve, reject) => {
             const messageHandler = (msg) => {
                 const { requestId, result } = msg;
-
-                const RESPONSE_TIMEOUT_MS = 60 * 1000;
 
                 const pendingTimer = setTimeout(() => {
                     reject(new Error('Native host is not responding.'));
@@ -108,14 +123,15 @@ class Api {
 
             try {
                 this.port.postMessage({ id, ...params });
-            } catch (e) {
-                log.error(e);
+            } catch (error) {
+                log.error(error.message);
 
                 this.port.onMessage.removeListener(messageHandler);
 
                 if (this.retryTimes) {
                     this.reinit();
                 } else {
+                    browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.CLOSE_POPUP });
                     this.deinit();
                 }
             }

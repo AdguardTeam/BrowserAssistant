@@ -16,16 +16,12 @@ body {
     font-size: 2.5rem;
     font-weight: 400;
     overflow: hidden;
-    transition: min-height 0.3s ease-in-out;
+    transition: min-height 0.15s linear;
     text-overflow: ellipsis;
-}
 
-loading {
-    &--success {
-        display: block;
-    }
-
-    &--pending {
-        display: none;
+    &.height {
+        &--extended {
+            min-height: 39.7rem;
+        }
     }
 }

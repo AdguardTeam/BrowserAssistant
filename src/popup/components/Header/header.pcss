@@ -10,7 +10,7 @@
         &-container {
             display: flex;
             align-items: center;
-            justify-content: start;
+            justify-content: flex-start;
         }
 
         &-logo {
@@ -48,14 +48,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: 0.3s ease opacity;
+        transition: 0.3s ease;
+        transition-property: background, opacity;
 
         &--pause {
-            background: url('../../../assets/images/icon-pause.svg') no-repeat;
+            background: url('../../../assets/images/icon__protection--pause.svg') no-repeat center;
         }
 
         &--start {
-            background: url('../../../assets/images/icon-start.svg') no-repeat;
+            background: url('../../../assets/images/icon__protection--start.svg') no-repeat center;
         }
 
         &--hidden {
@@ -63,7 +64,7 @@
         }
 
         &--settings {
-            background: url('../../../assets/images/icon-settings.svg') no-repeat;
+            background: url('../../../assets/images/icon__protection--settings.svg') no-repeat center;
         }
 
         &:hover {
@@ -72,6 +73,15 @@
 
         &:last-child {
             margin-right: 0;
+        }
+
+        &:active {
+            cursor: wait;
+        }
+
+        &:focus {
+            transform: scale(1.05);
+            opacity: 1;
         }
     }
 }

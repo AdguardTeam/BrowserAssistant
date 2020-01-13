@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import CertificateModal from './CertificateModal';
-import SecurePageModal from './SecurePageModal';
+import CertStatusModal from './CertStatusModal';
+import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
+import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
     const {
-        isExpired,
         isHttps,
         isHttpsFilteringEnabled,
         isFilteringEnabled,
@@ -18,36 +18,38 @@ const CurrentSite = observer(() => {
     } = settingsStore;
 
     const {
-        toggleShowInfo,
-        toggleOpenCertificateModal,
-        isOpenCertificateModal,
-        isSecureStatusHidden,
-        isInfoHovered,
-        securityModalState,
+        updateCertStatusModalState,
+        resetCertStatusModalState,
+        updateSecureStatusModalState,
+        isCertStatusModalOpen,
+        isPageStatusModalOpen,
+        secureStatusModalInfo,
+        certStatus,
     } = uiStore;
 
-
-    const onInfoHovered = () => {
-        toggleShowInfo();
+    const getHandlerForHttpsSite = (handler) => {
+        if (isHttps) {
+            return handler;
+        }
+        return undefined;
     };
 
-    const handleOpenCertificateModal = () => {
-        toggleOpenCertificateModal();
+    const getHandlerForHttpSite = (handler) => {
+        if (!isHttps) {
+            return handler;
+        }
+        return undefined;
     };
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--lock': !isExpired && (isHttpsFilteringEnabled || !isFilteringEnabled),
-        'current-site__icon--lock--danger': !isHttpsFilteringEnabled && isFilteringEnabled && isHttps,
-        'current-site__icon--warning--http': !isHttps && !isPageSecured && !isHttps,
-        'current-site__icon--warning--expired': isHttps && isExpired,
-        'current-site__icon--warning': (isHttps && isExpired) || (!isHttps && !isPageSecured),
+        'current-site__icon--lock': isHttps && certStatus.isValid,
+        'current-site__icon--lock--yellow': isHttps && !isHttpsFilteringEnabled,
+        'current-site__icon--warning--red': isHttps && certStatus.isInvalid,
+        'current-site__icon--warning--yellow': isHttps && (certStatus.isBypassed || certStatus.isNotFound),
+        'current-site__icon--warning--gray': !isHttps && !isPageSecured,
+        'current-site__icon--warning': (isHttps && !certStatus.isValid) || (!isHttps && !isPageSecured),
         'current-site__icon--disabled-cursor': !isFilteringEnabled,
-    });
-
-    const expiredClass = classNames({
-        'modal modal__certificate': true,
-        'modal__certificate--expired': isExpired,
     });
 
     const securedClass = classNames({
@@ -57,61 +59,92 @@ const CurrentSite = observer(() => {
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': isSecureStatusHidden,
+        'current-site__secure-status--hidden': !isPageSecured,
     });
 
+    const handleCertStatusModalState = (event, payload) => {
+        if (!isFilteringEnabled) {
+            return;
+        }
+        updateCertStatusModalState(event.type, payload);
+    };
+
+    const onKeyEnterDown = (event) => {
+        if (isFilteringEnabled && event.key !== 'Enter') {
+            return;
+        }
+        handleCertStatusModalState(event);
+        event.persist();
+        setTimeout(() => handleCertStatusModalState(event,
+            { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.LONG);
+    };
+
+    const handleSecureStatusModalState = (event, payload) => {
+        return updateSecureStatusModalState(event.type, payload);
+    };
+
+    const onKeyEnterDownSecure = (event) => {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        handleSecureStatusModalState(event);
+        event.persist();
+        setTimeout(() => handleSecureStatusModalState(event,
+            { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.SHORT);
+    };
+
     return (
-        <div
-            className="current-site__container"
-        >
-            <div
-                className={securedClass}
-            >
-                {!isPageSecured && (
-                    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
-                    <button
-                        type="button"
-                        onClick={(isHttps && isFilteringEnabled)
-                            ? handleOpenCertificateModal : undefined}
-                        onMouseOver={(!isHttps && isFilteringEnabled) ? onInfoHovered : undefined}
-                        onMouseOut={(!isHttps && isFilteringEnabled) ? onInfoHovered : undefined}
-                        className={iconClass}
-                    >
-                        {(isOpenCertificateModal || (!isHttps && isInfoHovered))
-                        && <div className="arrow-up" />}
-                    </button>
-                )}
+        <Fragment>
+            <div className="current-site__container">
+                <div className={securedClass}>
+                    {!isPageSecured && (
+                        <div
+                            role="menu"
+                            className={iconClass}
+                            tabIndex={uiStore.globalTabIndex}
+                            onKeyDown={onKeyEnterDown}
+                            onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
+                            onFocus={handleCertStatusModalState}
+                            onBlur={handleCertStatusModalState}
+                            onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
+                            onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
+                        >
+                            {(isCertStatusModalOpen
+                                || (!isHttps && isPageStatusModalOpen))
+                            && <div className="arrow-up" />}
+                        </div>
+                    )}
 
-                <div className="current-site__name">
-                    {currentTabHostname}
+                    <div className="current-site__name">
+                        {currentTabHostname}
+                    </div>
+
+                    <CertStatusModal
+                        isOpen={isHttps && isCertStatusModalOpen}
+                        onRequestClose={resetCertStatusModalState}
+                    />
+
+                    <SecureStatusModal
+                        isOpen={(isPageSecured && isPageStatusModalOpen)
+                        || (!isHttps && isCertStatusModalOpen)}
+                        message={secureStatusModalInfo.message}
+                        header={secureStatusModalInfo.header}
+                    />
                 </div>
-
-                <CertificateModal
-                    cn={expiredClass}
-                    onRequestClose={handleOpenCertificateModal}
-                    isOpen={isHttps && isOpenCertificateModal}
-                />
-
-                {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-                <div
-                    role="button"
-                    tabIndex="-1"
-                    className={secureStatusClass}
-                    onMouseOver={onInfoHovered}
-                    onMouseOut={onInfoHovered}
-                >
-                        secure page
-                </div>
-
-                <SecurePageModal
-                    cn={securityModalState.cn}
-                    message={securityModalState.message}
-                    isOpen={isInfoHovered || (!isHttps && isOpenCertificateModal)}
-                    header={securityModalState.header}
-                />
-
             </div>
-        </div>
+            <div
+                role="menu"
+                tabIndex={uiStore.globalTabIndex}
+                className={secureStatusClass}
+                onMouseOver={handleSecureStatusModalState}
+                onMouseOut={handleSecureStatusModalState}
+                onKeyDown={onKeyEnterDownSecure}
+                onFocus={handleSecureStatusModalState}
+                onBlur={handleSecureStatusModalState}
+            >
+                secure page
+            </div>
+        </Fragment>
     );
 });
 export default CurrentSite;

@@ -1,36 +1,56 @@
-import { action, observable, computed } from 'mobx';
-import { REQUEST_STATUSES } from '../consts';
+import {
+    action, observable, computed,
+} from 'mobx';
+import {
+    defaultModalState, eventTypeToModalStateMap, ORIGINAL_CERT_STATUS, SECURE_STATUS_MODAL_IDS,
+} from '../consts';
+import { checkSomeIsTrue } from '../../helpers';
 
 class UiStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable isOpenCertificateModal = false;
-
-    @observable isInfoHovered = false;
-
     @observable isPageFilteredByUserFilter = false;
 
-    @observable isAppWorking = true;
+    @observable isLoading = false;
 
-    @observable requestStatus = REQUEST_STATUSES.PENDING;
+    @observable isProtectionTogglePending = false;
 
-    @observable isReloading = false;
+    @observable isExtensionPending = true;
 
-    @action
-    setRequestStatus = () => {
-        this.requestStatus = this.isAppWorking ? REQUEST_STATUSES.SUCCESS : REQUEST_STATUSES.ERROR;
-    };
+    @observable certStatusModalState = { ...defaultModalState };
 
-    @computed get securityModalState() {
+    @observable secureStatusModalState = { ...defaultModalState };
+
+    @computed get isCertStatusModalOpen() {
+        return checkSomeIsTrue(this.certStatusModalState);
+    }
+
+    @computed get isPageStatusModalOpen() {
+        return checkSomeIsTrue(this.secureStatusModalState);
+    }
+
+    @computed get globalTabIndex() {
+        return (this.isLoading ? -1 : 0);
+    }
+
+    @computed get requestStatus() {
+        return ({
+            isSuccess: this.isAppWorking === true,
+            isError: this.isAppWorking === false,
+            isPending: this.isExtensionPending === true,
+        });
+    }
+
+    @computed get secureStatusModalInfo() {
         const {
             isPageSecured, isHttps, isFilteringEnabled, isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
 
         if (!isHttps && !isPageSecured) {
             return ({
-                cn: 'modal modal__insecure-page',
+                id: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
                 message: 'The site isn\'t using a private connection. Someone might be able to see or change the information you send or get through the site.',
                 header: 'Not secure',
             });
@@ -38,66 +58,87 @@ class UiStore {
 
         if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
             return ({
-                cn: 'modal modal__secure-page',
+                id: SECURE_STATUS_MODAL_IDS.SECURE,
                 message: 'Nothing to block here',
                 header: 'Secure page',
             });
         }
+        // TODO: get information about bank page (from host)
         return ({
-            cn: 'modal modal__secure-page modal__secure-page--bank',
+            id: SECURE_STATUS_MODAL_IDS.BANK,
             message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
             You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
             header: 'Secure page',
         });
     }
 
-    @computed get isSecureStatusHidden() {
+    @computed get certStatus() {
+        const { originalCertStatus } = this.rootStore.settingsStore;
+        return ({
+            isValid: originalCertStatus === ORIGINAL_CERT_STATUS.VALID,
+            isInvalid: originalCertStatus === ORIGINAL_CERT_STATUS.INVALID,
+            isBypassed: originalCertStatus === ORIGINAL_CERT_STATUS.BYPASSED,
+            isNotFound: originalCertStatus === ORIGINAL_CERT_STATUS.NOTFOUND,
+        });
+    }
+
+    @computed get isAppWorking() {
         const {
-            isPageSecured, isFilteringEnabled, isHttpsFilteringEnabled,
-            isExpired, isHttps,
+            isAppUpToDate,
+            isExtensionUpdated,
+            isSetupCorrectly,
+            isInstalled,
+            isRunning,
+            isProtectionEnabled,
         } = this.rootStore.settingsStore;
 
-        return !!(!isPageSecured && (!isHttps || !isFilteringEnabled || isHttpsFilteringEnabled
-            || this.isOpenCertificateModal || isExpired));
+        return [isInstalled,
+            isRunning,
+            isProtectionEnabled,
+            isAppUpToDate,
+            isExtensionUpdated,
+            isSetupCorrectly].every(state => state === true);
     }
 
-    @computed get currentWorkingStatus() {
-        const { isInstalled, isRunning, isProtectionEnabled } = this.rootStore.settingsStore;
-        return { isInstalled, isRunning, isProtectionEnabled };
-    }
-
     @action
-    setReloading = (isReloading) => {
-        this.isPending = isReloading;
+    updateCertStatusModalState = (eventType, newState = eventTypeToModalStateMap[eventType]) => {
+        this.certStatusModalState = {
+            ...this.certStatusModalState,
+            ...newState,
+        };
     };
 
     @action
-    setAppWorkingStatus = (workingStatus) => {
-        const { isAppUpToDate, isExtensionUpdated } = this.rootStore.settingsStore;
-
-        const status = workingStatus || this.currentWorkingStatus;
-        this.isAppWorking = (Object.values(status).every(state => state === true)
-            && isAppUpToDate && isExtensionUpdated && !this.isPending);
-    };
-
-    updateUi = () => {
-        this.setAppWorkingStatus();
-        this.setRequestStatus();
+    resetCertStatusModalState = () => {
+        this.certStatusModalState = defaultModalState;
     };
 
     @action
-    toggleOpenCertificateModal = () => {
-        this.isOpenCertificateModal = !this.isOpenCertificateModal;
+    updateSecureStatusModalState = (eventType, newState = eventTypeToModalStateMap[eventType]) => {
+        this.secureStatusModalState = {
+            ...this.secureStatusModalState,
+            ...newState,
+        };
     };
 
     @action
-    toggleShowInfo = () => {
-        this.isInfoHovered = !this.isInfoHovered;
+    setExtensionReloading = (isLoading) => {
+        this.isLoading = isLoading;
+    };
+
+    @action
+    setExtensionPending = (isPending) => {
+        this.isExtensionPending = isPending;
     };
 
     @action
     setPageFilteredByUserFilter = (isPageFilteredByUserFilter) => {
         this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
+    };
+
+    @action
+    setProtectionTogglePending = (isProtectionTogglePending) => {
+        this.isProtectionTogglePending = isProtectionTogglePending;
     };
 }
 

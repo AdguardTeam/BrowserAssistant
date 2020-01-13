@@ -7,16 +7,16 @@ export const RequestTypes = {
     addRule: 'addRule',
     removeRule: 'removeRule',
     removeCustomRules: 'removeCustomRules',
-    openOriginCert: 'openOriginCert',
+    openOriginalCert: 'openOriginalCert',
     reportSite: 'reportSite',
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
-    startApp: 'startApp',
+    updateApp: 'updateApp',
 };
 
-export const ResponseTypes = {
-    APP_STATE_RESPONSE_MESSAGE: 'APP_STATE_RESPONSE_MESSAGE',
-    INIT: 'INIT',
+export const ResponseTypesPrefixes = {
+    ADG: 'ADG',
+    ADG_INIT: 'ADG_INIT',
 };
 
 export const AssistantTypes = {
@@ -35,5 +35,11 @@ export const HostResponseTypes = {
 };
 
 export const HostTypes = {
-    browserExtensionHost: 'browser_extension_host',
+    browserExtensionHost: 'com.adguard.browser_extension_host.nm',
+};
+
+export const BACKGROUND_COMMANDS = {
+    CLOSE_POPUP: 'CLOSE_POPUP',
+    SHOW_RELOAD: 'SHOW_RELOAD',
+    SHOW_SETUP_INCORRECTLY: 'SHOW_SETUP_INCORRECTLY',
 };

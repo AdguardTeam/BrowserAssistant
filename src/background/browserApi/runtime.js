@@ -6,17 +6,11 @@ import log from '../../lib/logger';
  * @param args
  * @returns {Promise<void>}
  */
-const sendMessage = async (...args) => {
-    try {
-        await browser.runtime.sendMessage(...args);
-    } catch (err) {
-        if (err.message === 'Could not establish connection. Receiving end does not exist.') {
-            log.warn('Internal messaging error:', err.message);
-        } else {
-            log.error(err.message);
-        }
+const sendMessage = (...args) => browser.runtime.sendMessage(...args).catch((error) => {
+    if (!browser.runtime.lastError) {
+        log.error(error.message);
     }
-};
+});
 
 export default {
     sendMessage,

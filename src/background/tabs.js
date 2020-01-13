@@ -1,30 +1,29 @@
 import browser from 'webextension-polyfill';
-import { MessageTypes, RequestTypes } from '../lib/types';
+import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
 import log from '../lib/logger';
+import browserApi from './browserApi';
 
 class Tabs {
     async getCurrent() {
-        const { id: windowId } = await browser.windows.getCurrent();
-        const tabs = await browser.tabs.query({ active: true, windowId });
-        return tabs[0];
+        const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
+        if (!tab.url) {
+            log.error('Browser tabs api error: no url property. Checkout activeTab permission in manifest.', tab);
+            await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
+            setTimeout(() => browserApi.runtime.sendMessage(
+                { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
+            ),
+            1000);
+        }
+        return tab;
     }
 
     async sendMessage(type, options) {
         const tab = await this.getCurrent();
-        let response;
-        try {
-            response = await browser.tabs.sendMessage(tab.id, { type, options });
-            if (response) {
-                return response;
+        return browser.tabs.sendMessage(tab.id, { type, options }).catch((error) => {
+            if (!browser.runtime.lastError) {
+                log.error(error.message);
             }
-        } catch (err) {
-            if (err.message === 'Could not establish connection. Receiving end does not exist.') {
-                log.warn('Internal messaging error:', err.message);
-            } else {
-                log.error(err.message);
-            }
-        }
-        return '';
+        });
     }
 
     async getReferrer() {
@@ -37,7 +36,7 @@ class Tabs {
     }
 
     openDownloadPage() {
-        browser.tabs.create({ url: 'https://adguard.com/ru/download.html?os=windows' });
+        browser.tabs.create({ url: 'https://adguard.com/ru/download.html' });
     }
 }
 
