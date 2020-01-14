@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
-import { useIntl } from 'react-intl';
 import Option from './Option';
 import rootStore from '../../stores';
+import translator from '../../../lib/translator';
 
-const getOptions = ({ uiStore, requestsStore, settingsStore }, f) => ([
+const getOptions = ({ uiStore, requestsStore, settingsStore }) => ([
     {
         iconName: 'block-ad',
-        text: f({ id: 'block_ads' }),
+        text: translator.translate('block_ads'),
         onClick: () => {
             requestsStore.startBlockingAd();
         },
@@ -16,7 +16,7 @@ const getOptions = ({ uiStore, requestsStore, settingsStore }, f) => ([
     },
     {
         iconName: 'sandwich',
-        text: f({ id: 'open_filtering_log' }),
+        text: translator.translate('open_filtering_log'),
         onClick: () => {
             requestsStore.openFilteringLog();
         },
@@ -25,7 +25,7 @@ const getOptions = ({ uiStore, requestsStore, settingsStore }, f) => ([
     },
     {
         iconName: 'thumb-down',
-        text: f({ id: 'report_site' }),
+        text: translator.translate('report_site'),
         onClick: () => {
             requestsStore.reportSite();
         },
@@ -34,7 +34,7 @@ const getOptions = ({ uiStore, requestsStore, settingsStore }, f) => ([
     },
     {
         iconName: 'icon-cross',
-        text: f({ id: 'reset_custom_rules' }),
+        text: translator.translate('reset_custom_rules'),
         onClick: async () => {
             await requestsStore.removeCustomRules();
             await requestsStore.getCurrentFilteringState();
@@ -47,8 +47,7 @@ const getOptions = ({ uiStore, requestsStore, settingsStore }, f) => ([
 const Options = observer(() => {
     const stores = useContext(rootStore);
     const { uiStore } = stores;
-    const { formatMessage: f } = useIntl();
-    const OPTIONS = getOptions(stores, f);
+    const OPTIONS = getOptions(stores);
 
     return (
         <div className="actions">
@@ -56,14 +55,14 @@ const Options = observer(() => {
                 iconName, text, onClick, isDisabled, isVisible,
             }) => (
                 isVisible && (
-                <Option
-                    key={iconName}
-                    iconName={iconName}
-                    text={text}
-                    onClick={onClick}
-                    isDisabled={isDisabled}
-                    tabIndex={uiStore.globalTabIndex}
-                />
+                    <Option
+                        key={iconName}
+                        iconName={iconName}
+                        text={text}
+                        onClick={onClick}
+                        isDisabled={isDisabled}
+                        tabIndex={uiStore.globalTabIndex}
+                    />
                 )
             ))}
         </div>

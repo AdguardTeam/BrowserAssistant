@@ -4,5 +4,107 @@
     },
     "description": {
         "message": "TODO"
+    },
+    "preparing": {
+        "message": "Подготовка..."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard не установлен"
+    },
+    "download": {
+        "message": "Скачать"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard не обновлёе"
+    },
+    "update": {
+        "message": "Обновить"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard не запущен"
+    },
+    "run_adg": {
+        "message": "Запустить adguard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard защита приостановлена"
+    },
+    "enable": {
+        "message": "Включить"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistant не обновлён"
+    },
+    "reloading": {
+        "message": "Перезагрузка..."
+    },
+    "something_went_wrong": {
+        "message": "Что-то пошло не так"
+    },
+    "reinstall": {
+        "message": "Переустановить"
+    },
+    "adg_https": {
+        "message": "AdGuard HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Улучши качество блокировки рекламы"
+    },
+    "verified_by": {
+        "message": "Верифицировано:"
+    },
+    "more_info": {
+        "message": "Больше информации"
+    },
+    "assistant": {
+        "message": "Assistant"
+    },
+    "adg_protection": {
+        "message": "AdGuard Защита"
+    },
+    "adg_settings": {
+        "message": "AdGuard Настойки"
+    },
+    "block_ads": {
+        "message": "Блокировать рекламу на этом сайте"
+    },
+    "open_filtering_log": {
+        "message": "Открыть логи фильтрации"
+    },
+    "report_site": {
+        "message": "Пожаловаться на этот сайт"
+    },
+    "reset_custom_rules": {
+        "message": "Сбросить все правила этой страницы"
+    },
+    "cert_expired": {
+        "message": "AdGuard не может верифицировать сертификат этого сайта, потому что корневой сертификат истёк"
+    },
+    "cert_bypassed": {
+        "message": "AdGuard не может верифицировать сертификат этого сайта, потому что сайт бы исключён"
+    },
+    "cert_notfound": {
+        "message": "AdGuard не может верифицировать сертификат этого сайта, потому что сертификат не был найден"
+    },
+    "site_not_using_private_protection": {
+        "message": "Сайт использует небезопасное соединение. Кто-то может увидеть или изменить информацию, которую вы отправляете или получаете через сайт."
+    },
+    "not_secure": {
+        "message": "Не безопасно"
+    },
+    "nothing_to_block_here": {
+        "message": "Здесь нечего блокировать"
+    },
+    "secure_page": {
+        "message": "Безопасная страница"
+    },
+    "not_filtering_https": {
+        "message": "По умолчанию мы не фильтруем HTTPS-трафик для платежных систем и банковских сайтов. Вы можете включить фильтрацию самостоятельно\n: нажмите на желтый «замок» слева. "
+    },
+    "disabled": {
+        "message": "Выключено на этом сайте"
+    },
+    "enabled": {
+        "message": "Включено на этом сайте"
     }
 }

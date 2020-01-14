@@ -1,16 +1,15 @@
 import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import { useIntl } from 'react-intl';
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
 import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
+import translator from '../../../lib/translator';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
-    const { formatMessage: f } = useIntl();
     const {
         isHttps,
         isHttpsFilteringEnabled,
@@ -144,7 +143,7 @@ const CurrentSite = observer(() => {
                 onFocus={handleSecureStatusModalState}
                 onBlur={handleSecureStatusModalState}
             >
-                {f({ id: 'secure_page' })}
+                {translator.translate('secure_page')}
             </div>
         </Fragment>
     );

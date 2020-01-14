@@ -2,16 +2,15 @@ import React, { useContext } from 'react';
 import Modal from 'react-modal';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import { useIntl } from 'react-intl';
 import rootStore from '../../../stores';
 import { SECURE_STATUS_MODAL_IDS } from '../../../stores/consts';
+import translator from '../../../../lib/translator';
 
 const SecureStatusModal = observer(({
     header, message, isOpen,
 }) => {
     const { uiStore } = useContext(rootStore);
     const { secureStatusModalInfo } = uiStore;
-    const { formatMessage: f } = useIntl();
 
     const modalClass = classNames({
         modal: true,
@@ -28,8 +27,8 @@ const SecureStatusModal = observer(({
             contentLabel="Secure Status Modal"
             shouldFocusAfterRender={false}
         >
-            <header className="modal__header">{f({ id: header })}</header>
-            <p className="modal__text">{f({ id: message })}</p>
+            <header className="modal__header">{translator.translate(header)}</header>
+            <p className="modal__text">{translator.translate(message)}</p>
         </Modal>
     );
 });

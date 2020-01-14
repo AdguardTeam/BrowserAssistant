@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import { observer } from 'mobx-react';
-import { useIntl } from 'react-intl';
 import Settings from '../Settings';
 import Options from '../Options';
 import CurrentSite from '../CurrentSite';
@@ -11,12 +10,12 @@ import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
 import Loading from '../ui/Loading';
+import translator from '../../../lib/translator';
 
 Modal.setAppElement('#root');
 
 const App = observer(() => {
     const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
-    const { formatMessage: f } = useIntl();
     const {
         setCurrentFilteringState,
         setCurrentAppState,
@@ -79,7 +78,7 @@ const App = observer(() => {
     }
 
     if (uiStore.requestStatus.isPending) {
-        return (<Loading title={f({ id: 'preparing' })} />);
+        return (<Loading title={translator.translate('preparing')} />);
     }
 
     if (uiStore.requestStatus.isSuccess) {

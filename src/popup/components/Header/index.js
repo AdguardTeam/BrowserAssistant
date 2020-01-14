@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import { useIntl } from 'react-intl';
 import rootStore from '../../stores';
+import translator from '../../../lib/translator';
 import './header.pcss';
 
 const Header = observer(() => {
     const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
-    const { formatMessage: f } = useIntl();
 
     const disableProtection = (e) => {
         uiStore.setProtectionTogglePending(true);
@@ -35,19 +34,19 @@ const Header = observer(() => {
         <div className="widget-popup__header">
             <div className="widget-popup__header-container">
                 <div className="widget-popup__header-logo" />
-                <div className="widget-popup__header-title">{f({ id: 'assistant' })}</div>
+                <div className="widget-popup__header-title">{translator.translate('assistant')}</div>
             </div>
             <div className="widget-popup__header-buttons" id="popup-header-buttons">
                 <button
                     className={iconProtectionClass}
-                    title={f({ id: 'adg_protection' })}
+                    title={translator.translate('adg_protection')}
                     type="button"
                     onClick={disableProtection}
                     tabIndex={uiStore.globalTabIndex}
                 />
                 <button
                     className={iconSettingsClass}
-                    title={f({ id: 'adg_settings' })}
+                    title={translator.translate('adg_settings')}
                     type="button"
                     onClick={openSetting}
                     tabIndex={uiStore.globalTabIndex}

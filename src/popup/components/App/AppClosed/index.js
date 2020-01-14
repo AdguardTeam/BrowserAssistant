@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
-import { useIntl } from 'react-intl';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
+import translator from '../../../../lib/translator';
 
-const getStates = f => ({
+const getStates = () => ({
     [WORKING_STATES.IS_APP_INSTALLED]: {
         state: WORKING_STATES.IS_APP_INSTALLED,
-        content: f({ id: 'adg_is_not_installed' }),
-        buttonText: f({ id: 'download' }),
+        content: translator.translate('adg_is_not_installed'),
+        buttonText: translator.translate('download'),
         updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
@@ -19,8 +19,8 @@ const getStates = f => ({
 
     [WORKING_STATES.IS_APP_UP_TO_DATE]: {
         state: WORKING_STATES.IS_APP_UP_TO_DATE,
-        content: f({ id: 'adg_is_not_updated' }),
-        buttonText: f({ id: 'update' }),
+        content: translator.translate('adg_is_not_updated'),
+        buttonText: translator.translate('update'),
         updateStore: ({ requestsStore }) => {
             requestsStore.updateApp();
             window.close();
@@ -29,36 +29,36 @@ const getStates = f => ({
 
     [WORKING_STATES.IS_APP_RUNNING]: {
         state: WORKING_STATES.IS_APP_RUNNING,
-        content: f({ id: 'adg_is_not_running' }),
-        buttonText: f({ id: 'run_adg' }),
+        content: translator.translate('adg_is_not_running'),
+        buttonText: translator.translate('run_adg'),
         updateStore: ({ requestsStore }) => requestsStore.startApp(),
     },
 
     [WORKING_STATES.IS_PROTECTION_ENABLED]: {
         state: WORKING_STATES.IS_PROTECTION_ENABLED,
-        content: f({ id: 'adg_is_paused' }),
-        buttonText: f({ id: 'enable' }),
+        content: translator.translate('adg_is_paused'),
+        buttonText: translator.translate('enable'),
         updateStore: ({ requestsStore }) => requestsStore.setProtectionStatus(true),
     },
 
     [WORKING_STATES.IS_EXTENSION_UPDATED]: {
         state: WORKING_STATES.IS_EXTENSION_UPDATED,
-        content: f({ id: 'assistant_is_not_updated' }),
-        buttonText: f({ id: 'update' }),
+        content: translator.translate('assistant_is_not_updated'),
+        buttonText: translator.translate('update'),
         updateStore: ({ settingsStore }) => settingsStore.updateExtension(),
     },
 
     [WORKING_STATES.IS_EXTENSION_RELOADING]: {
         state: WORKING_STATES.IS_EXTENSION_RELOADING,
         content: <Loading />,
-        buttonText: f({ id: 'reloading' }),
+        buttonText: translator.translate('reloading'),
         updateStore: () => null,
     },
 
     [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
         state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
-        content: f({ id: 'something_went_wrong' }),
-        buttonText: f({ id: 'reinstall' }),
+        content: translator.translate('something_went_wrong'),
+        buttonText: translator.translate('reinstall'),
         updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
@@ -66,7 +66,7 @@ const getStates = f => ({
     },
 });
 
-function defineWarning(settingsStore, f) {
+function defineWarning(settingsStore) {
     const {
         isInstalled,
         isRunning,
@@ -76,7 +76,7 @@ function defineWarning(settingsStore, f) {
         isSetupCorrectly,
     } = settingsStore;
 
-    const STATES = getStates(f);
+    const STATES = getStates();
 
     if (!isInstalled || !isSetupCorrectly) {
         return STATES[WORKING_STATES.IS_APP_INSTALLED];
@@ -103,11 +103,10 @@ function defineWarning(settingsStore, f) {
 
 const AppClosed = observer(() => {
     const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
-    const { formatMessage: f } = useIntl();
 
     const {
         state, content, buttonText, updateStore,
-    } = defineWarning(settingsStore, f);
+    } = defineWarning(settingsStore);
 
     const stores = { requestsStore, settingsStore };
 
