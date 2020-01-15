@@ -42,7 +42,7 @@ const config = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
-                options: { babelrc: true },
+                options: { babelrc: true, compact: false },
             },
             {
                 test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/,
