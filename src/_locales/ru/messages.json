@@ -4,8 +4,5 @@
     },
     "description": {
         "message": "AdGuard браузерный помощник"
-    },
-    "short_name": {
-        "message": "AG браузерный помощник"
     }
 }
