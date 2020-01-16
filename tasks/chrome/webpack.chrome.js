@@ -29,6 +29,15 @@ if (process.env.NODE_ENV === 'beta') {
     );
 }
 
+if (process.env.NODE_ENV === 'release') {
+    plugins.push(
+        new ZipWebpackPlugin({
+            path: '../',
+            filename: `chrome-release-${pJson.version}.zip`,
+        })
+    );
+}
+
 const chromeConfig = {
     output: {
         path: path.join(common.output.path, CHROME_PATH),
