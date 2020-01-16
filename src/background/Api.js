@@ -44,21 +44,9 @@ class Api {
         this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
         this.port.onMessage.addListener(this.initHandler);
 
-        this.port.onDisconnect.addListener(() => {
-            this.retryTimes -= 1;
-
-            if (this.retryTimes) {
-                this.reinit();
-            } else {
-                this.deinit();
-                browserApi.runtime.sendMessage(
-                    { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
-                );
-                this.retryTimes = 5;
-
-                log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
-            }
-        });
+        this.port.onDisconnect.addListener(
+            () => this.makeReinit(BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED)
+        );
 
         this.initRequest();
         return this.port;
@@ -90,6 +78,22 @@ class Api {
         this.init();
     };
 
+    makeReinit = async (message = BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY) => {
+        this.retryTimes -= 1;
+
+        if (this.retryTimes) {
+            this.reinit();
+        } else {
+            this.deinit();
+            await browserApi.runtime.sendMessage(
+                { result: message }
+            );
+            this.retryTimes = 5;
+
+            log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
+        }
+    };
+
     makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
         const id = `${idPrefix}_${nanoid()}`;
 
@@ -114,7 +118,7 @@ class Api {
                     }
 
                     if (result === HostResponseTypes.error) {
-                        this.reinit();
+                        this.makeReinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }
                 }
@@ -127,13 +131,7 @@ class Api {
                 log.error(error.message);
 
                 this.port.onMessage.removeListener(messageHandler);
-
-                if (this.retryTimes) {
-                    this.reinit();
-                } else {
-                    browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.CLOSE_POPUP });
-                    this.deinit();
-                }
+                this.makeReinit();
             }
             this.port.onMessage.addListener(messageHandler);
         });

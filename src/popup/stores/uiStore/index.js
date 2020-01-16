@@ -132,6 +132,12 @@ class UiStore {
     };
 
     @action
+    setExtensionReloadingAndPending = (isLoading = false, isPending = false) => {
+        this.isLoading = isLoading;
+        this.isExtensionPending = isPending;
+    };
+
+    @action
     setPageFilteredByUserFilter = (isPageFilteredByUserFilter) => {
         this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
     };

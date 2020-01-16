@@ -5,7 +5,7 @@ import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 
-const STATES = {
+const getStates = () => ({
     [WORKING_STATES.IS_APP_INSTALLED]: {
         state: WORKING_STATES.IS_APP_INSTALLED,
         content: 'AdGuard is not installed',
@@ -65,7 +65,7 @@ const STATES = {
             window.close();
         },
     },
-};
+});
 
 function defineWarning(settingsStore) {
     const {
@@ -77,8 +77,14 @@ function defineWarning(settingsStore) {
         isSetupCorrectly,
     } = settingsStore;
 
-    if (!isInstalled || !isSetupCorrectly) {
+    const STATES = getStates();
+
+    if (!isInstalled) {
         return STATES[WORKING_STATES.IS_APP_INSTALLED];
+    }
+
+    if (!isSetupCorrectly) {
+        return STATES[WORKING_STATES.IS_APP_SETUP_CORRECTLY];
     }
 
     if (!isRunning) {
