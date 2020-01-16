@@ -77,11 +77,7 @@ function defineWarning(settingsStore) {
         isSetupCorrectly,
     } = settingsStore;
 
-    if (!isSetupCorrectly) {
-        return STATES[WORKING_STATES.IS_APP_SETUP_CORRECTLY];
-    }
-
-    if (!isInstalled) {
+    if (!isInstalled || !isSetupCorrectly) {
         return STATES[WORKING_STATES.IS_APP_INSTALLED];
     }
 

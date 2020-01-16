@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { initAssistant } from './assistant';
+import initAssistant from './assistant.embedded';
 import browserApi from '../../background/browserApi';
 import { MessageTypes } from '../../lib/types';
 
