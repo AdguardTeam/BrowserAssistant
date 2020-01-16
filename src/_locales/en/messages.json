@@ -9,7 +9,7 @@
         "message": "Preparing..."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard is not installed"
+        "message": "AdGuard is not installed or incorrectly configured"
     },
     "download": {
         "message": "Download"
@@ -24,7 +24,7 @@
         "message": "AdGuard is not running"
     },
     "run_adg": {
-        "message": "Run adguard"
+        "message": "Run AdGuard"
     },
     "adg_is_paused": {
         "message": "AdGuard protection is paused"
@@ -78,13 +78,13 @@
         "message": "Reset all custom rules for this page"
     },
     "cert_expired": {
-        "message": "AdGuard could not verify this website's certificate, because the root certificate has expired"
+        "message": "AdGuard could not verify this website's certificate because the root certificate has expired"
     },
     "cert_bypassed": {
-        "message": "AdGuard could not verify this website's certificate, because site was bypassed"
+        "message": "AdGuard could not verify this website's certificate because the site was bypassed"
     },
     "cert_notfound": {
-        "message": "AdGuard could not verify this website's certificate, because certificate wasn't found"
+        "message": "AdGuard could not verify this website's certificate because the certificate wasn't found"
     },
     "site_not_using_private_protection": {
         "message": "The site isn't using a private connection. Someone might be able to see or change the information you send or get through the site."
@@ -106,6 +106,5 @@
     },
     "enabled": {
         "message": "Enabled on this website"
-        "message": "TODO"
     }
 }
