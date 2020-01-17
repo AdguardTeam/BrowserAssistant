@@ -3,64 +3,79 @@ import { observer } from 'mobx-react';
 import Option from './Option';
 import rootStore from '../../stores';
 
-const Options = observer(() => {
-    const { uiStore, requestsStore, settingsStore } = useContext(rootStore);
-    const OPTIONS = [
+const getOptions = (stores) => {
+    const {
+        settingsStore: {
+            isFilteringEnabled,
+            isPageSecured,
+        },
+        requestsStore: {
+            startBlockingAd,
+            openFilteringLog,
+            reportSite,
+            removeCustomRules,
+            getCurrentFilteringState,
+        },
+        uiStore: {
+            isPageFilteredByUserFilter,
+        },
+    } = stores;
+
+    return ([
         {
             iconName: 'block-ad',
             text: 'Block ads\u00A0on\u00A0this website',
-            onClick: () => {
-                requestsStore.startBlockingAd();
-            },
-            isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
+            onClick: startBlockingAd,
+            isDisabled: !isFilteringEnabled || isPageSecured,
             isVisible: true,
         },
         {
             iconName: 'sandwich',
             text: 'Open the filtering log',
-            onClick: () => {
-                requestsStore.openFilteringLog();
-            },
+            onClick: openFilteringLog,
             isDisabled: false,
             isVisible: true,
         },
         {
             iconName: 'thumb-down',
             text: 'Report\u00A0this website',
-            onClick: () => {
-                requestsStore.reportSite();
-            },
-            isDisabled: !settingsStore.isFilteringEnabled || settingsStore.isPageSecured,
+            onClick: reportSite,
+            isDisabled: !isFilteringEnabled || isPageSecured,
             isVisible: true,
         },
         {
             iconName: 'icon-cross',
             text: 'Reset all custom rules for this page',
             onClick: async () => {
-                await requestsStore.removeCustomRules();
-                await requestsStore.getCurrentFilteringState();
+                await removeCustomRules();
+                await getCurrentFilteringState();
             },
             isDisabled: false,
-            isVisible: uiStore.isPageFilteredByUserFilter,
+            isVisible: isPageFilteredByUserFilter,
         },
-    ];
+    ]);
+};
+
+const Options = observer(() => {
+    const stores = useContext(rootStore);
+    const options = getOptions(stores);
+
     return (
         <div className="actions">
-            {OPTIONS
-                .map(({
-                    iconName, text, onClick, isDisabled, isVisible,
-                }) => (
-                    isVisible && (
-                        <Option
-                            key={iconName}
-                            iconName={iconName}
-                            text={text}
-                            onClick={onClick}
-                            isDisabled={isDisabled}
-                            tabIndex={uiStore.globalTabIndex}
-                        />
-                    )
-                ))}
+            {options.map(({
+                iconName, text, onClick, isDisabled, isVisible,
+            }) => (
+                isVisible && (
+                <Option
+                    key={iconName}
+                    iconName={iconName}
+                    text={text}
+                    onClick={onClick}
+                    isDisabled={isDisabled}
+                    tabIndex={stores.uiStore.globalTabIndex}
+                />
+                )
+            ))}
         </div>
     );
 });

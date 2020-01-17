@@ -64,5 +64,3 @@ export const eventTypeToModalStateMap = {
     keydown: { [modalStatesNames.isEntered]: true },
     mousedown: { [modalStatesNames.isClicked]: true },
 };
-
-export const downloadLink = 'https://adguard.com/ru/download.html';

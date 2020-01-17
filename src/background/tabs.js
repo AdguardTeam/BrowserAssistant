@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill';
 import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
 import log from '../lib/logger';
 import browserApi from './browserApi';
-import { downloadLink } from '../popup/stores/consts';
+import { downloadLink } from '../lib/conts';
 
 class Tabs {
     async getCurrent() {
