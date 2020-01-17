@@ -11,14 +11,14 @@ import {
 import browserApi from './browserApi';
 import versions from './versions';
 import log from '../lib/logger';
-import { retryTimes } from '../lib/conts';
+import { RETRY_TIMES } from '../lib/conts';
 
 class Api {
     isAppUpToDate = true;
 
     isExtensionUpdated = true;
 
-    retryTimes = retryTimes;
+    retryTimes = RETRY_TIMES;
 
     initHandler = (response) => {
         log.info(`response ${response.id}`, response);
@@ -89,7 +89,7 @@ class Api {
             await browserApi.runtime.sendMessage(
                 { result: message }
             );
-            this.retryTimes = retryTimes;
+            this.retryTimes = RETRY_TIMES;
 
             log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
         }

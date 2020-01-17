@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill';
 import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
 import log from '../lib/logger';
 import browserApi from './browserApi';
-import { downloadLink } from '../lib/conts';
+import { DOWNLOAD_LINK } from '../lib/conts';
 
 class Tabs {
     async getCurrent() {
@@ -37,7 +37,7 @@ class Tabs {
     }
 
     openDownloadPage() {
-        browser.tabs.create({ url: downloadLink });
+        browser.tabs.create({ url: DOWNLOAD_LINK });
     }
 }
 
