@@ -11,7 +11,8 @@ import {
 import browserApi from './browserApi';
 import versions from './versions';
 import log from '../lib/logger';
-import { RETRY_TIMES } from '../lib/conts';
+
+const RETRY_TIMES = 5;
 
 class Api {
     isAppUpToDate = true;
