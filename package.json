@@ -7,7 +7,7 @@
     "license": "LGPL-3.0",
     "scripts": {
         "lint": "eslint .",
-        "dev": "NODE_ENV=development run-p build:*",
+        "dev": "NODE_ENV=dev run-p build:*",
         "beta": "NODE_ENV=beta run-p build:*",
         "release": "NODE_ENV=release run-p build:*",
         "build:chrome": "webpack --config tasks/chrome/webpack.chrome.js",
@@ -17,8 +17,10 @@
         "test:watch": "jest --watch",
         "locales:download": "LOCALES=DOWNLOAD node tasks/locales.js",
         "locales:upload": "LOCALES=UPLOAD node tasks/locales.js",
-        "watch": "NODE_ENV=development run-s \"build:chrome --watch\"",
-        "watch:firefox": "NODE_ENV=development run-s \"build:firefox --watch\""
+        "watch": "NODE_ENV=dev run-s \"build:chrome --watch\"",
+        "watch:firefox": "NODE_ENV=dev run-s \"build:firefox --watch\"",
+        "crx:beta": "export NODE_ENV=beta; yarn build:chrome && node tasks/crx.js",
+        "crx:release": "export NODE_ENV=release; yarn build:chrome && node tasks/crx.js"
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",
@@ -35,6 +37,7 @@
         "babel-loader": "^8.0.6",
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^5.0.3",
+        "crx": "^5.0.1",
         "css-loader": "^3.2.0",
         "dotenv": "^8.0.0",
         "eslint": "^5.16.0",
