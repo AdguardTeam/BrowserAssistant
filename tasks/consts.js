@@ -12,16 +12,6 @@ const IS_DEV = process.env.NODE_ENV === 'dev';
 
 const BUILD_PATH = '../build';
 
-const LOAD_PATH = {
-    beta: `${BUILD_PATH}/${ENV_MAP.beta.outputPath}/chrome`,
-    release: `${BUILD_PATH}/${ENV_MAP.release.outputPath}/chrome`,
-};
-
-const WRITE_FILE_PATH = {
-    beta: './build/beta',
-    release: './build/release',
-};
-
 const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
 
 module.exports = {
@@ -31,6 +21,4 @@ module.exports = {
     IS_DEV,
     BUILD_PATH,
     CERTIFICATE_PATH,
-    LOAD_PATH,
-    WRITE_FILE_PATH,
 };
