@@ -14,6 +14,8 @@ const BUILD_PATH = '../build';
 
 const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
 
+const UPDATE_URL = 'TODO';
+
 module.exports = {
     LOCALES_PATH,
     ENV_MAP,
@@ -21,4 +23,5 @@ module.exports = {
     IS_DEV,
     BUILD_PATH,
     CERTIFICATE_PATH,
+    UPDATE_URL,
 };

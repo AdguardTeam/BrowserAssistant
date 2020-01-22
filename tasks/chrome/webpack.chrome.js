@@ -20,11 +20,12 @@ const plugins = [
     ]),
 ];
 
-if (process.env.NODE_ENV === 'beta' || process.env.NODE_ENV === 'release') {
+const { NODE_ENV } = process.env;
+if (NODE_ENV === 'beta' || NODE_ENV === 'release') {
     plugins.push(
         new ZipWebpackPlugin({
             path: '../',
-            filename: `chrome-${process.env.NODE_ENV}-${pJson.version}.zip`,
+            filename: `chrome-${NODE_ENV}-${pJson.version}.zip`,
         })
     );
 }

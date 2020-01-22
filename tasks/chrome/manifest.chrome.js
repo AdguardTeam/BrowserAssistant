@@ -8,5 +8,4 @@ module.exports = {
     optional_permissions: [
         'privacy',
     ],
-    update_url: 'todo',
 };

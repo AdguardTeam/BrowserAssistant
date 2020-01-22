@@ -8,8 +8,10 @@ const { BUILD_PATH, ENV_MAP, CERTIFICATE_PATH } = require('./consts');
 
 const CRX_FILENAME = `${config.name}-${config.version}.crx`;
 
-const LOAD_PATH = `${BUILD_PATH}/${ENV_MAP.beta.outputPath}/chrome`;
-const WRITE_FILE_PATH = `${BUILD_PATH}/${process.env.NODE_ENV}`;
+const { NODE_ENV } = process.env;
+
+const LOAD_PATH = `${BUILD_PATH}/${ENV_MAP[NODE_ENV].outputPath}/chrome`;
+const WRITE_FILE_PATH = `${BUILD_PATH}/${NODE_ENV}`;
 
 const ABSOLUTE_LOAD_PATH = path.resolve(__dirname, LOAD_PATH);
 const ABSOLUTE_WRITE_PATH = path.resolve(__dirname, WRITE_FILE_PATH);
