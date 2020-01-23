@@ -19,8 +19,7 @@
         "locales:upload": "LOCALES=UPLOAD node tasks/locales.js",
         "watch": "NODE_ENV=dev run-s \"build:chrome --watch\"",
         "watch:firefox": "NODE_ENV=dev run-s \"build:firefox --watch\"",
-        "crx:beta": "export NODE_ENV=beta; yarn build:chrome && node tasks/crx.js",
-        "crx:release": "export NODE_ENV=release; yarn build:chrome && node tasks/crx.js"
+        "crx": "export NODE_ENV=beta; yarn build:chrome && node tasks/crx.js"
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",

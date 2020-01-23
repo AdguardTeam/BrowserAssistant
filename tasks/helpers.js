@@ -1,6 +1,4 @@
-const {
-    LOCALES_PATH, ENV_MAP, IS_DEV, UPDATE_URL,
-} = require('./consts');
+const { LOCALES_PATH, ENV_MAP, IS_DEV } = require('./consts');
 const pJson = require('../package');
 
 const getNameByEnv = (env) => {
@@ -26,17 +24,12 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
     } catch (e) {
         throw new Error('unable to parse json from manifest');
     }
-
-    const IS_CHROME = 'minimum_chrome_version' in browserManifestDiff;
-
     const devPolicy = IS_DEV ? { content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'" } : {};
-    const updateUrl = !IS_DEV && IS_CHROME ? { update_url: UPDATE_URL } : {};
     const name = getNameByEnv(process.env.NODE_ENV);
     const updatedManifest = {
         ...manifest,
         ...browserManifestDiff,
         ...devPolicy,
-        ...updateUrl,
         name,
         version: pJson.version,
     };
