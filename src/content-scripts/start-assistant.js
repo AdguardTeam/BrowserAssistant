@@ -1,4 +1,4 @@
-import 'assistant-compiler';
+import 'adguard-assistant';
 import browser from 'webextension-polyfill';
 import browserApi from '../background/browserApi';
 import { MessageTypes } from '../lib/types';
