@@ -2,7 +2,6 @@ const path = require('path');
 
 const SRC_PATH = '../src';
 const LOCALES_PATH = path.join(__dirname, SRC_PATH, '_locales/en/messages');
-const NODE_ENVS = { DEV: 'dev', BETA: 'beta', RELEASE: 'release' };
 const ENV_MAP = {
     dev: { outputPath: 'dev', name: 'Dev' },
     beta: { outputPath: 'beta', name: 'Beta' },
@@ -30,6 +29,5 @@ module.exports = {
     CERTIFICATE_PATH,
     UPDATE_URL,
     MANIFEST_NAME,
-    NODE_ENVS,
     BROWSER_TYPES,
 };
