@@ -1,5 +1,5 @@
 const envMap = {
-    development: 'adguardadblockerdev@adguard.com',
+    dev: 'adguardadblockerdev@adguard.com',
     beta: 'adguardadblockerbeta@adguard.com',
     release: 'adguardadblocker@adguard.com',
 };
