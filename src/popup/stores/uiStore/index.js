@@ -133,8 +133,8 @@ class UiStore {
 
     @action
     setExtensionReloadingAndPending = (isLoading = false, isPending = false) => {
-        this.isLoading = isLoading;
-        this.isExtensionPending = isPending;
+        this.setExtensionReloading(isLoading);
+        this.setExtensionPending(isPending);
     };
 
     @action

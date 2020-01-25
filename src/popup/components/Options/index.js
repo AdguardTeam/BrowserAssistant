@@ -32,7 +32,10 @@ const getOptions = (stores) => {
         {
             iconName: 'sandwich',
             text: 'Open the filtering log',
-            onClick: openFilteringLog,
+            onClick: () => {
+                openFilteringLog();
+                window.close();
+            },
             isDisabled: false,
             isVisible: true,
         },

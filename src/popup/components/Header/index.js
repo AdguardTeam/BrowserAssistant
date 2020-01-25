@@ -11,8 +11,10 @@ const Header = observer(() => {
         requestsStore.setProtectionStatus(false);
         e.target.blur();
     };
+
     const openSetting = () => {
         requestsStore.openSettings();
+        window.close();
     };
 
     const iconProtectionClass = classNames({
