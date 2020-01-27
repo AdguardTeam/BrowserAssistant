@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Option from './Option';
 import rootStore from '../../stores';
+import translator from '../../../lib/translator';
 
 const getOptions = (stores) => {
     const {
@@ -24,14 +25,14 @@ const getOptions = (stores) => {
     return ([
         {
             iconName: 'block-ad',
-            text: 'Block ads\u00A0on\u00A0this website',
+            text: translator.translate('block_ads'),
             onClick: startBlockingAd,
             isDisabled: !isFilteringEnabled || isPageSecured,
             isVisible: true,
         },
         {
             iconName: 'sandwich',
-            text: 'Open the filtering log',
+            text: translator.translate('open_filtering_log'),
             onClick: () => {
                 openFilteringLog();
                 window.close();
@@ -41,14 +42,14 @@ const getOptions = (stores) => {
         },
         {
             iconName: 'thumb-down',
-            text: 'Report\u00A0this website',
+            text: translator.translate('report_site'),
             onClick: reportSite,
             isDisabled: !isFilteringEnabled || isPageSecured,
             isVisible: true,
         },
         {
             iconName: 'icon-cross',
-            text: 'Reset all custom rules for this page',
+            text: translator.translate('reset_custom_rules'),
             onClick: async () => {
                 await removeCustomRules();
                 await getCurrentFilteringState();

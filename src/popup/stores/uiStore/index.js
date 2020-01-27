@@ -51,24 +51,23 @@ class UiStore {
         if (!isHttps && !isPageSecured) {
             return ({
                 id: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
-                message: 'The site isn\'t using a private connection. Someone might be able to see or change the information you send or get through the site.',
-                header: 'Not secure',
+                message: 'site_not_using_private_protection',
+                header: 'not_secure',
             });
         }
 
         if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
             return ({
                 id: SECURE_STATUS_MODAL_IDS.SECURE,
-                message: 'Nothing to block here',
-                header: 'Secure page',
+                message: 'nothing_to_block_here',
+                header: 'secure_page',
             });
         }
         // TODO: get information about bank page (from host)
         return ({
             id: SECURE_STATUS_MODAL_IDS.BANK,
-            message: `By default, we don't filter HTTPS traffic for the payment system and bank websites.
-            You can enable the filtering yourself: tap on the yellow 'lock' on the left.`,
-            header: 'Secure page',
+            message: 'not_filtering_https',
+            header: 'secure_page',
         });
     }
 

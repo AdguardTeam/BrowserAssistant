@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import rootStore from '../../../stores';
 import { SECURE_STATUS_MODAL_IDS } from '../../../stores/consts';
+import translator from '../../../../lib/translator';
 
 const SecureStatusModal = observer(({
     header, message, isOpen,
@@ -26,12 +27,8 @@ const SecureStatusModal = observer(({
             contentLabel="Secure Status Modal"
             shouldFocusAfterRender={false}
         >
-            <header
-                className="modal__header"
-            >
-                {header}
-            </header>
-            <p className="modal__text">{message}</p>
+            <header className="modal__header">{translator.translate(header)}</header>
+            <p className="modal__text">{translator.translate(message)}</p>
         </Modal>
     );
 });

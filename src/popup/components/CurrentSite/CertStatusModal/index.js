@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Switcher from '../../Settings/Switcher';
 import rootStore from '../../../stores';
 import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
+import translator from '../../../../lib/translator';
 import './modal.pcss';
 
 const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
@@ -60,8 +61,8 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         >
             <div className="modal__info--upper">
                 <span className="modal__header modal__header--container">
-                    <span className="modal__header">AdGuard HTTPS</span>
-                    <p className="modal__text modal__text--additional">Increases the quality of ad blocking</p>
+                    <span className="modal__header">{translator.translate('adg_https')}</span>
+                    <p className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</p>
                 </span>
                 <Switcher
                     id={SWITCHER_IDS.HTTPS_SWITCHER}
@@ -73,15 +74,14 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             </div>
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
                 <p className="modal__text modal__text--red modal__text--upper">
-                    {`AdGuard could not verify this website's
-                    certificate, because ${CERT_STATES[originalCertStatus]}`}
+                    {translator.translate(CERT_STATES[originalCertStatus])}
                 </p>
             )}
             <div className="modal__info--lower">
                 {originalCertIssuer && (certStatus.isValid || certStatus.isInvalid)
                 && (
                     <Fragment>
-                        <p className="modal__text modal__text--notion">Verified by:</p>
+                        <p className="modal__text modal__text--notion">{translator.translate('verified_by')}</p>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         {certStatus.isValid && (
                             <div
@@ -91,7 +91,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                                 onClick={showCert}
                                 onKeyDown={handleKeyDown}
                             >
-                                More Information
+                                {translator.translate('more_info')}
                             </div>
                         )}
                     </Fragment>

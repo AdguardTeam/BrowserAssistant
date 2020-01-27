@@ -20,20 +20,12 @@ const plugins = [
     ]),
 ];
 
-if (process.env.NODE_ENV === 'beta') {
+const { NODE_ENV } = process.env;
+if (NODE_ENV === 'beta' || NODE_ENV === 'release') {
     plugins.push(
         new ZipWebpackPlugin({
             path: '../',
-            filename: `firefox-beta-${pJson.version}.zip`,
-        })
-    );
-}
-
-if (process.env.NODE_ENV === 'release') {
-    plugins.push(
-        new ZipWebpackPlugin({
-            path: '../',
-            filename: `firefox-release-${pJson.version}.zip`,
+            filename: `firefox-${NODE_ENV}-${pJson.version}.zip`,
         })
     );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import translator from '../../../../lib/translator';
 import './switcher.pcss';
 
 const Switcher = ({
@@ -38,7 +39,7 @@ const Switcher = ({
                 onClick={onClick}
                 onKeyDown={onKeyDown}
             />
-            <div className={switcherTextClass} />
+            <div className={switcherTextClass}>{translator.translate(checked ? 'enabled' : 'disabled')}</div>
         </div>
     );
 };

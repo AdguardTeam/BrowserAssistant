@@ -64,7 +64,7 @@
     }
 
     &__text {
-        max-width: 22rem;
+        max-width: 23rem;
         color: var(--gray-base);
         font-size: 1.6rem;
         text-align: center;
@@ -73,21 +73,9 @@
         &--secured {
             color: var(--gray88);
         }
-
-        &:before {
-            content: 'Disabled on this website';
-        }
-    }
-
-    &__checkbox:checked ~ &__text {
-        &:before {
-            content: 'Enabled on this website';
-        }
     }
 
     #https-switcher ~ &__text {
-        &:before {
-            content: '' !important;
-        }
+        display: none;
     }
 }

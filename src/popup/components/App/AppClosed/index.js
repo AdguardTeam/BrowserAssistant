@@ -4,6 +4,7 @@ import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
+import translator from '../../../../lib/translator';
 
 const getStates = (stores) => {
     const {
@@ -14,8 +15,8 @@ const getStates = (stores) => {
     return ({
         [WORKING_STATES.IS_APP_INSTALLED]: {
             state: WORKING_STATES.IS_APP_INSTALLED,
-            content: 'AdGuard is not installed',
-            buttonText: 'download',
+            content: translator.translate('adg_is_not_installed'),
+            buttonText: translator.translate('download'),
             onClick: () => {
                 openDownloadPage();
                 window.close();
@@ -24,8 +25,8 @@ const getStates = (stores) => {
 
         [WORKING_STATES.IS_APP_UP_TO_DATE]: {
             state: WORKING_STATES.IS_APP_UP_TO_DATE,
-            content: 'AdGuard is not updated',
-            buttonText: 'update',
+            content: translator.translate('adg_is_not_updated'),
+            buttonText: translator.translate('update'),
             onClick: () => {
                 updateApp();
                 window.close();
@@ -34,38 +35,38 @@ const getStates = (stores) => {
 
         [WORKING_STATES.IS_APP_RUNNING]: {
             state: WORKING_STATES.IS_APP_RUNNING,
-            content: 'AdGuard is not running',
-            buttonText: 'run adguard',
+            content: translator.translate('adg_is_not_running'),
+            buttonText: translator.translate('run_adg'),
             onClick: startApp,
         },
 
         [WORKING_STATES.IS_PROTECTION_ENABLED]: {
             state: WORKING_STATES.IS_PROTECTION_ENABLED,
-            content: 'AdGuard protection is paused',
-            buttonText: 'enable',
+            content: translator.translate('adg_is_paused'),
+            buttonText: translator.translate('enable'),
             onClick: setProtectionStatus.bind(this, true),
         },
 
         [WORKING_STATES.IS_EXTENSION_UPDATED]: {
             state: WORKING_STATES.IS_EXTENSION_UPDATED,
             id: 'isExtensionNotUpdated',
-            content: 'Assistant is not updated',
-            buttonText: 'update',
+            content: translator.translate('assistant_is_not_updated'),
+            buttonText: translator.translate('update'),
             onClick: updateExtension,
         },
 
         [WORKING_STATES.IS_EXTENSION_RELOADING]: {
             state: WORKING_STATES.IS_EXTENSION_RELOADING,
             content: <Loading />,
-            buttonText: 'reloading...',
+            buttonText: translator.translate('reloading'),
             onClick: undefined,
         },
 
         [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
             state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
             id: 'isBroken',
-            content: 'Something went wrong',
-            buttonText: 'reinstall',
+            content: translator.translate('something_went_wrong'),
+            buttonText: translator.translate('reinstall'),
             onClick: () => {
                 openDownloadPage();
                 window.close();

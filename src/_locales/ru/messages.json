@@ -1,8 +1,110 @@
 {
     "name": {
-        "message": "AdGuard Браузерный Помощник"
+        "message": "Браузерный помощник AdGuard"
     },
     "description": {
-        "message": "TODO"
+        "message": "Расширение к десктопной программе-блокировщику AdGuard. Помогает управлять фильтрацией прямо в браузере."
+    },
+    "preparing": {
+        "message": "Подготовка..."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard не установлен или настроен неправильно"
+    },
+    "download": {
+        "message": "Скачать"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard не обновлён"
+    },
+    "update": {
+        "message": "Обновить"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard не запущен"
+    },
+    "run_adg": {
+        "message": "Запустить AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Защита AdGuard приостановлена"
+    },
+    "enable": {
+        "message": "Включить"
+    },
+    "assistant_is_not_updated": {
+        "message": "Помощник не обновлён"
+    },
+    "reloading": {
+        "message": "Повторная загрузка..."
+    },
+    "something_went_wrong": {
+        "message": "Что-то пошло не так"
+    },
+    "reinstall": {
+        "message": "Переустановить"
+    },
+    "adg_https": {
+        "message": "AdGuard HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Улучшает блокировку рекламы"
+    },
+    "verified_by": {
+        "message": "Проверено:"
+    },
+    "more_info": {
+        "message": "Узнать больше"
+    },
+    "assistant": {
+        "message": "Помощник"
+    },
+    "adg_protection": {
+        "message": "Защита AdGuard"
+    },
+    "adg_settings": {
+        "message": "Настройки AdGuard"
+    },
+    "block_ads": {
+        "message": "Блокировать рекламу на этом сайте"
+    },
+    "open_filtering_log": {
+        "message": "Открыть журнал фильтрации"
+    },
+    "report_site": {
+        "message": "Пожаловаться на этот сайт"
+    },
+    "reset_custom_rules": {
+        "message": "Сбросить все свои правила для этой страницы"
+    },
+    "cert_expired": {
+        "message": "AdGuard не может проверить сертификат этого сайта, т. к. срок действик корневого сертификата истёк"
+    },
+    "cert_bypassed": {
+        "message": "AdGuard не может проверить сертификат этого сайта, т. к. сайт был исключён из фильтрации"
+    },
+    "cert_notfound": {
+        "message": "AdGuard не может проверить сертификат этого сайта, т. к. сертификат не найден"
+    },
+    "site_not_using_private_protection": {
+        "message": "Этот сайт не использует защищённое подключение. Кто-нибудь может увидеть или изменить данные, которыми вы обмениваетесь с этим сайтом."
+    },
+    "not_secure": {
+        "message": "Не защищён"
+    },
+    "nothing_to_block_here": {
+        "message": "Блокировать нечего"
+    },
+    "secure_page": {
+        "message": "Защищённая страница"
+    },
+    "not_filtering_https": {
+        "message": "По умолчанию мы не фильтруем HTTPS-трафик платёжных систем и банковских веб-сайтов. Вы можете включить фильтрацию самостоятельно: нажмите на жёлтый значок замка слева."
+    },
+    "disabled": {
+        "message": "Защита выключена на этом сайте"
+    },
+    "enabled": {
+        "message": "Защита включена на этом сайте"
     }
 }
