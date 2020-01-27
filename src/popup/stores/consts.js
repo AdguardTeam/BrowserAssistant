@@ -11,9 +11,9 @@ export const ORIGINAL_CERT_STATUS = {
 };
 
 export const CERT_STATES = {
-    INVALID: 'the root certificate has expired',
-    BYPASSED: 'site was bypassed',
-    NOTFOUND: 'certificate wasn\'t found',
+    INVALID: 'cert_expired',
+    BYPASSED: 'cert_bypassed',
+    NOTFOUND: 'cert_notfound',
 };
 
 export const WORKING_STATES = {

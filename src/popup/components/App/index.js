@@ -10,6 +10,7 @@ import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
 import Loading from '../ui/Loading';
+import translator from '../../../lib/translator';
 
 Modal.setAppElement('#root');
 
@@ -77,7 +78,7 @@ const App = observer(() => {
     }
 
     if (uiStore.requestStatus.isPending) {
-        return (<Loading title="Preparing..." />);
+        return (<Loading title={translator.translate('preparing')} />);
     }
 
     if (uiStore.requestStatus.isSuccess) {

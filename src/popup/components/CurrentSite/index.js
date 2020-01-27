@@ -6,6 +6,7 @@ import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
 import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
+import translator from '../../../lib/translator';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
@@ -142,7 +143,7 @@ const CurrentSite = observer(() => {
                 onFocus={handleSecureStatusModalState}
                 onBlur={handleSecureStatusModalState}
             >
-                secure page
+                {translator.translate('secure_page')}
             </div>
         </Fragment>
     );

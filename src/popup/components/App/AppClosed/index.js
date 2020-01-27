@@ -4,12 +4,13 @@ import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
+import translator from '../../../../lib/translator';
 
-const STATES = {
+const getStates = () => ({
     [WORKING_STATES.IS_APP_INSTALLED]: {
         state: WORKING_STATES.IS_APP_INSTALLED,
-        content: 'AdGuard is not installed',
-        buttonText: 'download',
+        content: translator.translate('adg_is_not_installed'),
+        buttonText: translator.translate('download'),
         updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
@@ -18,8 +19,8 @@ const STATES = {
 
     [WORKING_STATES.IS_APP_UP_TO_DATE]: {
         state: WORKING_STATES.IS_APP_UP_TO_DATE,
-        content: 'AdGuard is not updated',
-        buttonText: 'update',
+        content: translator.translate('adg_is_not_updated'),
+        buttonText: translator.translate('update'),
         updateStore: ({ requestsStore }) => {
             requestsStore.updateApp();
             window.close();
@@ -28,44 +29,42 @@ const STATES = {
 
     [WORKING_STATES.IS_APP_RUNNING]: {
         state: WORKING_STATES.IS_APP_RUNNING,
-        content: 'AdGuard is not running',
-        buttonText: 'run adguard',
+        content: translator.translate('adg_is_not_running'),
+        buttonText: translator.translate('run_adg'),
         updateStore: ({ requestsStore }) => requestsStore.startApp(),
     },
 
     [WORKING_STATES.IS_PROTECTION_ENABLED]: {
         state: WORKING_STATES.IS_PROTECTION_ENABLED,
-        content: 'AdGuard protection is paused',
-        buttonText: 'enable',
+        content: translator.translate('adg_is_paused'),
+        buttonText: translator.translate('enable'),
         updateStore: ({ requestsStore }) => requestsStore.setProtectionStatus(true),
     },
 
     [WORKING_STATES.IS_EXTENSION_UPDATED]: {
         state: WORKING_STATES.IS_EXTENSION_UPDATED,
-        id: 'isExtensionNotUpdated',
-        content: 'Assistant is not updated',
-        buttonText: 'update',
+        content: translator.translate('assistant_is_not_updated'),
+        buttonText: translator.translate('update'),
         updateStore: ({ settingsStore }) => settingsStore.updateExtension(),
     },
 
     [WORKING_STATES.IS_EXTENSION_RELOADING]: {
         state: WORKING_STATES.IS_EXTENSION_RELOADING,
         content: <Loading />,
-        buttonText: 'reloading...',
+        buttonText: translator.translate('reloading'),
         updateStore: () => null,
     },
 
     [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
         state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
-        id: 'isBroken',
-        content: 'Something went wrong',
-        buttonText: 'reinstall',
+        content: translator.translate('something_went_wrong'),
+        buttonText: translator.translate('reinstall'),
         updateStore: ({ settingsStore }) => {
             settingsStore.openDownloadPage();
             window.close();
         },
     },
-};
+});
 
 function defineWarning(settingsStore) {
     const {
@@ -76,6 +75,8 @@ function defineWarning(settingsStore) {
         isExtensionUpdated,
         isSetupCorrectly,
     } = settingsStore;
+
+    const STATES = getStates();
 
     if (!isInstalled || !isSetupCorrectly) {
         return STATES[WORKING_STATES.IS_APP_INSTALLED];

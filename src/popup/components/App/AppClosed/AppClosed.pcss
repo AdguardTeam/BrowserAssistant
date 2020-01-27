@@ -10,7 +10,7 @@
     &__status {
         margin-right: auto;
         margin-left: auto;
-        max-width: 22.8rem;
+        max-width: 90%;
         text-align: center;
         color: var(--gray-base);
         font-weight: bold;
@@ -44,8 +44,9 @@
         font-size: 1.5rem;
         margin: 0 6rem 4.8rem;
         transform: scale(1);
-        transition: 50ms;
-        transition-property: scale, background-color;
+        transition-property: background-color, transform;
+        transition-duration: 100ms;
+        transition-timing-function: ease-out;
 
         &:focus {
             transform: scale(1.02);

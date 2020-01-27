@@ -3,6 +3,108 @@
         "message": "AdGuard Browser Assistant"
     },
     "description": {
-        "message": "TODO"
+        "message": "Useful extension of AdGuard ad blocking desktop program. Manages filtering right from the browser, hides annoying elements in two clicks."
+    },
+    "preparing": {
+        "message": "Preparing..."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard is not installed or configured incorrectly"
+    },
+    "download": {
+        "message": "Download"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard is not updated"
+    },
+    "update": {
+        "message": "Update"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard is not running"
+    },
+    "run_adg": {
+        "message": "Run AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard protection is paused"
+    },
+    "enable": {
+        "message": "Enable"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistant is not updated"
+    },
+    "reloading": {
+        "message": "Reloading..."
+    },
+    "something_went_wrong": {
+        "message": "Something went wrong"
+    },
+    "reinstall": {
+        "message": "Reinstall"
+    },
+    "adg_https": {
+        "message": "AdGuard HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Increases the quality of ad blocking"
+    },
+    "verified_by": {
+        "message": "Verified by:"
+    },
+    "more_info": {
+        "message": "More Information"
+    },
+    "assistant": {
+        "message": "Assistant"
+    },
+    "adg_protection": {
+        "message": "AdGuard Protection"
+    },
+    "adg_settings": {
+        "message": "AdGuard Settings"
+    },
+    "block_ads": {
+        "message": "Block ads on this website"
+    },
+    "open_filtering_log": {
+        "message": "Open the filtering log"
+    },
+    "report_site": {
+        "message": "Report this website"
+    },
+    "reset_custom_rules": {
+        "message": "Reset all custom rules for this page"
+    },
+    "cert_expired": {
+        "message": "AdGuard could not verify this website's certificate because the root certificate has expired"
+    },
+    "cert_bypassed": {
+        "message": "AdGuard could not verify this website's certificate because the site was bypassed"
+    },
+    "cert_notfound": {
+        "message": "AdGuard could not verify this website's certificate because the certificate wasn't found"
+    },
+    "site_not_using_private_protection": {
+        "message": "The site isn't using a private connection. Someone might be able to see or change the information you send or get through the site."
+    },
+    "not_secure": {
+        "message": "Not secure"
+    },
+    "nothing_to_block_here": {
+        "message": "Nothing to block here"
+    },
+    "secure_page": {
+        "message": "Secure page"
+    },
+    "not_filtering_https": {
+        "message": "By default, we don't filter HTTPS traffic for the payment system and bank websites. You can enable the filtering yourself: tap on the yellow \"lock\" on the left."
+    },
+    "disabled": {
+        "message": "Disabled on this website"
+    },
+    "enabled": {
+        "message": "Enabled on this website"
     }
 }
