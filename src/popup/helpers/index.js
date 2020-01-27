@@ -5,5 +5,5 @@
  * @returns {boolean}
  */
 export const checkSomeIsTrue = (modalState) => {
-    return (Object.values(modalState).some(state => state === true));
+    return (Object.values(modalState).some((state) => state === true));
 };

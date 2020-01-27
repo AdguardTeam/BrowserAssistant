@@ -16,7 +16,7 @@ const Option = ({
         }
     };
 
-    const handleWhileEnabled = handler => (isDisabled ? undefined : handler);
+    const handleWhileEnabled = (handler) => (isDisabled ? undefined : handler);
 
     return (
         <div

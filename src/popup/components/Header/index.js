@@ -42,6 +42,7 @@ const Header = observer(() => {
                 <button
                     className={iconProtectionClass}
                     title={translator.translate('adg_protection')}
+                    aria-label={translator.translate('adg_protection')}
                     type="button"
                     onClick={disableProtection}
                     tabIndex={uiStore.globalTabIndex}
@@ -49,6 +50,7 @@ const Header = observer(() => {
                 <button
                     className={iconSettingsClass}
                     title={translator.translate('adg_settings')}
+                    aria-label={translator.translate('adg_settings')}
                     type="button"
                     onClick={openSetting}
                     tabIndex={uiStore.globalTabIndex}

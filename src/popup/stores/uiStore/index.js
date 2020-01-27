@@ -96,7 +96,7 @@ class UiStore {
             isProtectionEnabled,
             isAppUpToDate,
             isExtensionUpdated,
-            isSetupCorrectly].every(state => state === true);
+            isSetupCorrectly].every((state) => state === true);
     }
 
     @action

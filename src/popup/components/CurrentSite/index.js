@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import CertStatusModal from './CertStatusModal';
@@ -95,7 +95,7 @@ const CurrentSite = observer(() => {
     };
 
     return (
-        <Fragment>
+        <>
             <div className="current-site__container">
                 <div className={securedClass}>
                     {!isPageSecured && (
@@ -145,7 +145,7 @@ const CurrentSite = observer(() => {
             >
                 {translator.translate('secure_page')}
             </div>
-        </Fragment>
+        </>
     );
 });
 export default CurrentSite;
