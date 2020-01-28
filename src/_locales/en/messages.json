@@ -35,9 +35,6 @@
     "assistant_is_not_updated": {
         "message": "Assistant is not updated"
     },
-    "reloading": {
-        "message": "Reloading..."
-    },
     "something_went_wrong": {
         "message": "Something went wrong"
     },

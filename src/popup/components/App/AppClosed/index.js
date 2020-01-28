@@ -14,7 +14,6 @@ const getStates = (stores) => {
 
     return ({
         [WORKING_STATES.IS_APP_INSTALLED]: {
-            state: WORKING_STATES.IS_APP_INSTALLED,
             content: translator.translate('adg_is_not_installed'),
             buttonText: translator.translate('download'),
             onClick: () => {
@@ -24,7 +23,6 @@ const getStates = (stores) => {
         },
 
         [WORKING_STATES.IS_APP_UP_TO_DATE]: {
-            state: WORKING_STATES.IS_APP_UP_TO_DATE,
             content: translator.translate('adg_is_not_updated'),
             buttonText: translator.translate('update'),
             onClick: () => {
@@ -34,37 +32,30 @@ const getStates = (stores) => {
         },
 
         [WORKING_STATES.IS_APP_RUNNING]: {
-            state: WORKING_STATES.IS_APP_RUNNING,
             content: translator.translate('adg_is_not_running'),
             buttonText: translator.translate('run_adg'),
             onClick: startApp,
         },
 
         [WORKING_STATES.IS_PROTECTION_ENABLED]: {
-            state: WORKING_STATES.IS_PROTECTION_ENABLED,
             content: translator.translate('adg_is_paused'),
             buttonText: translator.translate('enable'),
             onClick: setProtectionStatus.bind(this, true),
         },
 
         [WORKING_STATES.IS_EXTENSION_UPDATED]: {
-            state: WORKING_STATES.IS_EXTENSION_UPDATED,
-            id: 'isExtensionNotUpdated',
             content: translator.translate('assistant_is_not_updated'),
             buttonText: translator.translate('update'),
             onClick: updateExtension,
         },
 
         [WORKING_STATES.IS_EXTENSION_RELOADING]: {
-            state: WORKING_STATES.IS_EXTENSION_RELOADING,
             content: <Loading />,
-            buttonText: translator.translate('reloading'),
+            buttonText: undefined,
             onClick: undefined,
         },
 
         [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
-            state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
-            id: 'isBroken',
             content: translator.translate('something_went_wrong'),
             buttonText: translator.translate('reinstall'),
             onClick: () => {
@@ -115,9 +106,7 @@ function defineState(stores) {
 
 const AppClosed = observer(() => {
     const stores = useContext(rootStore);
-    const {
-        state, content, buttonText, onClick,
-    } = defineState(stores);
+    const { content, buttonText, onClick } = defineState(stores);
 
     const handleClick = (e) => {
         e.target.blur();
@@ -131,7 +120,7 @@ const AppClosed = observer(() => {
             <div className="app-closed__status-container">
                 <header className="app-closed__status">{content}</header>
             </div>
-            {(state !== WORKING_STATES.IS_EXTENSION_RELOADING) && (
+            {buttonText && (
                 <div>
                     <button
                         className="app-closed__button"
