@@ -35,6 +35,7 @@ const Switcher = ({
             <button
                 className={switcherClass}
                 type="button"
+                aria-labelledby={translator.translate(checked ? 'enabled' : 'disabled')}
                 tabIndex={tabIndex}
                 onClick={onClick}
                 onKeyDown={onKeyDown}

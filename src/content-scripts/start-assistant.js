@@ -1,10 +1,9 @@
+import 'adguard-assistant';
 import browser from 'webextension-polyfill';
-import initAssistant from './assistant.embedded';
-import browserApi from '../../background/browserApi';
-import { MessageTypes } from '../../lib/types';
+import browserApi from '../background/browserApi';
+import { MessageTypes } from '../lib/types';
 
 export function startAssistant() {
-    initAssistant();
     if (window.top !== window || !(document.documentElement instanceof HTMLElement)) {
         return;
     }

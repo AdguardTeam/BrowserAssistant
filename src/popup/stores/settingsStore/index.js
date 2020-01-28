@@ -163,7 +163,6 @@ class SettingsStore {
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
-        this.rootStore.uiStore.setExtensionPending(false);
     };
 
     @action

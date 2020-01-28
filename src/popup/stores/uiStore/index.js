@@ -96,7 +96,7 @@ class UiStore {
             isProtectionEnabled,
             isAppUpToDate,
             isExtensionUpdated,
-            isSetupCorrectly].every(state => state === true);
+            isSetupCorrectly].every((state) => state === true);
     }
 
     @action
@@ -128,6 +128,12 @@ class UiStore {
     @action
     setExtensionPending = (isPending) => {
         this.isExtensionPending = isPending;
+    };
+
+    @action
+    setExtensionReloadingAndPending = (isLoading = false, isPending = false) => {
+        this.setExtensionReloading(isLoading);
+        this.setExtensionPending(isPending);
     };
 
     @action

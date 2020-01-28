@@ -35,18 +35,19 @@ const App = observer(() => {
                 } = response;
 
                 switch (result) {
+                    case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
+                        settingsStore.setInstalled(false);
+                        uiStore.setExtensionReloadingAndPending();
+                        break;
                     case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
                         settingsStore.setSetupCorrectly(false);
-                        uiStore.setExtensionReloading(false);
-                        break;
-                    case BACKGROUND_COMMANDS.CLOSE_POPUP:
-                        window.close();
+                        uiStore.setExtensionReloadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
                         uiStore.setExtensionReloading(true);
                         break;
                     case HostResponseTypes.ok:
-                        uiStore.setExtensionReloading(false);
+                        uiStore.setExtensionReloadingAndPending();
                         break;
                     default:
                         break;

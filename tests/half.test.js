@@ -1,4 +1,4 @@
-const half = x => x / 2;
+const half = (x) => x / 2;
 
 describe('half', () => {
     it('should return the value divided by 2', () => {

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Modal from 'react-modal';
 import classNames from 'classnames';
@@ -80,7 +80,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             <div className="modal__info--lower">
                 {originalCertIssuer && (certStatus.isValid || certStatus.isInvalid)
                 && (
-                    <Fragment>
+                    <>
                         <p className="modal__text modal__text--notion">{translator.translate('verified_by')}</p>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         {certStatus.isValid && (
@@ -94,7 +94,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                                 {translator.translate('more_info')}
                             </div>
                         )}
-                    </Fragment>
+                    </>
                 )}
             </div>
         </Modal>

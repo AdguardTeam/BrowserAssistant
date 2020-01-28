@@ -6,67 +6,68 @@ import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 import translator from '../../../../lib/translator';
 
-const getStates = () => ({
-    [WORKING_STATES.IS_APP_INSTALLED]: {
-        state: WORKING_STATES.IS_APP_INSTALLED,
-        content: translator.translate('adg_is_not_installed'),
-        buttonText: translator.translate('download'),
-        updateStore: ({ settingsStore }) => {
-            settingsStore.openDownloadPage();
-            window.close();
+const getStates = (stores) => {
+    const {
+        settingsStore: { openDownloadPage, updateExtension },
+        requestsStore: { updateApp, startApp, setProtectionStatus },
+    } = stores;
+
+    return ({
+        [WORKING_STATES.IS_APP_INSTALLED]: {
+            content: translator.translate('adg_is_not_installed'),
+            buttonText: translator.translate('download'),
+            onClick: () => {
+                openDownloadPage();
+                window.close();
+            },
         },
-    },
 
-    [WORKING_STATES.IS_APP_UP_TO_DATE]: {
-        state: WORKING_STATES.IS_APP_UP_TO_DATE,
-        content: translator.translate('adg_is_not_updated'),
-        buttonText: translator.translate('update'),
-        updateStore: ({ requestsStore }) => {
-            requestsStore.updateApp();
-            window.close();
+        [WORKING_STATES.IS_APP_UP_TO_DATE]: {
+            content: translator.translate('adg_is_not_updated'),
+            buttonText: translator.translate('update'),
+            onClick: () => {
+                updateApp();
+                window.close();
+            },
         },
-    },
 
-    [WORKING_STATES.IS_APP_RUNNING]: {
-        state: WORKING_STATES.IS_APP_RUNNING,
-        content: translator.translate('adg_is_not_running'),
-        buttonText: translator.translate('run_adg'),
-        updateStore: ({ requestsStore }) => requestsStore.startApp(),
-    },
-
-    [WORKING_STATES.IS_PROTECTION_ENABLED]: {
-        state: WORKING_STATES.IS_PROTECTION_ENABLED,
-        content: translator.translate('adg_is_paused'),
-        buttonText: translator.translate('enable'),
-        updateStore: ({ requestsStore }) => requestsStore.setProtectionStatus(true),
-    },
-
-    [WORKING_STATES.IS_EXTENSION_UPDATED]: {
-        state: WORKING_STATES.IS_EXTENSION_UPDATED,
-        content: translator.translate('assistant_is_not_updated'),
-        buttonText: translator.translate('update'),
-        updateStore: ({ settingsStore }) => settingsStore.updateExtension(),
-    },
-
-    [WORKING_STATES.IS_EXTENSION_RELOADING]: {
-        state: WORKING_STATES.IS_EXTENSION_RELOADING,
-        content: <Loading />,
-        buttonText: translator.translate('reloading'),
-        updateStore: () => null,
-    },
-
-    [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
-        state: WORKING_STATES.IS_APP_SETUP_CORRECTLY,
-        content: translator.translate('something_went_wrong'),
-        buttonText: translator.translate('reinstall'),
-        updateStore: ({ settingsStore }) => {
-            settingsStore.openDownloadPage();
-            window.close();
+        [WORKING_STATES.IS_APP_RUNNING]: {
+            content: translator.translate('adg_is_not_running'),
+            buttonText: translator.translate('run_adg'),
+            onClick: startApp,
         },
-    },
-});
 
-function defineWarning(settingsStore) {
+        [WORKING_STATES.IS_PROTECTION_ENABLED]: {
+            content: translator.translate('adg_is_paused'),
+            buttonText: translator.translate('enable'),
+            onClick: setProtectionStatus.bind(this, true),
+        },
+
+        [WORKING_STATES.IS_EXTENSION_UPDATED]: {
+            content: translator.translate('assistant_is_not_updated'),
+            buttonText: translator.translate('update'),
+            onClick: updateExtension,
+        },
+
+        [WORKING_STATES.IS_EXTENSION_RELOADING]: {
+            content: <Loading />,
+            buttonText: undefined,
+            onClick: undefined,
+        },
+
+        [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
+            content: translator.translate('something_went_wrong'),
+            buttonText: translator.translate('reinstall'),
+            onClick: () => {
+                openDownloadPage();
+                window.close();
+            },
+        },
+    });
+};
+
+function defineState(stores) {
+    const states = getStates(stores);
     const {
         isInstalled,
         isRunning,
@@ -74,45 +75,44 @@ function defineWarning(settingsStore) {
         isAppUpToDate,
         isExtensionUpdated,
         isSetupCorrectly,
-    } = settingsStore;
+    } = stores.settingsStore;
 
-    const STATES = getStates();
+    if (!isInstalled) {
+        return states[WORKING_STATES.IS_APP_INSTALLED];
+    }
 
-    if (!isInstalled || !isSetupCorrectly) {
-        return STATES[WORKING_STATES.IS_APP_INSTALLED];
+    if (!isSetupCorrectly) {
+        return states[WORKING_STATES.IS_APP_SETUP_CORRECTLY];
     }
 
     if (!isRunning) {
-        return STATES[WORKING_STATES.IS_APP_RUNNING];
+        return states[WORKING_STATES.IS_APP_RUNNING];
     }
 
     if (!isProtectionEnabled) {
-        return STATES[WORKING_STATES.IS_PROTECTION_ENABLED];
+        return states[WORKING_STATES.IS_PROTECTION_ENABLED];
     }
 
     if (!isAppUpToDate) {
-        return STATES[WORKING_STATES.IS_APP_UP_TO_DATE];
+        return states[WORKING_STATES.IS_APP_UP_TO_DATE];
     }
 
     if (!isExtensionUpdated) {
-        return STATES[WORKING_STATES.IS_EXTENSION_UPDATED];
+        return states[WORKING_STATES.IS_EXTENSION_UPDATED];
     }
 
-    return STATES[WORKING_STATES.IS_EXTENSION_RELOADING];
+    return states[WORKING_STATES.IS_EXTENSION_RELOADING];
 }
 
 const AppClosed = observer(() => {
-    const { requestsStore, settingsStore, uiStore } = useContext(rootStore);
+    const stores = useContext(rootStore);
+    const { content, buttonText, onClick } = defineState(stores);
 
-    const {
-        state, content, buttonText, updateStore,
-    } = defineWarning(settingsStore);
-
-    const stores = { requestsStore, settingsStore };
-
-    const onClick = (e) => {
-        updateStore(stores);
+    const handleClick = (e) => {
         e.target.blur();
+        if (onClick) {
+            onClick();
+        }
     };
 
     return (
@@ -120,13 +120,13 @@ const AppClosed = observer(() => {
             <div className="app-closed__status-container">
                 <header className="app-closed__status">{content}</header>
             </div>
-            {(state !== WORKING_STATES.IS_EXTENSION_RELOADING) && (
+            {buttonText && (
                 <div>
                     <button
                         className="app-closed__button"
                         type="button"
-                        tabIndex={uiStore.globalTabIndex}
-                        onClick={onClick}
+                        tabIndex={stores.uiStore.globalTabIndex}
+                        onClick={handleClick}
                     >
                         {buttonText}
                     </button>
