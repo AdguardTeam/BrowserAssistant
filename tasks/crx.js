@@ -4,7 +4,7 @@ const path = require('path');
 const Crx = require('crx');
 const chalk = require('chalk');
 const {
-    UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, ENV_MAP, CERTIFICATE_PATH,
+    CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, ENV_MAP, CERTIFICATE_PATH,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
 const config = require('../package');
@@ -80,7 +80,7 @@ const createCrx = async (crx) => {
 
         // Add to the chrome manifest `update_url` property
         // which is to be present while creating the crx file
-        await updateChromeManifest(chromeManifest, { update_url: UPDATE_URL });
+        await updateChromeManifest(chromeManifest, { update_url: CHROME_UPDATE_URL });
         await createCrx(crx);
         // Delete from the chrome manifest `update_url` property
         // after the crx file has been created - reset the manifest

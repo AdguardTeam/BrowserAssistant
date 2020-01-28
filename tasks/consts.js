@@ -18,7 +18,7 @@ const MANIFEST_NAME = 'manifest.json';
 
 const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
 
-const UPDATE_URL = 'TODO';
+const CHROME_UPDATE_URL = 'https://adguardteam.github.io/BrowserAssistant/chrome_updates.xml';
 
 module.exports = {
     LOCALES_PATH,
@@ -27,7 +27,7 @@ module.exports = {
     IS_DEV,
     BUILD_PATH,
     CERTIFICATE_PATH,
-    UPDATE_URL,
+    CHROME_UPDATE_URL,
     MANIFEST_NAME,
     BROWSER_TYPES,
 };
