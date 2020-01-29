@@ -22,9 +22,9 @@ const CHROME_UPDATE_URL = 'https://static.adguard.com/browserassistant/beta/upda
 
 const FIREFOX_UPDATE_URL = 'https://static.adguard.com/browserassistant/beta/update.json';
 
-const CHROME_CODEBASE = 'https://static.adguard.com/browserassistant/beta/chrome.crx';
+const CHROME_UPDATE_CRX = 'https://static.adguard.com/browserassistant/beta/chrome.crx';
 
-const FIREFOX_CODEBASE = 'https://static.adguard.com/browserassistant/beta/firefox.xpi';
+const FIREFOX_UPDATE_XML = 'https://static.adguard.com/browserassistant/beta/firefox.xpi';
 
 const CHROME_UPDATER_FILENAME = 'update.xml';
 
@@ -41,8 +41,8 @@ module.exports = {
     BROWSER_TYPES,
     CHROME_UPDATE_URL,
     FIREFOX_UPDATE_URL,
-    CHROME_CODEBASE,
-    FIREFOX_CODEBASE,
+    CHROME_UPDATE_CRX,
+    FIREFOX_UPDATE_XML,
     CHROME_UPDATER_FILENAME,
     FIREFOX_UPDATER_FILENAME,
 };

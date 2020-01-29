@@ -5,7 +5,7 @@ const Crx = require('crx');
 const chalk = require('chalk');
 const {
     CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, ENV_MAP, CERTIFICATE_PATH,
-    CHROME_CODEBASE, CHROME_UPDATER_FILENAME,
+    CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
 const config = require('../package');
@@ -84,7 +84,7 @@ const generateChromeFiles = async () => {
         const PRIVATE_KEY = await getPrivateKey();
 
         const crx = new Crx({
-            codebase: CHROME_CODEBASE,
+            codebase: CHROME_UPDATE_CRX,
             privateKey: PRIVATE_KEY,
             publicKey: config.name,
         });

@@ -4,8 +4,9 @@ const path = require('path');
 const { promises: fs } = require('fs');
 const chalk = require('chalk');
 const credentials = require('../private/AdguardBrowserAssistant/mozilla_credentials.json');
+
 const {
-    BROWSER_TYPES, ENV_MAP, FIREFOX_CODEBASE, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
+    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XML, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
 } = require('./consts');
 const config = require('../package');
 
@@ -29,6 +30,7 @@ const getFirefoxManifest = async () => {
 async function generateXpi() {
     try {
         const sourceDir = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX);
+
         const { downloadedFiles } = await webExt.default.cmd.sign({
             apiKey,
             apiSecret,
@@ -77,7 +79,7 @@ const createUpdateJson = async (manifest) => {
 
         const fileContent = getFileContent(
             {
-                id, version: config.version, update_link: FIREFOX_CODEBASE, strict_min_version,
+                id, version: config.version, update_link: FIREFOX_UPDATE_XML, strict_min_version,
             }
         );
 
