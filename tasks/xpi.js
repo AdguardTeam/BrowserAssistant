@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const credentials = require('../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
 const {
-    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XML, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
+    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XPI, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
 } = require('./consts');
 const config = require('../package');
 
@@ -79,7 +79,7 @@ const createUpdateJson = async (manifest) => {
 
         const fileContent = getFileContent(
             {
-                id, version: config.version, update_link: FIREFOX_UPDATE_XML, strict_min_version,
+                id, version: config.version, update_link: FIREFOX_UPDATE_XPI, strict_min_version,
             }
         );
 
