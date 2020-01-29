@@ -1,5 +1,3 @@
-Overview
-
 Meet AdGuard Assistant Browser Extension, the one our users used to know as a script in the AdGuard desktop programs for Mac and Windows, and now it is a separate browser extension! Why did we decide to make it a separate extension? It’s among best practices, more convenient to use and more independent which guarantees better functioning.
 
 Basically, former AdGuard Assistant was a common user script able to communicate with the program using a certain protocol. This script needed to be uploaded on a web page to start working — you see why we call it dependent. While separate extension is already installed in a browser.
