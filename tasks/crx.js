@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const fs = require('fs');
+const { promises: fs } = require('fs');
 const path = require('path');
 const Crx = require('crx');
 const chalk = require('chalk');
@@ -24,7 +24,7 @@ const MANIFEST_PATH = path.resolve(
 const getPrivateKey = async () => {
     let privateKey;
     try {
-        privateKey = await fs.promises.readFile(CERTIFICATE_PATH);
+        privateKey = await fs.readFile(CERTIFICATE_PATH);
         console.log(chalk.greenBright(`\nThe certificate is read from ${CERTIFICATE_PATH}\n`));
     } catch (error) {
         console.error(chalk.redBright(`Can not create ${CRX_FILENAME} - the valid certificate is not found in ${CERTIFICATE_PATH} - ${error.message}\n`));
@@ -42,7 +42,7 @@ const getPrivateKey = async () => {
 const updateChromeManifest = async (chromeManifest, additionalProps) => {
     try {
         const updatedManifest = updateManifest(chromeManifest, additionalProps);
-        await fs.promises.writeFile(MANIFEST_PATH, updatedManifest);
+        await fs.writeFile(MANIFEST_PATH, updatedManifest);
 
         const info = chromeManifest && additionalProps
             ? `is updated with properties ${JSON.stringify(additionalProps)} to create ${CRX_FILENAME} at ${MANIFEST_PATH}`
@@ -58,8 +58,8 @@ const updateChromeManifest = async (chromeManifest, additionalProps) => {
 const createCrx = async (loadedFile) => {
     try {
         const crxBuffer = await loadedFile.pack();
-        const writePath = [WRITE_PATH, CRX_FILENAME].join('/');
-        await fs.promises.writeFile(writePath, crxBuffer);
+        const writePath = path.resolve(WRITE_PATH, CRX_FILENAME);
+        await fs.writeFile(writePath, crxBuffer);
         console.log(chalk.greenBright(`${CRX_FILENAME} saved in ${WRITE_PATH}\n`));
     } catch (error) {
         console.error(chalk.redBright(`Error: Can not create ${CRX_FILENAME} - ${error.message}\n`));
@@ -70,8 +70,8 @@ const createCrx = async (loadedFile) => {
 const createXml = async (crx) => {
     try {
         const xmlBuffer = await crx.generateUpdateXML();
-        const writeXmlPath = [WRITE_PATH, CHROME_UPDATER_FILENAME].join('/');
-        await fs.promises.writeFile(writeXmlPath, xmlBuffer);
+        const writeXmlPath = path.resolve(WRITE_PATH, CHROME_UPDATER_FILENAME);
+        await fs.writeFile(writeXmlPath, xmlBuffer);
         console.log(chalk.greenBright(`${CHROME_UPDATER_FILENAME} saved in ${WRITE_PATH}\n`));
     } catch (error) {
         console.error(chalk.redBright(error.message));
@@ -80,7 +80,7 @@ const createXml = async (crx) => {
 
 const generateChromeFiles = async () => {
     try {
-        const chromeManifest = await fs.promises.readFile(MANIFEST_PATH);
+        const chromeManifest = await fs.readFile(MANIFEST_PATH);
         const PRIVATE_KEY = await getPrivateKey();
 
         const crx = new Crx({

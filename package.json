@@ -20,7 +20,7 @@
         "watch": "NODE_ENV=dev run-s \"build:chrome --watch\"",
         "watch:firefox": "NODE_ENV=dev run-s \"build:firefox --watch\"",
         "crx": "export NODE_ENV=beta; yarn build:chrome && node tasks/crx.js",
-        "xpi": "export NODE_ENV=beta; yarn build:firefox && node tasks/xpi.js",
+        "xpi": "NODE_ENV=beta node tasks/xpi.js",
         "artifacts": "yarn crx && yarn xpi && yarn artifacts:version",
         "artifacts:version": "NODE_ENV=beta node tasks/versionInfo.js"
     },
