@@ -26,5 +26,5 @@ Builds will be located in the `build` directory
 * `yarn xpi` create web extension files for Mozilla Firefox browser - build, zipped build and update manifest JSON document. You must have the `mozilla_credentials.json` to run this commands
 
 ## Artifacts
-* `yarn artifacts` creates Chrome and Firefox builds, zipped builds, documents for update and text file containing current version
+* `yarn artifacts` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version
 * `yarn artifacts:version` create text file containing current extension version
