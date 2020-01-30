@@ -35,9 +35,6 @@
     "assistant_is_not_updated": {
         "message": "Помощник не обновлён"
     },
-    "reloading": {
-        "message": "Повторная загрузка..."
-    },
     "something_went_wrong": {
         "message": "Что-то пошло не так"
     },

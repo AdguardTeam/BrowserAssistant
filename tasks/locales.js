@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-await-in-loop */
-const { promises: fs } = require('fs');
+const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
@@ -56,7 +56,7 @@ function saveFile(filePath, data) {
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath);
     }
-    return fs.writeFile(filePath, data);
+    return fs.promises.writeFile(filePath, data);
 }
 
 /**
