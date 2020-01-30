@@ -6,7 +6,8 @@ const chalk = require('chalk');
 const credentials = require('../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
 const {
-    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XPI, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME, XPI_NAME,
+    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XPI, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
+    XPI_NAME,
 } = require('./consts');
 const config = require('../package');
 
@@ -103,7 +104,6 @@ const generateFirefoxArtifacts = async () => {
     } catch (error) {
         console.error(chalk.redBright(error.message));
         console.error(error);
-        
         // Fail the task execution
         process.exit(1);
     }
