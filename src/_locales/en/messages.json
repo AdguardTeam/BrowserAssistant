@@ -11,6 +11,9 @@
     "adg_is_not_installed": {
         "message": "AdGuard is not installed or configured incorrectly"
     },
+    "get_adguard": {
+        "message": "Get AdGuard"
+    },
     "download": {
         "message": "Download"
     },

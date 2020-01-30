@@ -34,5 +34,4 @@ Builds will be located in the `build` directory.
 
 ## Artifacts
 
-- `yarn artifacts` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version
-- `yarn artifacts:version` create text file containing current extension version
+- `yarn artifacts:beta`, `yarn artifacts:release` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.

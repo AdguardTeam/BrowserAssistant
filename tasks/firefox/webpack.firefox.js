@@ -24,7 +24,7 @@ if (NODE_ENV === 'beta' || NODE_ENV === 'release') {
     plugins.push(
         new ZipWebpackPlugin({
             path: '../',
-            filename: `firefox-${NODE_ENV}.zip`,
+            filename: 'firefox.zip',
         })
     );
 }

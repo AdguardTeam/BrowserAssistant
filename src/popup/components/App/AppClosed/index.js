@@ -15,7 +15,7 @@ const getStates = (stores) => {
     return ({
         [WORKING_STATES.IS_APP_INSTALLED]: {
             content: translator.translate('adg_is_not_installed'),
-            buttonText: translator.translate('download'),
+            buttonText: translator.translate('get_adguard'),
             onClick: () => {
                 openDownloadPage();
                 window.close();
