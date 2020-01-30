@@ -18,7 +18,17 @@ const MANIFEST_NAME = 'manifest.json';
 
 const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
 
-const CHROME_UPDATE_URL = 'https://adguardteam.github.io/BrowserAssistant/chrome_updates.xml';
+const CHROME_UPDATE_URL = 'https://static.adguard.com/browserassistant/beta/update.xml';
+
+const FIREFOX_UPDATE_URL = 'https://static.adguard.com/browserassistant/beta/update.json';
+
+const CHROME_UPDATE_CRX = 'https://static.adguard.com/browserassistant/beta/chrome.crx';
+
+const FIREFOX_UPDATE_XPI = 'https://static.adguard.com/browserassistant/beta/firefox.xpi';
+
+const CHROME_UPDATER_FILENAME = 'update.xml';
+
+const FIREFOX_UPDATER_FILENAME = 'update.json';
 
 module.exports = {
     LOCALES_PATH,
@@ -27,7 +37,12 @@ module.exports = {
     IS_DEV,
     BUILD_PATH,
     CERTIFICATE_PATH,
-    CHROME_UPDATE_URL,
     MANIFEST_NAME,
     BROWSER_TYPES,
+    CHROME_UPDATE_URL,
+    FIREFOX_UPDATE_URL,
+    CHROME_UPDATE_CRX,
+    FIREFOX_UPDATE_XPI,
+    CHROME_UPDATER_FILENAME,
+    FIREFOX_UPDATER_FILENAME,
 };

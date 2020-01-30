@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
-const fs = require('fs');
+const { promises: fs } = require('fs');
 const path = require('path');
 const Crx = require('crx');
 const chalk = require('chalk');
 const {
     CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, ENV_MAP, CERTIFICATE_PATH,
+    CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
 const config = require('../package');
@@ -23,7 +24,7 @@ const MANIFEST_PATH = path.resolve(
 const getPrivateKey = async () => {
     let privateKey;
     try {
-        privateKey = await fs.promises.readFile(CERTIFICATE_PATH);
+        privateKey = await fs.readFile(CERTIFICATE_PATH);
         console.log(chalk.greenBright(`\nThe certificate is read from ${CERTIFICATE_PATH}\n`));
     } catch (error) {
         console.error(chalk.redBright(`Can not create ${CRX_FILENAME} - the valid certificate is not found in ${CERTIFICATE_PATH} - ${error.message}\n`));
@@ -41,7 +42,7 @@ const getPrivateKey = async () => {
 const updateChromeManifest = async (chromeManifest, additionalProps) => {
     try {
         const updatedManifest = updateManifest(chromeManifest, additionalProps);
-        await fs.promises.writeFile(MANIFEST_PATH, updatedManifest);
+        await fs.writeFile(MANIFEST_PATH, updatedManifest);
 
         const info = chromeManifest && additionalProps
             ? `is updated with properties ${JSON.stringify(additionalProps)} to create ${CRX_FILENAME} at ${MANIFEST_PATH}`
@@ -54,14 +55,11 @@ const updateChromeManifest = async (chromeManifest, additionalProps) => {
     }
 };
 
-const createCrx = async (crx) => {
+const createCrx = async (loadedFile) => {
     try {
-        const loadedFile = await crx.load(LOAD_PATH);
         const crxBuffer = await loadedFile.pack();
-        const writePath = [WRITE_PATH, CRX_FILENAME].join('/');
-
-        await fs.promises.writeFile(writePath, crxBuffer);
-
+        const writePath = path.resolve(WRITE_PATH, CRX_FILENAME);
+        await fs.writeFile(writePath, crxBuffer);
         console.log(chalk.greenBright(`${CRX_FILENAME} saved in ${WRITE_PATH}\n`));
     } catch (error) {
         console.error(chalk.redBright(`Error: Can not create ${CRX_FILENAME} - ${error.message}\n`));
@@ -69,23 +67,40 @@ const createCrx = async (crx) => {
     }
 };
 
-(async () => {
+const createXml = async (crx) => {
     try {
-        const chromeManifest = await fs.promises.readFile(MANIFEST_PATH);
-        const privateKey = await getPrivateKey();
+        const xmlBuffer = await crx.generateUpdateXML();
+        const writeXmlPath = path.resolve(WRITE_PATH, CHROME_UPDATER_FILENAME);
+        await fs.writeFile(writeXmlPath, xmlBuffer);
+        console.log(chalk.greenBright(`${CHROME_UPDATER_FILENAME} saved in ${WRITE_PATH}\n`));
+    } catch (error) {
+        console.error(chalk.redBright(error.message));
+    }
+};
+
+const generateChromeFiles = async () => {
+    try {
+        const chromeManifest = await fs.readFile(MANIFEST_PATH);
+        const PRIVATE_KEY = await getPrivateKey();
 
         const crx = new Crx({
-            privateKey,
+            codebase: CHROME_UPDATE_CRX,
+            privateKey: PRIVATE_KEY,
+            publicKey: config.name,
         });
 
         // Add to the chrome manifest `update_url` property
         // which is to be present while creating the crx file
         await updateChromeManifest(chromeManifest, { update_url: CHROME_UPDATE_URL });
-        await createCrx(crx);
+        const loadedFile = await crx.load(LOAD_PATH);
+        await createCrx(loadedFile);
+        await createXml(crx);
         // Delete from the chrome manifest `update_url` property
         // after the crx file has been created - reset the manifest
         await updateChromeManifest(chromeManifest);
     } catch (error) {
         console.error(error.message);
     }
-})();
+};
+
+generateChromeFiles();
