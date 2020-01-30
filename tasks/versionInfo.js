@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const { BUILD_PATH, ENV_MAP } = require('./consts');
 const config = require('../package');
 
-const content = `version=v${config.version}`;
+const content = `version=${config.version}`;
 const { NODE_ENV } = process.env;
 const { outputPath } = ENV_MAP[NODE_ENV];
 const FILENAME = 'build.txt';

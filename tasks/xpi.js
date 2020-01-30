@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const credentials = require('../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
 const {
-    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XPI, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
+    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XPI, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME, XPI_NAME,
 } = require('./consts');
 const config = require('../package');
 
@@ -42,7 +42,13 @@ async function generateXpi() {
 
         if (downloadedFiles) {
             const [downloadedXpi] = downloadedFiles;
-            console.log(chalk.greenBright(`file saved ${downloadedXpi}\n`));
+
+            // Rename
+            const basePath = path.dirname(downloadedXpi);
+            const xpiPath = path.join(basePath, XPI_NAME);
+            await fs.rename(downloadedXpi, xpiPath);
+
+            console.log(chalk.greenBright(`File saved to ${xpiPath}\n`));
         }
     } catch (error) {
         console.error(error.message);
@@ -88,7 +94,7 @@ const createUpdateJson = async (manifest) => {
         await fs.writeFile(fileDir, fileJson);
         console.log(chalk.greenBright(`${FIREFOX_UPDATER_FILENAME} saved in ${buildDir}\n`));
     } catch (error) {
-        console.error(chalk.redBright(`Error: Can not create ${FIREFOX_UPDATER_FILENAME} - ${error.message}\n`));
+        console.error(chalk.redBright(`Error: cannot create ${FIREFOX_UPDATER_FILENAME} - ${error.message}\n`));
         throw error;
     }
 };

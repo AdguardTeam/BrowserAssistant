@@ -5,12 +5,11 @@ const Crx = require('crx');
 const chalk = require('chalk');
 const {
     CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, ENV_MAP, CERTIFICATE_PATH,
-    CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME,
+    CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME, CRX_NAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
 const config = require('../package');
 
-const CRX_FILENAME = `${config.name}-${config.version}.crx`;
 const { NODE_ENV } = process.env;
 const { outputPath } = ENV_MAP[NODE_ENV];
 
@@ -27,7 +26,7 @@ const getPrivateKey = async () => {
         privateKey = await fs.readFile(CERTIFICATE_PATH);
         console.log(chalk.greenBright(`\nThe certificate is read from ${CERTIFICATE_PATH}\n`));
     } catch (error) {
-        console.error(chalk.redBright(`Can not create ${CRX_FILENAME} - the valid certificate is not found in ${CERTIFICATE_PATH} - ${error.message}\n`));
+        console.error(chalk.redBright(`Can not create ${CRX_NAME} - the valid certificate is not found in ${CERTIFICATE_PATH} - ${error.message}\n`));
         throw error;
     }
     return privateKey;
@@ -45,7 +44,7 @@ const updateChromeManifest = async (chromeManifest, additionalProps) => {
         await fs.writeFile(MANIFEST_PATH, updatedManifest);
 
         const info = chromeManifest && additionalProps
-            ? `is updated with properties ${JSON.stringify(additionalProps)} to create ${CRX_FILENAME} at ${MANIFEST_PATH}`
+            ? `is updated with properties ${JSON.stringify(additionalProps)} to create ${CRX_NAME} at ${MANIFEST_PATH}`
             : 'is reset';
 
         console.log(chalk.greenBright(`${MANIFEST_NAME} ${info}\n`));
@@ -58,11 +57,11 @@ const updateChromeManifest = async (chromeManifest, additionalProps) => {
 const createCrx = async (loadedFile) => {
     try {
         const crxBuffer = await loadedFile.pack();
-        const writePath = path.resolve(WRITE_PATH, CRX_FILENAME);
+        const writePath = path.resolve(WRITE_PATH, CRX_NAME);
         await fs.writeFile(writePath, crxBuffer);
-        console.log(chalk.greenBright(`${CRX_FILENAME} saved in ${WRITE_PATH}\n`));
+        console.log(chalk.greenBright(`${CRX_NAME} saved to ${WRITE_PATH}\n`));
     } catch (error) {
-        console.error(chalk.redBright(`Error: Can not create ${CRX_FILENAME} - ${error.message}\n`));
+        console.error(chalk.redBright(`Error: Can not create ${CRX_NAME} - ${error.message}\n`));
         throw error;
     }
 };
@@ -72,7 +71,7 @@ const createXml = async (crx) => {
         const xmlBuffer = await crx.generateUpdateXML();
         const writeXmlPath = path.resolve(WRITE_PATH, CHROME_UPDATER_FILENAME);
         await fs.writeFile(writeXmlPath, xmlBuffer);
-        console.log(chalk.greenBright(`${CHROME_UPDATER_FILENAME} saved in ${WRITE_PATH}\n`));
+        console.log(chalk.greenBright(`${CHROME_UPDATER_FILENAME} saved to ${WRITE_PATH}\n`));
     } catch (error) {
         console.error(chalk.redBright(error.message));
     }

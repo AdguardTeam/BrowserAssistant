@@ -1,7 +1,7 @@
 const envMap = {
-    dev: 'adguardadblockerdev@adguard.com',
-    beta: 'adguardadblockerbeta@adguard.com',
-    release: 'adguardadblocker@adguard.com',
+    dev: 'browserassistantdev@adguard.com',
+    beta: 'browserassistantbeta@adguard.com',
+    release: 'browserassistant@adguard.com',
 };
 
 module.exports = {

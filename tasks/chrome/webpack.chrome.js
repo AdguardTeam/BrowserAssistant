@@ -5,7 +5,6 @@ const ZipWebpackPlugin = require('zip-webpack-plugin');
 const common = require('../webpack.common');
 const { updateManifest } = require('../helpers');
 const chromeManifestDiff = require('./manifest.chrome');
-const pJson = require('../../package.json');
 
 const CHROME_PATH = 'chrome';
 
@@ -25,7 +24,7 @@ if (NODE_ENV === 'beta' || NODE_ENV === 'release') {
     plugins.push(
         new ZipWebpackPlugin({
             path: '../',
-            filename: `chrome-${NODE_ENV}-${pJson.version}.zip`,
+            filename: `chrome-${NODE_ENV}.zip`,
         })
     );
 }
