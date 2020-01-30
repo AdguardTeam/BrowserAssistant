@@ -3,7 +3,7 @@
         "message": "AdGuard Browser Assistant"
     },
     "description": {
-        "message": "Useful extension of AdGuard ad blocking desktop program. Manages filtering right from the browser, hides annoying elements in two clicks."
+        "message": "Extension for the AdGuard desktop app. Manages filtering right from the browser, hides annoying elements in two clicks."
     },
     "preparing": {
         "message": "Preparing..."
