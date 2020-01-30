@@ -32,6 +32,9 @@
     "adg_is_paused": {
         "message": "AdGuard protection is paused"
     },
+    "adg_is_launching": {
+        "message": "AdGuard is launching..."
+    },
     "enable": {
         "message": "Enable"
     },
@@ -98,6 +101,9 @@
     "secure_page": {
         "message": "Secure page"
     },
+    "is_secure_page": {
+        "message": "Is secure page"
+    },
     "not_filtering_https": {
         "message": "By default, we don't filter HTTPS traffic for the payment system and bank websites. You can enable the filtering yourself: tap on the yellow \"lock\" on the left."
     },
@@ -106,5 +112,20 @@
     },
     "enabled": {
         "message": "Enabled on this website"
+    },
+    "protection_is_enabled": {
+        "message": "Protection is enabled"
+    },
+    "protection_is_disabled": {
+        "message": "Protection is disabled"
+    },
+    "website_cert_is_expired": {
+        "message": "Website certificate is expired"
+    },
+    "website_cert_was_not_found": {
+        "message": "Website certificate wasn't found"
+    },
+    "website_was_bypassed": {
+        "message": "Website was bypassed"
     }
 }

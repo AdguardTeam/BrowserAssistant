@@ -49,7 +49,7 @@ class Api {
                 },
             }, ResponseTypesPrefixes.ADG_INIT);
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -61,7 +61,8 @@ class Api {
         const request = { id, ...params };
         const response = stubHost.getStubResponse(request);
 
-        return this.initHandler(response);
+        this.initHandler(response);
+        return response;
     };
 }
 

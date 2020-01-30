@@ -18,6 +18,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         isHttps,
         isPageSecured,
         originalCertStatus,
+        isFilteringEnabled,
     } = settingsStore;
 
     const showCert = () => {
@@ -45,8 +46,15 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         'modal__cert-status--small': certStatus.isNotFound || certStatus.isBypassed
             || (certStatus.isInvalid && !originalCertIssuer),
         'modal__cert-status--large': certStatus.isInvalid && originalCertIssuer,
+        'modal__cert-status--smallest': certStatus.isValid && !isFilteringEnabled,
         // This case can happen only as result of host mistake
         'modal__cert-status--tiny': certStatus.isValid && !originalCertIssuer,
+    });
+
+    const lowerInfoClass = classNames({
+        'modal__info--lower': true,
+        'modal__info--lower--smaller-padding': certStatus.isInvalid,
+        'modal__info--lower--no-padding': isHttps && !isFilteringEnabled,
     });
 
     return (
@@ -59,31 +67,34 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             onRequestClose={onRequestClose}
             shouldFocusAfterRender={false}
         >
-            <div className="modal__info--upper">
-                <span className="modal__header modal__header--container">
-                    <span className="modal__header">{translator.translate('adg_https')}</span>
-                    <p className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</p>
-                </span>
-                <Switcher
-                    id={SWITCHER_IDS.HTTPS_SWITCHER}
-                    checked={!certStatus.isInvalid && isHttpsFilteringEnabled && isHttps}
-                    onClick={toggleHttpsFiltering}
-                    isPageSecured={isPageSecured}
-                    isDisabled={certStatus.isInvalid}
-                />
-            </div>
+            {isFilteringEnabled && (
+                <div className="modal__info--upper">
+                    <span className="modal__header--container">
+                        <span className="modal__header">{translator.translate('adg_https')}</span>
+                        <p className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</p>
+                    </span>
+                    <Switcher
+                        id={SWITCHER_IDS.HTTPS_SWITCHER}
+                        checked={!certStatus.isInvalid && isHttpsFilteringEnabled && isHttps}
+                        onClick={toggleHttpsFiltering}
+                        isPageSecured={isPageSecured}
+                        isDisabled={certStatus.isInvalid}
+                    />
+                </div>
+            )}
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
                 <p className="modal__text modal__text--red modal__text--upper">
                     {translator.translate(CERT_STATES[originalCertStatus])}
                 </p>
             )}
-            <div className="modal__info--lower">
+            <div className={lowerInfoClass}>
                 {originalCertIssuer && (certStatus.isValid || certStatus.isInvalid)
                 && (
                     <>
                         <p className="modal__text modal__text--notion">{translator.translate('verified_by')}</p>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
-                        {certStatus.isValid && (
+                        <div className="modal__text--container">
+                            {certStatus.isInvalid && <div className="modal__text modal__text--red">Expired</div>}
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"
@@ -93,7 +104,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                             >
                                 {translator.translate('more_info')}
                             </div>
-                        )}
+                        </div>
                     </>
                 )}
             </div>

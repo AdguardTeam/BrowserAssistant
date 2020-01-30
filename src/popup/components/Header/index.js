@@ -23,13 +23,13 @@ const Header = observer(() => {
         'widget-popup__buttons': true,
         'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
         'widget-popup__buttons--start': !settingsStore.isProtectionEnabled || uiStore.isProtectionTogglePending,
-        'widget-popup__buttons--hidden': !uiStore.isAppWorking,
+        'widget-popup__buttons--hidden': !uiStore.isAppWorking || uiStore.requestStatus.isPending,
     });
 
     const iconSettingsClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--settings': true,
-        'widget-popup__buttons--hidden': !uiStore.isAppWorking,
+        'widget-popup__buttons--hidden': !uiStore.isAppWorking || uiStore.requestStatus.isPending,
     });
 
     return (

@@ -3,18 +3,16 @@
     flex-direction: column;
     justify-items: flex-start;
     max-width: 32rem;
-    padding: 1.1rem 0;
-    margin: 0 1.6rem;
-    border-top: 0.1rem solid var(--grayd8);
+    padding: 1.8rem 0 0.8rem;
 
     .action {
         display: flex;
-        padding: 0.9rem;
+        padding: 1.1rem 1.6rem;
         cursor: pointer;
         transition-property: background, opacity;
         transition-duration: 300ms;
         transition-timing-function: ease;
-        max-height: 3.5rem;
+        max-height: 4rem;
         opacity: 1;
 
         &--disabled {
@@ -23,9 +21,9 @@
         }
 
         &__icon {
-            height: 1.9rem;
-            width: 1.9rem;
-            flex-basis: 1.9rem;
+            height: 2.4rem;
+            width: 2.4rem;
+            flex-basis: 2.4rem;
 
             &--block-ad {
                 background: url('../../../../assets/images/icon__option--block-ad.svg') no-repeat center;
@@ -49,8 +47,8 @@
 
         &__name {
             max-width: 27rem;
-            padding-left: 0.8rem;
-            padding-bottom: 0.5rem;
+            line-height: 1.8rem;
+            padding: 0.2rem 0 0.5rem 0.8rem;
             font-size: 1.3rem;
             color: var(--gray-base);
             white-space: nowrap;

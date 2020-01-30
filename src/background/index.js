@@ -47,5 +47,5 @@ try {
 
     browser.runtime.onMessage.addListener(handleMessage);
 } catch (error) {
-    log.error(error.message);
+    log.error(error);
 }

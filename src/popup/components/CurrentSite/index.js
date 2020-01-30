@@ -16,6 +16,7 @@ const CurrentSite = observer(() => {
         isFilteringEnabled,
         isPageSecured,
         currentTabHostname,
+        originalCertIssuer,
     } = settingsStore;
 
     const {
@@ -24,7 +25,9 @@ const CurrentSite = observer(() => {
         updateSecureStatusModalState,
         isCertStatusModalOpen,
         isPageStatusModalOpen,
-        secureStatusModalInfo,
+        secureStatusModalInfo: {
+            modalId, header, message, info,
+        },
         certStatus,
     } = uiStore;
 
@@ -44,13 +47,14 @@ const CurrentSite = observer(() => {
 
     const iconClass = classNames({
         'current-site__icon': true,
+        'current-site__icon--checkmark': isPageSecured,
         'current-site__icon--lock': isHttps && certStatus.isValid,
         'current-site__icon--lock--yellow': isHttps && !isHttpsFilteringEnabled,
         'current-site__icon--warning--red': isHttps && certStatus.isInvalid,
         'current-site__icon--warning--yellow': isHttps && (certStatus.isBypassed || certStatus.isNotFound),
         'current-site__icon--warning--gray': !isHttps && !isPageSecured,
         'current-site__icon--warning': (isHttps && !certStatus.isValid) || (!isHttps && !isPageSecured),
-        'current-site__icon--disabled-cursor': !isFilteringEnabled,
+        'current-site__icon--disabled-cursor': (!isFilteringEnabled && !certStatus.isValid) || !originalCertIssuer,
     });
 
     const securedClass = classNames({
@@ -60,11 +64,13 @@ const CurrentSite = observer(() => {
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--hidden': !isPageSecured,
+        'current-site__secure-status--gray': isPageSecured || isFilteringEnabled,
+        'current-site__secure-status--red': (isHttps && (!isFilteringEnabled || !certStatus.isValid)) || (!isHttps && !isPageSecured),
+        'current-site__secure-status--modal': modalId,
     });
 
     const handleCertStatusModalState = (event, payload) => {
-        if (!isFilteringEnabled) {
+        if (!isFilteringEnabled && !certStatus.isValid) {
             return;
         }
         updateCertStatusModalState(event.type, payload);
@@ -95,43 +101,40 @@ const CurrentSite = observer(() => {
     };
 
     return (
-        <>
-            <div className="current-site__container">
-                <div className={securedClass}>
-                    {!isPageSecured && (
-                        <div
-                            role="menu"
-                            className={iconClass}
-                            tabIndex={uiStore.globalTabIndex}
-                            onKeyDown={onKeyEnterDown}
-                            onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
-                            onFocus={handleCertStatusModalState}
-                            onBlur={handleCertStatusModalState}
-                            onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
-                            onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
-                        >
-                            {(isCertStatusModalOpen
-                                || (!isHttps && isPageStatusModalOpen))
-                            && <div className="arrow-up" />}
-                        </div>
-                    )}
-
-                    <div className="current-site__name">
-                        {currentTabHostname}
-                    </div>
-
-                    <CertStatusModal
-                        isOpen={isHttps && isCertStatusModalOpen}
-                        onRequestClose={resetCertStatusModalState}
-                    />
-
-                    <SecureStatusModal
-                        isOpen={(isPageSecured && isPageStatusModalOpen)
-                        || (!isHttps && isCertStatusModalOpen)}
-                        message={secureStatusModalInfo.message}
-                        header={secureStatusModalInfo.header}
-                    />
+        <div className="current-site__container">
+            <div className={securedClass}>
+                <div
+                    role="menu"
+                    className={iconClass}
+                    tabIndex={uiStore.globalTabIndex}
+                    onKeyDown={onKeyEnterDown}
+                    onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
+                    onFocus={handleCertStatusModalState}
+                    onBlur={handleCertStatusModalState}
+                    onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
+                    onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
+                >
+                    {!isPageSecured && ((isCertStatusModalOpen
+                        && (!!originalCertIssuer || (!originalCertIssuer && isFilteringEnabled)))
+                        || (!isHttps && isPageStatusModalOpen))
+                    && <div className="arrow-up" />}
                 </div>
+                <div className="current-site__name">
+                    {currentTabHostname}
+                </div>
+
+                <CertStatusModal
+                    isOpen={isHttps && isCertStatusModalOpen
+                    && (!!originalCertIssuer || (!originalCertIssuer && isFilteringEnabled))}
+                    onRequestClose={resetCertStatusModalState}
+                />
+                <SecureStatusModal
+                    isOpen={modalId
+                    && ((isPageSecured && isPageStatusModalOpen)
+                        || (!isHttps && (isPageStatusModalOpen || isCertStatusModalOpen)))}
+                    message={message}
+                    header={header}
+                />
             </div>
             <div
                 role="menu"
@@ -143,9 +146,9 @@ const CurrentSite = observer(() => {
                 onFocus={handleSecureStatusModalState}
                 onBlur={handleSecureStatusModalState}
             >
-                {translator.translate('secure_page')}
+                {translator.translate(info)}
             </div>
-        </>
+        </div>
     );
 });
 export default CurrentSite;

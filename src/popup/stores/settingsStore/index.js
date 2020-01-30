@@ -79,7 +79,7 @@ class SettingsStore {
                 this.currentPort = port === '' ? defaultPort : Number(port);
             });
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 

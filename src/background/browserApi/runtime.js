@@ -8,7 +8,7 @@ import log from '../../lib/logger';
  */
 const sendMessage = (...args) => browser.runtime.sendMessage(...args).catch((error) => {
     if (!browser.runtime.lastError) {
-        log.error(error.message);
+        log.error(error);
     }
 });
 

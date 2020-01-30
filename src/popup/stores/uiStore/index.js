@@ -45,29 +45,62 @@ class UiStore {
 
     @computed get secureStatusModalInfo() {
         const {
-            isPageSecured, isHttps, isFilteringEnabled, isHttpsFilteringEnabled,
+            isPageSecured, isHttps, isFilteringEnabled,
         } = this.rootStore.settingsStore;
-
-        if (!isHttps && !isPageSecured) {
+        // TODO: setup logic
+        if (isHttps && this.certStatus.isInvalid) {
             return ({
-                id: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
-                message: 'site_not_using_private_protection',
-                header: 'not_secure',
+                info: 'website_cert_is_expired',
             });
         }
 
-        if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
+        if (isHttps && this.certStatus.isNotFound) {
             return ({
-                id: SECURE_STATUS_MODAL_IDS.SECURE,
+                info: 'website_cert_was_not_found',
+            });
+        }
+
+        if (isHttps && this.certStatus.isBypassed) {
+            return ({
+                info: 'website_was_bypassed',
+            });
+        }
+
+        if (isHttps && isFilteringEnabled) {
+            return ({
+                info: 'protection_is_enabled',
+            });
+        }
+
+        if (isHttps && !isFilteringEnabled) {
+            return ({
+                info: 'protection_is_disabled',
+            });
+        }
+
+        if (!isHttps && !isPageSecured) {
+            return ({
+                modalId: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
+                message: 'site_not_using_private_protection',
+                header: 'not_secure',
+                info: 'not_secure',
+            });
+        }
+
+        if (isPageSecured) {
+            return ({
+                modalId: SECURE_STATUS_MODAL_IDS.SECURE,
                 message: 'nothing_to_block_here',
                 header: 'secure_page',
+                info: 'is_secure_page',
             });
         }
         // TODO: get information about bank page (from host)
         return ({
-            id: SECURE_STATUS_MODAL_IDS.BANK,
+            modalId: SECURE_STATUS_MODAL_IDS.BANK,
             message: 'not_filtering_https',
-            header: 'secure_page',
+            header: 'is_secure_page',
+            info: 'protection_is_enabled',
         });
     }
 
