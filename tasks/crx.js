@@ -67,14 +67,10 @@ const createCrx = async (loadedFile) => {
 };
 
 const createXml = async (crx) => {
-    try {
-        const xmlBuffer = await crx.generateUpdateXML();
-        const writeXmlPath = path.resolve(WRITE_PATH, CHROME_UPDATER_FILENAME);
-        await fs.writeFile(writeXmlPath, xmlBuffer);
-        console.log(chalk.greenBright(`${CHROME_UPDATER_FILENAME} saved to ${WRITE_PATH}\n`));
-    } catch (error) {
-        console.error(chalk.redBright(error.message));
-    }
+    const xmlBuffer = await crx.generateUpdateXML();
+    const writeXmlPath = path.resolve(WRITE_PATH, CHROME_UPDATER_FILENAME);
+    await fs.writeFile(writeXmlPath, xmlBuffer);
+    console.log(chalk.greenBright(`${CHROME_UPDATER_FILENAME} saved to ${WRITE_PATH}\n`));
 };
 
 const generateChromeFiles = async () => {
@@ -98,7 +94,11 @@ const generateChromeFiles = async () => {
         // after the crx file has been created - reset the manifest
         await updateChromeManifest(chromeManifest);
     } catch (error) {
-        console.error(error.message);
+        console.error(chalk.redBright(error.message));
+        console.error(error);
+
+        // Fail the task execution
+        process.exit(1);
     }
 };
 

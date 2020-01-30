@@ -28,30 +28,26 @@ const getFirefoxManifest = async () => {
 };
 
 async function generateXpi() {
-    try {
-        const sourceDir = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX);
+    const sourceDir = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX);
 
-        const { downloadedFiles } = await webExt.default.cmd.sign({
-            apiKey,
-            apiSecret,
-            sourceDir,
-            artifactsDir: buildDir,
-        }, {
-            shouldExitProgram: false,
-        });
+    const { downloadedFiles } = await webExt.default.cmd.sign({
+        apiKey,
+        apiSecret,
+        sourceDir,
+        artifactsDir: buildDir,
+    }, {
+        shouldExitProgram: false,
+    });
 
-        if (downloadedFiles) {
-            const [downloadedXpi] = downloadedFiles;
+    if (downloadedFiles) {
+        const [downloadedXpi] = downloadedFiles;
 
-            // Rename
-            const basePath = path.dirname(downloadedXpi);
-            const xpiPath = path.join(basePath, XPI_NAME);
-            await fs.rename(downloadedXpi, xpiPath);
+        // Rename
+        const basePath = path.dirname(downloadedXpi);
+        const xpiPath = path.join(basePath, XPI_NAME);
+        await fs.rename(downloadedXpi, xpiPath);
 
-            console.log(chalk.greenBright(`File saved to ${xpiPath}\n`));
-        }
-    } catch (error) {
-        console.error(error.message);
+        console.log(chalk.greenBright(`File saved to ${xpiPath}\n`));
     }
 }
 
@@ -106,6 +102,10 @@ const generateFirefoxArtifacts = async () => {
         await createUpdateJson(manifest);
     } catch (error) {
         console.error(chalk.redBright(error.message));
+        console.error(error);
+        
+        // Fail the task execution
+        process.exit(1);
     }
 };
 
