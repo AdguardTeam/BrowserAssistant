@@ -5,7 +5,4 @@ module.exports = {
         'activeTab',
         'nativeMessaging',
     ],
-    optional_permissions: [
-        'privacy',
-    ],
 };
