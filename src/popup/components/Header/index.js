@@ -22,7 +22,7 @@ const Header = observer(() => {
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
-        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled || uiStore.isProtectionTogglePending,
+        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled,
         'widget-popup__buttons--hidden': !uiStore.isAppWorking,
     });
 

@@ -1,5 +1,5 @@
 import { RequestTypes } from '../lib/types';
-import api from './Api';
+import api from './Stub/StubApi';
 import versions from './versions';
 
 class RequestsApi {
