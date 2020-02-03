@@ -179,16 +179,6 @@ class SettingsStore {
             this.isExtensionUpdated = adguard.isExtensionUpdated;
         }
     };
-
-    @action
-    setIsAppUpToDate = (isAppUpToDate) => {
-        this.isAppUpToDate = isAppUpToDate;
-    };
-
-    @action
-    setIsExtensionUpdated = (isExtensionUpdated) => {
-        this.isExtensionUpdated = isExtensionUpdated;
-    };
 }
 
 export default SettingsStore;
