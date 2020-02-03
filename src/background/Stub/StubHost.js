@@ -3,20 +3,20 @@ import { HostResponseTypes, RequestTypes } from '../../lib/types';
 import log from '../../lib/logger';
 
 class StubHost {
-    appState = {
-        lastCheckTime: new Date().toISOString(),
-        isInstalled: true,
-        isRunning: true,
-        isProtectionEnabled: true,
-    };
-
     filteringStatus = {
+        /** @param isFilteringEnabled boolean * */
         isFilteringEnabled: true,
+        /** @param isHttpsFilteringEnabled boolean * */
         isHttpsFilteringEnabled: true,
+        /** @param isPageFilteredByUserFilter boolean * */
         isPageFilteredByUserFilter: false,
+        /** @param blockedAdsCount number * */
         blockedAdsCount: 0,
+        /** @param originalCertIssuer number * */
         totalBlockedCount: 346,
+        /** @param originalCertIssuer string * */
         originalCertIssuer: 'GTS CA 1O1',
+        /** @param originalCertStatus  {("valid" | "invalid" | "bypassed" | "notfound")}* */
         originalCertStatus: ORIGINAL_CERT_STATUS.VALID,
     };
 
@@ -25,6 +25,7 @@ class StubHost {
         const response = {
             id: `${id}_resp`,
             requestId: id,
+            /** @param lastCheckTime {("ok" | "error")} * */
             result: HostResponseTypes.ok,
             appState: this.appState,
             parameters: null,
@@ -37,35 +38,39 @@ class StubHost {
                 log.info('INIT');
 
                 this.appState = {
+                    /** @param lastCheckTime string * */
                     lastCheckTime: new Date().toISOString(),
+                    /** @param isInstalled boolean * */
                     isInstalled: true,
+                    /** @param isRunning boolean * */
                     isRunning: true,
+                    /** @param isProtectionEnabled boolean* */
                     isProtectionEnabled: true,
                 };
                 response.parameters = {
+                    /** @param version string* */
                     version: '7.3.3050.0',
+                    /** @param apiVersion string* */
                     apiVersion: '1',
+                    /** @param isValidatedOnHost boolean* */
                     isValidatedOnHost: true,
                 };
                 break;
             case RequestTypes.getCurrentFilteringState:
                 log.info('GET CURRENT FILTERING STATE');
+
                 response.parameters = this.filteringStatus;
                 if (parameters.forceStartApp) {
-                    this.appState = {
-                        ...this.appState,
-                        isRunning: true,
-                        isProtectionEnabled: true,
-                    };
+                    this.appState.isRunning = true;
+                    this.appState.isProtectionEnabled = true;
+
                     response.appState = this.appState;
                 }
                 break;
             case RequestTypes.setProtectionStatus:
                 log.info('SET PROTECTION STATUS');
-                this.appState = {
-                    ...this.appState,
-                    isRunning: parameters.isEnabled,
-                };
+
+                this.appState.isProtectionEnabled = parameters.isEnabled;
                 response.appState = this.appState;
                 break;
             case RequestTypes.setFilteringStatus:

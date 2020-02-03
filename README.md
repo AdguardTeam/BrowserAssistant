@@ -35,3 +35,8 @@ Builds will be located in the `build` directory.
 ## Artifacts
 
 - `yarn artifacts:beta`, `yarn artifacts:release` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.
+
+## "How to debug extension without AdGuard apps"
+
+- Replace `import api from './Api'` with `import api from './Stub/StubApi';` everywhere in the background script: `index.js` and `requestsApi.js`
+- Changeable parameters of host are marked as @param in the class StubHost 
