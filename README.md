@@ -39,4 +39,4 @@ Builds will be located in the `build` directory.
 ## "How to debug extension without AdGuard apps"
 
 - Replace `import api from './Api'` with `import api from './Stub/StubApi';` everywhere in the background script: `index.js` and `requestsApi.js`
-- Changeable parameters of host are marked as @param in the class StubHost 
+- Changeable parameters of host are marked as @param in the class StubHost. For example, in order to emulate disabled protection find property isProtectionEnabled marked as @param and manually in code set its value to false.

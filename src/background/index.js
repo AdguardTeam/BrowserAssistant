@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import requests from './requestsApi';
-import api from './Stub/StubApi';
+import api from './Api';
 import { MessageTypes, RequestTypes } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
