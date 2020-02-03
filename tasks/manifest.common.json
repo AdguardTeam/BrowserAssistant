@@ -22,20 +22,6 @@
         "page": "background.html",
         "persistent": true
     },
-    "content_scripts": [
-        {
-            "all_frames": true,
-            "js": [
-                "content-scripts.js"
-            ],
-            "matches": [
-                "http://*/*",
-                "https://*/*"
-            ],
-            "match_about_blank": false,
-            "run_at": "document_start"
-        }
-    ],
     "permissions": [
         "activeTab",
         "nativeMessaging"

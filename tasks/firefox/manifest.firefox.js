@@ -15,10 +15,6 @@ module.exports = {
     background: {
         page: 'background.html',
     },
-    options_ui: {
-        page: 'options.html',
-        open_in_tab: true,
-    },
     permissions: [
         'activeTab',
         'nativeMessaging',

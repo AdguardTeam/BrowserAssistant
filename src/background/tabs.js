@@ -2,7 +2,8 @@ import browser from 'webextension-polyfill';
 import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
 import log from '../lib/logger';
 import browserApi from './browserApi';
-import { DOWNLOAD_LINK } from '../lib/conts';
+import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
+
 
 class Tabs {
     async getCurrent() {
@@ -32,6 +33,8 @@ class Tabs {
     }
 
     async initAssistant() {
+        const tab = await this.getCurrent();
+        await browser.tabs.executeScript(tab.id, { file: CONTENT_SCRIPT_NAME });
         const options = { addRuleCallbackName: RequestTypes.addRule };
         this.sendMessage(MessageTypes.initAssistant, options);
     }

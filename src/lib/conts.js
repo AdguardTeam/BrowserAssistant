@@ -1,1 +1,2 @@
-export const DOWNLOAD_LINK = 'https://adguard.com/forward.html?action=getadguard&from=popup&app=browser_assistant';
+export const DOWNLOAD_LINK = 'https://adguard.com/forward.html?action=download&from=popup&app=browser_assistant';
+export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
