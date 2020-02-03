@@ -9,14 +9,10 @@ import versions from '../versions';
 import log from '../../lib/logger';
 import stubHost from './StubHost';
 
-const MAX_RETRY_TIMES = 5;
-
 class Api {
     isAppUpToDate = true;
 
     isExtensionUpdated = true;
-
-    retryTimes = MAX_RETRY_TIMES;
 
     initHandler = (response) => {
         log.info(`response ${response.id}`, response);

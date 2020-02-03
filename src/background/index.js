@@ -34,13 +34,6 @@ function handleMessage(sender) {
     }
 }
 
-try {
-    api.init();
-
-    browser.runtime.onMessage.addListener(handleMessage);
-} catch (error) {
-    log.error(error.message);
-}
 
 global.adguard = {
     requests,
@@ -48,3 +41,11 @@ global.adguard = {
     isAppUpToDate: api.isAppUpToDate,
     isExtensionUpdated: api.isExtensionUpdated,
 };
+
+try {
+    api.init();
+
+    browser.runtime.onMessage.addListener(handleMessage);
+} catch (error) {
+    log.error(error.message);
+}

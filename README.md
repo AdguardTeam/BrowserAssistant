@@ -36,7 +36,8 @@ Builds will be located in the `build` directory.
 
 - `yarn artifacts:beta`, `yarn artifacts:release` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.
 
-## "How to debug extension without AdGuard apps"
+## "How to debug extension without AdGuard application"
 
-- Replace `import api from './Api'` with `import api from './Stub/StubApi';` everywhere in the background script: `index.js` and `requestsApi.js`
-- Changeable parameters of host are marked as @param in the class StubHost. For example, in order to emulate disabled protection find property isProtectionEnabled marked as @param and manually in code set its value to false.
+- Replace `import api from './Api'` with `import api from './Stub/StubApi';` everywhere in the background script: `index.js` and `requestsApi.js`.
+- Add class `stubHost` to the global object `adguard` in the background script: (e.g., `global.adguard = { stubHost: stubHost }`).
+- Change host state variables from the browser console on the popup and background scripts (e.g., `adguard.stubHost.isProtectionEnabled = false` disables AdGuard protection). 
