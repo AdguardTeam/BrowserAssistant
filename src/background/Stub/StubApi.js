@@ -1,3 +1,8 @@
+/**
+ * Stub for the native application API.
+ * It is used for debugging purposes only.
+ */
+
 import nanoid from 'nanoid';
 import {
     AssistantTypes,
