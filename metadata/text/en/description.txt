@@ -1,38 +1,25 @@
-Meet AdGuard Assistant Browser Extension, the one our users used to know as a script in the AdGuard desktop programs for Mac and Windows, and now it is a separate browser extension! Why did we decide to make it a separate extension? It’s among best practices, more convenient to use and more independent which guarantees better functioning.
-
-Basically, former AdGuard Assistant was a common user script able to communicate with the program using a certain protocol. This script needed to be uploaded on a web page to start working — you see why we call it dependent. While separate extension is already installed in a browser.
+IMPORTANT: This extension requires AdGuard desktop app to function! Install AdGuard desktop app (for Mac or Windows) first and then use this extension to expand the app's capabilities.
 
 ## What can it do?
-### Features that used to be in the program and stay in the new version:
-Manage filtering on the website
-Now there is no need to open your desktop program and switch off ad blocking, for instance — you can do it in your browser.
 
-Block any annoying element on a website manually
+🚦 Manage filtering on the website
+It's easy to whitelist a website. Switch off (or back on) ad blocking for any website right in the Assistant's main menu.
+
+✂ Block any annoying element manually
 Say, you’ve seen an element (whether it be a text, picture, video, banner, or else) you dislike. You can easily select and delete it.
 
-Report site (if an ad snuck in by accident)
+🗑 Delete all user rules related to a web page
+While you block various elements you dislike — user filters are created. This functionality helps remove all changes by one click in case you want to go back to the way things were.
+
+🚨 Report site (if an ad snuck in by accident)
 Browsing, you were suddenly distracted by a sneaky ad? Report it immediately and it won’t stand a chance.
 
-### Features we added in the new format:
-Managing HTTPS filtering
-HTTPS is an extension of the HTTP protocol that supports encryption of transmitted information (personal data, credit card details, etc.). Why does it need filtering? You can’t remove ads on websites like YouTube, Facebook or Twitter without filtering HTTPS.
+✅ Easy access to the AdGuard desktop app
+Now it’s much easier to open settings or watch filtering log applicable to the web page you’re on — you don’t have to open the desktop app for these needs.
 
-For correct work of some websites and services (e.g., banks’ websites) HTTPS filtering has to be disabled. Our apps support this function and allow to create ‘HTTPS exceptions'. Now you can do it right from the extension!
+==============================
 
-Viewing original website certificate
-Security certificate of a website is a confirmation of its reliability.
+More on AdGuard:
+https://adguard.com/
 
-By establishing a secure connection, we replace website’s certificate with ours, but users may want to look at the original one. Now it’s possible!
-
-Tabs: Settings, Filtering log
-The first tab is the app window where you can manage AdGuard configuration settings. Filtering log tab is one more useful thing. Now it’s much easier to open settings or watch filtering log applicable to the web page you’re on — you don’t have to open the app for these needs.
-
-Deleting all user rules related to a web page
-You can block various elements you dislike — this is how user filters are created. New functionality helps remove all changes by one click in case you want to go back to the way things were.
-
-Application launch if it's disabled
-As far as new Assistant is an extension, it can operate independently, without the app, and check whether the latter has been launched or updated. In this regard, the extension is sort of a ‘supervisor' over the app, but it needs to be coupled with the app for you to enjoy the full functionality of AdGuard.
-
-And that’s not all. The functionality and capabilities of the extension will be further enhanced.
-
-This extension is an assistant of the desktop program AdGuard which you can download for Mac or Windows [here](https://adguard.com/en/products.html)
+Found a bug? Have a problem and need help? Visit our forum: https://forum.adguard.com/
