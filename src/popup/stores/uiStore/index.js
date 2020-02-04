@@ -47,7 +47,7 @@ class UiStore {
         const {
             isPageSecured, isHttps, isFilteringEnabled,
         } = this.rootStore.settingsStore;
-        // TODO: setup logic
+
         if (isHttps && this.certStatus.isInvalid) {
             return ({
                 info: 'website_cert_is_expired',

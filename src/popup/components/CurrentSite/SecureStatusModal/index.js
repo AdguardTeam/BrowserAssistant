@@ -11,6 +11,7 @@ const SecureStatusModal = observer(({
 }) => {
     const { uiStore } = useContext(rootStore);
     const { secureStatusModalInfo } = uiStore;
+
     const modalClass = classNames({
         modal: true,
         'modal__secure-status': secureStatusModalInfo.modalId === SECURE_STATUS_MODAL_IDS.SECURE,
