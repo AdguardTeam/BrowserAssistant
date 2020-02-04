@@ -14,6 +14,10 @@ export const RequestTypes = {
     updateApp: 'updateApp',
 };
 
+export const HostRequestTypes = {
+    hostRequest: 'hostRequest',
+};
+
 export const ResponseTypesPrefixes = {
     ADG: 'ADG',
     ADG_INIT: 'ADG_INIT',

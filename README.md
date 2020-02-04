@@ -35,3 +35,18 @@ Builds will be located in the `build` directory.
 ## Artifacts
 
 - `yarn artifacts:beta`, `yarn artifacts:release` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.
+
+## How to debug without AdGuard application
+
+- Replace `Api.js` content with the following:
+
+  ```
+  import api from './Stub/StubApi';
+  import stubHost from './Stub/StubHost';
+
+  // Expose stubHost to the global scope
+  global.stubHost = stubHost;
+  export default api;
+  ```
+
+- Whenever you need to change the API state, do it via the browser console (e.g., `adguard.stubHost.isProtectionEnabled = false` disables AdGuard protection).
