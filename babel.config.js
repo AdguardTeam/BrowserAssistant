@@ -4,8 +4,8 @@ module.exports = (api) => {
         presets: [['@babel/preset-env', {
             targets: {
                 chrome: '55',
-                ie: '15',
-                firefox: '52',
+                edge: '79',
+                firefox: '54',
                 opera: '42',
             },
         }], '@babel/preset-react'],
