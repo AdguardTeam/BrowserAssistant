@@ -1,18 +1,29 @@
 .settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 13.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &--short {
+        height: 9.2rem;
+
+        & > settings__main {
+            padding-top: 4.7rem;
+        }
+    }
+
     &__main {
-        padding: 8.7rem 2.4rem 1.5rem;
+        padding: 1.5rem 2.4rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        &--small-padding {
-            padding-top: 4.7rem;
-        }
     }
 }
 
 .horizontal-line {
     margin: 0 1.6rem;
-    width: 90%;
+    width: 28.8rem;
     color: var(--grayd8);
 }

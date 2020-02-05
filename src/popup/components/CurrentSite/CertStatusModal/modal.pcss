@@ -39,12 +39,22 @@
     }
 
     &__insecure-status {
-        height: 10.8rem;
+        height: 11.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        & > .modal__text--message {
+            height: 6.3rem;
+            line-height: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     &__header {
         font-size: 1.6rem;
         line-height: 2.2rem;
+        height: 2.2rem;
         color: var(--gray-base);
         overflow: hidden;
         text-overflow: ellipsis;
@@ -66,6 +76,7 @@
     &__text {
         font-size: 1.2rem;
         max-width: 100%;
+        line-height: 1.4rem;
 
         &--message {
             padding-top: 0.8rem;
@@ -80,12 +91,23 @@
         }
 
         &--upper {
-            margin: 1.6rem 4.2rem 0 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 7.5rem;
+            line-height: 1.6rem;
+            width: 25.6rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--additional {
-            margin: 0.8rem 0 0;
-            max-width: 12rem;
+            margin-top: 0.8rem;
+            width: 12rem;
+            height: 3.2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--container {

@@ -18,14 +18,14 @@ const Settings = observer(() => {
         }
         toggleFiltering();
     };
-    const settingsClass = classNames({
-        settings__main: true,
-        'settings__main--small-padding': uiStore.isPageFilteredByUserFilter,
+    const settingClass = classNames({
+        settings: true,
+        'settings--short': uiStore.isPageFilteredByUserFilter,
     });
 
     return (
-        <div className="settings">
-            <div className={settingsClass}>
+        <div className={settingClass}>
+            <div className="settings__main">
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
                     checked={isPageSecured ? true : isFilteringEnabled}

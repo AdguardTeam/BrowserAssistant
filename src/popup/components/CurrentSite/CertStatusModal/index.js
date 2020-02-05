@@ -37,10 +37,6 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         }
     };
 
-    const bodyClass = classNames({
-        'height--extended': certStatus.isInvalid && originalCertIssuer,
-    });
-
     const modalClass = classNames({
         'modal modal__cert-status': true,
         'modal__cert-status--small': certStatus.isNotFound || certStatus.isBypassed
@@ -52,9 +48,8 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
     });
 
     const lowerInfoClass = classNames({
-        'modal__info--lower': true,
-        'modal__info--lower--smaller-padding': certStatus.isInvalid,
-        'modal__info--lower--no-padding': isHttps && !isFilteringEnabled,
+        'modal__info--lower': certStatus.isValid,
+        'modal__info--lower--no-padding': certStatus.isInvalid || (isHttps && !isFilteringEnabled),
     });
 
     return (
@@ -63,16 +58,15 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             className={modalClass}
             overlayClassName="overlay overlay--fullscreen"
             contentLabel="Certificate Modal"
-            bodyOpenClassName={bodyClass}
             onRequestClose={onRequestClose}
             shouldFocusAfterRender={false}
         >
             {isFilteringEnabled && (
                 <div className="modal__info--upper">
-                    <span className="modal__header--container">
-                        <span className="modal__header">{translator.translate('adg_https')}</span>
-                        <p className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</p>
-                    </span>
+                    <div className="modal__header--container">
+                        <div className="modal__header">{translator.translate('adg_https')}</div>
+                        <div className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</div>
+                    </div>
                     <Switcher
                         id={SWITCHER_IDS.HTTPS_SWITCHER}
                         checked={!certStatus.isInvalid && isHttpsFilteringEnabled && isHttps}
@@ -83,15 +77,15 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                 </div>
             )}
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
-                <p className="modal__text modal__text--red modal__text--upper">
+                <div className="modal__text modal__text--red modal__text--upper">
                     {translator.translate(CERT_STATES[originalCertStatus])}
-                </p>
+                </div>
             )}
             <div className={lowerInfoClass}>
                 {originalCertIssuer && (certStatus.isValid || certStatus.isInvalid)
                 && (
                     <>
-                        <p className="modal__text modal__text--notion">{translator.translate('verified_by')}</p>
+                        <div className="modal__text modal__text--notion">{translator.translate('verified_by')}</div>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         <div className="modal__text--container">
                             {certStatus.isInvalid && <div className="modal__text modal__text--red">Expired</div>}
