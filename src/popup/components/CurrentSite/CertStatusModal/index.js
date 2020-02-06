@@ -15,8 +15,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         setHttpsFiltering,
         isHttpsFilteringEnabled,
         originalCertIssuer,
-        isHttps,
-        isPageSecured,
+        pageProtocol,
         originalCertStatus,
         isFilteringEnabled,
     } = settingsStore;
@@ -49,7 +48,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
 
     const lowerInfoClass = classNames({
         'modal__info--lower': certStatus.isValid,
-        'modal__info--lower--no-padding': certStatus.isInvalid || (isHttps && !isFilteringEnabled),
+        'modal__info--lower--no-padding': certStatus.isInvalid || (pageProtocol.isHttps && !isFilteringEnabled),
     });
 
     return (
@@ -69,9 +68,10 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                     </div>
                     <Switcher
                         id={SWITCHER_IDS.HTTPS_SWITCHER}
-                        checked={!certStatus.isInvalid && isHttpsFilteringEnabled && isHttps}
+                        checked={!certStatus.isInvalid && pageProtocol.isHttps
+                        && isHttpsFilteringEnabled}
                         onClick={toggleHttpsFiltering}
-                        isPageSecured={isPageSecured}
+                        isSecured={pageProtocol.isSecured}
                         isDisabled={certStatus.isInvalid}
                     />
                 </div>
@@ -88,7 +88,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                         <div className="modal__text modal__text--notion">{translator.translate('verified_by')}</div>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         <div className="modal__text--container">
-                            {certStatus.isInvalid && <div className="modal__text modal__text--red">Expired</div>}
+                            {certStatus.isInvalid && <div className="modal__text modal__text--red modal__text--capitalized">{translator.translate('expired')}</div>}
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"

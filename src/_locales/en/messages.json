@@ -5,17 +5,11 @@
     "description": {
         "message": "Extension for the AdGuard desktop app. Manages filtering right from the browser, hides annoying elements in two clicks."
     },
-    "preparing": {
-        "message": "Preparing..."
-    },
     "adg_is_not_installed": {
         "message": "AdGuard is not installed or configured incorrectly"
     },
     "get_adguard": {
         "message": "Get AdGuard"
-    },
-    "download": {
-        "message": "Download"
     },
     "adg_is_not_updated": {
         "message": "AdGuard is not updated"
@@ -127,5 +121,8 @@
     },
     "website_was_bypassed": {
         "message": "Website was bypassed"
+    },
+    "expired": {
+        "message": "Expired"
     }
 }

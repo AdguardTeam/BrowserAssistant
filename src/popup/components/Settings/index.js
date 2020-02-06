@@ -8,12 +8,12 @@ import { SWITCHER_IDS } from '../../stores/consts';
 
 const Settings = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
-    const { isFilteringEnabled, isPageSecured } = settingsStore;
+    const { isFilteringEnabled, pageProtocol } = settingsStore;
     const toggleFiltering = () => {
         settingsStore.setFiltering(!isFilteringEnabled);
     };
     const onClick = () => {
-        if (settingsStore.isPageSecured) {
+        if (pageProtocol.isSecured) {
             return;
         }
         toggleFiltering();
@@ -28,10 +28,10 @@ const Settings = observer(() => {
             <div className="settings__main">
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
-                    checked={isPageSecured ? true : isFilteringEnabled}
+                    checked={pageProtocol.isSecured ? true : isFilteringEnabled}
                     onClick={onClick}
-                    isPageSecured={isPageSecured}
-                    isDisabled={isPageSecured}
+                    isSecured={pageProtocol.isSecured}
+                    isDisabled={pageProtocol.isSecured}
                     tabIndex={uiStore.globalTabIndex}
                 />
             </div>

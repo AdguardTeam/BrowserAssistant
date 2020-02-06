@@ -1,5 +1,5 @@
 import {
-    action, observable, runInAction,
+    action, computed, observable, runInAction,
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, protocolToPortMap } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
@@ -16,13 +16,11 @@ class SettingsStore {
 
     @observable currentPort = 0;
 
-    @observable isHttps = true;
+    @observable protocol = '';
 
     @observable referrer = '';
 
     @observable originalCertIssuer = '';
-
-    @observable isPageSecured = false;
 
     @observable isHttpsFilteringEnabled = false;
 
@@ -42,6 +40,14 @@ class SettingsStore {
 
     @observable isSetupCorrectly = true;
 
+    @computed get pageProtocol() {
+        return ({
+            isHttp: this.protocol === 'http:',
+            isHttps: this.protocol === 'https:',
+            isSecured: this.protocol !== 'http:' && this.protocol !== 'https:',
+        });
+    }
+
     @action
     getReferrer = async () => {
         const referrer = await adguard.tabs.getReferrer();
@@ -60,19 +66,7 @@ class SettingsStore {
 
                 this.currentTabHostname = hostname || this.currentURL;
 
-                switch (protocol) {
-                    case 'https:':
-                        this.setIsHttps(true);
-                        this.setSecure(false);
-                        break;
-                    case 'http:':
-                        this.setIsHttps(false);
-                        this.setSecure(false);
-                        break;
-                    default:
-                        this.setIsHttps(false);
-                        this.setSecure(true);
-                }
+                this.protocol = protocol;
 
                 const defaultPort = protocolToPortMap[protocol] || 0;
 
@@ -86,16 +80,6 @@ class SettingsStore {
     @action
     openDownloadPage = () => {
         adguard.tabs.openDownloadPage();
-    };
-
-    @action
-    setIsHttps = (isHttps) => {
-        this.isHttps = isHttps;
-    };
-
-    @action
-    setSecure = (isPageSecured) => {
-        this.isPageSecured = isPageSecured;
     };
 
     @action

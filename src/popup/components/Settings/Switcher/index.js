@@ -4,11 +4,11 @@ import translator from '../../../../lib/translator';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, checked, onClick, isPageSecured, tabIndex, isDisabled,
+    id, checked, onClick, isSecured, tabIndex, isDisabled,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,
-        'switcher__text--secured': isPageSecured,
+        'switcher__text--secured': isSecured,
     });
 
     const switcherClass = classNames({

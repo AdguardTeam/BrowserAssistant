@@ -45,40 +45,42 @@ class UiStore {
 
     @computed get secureStatusModalInfo() {
         const {
-            isPageSecured, isHttps, isFilteringEnabled,
+            pageProtocol, isFilteringEnabled,
         } = this.rootStore.settingsStore;
 
-        if (isHttps && this.certStatus.isInvalid) {
+        const { certStatus } = this;
+
+        if (pageProtocol.isHttps && certStatus.isInvalid) {
             return ({
                 info: 'website_cert_is_expired',
             });
         }
 
-        if (isHttps && this.certStatus.isNotFound) {
+        if (pageProtocol.isHttps && certStatus.isNotFound) {
             return ({
                 info: 'website_cert_was_not_found',
             });
         }
 
-        if (isHttps && this.certStatus.isBypassed) {
+        if (pageProtocol.isHttps && certStatus.isBypassed) {
             return ({
                 info: 'website_was_bypassed',
             });
         }
 
-        if (isHttps && isFilteringEnabled) {
+        if (pageProtocol.isHttps && isFilteringEnabled) {
             return ({
                 info: 'protection_is_enabled',
             });
         }
 
-        if (isHttps && !isFilteringEnabled) {
+        if (pageProtocol.isHttps && !isFilteringEnabled) {
             return ({
                 info: 'protection_is_disabled',
             });
         }
 
-        if (!isHttps && !isPageSecured) {
+        if (pageProtocol.isHttp) {
             return ({
                 modalId: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
                 message: 'site_not_using_private_protection',
@@ -87,7 +89,7 @@ class UiStore {
             });
         }
 
-        if (isPageSecured) {
+        if (pageProtocol.isSecured) {
             return ({
                 modalId: SECURE_STATUS_MODAL_IDS.SECURE,
                 message: 'nothing_to_block_here',

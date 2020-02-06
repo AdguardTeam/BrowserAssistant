@@ -90,6 +90,10 @@
             color: var(--red);
         }
 
+        &--capitalized {
+            text-transform: capitalize;
+        }
+
         &--upper {
             display: flex;
             flex-direction: column;
@@ -121,6 +125,7 @@
         &--link {
             cursor: pointer;
             text-decoration: underline;
+            text-transform: capitalize;
             width: fit-content;
             transition: color 300ms ease;
 

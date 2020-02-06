@@ -11,10 +11,9 @@ import translator from '../../../lib/translator';
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
     const {
-        isHttps,
+        pageProtocol,
         isHttpsFilteringEnabled,
         isFilteringEnabled,
-        isPageSecured,
         currentTabHostname,
         originalCertIssuer,
     } = settingsStore;
@@ -32,14 +31,14 @@ const CurrentSite = observer(() => {
     } = uiStore;
 
     const getHandlerForHttpsSite = (handler) => {
-        if (isHttps) {
+        if (pageProtocol.isHttps) {
             return handler;
         }
         return undefined;
     };
 
     const getHandlerForHttpSite = (handler) => {
-        if (!isHttps) {
+        if (!pageProtocol.isHttps) {
             return handler;
         }
         return undefined;
@@ -47,25 +46,25 @@ const CurrentSite = observer(() => {
 
     const iconClass = classNames({
         'current-site__icon': true,
-        'current-site__icon--checkmark': isPageSecured,
-        'current-site__icon--lock': isHttps && certStatus.isValid,
-        'current-site__icon--lock--yellow': isHttps && !isHttpsFilteringEnabled,
-        'current-site__icon--warning--red': isHttps && certStatus.isInvalid,
-        'current-site__icon--warning--yellow': isHttps && (certStatus.isBypassed || certStatus.isNotFound),
-        'current-site__icon--warning--gray': !isHttps && !isPageSecured,
-        'current-site__icon--warning': (isHttps && !certStatus.isValid) || (!isHttps && !isPageSecured),
+        'current-site__icon--checkmark': pageProtocol.isSecured,
+        'current-site__icon--lock': pageProtocol.isHttps && certStatus.isValid,
+        'current-site__icon--lock--yellow': pageProtocol.isHttps && !isHttpsFilteringEnabled,
+        'current-site__icon--warning--red': pageProtocol.isHttps && certStatus.isInvalid,
+        'current-site__icon--warning--yellow': pageProtocol.isHttps && (certStatus.isBypassed || certStatus.isNotFound),
+        'current-site__icon--warning--gray': pageProtocol.isHttp,
+        'current-site__icon--warning': (pageProtocol.isHttps && !certStatus.isValid) || pageProtocol.isHttp,
         'current-site__icon--disabled-cursor': (!isFilteringEnabled && !certStatus.isValid) || !originalCertIssuer,
     });
 
     const securedClass = classNames({
         'current-site__title': true,
-        'current-site__title--secured': isPageSecured,
+        'current-site__title--secured': pageProtocol.isSecured,
     });
 
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
-        'current-site__secure-status--gray': isPageSecured || isFilteringEnabled,
-        'current-site__secure-status--red': (isHttps && (!isFilteringEnabled || !certStatus.isValid)) || (!isHttps && !isPageSecured),
+        'current-site__secure-status--gray': pageProtocol.isSecured || isFilteringEnabled,
+        'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || !certStatus.isValid)) || pageProtocol.isHttp,
         'current-site__secure-status--modal': modalId,
     });
 
@@ -100,6 +99,12 @@ const CurrentSite = observer(() => {
             { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.SHORT);
     };
 
+    const shouldOpenCertStatusModal = (isCertStatusModalOpen
+        && (!!originalCertIssuer
+            || (!originalCertIssuer && isFilteringEnabled)
+        )
+    );
+
     return (
         <div className="current-site__container">
             <div className={securedClass}>
@@ -114,9 +119,9 @@ const CurrentSite = observer(() => {
                     onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
                     onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
                 >
-                    {!isPageSecured && ((isCertStatusModalOpen
-                        && (!!originalCertIssuer || (!originalCertIssuer && isFilteringEnabled)))
-                        || (!isHttps && isPageStatusModalOpen))
+                    {!pageProtocol.isSecured
+                    && (shouldOpenCertStatusModal
+                        || (!pageProtocol.isHttps && isPageStatusModalOpen))
                     && <div className="arrow-up" />}
                 </div>
                 <div className="current-site__name">
@@ -124,14 +129,15 @@ const CurrentSite = observer(() => {
                 </div>
 
                 <CertStatusModal
-                    isOpen={isHttps && isCertStatusModalOpen
-                    && (!!originalCertIssuer || (!originalCertIssuer && isFilteringEnabled))}
+                    isOpen={pageProtocol.isHttps && shouldOpenCertStatusModal}
                     onRequestClose={resetCertStatusModalState}
                 />
                 <SecureStatusModal
                     isOpen={modalId
-                    && ((isPageSecured && isPageStatusModalOpen)
-                        || (!isHttps && (isPageStatusModalOpen || isCertStatusModalOpen)))}
+                    && ((pageProtocol.isSecured && isPageStatusModalOpen)
+                        || (!pageProtocol.isHttps
+                            && (isPageStatusModalOpen || isCertStatusModalOpen))
+                    )}
                     message={message}
                     header={header}
                 />
