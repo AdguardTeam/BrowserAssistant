@@ -79,25 +79,20 @@ export const HTTP_FILTERING_STATUS = {
 
 export const secureStatusModalStates = {
     [PROTOCOLS.HTTPS]: {
-        [ORIGINAL_CERT_STATUS.INVALID]:
-            { info: 'website_cert_is_expired' },
-        [ORIGINAL_CERT_STATUS.NOTFOUND]:
-            { info: 'website_cert_was_not_found' },
-        [ORIGINAL_CERT_STATUS.BYPASSED]: {
-            info: 'website_was_bypassed',
-        },
+        [ORIGINAL_CERT_STATUS.INVALID]: { info: 'website_cert_is_expired' },
+        [ORIGINAL_CERT_STATUS.NOTFOUND]: { info: 'website_cert_was_not_found' },
+        [ORIGINAL_CERT_STATUS.BYPASSED]: { info: 'website_was_bypassed' },
         [ORIGINAL_CERT_STATUS.VALID]: {
             [HTTP_FILTERING_STATUS.ENABLED]: { info: 'protection_is_enabled' },
             [HTTP_FILTERING_STATUS.DISABLED]: { info: 'protection_is_disabled' },
         },
     },
-    [PROTOCOLS.HTTP]:
-        {
-            modalId: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
-            message: 'site_not_using_private_protection',
-            header: 'not_secure',
-            info: 'not_secure',
-        },
+    [PROTOCOLS.HTTP]: {
+        modalId: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
+        message: 'site_not_using_private_protection',
+        header: 'not_secure',
+        info: 'not_secure',
+    },
     [PROTOCOLS.SECURED]: {
         modalId: SECURE_STATUS_MODAL_IDS.SECURE,
         message: 'nothing_to_block_here',
