@@ -1,7 +1,7 @@
 import {
     action, computed, observable, runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, protocolToPortMap } from '../consts';
+import { ORIGINAL_CERT_STATUS, PROTOCOLS, protocolToPortMap } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
@@ -16,7 +16,7 @@ class SettingsStore {
 
     @observable currentPort = 0;
 
-    @observable protocol = '';
+    @observable protocol = PROTOCOLS.HTTPS;
 
     @observable referrer = '';
 
@@ -42,9 +42,9 @@ class SettingsStore {
 
     @computed get pageProtocol() {
         return ({
-            isHttp: this.protocol === 'http:',
-            isHttps: this.protocol === 'https:',
-            isSecured: this.protocol !== 'http:' && this.protocol !== 'https:',
+            isHttp: this.protocol === PROTOCOLS.HTTP,
+            isHttps: this.protocol === PROTOCOLS.HTTPS,
+            isSecured: this.protocol === PROTOCOLS.SECURED,
         });
     }
 
@@ -66,10 +66,10 @@ class SettingsStore {
 
                 this.currentTabHostname = hostname || this.currentURL;
 
-                this.protocol = protocol;
+                const formattedProtocol = protocol.slice(0, -1).toUpperCase();
+                this.protocol = PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
 
-                const defaultPort = protocolToPortMap[protocol] || 0;
-
+                const defaultPort = protocolToPortMap[this.protocol];
                 this.currentPort = port === '' ? defaultPort : Number(port);
             });
         } catch (error) {

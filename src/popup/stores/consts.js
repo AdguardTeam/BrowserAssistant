@@ -1,6 +1,7 @@
 export const protocolToPortMap = {
-    'https:': 443,
-    'http:': 80,
+    HTTPS: 443,
+    HTTP: 80,
+    SECURED: 0,
 };
 
 export const ORIGINAL_CERT_STATUS = {
@@ -63,4 +64,50 @@ export const eventTypeToModalStateMap = {
     blur: { [modalStatesNames.isFocused]: false },
     keydown: { [modalStatesNames.isEntered]: true },
     mousedown: { [modalStatesNames.isClicked]: true },
+};
+
+export const PROTOCOLS = {
+    HTTPS: 'HTTPS',
+    HTTP: 'HTTP',
+    SECURED: 'SECURED',
+};
+
+export const HTTP_FILTERING_STATUS = {
+    ENABLED: 'ENABLED',
+    DISABLED: 'DISABLED',
+};
+
+export const secureStatusModalStates = {
+    [PROTOCOLS.HTTPS]: {
+        [ORIGINAL_CERT_STATUS.INVALID]:
+            { info: 'website_cert_is_expired' },
+        [ORIGINAL_CERT_STATUS.NOTFOUND]:
+            { info: 'website_cert_was_not_found' },
+        [ORIGINAL_CERT_STATUS.BYPASSED]: {
+            info: 'website_was_bypassed',
+        },
+        [ORIGINAL_CERT_STATUS.VALID]: {
+            [HTTP_FILTERING_STATUS.ENABLED]: { info: 'protection_is_enabled' },
+            [HTTP_FILTERING_STATUS.DISABLED]: { info: 'protection_is_disabled' },
+        },
+    },
+    [PROTOCOLS.HTTP]:
+        {
+            modalId: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
+            message: 'site_not_using_private_protection',
+            header: 'not_secure',
+            info: 'not_secure',
+        },
+    [PROTOCOLS.SECURED]: {
+        modalId: SECURE_STATUS_MODAL_IDS.SECURE,
+        message: 'nothing_to_block_here',
+        header: 'secure_page',
+        info: 'is_secure_page',
+    },
+    default: {
+        modalId: SECURE_STATUS_MODAL_IDS.BANK,
+        message: 'not_filtering_https',
+        header: 'is_secure_page',
+        info: 'protection_is_enabled',
+    },
 };
