@@ -50,3 +50,11 @@ Builds will be located in the `build` directory.
   ```
 
 - Whenever you need to change the API state, do it via the browser console (e.g., `adguard.stubHost.isProtectionEnabled = false` disables AdGuard protection).
+
+## Minimum supported browser versions
+| Browser                 	| Version 	|
+|-------------------------	|:-------:	|
+| Chromium Based Browsers 	|    55   	|
+| Firefox                 	|    54   	|
+| Opera                   	|    42   	|
+| Edge                    	|    79   	|
