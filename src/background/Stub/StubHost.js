@@ -174,6 +174,7 @@ class StubHost {
 
                 this.filteringStatus.isFilteringEnabled = parameters.isEnabled;
                 this.filteringStatus.isHttpsFilteringEnabled = parameters.isHttpsEnabled;
+                this.filteringStatus.isPageFilteredByUserFilter = true;
                 break;
             case RequestTypes.addRule:
                 log.info('ADD RULE');
@@ -183,6 +184,10 @@ class StubHost {
                 break;
             case RequestTypes.removeCustomRules:
                 log.info('REMOVE CUSTOM RULES');
+
+                this.filteringStatus.isFilteringEnabled = true;
+                this.filteringStatus.isHttpsFilteringEnabled = true;
+                this.filteringStatus.isPageFilteredByUserFilter = false;
                 break;
             case RequestTypes.openOriginalCert:
                 log.info('OPEN ORIGINAL CERT');

@@ -40,12 +40,15 @@ global.adguard = {
     tabs,
     isAppUpToDate: api.isAppUpToDate,
     isExtensionUpdated: api.isExtensionUpdated,
+    isSetupCorrectly: tabs.isSetupCorrectly,
 };
 
 try {
     api.init();
+    tabs.updateIconColor();
 
     browser.runtime.onMessage.addListener(handleMessage);
+    browser.tabs.onActiveChanged.addListener(tabs.updateIconColor);
 } catch (error) {
     log.error(error.message);
 }

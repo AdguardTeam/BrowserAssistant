@@ -14,8 +14,4 @@ module.exports = {
     background: {
         page: 'background.html',
     },
-    permissions: [
-        'activeTab',
-        'nativeMessaging',
-    ],
 };

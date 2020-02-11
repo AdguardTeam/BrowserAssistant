@@ -58,3 +58,7 @@ Builds will be located in the `build` directory.
 | Firefox                 	|    54   	|
 | Opera                   	|    42   	|
 | Edge                    	|    79   	|
+
+## Permissions
+- Permission `tabs` allows to indicate the status of websites by changing the icon color
+- Permission `nativeMessaging` allows to communicate with the native host

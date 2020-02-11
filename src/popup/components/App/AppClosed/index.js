@@ -111,6 +111,7 @@ const AppClosed = observer(() => {
     const handleClick = (e) => {
         e.target.blur();
         if (onClick) {
+            adguard.tabs.updateIconColor();
             onClick();
         }
     };

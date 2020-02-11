@@ -5,17 +5,11 @@
     "description": {
         "message": "Расширение к десктопной программе AdGuard. Помогает управлять фильтрацией прямо в браузере."
     },
-    "preparing": {
-        "message": "Подготовка..."
-    },
     "adg_is_not_installed": {
         "message": "AdGuard не установлен или настроен неправильно"
     },
     "get_adguard": {
         "message": "Получить AdGuard"
-    },
-    "download": {
-        "message": "Скачать"
     },
     "adg_is_not_updated": {
         "message": "AdGuard не обновлён"

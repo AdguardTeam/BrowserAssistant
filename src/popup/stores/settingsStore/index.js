@@ -1,8 +1,7 @@
 import {
-    action, observable, runInAction,
+    action, computed, observable, runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, protocolToPortMap } from '../consts';
-import { getUrlProperties } from '../../../lib/helpers';
+import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 
 class SettingsStore {
@@ -16,13 +15,11 @@ class SettingsStore {
 
     @observable currentPort = 0;
 
-    @observable isHttps = true;
+    @observable currentProtocol = PROTOCOLS.HTTPS;
 
     @observable referrer = '';
 
     @observable originalCertIssuer = '';
-
-    @observable isPageSecured = false;
 
     @observable isHttpsFilteringEnabled = false;
 
@@ -40,7 +37,15 @@ class SettingsStore {
 
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
-    @observable isSetupCorrectly = true;
+    @observable isSetupCorrectly = adguard.isSetupCorrectly;
+
+    @computed get pageProtocol() {
+        return ({
+            isHttp: this.currentProtocol === PROTOCOLS.HTTP,
+            isHttps: this.currentProtocol === PROTOCOLS.HTTPS,
+            isSecured: this.currentProtocol === PROTOCOLS.SECURED,
+        });
+    }
 
     @action
     getReferrer = async () => {
@@ -53,49 +58,27 @@ class SettingsStore {
     @action
     getCurrentTabHostname = async () => {
         try {
-            const { url } = await adguard.tabs.getCurrent();
+            const {
+                currentURL,
+                currentPort,
+                currentProtocol,
+                hostname,
+            } = await adguard.tabs.getCurrentTabUrlProperties();
+
             runInAction(() => {
-                this.currentURL = url;
-                const { hostname, port, protocol } = getUrlProperties(url);
-
+                this.currentURL = currentURL;
                 this.currentTabHostname = hostname || this.currentURL;
-
-                switch (protocol) {
-                    case 'https:':
-                        this.setIsHttps(true);
-                        this.setSecure(false);
-                        break;
-                    case 'http:':
-                        this.setIsHttps(false);
-                        this.setSecure(false);
-                        break;
-                    default:
-                        this.setIsHttps(false);
-                        this.setSecure(true);
-                }
-
-                const defaultPort = protocolToPortMap[protocol] || 0;
-
-                this.currentPort = port === '' ? defaultPort : Number(port);
+                this.currentPort = currentPort;
+                this.currentProtocol = currentProtocol;
             });
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
     @action
     openDownloadPage = () => {
         adguard.tabs.openDownloadPage();
-    };
-
-    @action
-    setIsHttps = (isHttps) => {
-        this.isHttps = isHttps;
-    };
-
-    @action
-    setSecure = (isPageSecured) => {
-        this.isPageSecured = isPageSecured;
     };
 
     @action
@@ -107,6 +90,7 @@ class SettingsStore {
     @action
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
+        adguard.tabs.updateIconColor();
         this.rootStore.requestsStore.setFilteringStatus();
         this.rootStore.uiStore.setPageFilteredByUserFilter(true);
     };
@@ -163,11 +147,6 @@ class SettingsStore {
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
-    };
-
-    @action
-    setSetupCorrectly = (isSetupCorrectly) => {
-        this.isSetupCorrectly = isSetupCorrectly;
     };
 
     @action

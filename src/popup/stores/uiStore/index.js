@@ -2,7 +2,11 @@ import {
     action, observable, computed,
 } from 'mobx';
 import {
-    defaultModalState, eventTypeToModalStateMap, ORIGINAL_CERT_STATUS, SECURE_STATUS_MODAL_IDS,
+    defaultModalState,
+    eventTypeToModalStateMap,
+    ORIGINAL_CERT_STATUS,
+    HTTP_FILTERING_STATUS,
+    secureStatusModalStates,
 } from '../consts';
 import { checkSomeIsTrue } from '../../helpers';
 
@@ -45,30 +49,23 @@ class UiStore {
 
     @computed get secureStatusModalInfo() {
         const {
-            isPageSecured, isHttps, isFilteringEnabled, isHttpsFilteringEnabled,
+            pageProtocol, currentProtocol, originalCertStatus, isFilteringEnabled,
         } = this.rootStore.settingsStore;
+        const { certStatus } = this;
 
-        if (!isHttps && !isPageSecured) {
-            return ({
-                id: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
-                message: 'site_not_using_private_protection',
-                header: 'not_secure',
-            });
-        }
+        let modalInfo = secureStatusModalStates[currentProtocol];
 
-        if (isPageSecured || !isFilteringEnabled || isHttpsFilteringEnabled) {
-            return ({
-                id: SECURE_STATUS_MODAL_IDS.SECURE,
-                message: 'nothing_to_block_here',
-                header: 'secure_page',
-            });
+        if (pageProtocol.isHttps) {
+            modalInfo = modalInfo[originalCertStatus];
+
+            if (certStatus.isValid) {
+                const protectionStatus = isFilteringEnabled
+                    ? HTTP_FILTERING_STATUS.ENABLED : HTTP_FILTERING_STATUS.DISABLED;
+
+                modalInfo = modalInfo[protectionStatus];
+            }
         }
-        // TODO: get information about bank page (from host)
-        return ({
-            id: SECURE_STATUS_MODAL_IDS.BANK,
-            message: 'not_filtering_https',
-            header: 'secure_page',
-        });
+        return modalInfo || secureStatusModalStates.default;
     }
 
     @computed get certStatus() {

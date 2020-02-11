@@ -27,8 +27,8 @@ const SecureStatusModal = observer(({
             contentLabel="Secure Status Modal"
             shouldFocusAfterRender={false}
         >
-            <header className="modal__header">{translator.translate(header)}</header>
-            <p className="modal__text">{translator.translate(message)}</p>
+            {header && <header className="modal__header">{translator.translate(header)}</header>}
+            {message && <p className="modal__text">{translator.translate(message)}</p>}
         </Modal>
     );
 });

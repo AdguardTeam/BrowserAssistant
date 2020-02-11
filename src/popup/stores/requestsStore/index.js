@@ -59,6 +59,8 @@ class RequestsStore {
     @action
     removeCustomRules = async () => {
         this.rootStore.uiStore.setExtensionReloading(true);
+        adguard.tabs.updateIconColor();
+
         try {
             await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
@@ -115,6 +117,7 @@ class RequestsStore {
     @action
     setProtectionStatus = async (shouldEnableProtection) => {
         this.rootStore.uiStore.setExtensionReloading(true);
+        adguard.tabs.updateIconColor();
         try {
             const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
