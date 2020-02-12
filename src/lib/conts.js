@@ -2,6 +2,5 @@ export const DOWNLOAD_LINK = 'https://adguard.com/forward.html?action=download&f
 export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 export const ICON_COLORS = {
     GREEN: 'green',
-    ORANGE: 'orange',
     GREY: 'grey',
 };

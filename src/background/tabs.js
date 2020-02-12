@@ -4,10 +4,8 @@ import log from '../lib/logger';
 import browserApi from './browserApi';
 import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import requests from './requestsApi';
-import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
-import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../popup/stores/consts';
-import api from './Api';
 import actions from './actions';
+import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
 
 class Tabs {
     isSetupCorrectly = true;
@@ -67,54 +65,24 @@ class Tabs {
         };
     };
 
-    getStatus = async () => {
-        const {
-            currentURL,
-            currentPort,
-            currentProtocol,
-        } = await this.getCurrentTabUrlProperties();
-
+    getFilteringStatus = async () => {
+        const { currentURL, currentPort } = await this.getCurrentTabUrlProperties();
         const response = await requests.getCurrentFilteringState(currentURL, currentPort);
-        const { originalCertStatus, isFilteringEnabled } = response.parameters;
 
-        const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
-        const appState = {
-            isInstalled,
-            isRunning,
-            isProtectionEnabled,
-        };
-
-        return {
-            appState,
-            originalCertStatus,
-            isFilteringEnabled,
-            currentProtocol,
-        };
+        return response.parameters && response.parameters.isFilteringEnabled;
     };
 
-    updateIconColor = async () => {
-        const { id } = await this.getCurrent();
-        const {
-            appState,
-            originalCertStatus,
-            isFilteringEnabled,
-            currentProtocol,
-        } = await this.getStatus();
+    updateIconColor = async (isFilteringEnabled, tabId) => {
+        const id = tabId || (await this.getCurrent()).id;
 
-        const states = Object.values(appState);
-        states.push(this.isSetupCorrectly, api.isAppUpToDate, api.isExtensionUpdated);
-
-        if (!states.every(Boolean) || originalCertStatus !== ORIGINAL_CERT_STATUS.VALID) {
-            return actions.setIconWarning(id);
-        }
-        if (currentProtocol === PROTOCOLS.SECURED) {
-            return actions.setIconEnabled(id);
-        }
-        if (!isFilteringEnabled) {
-            return actions.setIconDisabled(id);
-        }
-        return actions.setIconEnabled(id);
+        return isFilteringEnabled ? actions.setIconEnabled(id) : actions.setIconDisabled(id);
     };
+
+    updateIconColorListener = async ({ tabId }) => {
+        const isFilteringEnabled = await this.getFilteringStatus();
+
+        this.updateIconColor(isFilteringEnabled, tabId);
+    }
 }
 
 const tabs = new Tabs();

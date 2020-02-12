@@ -16,10 +16,6 @@ export const Prefs = {
                 19: getUrl(`${ICONS_PATH}/grey-19.png`),
                 38: getUrl(`${ICONS_PATH}/grey-38.png`),
             },
-            [ICON_COLORS.ORANGE]: {
-                19: getUrl(`${ICONS_PATH}/orange-19.png`),
-                38: getUrl(`${ICONS_PATH}/orange-38.png`),
-            },
         }));
     },
 };

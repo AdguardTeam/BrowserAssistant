@@ -45,10 +45,9 @@ global.adguard = {
 
 try {
     api.init();
-    tabs.updateIconColor();
 
     browser.runtime.onMessage.addListener(handleMessage);
-    browser.tabs.onActiveChanged.addListener(tabs.updateIconColor);
+    browser.tabs.onActivated.addListener(tabs.updateIconColorListener);
 } catch (error) {
     log.error(error.message);
 }

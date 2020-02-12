@@ -90,9 +90,9 @@ class SettingsStore {
     @action
     setFiltering = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
-        adguard.tabs.updateIconColor();
         this.rootStore.requestsStore.setFilteringStatus();
         this.rootStore.uiStore.setPageFilteredByUserFilter(true);
+        adguard.tabs.updateIconColor(isFilteringEnabled);
     };
 
     @action
@@ -124,6 +124,7 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+        adguard.tabs.updateIconColor(isFilteringEnabled);
     };
 
     @action

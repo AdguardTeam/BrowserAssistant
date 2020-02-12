@@ -8,12 +8,9 @@ const setIconEnabled = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.GREEN], tabId)
 
 const setIconDisabled = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.GREY], tabId);
 
-const setIconWarning = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.ORANGE], tabId);
-
 const actions = {
     setIconEnabled,
     setIconDisabled,
-    setIconWarning,
 };
 
 export default actions;
