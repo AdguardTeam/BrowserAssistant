@@ -2,11 +2,12 @@ import browser from 'webextension-polyfill';
 import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
 import log from '../lib/logger';
 import browserApi from './browserApi';
-import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME, ICON_COLORS } from '../lib/conts';
+import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import requests from './requestsApi';
 import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../popup/stores/consts';
 import api from './Api';
+import actions from './actions';
 
 class Tabs {
     isSetupCorrectly = true;
@@ -47,20 +48,6 @@ class Tabs {
 
     openDownloadPage = () => {
         browser.tabs.create({ url: DOWNLOAD_LINK });
-    };
-
-    setIconColor = async (color = ICON_COLORS.GREEN, tabId) => {
-        // eslint-disable-next-line no-param-reassign
-        tabId = tabId || (await this.getCurrent()).id;
-        return browser.browserAction.setIcon(
-            {
-                path: {
-                    19: `assets/images/assistant-logo--19--${color}.png`,
-                    38: `assets/images/assistant-logo--38--${color}.png`,
-                },
-                tabId,
-            }
-        );
     };
 
     getCurrentTabUrlProperties = async () => {
@@ -118,15 +105,15 @@ class Tabs {
         states.push(this.isSetupCorrectly, api.isAppUpToDate, api.isExtensionUpdated);
 
         if (!states.every(Boolean) || originalCertStatus !== ORIGINAL_CERT_STATUS.VALID) {
-            return this.setIconColor(ICON_COLORS.ORANGE, id);
+            return actions.setIconWarning(id);
         }
         if (currentProtocol === PROTOCOLS.SECURED) {
-            return this.setIconColor(ICON_COLORS.GREEN, id);
+            return actions.setIconEnabled(id);
         }
         if (!isFilteringEnabled) {
-            return this.setIconColor(ICON_COLORS.GRAY, id);
+            return actions.setIconDisabled(id);
         }
-        return this.setIconColor(ICON_COLORS.GREEN, id);
+        return actions.setIconEnabled(id);
     };
 }
 

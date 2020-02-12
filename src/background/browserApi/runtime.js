@@ -12,6 +12,8 @@ const sendMessage = (...args) => browser.runtime.sendMessage(...args).catch((err
     }
 });
 
+export const getUrl = (url) => browser.runtime.getURL(url);
+
 export default {
     sendMessage,
 };

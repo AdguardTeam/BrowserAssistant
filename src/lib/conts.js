@@ -3,5 +3,5 @@ export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 export const ICON_COLORS = {
     GREEN: 'green',
     ORANGE: 'orange',
-    GRAY: 'gray',
+    GREY: 'grey',
 };
