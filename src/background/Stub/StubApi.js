@@ -49,7 +49,7 @@ class Api {
                 },
             }, ResponseTypesPrefixes.ADG_INIT);
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 

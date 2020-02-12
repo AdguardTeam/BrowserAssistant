@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
+import classnames from 'classnames';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
@@ -50,8 +51,8 @@ const getStates = (stores) => {
         },
 
         [WORKING_STATES.IS_EXTENSION_RELOADING]: {
-            content: <Loading />,
-            buttonText: undefined,
+            content: translator.translate('adg_is_launching'),
+            buttonText: <Loading />,
             onClick: undefined,
         },
 
@@ -108,6 +109,11 @@ const AppClosed = observer(() => {
     const stores = useContext(rootStore);
     const { content, buttonText, onClick } = defineState(stores);
 
+    const buttonClass = classnames({
+        'app-closed__button': true,
+        'app-closed__button--transparent': stores.uiStore.requestStatus.isPending,
+    });
+
     const handleClick = (e) => {
         e.target.blur();
         if (onClick) {
@@ -120,18 +126,16 @@ const AppClosed = observer(() => {
             <div className="app-closed__status-container">
                 <header className="app-closed__status">{content}</header>
             </div>
-            {buttonText && (
-                <div>
-                    <button
-                        className="app-closed__button"
-                        type="button"
-                        tabIndex={stores.uiStore.globalTabIndex}
-                        onClick={handleClick}
-                    >
-                        {buttonText}
-                    </button>
-                </div>
-            )}
+            <div>
+                <button
+                    className={buttonClass}
+                    type="button"
+                    tabIndex={stores.uiStore.globalTabIndex}
+                    onClick={handleClick}
+                >
+                    {buttonText}
+                </button>
+            </div>
         </div>
     );
 });

@@ -19,6 +19,7 @@
         "locales:upload": "LOCALES=UPLOAD node tasks/locales.js",
         "watch": "NODE_ENV=dev run-s \"build:chrome --watch\"",
         "watch:firefox": "NODE_ENV=dev run-s \"build:firefox --watch\"",
+        "watch:all": "run-s watch watch:firefox",
         "crx": "yarn build:chrome && node tasks/crx.js",
         "xpi": "yarn build:firefox && node tasks/xpi.js",
         "artifacts:beta": "NODE_ENV=beta yarn crx && NODE_ENV=beta yarn xpi && NODE_ENV=beta node tasks/versionInfo.js",

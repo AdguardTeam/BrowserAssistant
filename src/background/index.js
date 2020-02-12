@@ -49,5 +49,5 @@ try {
     browser.runtime.onMessage.addListener(handleMessage);
     browser.tabs.onActivated.addListener(tabs.updateIconColorListener);
 } catch (error) {
-    log.error(error.message);
+    log.error(error);
 }
