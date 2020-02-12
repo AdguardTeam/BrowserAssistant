@@ -106,5 +106,8 @@
     },
     "enabled": {
         "message": "Защита включена на этом сайте"
+    },
+    "protection_is_enabled": {
+        "message": "Защита включена"
     }
 }

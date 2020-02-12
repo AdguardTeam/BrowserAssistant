@@ -3,31 +3,35 @@
     display: flex;
     flex-direction: column;
     border-radius: 0.5rem;
-    padding: 2.4rem 1.5rem;
+    padding: 1.6rem;
     background-color: var(--white);
     border: 0.1rem solid var(--greyf3);
     width: 28.8rem;
-    transform: translate(1.6rem, 14.5rem);
+    transform: translate(1.6rem, 15.8rem);
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1), 0 3rem 6rem rgba(0, 0, 0, 0.1);
 
     &__cert-status {
-        height: 20.7rem;
+        height: 19.4rem;
+
+        &--smallest {
+            height: 10rem;
+        }
 
         &--large {
             height: 23.7rem;
         }
 
         &--small {
-            height: 17.7rem;
+            height: 15.6rem;
         }
 
         &--tiny {
-            height: 10.7rem;
+            height: 8.8rem;
         }
     }
 
     &__secure-status {
-        transform: translate(1.6rem, 15rem);
+        transform: translate(1.6rem, 18rem);
 
         &--bank {
             height: 15rem;
@@ -35,13 +39,23 @@
     }
 
     &__insecure-status {
-        height: 12.8rem;
+        height: 11.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        & > .modal__text--message {
+            height: 6.3rem;
+            line-height: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     &__header {
         font-size: 1.6rem;
+        line-height: 2.2rem;
+        height: 2.2rem;
         color: var(--gray-base);
-        margin-bottom: 0.9rem;
         overflow: hidden;
         text-overflow: ellipsis;
 
@@ -55,30 +69,63 @@
         }
 
         &--issuer {
-            max-height: 2rem;
+            margin: 0.8rem 0;
         }
     }
 
     &__text {
         font-size: 1.2rem;
         max-width: 100%;
-        color: var(--gray88);
+        line-height: 1.4rem;
+
+        &--message {
+            padding-top: 0.8rem;
+        }
+
+        &--notion {
+            color: var(--gray88);
+        }
 
         &--red {
             color: var(--red);
         }
 
+        &--capitalized {
+            text-transform: capitalize;
+        }
+
         &--upper {
-            margin: 1.8rem 0 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 7.5rem;
+            line-height: 1.6rem;
+            width: 25.6rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--additional {
-            max-width: 12.9rem;
+            margin-top: 0.8rem;
+            width: 12rem;
+            height: 3.2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &--container {
+            display: flex;
+
+            & > .modal__text--red {
+                padding-right: 1.6rem;
+            }
         }
 
         &--link {
             cursor: pointer;
             text-decoration: underline;
+            text-transform: capitalize;
             width: fit-content;
             transition: color 300ms ease;
 
@@ -90,11 +137,6 @@
                 color: var(--green78);
             }
         }
-
-        &--notion {
-            margin-top: 2.4rem;
-            margin-bottom: 0.8rem;
-        }
     }
 
     &__info {
@@ -104,8 +146,17 @@
         }
 
         &--lower {
+            padding-top: 3.2rem;
             display: flex;
             flex-direction: column;
+
+            &--smaller-padding {
+                padding-top: 2.4rem;
+            }
+
+            &--no-padding {
+                padding-top: 0;
+            }
         }
 
         &--upper > .switcher {

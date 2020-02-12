@@ -23,7 +23,7 @@ class Tabs {
         const tab = await this.getCurrent();
         return browser.tabs.sendMessage(tab.id, { type, options }).catch((error) => {
             if (!browser.runtime.lastError) {
-                log.error(error.message);
+                log.error(error);
             }
         });
     }

@@ -8,7 +8,7 @@ const getOptions = (stores) => {
     const {
         settingsStore: {
             isFilteringEnabled,
-            isPageSecured,
+            pageProtocol,
         },
         requestsStore: {
             startBlockingAd,
@@ -27,7 +27,7 @@ const getOptions = (stores) => {
             iconName: 'block-ad',
             text: translator.translate('block_ads'),
             onClick: startBlockingAd,
-            isDisabled: !isFilteringEnabled || isPageSecured,
+            isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
         {
@@ -44,7 +44,7 @@ const getOptions = (stores) => {
             iconName: 'thumb-down',
             text: translator.translate('report_site'),
             onClick: reportSite,
-            isDisabled: !isFilteringEnabled || isPageSecured,
+            isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
         {

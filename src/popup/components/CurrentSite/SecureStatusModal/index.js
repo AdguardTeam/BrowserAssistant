@@ -14,9 +14,9 @@ const SecureStatusModal = observer(({
 
     const modalClass = classNames({
         modal: true,
-        'modal__secure-status': secureStatusModalInfo.id === SECURE_STATUS_MODAL_IDS.SECURE,
-        'modal__insecure-status': secureStatusModalInfo.id === SECURE_STATUS_MODAL_IDS.NOT_SECURE,
-        'modal__secure-status--bank': secureStatusModalInfo.id === SECURE_STATUS_MODAL_IDS.BANK,
+        'modal__secure-status': secureStatusModalInfo.modalId === SECURE_STATUS_MODAL_IDS.SECURE,
+        'modal__insecure-status': secureStatusModalInfo.modalId === SECURE_STATUS_MODAL_IDS.NOT_SECURE,
+        'modal__secure-status--bank': secureStatusModalInfo.modalId === SECURE_STATUS_MODAL_IDS.BANK,
     });
 
     return (
@@ -27,8 +27,8 @@ const SecureStatusModal = observer(({
             contentLabel="Secure Status Modal"
             shouldFocusAfterRender={false}
         >
-            <header className="modal__header">{translator.translate(header)}</header>
-            <p className="modal__text">{translator.translate(message)}</p>
+            {header && <header className="modal__header">{translator.translate(header)}</header>}
+            {message && <p className="modal__text modal__text--message">{translator.translate(message)}</p>}
         </Modal>
     );
 });

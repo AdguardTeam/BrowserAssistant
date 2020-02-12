@@ -1,7 +1,7 @@
 import {
-    action, observable, runInAction,
+    action, computed, observable, runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, protocolToPortMap } from '../consts';
+import { ORIGINAL_CERT_STATUS, PROTOCOLS, protocolToPortMap } from '../consts';
 import { getUrlProperties } from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
@@ -16,13 +16,11 @@ class SettingsStore {
 
     @observable currentPort = 0;
 
-    @observable isHttps = true;
+    @observable protocol = PROTOCOLS.HTTPS;
 
     @observable referrer = '';
 
     @observable originalCertIssuer = '';
-
-    @observable isPageSecured = false;
 
     @observable isHttpsFilteringEnabled = false;
 
@@ -42,6 +40,14 @@ class SettingsStore {
 
     @observable isSetupCorrectly = true;
 
+    @computed get pageProtocol() {
+        return ({
+            isHttp: this.protocol === PROTOCOLS.HTTP,
+            isHttps: this.protocol === PROTOCOLS.HTTPS,
+            isSecured: this.protocol === PROTOCOLS.SECURED,
+        });
+    }
+
     @action
     getReferrer = async () => {
         const referrer = await adguard.tabs.getReferrer();
@@ -60,42 +66,20 @@ class SettingsStore {
 
                 this.currentTabHostname = hostname || this.currentURL;
 
-                switch (protocol) {
-                    case 'https:':
-                        this.setIsHttps(true);
-                        this.setSecure(false);
-                        break;
-                    case 'http:':
-                        this.setIsHttps(false);
-                        this.setSecure(false);
-                        break;
-                    default:
-                        this.setIsHttps(false);
-                        this.setSecure(true);
-                }
+                const formattedProtocol = protocol.slice(0, -1).toUpperCase();
+                this.protocol = PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
 
-                const defaultPort = protocolToPortMap[protocol] || 0;
-
+                const defaultPort = protocolToPortMap[this.protocol];
                 this.currentPort = port === '' ? defaultPort : Number(port);
             });
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
     @action
     openDownloadPage = () => {
         adguard.tabs.openDownloadPage();
-    };
-
-    @action
-    setIsHttps = (isHttps) => {
-        this.isHttps = isHttps;
-    };
-
-    @action
-    setSecure = (isPageSecured) => {
-        this.isPageSecured = isPageSecured;
     };
 
     @action

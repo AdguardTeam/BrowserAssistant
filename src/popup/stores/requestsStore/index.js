@@ -13,7 +13,7 @@ class RequestsStore {
         try {
             await adguard.requests.getCurrentFilteringState(currentURL, currentPort, forceStartApp);
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -23,7 +23,7 @@ class RequestsStore {
         try {
             await adguard.requests.getCurrentAppState();
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -41,7 +41,7 @@ class RequestsStore {
                 isHttpsEnabled: isHttpsFilteringEnabled,
             });
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -52,7 +52,7 @@ class RequestsStore {
             await adguard.requests.openOriginalCert(currentTabHostname, currentPort);
         } catch (error) {
             this.rootStore.uiStore.setExtensionReloading(true);
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -63,7 +63,7 @@ class RequestsStore {
             await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -76,7 +76,7 @@ class RequestsStore {
                 referrer: this.rootStore.settingsStore.referrer,
             });
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -86,7 +86,7 @@ class RequestsStore {
         try {
             await adguard.requests.openFilteringLog();
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -97,7 +97,7 @@ class RequestsStore {
                 this.rootStore.settingsStore.currentTabHostname
             );
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -108,7 +108,7 @@ class RequestsStore {
                 this.rootStore.settingsStore.currentTabHostname
             );
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -120,7 +120,7 @@ class RequestsStore {
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
             this.rootStore.uiStore.setProtectionTogglePending(false);
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -130,7 +130,7 @@ class RequestsStore {
         try {
             await this.getCurrentFilteringState(true);
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -140,7 +140,7 @@ class RequestsStore {
         try {
             await adguard.requests.updateApp();
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -150,7 +150,7 @@ class RequestsStore {
         try {
             await adguard.requests.openSettings();
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
     };
 
@@ -160,7 +160,7 @@ class RequestsStore {
         try {
             await adguard.tabs.initAssistant();
         } catch (error) {
-            log.error(error.message);
+            log.error(error);
         }
         window.close();
     };
