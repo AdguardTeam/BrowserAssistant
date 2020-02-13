@@ -6,11 +6,17 @@ import log from '../../lib/logger';
  * @param args
  * @returns {Promise<void>}
  */
-const sendMessage = (...args) => browser.runtime.sendMessage(...args).catch((error) => {
-    if (!browser.runtime.lastError) {
-        log.error(error);
+const sendMessage = async (...args) => {
+    try {
+        await browser.runtime.sendMessage(...args);
+    } catch (error) {
+        if (!browser.runtime.lastError) {
+            log.error(error);
+        }
     }
-});
+};
+
+export const getUrl = (url) => browser.runtime.getURL(url);
 
 export default {
     sendMessage,

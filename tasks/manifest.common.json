@@ -6,14 +6,14 @@
     "default_locale": "en",
     "description": "__MSG_description__",
     "icons": {
-        "16": "assets/images/green-16.png",
-        "48": "assets/images/green-48.png",
-        "128": "assets/images/green-128.png"
+        "16": "assets/images/icons/green-16.png",
+        "48": "assets/images/icons/green-48.png",
+        "128": "assets/images/icons/green-128.png"
     },
     "browser_action": {
         "default_icon": {
-            "19": "assets/images/green-19.png",
-            "38": "assets/images/green-38.png"
+            "19": "assets/images/icons/green-19.png",
+            "38": "assets/images/icons/green-38.png"
         },
         "default_title": "__MSG_name__",
         "default_popup": "popup.html"
@@ -23,7 +23,7 @@
         "persistent": true
     },
     "permissions": [
-        "activeTab",
-        "nativeMessaging"
+        "nativeMessaging",
+        "tabs"
     ]
 }

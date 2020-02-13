@@ -115,6 +115,7 @@ class RequestsStore {
     @action
     setProtectionStatus = async (shouldEnableProtection) => {
         this.rootStore.uiStore.setExtensionReloading(true);
+
         try {
             const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);

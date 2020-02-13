@@ -105,7 +105,6 @@ function defineState(stores) {
     return states[WORKING_STATES.IS_EXTENSION_RELOADING];
 }
 
-
 const AppClosed = observer(() => {
     const stores = useContext(rootStore);
     const { content, buttonText, onClick } = defineState(stores);

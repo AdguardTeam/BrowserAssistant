@@ -97,12 +97,12 @@ export const secureStatusModalStates = {
         modalId: SECURE_STATUS_MODAL_IDS.SECURE,
         message: 'nothing_to_block_here',
         header: 'secure_page',
-        info: 'is_secure_page',
+        info: 'secure_page',
     },
     default: {
         modalId: SECURE_STATUS_MODAL_IDS.BANK,
         message: 'not_filtering_https',
-        header: 'is_secure_page',
+        header: 'secure_page',
         info: 'protection_is_enabled',
     },
 };

@@ -39,7 +39,6 @@ const App = observer(() => {
                         uiStore.setExtensionReloadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
-                        settingsStore.setSetupCorrectly(false);
                         uiStore.setExtensionReloadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:

@@ -49,11 +49,11 @@ class UiStore {
 
     @computed get secureStatusModalInfo() {
         const {
-            pageProtocol, protocol, originalCertStatus, isFilteringEnabled,
+            pageProtocol, currentProtocol, originalCertStatus, isFilteringEnabled,
         } = this.rootStore.settingsStore;
         const { certStatus } = this;
 
-        let modalInfo = secureStatusModalStates[protocol];
+        let modalInfo = secureStatusModalStates[currentProtocol];
 
         if (pageProtocol.isHttps) {
             modalInfo = modalInfo[originalCertStatus];

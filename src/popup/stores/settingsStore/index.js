@@ -1,8 +1,7 @@
 import {
     action, computed, observable, runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, PROTOCOLS, protocolToPortMap } from '../consts';
-import { getUrlProperties } from '../../../lib/helpers';
+import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 
 class SettingsStore {
@@ -16,7 +15,7 @@ class SettingsStore {
 
     @observable currentPort = 0;
 
-    @observable protocol = PROTOCOLS.HTTPS;
+    @observable currentProtocol = PROTOCOLS.HTTPS;
 
     @observable referrer = '';
 
@@ -38,13 +37,13 @@ class SettingsStore {
 
     @observable isExtensionUpdated = adguard.isExtensionUpdated;
 
-    @observable isSetupCorrectly = true;
+    @observable isSetupCorrectly = adguard.isSetupCorrectly;
 
     @computed get pageProtocol() {
         return ({
-            isHttp: this.protocol === PROTOCOLS.HTTP,
-            isHttps: this.protocol === PROTOCOLS.HTTPS,
-            isSecured: this.protocol === PROTOCOLS.SECURED,
+            isHttp: this.currentProtocol === PROTOCOLS.HTTP,
+            isHttps: this.currentProtocol === PROTOCOLS.HTTPS,
+            isSecured: this.currentProtocol === PROTOCOLS.SECURED,
         });
     }
 
@@ -59,18 +58,18 @@ class SettingsStore {
     @action
     getCurrentTabHostname = async () => {
         try {
-            const { url } = await adguard.tabs.getCurrent();
+            const {
+                currentURL,
+                currentPort,
+                currentProtocol,
+                hostname,
+            } = await adguard.tabs.getCurrentTabUrlProperties();
+
             runInAction(() => {
-                this.currentURL = url;
-                const { hostname, port, protocol } = getUrlProperties(url);
-
+                this.currentURL = currentURL;
                 this.currentTabHostname = hostname || this.currentURL;
-
-                const formattedProtocol = protocol.slice(0, -1).toUpperCase();
-                this.protocol = PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
-
-                const defaultPort = protocolToPortMap[this.protocol];
-                this.currentPort = port === '' ? defaultPort : Number(port);
+                this.currentPort = currentPort;
+                this.currentProtocol = currentProtocol;
             });
         } catch (error) {
             log.error(error);
@@ -93,6 +92,7 @@ class SettingsStore {
         this.isFilteringEnabled = isFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
         this.rootStore.uiStore.setPageFilteredByUserFilter(true);
+        adguard.tabs.updateIconColor(isFilteringEnabled);
     };
 
     @action
@@ -124,6 +124,7 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+        adguard.tabs.updateIconColor(isFilteringEnabled);
     };
 
     @action
@@ -147,11 +148,6 @@ class SettingsStore {
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
-    };
-
-    @action
-    setSetupCorrectly = (isSetupCorrectly) => {
-        this.isSetupCorrectly = isSetupCorrectly;
     };
 
     @action
