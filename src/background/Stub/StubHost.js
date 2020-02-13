@@ -174,7 +174,6 @@ class StubHost {
 
                 this.filteringStatus.isFilteringEnabled = parameters.isEnabled;
                 this.filteringStatus.isHttpsFilteringEnabled = parameters.isHttpsEnabled;
-                this.filteringStatus.isPageFilteredByUserFilter = true;
                 break;
             case RequestTypes.addRule:
                 log.info('ADD RULE');

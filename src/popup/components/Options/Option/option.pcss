@@ -16,8 +16,8 @@
         opacity: 1;
 
         &--disabled {
-            cursor: not-allowed !important;
             opacity: 0.5;
+            cursor: default;
         }
 
         &__icon {
@@ -56,15 +56,11 @@
             text-overflow: ellipsis;
         }
 
-        &:hover {
+        &:hover:not(.action--disabled) {
             background: var(--greyf3);
-
-            &:active {
-                cursor: wait;
-            }
         }
 
-        &:focus {
+        &:focus:not(.action--disabled) {
             background: var(--greyf3);
         }
     }

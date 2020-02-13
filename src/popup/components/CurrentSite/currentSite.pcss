@@ -34,7 +34,7 @@
         border-right: 1px solid var(--grayd8);
 
         &--checkmark {
-            cursor: help;
+            cursor: default;
             background: url('../../../assets/images/icon__checkmark.svg') no-repeat center;
         }
 
@@ -59,18 +59,14 @@
             }
 
             &--gray {
-                cursor: help;
                 background: url('../../../assets/images/icon__exclamation-point--gray.svg') no-repeat center;
             }
-        }
-
-        &--disabled-cursor {
-            cursor: not-allowed !important;
         }
     }
 
 
     &__secure-status {
+        cursor: default;
         width: fit-content;
         max-width: 28.8rem;
         max-height: 1.5rem;
@@ -92,7 +88,6 @@
 
         &--modal:hover {
             text-decoration: underline;
-            cursor: help;
         }
     }
 }

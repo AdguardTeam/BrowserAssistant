@@ -5,8 +5,8 @@ import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
 import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
-import './currentSite.pcss';
 import translator from '../../../lib/translator';
+import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
@@ -53,7 +53,6 @@ const CurrentSite = observer(() => {
         'current-site__icon--warning--yellow': pageProtocol.isHttps && (certStatus.isBypassed || certStatus.isNotFound),
         'current-site__icon--warning--gray': pageProtocol.isHttp,
         'current-site__icon--warning': (pageProtocol.isHttps && !certStatus.isValid) || pageProtocol.isHttp,
-        'current-site__icon--disabled-cursor': (!isFilteringEnabled && !certStatus.isValid) || !originalCertIssuer,
     });
 
     const securedClass = classNames({
