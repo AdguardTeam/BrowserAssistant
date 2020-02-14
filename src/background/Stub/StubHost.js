@@ -98,13 +98,13 @@ class StubHost {
         this.#makeRequest();
     }
 
-    #makeRequest = async (isDelayNeeded = false) => {
+    #makeRequest = async (delay) => {
         const request = {
             id: `ADG_APP_STATE_RESPONSE_MESSAGE_${nanoid()}`,
             type: HostRequestTypes.hostRequest,
             parameters: this.filteringStatus,
         };
-        const response = await this.getStubResponse(request, isDelayNeeded);
+        const response = await this.getStubResponse(request, delay);
         return this.#initHandler(response);
     };
 
