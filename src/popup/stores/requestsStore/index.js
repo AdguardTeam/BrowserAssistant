@@ -1,5 +1,6 @@
 import { action } from 'mobx';
 import log from '../../../lib/logger';
+import { INDICATE_LOADING_START_TIME } from '../consts';
 
 class RequestsStore {
     constructor(rootStore) {
@@ -47,8 +48,14 @@ class RequestsStore {
 
     @action
     openOriginalCert = async () => {
-        const { currentTabHostname, currentPort } = this.rootStore.settingsStore;
-        this.rootStore.uiStore.setExtensionLoading(true);
+        const {
+            settingsStore: { currentTabHostname, currentPort },
+            uiStore: { setExtensionLoading },
+        } = this.rootStore;
+
+        setExtensionLoading(true);
+        setTimeout(() => setExtensionLoading(false), INDICATE_LOADING_START_TIME);
+
         try {
             await adguard.requests.openOriginalCert(currentTabHostname, currentPort);
         } catch (error) {
@@ -116,7 +123,6 @@ class RequestsStore {
     @action
     setProtectionStatus = async (shouldEnableProtection) => {
         this.rootStore.uiStore.setExtensionLoading(true);
-
         try {
             const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
@@ -148,6 +154,7 @@ class RequestsStore {
 
     @action
     openSettings = async () => {
+        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.openSettings();
         } catch (error) {

@@ -15,7 +15,7 @@ const Header = observer(() => {
             setProtectionStatus,
         },
         uiStore: {
-            closePopupAfterInvokingFn,
+            closePopupWrapper,
             setProtectionTogglePending,
             isProtectionTogglePending,
             isAppWorking,
@@ -30,7 +30,7 @@ const Header = observer(() => {
         e.target.blur();
     };
 
-    const openSettingsAndClosePopup = closePopupAfterInvokingFn(openSettings);
+    const openSettingsAndClosePopup = closePopupWrapper(openSettings);
 
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,

@@ -145,15 +145,12 @@ class UiStore {
     };
 
     @action
-    closePopup = () => setTimeout(() => {
-        this.setExtensionLoading(false);
-        window.close();
-    }, INDICATE_LOADING_START_TIME);
-
-    @action
-    closePopupAfterInvokingFn = (fn) => async () => {
-        await fn();
-        await this.closePopup();
+    closePopupWrapper = (fn) => () => {
+        setTimeout(() => {
+            this.setExtensionLoading(false);
+            window.close();
+        }, INDICATE_LOADING_START_TIME);
+        fn();
     };
 }
 

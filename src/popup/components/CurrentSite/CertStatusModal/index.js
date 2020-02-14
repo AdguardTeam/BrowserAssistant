@@ -22,13 +22,10 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             isFilteringEnabled,
         },
         uiStore: {
-            closePopupAfterInvokingFn,
             certStatus,
             globalTabIndex,
         },
     } = useContext(rootStore);
-
-    const openOriginalCertAndClosePopup = closePopupAfterInvokingFn(openOriginalCert);
 
     const toggleHttpsFiltering = () => {
         if (!certStatus.isInvalid) {
@@ -38,7 +35,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            openOriginalCertAndClosePopup();
+            openOriginalCert();
         }
     };
 
@@ -99,7 +96,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                                 className="modal__text modal__text--link"
                                 role="button"
                                 tabIndex={globalTabIndex}
-                                onClick={openOriginalCertAndClosePopup}
+                                onClick={openOriginalCert}
                                 onKeyDown={handleKeyDown}
                             >
                                 {translator.translate('more_info')}

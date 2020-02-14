@@ -19,7 +19,7 @@ const getOptions = (stores) => {
         },
         uiStore: {
             isPageFilteredByUserFilter,
-            closePopupAfterInvokingFn,
+            closePopupWrapper,
         },
     } = stores;
 
@@ -34,14 +34,14 @@ const getOptions = (stores) => {
         {
             iconName: 'sandwich',
             text: translator.translate('open_filtering_log'),
-            onClick: closePopupAfterInvokingFn(openFilteringLog),
+            onClick: closePopupWrapper(openFilteringLog),
             isDisabled: false,
             isVisible: true,
         },
         {
             iconName: 'thumb-down',
             text: translator.translate('report_site'),
-            onClick: closePopupAfterInvokingFn(reportSite),
+            onClick: closePopupWrapper(reportSite),
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
