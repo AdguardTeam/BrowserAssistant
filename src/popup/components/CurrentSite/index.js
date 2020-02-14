@@ -5,8 +5,8 @@ import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
 import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
-import './currentSite.pcss';
 import translator from '../../../lib/translator';
+import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);
@@ -53,7 +53,6 @@ const CurrentSite = observer(() => {
         'current-site__icon--warning--yellow': pageProtocol.isHttps && (certStatus.isBypassed || certStatus.isNotFound),
         'current-site__icon--warning--gray': pageProtocol.isHttp,
         'current-site__icon--warning': (pageProtocol.isHttps && !certStatus.isValid) || pageProtocol.isHttp,
-        'current-site__icon--disabled-cursor': (!isFilteringEnabled && !certStatus.isValid) || !originalCertIssuer,
     });
 
     const securedClass = classNames({
@@ -108,24 +107,24 @@ const CurrentSite = observer(() => {
     return (
         <div className="current-site__container">
             <div className={securedClass}>
-                <div
-                    role="menu"
-                    className={iconClass}
-                    tabIndex={uiStore.globalTabIndex}
-                    onKeyDown={onKeyEnterDown}
-                    onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
-                    onFocus={handleCertStatusModalState}
-                    onBlur={handleCertStatusModalState}
-                    onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
-                    onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
-                >
-                    {!pageProtocol.isSecured
-                    && (shouldOpenCertStatusModal
-                        || (!pageProtocol.isHttps && isPageStatusModalOpen))
-                    && <div className="arrow-up" />}
-                </div>
                 <div className="current-site__name">
-                    {currentTabHostname}
+                    <div
+                        role="menu"
+                        className={iconClass}
+                        tabIndex={uiStore.globalTabIndex}
+                        onKeyDown={onKeyEnterDown}
+                        onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
+                        onFocus={handleCertStatusModalState}
+                        onBlur={handleCertStatusModalState}
+                        onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
+                        onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
+                    >
+                        {!pageProtocol.isSecured
+                        && (shouldOpenCertStatusModal
+                            || (!pageProtocol.isHttps && isPageStatusModalOpen))
+                        && <div className="arrow-up" />}
+                    </div>
+                    <div className="current-site__hostname">{currentTabHostname}</div>
                 </div>
 
                 <CertStatusModal

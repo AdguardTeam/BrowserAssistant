@@ -13,7 +13,8 @@ const Switcher = ({
 
     const switcherClass = classNames({
         switcher__label: true,
-        'switcher__label--disabled': isDisabled,
+        'switcher__label--disabled': isDisabled && !isSecured,
+        'switcher__label--secured': isSecured,
     });
 
     const onKeyDown = (e) => {

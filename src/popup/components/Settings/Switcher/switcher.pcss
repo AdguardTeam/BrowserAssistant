@@ -1,6 +1,6 @@
 .switcher {
     width: 32rem;
-    align-items: flex-start;
+    align-items: center;
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
@@ -19,17 +19,13 @@
         opacity: 1;
         border: 0;
 
-        &:active {
-            cursor: wait;
-        }
-
-        &:focus {
-            transform: scale(1.05);
-        }
-
         &--disabled {
-            cursor: not-allowed !important;
             background-color: var(--grayd8);
+        }
+
+        &--secured {
+            cursor: default;
+            background-color: var(--green-pale) !important;
         }
 
         &:before {
@@ -46,17 +42,8 @@
         }
     }
 
-    &__label:active ~ &__text {
-        transition: opacity 0.1s linear;
-        opacity: 0;
-    }
-
     &__checkbox:checked ~ &__label {
         background-color: var(--green74);
-
-        &--secured {
-            background-color: var(--green-pale);
-        }
 
         &:before {
             transform: translateX(2.0rem);
@@ -64,12 +51,14 @@
     }
 
     &__text {
-        max-width: 21rem;
+        cursor: default;
+        max-width: 23rem;
         max-height: 7.4rem;
         overflow: hidden;
         text-overflow: ellipsis;
         color: var(--gray-base);
         font-size: 1.6rem;
+        white-space: pre-line;
 
         &--secured {
             color: var(--gray88);

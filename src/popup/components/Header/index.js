@@ -36,7 +36,6 @@ const Header = observer(() => {
         <div className="widget-popup__header">
             <div className="widget-popup__header-container">
                 <div className="widget-popup__header-logo" />
-                <div className="widget-popup__header-title">{translator.translate('assistant')}</div>
             </div>
             <div className="widget-popup__header-buttons" id="popup-header-buttons">
                 <button

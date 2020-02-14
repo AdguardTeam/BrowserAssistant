@@ -1,31 +1,39 @@
 .current-site {
     &__container {
         z-index: var(--higher);
+        width: fit-content;
+        margin: 6.6rem auto 0;
     }
 
     &__name {
+        position: relative;
         text-align: center;
-        margin-left: 0.9rem;
         cursor: default;
-        overflow: hidden;
         text-overflow: ellipsis;
         max-width: 24rem;
     }
 
+    &__hostname {
+        max-width: 23.6rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     &__title {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         font-size: 1.6rem;
         text-align: center;
-        margin: 6.6rem 0 0 0;
         white-space: nowrap;
         color: var(--gray-base);
         position: relative;
-        border-left: 1px solid transparent;
         min-height: 2.2rem;
+        padding: 0 1rem;
     }
 
     &__icon {
+        position: absolute;
+        left: -4.2rem;
         width: 1.6rem;
         height: 1.9rem;
         cursor: pointer;
@@ -34,7 +42,7 @@
         border-right: 1px solid var(--grayd8);
 
         &--checkmark {
-            cursor: help;
+            cursor: default;
             background: url('../../../assets/images/icon__checkmark.svg') no-repeat center;
         }
 
@@ -59,18 +67,14 @@
             }
 
             &--gray {
-                cursor: help;
                 background: url('../../../assets/images/icon__exclamation-point--gray.svg') no-repeat center;
             }
-        }
-
-        &--disabled-cursor {
-            cursor: not-allowed !important;
         }
     }
 
 
     &__secure-status {
+        cursor: default;
         width: fit-content;
         max-width: 28.8rem;
         max-height: 1.5rem;
@@ -92,7 +96,6 @@
 
         &--modal:hover {
             text-decoration: underline;
-            cursor: help;
         }
     }
 }
