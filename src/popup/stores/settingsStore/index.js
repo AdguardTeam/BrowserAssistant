@@ -50,6 +50,7 @@ class SettingsStore {
     @action
     getReferrer = async () => {
         const referrer = await adguard.tabs.getReferrer();
+
         runInAction(() => {
             this.referrer = referrer || '';
         });

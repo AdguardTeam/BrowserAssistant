@@ -15,22 +15,23 @@ class Tabs {
         if (!tab.url) {
             log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest.', tab);
             this.isSetupCorrectly = false;
-            await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
-            setTimeout(() => browserApi.runtime.sendMessage(
-                { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
-            ),
-            1000);
+            await browserApi.runtime
+                .sendMessage({ result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY });
         }
         return tab;
     };
 
     sendMessage = async (type, options) => {
         const tab = await this.getCurrent();
-        return browser.tabs.sendMessage(tab.id, { type, options }).catch((error) => {
+        let response;
+        try {
+            response = await browser.tabs.sendMessage(tab.id, { type, options });
+        } catch (error) {
             if (!browser.runtime.lastError) {
                 log.error(error);
             }
-        });
+        }
+        return response;
     };
 
     getReferrer = async () => {

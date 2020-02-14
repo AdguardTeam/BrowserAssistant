@@ -6,30 +6,43 @@ import translator from '../../../lib/translator';
 import './header.pcss';
 
 const Header = observer(() => {
-    const { settingsStore, requestsStore, uiStore } = useContext(rootStore);
+    const {
+        settingsStore: {
+            isProtectionEnabled,
+        },
+        requestsStore: {
+            openSettings,
+            setProtectionStatus,
+        },
+        uiStore: {
+            closePopupAfterInvokingFn,
+            setProtectionTogglePending,
+            isProtectionTogglePending,
+            isAppWorking,
+            requestStatus,
+            globalTabIndex,
+        },
+    } = useContext(rootStore);
 
     const disableProtection = (e) => {
-        uiStore.setProtectionTogglePending(true);
-        requestsStore.setProtectionStatus(false);
+        setProtectionTogglePending(true);
+        setProtectionStatus(false);
         e.target.blur();
     };
 
-    const openSetting = () => {
-        requestsStore.openSettings();
-        window.close();
-    };
+    const openSettingsAndClosePopup = closePopupAfterInvokingFn(openSettings);
 
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,
-        'widget-popup__buttons--pause': settingsStore.isProtectionEnabled,
-        'widget-popup__buttons--start': !settingsStore.isProtectionEnabled || uiStore.isProtectionTogglePending,
-        'widget-popup__buttons--hidden': !uiStore.isAppWorking || uiStore.requestStatus.isPending,
+        'widget-popup__buttons--pause': isProtectionEnabled,
+        'widget-popup__buttons--start': !isProtectionEnabled || isProtectionTogglePending,
+        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
     });
 
     const iconSettingsClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--settings': true,
-        'widget-popup__buttons--hidden': !uiStore.isAppWorking || uiStore.requestStatus.isPending,
+        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
     });
 
     return (
@@ -45,15 +58,15 @@ const Header = observer(() => {
                     aria-label={translator.translate('adg_protection')}
                     type="button"
                     onClick={disableProtection}
-                    tabIndex={uiStore.globalTabIndex}
+                    tabIndex={globalTabIndex}
                 />
                 <button
                     className={iconSettingsClass}
                     title={translator.translate('adg_settings')}
                     aria-label={translator.translate('adg_settings')}
                     type="button"
-                    onClick={openSetting}
-                    tabIndex={uiStore.globalTabIndex}
+                    onClick={openSettingsAndClosePopup}
+                    tabIndex={globalTabIndex}
                 />
             </div>
         </div>

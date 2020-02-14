@@ -43,6 +43,8 @@ export const SHOW_MODAL_TIME = {
     LONG: 5000,
 };
 
+export const INDICATE_LOADING_START_TIME = 1000;
+
 export const modalStatesNames = {
     isHovered: 'isHovered',
     isFocused: 'isFocused',
