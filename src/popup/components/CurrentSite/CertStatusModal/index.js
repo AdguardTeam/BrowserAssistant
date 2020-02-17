@@ -9,20 +9,23 @@ import translator from '../../../../lib/translator';
 import './modal.pcss';
 
 const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
-    const { uiStore, settingsStore, requestsStore } = useContext(rootStore);
-    const { certStatus } = uiStore;
     const {
-        setHttpsFiltering,
-        isHttpsFilteringEnabled,
-        originalCertIssuer,
-        pageProtocol,
-        originalCertStatus,
-        isFilteringEnabled,
-    } = settingsStore;
-
-    const showCert = () => {
-        requestsStore.openOriginalCert();
-    };
+        requestsStore: {
+            openOriginalCert,
+        },
+        settingsStore: {
+            setHttpsFiltering,
+            isHttpsFilteringEnabled,
+            originalCertIssuer,
+            pageProtocol,
+            originalCertStatus,
+            isFilteringEnabled,
+        },
+        uiStore: {
+            certStatus,
+            globalTabIndex,
+        },
+    } = useContext(rootStore);
 
     const toggleHttpsFiltering = () => {
         if (!certStatus.isInvalid) {
@@ -32,7 +35,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            showCert();
+            openOriginalCert();
         }
     };
 
@@ -92,8 +95,8 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"
-                                tabIndex={uiStore.globalTabIndex}
-                                onClick={showCert}
+                                tabIndex={globalTabIndex}
+                                onClick={openOriginalCert}
                                 onKeyDown={handleKeyDown}
                             >
                                 {translator.translate('more_info')}

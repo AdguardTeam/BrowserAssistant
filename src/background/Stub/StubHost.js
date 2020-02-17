@@ -13,6 +13,8 @@ import browserApi from '../browserApi';
 import versions from '../versions';
 
 class StubHost {
+    delay = 500;
+
     filteringStatus = {
         /** @param isFilteringEnabled boolean * */
         isFilteringEnabled: true,
@@ -96,13 +98,13 @@ class StubHost {
         this.#makeRequest();
     }
 
-    #makeRequest = () => {
+    #makeRequest = async (delay) => {
         const request = {
             id: `ADG_APP_STATE_RESPONSE_MESSAGE_${nanoid()}`,
             type: HostRequestTypes.hostRequest,
             parameters: this.filteringStatus,
         };
-        const response = this.getStubResponse(request);
+        const response = await this.getStubResponse(request, delay);
         return this.#initHandler(response);
     };
 
@@ -126,7 +128,21 @@ class StubHost {
         browserApi.runtime.sendMessage(response);
     };
 
-    getStubResponse = (request) => {
+    /**
+     * @param delay
+     * @returns {Promise<void>}
+     */
+   #waitDelay = async (delay = this.delay) => {
+       return new Promise((resolve) => (setTimeout(resolve, delay)));
+   };
+
+    /**
+     * Emulates server response with delay
+     * @param request object
+     * @param delay [number]
+     * @returns {Promise<object>}
+     */
+    getStubResponse = async (request, delay) => {
         const { id, type, parameters } = request;
         const response = {
             id: `${id}_resp`,
@@ -138,6 +154,8 @@ class StubHost {
             data: null,
             parameters,
         };
+
+        await this.#waitDelay(delay);
 
         switch (type) {
             case RequestTypes.init:

@@ -36,16 +36,16 @@ const App = observer(() => {
                 switch (result) {
                     case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
                         settingsStore.setInstalled(false);
-                        uiStore.setExtensionReloadingAndPending();
+                        uiStore.setExtensionLoadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
-                        uiStore.setExtensionReloadingAndPending();
+                        uiStore.setExtensionLoadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
-                        uiStore.setExtensionReloading(true);
+                        uiStore.setExtensionLoading(true);
                         break;
                     case HostResponseTypes.ok:
-                        uiStore.setExtensionReloadingAndPending();
+                        uiStore.setExtensionLoadingAndPending();
                         break;
                     default:
                         break;

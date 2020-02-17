@@ -6,6 +6,7 @@ import {
     eventTypeToModalStateMap,
     ORIGINAL_CERT_STATUS,
     HTTP_FILTERING_STATUS,
+    INDICATE_LOADING_START_TIME,
     secureStatusModalStates,
 } from '../consts';
 import { checkSomeIsTrue } from '../../helpers';
@@ -118,7 +119,7 @@ class UiStore {
     };
 
     @action
-    setExtensionReloading = (isLoading) => {
+    setExtensionLoading = (isLoading) => {
         this.isLoading = isLoading;
     };
 
@@ -128,8 +129,8 @@ class UiStore {
     };
 
     @action
-    setExtensionReloadingAndPending = (isLoading = false, isPending = false) => {
-        this.setExtensionReloading(isLoading);
+    setExtensionLoadingAndPending = (isLoading = false, isPending = isLoading) => {
+        this.setExtensionLoading(isLoading);
         this.setExtensionPending(isPending);
     };
 
@@ -141,6 +142,15 @@ class UiStore {
     @action
     setProtectionTogglePending = (isProtectionTogglePending) => {
         this.isProtectionTogglePending = isProtectionTogglePending;
+    };
+
+    @action
+    closePopupWrapper = (fn) => () => {
+        setTimeout(() => {
+            this.setExtensionLoading(false);
+            window.close();
+        }, INDICATE_LOADING_START_TIME);
+        fn();
     };
 }
 

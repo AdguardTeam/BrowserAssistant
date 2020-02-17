@@ -59,7 +59,7 @@ class Api {
         log.info(`request ${id}`, params);
 
         const request = { id, ...params };
-        const response = stubHost.getStubResponse(request);
+        const response = await stubHost.getStubResponse(request);
 
         this.initHandler(response);
         return response;

@@ -11,26 +11,46 @@ class Tabs {
     isSetupCorrectly = true;
 
     getCurrent = async () => {
-        const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
-        if (!tab.url) {
-            log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest.', tab);
-            this.isSetupCorrectly = false;
-            await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
-            setTimeout(() => browserApi.runtime.sendMessage(
-                { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
-            ),
-            1000);
+        let tab;
+
+        try {
+            [tab] = await browser.tabs.query({
+                active: true,
+                lastFocusedWindow: true,
+            });
+
+            if (!tab) {
+                log.warn('browser.tabs.query is called from a non-tab context (a background page or popup view)');
+                return tab;
+            }
+
+            if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {
+                log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest', tab);
+
+                this.isSetupCorrectly = false;
+                await browserApi.runtime
+                    .sendMessage({ result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY });
+            }
+        } catch (error) {
+            log.error(error);
         }
         return tab;
     };
 
     sendMessage = async (type, options) => {
         const tab = await this.getCurrent();
-        return browser.tabs.sendMessage(tab.id, { type, options }).catch((error) => {
+        let response;
+        try {
+            response = await browser.tabs.sendMessage(tab.id, {
+                type,
+                options,
+            });
+        } catch (error) {
             if (!browser.runtime.lastError) {
                 log.error(error);
             }
-        });
+        }
+        return response;
     };
 
     getReferrer = async () => {
@@ -50,7 +70,7 @@ class Tabs {
 
     getCurrentTabUrlProperties = async () => {
         const tab = await this.getCurrent();
-        const { url } = tab;
+        const url = tab.url || tab.pendingUrl;
 
         const { hostname, port, protocol } = getUrlProperties(url);
 
@@ -73,16 +93,28 @@ class Tabs {
     };
 
     updateIconColor = async (isFilteringEnabled, tabId) => {
-        const id = tabId || (await this.getCurrent()).id;
+        let id = tabId;
 
-        return isFilteringEnabled ? actions.setIconEnabled(id) : actions.setIconDisabled(id);
+        if (!tabId) {
+            const tab = await this.getCurrent();
+            id = tab && tab.id;
+        }
+
+        if (id) {
+            if (isFilteringEnabled) {
+                await actions.setIconEnabled(id);
+            } else {
+                await actions.setIconDisabled(id);
+            }
+        }
     };
 
-    updateIconColorListener = async ({ tabId }) => {
+    updateIconColorListener = async (params) => {
+        const { tabId } = params;
         const isFilteringEnabled = await this.getFilteringStatus();
 
         this.updateIconColor(isFilteringEnabled, tabId);
-    }
+    };
 }
 
 const tabs = new Tabs();
