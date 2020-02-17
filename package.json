@@ -22,6 +22,7 @@
         "watch:all": "run-s watch watch:firefox",
         "crx": "yarn build:chrome && node tasks/crx.js",
         "xpi": "yarn build:firefox && node tasks/xpi.js",
+        "ci:increment": "node tasks/increment.js",
         "artifacts:beta": "NODE_ENV=beta yarn crx && NODE_ENV=beta yarn xpi && NODE_ENV=beta node tasks/versionInfo.js",
         "artifacts:release": "NODE_ENV=release yarn crx && NODE_ENV=release yarn xpi && NODE_ENV=release node tasks/versionInfo.js",
         "clear": "rm -rf build ; rm -rf node_modules"
