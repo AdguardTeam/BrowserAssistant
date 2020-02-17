@@ -109,12 +109,17 @@ class Tabs {
         }
     };
 
-    updateIconColorListener = async (params) => {
-        const { tabId } = params;
+    updateIconColorListener = async ({ tabId }) => {
         const isFilteringEnabled = await this.getFilteringStatus();
 
         this.updateIconColor(isFilteringEnabled, tabId);
     };
+
+    updateIconColorReloadListener = async (tabId, changeInfo) => {
+        if (changeInfo.status === 'loading') {
+            this.updateIconColorListener({ tabId });
+        }
+    }
 }
 
 const tabs = new Tabs();
