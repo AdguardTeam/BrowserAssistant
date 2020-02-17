@@ -10,16 +10,18 @@ import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../li
 class Tabs {
     isSetupCorrectly = true;
 
-    // eslint-disable-next-line consistent-return
     getCurrent = async () => {
+        let tab;
+
         try {
-            const [tab] = await browser.tabs.query({
+            [tab] = await browser.tabs.query({
                 active: true,
                 lastFocusedWindow: true,
             });
 
             if (!tab) {
                 log.warn('browser.tabs.query is called from a non-tab context (a background page or popup view)');
+                return tab;
             }
 
             if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {
@@ -29,11 +31,10 @@ class Tabs {
                 await browserApi.runtime
                     .sendMessage({ result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY });
             }
-
-            return tab;
         } catch (error) {
             log.error(error);
         }
+        return tab;
     };
 
     sendMessage = async (type, options) => {
