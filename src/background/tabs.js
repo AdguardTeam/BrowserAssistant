@@ -13,14 +13,16 @@ class Tabs {
     // eslint-disable-next-line consistent-return
     getCurrent = async () => {
         try {
-            const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
+            const [tab] = await browser.tabs.query({
+                active: true,
+                lastFocusedWindow: true,
+            });
 
-            if (tab === undefined) {
+            if (!tab) {
                 log.warn('browser.tabs.query is called from a non-tab context (a background page or popup view)');
-                return tab;
             }
 
-            if (!('url' in tab)) {
+            if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {
                 log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest', tab);
 
                 this.isSetupCorrectly = false;
@@ -38,7 +40,10 @@ class Tabs {
         const tab = await this.getCurrent();
         let response;
         try {
-            response = await browser.tabs.sendMessage(tab.id, { type, options });
+            response = await browser.tabs.sendMessage(tab.id, {
+                type,
+                options,
+            });
         } catch (error) {
             if (!browser.runtime.lastError) {
                 log.error(error);
@@ -90,14 +95,17 @@ class Tabs {
         let id = tabId;
 
         if (!tabId) {
-            try {
-                const tab = await this.getCurrent();
-                id = tab && tab.id;
-            } catch (error) {
-                log.error(error);
+            const tab = await this.getCurrent();
+            id = tab && tab.id;
+        }
+
+        if (id) {
+            if (isFilteringEnabled) {
+                await actions.setIconEnabled(id);
+            } else {
+                await actions.setIconDisabled(id);
             }
         }
-        return isFilteringEnabled ? actions.setIconEnabled(id) : actions.setIconDisabled(id);
     };
 
     updateIconColorListener = async (params) => {
@@ -105,7 +113,7 @@ class Tabs {
         const isFilteringEnabled = await this.getFilteringStatus();
 
         this.updateIconColor(isFilteringEnabled, tabId);
-    }
+    };
 }
 
 const tabs = new Tabs();
