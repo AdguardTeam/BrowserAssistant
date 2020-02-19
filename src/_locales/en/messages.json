@@ -107,9 +107,6 @@
     "website_cert_is_expired": {
         "message": "Website certificate is expired"
     },
-    "website_cert_was_not_found": {
-        "message": "Website certificate wasn't found"
-    },
     "expired": {
         "message": "Expired"
     }
