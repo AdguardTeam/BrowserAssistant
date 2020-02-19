@@ -85,11 +85,19 @@ class Tabs {
         };
     };
 
-    getFilteringStatus = async () => {
+    getAppWorkingStatus = async () => {
         const { currentURL, currentPort } = await this.getCurrentTabUrlProperties();
         const response = await requests.getCurrentFilteringState(currentURL, currentPort);
 
-        return response.parameters && response.parameters.isFilteringEnabled;
+        const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
+        const { isFilteringEnabled } = response.parameters;
+        const { isExtensionUpdated, isSetupCorrectly } = adguard;
+
+        const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,
+            isExtensionUpdated, isSetupCorrectly, isFilteringEnabled]
+            .every((state) => state === true);
+
+        return isAppWorking;
     };
 
     updateIconColor = async (isFilteringEnabled, tabId) => {
@@ -110,9 +118,9 @@ class Tabs {
     };
 
     updateIconColorListener = async ({ tabId }) => {
-        const isFilteringEnabled = await this.getFilteringStatus();
+        const isAppWorking = await this.getAppWorkingStatus();
 
-        this.updateIconColor(isFilteringEnabled, tabId);
+        this.updateIconColor(isAppWorking, tabId);
     };
 
     updateIconColorReloadListener = async (tabId, changeInfo) => {
