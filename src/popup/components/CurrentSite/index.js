@@ -107,25 +107,23 @@ const CurrentSite = observer(() => {
     return (
         <div className="current-site__container">
             <div className={securedClass}>
-                <div className="current-site__name">
-                    <div
-                        role="menu"
-                        className={iconClass}
-                        tabIndex={uiStore.globalTabIndex}
-                        onKeyDown={onKeyEnterDown}
-                        onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
-                        onFocus={handleCertStatusModalState}
-                        onBlur={handleCertStatusModalState}
-                        onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
-                        onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
-                    >
-                        {!pageProtocol.isSecured
-                        && (shouldOpenCertStatusModal
-                            || (!pageProtocol.isHttps && isPageStatusModalOpen))
-                        && <div className="arrow-up" />}
-                    </div>
-                    <div className="current-site__hostname">{currentTabHostname}</div>
+                <div
+                    role="menu"
+                    className={iconClass}
+                    tabIndex={uiStore.globalTabIndex}
+                    onKeyDown={onKeyEnterDown}
+                    onMouseDown={getHandlerForHttpsSite(handleCertStatusModalState)}
+                    onFocus={handleCertStatusModalState}
+                    onBlur={handleCertStatusModalState}
+                    onMouseOver={getHandlerForHttpSite(handleCertStatusModalState)}
+                    onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
+                >
+                    {!pageProtocol.isSecured
+                    && (shouldOpenCertStatusModal
+                        || (!pageProtocol.isHttps && isPageStatusModalOpen))
+                    && <div className="arrow-up" />}
                 </div>
+                <div className="current-site__name">{currentTabHostname}</div>
 
                 <CertStatusModal
                     isOpen={pageProtocol.isHttps && shouldOpenCertStatusModal}
