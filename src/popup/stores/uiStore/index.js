@@ -6,7 +6,6 @@ import {
     eventTypeToModalStateMap,
     ORIGINAL_CERT_STATUS,
     HTTP_FILTERING_STATUS,
-    INDICATE_LOADING_START_TIME,
     secureStatusModalStates,
 } from '../consts';
 import { checkSomeIsTrue } from '../../helpers';
@@ -146,11 +145,8 @@ class UiStore {
 
     @action
     closePopupWrapper = (fn) => () => {
-        setTimeout(() => {
-            this.setExtensionLoading(false);
-            window.close();
-        }, INDICATE_LOADING_START_TIME);
         fn();
+        window.close();
     };
 }
 

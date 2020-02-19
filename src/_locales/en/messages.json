@@ -74,11 +74,8 @@
     "cert_expired": {
         "message": "AdGuard could not verify this website's certificate because the root certificate has expired"
     },
-    "cert_bypassed": {
-        "message": "AdGuard could not verify this website's certificate because the site was bypassed"
-    },
-    "cert_notfound": {
-        "message": "AdGuard could not verify this website's certificate because the certificate wasn't found"
+    "cert_absent": {
+        "message": "HTTPS filtering was not performed for this website"
     },
     "site_not_using_private_protection": {
         "message": "The site isn't using a private connection. Someone might be able to see or change the information you send or get through the site."

@@ -18,7 +18,6 @@ class RequestsStore {
 
     @action
     getCurrentAppState = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.getCurrentAppState();
         } catch (error) {
@@ -32,7 +31,6 @@ class RequestsStore {
             currentURL, isFilteringEnabled,
             isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.setFilteringStatus({
                 url: currentURL,
@@ -68,7 +66,6 @@ class RequestsStore {
     @action
     reportSite = async () => {
         const { currentURL, referrer } = this.rootStore.settingsStore;
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.reportSite({
                 url: currentURL,

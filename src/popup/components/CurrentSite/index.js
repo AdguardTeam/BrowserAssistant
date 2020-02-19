@@ -47,12 +47,11 @@ const CurrentSite = observer(() => {
     const iconClass = classNames({
         'current-site__icon': true,
         'current-site__icon--checkmark': pageProtocol.isSecured,
-        'current-site__icon--lock': pageProtocol.isHttps && certStatus.isValid,
+        'current-site__icon--lock': pageProtocol.isHttps && !certStatus.isInvalid,
         'current-site__icon--lock--yellow': pageProtocol.isHttps && !isHttpsFilteringEnabled,
         'current-site__icon--warning--red': pageProtocol.isHttps && certStatus.isInvalid,
-        'current-site__icon--warning--yellow': pageProtocol.isHttps && (certStatus.isBypassed || certStatus.isNotFound),
         'current-site__icon--warning--gray': pageProtocol.isHttp,
-        'current-site__icon--warning': (pageProtocol.isHttps && !certStatus.isValid) || pageProtocol.isHttp,
+        'current-site__icon--warning': (pageProtocol.isHttps && certStatus.isInvalid) || pageProtocol.isHttp,
     });
 
     const securedClass = classNames({
@@ -63,7 +62,7 @@ const CurrentSite = observer(() => {
     const secureStatusClass = classNames({
         'current-site__secure-status': true,
         'current-site__secure-status--gray': pageProtocol.isSecured || isFilteringEnabled,
-        'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || !certStatus.isValid)) || pageProtocol.isHttp,
+        'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || certStatus.isInvalid)) || pageProtocol.isHttp,
         'current-site__secure-status--modal': modalId,
     });
 
