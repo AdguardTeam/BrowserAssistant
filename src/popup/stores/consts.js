@@ -43,8 +43,6 @@ export const SHOW_MODAL_TIME = {
     LONG: 5000,
 };
 
-export const INDICATE_LOADING_START_TIME = 1000;
-
 export const modalStatesNames = {
     isHovered: 'isHovered',
     isFocused: 'isFocused',
@@ -83,7 +81,7 @@ export const secureStatusModalStates = {
     [PROTOCOLS.HTTPS]: {
         [ORIGINAL_CERT_STATUS.INVALID]: { info: 'website_cert_is_expired' },
         [ORIGINAL_CERT_STATUS.NOTFOUND]: { info: 'website_cert_was_not_found' },
-        [ORIGINAL_CERT_STATUS.BYPASSED]: { info: 'website_was_bypassed' },
+        [ORIGINAL_CERT_STATUS.BYPASSED]: { info: '' },
         [ORIGINAL_CERT_STATUS.VALID]: {
             [HTTP_FILTERING_STATUS.ENABLED]: { info: 'protection_is_enabled' },
             [HTTP_FILTERING_STATUS.DISABLED]: { info: 'protection_is_disabled' },

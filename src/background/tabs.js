@@ -119,7 +119,16 @@ class Tabs {
         if (changeInfo.status === 'loading') {
             this.updateIconColorListener({ tabId });
         }
-    }
+    };
+
+    reload = async () => {
+        try {
+            const tab = await this.getCurrent();
+            await browser.tabs.reload(tab.id);
+        } catch (error) {
+            log.error(error);
+        }
+    };
 }
 
 const tabs = new Tabs();

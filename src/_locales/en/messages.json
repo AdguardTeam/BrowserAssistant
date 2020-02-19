@@ -41,8 +41,8 @@
     "reinstall": {
         "message": "Reinstall"
     },
-    "adg_https": {
-        "message": "AdGuard HTTPS"
+    "https_filtering": {
+        "message": "HTTPS filtering"
     },
     "increase_ab_block_quality": {
         "message": "Increases the quality of ad blocking"
@@ -112,9 +112,6 @@
     },
     "website_cert_was_not_found": {
         "message": "Website certificate wasn't found"
-    },
-    "website_was_bypassed": {
-        "message": "Website was bypassed"
     },
     "expired": {
         "message": "Expired"

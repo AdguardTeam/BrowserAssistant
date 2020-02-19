@@ -132,9 +132,9 @@ class StubHost {
      * @param delay
      * @returns {Promise<void>}
      */
-   #waitDelay = async (delay = this.delay) => {
-       return new Promise((resolve) => (setTimeout(resolve, delay)));
-   };
+    #waitDelay = async (delay = this.delay) => {
+        return new Promise((resolve) => (setTimeout(resolve, delay)));
+    };
 
     /**
      * Emulates server response with delay

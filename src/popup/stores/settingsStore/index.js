@@ -86,6 +86,7 @@ class SettingsStore {
     setHttpsFiltering = (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
+        adguard.tabs.reload();
     };
 
     @action
@@ -93,6 +94,7 @@ class SettingsStore {
         this.isFilteringEnabled = isFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
         adguard.tabs.updateIconColor(isFilteringEnabled);
+        adguard.tabs.reload();
     };
 
     @action
