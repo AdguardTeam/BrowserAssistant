@@ -23,6 +23,7 @@ const Option = ({
             className={actionClass}
             onClick={handleWhileEnabled(onClick)}
             onKeyDown={handleWhileEnabled(onKeyDown)}
+            title={text}
             role="menuitem"
             tabIndex={tabIndex}
         >
