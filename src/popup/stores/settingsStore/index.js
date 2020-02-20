@@ -3,6 +3,7 @@ import {
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
+import { DOWNLOAD_LINK } from '../../../lib/conts';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -79,7 +80,7 @@ class SettingsStore {
 
     @action
     openDownloadPage = () => {
-        adguard.tabs.openDownloadPage();
+        adguard.tabs.openPage(DOWNLOAD_LINK);
     };
 
     @action

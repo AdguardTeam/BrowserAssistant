@@ -7,3 +7,7 @@
 export const checkSomeIsTrue = (modalState) => {
     return (Object.values(modalState).some((state) => state === true));
 };
+
+export const deepCloneObject = (obj) => {
+    return JSON.parse(JSON.stringify(obj));
+};

@@ -67,10 +67,11 @@ class RequestsStore {
     reportSite = async () => {
         const { currentURL, referrer } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.reportSite({
-                url: currentURL,
-                referrer,
-            });
+            const {
+                parameters: { reportUrl },
+            } = await adguard.requests.reportSite({ url: currentURL, referrer });
+
+            adguard.tabs.openPage(reportUrl);
         } catch (error) {
             log.error(error);
         }

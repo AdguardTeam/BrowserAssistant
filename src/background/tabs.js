@@ -64,8 +64,8 @@ class Tabs {
         this.sendMessage(MessageTypes.initAssistant, options);
     };
 
-    openDownloadPage = () => {
-        browser.tabs.create({ url: DOWNLOAD_LINK });
+    openPage = (url = DOWNLOAD_LINK) => {
+        browser.tabs.create({ url });
     };
 
     getCurrentTabUrlProperties = async () => {

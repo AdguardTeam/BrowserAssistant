@@ -8,7 +8,7 @@ import {
     HTTP_FILTERING_STATUS,
     secureStatusModalStates,
 } from '../consts';
-import { checkSomeIsTrue } from '../../helpers';
+import { checkSomeIsTrue } from '../../../helpers';
 
 class UiStore {
     constructor(rootStore) {
