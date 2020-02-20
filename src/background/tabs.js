@@ -6,6 +6,7 @@ import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import requests from './requestsApi';
 import actions from './actions';
 import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
+import { PROTOCOLS } from '../popup/stores/consts';
 
 class Tabs {
     isSetupCorrectly = true;
@@ -85,23 +86,34 @@ class Tabs {
         };
     };
 
-    getAppWorkingStatus = async () => {
-        const { currentURL, currentPort } = await this.getCurrentTabUrlProperties();
-        const response = await requests.getCurrentFilteringState(currentURL, currentPort);
+    getIsAppWorking = async () => {
+        const {
+            currentURL, currentPort, currentProtocol,
+        } = await this.getCurrentTabUrlProperties();
+        adguard.currentProtocol = currentProtocol;
 
-        const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
-        const { isFilteringEnabled } = response.parameters;
+        let response;
+        let isFilteringEnabled;
+        if (currentProtocol === PROTOCOLS.SECURED) {
+            response = await requests.getCurrentAppState();
+            isFilteringEnabled = true;
+        } else {
+            response = await requests.getCurrentFilteringState(currentURL, currentPort);
+            isFilteringEnabled = response.parameters.isFilteringEnabled;
+        }
+        const { appState: { isInstalled, isRunning, isProtectionEnabled } } = response;
         const { isExtensionUpdated, isSetupCorrectly } = adguard;
 
         const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,
-            isExtensionUpdated, isSetupCorrectly, isFilteringEnabled]
+            isExtensionUpdated, isSetupCorrectly, isFilteringEnabled, isFilteringEnabled]
             .every((state) => state === true);
 
         return isAppWorking;
     };
 
-    updateIconColor = async (isFilteringEnabled, tabId) => {
+    updateIconColor = async (tabId) => {
         let id = tabId;
+        const isAppWorking = await this.getIsAppWorking();
 
         if (!tabId) {
             const tab = await this.getCurrent();
@@ -109,7 +121,7 @@ class Tabs {
         }
 
         if (id) {
-            if (isFilteringEnabled) {
+            if (isAppWorking) {
                 await actions.setIconEnabled(id);
             } else {
                 await actions.setIconDisabled(id);
@@ -118,9 +130,7 @@ class Tabs {
     };
 
     updateIconColorListener = async ({ tabId }) => {
-        const isAppWorking = await this.getAppWorkingStatus();
-
-        this.updateIconColor(isAppWorking, tabId);
+        this.updateIconColor(tabId);
     };
 
     updateIconColorReloadListener = async (tabId, changeInfo) => {

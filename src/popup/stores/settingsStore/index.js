@@ -16,7 +16,7 @@ class SettingsStore {
 
     @observable currentPort = 0;
 
-    @observable currentProtocol = PROTOCOLS.HTTPS;
+    @observable currentProtocol = PROTOCOLS.SECURED;
 
     @observable referrer = '';
 
@@ -85,6 +85,7 @@ class SettingsStore {
 
     @action
     setHttpsFiltering = (isHttpsFilteringEnabled) => {
+        window.close();
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
         adguard.tabs.reload();
@@ -92,9 +93,10 @@ class SettingsStore {
 
     @action
     setFiltering = (isFilteringEnabled) => {
+        window.close();
         this.isFilteringEnabled = isFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
-        adguard.tabs.updateIconColor(isFilteringEnabled);
+        adguard.tabs.updateIconColor();
         adguard.tabs.reload();
     };
 
@@ -127,7 +129,7 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        adguard.tabs.updateIconColor(isFilteringEnabled);
+        adguard.tabs.updateIconColor();
     };
 
     @action
