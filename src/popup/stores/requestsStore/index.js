@@ -113,7 +113,7 @@ class RequestsStore {
             const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
             this.rootStore.uiStore.setProtectionTogglePending(false);
-            await adguard.tabs.updateIconColor(shouldEnableProtection);
+            await adguard.tabs.updateIconColor();
         } catch (error) {
             log.error(error);
         }

@@ -152,8 +152,11 @@ class StubHost {
             appState: this.appState,
             timestamp: new Date().toISOString(),
             data: null,
-            parameters,
         };
+
+        if (parameters) {
+            response.parameters = parameters;
+        }
 
         await this.#waitDelay(delay);
 
@@ -169,6 +172,10 @@ class StubHost {
                     /** @param isValidatedOnHost boolean* */
                     isValidatedOnHost: true,
                 };
+                break;
+
+            case RequestTypes.getCurrentAppState:
+                log.info('GET CURRENT APP STATE');
                 break;
             case RequestTypes.getCurrentFilteringState:
                 log.info('GET CURRENT FILTERING STATE');
