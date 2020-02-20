@@ -56,7 +56,7 @@ class Api {
     makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
         const id = `${idPrefix}_${nanoid()}`;
 
-        log.info(`request ${id}`, params);
+        log.info(`request ${id}`, JSON.parse(JSON.stringify(params)));
 
         const request = { id, ...params };
         const response = await stubHost.getStubResponse(request);

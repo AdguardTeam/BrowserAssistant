@@ -15,6 +15,8 @@ import versions from '../versions';
 class StubHost {
     delay = 500;
 
+    REPORT_URL = 'https://reports.adguard.com/ru/new_issue.html?product_type=Win&pr...';
+
     filteringStatus = {
         /** @param isFilteringEnabled boolean * */
         isFilteringEnabled: true,
@@ -210,6 +212,7 @@ class StubHost {
                 log.info('OPEN ORIGINAL CERT');
                 break;
             case RequestTypes.reportSite:
+                response.parameters.reportUrl = this.REPORT_URL;
                 log.info('REPORT SITE');
                 break;
             case RequestTypes.openFilteringLog:
