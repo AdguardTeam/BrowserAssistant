@@ -9,7 +9,7 @@ import {
     INDICATE_LOADING_START_TIME,
     secureStatusModalStates,
 } from '../consts';
-import { checkSomeIsTrue } from '../../helpers';
+import { checkSomeIsTrue } from '../../../helpers';
 
 class UiStore {
     constructor(rootStore) {

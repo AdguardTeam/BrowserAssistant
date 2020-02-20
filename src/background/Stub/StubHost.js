@@ -15,7 +15,7 @@ import versions from '../versions';
 class StubHost {
     delay = 500;
 
-    REPORT_URL = 'https://reports.adguard.com/ru/new_issue.html?product_type=Win&pr...';
+    REPORT_URL = 'https://reports.adguard.com/ru/new_issue.html';
 
     filteringStatus = {
         /** @param isFilteringEnabled boolean * */
