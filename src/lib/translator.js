@@ -1,14 +1,7 @@
-import browser from 'webextension-polyfill';
-import log from './logger';
+import { FormattedMessage } from 'react-intl';
+import React from 'react';
 
-const translate = (key) => {
-    try {
-        return browser.i18n.getMessage(key);
-    } catch (error) {
-        log.error(error);
-        return key;
-    }
-};
+const translate = (id) => <FormattedMessage id={id} />;
 
 const translator = {
     translate,

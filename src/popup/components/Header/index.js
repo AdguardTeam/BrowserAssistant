@@ -51,6 +51,7 @@ const Header = observer(() => {
                 <div className="widget-popup__header-logo" />
             </div>
             <div className="widget-popup__header-buttons" id="popup-header-buttons">
+                {/* TODO: [object Object] */}
                 <button
                     className={iconProtectionClass}
                     title={translator.translate('adg_protection')}

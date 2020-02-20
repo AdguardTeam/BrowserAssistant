@@ -18,6 +18,7 @@ const Option = ({
 
     const handleWhileEnabled = (handler) => (isDisabled ? undefined : handler);
 
+    /* TODO: fix [object Object] */
     return (
         <div
             className={actionClass}
