@@ -41,8 +41,8 @@
     "reinstall": {
         "message": "Reinstall"
     },
-    "adg_https": {
-        "message": "AdGuard HTTPS"
+    "https_filtering": {
+        "message": "HTTPS filtering"
     },
     "increase_ab_block_quality": {
         "message": "Increases the quality of ad blocking"
@@ -74,11 +74,8 @@
     "cert_expired": {
         "message": "AdGuard could not verify this website's certificate because the root certificate has expired"
     },
-    "cert_bypassed": {
-        "message": "AdGuard could not verify this website's certificate because the site was bypassed"
-    },
-    "cert_notfound": {
-        "message": "AdGuard could not verify this website's certificate because the certificate wasn't found"
+    "cert_absent": {
+        "message": "HTTPS filtering was not performed for this website"
     },
     "site_not_using_private_protection": {
         "message": "The site isn't using a private connection. Someone might be able to see or change the information you send or get through the site."
@@ -109,12 +106,6 @@
     },
     "website_cert_is_expired": {
         "message": "Website certificate is expired"
-    },
-    "website_cert_was_not_found": {
-        "message": "Website certificate wasn't found"
-    },
-    "website_was_bypassed": {
-        "message": "Website was bypassed"
     },
     "expired": {
         "message": "Expired"

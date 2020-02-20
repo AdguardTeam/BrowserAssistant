@@ -13,8 +13,8 @@ export const ORIGINAL_CERT_STATUS = {
 
 export const CERT_STATES = {
     INVALID: 'cert_expired',
-    BYPASSED: 'cert_bypassed',
-    NOTFOUND: 'cert_notfound',
+    BYPASSED: 'cert_absent',
+    NOTFOUND: 'cert_absent',
 };
 
 export const WORKING_STATES = {
@@ -42,8 +42,6 @@ export const SHOW_MODAL_TIME = {
     SHORT: 1000,
     LONG: 5000,
 };
-
-export const INDICATE_LOADING_START_TIME = 1000;
 
 export const modalStatesNames = {
     isHovered: 'isHovered',
@@ -82,8 +80,8 @@ export const HTTP_FILTERING_STATUS = {
 export const secureStatusModalStates = {
     [PROTOCOLS.HTTPS]: {
         [ORIGINAL_CERT_STATUS.INVALID]: { info: 'website_cert_is_expired' },
-        [ORIGINAL_CERT_STATUS.NOTFOUND]: { info: 'website_cert_was_not_found' },
-        [ORIGINAL_CERT_STATUS.BYPASSED]: { info: 'website_was_bypassed' },
+        [ORIGINAL_CERT_STATUS.NOTFOUND]: { info: 'protection_is_enabled' },
+        [ORIGINAL_CERT_STATUS.BYPASSED]: { info: 'protection_is_enabled' },
         [ORIGINAL_CERT_STATUS.VALID]: {
             [HTTP_FILTERING_STATUS.ENABLED]: { info: 'protection_is_enabled' },
             [HTTP_FILTERING_STATUS.DISABLED]: { info: 'protection_is_disabled' },

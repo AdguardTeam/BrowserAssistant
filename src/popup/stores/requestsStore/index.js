@@ -1,6 +1,5 @@
 import { action } from 'mobx';
 import log from '../../../lib/logger';
-import { INDICATE_LOADING_START_TIME } from '../consts';
 
 class RequestsStore {
     constructor(rootStore) {
@@ -10,7 +9,6 @@ class RequestsStore {
     @action
     getCurrentFilteringState = async (forceStartApp = false) => {
         const { currentURL, currentPort } = this.rootStore.settingsStore;
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.getCurrentFilteringState(currentURL, currentPort, forceStartApp);
         } catch (error) {
@@ -20,7 +18,6 @@ class RequestsStore {
 
     @action
     getCurrentAppState = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.getCurrentAppState();
         } catch (error) {
@@ -34,7 +31,6 @@ class RequestsStore {
             currentURL, isFilteringEnabled,
             isHttpsFilteringEnabled,
         } = this.rootStore.settingsStore;
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.setFilteringStatus({
                 url: currentURL,
@@ -48,14 +44,7 @@ class RequestsStore {
 
     @action
     openOriginalCert = async () => {
-        const {
-            settingsStore: { currentTabHostname, currentPort },
-            uiStore: { setExtensionLoading },
-        } = this.rootStore;
-
-        setExtensionLoading(true);
-        setTimeout(() => setExtensionLoading(false), INDICATE_LOADING_START_TIME);
-
+        const { settingsStore: { currentTabHostname, currentPort } } = this.rootStore;
         try {
             await adguard.requests.openOriginalCert(currentTabHostname, currentPort);
         } catch (error) {
@@ -65,7 +54,7 @@ class RequestsStore {
 
     @action
     removeCustomRules = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
+        adguard.tabs.reload();
         try {
             await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
@@ -77,7 +66,6 @@ class RequestsStore {
     @action
     reportSite = async () => {
         const { currentURL, referrer } = this.rootStore.settingsStore;
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.reportSite({
                 url: currentURL,
@@ -90,7 +78,6 @@ class RequestsStore {
 
     @action
     openFilteringLog = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.openFilteringLog();
         } catch (error) {
@@ -122,7 +109,6 @@ class RequestsStore {
 
     @action
     setProtectionStatus = async (shouldEnableProtection) => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
@@ -145,7 +131,6 @@ class RequestsStore {
 
     @action
     updateApp = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.updateApp();
         } catch (error) {
@@ -155,7 +140,6 @@ class RequestsStore {
 
     @action
     openSettings = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.requests.openSettings();
         } catch (error) {
@@ -165,7 +149,6 @@ class RequestsStore {
 
     @action
     startBlockingAd = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
             await adguard.tabs.initAssistant();
         } catch (error) {

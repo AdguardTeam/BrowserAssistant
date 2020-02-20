@@ -66,7 +66,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             {isFilteringEnabled && (
                 <div className="modal__info--upper">
                     <div className="modal__header--container">
-                        <div className="modal__header">{translator.translate('adg_https')}</div>
+                        <div className="modal__header">{translator.translate('https_filtering')}</div>
                         <div className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</div>
                     </div>
                     <Switcher

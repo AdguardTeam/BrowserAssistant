@@ -6,7 +6,6 @@ const { SRC_PATH, BUILD_PATH } = require('./consts');
 const { getOutputPathByEnv } = require('./helpers');
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
-const OPTIONS_PATH = path.resolve(__dirname, SRC_PATH, 'options');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
 const CONTENT_SCRIPTS_PATH = path.resolve(__dirname, SRC_PATH, 'content-scripts');
 
@@ -29,7 +28,6 @@ const config = {
     },
     entry: {
         background: BACKGROUND_PATH,
-        options: OPTIONS_PATH,
         popup: POPUP_PATH,
         'content-scripts': CONTENT_SCRIPTS_PATH,
     },
@@ -82,11 +80,6 @@ const config = {
             template: path.join(BACKGROUND_PATH, 'index.html'),
             filename: 'background.html',
             chunks: ['background'],
-        }),
-        new HtmlWebpackPlugin({
-            template: path.join(OPTIONS_PATH, 'index.html'),
-            filename: 'options.html',
-            chunks: ['options'],
         }),
         new HtmlWebpackPlugin({
             template: path.join(POPUP_PATH, 'index.html'),
