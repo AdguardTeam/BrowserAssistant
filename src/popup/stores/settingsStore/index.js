@@ -85,19 +85,17 @@ class SettingsStore {
 
     @action
     setHttpsFiltering = (isHttpsFilteringEnabled) => {
-        window.close();
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
         this.rootStore.requestsStore.setFilteringStatus();
-        adguard.tabs.reload();
+        this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 
     @action
-    setFiltering = (isFilteringEnabled) => {
-        window.close();
+    setFiltering = async (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
-        this.rootStore.requestsStore.setFilteringStatus();
-        adguard.tabs.updateIconColor();
-        adguard.tabs.reload();
+        await this.rootStore.requestsStore.setFilteringStatus();
+        await adguard.tabs.updateIconColor(isFilteringEnabled);
+        this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 
     @action
@@ -126,10 +124,10 @@ class SettingsStore {
     };
 
     @action
-    setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
+    setHttpAndHttpsFilteringActive = async (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        adguard.tabs.updateIconColor();
+        await adguard.tabs.updateIconColor(isFilteringEnabled);
     };
 
     @action

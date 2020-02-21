@@ -9,5 +9,13 @@ export const checkSomeIsTrue = (modalState) => {
 };
 
 export const deepCloneObject = (obj) => {
-    return JSON.parse(JSON.stringify(obj));
+    let clonedObj;
+
+    try {
+        clonedObj = JSON.parse(JSON.stringify(obj));
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+    }
+    return clonedObj;
 };

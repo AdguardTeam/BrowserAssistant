@@ -7,6 +7,7 @@ import {
     ORIGINAL_CERT_STATUS,
     HTTP_FILTERING_STATUS,
     secureStatusModalStates,
+    SWITCHER_TRANSITION_TIME,
 } from '../consts';
 import { checkSomeIsTrue } from '../../../helpers';
 
@@ -143,11 +144,16 @@ class UiStore {
         this.isProtectionTogglePending = isProtectionTogglePending;
     };
 
-    @action
     closePopupWrapper = (fn) => () => {
         fn();
         window.close();
     };
+
+    reloadPageAfterSwitcherTransition = () => {
+        setTimeout(() => {
+            adguard.tabs.reload();
+        }, SWITCHER_TRANSITION_TIME);
+    }
 }
 
 export default UiStore;
