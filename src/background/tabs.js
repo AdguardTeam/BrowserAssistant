@@ -6,7 +6,6 @@ import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import requests from './requestsApi';
 import actions from './actions';
 import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
-import { PROTOCOLS } from '../popup/stores/consts';
 
 class Tabs {
     isSetupCorrectly = true;
@@ -92,15 +91,9 @@ class Tabs {
         } = await this.getCurrentTabUrlProperties();
         adguard.currentProtocol = currentProtocol;
 
-        let response;
-        let isFilteringEnabled;
-        if (currentProtocol === PROTOCOLS.SECURED) {
-            response = await requests.getCurrentAppState();
-            isFilteringEnabled = true;
-        } else {
-            response = await requests.getCurrentFilteringState(currentURL, currentPort);
-            isFilteringEnabled = response.parameters.isFilteringEnabled;
-        }
+        const response = await requests.getCurrentFilteringState(currentURL, currentPort);
+        const { isFilteringEnabled } = response.parameters;
+
         const { appState: { isInstalled, isRunning, isProtectionEnabled } } = response;
         const { isExtensionUpdated, isSetupCorrectly } = adguard;
 

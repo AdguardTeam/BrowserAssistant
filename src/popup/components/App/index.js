@@ -10,7 +10,6 @@ import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
 import Loading from '../ui/Loading';
-import { PROTOCOLS } from '../../stores/consts';
 
 Modal.setAppElement('#root');
 
@@ -25,12 +24,7 @@ const App = observer(() => {
         (async () => {
             await getCurrentTabHostname();
             await getReferrer();
-
-            if (adguard.currentProtocol === PROTOCOLS.SECURED) {
-                await requestsStore.getCurrentAppState();
-            } else {
-                await requestsStore.getCurrentFilteringState();
-            }
+            await requestsStore.getCurrentFilteringState();
         })();
 
         browser.runtime.onMessage.addListener(
