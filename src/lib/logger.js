@@ -1,5 +1,3 @@
-import { deepCloneObject } from '../helpers';
-
 const CURRENT_LEVEL = 'DEBUG';
 
 const LEVELS = {
@@ -20,13 +18,7 @@ const print = (level, method, args) => {
 
     const now = new Date();
     const formatted = `${now.toISOString()}:`;
-    /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Console/log
-     * This way you are sure you are seeing the value of obj at the moment you log it.
-     */
-    const msg = args.map((arg) => (typeof arg === 'object' ? deepCloneObject(arg) : arg));
-    // eslint-disable-next-line no-console
-    console[method](formatted, ...msg);
+    console[method](formatted, ...args);
 };
 
 const log = {
