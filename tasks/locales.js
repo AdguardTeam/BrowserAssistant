@@ -4,7 +4,7 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
-const twoskyConfig = require('../.twosky.json')[0];
+const [twoskyConfig] = require('../.twosky.json');
 
 const {
     project_id: PROJECT_ID, languages: LANGUAGES, base_locale: BASE_LOCALE,

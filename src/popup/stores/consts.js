@@ -50,11 +50,11 @@ export const modalStatesNames = {
     isClicked: 'isClicked',
 };
 
-export const defaultModalState = Object.values(modalStatesNames).reduce((states, name) => {
-    // eslint-disable-next-line no-param-reassign
-    states[name] = false;
-    return states;
-}, {});
+export const defaultModalState = Object.values(modalStatesNames)
+    .reduce((acc, name) => {
+        acc[name] = false;
+        return acc;
+    }, {});
 
 
 export const eventTypeToModalStateMap = {

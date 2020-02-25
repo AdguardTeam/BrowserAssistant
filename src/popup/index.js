@@ -7,29 +7,18 @@ import App from './components/App';
 import './styles/main.pcss';
 import log from '../lib/logger';
 import manifest from '../../tasks/manifest.common.json';
-import ru from '../_locales/ru/messages.json';
-import en from '../_locales/en/messages.json';
+import messagesMap from '../_locales';
 
-const flat = (lang) => Object.fromEntries(
-    Object.entries(lang).map(([key, value]) => [key, value.message])
-);
-
-const messagesEn = flat(en);
-const messagesRu = flat(ru);
-
-const messagesMap = {
-    en: messagesEn,
-    ru: messagesRu,
-};
-
-const locale = manifest.default_locale;
+const { default_locale: defaultLocale } = manifest;
+const locale = navigator.language.slice(0, 2) || defaultLocale;
+const mergedMessages = { ...messagesMap[defaultLocale], ...messagesMap[locale] };
 
 try {
     (async () => {
         const bgPage = await browser.runtime.getBackgroundPage();
         global.adguard = bgPage.adguard;
         ReactDOM.render(
-            <IntlProvider locale={locale} messages={messagesMap[locale]}>
+            <IntlProvider locale={locale} messages={mergedMessages}>
                 <Provider>
                     <App />
                 </Provider>
