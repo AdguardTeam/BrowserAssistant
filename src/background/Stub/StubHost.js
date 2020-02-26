@@ -17,6 +17,8 @@ class StubHost {
 
     REPORT_URL = 'https://reports.adguard.com/ru/new_issue.html';
 
+    locale = 'en';
+
     filteringStatus = {
         /** @param isFilteringEnabled boolean * */
         isFilteringEnabled: true,
@@ -43,6 +45,7 @@ class StubHost {
         isRunning: true,
         /** @param isProtectionEnabled boolean* */
         isProtectionEnabled: true,
+        locale: this.locale,
     };
 
     set isFilteringEnabled(isFilteringEnabled) {
@@ -92,6 +95,7 @@ class StubHost {
 
     set isRunning(isRunning) {
         this.appState.isRunning = isRunning;
+        this.appState.locale = isRunning ? this.locale : '';
         this.#makeRequest();
     }
 

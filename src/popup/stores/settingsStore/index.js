@@ -33,6 +33,8 @@ class SettingsStore {
 
     @observable isProtectionEnabled = true;
 
+    @observable locale = '';
+
     @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
     @observable isAppUpToDate = adguard.isAppUpToDate;
@@ -125,6 +127,11 @@ class SettingsStore {
     };
 
     @action
+    setLocale = (locale) => {
+        this.locale = locale;
+    };
+
+    @action
     setHttpAndHttpsFilteringActive = async (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
@@ -148,10 +155,13 @@ class SettingsStore {
 
     @action
     setCurrentAppState = (appState) => {
-        const { isInstalled, isRunning, isProtectionEnabled } = appState;
+        const {
+            isInstalled, isRunning, isProtectionEnabled, locale,
+        } = appState;
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+        this.setLocale(locale);
     };
 
     @action
