@@ -104,26 +104,30 @@ class Tabs {
         return isAppWorking;
     };
 
-    updateIconColor = async (tabId) => {
-        let id = tabId;
-        const isAppWorking = await this.getIsAppWorking();
-
-        if (!tabId) {
-            const tab = await this.getCurrent();
-            id = tab && tab.id;
-        }
-
-        if (id) {
-            if (isAppWorking) {
-                await actions.setIconEnabled(id);
-            } else {
-                await actions.setIconDisabled(id);
+    updateIconColor = async (isAppWorking, tabId) => {
+        try {
+            let id = tabId;
+            if (!tabId) {
+                const tab = await this.getCurrent();
+                id = tab && tab.id;
             }
+
+            if (id) {
+                if (isAppWorking) {
+                    await actions.setIconEnabled(id);
+                } else {
+                    await actions.setIconDisabled(id);
+                }
+            }
+        } catch (error) {
+            log.error(error);
         }
     };
 
     updateIconColorListener = async ({ tabId }) => {
-        this.updateIconColor(tabId);
+        const isAppWorking = await this.getIsAppWorking();
+
+        this.updateIconColor(isAppWorking, tabId);
     };
 
     updateIconColorReloadListener = async (tabId, changeInfo) => {

@@ -1,13 +1,9 @@
 /**
- * Checks if at least one value of the object is equal to true
- *
- * @param {object} params
+ * Checks if at least one value of the object is strictly equal to true
+ * @param {Object.<string, any>} states
  * @returns {boolean}
  */
-export const checkSomeIsTrue = (modalState) => {
-    return (Object.values(modalState).some((state) => state === true));
-};
-
-export const deepCloneObject = (obj) => {
-    return JSON.parse(JSON.stringify(obj));
+export const checkSomeIsTrue = (states) => {
+    return Object.values(states)
+        .some((state) => state === true);
 };

@@ -5,7 +5,9 @@ import Header from '../../Header';
 import Loading from '../../ui/Loading';
 
 const AppWrapper = observer(({ children }) => {
-    const { uiStore: { isLoading, requestStatus: { isPending } } } = useContext(rootStore);
+    const {
+        uiStore: { isLoading, requestStatus: { isPending } },
+    } = useContext(rootStore);
 
     const disableEvent = (e) => {
         e.stopPropagation();

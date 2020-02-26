@@ -22,7 +22,7 @@ class Api {
     retryTimes = MAX_RETRY_TIMES;
 
     initHandler = (response) => {
-        log.info(`response ${response.id}`, JSON.parse(JSON.stringify(response)));
+        log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
         // Ignore requests without identifying prefix ADG
@@ -100,7 +100,7 @@ class Api {
         const id = `${idPrefix}_${nanoid()}`;
 
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
-        log.info(`request ${id}`, JSON.parse(JSON.stringify(params)));
+        log.info(`request ${id}`, params);
 
         return new Promise((resolve, reject) => {
             const messageHandler = (msg) => {

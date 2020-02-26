@@ -2,15 +2,17 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import rootStore from '../../../stores';
-import './AppClosed.pcss';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 import translator from '../../../../lib/translator';
+import './AppClosed.pcss';
 
 const getStates = (stores) => {
     const {
         settingsStore: { openDownloadPage, updateExtension },
-        requestsStore: { updateApp, startApp, setProtectionStatus },
+        requestsStore: {
+            updateApp, startApp, setProtectionStatus, getCurrentFilteringState,
+        },
     } = stores;
 
     return ({
@@ -41,7 +43,10 @@ const getStates = (stores) => {
         [WORKING_STATES.IS_PROTECTION_ENABLED]: {
             content: translator.translate('adg_is_paused'),
             buttonText: translator.translate('enable'),
-            onClick: setProtectionStatus.bind(this, true),
+            onClick: async () => {
+                setProtectionStatus(true);
+                await getCurrentFilteringState();
+            },
         },
 
         [WORKING_STATES.IS_EXTENSION_UPDATED]: {

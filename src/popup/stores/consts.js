@@ -106,3 +106,5 @@ export const secureStatusModalStates = {
         info: 'protection_is_enabled',
     },
 };
+
+export const SWITCHER_TRANSITION_TIME = 150;

@@ -219,7 +219,8 @@ class StubHost {
                 log.info('OPEN ORIGINAL CERT');
                 break;
             case RequestTypes.reportSite:
-                response.parameters.reportUrl = this.REPORT_URL;
+                // Don't modify the object to log the correct state
+                response.parameters = { ...response.parameters, reportUrl: this.REPORT_URL };
                 log.info('REPORT SITE');
                 break;
             case RequestTypes.openFilteringLog:
