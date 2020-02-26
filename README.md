@@ -1,5 +1,10 @@
 # AdGuard Browser Assistant
 
+AdGuard Browser Assistant extension:
+https://adguard.com/en/adguard-assistant/overview.html
+
+This is a replacement for the legacy browser assistant userscript we were using before that.
+
 ## Build
 
 - `yarn clear` - removes build and node modules directories
