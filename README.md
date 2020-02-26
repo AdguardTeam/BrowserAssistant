@@ -3,7 +3,7 @@
 AdGuard Browser Assistant extension:
 https://adguard.com/en/adguard-assistant/overview.html
 
-This is a replacement for the legacy browser assistant userscript we were using before that.
+This is a replacement for the [legacy assistant](https://github.com/AdguardTeam/AdguardAssistant) userscript we were using before that.
 
 ## Build
 
