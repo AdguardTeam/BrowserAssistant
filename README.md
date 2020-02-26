@@ -66,4 +66,5 @@ Builds will be located in the `build` directory.
 
 ## Permissions
 - Permission `tabs` allows to indicate the status of websites by changing the icon color
+- Permission `activeTabs` allows to inject script of adguard-assistant https://github.com/AdguardTeam/AdguardAssistant into the content page
 - Permission `nativeMessaging` allows to communicate with the native host

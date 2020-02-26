@@ -4,6 +4,7 @@ import {
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 import { DOWNLOAD_LINK } from '../../../lib/conts';
+import { CHROME_UPDATE_CRX, FIREFOX_UPDATE_XPI } from '../../../../tasks/consts';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -155,12 +156,9 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        // TODO: update extension
-        const updateSuccess = true;
-        if (updateSuccess) {
-            adguard.isExtensionUpdated = true;
-            this.isExtensionUpdated = adguard.isExtensionUpdated;
-        }
+        const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
+        const updateLink = isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
+        adguard.tabs.openPage(updateLink);
     };
 }
 

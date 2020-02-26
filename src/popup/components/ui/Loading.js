@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './Loading.pcss';
 
 const Loading = ({ title }) => (
