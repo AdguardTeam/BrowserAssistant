@@ -4,3 +4,4 @@ export const ICON_COLORS = {
     GREEN: 'green',
     GREY: 'grey',
 };
+export const browserLocale = navigator.language.slice(0, 2);

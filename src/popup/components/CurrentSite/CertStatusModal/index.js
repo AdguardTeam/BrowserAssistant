@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import Switcher from '../../Settings/Switcher';
 import rootStore from '../../../stores';
 import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
-import translator from '../../../../lib/translator';
 import './modal.pcss';
 
 const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
@@ -24,6 +23,9 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         uiStore: {
             certStatus,
             globalTabIndex,
+        },
+        translationStore: {
+            translate,
         },
     } = useContext(rootStore);
 
@@ -66,8 +68,8 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             {isFilteringEnabled && (
                 <div className="modal__info--upper">
                     <div className="modal__header--container">
-                        <div className="modal__header">{translator.translate('https_filtering')}</div>
-                        <div className="modal__text modal__text--additional">{translator.translate('increase_ab_block_quality')}</div>
+                        <div className="modal__header">{translate('https_filtering')}</div>
+                        <div className="modal__text modal__text--additional">{translate('increase_ab_block_quality')}</div>
                     </div>
                     <Switcher
                         id={SWITCHER_IDS.HTTPS_SWITCHER}
@@ -81,17 +83,17 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             )}
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
                 <div className="modal__text modal__text--red modal__text--upper">
-                    {translator.translate(CERT_STATES[originalCertStatus])}
+                    {translate(CERT_STATES[originalCertStatus])}
                 </div>
             )}
             <div className={lowerInfoClass}>
                 {originalCertIssuer && (certStatus.isValid || certStatus.isInvalid)
                 && (
                     <>
-                        <div className="modal__text modal__text--notion">{translator.translate('verified_by')}</div>
+                        <div className="modal__text modal__text--notion">{translate('verified_by')}</div>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         <div className="modal__text--container">
-                            {certStatus.isInvalid && <div className="modal__text modal__text--red modal__text--expired">{translator.translate('expired')}</div>}
+                            {certStatus.isInvalid && <div className="modal__text modal__text--red modal__text--expired">{translate('expired')}</div>}
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"
@@ -99,7 +101,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                                 onClick={openOriginalCert}
                                 onKeyDown={handleKeyDown}
                             >
-                                {translator.translate('more_info')}
+                                {translate('more_info')}
                             </div>
                         </div>
                     </>

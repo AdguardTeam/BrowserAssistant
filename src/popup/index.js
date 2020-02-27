@@ -5,18 +5,15 @@ import { Provider } from 'mobx-react';
 import App from './components/App';
 import './styles/main.pcss';
 import log from '../lib/logger';
-import TranslationProvider from './TranslationProvider';
 
 try {
     (async () => {
         const bgPage = await browser.runtime.getBackgroundPage();
         global.adguard = bgPage.adguard;
         ReactDOM.render(
-            <TranslationProvider>
-                <Provider>
-                    <App />
-                </Provider>
-            </TranslationProvider>,
+            <Provider>
+                <App />
+            </Provider>,
             document.getElementById('root')
         );
     })();

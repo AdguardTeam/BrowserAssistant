@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import rootStore from '../../stores';
-import translator from '../../../lib/translator';
 import './header.pcss';
 
 const Header = observer(() => {
@@ -21,6 +20,9 @@ const Header = observer(() => {
             isAppWorking,
             requestStatus,
             globalTabIndex,
+        },
+        translationStore: {
+            translate,
         },
     } = useContext(rootStore);
 
@@ -51,19 +53,18 @@ const Header = observer(() => {
                 <div className="widget-popup__header-logo" />
             </div>
             <div className="widget-popup__header-buttons" id="popup-header-buttons">
-                {/* TODO: [object Object] */}
                 <button
                     className={iconProtectionClass}
-                    title={translator.translate('adg_protection')}
-                    aria-label={translator.translate('adg_protection')}
+                    title={translate('adg_protection')}
+                    aria-label={translate('adg_protection')}
                     type="button"
                     onClick={disableProtection}
                     tabIndex={globalTabIndex}
                 />
                 <button
                     className={iconSettingsClass}
-                    title={translator.translate('adg_settings')}
-                    aria-label={translator.translate('adg_settings')}
+                    title={translate('adg_settings')}
+                    aria-label={translate('adg_settings')}
                     type="button"
                     onClick={openSettingsAndClosePopup}
                     tabIndex={globalTabIndex}

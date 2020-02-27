@@ -6,11 +6,18 @@ import { SWITCHER_IDS } from '../../stores/consts';
 import './settings.pcss';
 
 const Settings = observer(() => {
-    const { settingsStore, uiStore } = useContext(rootStore);
-    const { isFilteringEnabled, pageProtocol } = settingsStore;
+    const {
+        settingsStore: {
+            isFilteringEnabled, pageProtocol, setFiltering,
+        },
+        translationStore: { translate },
+        uiStore: { globalTabIndex },
+    } = useContext(rootStore);
+
     const toggleFiltering = () => {
-        settingsStore.setFiltering(!isFilteringEnabled);
+        setFiltering(!isFilteringEnabled);
     };
+
     const onClick = () => {
         if (pageProtocol.isSecured) {
             return;
@@ -18,16 +25,19 @@ const Settings = observer(() => {
         toggleFiltering();
     };
 
+    const checked = pageProtocol.isSecured ? true : isFilteringEnabled;
+
     return (
         <div className="settings">
             <div className="settings__main">
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
-                    checked={pageProtocol.isSecured ? true : isFilteringEnabled}
+                    checked={checked}
                     onClick={onClick}
                     isSecured={pageProtocol.isSecured}
                     isDisabled={pageProtocol.isSecured}
-                    tabIndex={uiStore.globalTabIndex}
+                    tabIndex={globalTabIndex}
+                    label={translate(checked ? 'enabled' : 'disabled')}
                 />
             </div>
             <hr className="horizontal-line" />

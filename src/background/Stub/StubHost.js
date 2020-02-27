@@ -13,7 +13,7 @@ import browserApi from '../browserApi';
 import versions from '../versions';
 import manifest from '../../../tasks/manifest.common.json';
 
-const { default_locale: defaultLocale } = manifest.default_locale;
+const { default_locale: defaultLocale } = manifest;
 
 class StubHost {
     delay = 500;
@@ -109,6 +109,54 @@ class StubHost {
     set locale(locale) {
         this.appState.locale = locale;
         this.#makeRequest();
+    }
+
+    get isFilteringEnabled() {
+        return this.filteringStatus.isFilteringEnabled;
+    }
+
+    get isHttpsFilteringEnabled() {
+        return this.filteringStatus.appState.isHttpsFilteringEnabled;
+    }
+
+    get isPageFilteredByUserFilter() {
+        return this.filteringStatus.isPageFilteredByUserFilter;
+    }
+
+    get blockedAdsCount() {
+        return this.filteringStatus.blockedAdsCount;
+    }
+
+    get totalBlockedCount() {
+        return this.filteringStatus.totalBlockedCount;
+    }
+
+    get originalCertIssuer() {
+        return this.filteringStatus.originalCertIssuer;
+    }
+
+    get originalCertStatus() {
+        return this.filteringStatus.originalCertStatus;
+    }
+
+    get lastCheckTime() {
+        return this.appState.lastCheckTime;
+    }
+
+    get isInstalled() {
+        return this.appState.isInstalled;
+    }
+
+    get isRunning() {
+        return this.appState.isRunning;
+    }
+
+    get isProtectionEnabled() {
+        return this.appState.isProtectionEnabled;
+    }
+
+    get locale() {
+        return this.appState.locale;
     }
 
     #makeRequest = async (delay) => {

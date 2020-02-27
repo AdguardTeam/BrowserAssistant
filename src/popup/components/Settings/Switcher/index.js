@@ -1,10 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
-import translator from '../../../../lib/translator';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, checked, onClick, isSecured, tabIndex, isDisabled,
+    id, checked, onClick, isSecured, tabIndex, isDisabled, label,
 }) => {
     const switcherTextClass = classNames({
         switcher__text: true,
@@ -36,12 +35,12 @@ const Switcher = ({
             <button
                 className={switcherClass}
                 type="button"
-                aria-labelledby={translator.translate(checked ? 'enabled' : 'disabled')}
+                aria-labelledby={label}
                 tabIndex={tabIndex}
                 onClick={onClick}
                 onKeyDown={onKeyDown}
             />
-            <div className={switcherTextClass}>{translator.translate(checked ? 'enabled' : 'disabled')}</div>
+            <div className={switcherTextClass}>{label}</div>
         </div>
     );
 };
