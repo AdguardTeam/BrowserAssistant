@@ -18,6 +18,7 @@ const print = (level, method, args) => {
 
     const now = new Date();
     const formatted = `${now.toISOString()}:`;
+    // eslint-disable-next-line no-console
     console[method](formatted, ...args);
 };
 

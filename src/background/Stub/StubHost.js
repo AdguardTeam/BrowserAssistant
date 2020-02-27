@@ -11,13 +11,14 @@ import {
 import log from '../../lib/logger';
 import browserApi from '../browserApi';
 import versions from '../versions';
+import manifest from '../../../tasks/manifest.common.json';
+
+const { default_locale: defaultLocale } = manifest.default_locale;
 
 class StubHost {
     delay = 500;
 
     REPORT_URL = 'https://reports.adguard.com/ru/new_issue.html';
-
-    locale = 'en';
 
     filteringStatus = {
         /** @param isFilteringEnabled boolean * */
@@ -45,7 +46,8 @@ class StubHost {
         isRunning: true,
         /** @param isProtectionEnabled boolean* */
         isProtectionEnabled: true,
-        locale: this.locale,
+        /** @param locale string* */
+        locale: defaultLocale,
     };
 
     set isFilteringEnabled(isFilteringEnabled) {
@@ -95,12 +97,17 @@ class StubHost {
 
     set isRunning(isRunning) {
         this.appState.isRunning = isRunning;
-        this.appState.locale = isRunning ? this.locale : '';
+        this.appState.locale = isRunning ? this.appState.locale : '';
         this.#makeRequest();
     }
 
     set isProtectionEnabled(isProtectionEnabled) {
         this.appState.isProtectionEnabled = isProtectionEnabled;
+        this.#makeRequest();
+    }
+
+    set locale(locale) {
+        this.appState.locale = locale;
         this.#makeRequest();
     }
 
@@ -224,7 +231,10 @@ class StubHost {
                 break;
             case RequestTypes.reportSite:
                 // Don't modify the object to log the correct state
-                response.parameters = { ...response.parameters, reportUrl: this.REPORT_URL };
+                response.parameters = {
+                    ...response.parameters,
+                    reportUrl: this.REPORT_URL,
+                };
                 log.info('REPORT SITE');
                 break;
             case RequestTypes.openFilteringLog:
