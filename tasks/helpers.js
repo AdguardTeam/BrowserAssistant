@@ -1,5 +1,8 @@
 const { LOCALES_PATH, ENV_MAP, IS_DEV } = require('./consts');
 const pJson = require('../package');
+const twoskyConfig = require('../.twosky.json');
+
+const [{ base_locale: baseLocale }] = twoskyConfig;
 
 const getNameByEnv = (env) => {
     // eslint-disable-next-line import/no-dynamic-require, global-require
@@ -31,6 +34,7 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
         ...browserManifestDiff,
         ...devPolicy,
         name,
+        default_locale: baseLocale,
         version: pJson.version,
     };
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));

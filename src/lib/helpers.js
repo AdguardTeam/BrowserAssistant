@@ -49,14 +49,15 @@ export const lazyGet = (obj, prop, func) => {
 };
 
 /**
- * Flattens the object by mapping it's key to the specified value of the nested object
+ * Flattens the object by mapping it's key to the specified property of the nested object
  * @param {Object.<string,Object.<string,any>>} obj
- * @param {string} prop
+ * @param {string} propName
  * @returns {Object.<string,any>}
  */
-export const flat = (obj, propName) => {
-    return Object.fromEntries(
-        Object.entries(obj)
-            .map(([key, value]) => [key, value[propName]])
-    );
+export const flattenNestedObj = (obj, propName) => {
+    return Object.entries(obj)
+        .reduce((acc, [key, value]) => {
+            acc[key] = value[propName];
+            return acc;
+        }, {});
 };
