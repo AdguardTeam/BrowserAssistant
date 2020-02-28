@@ -39,12 +39,10 @@
     }
 
     &__insecure-status {
-        height: 11.8rem;
         overflow: hidden;
         text-overflow: ellipsis;
 
         & > .modal__text--message {
-            height: 6.3rem;
             line-height: 1.4rem;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -79,19 +77,30 @@
         line-height: 1.4rem;
 
         &--message {
-            padding-top: 0.8rem;
+            margin-top: 0.8rem;
+            max-height: 22.5rem;
+            line-height: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--notion {
             color: var(--gray88);
+            height: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--red {
             color: var(--red);
         }
 
-        &--capitalized {
+        &--expired {
             text-transform: capitalize;
+            max-width: 40%;
+            height: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--upper {
@@ -101,7 +110,7 @@
             align-items: center;
             height: 7.5rem;
             line-height: 1.6rem;
-            width: 25.6rem;
+            width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -116,9 +125,10 @@
 
         &--container {
             display: flex;
+            width: 100%;
 
             & > .modal__text--red {
-                padding-right: 1.6rem;
+                padding-right: 6%;
             }
         }
 
@@ -127,7 +137,11 @@
             text-decoration: underline;
             text-transform: capitalize;
             width: fit-content;
+            max-width: 54%;
             transition: color 300ms ease;
+            height: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             &:hover {
                 color: var(--green78);
