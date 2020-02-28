@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-items: flex-start;
     max-width: 32rem;
-    padding: 1.8rem 0 0.8rem;
+    padding: 2.1rem 0 0.5rem;
 
     .action {
         display: flex;
@@ -15,15 +15,29 @@
         max-height: 4rem;
         opacity: 1;
 
-        &--disabled {
-            opacity: 0.5;
-            cursor: default;
+        &__item {
+            max-width: 27rem;
+            height: 2.4rem;
+            font-size: 1.3rem;
+            color: var(--gray-base);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+
+        &__text {
+            text-indent: 0.8rem;
+            height: 2.4rem;
+            display: inline-block;
+            text-rendering: geometricPrecision;
         }
 
         &__icon {
+            display: inline-block;
             height: 2.4rem;
             width: 2.4rem;
             flex-basis: 2.4rem;
+            vertical-align: middle;
 
             &--block-ad {
                 background: url('../../../../assets/images/icon__option--block-ad.svg') no-repeat center;
@@ -42,18 +56,11 @@
             &--icon-cross {
                 background: url('../../../../assets/images/icon__option--cross.svg') no-repeat center/1.4rem;
             }
-
         }
 
-        &__name {
-            max-width: 27rem;
-            line-height: 1.8rem;
-            padding: 0.2rem 0 0.5rem 0.8rem;
-            font-size: 1.3rem;
-            color: var(--gray-base);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        &--disabled {
+            opacity: 0.5;
+            cursor: default;
         }
 
         &:hover:not(.action--disabled) {
