@@ -120,7 +120,7 @@ class Tabs {
                 }
             }
         } catch (error) {
-            log.error(error);
+            // Ignore message
         }
     };
 

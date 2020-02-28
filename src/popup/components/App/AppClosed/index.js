@@ -9,7 +9,9 @@ import './AppClosed.pcss';
 
 const getStates = (stores) => {
     const {
-        settingsStore: { openDownloadPage, updateExtension },
+        settingsStore: {
+            openDownloadPage, updateExtension,
+        },
         requestsStore: {
             updateApp, startApp, setProtectionStatus, getCurrentFilteringState,
         },
