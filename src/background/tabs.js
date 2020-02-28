@@ -20,8 +20,8 @@ class Tabs {
             });
 
             if (!tab) {
-                log.warn('browser.tabs.query is called from a non-tab context (a background page or popup view)');
-                return tab;
+                // return stub tab
+                return { url: 'about:', id: 0 };
             }
 
             if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {
@@ -120,7 +120,7 @@ class Tabs {
                 }
             }
         } catch (error) {
-            log.error(error);
+            // Ignore message
         }
     };
 

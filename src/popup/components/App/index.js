@@ -14,17 +14,29 @@ import Loading from '../ui/Loading';
 Modal.setAppElement('#root');
 
 const App = observer(() => {
-    const { settingsStore, uiStore, requestsStore } = useContext(rootStore);
     const {
-        setCurrentFilteringState,
-        setCurrentAppState,
-        getCurrentTabHostname, getReferrer,
-    } = settingsStore;
+        settingsStore: {
+            setCurrentFilteringState,
+            setCurrentAppState,
+            getCurrentTabHostname,
+            getReferrer,
+            setInstalled,
+        },
+        requestsStore: {
+            getCurrentFilteringState,
+        },
+        uiStore: {
+            setExtensionLoadingAndPending,
+            setExtensionLoading,
+            requestStatus,
+        },
+    } = useContext(rootStore);
+
     useEffect(() => {
         (async () => {
             await getCurrentTabHostname();
             await getReferrer();
-            await requestsStore.getCurrentFilteringState();
+            await getCurrentFilteringState();
         })();
 
         browser.runtime.onMessage.addListener(
@@ -35,17 +47,17 @@ const App = observer(() => {
 
                 switch (result) {
                     case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
-                        settingsStore.setInstalled(false);
-                        uiStore.setExtensionLoadingAndPending();
+                        setInstalled(false);
+                        setExtensionLoadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
-                        uiStore.setExtensionLoadingAndPending();
+                        setExtensionLoadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
-                        uiStore.setExtensionLoading(true);
+                        setExtensionLoading(true);
                         break;
                     case HostResponseTypes.ok:
-                        uiStore.setExtensionLoadingAndPending();
+                        setExtensionLoadingAndPending();
                         break;
                     default:
                         break;
@@ -68,7 +80,7 @@ const App = observer(() => {
         };
     }, []);
 
-    if (uiStore.requestStatus.isError || uiStore.requestStatus.isPending) {
+    if (requestStatus.isError || requestStatus.isPending) {
         return (
             <AppWrapper>
                 <AppClosed />
@@ -76,7 +88,7 @@ const App = observer(() => {
         );
     }
 
-    if (uiStore.requestStatus.isSuccess) {
+    if (requestStatus.isSuccess) {
         return (
             <AppWrapper>
                 <CurrentSite />
