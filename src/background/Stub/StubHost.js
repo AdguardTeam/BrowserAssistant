@@ -11,9 +11,8 @@ import {
 import log from '../../lib/logger';
 import browserApi from '../browserApi';
 import versions from '../versions';
-import manifest from '../../../tasks/manifest.common.json';
 
-const { default_locale: defaultLocale } = manifest;
+const { BASE_LOCALE } = require('../../../tasks/consts');
 
 class StubHost {
     delay = 500;
@@ -47,7 +46,7 @@ class StubHost {
         /** @param isProtectionEnabled boolean* */
         isProtectionEnabled: true,
         /** @param locale string* */
-        locale: defaultLocale,
+        locale: BASE_LOCALE,
     };
 
     set isFilteringEnabled(isFilteringEnabled) {

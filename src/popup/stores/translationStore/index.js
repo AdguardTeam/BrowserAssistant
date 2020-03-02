@@ -2,16 +2,15 @@ import { action, computed, observable } from 'mobx';
 import { createIntl } from 'react-intl';
 import { browserLocale } from '../../../lib/conts';
 import messagesMap from '../../../_locales';
-import twoskyConfig from '../../../../.twosky.json';
 
-const [{ base_locale: baseLocale }] = twoskyConfig;
+const { BASE_LOCALES } = require('../../../../tasks/consts');
 
 class TranslationsStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable locale = baseLocale;
+    @observable locale = BASE_LOCALES;
 
     @action
     setLocale = (locale) => {
@@ -20,11 +19,11 @@ class TranslationsStore {
 
     @computed
     get i18n() {
-        const fallbackLocale = messagesMap[browserLocale] ? browserLocale : baseLocale;
+        const fallbackLocale = messagesMap[browserLocale] ? browserLocale : BASE_LOCALES;
         const locale = messagesMap[this.locale] ? this.locale : fallbackLocale;
 
         const messages = {
-            ...messagesMap[baseLocale],
+            ...messagesMap[BASE_LOCALES],
             ...messagesMap[locale],
         };
 

@@ -1,14 +1,28 @@
 const path = require('path');
+const [twoskyConfig] = require('../.twosky.json');
 
 const SRC_PATH = '../src';
 const LOCALES_PATH = path.join(__dirname, SRC_PATH, '_locales/en/messages');
 const ENV_MAP = {
-    dev: { outputPath: 'dev', name: 'Dev' },
-    beta: { outputPath: 'beta', name: 'Beta' },
-    release: { outputPath: 'release', name: '' },
+    dev: {
+        outputPath: 'dev',
+        name: 'Dev',
+    },
+    beta: {
+        outputPath: 'beta',
+        name: 'Beta',
+    },
+    release: {
+        outputPath: 'release',
+        name: '',
+    },
 };
 
-const BROWSER_TYPES = { CHROME: 'chrome', FIREFOX: 'firefox', EDGE: 'edge' };
+const BROWSER_TYPES = {
+    CHROME: 'chrome',
+    FIREFOX: 'firefox',
+    EDGE: 'edge',
+};
 
 const IS_DEV = process.env.NODE_ENV === 'dev';
 
@@ -35,6 +49,7 @@ const CHROME_UPDATE_CRX = `https://static.adguard.com/browserassistant/beta/${CR
 // Path to the Firefox XPI (that we'll add to the update manifest)
 const FIREFOX_UPDATE_XPI = `https://static.adguard.com/browserassistant/beta/${XPI_NAME}`;
 
+const { base_locale: BASE_LOCALE, project_id: PROJECT_ID, languages: LANGUAGES } = twoskyConfig;
 
 module.exports = {
     LOCALES_PATH,
@@ -53,4 +68,7 @@ module.exports = {
     FIREFOX_UPDATER_FILENAME,
     CRX_NAME,
     XPI_NAME,
+    BASE_LOCALE,
+    PROJECT_ID,
+    LANGUAGES,
 };
