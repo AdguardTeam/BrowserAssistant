@@ -4,7 +4,8 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
-const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('../tasks/consts');
+const { getEquivalent } = require('./helpers');
+const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('./consts');
 
 const BASE_URL = 'https://twosky.adtidy.org/api/v1';
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
@@ -13,15 +14,6 @@ const FORMAT = 'json';
 const FILENAME = `messages.${FORMAT}`;
 const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
 const LOCALES_DIR = path.resolve(__dirname, '../src/_locales');
-
-/**
- * Users locale may be defined with only two chars (language code)
- * Here we provide a map of equivalent translation for such locales
- */
-const LOCALES_EQUIVALENTS_MAP = {
-    'pt-BR': 'pt',
-    'zh-CN': 'zh',
-};
 
 /**
  * Build query string for downloading translations
@@ -33,13 +25,6 @@ const getQueryString = (lang) => querystring.stringify({
     project: PROJECT_ID,
     filename: FILENAME,
 });
-
-/**
- * Returns equivalent of specified locale code
- * @param {string} locale locale
- */
-const getEquivalent = (locale) => LOCALES_EQUIVALENTS_MAP[locale] || locale;
-
 
 /**
  * Build form data for uploading translation
@@ -141,7 +126,3 @@ if (process.env.LOCALES === 'DOWNLOAD') {
 } else {
     console.log('Option DOWNLOAD/UPLOAD locales is not set');
 }
-
-module.exports = {
-    getEquivalent,
-};
