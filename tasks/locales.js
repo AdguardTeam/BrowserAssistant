@@ -14,6 +14,14 @@ const FILENAME = `messages.${FORMAT}`;
 const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
 const LOCALES_DIR = path.resolve(__dirname, '../src/_locales');
 
+/**
+ * Users locale may be defined with only two chars (language code)
+ * Here we provide a map of equivalent translation for such locales
+ */
+const LOCALES_EQUIVALENTS_MAP = {
+    'pt-BR': 'pt',
+    'zh-CN': 'zh',
+};
 
 /**
  * Build query string for downloading translations
@@ -25,6 +33,13 @@ const getQueryString = (lang) => querystring.stringify({
     project: PROJECT_ID,
     filename: FILENAME,
 });
+
+/**
+ * Returns equivalent of specified locale code
+ * @param {string} locale locale
+ */
+const getEquivalent = (locale) => LOCALES_EQUIVALENTS_MAP[locale] || locale;
+
 
 /**
  * Build form data for uploading translation
@@ -61,11 +76,12 @@ function saveFile(filePath, data) {
 async function downloadAndSave() {
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const lang of LOCALES) {
-        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(lang)}`;
+        const resultLocale = getEquivalent(lang);
+        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(resultLocale)}`;
         try {
             console.log(`Downloading: ${downloadUrl}`);
             const { data } = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
-            const filePath = path.join(LOCALES_DIR, lang, FILENAME);
+            const filePath = path.join(LOCALES_DIR, resultLocale, FILENAME);
             await saveFile(filePath, data);
             console.log(`Successfully saved in: ${filePath}`);
         } catch (e) {
@@ -125,3 +141,7 @@ if (process.env.LOCALES === 'DOWNLOAD') {
 } else {
     console.log('Option DOWNLOAD/UPLOAD locales is not set');
 }
+
+module.exports = {
+    getEquivalent,
+};
