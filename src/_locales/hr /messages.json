@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard pomoćnik preglednika"
+    },
+    "description": {
+        "message": "Proširenje AdGuard programa za blokiranje oglasa. Upravlja filtriranjem izravno iz preglednika, skriva dosadne elemente u dva klika."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard nije instaliran ili pravilno postavljen"
+    },
+    "get_adguard": {
+        "message": "Nabavi AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard nije ažuriran"
+    },
+    "update": {
+        "message": "Ažuriraj"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard nije pokrenut"
+    },
+    "run_adg": {
+        "message": "Pokreni AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard zaštita je pauzirana"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard se pokreće..."
+    },
+    "enable": {
+        "message": "Omogući"
+    },
+    "assistant_is_not_updated": {
+        "message": "Pomoćnik nije ažuriran"
+    },
+    "something_went_wrong": {
+        "message": "Nešto je pošlo po zlu"
+    },
+    "reinstall": {
+        "message": "Ponovo instaliraj"
+    },
+    "https_filtering": {
+        "message": "HTTPS filtriranje"
+    },
+    "increase_ab_block_quality": {
+        "message": "Povećava kvalitetu blokiranja oglasa"
+    },
+    "verified_by": {
+        "message": "Potvrdio:"
+    },
+    "more_info": {
+        "message": "Više informacija"
+    },
+    "adg_protection": {
+        "message": "AdGuard Zaštita"
+    },
+    "adg_settings": {
+        "message": "AdGuard Postavke"
+    },
+    "block_ads": {
+        "message": "Blokiraj oglase na ovoj web stranici"
+    },
+    "open_filtering_log": {
+        "message": "Otvori zapisnik filtriranja"
+    },
+    "report_site": {
+        "message": "Prijavi ovu stranicu"
+    },
+    "reset_custom_rules": {
+        "message": "Poništi sva prilagođena pravila za ovu stranicu"
+    },
+    "cert_expired": {
+        "message": "AdGuard nije mogao potvrditi certifikat ove web stranice, jer je root certifikat istekao"
+    },
+    "cert_absent": {
+        "message": "HTTPS filtriranje nije izvršeno za ovu web stranicu"
+    },
+    "site_not_using_private_protection": {
+        "message": "Web stranica ne koristi privatnu vezu. Netko bi mogao vidjeti ili promijeniti informacije koje šaljete ili dobivate na web stranici."
+    },
+    "not_secure": {
+        "message": "Nije sigurno"
+    },
+    "nothing_to_block_here": {
+        "message": "Ništa za blokirati ovdje"
+    },
+    "secure_page": {
+        "message": "Sigurna stranica"
+    },
+    "not_filtering_https": {
+        "message": "Prema zadanom, ne filtriramo HTTPS promet za platne sustave i web stranice banki. Možete sami omogućiti filtriranje: pritisnite žuti \"lokot\" s lijeve strane."
+    },
+    "disabled": {
+        "message": "Onemogućeno na ovoj stranici"
+    },
+    "enabled": {
+        "message": "Omogućeno na ovoj stranici"
+    },
+    "protection_is_enabled": {
+        "message": "Zaštita je omogućena"
+    },
+    "protection_is_disabled": {
+        "message": "Zaštita je onemogućena"
+    },
+    "website_cert_is_expired": {
+        "message": "Certifikat web stranice je istekao"
+    },
+    "expired": {
+        "message": "Isteklo"
+    }
+}

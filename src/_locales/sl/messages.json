@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AsGuard Pomočnik brskalnika"
+    },
+    "description": {
+        "message": "Uporabna razširitev namizne aplikacije za zaviranje oglasov. Filtrira iz brskalnika z dvema klikoma in skrije nadležne elemente."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard ni nameščen ali je nepravilno konfiguriran"
+    },
+    "get_adguard": {
+        "message": "Dobi Adguard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard ni posodobljen"
+    },
+    "update": {
+        "message": "Posodobi"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard ne deluje"
+    },
+    "run_adg": {
+        "message": "Zaženi AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuardova zaščita je začasno ustavljena"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard je zagnan..."
+    },
+    "enable": {
+        "message": "Omogoči"
+    },
+    "assistant_is_not_updated": {
+        "message": "AdGuard ni posodobljen"
+    },
+    "something_went_wrong": {
+        "message": "Nekaj je šlo narobe"
+    },
+    "reinstall": {
+        "message": "Ponovno namesti"
+    },
+    "https_filtering": {
+        "message": "Filtriranje HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Zmanjša kakovost zaviranja oglasov"
+    },
+    "verified_by": {
+        "message": "Preveril:"
+    },
+    "more_info": {
+        "message": "Več podatkov"
+    },
+    "adg_protection": {
+        "message": "AdGuardova zaščita"
+    },
+    "adg_settings": {
+        "message": "Nastavitve AdGuarda"
+    },
+    "block_ads": {
+        "message": "Onemogoči oglase na tej spletni strani"
+    },
+    "open_filtering_log": {
+        "message": "Odpri dnevnik filtriranja"
+    },
+    "report_site": {
+        "message": "Prijavi to spletno stran"
+    },
+    "reset_custom_rules": {
+        "message": "Ponastavi vsa pravila po meri za to stran"
+    },
+    "cert_expired": {
+        "message": "AdGuard ni mogel preveriti digitalnega potrdila te spletne strani, ker je poteklo korensko digitalno potrdilo"
+    },
+    "cert_absent": {
+        "message": "Za to spletno stran ni bilo izvedeno filtriranje HTTPS"
+    },
+    "site_not_using_private_protection": {
+        "message": "Spletna stran ne uporablja zasebne povezave. Nekdo bo lahko videl ali spremenil informacije, ki jih pošljete ali dobite na spletni strani."
+    },
+    "not_secure": {
+        "message": "Ni varna"
+    },
+    "nothing_to_block_here": {
+        "message": "Tukaj ni ničesar za onemogočanje"
+    },
+    "secure_page": {
+        "message": "Varna stran"
+    },
+    "not_filtering_https": {
+        "message": "Privzeto ne filtriramo prometa HTTPS za plačilne sisteme in bančne spletne strani. Filtriranje lahko omogočite sami: tapnite na rumeno \"ključavnico\" na levi strani."
+    },
+    "disabled": {
+        "message": "Omogočen na tej spletni strani"
+    },
+    "enabled": {
+        "message": "Omogočen na tej spletni strani"
+    },
+    "protection_is_enabled": {
+        "message": "Varovanje je onemogočeno"
+    },
+    "protection_is_disabled": {
+        "message": "Varovanje je onemogočeno"
+    },
+    "website_cert_is_expired": {
+        "message": "Potrdilo spletne strani je poteklo"
+    },
+    "expired": {
+        "message": "Poteklo"
+    }
+}

@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "Asistente de navegador AdGuard"
+    },
+    "description": {
+        "message": "Extensión para la aplicación de escritorio AdGuard. Gestiona el filtrado desde el navegador, oculta elementos molestos en dos clics."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard no está instalado o configurado incorrectamente"
+    },
+    "get_adguard": {
+        "message": "Obtener AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard no está actualizado"
+    },
+    "update": {
+        "message": "Actualizar"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard no se está ejecutando"
+    },
+    "run_adg": {
+        "message": "Ejecutar AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "La protección de AdGuard está pausada"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard está iniciando..."
+    },
+    "enable": {
+        "message": "Habilitar"
+    },
+    "assistant_is_not_updated": {
+        "message": "El asistente no está actualizado"
+    },
+    "something_went_wrong": {
+        "message": "Algo salió mal"
+    },
+    "reinstall": {
+        "message": "Reinstalar"
+    },
+    "https_filtering": {
+        "message": "Filtrado HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Aumenta la calidad del bloqueo de anuncios"
+    },
+    "verified_by": {
+        "message": "Verificado por:"
+    },
+    "more_info": {
+        "message": "Más información"
+    },
+    "adg_protection": {
+        "message": "Protección de AdGuard"
+    },
+    "adg_settings": {
+        "message": "Configuración de AdGuard"
+    },
+    "block_ads": {
+        "message": "Bloquear anuncios en este sitio web"
+    },
+    "open_filtering_log": {
+        "message": "Abrir registro de filtrado"
+    },
+    "report_site": {
+        "message": "Reportar este sitio web"
+    },
+    "reset_custom_rules": {
+        "message": "Restablecer todas las reglas personalizadas para esta página"
+    },
+    "cert_expired": {
+        "message": "AdGuard no pudo verificar el certificado de este sitio web porque el certificado raíz ha expirado"
+    },
+    "cert_absent": {
+        "message": "El filtrado HTTPS no ha sido realizado para este sitio web"
+    },
+    "site_not_using_private_protection": {
+        "message": "El sitio no está usando una conexión privada. Alguien podría ver o cambiar la información que usted envía o recibe a través del sitio."
+    },
+    "not_secure": {
+        "message": "No es seguro"
+    },
+    "nothing_to_block_here": {
+        "message": "Nada que bloquear aquí"
+    },
+    "secure_page": {
+        "message": "Página segura"
+    },
+    "not_filtering_https": {
+        "message": "De manera predeterminada, no filtramos el tráfico HTTPS para sistemas de pago y sitios web bancarios. Puede habilitar el filtrado usted mismo: toque el \"candado\" amarillo a la izquierda."
+    },
+    "disabled": {
+        "message": "Deshabilitado en este sitio web"
+    },
+    "enabled": {
+        "message": "Habilitado en este sitio web"
+    },
+    "protection_is_enabled": {
+        "message": "Protección habilitada"
+    },
+    "protection_is_disabled": {
+        "message": "Protección deshabilitada"
+    },
+    "website_cert_is_expired": {
+        "message": "El certificado del sitio web ha expirado"
+    },
+    "expired": {
+        "message": "Expirado"
+    }
+}

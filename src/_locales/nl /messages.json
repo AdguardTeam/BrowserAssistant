@@ -1,0 +1,89 @@
+{
+    "name": {
+        "message": "AdGuard Browser Assistent"
+    },
+    "description": {
+        "message": "Uitbreiding voor AdGuard desktop app. Filtering beheren vanuit je browser, vervelende elementen verbergen met 2 muisklikken."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard is niet geïnstalleerd"
+    },
+    "get_adguard": {
+        "message": "AdGuard aanschaffen"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard is niet bijgewerkt"
+    },
+    "update": {
+        "message": "Bijwerken"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard is niet actief"
+    },
+    "run_adg": {
+        "message": "AdGuard starten"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard bescherming is gepauzeerd"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard wordt opgestart"
+    },
+    "enable": {
+        "message": "Inschakelen"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistent is niet bijgewerkt"
+    },
+    "something_went_wrong": {
+        "message": "Er ging iets verkeerd"
+    },
+    "reinstall": {
+        "message": "Herinstalleren"
+    },
+    "https_filtering": {
+        "message": "HTTPS filtering"
+    },
+    "increase_ab_block_quality": {
+        "message": "Vermindert de kwaliteit van het blokkeren van advertenties"
+    },
+    "verified_by": {
+        "message": "Gecontroleerd door:"
+    },
+    "more_info": {
+        "message": "Meer informatie"
+    },
+    "adg_protection": {
+        "message": "AdGuard Bescherming"
+    },
+    "adg_settings": {
+        "message": "AdGuard Instellingen"
+    },
+    "block_ads": {
+        "message": "Advertenties blokkeren op deze website"
+    },
+    "open_filtering_log": {
+        "message": "Filterlogboek openen"
+    },
+    "report_site": {
+        "message": "Deze website rapporteren"
+    },
+    "cert_absent": {
+        "message": "HTTPS filtering niet uitgevoerd voor deze website"
+    },
+    "secure_page": {
+        "message": "Beveiligde pagina"
+    },
+    "protection_is_enabled": {
+        "message": "Bescherming aan"
+    },
+    "protection_is_disabled": {
+        "message": "Bescherming uit"
+    },
+    "website_cert_is_expired": {
+        "message": "Website certificaat is niet meer geldig"
+    },
+    "expired": {
+        "message": "Niet meer geldig"
+    }
+}

@@ -1,14 +1,44 @@
 [
-  {
-    "project_id": "browser-assistant",
-    "base_locale": "en",
-    "localizable_files": [
-      "src/_locales/en/messages.json"
-    ],
-    "languages": {
-      "de": "German",
-      "en": "English",
-      "ru": "Russian"
+    {
+        "project_id": "browser-assistant",
+        "base_locale": "en",
+        "localizable_files": [
+            "src/_locales/en/messages.json"
+        ],
+        "languages": {
+            "de": "German",
+            "en": "English",
+            "ru": "Russian",
+            "af ": "Afrikaans",
+            "ar ": "Arabic",
+            "be ": "Belarusian",
+            "bg ": "Bulgarian",
+            "zh-CN": "Chinese Simplified",
+            "zh-TW": "Chinese Traditional",
+            "hr ": "Croatian",
+            "cs ": "Czech",
+            "da ": "Danish",
+            "nl ": "Dutch",
+            "fr ": "French",
+            "de ": "German",
+            "he ": "Hebrew",
+            "hu ": "Hungarian",
+            "id ": "Indonesian",
+            "it ": "Italian",
+            "ko": " Korean",
+            "ms": " Malay",
+            "fa": " Persian",
+            "pt-BR": " Portuguese (Brazilian)",
+            "ro": "Romanian",
+            "ru": " Russian",
+            "sr-CS": " Serbian (Latin)",
+            "sk": " Slovak",
+            "sl": " Slovenian",
+            "es": " Spanish",
+            "th": " Thai",
+            "tr": " Turkish",
+            "uk": " Ukrainian",
+            "vi": " Vietnamese"
+        }
     }
-  }
 ]

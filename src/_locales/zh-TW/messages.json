@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard 瀏覽器助理"
+    },
+    "description": {
+        "message": "用於 AdGuard 桌面應用程式之擴充功能。直接地從該瀏覽器管理過濾，以兩次點擊隱藏惱人的元件。"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard 未被安裝或被不正確地配置"
+    },
+    "get_adguard": {
+        "message": "取得 AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard 未被更新"
+    },
+    "update": {
+        "message": "更新"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard 未正在執行"
+    },
+    "run_adg": {
+        "message": "執行 AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard 防護被暫停"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard 正在啟動…"
+    },
+    "enable": {
+        "message": "啟用"
+    },
+    "assistant_is_not_updated": {
+        "message": "助理未被更新"
+    },
+    "something_went_wrong": {
+        "message": "某事物出現問題"
+    },
+    "reinstall": {
+        "message": "重新安裝"
+    },
+    "https_filtering": {
+        "message": "HTTPS 過濾"
+    },
+    "increase_ab_block_quality": {
+        "message": "增進廣告封鎖的品質"
+    },
+    "verified_by": {
+        "message": "由以下確認："
+    },
+    "more_info": {
+        "message": "更多的資訊"
+    },
+    "adg_protection": {
+        "message": "AdGuard 防護"
+    },
+    "adg_settings": {
+        "message": "AdGuard 設定"
+    },
+    "block_ads": {
+        "message": "封鎖於該網站上之廣告"
+    },
+    "open_filtering_log": {
+        "message": "開啟該過濾記錄"
+    },
+    "report_site": {
+        "message": "報告該網站"
+    },
+    "reset_custom_rules": {
+        "message": "重置關於該頁面之所有自訂的規則"
+    },
+    "cert_expired": {
+        "message": "因為該網站的根憑證已到期，AdGuard 無法確認其憑證"
+    },
+    "cert_absent": {
+        "message": "對於此網站，HTTPS 過濾未被執行"
+    },
+    "site_not_using_private_protection": {
+        "message": "該網站未正在使用私人連線。某些人可能能夠查看或更改您通過該網站傳送或取得之資訊。"
+    },
+    "not_secure": {
+        "message": "不安全的"
+    },
+    "nothing_to_block_here": {
+        "message": "無什麼要於此封鎖"
+    },
+    "secure_page": {
+        "message": "安全的頁面"
+    },
+    "not_filtering_https": {
+        "message": "預設下，我們不過濾有關付款系統和銀行網站的 HTTPS 流量。您可靠您自己啟用該過濾：於在左側的黃色\"鎖頭\"上輕觸。"
+    },
+    "disabled": {
+        "message": "已於該網站上禁用"
+    },
+    "enabled": {
+        "message": "已於該網站上啟用"
+    },
+    "protection_is_enabled": {
+        "message": "防護被啟用"
+    },
+    "protection_is_disabled": {
+        "message": "防護被禁用"
+    },
+    "website_cert_is_expired": {
+        "message": "網站憑證為已到期的"
+    },
+    "expired": {
+        "message": "已到期的"
+    }
+}
