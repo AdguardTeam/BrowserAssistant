@@ -95,7 +95,6 @@ class SettingsStore {
     setFiltering = async (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         await this.rootStore.requestsStore.setFilteringStatus();
-        await adguard.tabs.updateIconColor(isFilteringEnabled);
         this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 
@@ -120,7 +119,7 @@ class SettingsStore {
     };
 
     @action
-    setProtection = (isProtectionEnabled) => {
+    setProtection = async (isProtectionEnabled) => {
         this.isProtectionEnabled = isProtectionEnabled;
     };
 
