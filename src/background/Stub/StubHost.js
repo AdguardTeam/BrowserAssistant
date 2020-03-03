@@ -12,6 +12,8 @@ import log from '../../lib/logger';
 import browserApi from '../browserApi';
 import versions from '../versions';
 
+const { BASE_LOCALE } = require('../../../tasks/consts');
+
 class StubHost {
     delay = 500;
 
@@ -43,6 +45,8 @@ class StubHost {
         isRunning: true,
         /** @param isProtectionEnabled boolean* */
         isProtectionEnabled: true,
+        /** @param locale string* */
+        locale: BASE_LOCALE,
     };
 
     set isFilteringEnabled(isFilteringEnabled) {
@@ -92,12 +96,66 @@ class StubHost {
 
     set isRunning(isRunning) {
         this.appState.isRunning = isRunning;
+        this.appState.locale = isRunning ? this.appState.locale : '';
         this.#makeRequest();
     }
 
     set isProtectionEnabled(isProtectionEnabled) {
         this.appState.isProtectionEnabled = isProtectionEnabled;
         this.#makeRequest();
+    }
+
+    set locale(locale) {
+        this.appState.locale = locale;
+        this.#makeRequest();
+    }
+
+    get isFilteringEnabled() {
+        return this.filteringStatus.isFilteringEnabled;
+    }
+
+    get isHttpsFilteringEnabled() {
+        return this.filteringStatus.appState.isHttpsFilteringEnabled;
+    }
+
+    get isPageFilteredByUserFilter() {
+        return this.filteringStatus.isPageFilteredByUserFilter;
+    }
+
+    get blockedAdsCount() {
+        return this.filteringStatus.blockedAdsCount;
+    }
+
+    get totalBlockedCount() {
+        return this.filteringStatus.totalBlockedCount;
+    }
+
+    get originalCertIssuer() {
+        return this.filteringStatus.originalCertIssuer;
+    }
+
+    get originalCertStatus() {
+        return this.filteringStatus.originalCertStatus;
+    }
+
+    get lastCheckTime() {
+        return this.appState.lastCheckTime;
+    }
+
+    get isInstalled() {
+        return this.appState.isInstalled;
+    }
+
+    get isRunning() {
+        return this.appState.isRunning;
+    }
+
+    get isProtectionEnabled() {
+        return this.appState.isProtectionEnabled;
+    }
+
+    get locale() {
+        return this.appState.locale;
     }
 
     #makeRequest = async (delay) => {
@@ -220,7 +278,10 @@ class StubHost {
                 break;
             case RequestTypes.reportSite:
                 // Don't modify the object to log the correct state
-                response.parameters = { ...response.parameters, reportUrl: this.REPORT_URL };
+                response.parameters = {
+                    ...response.parameters,
+                    reportUrl: this.REPORT_URL,
+                };
                 log.info('REPORT SITE');
                 break;
             case RequestTypes.openFilteringLog:

@@ -32,7 +32,6 @@ const Option = ({
                 <div className="action__text">{text}</div>
             </div>
         </div>
-
     );
 };
 

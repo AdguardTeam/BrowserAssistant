@@ -4,11 +4,8 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
-const twoskyConfig = require('../.twosky.json')[0];
-
-const {
-    project_id: PROJECT_ID, languages: LANGUAGES, base_locale: BASE_LOCALE,
-} = twoskyConfig;
+const { getEquivalent } = require('./helpers');
+const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('./consts');
 
 const BASE_URL = 'https://twosky.adtidy.org/api/v1';
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
@@ -17,7 +14,6 @@ const FORMAT = 'json';
 const FILENAME = `messages.${FORMAT}`;
 const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
 const LOCALES_DIR = path.resolve(__dirname, '../src/_locales');
-
 
 /**
  * Build query string for downloading translations
@@ -65,11 +61,12 @@ function saveFile(filePath, data) {
 async function downloadAndSave() {
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const lang of LOCALES) {
-        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(lang)}`;
+        const resultLocale = getEquivalent(lang);
+        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(resultLocale)}`;
         try {
             console.log(`Downloading: ${downloadUrl}`);
             const { data } = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
-            const filePath = path.join(LOCALES_DIR, lang, FILENAME);
+            const filePath = path.join(LOCALES_DIR, resultLocale, FILENAME);
             await saveFile(filePath, data);
             console.log(`Successfully saved in: ${filePath}`);
         } catch (e) {

@@ -5,11 +5,10 @@ import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
 import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
-import translator from '../../../lib/translator';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
-    const { settingsStore, uiStore } = useContext(rootStore);
+    const { settingsStore, uiStore, translationStore } = useContext(rootStore);
     const {
         pageProtocol,
         isHttpsFilteringEnabled,
@@ -29,6 +28,10 @@ const CurrentSite = observer(() => {
         },
         certStatus,
     } = uiStore;
+
+    const {
+        translate,
+    } = translationStore;
 
     const getHandlerForHttpsSite = (handler) => {
         if (pageProtocol.isHttps) {
@@ -148,7 +151,7 @@ const CurrentSite = observer(() => {
                 onFocus={handleSecureStatusModalState}
                 onBlur={handleSecureStatusModalState}
             >
-                {translator.translate(info)}
+                {translate(info)}
             </div>
         </div>
     );

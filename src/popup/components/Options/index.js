@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Option from './Option';
 import rootStore from '../../stores';
-import translator from '../../../lib/translator';
 
 const getOptions = (stores) => {
     const {
@@ -21,33 +20,36 @@ const getOptions = (stores) => {
             isPageFilteredByUserFilter,
             closePopupWrapper,
         },
+        translationStore: {
+            translate,
+        },
     } = stores;
 
     return ([
         {
             iconName: 'block-ad',
-            text: translator.translate('block_ads'),
+            text: translate('block_ads'),
             onClick: startBlockingAd,
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
         {
             iconName: 'sandwich',
-            text: translator.translate('open_filtering_log'),
+            text: translate('open_filtering_log'),
             onClick: closePopupWrapper(openFilteringLog),
             isDisabled: false,
             isVisible: true,
         },
         {
             iconName: 'thumb-down',
-            text: translator.translate('report_site'),
+            text: translate('report_site'),
             onClick: closePopupWrapper(reportSite),
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
         {
             iconName: 'icon-cross',
-            text: translator.translate('reset_custom_rules'),
+            text: translate('reset_custom_rules'),
             onClick: async () => {
                 await removeCustomRules();
                 await getCurrentFilteringState();
@@ -68,14 +70,14 @@ const Options = observer(() => {
                 iconName, text, onClick, isDisabled, isVisible,
             }) => (
                 isVisible && (
-                <Option
-                    key={iconName}
-                    iconName={iconName}
-                    text={text}
-                    onClick={onClick}
-                    isDisabled={isDisabled}
-                    tabIndex={stores.uiStore.globalTabIndex}
-                />
+                    <Option
+                        key={iconName}
+                        iconName={iconName}
+                        text={text}
+                        onClick={onClick}
+                        isDisabled={isDisabled}
+                        tabIndex={stores.uiStore.globalTabIndex}
+                    />
                 )
             ))}
         </div>

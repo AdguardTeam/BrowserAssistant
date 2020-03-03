@@ -148,10 +148,13 @@ class SettingsStore {
 
     @action
     setCurrentAppState = (appState) => {
-        const { isInstalled, isRunning, isProtectionEnabled } = appState;
+        const {
+            isInstalled, isRunning, isProtectionEnabled, locale,
+        } = appState;
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+        this.rootStore.translationStore.setLocale(locale);
     };
 
     @action
