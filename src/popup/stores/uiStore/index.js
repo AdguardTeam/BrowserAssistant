@@ -1,5 +1,5 @@
 import {
-    action, observable, computed,
+    action, observable, computed, reaction,
 } from 'mobx';
 import {
     defaultModalState,
@@ -27,6 +27,8 @@ class UiStore {
     @observable certStatusModalState = { ...defaultModalState };
 
     @observable secureStatusModalState = { ...defaultModalState };
+
+    @observable userSettingsZoom = 1;
 
     @computed get isCertStatusModalOpen() {
         return checkSomeIsTrue(this.certStatusModalState);
@@ -144,6 +146,19 @@ class UiStore {
         this.isProtectionTogglePending = isProtectionTogglePending;
     };
 
+    @action
+    getZoom = () => {
+        const popupZoom = ((window.outerWidth - 8) / window.innerWidth) - 0.02;
+        this.userSettingsZoom = popupZoom.toFixed(popupZoom < 3 ? 2 : 1);
+    };
+
+    resizeBody = reaction(
+        () => this.userSettingsZoom,
+        (userSettingsZoom) => {
+            document.body.style.zoom = 1 / userSettingsZoom;
+        }
+    );
+
     closePopupWrapper = (fn) => () => {
         fn();
         window.close();
@@ -153,7 +168,7 @@ class UiStore {
         setTimeout(() => {
             adguard.tabs.reload();
         }, SWITCHER_TRANSITION_TIME);
-    }
+    };
 }
 
 export default UiStore;
