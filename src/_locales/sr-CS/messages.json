@@ -2,9 +2,6 @@
     "name": {
         "message": "AdGuard pomoćnik za preglednike"
     },
-    "description": {
-        "message": "TODO"
-    },
     "adg_is_not_installed": {
         "message": "AdGuard nije instaliran ili neispravno konfigurusan"
     },
