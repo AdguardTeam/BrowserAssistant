@@ -8,15 +8,15 @@ import './settings.pcss';
 const Settings = observer(() => {
     const {
         settingsStore: {
-            isFilteringEnabled, pageProtocol, setFiltering,
+            isFilteringEnabled,
+            pageProtocol,
+            setFiltering,
         },
         translationStore: { translate },
         uiStore: { globalTabIndex },
     } = useContext(rootStore);
 
-    const toggleFiltering = () => {
-        setFiltering(!isFilteringEnabled);
-    };
+    const toggleFiltering = () => setFiltering(!isFilteringEnabled);
 
     const onClick = () => {
         if (pageProtocol.isSecured) {
