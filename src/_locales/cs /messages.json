@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard asistent prohlížeče"
+    },
+    "description": {
+        "message": "Rozšíření programu AdGuard pro blokování reklam. Spravuje filtrování přímo z prohlížeče, skrývá nepříjemné prvky na dvě kliknutí."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard není nainstalovaný nebo není správně nakonfigurovaný"
+    },
+    "get_adguard": {
+        "message": "Získat AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard není aktualizován"
+    },
+    "update": {
+        "message": "Aktualizovat"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard není spuštěn"
+    },
+    "run_adg": {
+        "message": "Spustit AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Ochrana AdGuardem je pozastavena"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard se spouští..."
+    },
+    "enable": {
+        "message": "Povolit"
+    },
+    "assistant_is_not_updated": {
+        "message": "Asistent není aktualizován"
+    },
+    "something_went_wrong": {
+        "message": "Něco se pokazilo"
+    },
+    "reinstall": {
+        "message": "Přeinstalovat"
+    },
+    "https_filtering": {
+        "message": "HTTPS filtrování"
+    },
+    "increase_ab_block_quality": {
+        "message": "Zvyšuje kvalitu blokování reklam"
+    },
+    "verified_by": {
+        "message": "Ověřeno podle:"
+    },
+    "more_info": {
+        "message": "Další informace"
+    },
+    "adg_protection": {
+        "message": "AdGuard ochrana"
+    },
+    "adg_settings": {
+        "message": "Nastavení AdGuardu"
+    },
+    "block_ads": {
+        "message": "Zablokovat reklamy na této stránce"
+    },
+    "open_filtering_log": {
+        "message": "Otevřít záznam filtrování"
+    },
+    "report_site": {
+        "message": "Nahlásit tuto webovou stránku"
+    },
+    "reset_custom_rules": {
+        "message": "Resetovat všechna vlastní pravidla pro tuto stránku"
+    },
+    "cert_expired": {
+        "message": "AdGuard nemohl ověřit tento certifikát webové stránky, protože vypršela platnost kořenového certifikátu"
+    },
+    "cert_absent": {
+        "message": "Filtrování HTTPS nebylo pro tento web provedeno"
+    },
+    "site_not_using_private_protection": {
+        "message": "Tato webová stránka nepoužívá soukromé připojení. Někdo může vidět nebo změnit informace, které odešlete nebo stáhnete prostřednictvím webové stránky."
+    },
+    "not_secure": {
+        "message": "Nezabezpečeno"
+    },
+    "nothing_to_block_here": {
+        "message": "Nic k blokování"
+    },
+    "secure_page": {
+        "message": "Zabezpečená stránka"
+    },
+    "not_filtering_https": {
+        "message": "Ve výchozím nastavení nefiltrujeme přenos HTTPS pro platební systém a bankovní webové stránky. Filtrování můžete sami povolit: klepněte na žlutý „zámek“ vlevo."
+    },
+    "disabled": {
+        "message": "Zakázáno na této stránce"
+    },
+    "enabled": {
+        "message": "Povoleno na této stránce"
+    },
+    "protection_is_enabled": {
+        "message": "Ochrana je zapnuta"
+    },
+    "protection_is_disabled": {
+        "message": "Ochrana je vypnuta"
+    },
+    "website_cert_is_expired": {
+        "message": "Platnost certifikátu webové stránky vypršela"
+    },
+    "expired": {
+        "message": "Vypršený"
+    }
+}

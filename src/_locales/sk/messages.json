@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard asistent prehliadača"
+    },
+    "description": {
+        "message": "Rozšírenie programu AdGuard pre stolné počítače. Spravuje filtrovanie priamo z prehliadača, skrýva obťažujúce prvky dvomi klikmi."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard nie je nainštalovaný alebo korektne nakonfigurovaný"
+    },
+    "get_adguard": {
+        "message": "Získať AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard nie je aktualizovaný"
+    },
+    "update": {
+        "message": "Aktualizácia"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard nie je spustený"
+    },
+    "run_adg": {
+        "message": "Spustiť AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard ochrana je pozastavená"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard sa spúšťa..."
+    },
+    "enable": {
+        "message": "Zapnúť"
+    },
+    "assistant_is_not_updated": {
+        "message": "Asistent nie je aktualizovaný"
+    },
+    "something_went_wrong": {
+        "message": "Niečo sa pokazilo"
+    },
+    "reinstall": {
+        "message": "Znovu inštalovať"
+    },
+    "https_filtering": {
+        "message": "Filtrácia HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Zvyšuje kvalitu blokovania reklám"
+    },
+    "verified_by": {
+        "message": "Overené:"
+    },
+    "more_info": {
+        "message": "Viac informácií"
+    },
+    "adg_protection": {
+        "message": "Ochrana AdGuard"
+    },
+    "adg_settings": {
+        "message": "Nastavenia AdGuard"
+    },
+    "block_ads": {
+        "message": "Blokovať reklamy na tejto stránke"
+    },
+    "open_filtering_log": {
+        "message": "Otvoriť denník filtrácie"
+    },
+    "report_site": {
+        "message": "Nahlásiť túto stránku"
+    },
+    "reset_custom_rules": {
+        "message": "Obnoviť všetky vlastné nastavenia pre túto stránku"
+    },
+    "cert_expired": {
+        "message": "AdGuard nedokázal overiť certifikát tejto stránky, pretože koreňový certifikát vypršal"
+    },
+    "cert_absent": {
+        "message": "Pre túto webovú stránku nebola vykonaná filtrácia HTTPS"
+    },
+    "site_not_using_private_protection": {
+        "message": "Stránka nevyužíva súkromné pripojenie. Niekto môže vidieť alebo zmeniť informácie, ktoré pošlete alebo ktoré prejdú cez stránku."
+    },
+    "not_secure": {
+        "message": "Nezabezpečené"
+    },
+    "nothing_to_block_here": {
+        "message": "Nie je tu nič na blokovanie"
+    },
+    "secure_page": {
+        "message": "Bezpečná stránka"
+    },
+    "not_filtering_https": {
+        "message": "Štandardne nefiltrujeme HTTPS prevádzku pre stránky platobných systémov a bánk. Filtráciu môžete zapnúť nasledovne: kliknite vľavo na žlté \"zamknúť\"."
+    },
+    "disabled": {
+        "message": "Vypnuté na tejto stránke"
+    },
+    "enabled": {
+        "message": "Zapnuté na tejto stránke"
+    },
+    "protection_is_enabled": {
+        "message": "Ochrana je zapnutá"
+    },
+    "protection_is_disabled": {
+        "message": "Ochrana je vypnutá"
+    },
+    "website_cert_is_expired": {
+        "message": "Certifikát webovej stránky vypršal"
+    },
+    "expired": {
+        "message": "Vypršaný"
+    }
+}

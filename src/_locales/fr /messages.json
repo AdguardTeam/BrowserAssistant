@@ -1,0 +1,107 @@
+{
+    "name": {
+        "message": "Assistant de navigateur AdGuard"
+    },
+    "description": {
+        "message": "Extension pour l'application de bureau AdGuard. Gère le filtrage depuis le navigateur, masque des éléments intrusifs en deux clics."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard est mal paramétré ou pas installé"
+    },
+    "get_adguard": {
+        "message": "Obtenir AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard n'est pas à jour"
+    },
+    "update": {
+        "message": "Mettre à jour"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard n'est pas actif"
+    },
+    "run_adg": {
+        "message": "Démarrer AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "La protection AdGuard est en pause"
+    },
+    "adg_is_launching": {
+        "message": "Lancement d'AdGuard en cours ..."
+    },
+    "enable": {
+        "message": "Activer"
+    },
+    "assistant_is_not_updated": {
+        "message": "L'Assistant n'est pas à jour"
+    },
+    "something_went_wrong": {
+        "message": "Une erreur est survenue"
+    },
+    "reinstall": {
+        "message": "Réinstaller"
+    },
+    "increase_ab_block_quality": {
+        "message": "Augmente la qualité du blocage des publicités"
+    },
+    "verified_by": {
+        "message": "Certifié par :"
+    },
+    "more_info": {
+        "message": "Plus d'informations"
+    },
+    "adg_protection": {
+        "message": "Protection AdGuard"
+    },
+    "adg_settings": {
+        "message": "Paramètres AdGuard"
+    },
+    "block_ads": {
+        "message": "Bloquer les publicités sur ce site"
+    },
+    "open_filtering_log": {
+        "message": "Ouvrir le journal de filtrage"
+    },
+    "report_site": {
+        "message": "Signaler ce site Web"
+    },
+    "reset_custom_rules": {
+        "message": "Réinitialiser toutes les règles personnalisées pour cette page"
+    },
+    "cert_expired": {
+        "message": "AdGuard n’a pas pu vérifier le certificat de ce site Web, car le certificat racine a expiré"
+    },
+    "site_not_using_private_protection": {
+        "message": "Ce site n’utilise pas une connexion privée. Il est possible que quelqu’un puisse voir ou modifier les informations que vous envoyez ou obtenez via le site."
+    },
+    "not_secure": {
+        "message": "Non sécurisé"
+    },
+    "nothing_to_block_here": {
+        "message": "Rien à bloquer ici"
+    },
+    "secure_page": {
+        "message": "Page sécurisée"
+    },
+    "not_filtering_https": {
+        "message": "Par défaut, nous ne filtrons pas le trafic HTTPS pour le système de paiement et les sites Web bancaires. Vous pouvez activer le filtrage vous-même : appuyez sur le « cadenas » jaune à gauche."
+    },
+    "disabled": {
+        "message": "Désactivé sur ce site"
+    },
+    "enabled": {
+        "message": "Activé sur ce site"
+    },
+    "protection_is_enabled": {
+        "message": "La protection est activée"
+    },
+    "protection_is_disabled": {
+        "message": "La protection est désactivée"
+    },
+    "website_cert_is_expired": {
+        "message": "Le certificat du site web est expiré"
+    },
+    "expired": {
+        "message": "Expiré"
+    }
+}

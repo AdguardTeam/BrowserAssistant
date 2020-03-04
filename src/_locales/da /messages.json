@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard browser-assistent"
+    },
+    "description": {
+        "message": "Udvidelse til AdGuards desktop-program. Administrerer filtrering direkte fra browseren, skjuler irriterende elementer i to klik."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard er ikke installeret eller konfigureret forkert"
+    },
+    "get_adguard": {
+        "message": "Få AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard er ikke opdateret"
+    },
+    "update": {
+        "message": "Opdater"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard kører ikke"
+    },
+    "run_adg": {
+        "message": "Kør AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard beskyttelsen er pauset"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard starter..."
+    },
+    "enable": {
+        "message": "Aktiver"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistenten er ikke opdateret"
+    },
+    "something_went_wrong": {
+        "message": "Noget gik galt"
+    },
+    "reinstall": {
+        "message": "Geninstaller"
+    },
+    "https_filtering": {
+        "message": "HTTPS-filtrering"
+    },
+    "increase_ab_block_quality": {
+        "message": "Øger kvaliteten af annonceblokering"
+    },
+    "verified_by": {
+        "message": "Verificeret af:"
+    },
+    "more_info": {
+        "message": "Mere information"
+    },
+    "adg_protection": {
+        "message": "AdGuard-beskyttelse"
+    },
+    "adg_settings": {
+        "message": "AdGuard-indstillinger"
+    },
+    "block_ads": {
+        "message": "Bloker annoncer på denne webside"
+    },
+    "open_filtering_log": {
+        "message": "Åben filtreringslog"
+    },
+    "report_site": {
+        "message": "Rapporter denne hjemmeside"
+    },
+    "reset_custom_rules": {
+        "message": "Nulstil alle brugerdefinerede regler for denne side"
+    },
+    "cert_expired": {
+        "message": "AdGuard kunne ikke verificere dette websteds certifikat, fordi root-certifikatet er udløbet"
+    },
+    "cert_absent": {
+        "message": "HTTPS-filtrering blev ikke udført på dette websted"
+    },
+    "site_not_using_private_protection": {
+        "message": "Siden bruger ikke en privat forbindelse. En person kan muligvis se eller ændre de oplysninger, du sender eller får gennem webstedet."
+    },
+    "not_secure": {
+        "message": "Ikke sikker"
+    },
+    "nothing_to_block_here": {
+        "message": "Intet at blokere her"
+    },
+    "secure_page": {
+        "message": "Sikker side"
+    },
+    "not_filtering_https": {
+        "message": "Som standard filtrerer vi ikke HTTPS-trafik for betalingssystemer og bankwebsteder. Du kan selv aktivere filtreringen: tryk på den gule \"lås\" til venstre."
+    },
+    "disabled": {
+        "message": "Deaktiveret på denne hjemmeside"
+    },
+    "enabled": {
+        "message": "Aktiveret på denne hjemmeside"
+    },
+    "protection_is_enabled": {
+        "message": "Beskyttelsen er aktiveret"
+    },
+    "protection_is_disabled": {
+        "message": "Beskyttelsen er deaktiveret"
+    },
+    "website_cert_is_expired": {
+        "message": "Webstedscertifikat er udløbet"
+    },
+    "expired": {
+        "message": "Udløbet"
+    }
+}

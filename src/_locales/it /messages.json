@@ -1,0 +1,74 @@
+{
+    "adg_is_not_updated": {
+        "message": "AdGuard non è aggiornato"
+    },
+    "update": {
+        "message": "Aggiorna"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard non è in esecuzione"
+    },
+    "adg_is_paused": {
+        "message": "La protezione di AdGuard è sospesa"
+    },
+    "enable": {
+        "message": "Abilita"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistente non aggiornato"
+    },
+    "something_went_wrong": {
+        "message": "Qualcosa è andato storto"
+    },
+    "reinstall": {
+        "message": "Reinstalla"
+    },
+    "increase_ab_block_quality": {
+        "message": "Aumenta la qualità del blocco pubblicitario"
+    },
+    "verified_by": {
+        "message": "Verificato da:"
+    },
+    "more_info": {
+        "message": "Più informazioni"
+    },
+    "adg_protection": {
+        "message": "Protezione AdGuard"
+    },
+    "adg_settings": {
+        "message": "Impostazioni AdGuard"
+    },
+    "block_ads": {
+        "message": "Blocca le pubblicità su questo sito"
+    },
+    "open_filtering_log": {
+        "message": "Apri il log dei filtri"
+    },
+    "report_site": {
+        "message": "Segnala questo sito"
+    },
+    "reset_custom_rules": {
+        "message": "Resetta tutte le regole personalizzate per questa pagina"
+    },
+    "site_not_using_private_protection": {
+        "message": "Il sito non sta usando una connessione privata. Qualcuno potrebbe vedere o cambiare le informazioni che invii attraverso il sito."
+    },
+    "not_secure": {
+        "message": "Non sicuro"
+    },
+    "nothing_to_block_here": {
+        "message": "Nulla da bloccare qua"
+    },
+    "secure_page": {
+        "message": "Pagina sicura"
+    },
+    "not_filtering_https": {
+        "message": "Di norma, non filtriamo il traffico HTTPS per i sistemi di pagamento e i siti bancari. Puoi abilitare i filtri tu stesso: tocca sul \"lucchetto\" giallo sulla sinistra."
+    },
+    "disabled": {
+        "message": "Disattivato su questo sito"
+    },
+    "enabled": {
+        "message": "Attivato su questo sito"
+    }
+}

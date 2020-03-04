@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "Браузерний помічник AdGuard"
+    },
+    "description": {
+        "message": "Розширення для програми AdGuard, яке дозволяє керувати фільтруванням та ховати дратівливі елементи прямо в браузері."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard не встановлений, або неправильно налаштований"
+    },
+    "get_adguard": {
+        "message": "Отримати AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard не оновлений"
+    },
+    "update": {
+        "message": "Оновити"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard не запущений"
+    },
+    "run_adg": {
+        "message": "Запустити AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Захист AdGuard призупинено"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard запускається..."
+    },
+    "enable": {
+        "message": "Увімкнути"
+    },
+    "assistant_is_not_updated": {
+        "message": "Помічник не оновлений"
+    },
+    "something_went_wrong": {
+        "message": "Щось пішло не так"
+    },
+    "reinstall": {
+        "message": "Перевстановити"
+    },
+    "https_filtering": {
+        "message": "HTTPS фільтрування"
+    },
+    "increase_ab_block_quality": {
+        "message": "Вдосконалює якість блокування"
+    },
+    "verified_by": {
+        "message": "Засвідчено:"
+    },
+    "more_info": {
+        "message": "Докладніше"
+    },
+    "adg_protection": {
+        "message": "Захист AdGuard"
+    },
+    "adg_settings": {
+        "message": "Налаштування AdGuard"
+    },
+    "block_ads": {
+        "message": "Блокувати рекламу на цьому сайті"
+    },
+    "open_filtering_log": {
+        "message": "Відкрити журнал фільтрування"
+    },
+    "report_site": {
+        "message": "Повідомити про цей веб-сайт"
+    },
+    "reset_custom_rules": {
+        "message": "Скинути власні правила для цієї сторінки"
+    },
+    "cert_expired": {
+        "message": "AdGuard не може засвідчити сертифікат цього веб-сайту, тому що термін дії кореневого сертифіката завершився"
+    },
+    "cert_absent": {
+        "message": "HTTPS фільтрування не застосовувалось для цього веб-сайту"
+    },
+    "site_not_using_private_protection": {
+        "message": "Сайт не використовує приватне з'єднання. Хтось інший може бачити чи змінювати інформацію, яку ви передаєте чи отримуєте через цей сайт."
+    },
+    "not_secure": {
+        "message": "Не захищено"
+    },
+    "nothing_to_block_here": {
+        "message": "Немає що блокувати"
+    },
+    "secure_page": {
+        "message": "Безпечна сторінка"
+    },
+    "not_filtering_https": {
+        "message": "Типово, ми не фільтруємо трафік HTTPS для веб-сайтів платіжних систем та банків. Ви можете власноруч увімкнути фільтрування: натисніть на жовтий \"замок\" зліва."
+    },
+    "disabled": {
+        "message": "Вимкнено на цьому веб-сайті"
+    },
+    "enabled": {
+        "message": "Увімкнено на цьому веб-сайті"
+    },
+    "protection_is_enabled": {
+        "message": "Захист увімкнено"
+    },
+    "protection_is_disabled": {
+        "message": "Захист вимкнено"
+    },
+    "website_cert_is_expired": {
+        "message": "Термін дії сертифіката веб-сайту завершився"
+    },
+    "expired": {
+        "message": "Завершився"
+    }
+}

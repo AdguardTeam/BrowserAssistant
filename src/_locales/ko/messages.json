@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard 브라우저 어시스턴트"
+    },
+    "description": {
+        "message": "AdGuard 데스크탑 앱을 위한 확장 프로그램입니다. 브라우저에서 바로 필터링을 관리하고, 두 번의 클릭으로 방해 요소를 숨겨보세요."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard가 설치되지 않았거나 정상적으로 설정되어있지 않습니다."
+    },
+    "get_adguard": {
+        "message": "AdGuard 설치"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard가 업데이트되지 않았습니다"
+    },
+    "update": {
+        "message": "업데이트"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard가 실행 중이지 않습니다"
+    },
+    "run_adg": {
+        "message": "AdGuard 실행"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard 보호가 일시 정지됨"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard 실행 중..."
+    },
+    "enable": {
+        "message": "활성화"
+    },
+    "assistant_is_not_updated": {
+        "message": "어시스턴트가 업데이트되지 않았습니다"
+    },
+    "something_went_wrong": {
+        "message": "오류가 발생하였습니다."
+    },
+    "reinstall": {
+        "message": "재설치"
+    },
+    "https_filtering": {
+        "message": "HTTPS 필터링"
+    },
+    "increase_ab_block_quality": {
+        "message": "광고 차단 품질을 향상시키는데 도움을 줍니다."
+    },
+    "verified_by": {
+        "message": "인증자:"
+    },
+    "more_info": {
+        "message": "추가 정보"
+    },
+    "adg_protection": {
+        "message": "AdGuard 보호"
+    },
+    "adg_settings": {
+        "message": "AdGuard 설정"
+    },
+    "block_ads": {
+        "message": "이 웹사이트에서 광고 차단"
+    },
+    "open_filtering_log": {
+        "message": "필터링 로그 열기"
+    },
+    "report_site": {
+        "message": "이 웹사이트에 관한 불만 사항 제출"
+    },
+    "reset_custom_rules": {
+        "message": "이 페이지에 대한 모든 사용자 규칙 초기화"
+    },
+    "cert_expired": {
+        "message": "최상위 인증서가 만료되었기 때문에 AdGuard에서 이 웹사이트의 인증서를 검증할 수 없습니다"
+    },
+    "cert_absent": {
+        "message": "이 웹사이트에 대한 HTTPS 필터링이 실행되지 않았습니다."
+    },
+    "site_not_using_private_protection": {
+        "message": "이 사이트에는 안전하게 연결할 수 없습니다. 다른 사람이 이 사이트의 정보를 보거나 변조 또는 접속할 수 있습니다."
+    },
+    "not_secure": {
+        "message": "안전하지 않음"
+    },
+    "nothing_to_block_here": {
+        "message": "차단할 요소가 없습니다"
+    },
+    "secure_page": {
+        "message": "안전한 연결"
+    },
+    "not_filtering_https": {
+        "message": "우리는 기본적으로 결제 시스템과 은행 웹사이트의 HTTPS 트래픽을 필터링하지 않습니다. 직접 활성화해서 필터링할 수 있습니다: 좌측의 노랑색 \"자물쇠\"를 눌러주세요."
+    },
+    "disabled": {
+        "message": "이 웹사이트에서 비활성화됨"
+    },
+    "enabled": {
+        "message": "이 웹사이트에서 활성화됨"
+    },
+    "protection_is_enabled": {
+        "message": "보호 활성화"
+    },
+    "protection_is_disabled": {
+        "message": "보호 비활성화"
+    },
+    "website_cert_is_expired": {
+        "message": "웹사이트 인증서가 만료됨"
+    },
+    "expired": {
+        "message": "만료"
+    }
+}

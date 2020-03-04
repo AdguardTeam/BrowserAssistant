@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "Асістэнт AdGuard для браўзара"
+    },
+    "description": {
+        "message": "Карыснае пашырэнне праграмы блакавання рэкламы AdGuard для настольных камп'ютараў. Дапамагае кіраваць фільтрамі непасрэдна з браўзара і хаваць элементы, якія раздражняюць, у два націскі."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard не ўсталяваны або наладжаны няправільна"
+    },
+    "get_adguard": {
+        "message": "Атрымаць AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard не абноўлены"
+    },
+    "update": {
+        "message": "Абнавіць"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard не запушчаны"
+    },
+    "run_adg": {
+        "message": "Запусціць AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Абарона AdGuard прыпынена"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard загружаецца..."
+    },
+    "enable": {
+        "message": "Уключыць"
+    },
+    "assistant_is_not_updated": {
+        "message": "Памагаты не абноўлены"
+    },
+    "something_went_wrong": {
+        "message": "Нешта пайшло не так"
+    },
+    "reinstall": {
+        "message": "Пераўсталяваць"
+    },
+    "https_filtering": {
+        "message": "Фільтрацыя HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Паляпшае якасць блакавання"
+    },
+    "verified_by": {
+        "message": "Праверана:"
+    },
+    "more_info": {
+        "message": "Даведацца больш"
+    },
+    "adg_protection": {
+        "message": "Абарона AdGuard"
+    },
+    "adg_settings": {
+        "message": "Налады AdGuard"
+    },
+    "block_ads": {
+        "message": "Блакаваць рэкламу на гэтым сайце"
+    },
+    "open_filtering_log": {
+        "message": "Адкрыць часопіс фільтрацыі"
+    },
+    "report_site": {
+        "message": "Паскардзіцца на гэты сайт"
+    },
+    "reset_custom_rules": {
+        "message": "Скінуць правілы на старонцы"
+    },
+    "cert_expired": {
+        "message": "AdGuard не можа праверыць сертыфікат гэтага сайта, бо тэрмін дзеяння каранёвага сертыфіката мінуў"
+    },
+    "cert_absent": {
+        "message": "Фільтрацыя HTTPS для гэтага сайта не выконвалася"
+    },
+    "site_not_using_private_protection": {
+        "message": "Гэты сайт не выкарыстоўвае абароненае падлучэнне. Хто-небудзь можа ўбачыць ці змяніць дадзеныя, якімі вы мяняецеся з гэтым сайтам."
+    },
+    "not_secure": {
+        "message": "Не абаронены"
+    },
+    "nothing_to_block_here": {
+        "message": "Блакаваць няма чаго"
+    },
+    "secure_page": {
+        "message": "Абароненая старонка"
+    },
+    "not_filtering_https": {
+        "message": "Па змаўчанні мы не фільтруем HTTPS-трафік аплатных сістэм і банкаўскіх ўэб-сайтаў. Вы можаце ўключыць фільтрацыю самастойна: націсніце на жоўты значок замка злева."
+    },
+    "disabled": {
+        "message": "Абарона выключана\nна гэтым сайце"
+    },
+    "enabled": {
+        "message": "Абарона ўлучана\nна гэтым сайце"
+    },
+    "protection_is_enabled": {
+        "message": "Абарона ўлучана"
+    },
+    "protection_is_disabled": {
+        "message": "Абарона выключана"
+    },
+    "website_cert_is_expired": {
+        "message": "Тэрмін дзеяння сертыфіката сайта мінуў"
+    },
+    "expired": {
+        "message": "Мінуў"
+    }
+}

@@ -1,0 +1,110 @@
+{
+    "name": {
+        "message": "AdGuard pomoćnik za preglednike"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard nije instaliran ili neispravno konfigurusan"
+    },
+    "get_adguard": {
+        "message": "Nabavi AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard nije ažuriran"
+    },
+    "update": {
+        "message": "Ažuriraj"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard nije pokrenut"
+    },
+    "run_adg": {
+        "message": "Pokreni AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard zaštita je pauzirana"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard se pokreće"
+    },
+    "enable": {
+        "message": "Uključi"
+    },
+    "assistant_is_not_updated": {
+        "message": "Pomoćnik nije ažuriran"
+    },
+    "something_went_wrong": {
+        "message": "Nešto je pošlo naopako"
+    },
+    "reinstall": {
+        "message": "Ponovo instaliraj"
+    },
+    "https_filtering": {
+        "message": "HTTPS filtriranje"
+    },
+    "increase_ab_block_quality": {
+        "message": "Povećava kvalitet blokiranja reklama"
+    },
+    "verified_by": {
+        "message": "Potvrđeno od:"
+    },
+    "more_info": {
+        "message": "Više informacija"
+    },
+    "adg_protection": {
+        "message": "AdGuard zaštita"
+    },
+    "adg_settings": {
+        "message": "AdGuard postavke"
+    },
+    "block_ads": {
+        "message": "Blokiraj reklame na ovom sajtu"
+    },
+    "open_filtering_log": {
+        "message": "Otvori dnevnik filtriranja"
+    },
+    "report_site": {
+        "message": "Prijavi ovaj sajt"
+    },
+    "reset_custom_rules": {
+        "message": "Resetuj sva korisnička pravila za ovu stranicu"
+    },
+    "cert_expired": {
+        "message": "AdGuard ne može da potvrdi verodostojnost sertifikata ovog sajta jer je root sertifikat istekao"
+    },
+    "cert_absent": {
+        "message": "HTTPS filtriranje nije izvršeno nad ovim sajtom"
+    },
+    "site_not_using_private_protection": {
+        "message": "Sajt ne koristi privatnu vezu. neko će možda moći da vidi ili promeni informacije koje šaljete ili primate preko sajta."
+    },
+    "not_secure": {
+        "message": "Nije bezbedno"
+    },
+    "nothing_to_block_here": {
+        "message": "Ovde nema ničeg za blokiranje"
+    },
+    "secure_page": {
+        "message": "Bezbedna stranica"
+    },
+    "not_filtering_https": {
+        "message": "Podrazumevano, ne filtriramo HTTPS saobraćaj za platne sisteme i sajtove banaka. Možete uključiti filtriranje: dodirnite na žuti \"katanac\" na levoj strani."
+    },
+    "disabled": {
+        "message": "Isključeno na ovom sajtu"
+    },
+    "enabled": {
+        "message": "Uključeno na ovom sajtu"
+    },
+    "protection_is_enabled": {
+        "message": "Zaštita je uključena"
+    },
+    "protection_is_disabled": {
+        "message": "Zaštita je isključena"
+    },
+    "website_cert_is_expired": {
+        "message": "Sertifikat sajta je istekao"
+    },
+    "expired": {
+        "message": "Istekla"
+    }
+}
