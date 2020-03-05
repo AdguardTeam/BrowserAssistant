@@ -21,7 +21,10 @@ class Tabs {
 
             if (!tab) {
                 // return stub tab
-                return { url: 'about:', id: 0 };
+                return {
+                    url: 'about:',
+                    id: 0,
+                };
             }
 
             if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {

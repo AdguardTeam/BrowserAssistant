@@ -21,7 +21,7 @@ class Api {
 
     retryTimes = MAX_RETRY_TIMES;
 
-    initHandler = (response) => {
+    responsesHandler = (response) => {
         log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
@@ -44,7 +44,7 @@ class Api {
     init = () => {
         log.info('init');
         this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
-        this.port.onMessage.addListener(this.initHandler);
+        this.port.onMessage.addListener(this.responsesHandler);
 
         this.port.onDisconnect.addListener(
             () => this.makeReinit(BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED)
@@ -71,7 +71,7 @@ class Api {
     deinit = () => {
         log.info('deinit');
         this.port.disconnect();
-        this.port.onMessage.removeListener(this.initHandler);
+        this.port.onMessage.removeListener(this.responsesHandler);
     };
 
     reinit = async () => {

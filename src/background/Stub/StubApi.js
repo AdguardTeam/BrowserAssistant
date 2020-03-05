@@ -19,7 +19,7 @@ class Api {
 
     isExtensionUpdated = true;
 
-    initHandler = (response) => {
+    responsesHandler = (response) => {
         log.info(`response ${response.id}`, response);
         const { parameters } = response;
 
@@ -61,7 +61,7 @@ class Api {
         const request = { id, ...params };
         const response = await stubHost.getStubResponse(request);
 
-        this.initHandler(response);
+        this.responsesHandler(response);
         return response;
     };
 }
