@@ -4,7 +4,6 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
-const { getEquivalent } = require('./helpers');
 const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('./consts');
 
 const BASE_URL = 'https://twosky.adtidy.org/api/v1';
@@ -61,12 +60,11 @@ function saveFile(filePath, data) {
 async function downloadAndSave() {
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const lang of LOCALES) {
-        const resultLocale = getEquivalent(lang);
-        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(resultLocale)}`;
+        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(lang)}`;
         try {
             console.log(`Downloading: ${downloadUrl}`);
             const { data } = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
-            const filePath = path.join(LOCALES_DIR, resultLocale, FILENAME);
+            const filePath = path.join(LOCALES_DIR, lang, FILENAME);
             await saveFile(filePath, data);
             console.log(`Successfully saved in: ${filePath}`);
         } catch (e) {
