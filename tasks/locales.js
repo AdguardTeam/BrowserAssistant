@@ -62,7 +62,7 @@ async function downloadAndSave() {
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const lang of LOCALES) {
         const resultLocale = getEquivalent(lang);
-        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(resultLocale)}`;
+        const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(lang)}`;
         try {
             console.log(`Downloading: ${downloadUrl}`);
             const { data } = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
