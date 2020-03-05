@@ -29,14 +29,14 @@ const App = observer(() => {
             setExtensionLoadingAndPending,
             setExtensionLoading,
             requestStatus,
-            getZoom,
+            normalizePopupScale,
         },
     } = useContext(rootStore);
 
     useEffect(() => {
         (async () => {
-            await getZoom();
             await getCurrentTabHostname();
+            normalizePopupScale();
             await getReferrer();
             await getCurrentFilteringState();
         })();

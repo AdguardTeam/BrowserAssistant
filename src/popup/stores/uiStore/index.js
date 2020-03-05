@@ -1,5 +1,5 @@
 import {
-    action, observable, computed, reaction,
+    action, observable, computed,
 } from 'mobx';
 import {
     defaultModalState,
@@ -157,12 +157,10 @@ class UiStore {
      * by multiplying by the inverse scale
      * https://github.com/AdguardTeam/AdguardBrowserExtension/issues/1529
      */
-    resizeBody = reaction(
-        () => this.userSettingsZoom,
-        (userSettingsZoom) => {
-            document.body.style.zoom = 1 / userSettingsZoom;
-        }
-    );
+    normalizePopupScale = () => {
+        this.getZoom();
+        document.body.style.zoom = 1 / this.userSettingsZoom;
+    };
 
     closePopupWrapper = (fn) => () => {
         fn();
