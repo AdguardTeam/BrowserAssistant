@@ -44,6 +44,7 @@ class Api {
     init = () => {
         log.info('init');
         this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
+        this.port.onMessage.addListener(this.initHandler);
 
         this.port.onDisconnect.addListener(
             () => this.makeReinit(BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED)

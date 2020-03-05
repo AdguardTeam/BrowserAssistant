@@ -25,8 +25,6 @@ export const ResponseTypesPrefixes = {
 
 export const AssistantTypes = {
     nativeAssistant: 'nativeAssistant',
-    assistant: 'assistant',
-    browserExtension: 'browserExtension',
 };
 
 export const MessageTypes = {

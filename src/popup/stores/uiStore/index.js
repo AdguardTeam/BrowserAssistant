@@ -152,6 +152,11 @@ class UiStore {
         this.userSettingsZoom = popupZoom.toFixed(popupZoom < 3 ? 2 : 1);
     };
 
+    /**
+     * Compensation for zooming in or out of the default window scale
+     * by multiplying by the inverse scale
+     * https://github.com/AdguardTeam/AdguardBrowserExtension/issues/1529
+     */
     resizeBody = reaction(
         () => this.userSettingsZoom,
         (userSettingsZoom) => {
