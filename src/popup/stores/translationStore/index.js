@@ -3,14 +3,14 @@ import { createIntl } from 'react-intl';
 import { browserLocale } from '../../../lib/conts';
 import messagesMap from '../../../_locales';
 
-const { BASE_LOCALES } = require('../../../../tasks/consts');
+const { BASE_LOCALE } = require('../../../../tasks/consts');
 
 class TranslationsStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable locale = BASE_LOCALES;
+    @observable locale = BASE_LOCALE;
 
     @action
     setLocale = (locale) => {
@@ -19,11 +19,11 @@ class TranslationsStore {
 
     @computed
     get i18n() {
-        const fallbackLocale = messagesMap[browserLocale] ? browserLocale : BASE_LOCALES;
+        const fallbackLocale = messagesMap[browserLocale] ? browserLocale : BASE_LOCALE;
         const locale = messagesMap[this.locale] ? this.locale : fallbackLocale;
 
         const messages = {
-            ...messagesMap[BASE_LOCALES],
+            ...messagesMap[BASE_LOCALE],
             ...messagesMap[locale],
         };
 

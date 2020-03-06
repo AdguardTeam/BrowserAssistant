@@ -43,7 +43,7 @@ const getOptions = (stores) => {
         {
             iconName: 'thumb-down',
             text: translate('report_site'),
-            onClick: closePopupWrapper(reportSite),
+            onClick: reportSite,
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },

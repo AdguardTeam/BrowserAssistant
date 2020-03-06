@@ -72,6 +72,7 @@ class RequestsStore {
             } = await adguard.requests.reportSite({ url: currentURL, referrer });
 
             adguard.tabs.openPage(reportUrl);
+            window.location.reload();
         } catch (error) {
             log.error(error);
         }
