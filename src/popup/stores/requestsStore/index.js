@@ -72,6 +72,10 @@ class RequestsStore {
             } = await adguard.requests.reportSite({ url: currentURL, referrer });
 
             adguard.tabs.openPage(reportUrl);
+
+            /** The popup in Firefox is not closed after opening new tabs by Tabs API.
+             *  Reload re-renders popup. */
+            window.location.reload();
         } catch (error) {
             log.error(error);
         }
