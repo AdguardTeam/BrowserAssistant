@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Option from './Option';
-import rootStore from '../../stores';
+import rootStoreCtx from '../../stores';
 
 const getOptions = (stores) => {
     const {
@@ -18,7 +18,6 @@ const getOptions = (stores) => {
         },
         uiStore: {
             isPageFilteredByUserFilter,
-            closePopupWrapper,
         },
         translationStore: {
             translate,
@@ -36,7 +35,7 @@ const getOptions = (stores) => {
         {
             iconName: 'sandwich',
             text: translate('open_filtering_log'),
-            onClick: closePopupWrapper(openFilteringLog),
+            onClick: openFilteringLog,
             isDisabled: false,
             isVisible: true,
         },
@@ -61,7 +60,7 @@ const getOptions = (stores) => {
 };
 
 const Options = observer(() => {
-    const stores = useContext(rootStore);
+    const stores = useContext(rootStoreCtx);
     const options = getOptions(stores);
 
     return (

@@ -3,12 +3,12 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
-import rootStore from '../../stores';
+import rootStoreCtx from '../../stores';
 import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
-    const { settingsStore, uiStore, translationStore } = useContext(rootStore);
+    const { settingsStore, uiStore, translationStore } = useContext(rootStoreCtx);
     const {
         pageProtocol,
         isHttpsFilteringEnabled,

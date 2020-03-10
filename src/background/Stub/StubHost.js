@@ -14,6 +14,7 @@ import versions from '../versions';
 
 const { BASE_LOCALE } = require('../../../tasks/consts');
 
+// TODO: update testing logic
 class StubHost {
     delay = 500;
 

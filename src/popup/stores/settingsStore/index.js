@@ -1,5 +1,5 @@
 import {
-    action, computed, observable, runInAction,
+    action, computed, observable,
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
@@ -35,11 +35,13 @@ class SettingsStore {
 
     @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
-    @observable isAppUpToDate = adguard.isAppUpToDate;
+    @observable isAppUpToDate = true;
 
-    @observable isExtensionUpdated = adguard.isExtensionUpdated;
+    @observable isExtensionUpdated = true;
 
-    @observable isSetupCorrectly = adguard.isSetupCorrectly;
+    @observable isSetupCorrectly = true;
+
+    @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
     @computed get pageProtocol() {
         return ({
@@ -50,33 +52,52 @@ class SettingsStore {
     }
 
     @action
-    getReferrer = async () => {
-        const referrer = await adguard.tabs.getReferrer();
-
-        runInAction(() => {
-            this.referrer = referrer || '';
-        });
+    setIsAppUpToDate = (isAppUpToDate) => {
+        this.isAppUpToDate = isAppUpToDate;
     };
 
     @action
-    getCurrentTabHostname = async () => {
-        try {
-            const {
-                currentURL,
-                currentPort,
-                currentProtocol,
-                hostname,
-            } = await adguard.tabs.getCurrentTabUrlProperties();
+    setIsExtensionUpdated = (isExtensionUpdated) => {
+        this.isExtensionUpdated = isExtensionUpdated;
+    };
 
-            runInAction(() => {
-                this.currentURL = currentURL;
-                this.currentTabHostname = hostname || this.currentURL;
-                this.currentPort = currentPort;
-                this.currentProtocol = currentProtocol;
-            });
+    @action
+    setIsSetupCorrectly = (isSetupCorrectly) => {
+        this.isSetupCorrectly = isSetupCorrectly;
+    };
+
+    @action
+    getReferrer = async () => {
+        await adguard.tabs.getReferrer();
+    };
+
+    @action
+    setReferrer = (referrer) => {
+        this.referrer = referrer || '';
+    };
+
+    @action
+    getCurrentTabUrlProperties = async () => {
+        try {
+            await adguard.tabs.getCurrentTabUrlProperties();
         } catch (error) {
             log.error(error);
         }
+    };
+
+    @action
+    setCurrentTabUrlProperties = (urlProps) => {
+        const {
+            currentURL,
+            currentPort,
+            currentProtocol,
+            hostname,
+        } = urlProps;
+
+        this.currentURL = currentURL;
+        this.currentTabHostname = hostname || this.currentURL;
+        this.currentPort = currentPort;
+        this.currentProtocol = currentProtocol;
     };
 
     @action
@@ -158,7 +179,7 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
+        const { isFirefox } = this;
         const updateLink = isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
         adguard.tabs.openPage(updateLink);
     };

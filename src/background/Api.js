@@ -7,6 +7,7 @@ import {
     HostTypes,
     RequestTypes,
     ResponseTypesPrefixes,
+    setupStates,
 } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
@@ -32,10 +33,20 @@ class Api {
 
         if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            adguard.isAppUpToDate = this.isAppUpToDate;
+
+            browserApi.runtime.sendMessage({
+                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY,
+                options: { [setupStates.isAppUpToDate]: this.isAppUpToDate },
+            });
+
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
+
+            browserApi.runtime.sendMessage({
+                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY,
+                options: { [setupStates.isExtensionUpdated]: this.isExtensionUpdated },
+
+            });
         }
 
         browserApi.runtime.sendMessage(response);

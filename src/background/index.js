@@ -1,14 +1,16 @@
 import browser from 'webextension-polyfill';
 import requests from './requestsApi';
 import api from './Api';
-import { MessageTypes, RequestTypes } from '../lib/types';
+import {
+    INNER_MESSAGING_TYPES, MessageTypes, RequestTypes,
+} from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
 
 // eslint-disable-next-line consistent-return
 async function sendMessage(sender) {
     const { type } = sender;
-    const tab = await adguard.tabs.getCurrent();
+    const tab = await tabs.getCurrent();
     const response = await browser.tabs.sendMessage(tab.id, { type });
     if (response) {
         return Promise.resolve(response);
@@ -17,8 +19,7 @@ async function sendMessage(sender) {
 
 function addRule(sender) {
     const { ruleText } = sender;
-    adguard.requests.addRule(ruleText);
-    adguard.tabs.isPageFilteredByUserFilter = true;
+    requests.addRule(ruleText);
 }
 
 function handleMessage(sender) {
@@ -34,15 +35,6 @@ function handleMessage(sender) {
     }
 }
 
-
-global.adguard = {
-    requests,
-    tabs,
-    isAppUpToDate: api.isAppUpToDate,
-    isExtensionUpdated: api.isExtensionUpdated,
-    isSetupCorrectly: tabs.isSetupCorrectly,
-};
-
 try {
     api.init();
 
@@ -52,3 +44,27 @@ try {
 } catch (error) {
     log.error(error);
 }
+
+const onConnected = (port) => {
+    port.onMessage.addListener(async (msg) => {
+        const { apiType, actionType, params } = msg;
+
+        const mapApiTypeToApi = {
+            [INNER_MESSAGING_TYPES.API_REQUEST]: requests,
+            [INNER_MESSAGING_TYPES.TAB_ACTION]: tabs,
+        };
+
+        const response = await mapApiTypeToApi[apiType][actionType].apply(null, params);
+
+        try {
+            await port.postMessage({
+                actionType,
+                response,
+            });
+        } catch (error) {
+            // Ignore message
+        }
+    });
+};
+
+browser.runtime.onConnect.addListener(onConnected);

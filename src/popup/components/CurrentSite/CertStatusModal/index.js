@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import Switcher from '../../Settings/Switcher';
-import rootStore from '../../../stores';
+import rootStoreCtx from '../../../stores';
 import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
 import './modal.pcss';
 
@@ -27,7 +27,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         translationStore: {
             translate,
         },
-    } = useContext(rootStore);
+    } = useContext(rootStoreCtx);
 
     const toggleHttpsFiltering = () => {
         if (!certStatus.isInvalid) {

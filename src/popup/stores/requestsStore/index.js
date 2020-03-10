@@ -1,4 +1,3 @@
-import { action } from 'mobx';
 import log from '../../../lib/logger';
 
 class RequestsStore {
@@ -6,7 +5,6 @@ class RequestsStore {
         this.rootStore = rootStore;
     }
 
-    @action
     getCurrentFilteringState = async (forceStartApp = false) => {
         const { currentURL, currentPort } = this.rootStore.settingsStore;
         try {
@@ -16,7 +14,6 @@ class RequestsStore {
         }
     };
 
-    @action
     getCurrentAppState = async () => {
         try {
             await adguard.requests.getCurrentAppState();
@@ -25,7 +22,6 @@ class RequestsStore {
         }
     };
 
-    @action
     setFilteringStatus = async () => {
         const {
             currentURL, isFilteringEnabled,
@@ -42,7 +38,6 @@ class RequestsStore {
         }
     };
 
-    @action
     openOriginalCert = async () => {
         const { settingsStore: { currentTabHostname, currentPort } } = this.rootStore;
         try {
@@ -52,7 +47,6 @@ class RequestsStore {
         }
     };
 
-    @action
     removeCustomRules = async () => {
         adguard.tabs.reload();
         try {
@@ -63,25 +57,18 @@ class RequestsStore {
         }
     };
 
-    @action
     reportSite = async () => {
         const { currentURL, referrer } = this.rootStore.settingsStore;
         try {
-            const {
-                parameters: { reportUrl },
-            } = await adguard.requests.reportSite({ url: currentURL, referrer });
-
-            adguard.tabs.openPage(reportUrl);
-
-            /** The popup in Firefox is not closed after opening new tabs by Tabs API.
-             *  Reload re-renders popup. */
-            window.location.reload();
+            await adguard.requests.reportSite({
+                url: currentURL,
+                referrer,
+            });
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     openFilteringLog = async () => {
         try {
             await adguard.requests.openFilteringLog();
@@ -90,7 +77,6 @@ class RequestsStore {
         }
     };
 
-    @action
     removeRule = async () => {
         try {
             await adguard.requests.removeRule(
@@ -101,7 +87,6 @@ class RequestsStore {
         }
     };
 
-    @action
     addRule = async () => {
         try {
             await adguard.requests.addRule(
@@ -112,20 +97,16 @@ class RequestsStore {
         }
     };
 
-    @action
     setProtectionStatus = async (shouldEnableProtection) => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);
-            const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
-            this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
+            await adguard.requests.setProtectionStatus(shouldEnableProtection);
             this.rootStore.uiStore.setProtectionTogglePending(false);
-            await adguard.tabs.updateIconColor(shouldEnableProtection);
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     startApp = async () => {
         this.rootStore.uiStore.setExtensionLoading(true);
         try {
@@ -135,7 +116,6 @@ class RequestsStore {
         }
     };
 
-    @action
     updateApp = async () => {
         try {
             await adguard.requests.updateApp();
@@ -144,7 +124,6 @@ class RequestsStore {
         }
     };
 
-    @action
     openSettings = async () => {
         try {
             await adguard.requests.openSettings();
@@ -153,7 +132,6 @@ class RequestsStore {
         }
     };
 
-    @action
     startBlockingAd = async () => {
         try {
             await adguard.tabs.initAssistant();

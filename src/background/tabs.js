@@ -1,11 +1,14 @@
 import browser from 'webextension-polyfill';
-import { BACKGROUND_COMMANDS, MessageTypes, RequestTypes } from '../lib/types';
+import {
+    BACKGROUND_COMMANDS, MessageTypes, RequestTypes, setupStates,
+} from '../lib/types';
 import log from '../lib/logger';
 import browserApi from './browserApi';
 import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import requests from './requestsApi';
 import actions from './actions';
 import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
+import Api from './Api';
 
 class Tabs {
     isSetupCorrectly = true;
@@ -31,8 +34,11 @@ class Tabs {
                 log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest', tab);
 
                 this.isSetupCorrectly = false;
-                await browserApi.runtime
-                    .sendMessage({ result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY });
+
+                await browserApi.runtime.sendMessage({
+                    result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY,
+                    options: { [setupStates.isSetupCorrectly]: this.isSetupCorrectly },
+                });
             }
         } catch (error) {
             log.error(error);
@@ -49,9 +55,7 @@ class Tabs {
                 options,
             });
         } catch (error) {
-            if (!browser.runtime.lastError) {
-                log.error(error);
-            }
+            // Ignore message
         }
         return response;
     };
@@ -90,15 +94,14 @@ class Tabs {
 
     getIsAppWorking = async () => {
         const {
-            currentURL, currentPort, currentProtocol,
+            currentURL, currentPort,
         } = await this.getCurrentTabUrlProperties();
-        adguard.currentProtocol = currentProtocol;
-
         const response = await requests.getCurrentFilteringState(currentURL, currentPort);
         const { isFilteringEnabled } = response.parameters;
 
         const { appState: { isInstalled, isRunning, isProtectionEnabled } } = response;
-        const { isExtensionUpdated, isSetupCorrectly } = adguard;
+        const { isExtensionUpdated } = Api;
+        const { isSetupCorrectly } = this;
 
         const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,
             isExtensionUpdated, isSetupCorrectly, isFilteringEnabled, isFilteringEnabled]

@@ -7,8 +7,8 @@ import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
-import rootStore from '../../stores';
-import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
+import rootStoreCtx from '../../stores';
+import { BACKGROUND_COMMANDS, HostResponseTypes, setupStates } from '../../../lib/types';
 import Loading from '../ui/Loading';
 
 Modal.setAppElement('#root');
@@ -18,27 +18,23 @@ const App = observer(() => {
         settingsStore: {
             setCurrentFilteringState,
             setCurrentAppState,
-            getCurrentTabHostname,
-            getReferrer,
+            getCurrentTabUrlProperties,
             setInstalled,
-        },
-        requestsStore: {
-            getCurrentFilteringState,
+            setIsAppUpToDate,
+            setIsExtensionUpdated,
+            setIsSetupCorrectly,
         },
         uiStore: {
             setExtensionLoadingAndPending,
             setExtensionLoading,
             requestStatus,
-            normalizePopupScale,
         },
-    } = useContext(rootStore);
+    } = useContext(rootStoreCtx);
 
     useEffect(() => {
         (async () => {
-            await getCurrentTabHostname();
-            normalizePopupScale();
-            await getReferrer();
-            await getCurrentFilteringState();
+            await getCurrentTabUrlProperties();
+            // TODO: normalizePopupScale
         })();
 
         browser.runtime.onMessage.addListener(
@@ -52,8 +48,27 @@ const App = observer(() => {
                         setInstalled(false);
                         setExtensionLoadingAndPending();
                         break;
-                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
+                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY: {
+                        const { options } = response;
+
+                        if (Object.prototype.hasOwnProperty.call(options,
+                            setupStates.isAppUpToDate)) {
+                            const { isAppUpToDate } = options;
+                            // TODO: save in storage
+                            setIsAppUpToDate(isAppUpToDate);
+                        }
+                        if (Object.prototype.hasOwnProperty.call(options,
+                            setupStates.isExtensionUpdated)) {
+                            const { isExtensionUpdated } = options;
+                            setIsExtensionUpdated(isExtensionUpdated);
+                        }
+                        if (Object.prototype.hasOwnProperty.call(options,
+                            setupStates.isSetupCorrectly)) {
+                            const { isSetupCorrectly } = options;
+                            setIsSetupCorrectly(isSetupCorrectly);
+                        }
                         setExtensionLoadingAndPending();
+                    }
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
                         setExtensionLoading(true);

@@ -148,6 +148,7 @@ class UiStore {
 
     @action
     getZoom = () => {
+        // TODO: fix logic
         const popupZoom = ((window.outerWidth - 8) / window.innerWidth) - 0.02;
         this.userSettingsZoom = popupZoom.toFixed(popupZoom < 3 ? 2 : 1);
     };
@@ -160,11 +161,6 @@ class UiStore {
     normalizePopupScale = () => {
         this.getZoom();
         document.body.style.zoom = 1 / this.userSettingsZoom;
-    };
-
-    closePopupWrapper = (fn) => () => {
-        fn();
-        window.close();
     };
 
     reloadPageAfterSwitcherTransition = () => {
