@@ -186,7 +186,7 @@ class StubHost {
             adguard.isExtensionUpdated = this.isExtensionUpdated;
         }
 
-        browserApi.runtime.sendMessage(response);
+        browserApi.runtime.sendMessage({ result: response.result, response });
     };
 
     /**

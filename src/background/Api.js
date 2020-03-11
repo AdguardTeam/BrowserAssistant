@@ -48,7 +48,7 @@ class Api {
             );
         }
 
-        await browserApi.runtime.sendMessage(response);
+        await browserApi.runtime.sendMessage({ result: response.result, response });
     };
 
     init = () => {

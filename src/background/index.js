@@ -47,18 +47,19 @@ try {
 
 const onConnected = (port) => {
     port.onMessage.addListener(async (msg) => {
-        const { apiType, actionType, params } = msg;
+        const { apiType, result, params } = msg;
 
         const mapApiTypeToApi = {
             [INNER_MESSAGING_TYPES.API_REQUEST]: requests,
             [INNER_MESSAGING_TYPES.TAB_ACTION]: tabs,
         };
 
-        const response = await mapApiTypeToApi[apiType][actionType].apply(null, params);
 
         try {
+            const response = await mapApiTypeToApi[apiType][result].apply(null, params);
+
             await port.postMessage({
-                actionType,
+                result,
                 response,
             });
         } catch (error) {
