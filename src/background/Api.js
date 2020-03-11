@@ -35,20 +35,20 @@ class Api {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
 
             await browserApi.runtime.sendMessage({
-                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
+                msgType: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
             });
             await browser.storage.local.set({ [SETUP_STATES.isAppUpToDate]: this.isAppUpToDate });
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
             await browserApi.runtime.sendMessage({
-                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
+                msgType: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
             });
             await browser.storage.local.set(
                 { [SETUP_STATES.isExtensionUpdated]: this.isExtensionUpdated }
             );
         }
 
-        await browserApi.runtime.sendMessage({ result: response.result, response });
+        await browserApi.runtime.sendMessage({ msgType: response.result, response });
     };
 
     init = () => {
@@ -85,7 +85,7 @@ class Api {
     };
 
     reinit = async () => {
-        await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
+        await browserApi.runtime.sendMessage({ msgType: BACKGROUND_COMMANDS.SHOW_RELOAD });
         this.deinit();
         this.init();
     };
@@ -98,7 +98,7 @@ class Api {
         } else {
             this.deinit();
             await browserApi.runtime.sendMessage(
-                { result: message }
+                { msgType: message }
             );
             this.retryTimes = MAX_RETRY_TIMES;
 

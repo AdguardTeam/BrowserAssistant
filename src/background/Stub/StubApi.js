@@ -36,7 +36,7 @@ class Api {
             adguard.isExtensionUpdated = this.isExtensionUpdated;
         }
 
-        browserApi.runtime.sendMessage({ result: response.result, response });
+        browserApi.runtime.sendMessage({ msgType: response.result, response });
     };
 
     init = async () => {

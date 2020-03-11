@@ -9,7 +9,7 @@ import {
     SECURE_STATUS_MODAL_STATES,
     SWITCHER_TRANSITION_TIME,
 } from '../consts';
-import { checkSomeIsTrue } from '../../../helpers';
+import { checkSomeIsTrue } from '../../../lib/helpers';
 
 class UiStore {
     constructor(rootStore) {
@@ -150,7 +150,6 @@ class UiStore {
 
     @action
     getZoom = () => {
-        // TODO: fix logic
         const popupZoom = ((window.outerWidth - 8) / window.innerWidth) - 0.02;
         this.userSettingsZoom = popupZoom.toFixed(popupZoom < 3 ? 2 : 1);
     };

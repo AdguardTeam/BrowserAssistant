@@ -36,7 +36,7 @@ async function handleMessage(msg) {
             break;
     }
 
-    const { apiType, result, params } = msg;
+    const { apiType, msgType, params } = msg;
 
     const mapApiTypeToApi = {
         [INNER_MESSAGING_TYPES.API_REQUEST]: requests,
@@ -44,10 +44,10 @@ async function handleMessage(msg) {
     };
 
     try {
-        const response = await mapApiTypeToApi[apiType][result].apply(null, params);
+        const response = await mapApiTypeToApi[apiType][msgType].apply(null, params);
 
         await browserApi.runtime.sendMessage({
-            result,
+            msgType,
             response,
         });
     } catch (error) {

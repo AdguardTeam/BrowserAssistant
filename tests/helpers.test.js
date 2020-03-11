@@ -1,4 +1,4 @@
-import { checkSomeIsTrue } from '../src/helpers';
+import { checkSomeIsTrue } from '../src/lib/helpers';
 
 describe('checkSomeIsTrue', () => {
     it('should return true if at least one value is true', () => {

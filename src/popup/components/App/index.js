@@ -9,9 +9,9 @@ import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStoreCtx from '../../stores';
 import {
-    API_TYPES,
     BACKGROUND_COMMANDS,
-    HOST_RESPONSE_TYPES, INNER_MESSAGING_TYPES, REQUEST_TYPES,
+    HOST_RESPONSE_TYPES,
+    REQUEST_TYPES,
     SETUP_STATES,
     TAB_ACTIONS,
 } from '../../../lib/types';
@@ -38,44 +38,17 @@ const App = observer(() => {
             setExtensionLoadingAndPending,
             setExtensionLoading,
             requestStatus,
+            normalizePopupScale,
         },
         requestsStore: {
             getCurrentFilteringState,
         },
     } = useContext(rootStoreCtx);
 
-    global.adguard = {};
-
-    const createGlobalActions = (globalVar, actionTypes, apiName, apiType) => {
-        // eslint-disable-next-line no-param-reassign
-        globalVar[apiName] = {};
-        Object.values(actionTypes)
-            .forEach((result) => {
-                // eslint-disable-next-line no-param-reassign
-                globalVar[apiName][result] = async (...args) => {
-                    try {
-                        await browser.runtime.sendMessage({
-                            apiType,
-                            result,
-                            params: [...args],
-                        });
-                    } catch (error) {
-                        // Ignore message
-                    }
-                };
-            });
-    };
-
-    createGlobalActions(adguard, REQUEST_TYPES,
-        API_TYPES.requests, INNER_MESSAGING_TYPES.API_REQUEST);
-    createGlobalActions(adguard, TAB_ACTIONS,
-        API_TYPES.tabs, INNER_MESSAGING_TYPES.TAB_ACTION);
-
-
     useEffect(() => {
         (async () => {
             await getCurrentTabUrlProperties();
-            // TODO: normalizePopupScale
+            normalizePopupScale();
 
             const {
                 isAppUpToDate,
@@ -89,8 +62,8 @@ const App = observer(() => {
         })();
 
         browser.runtime.onMessage.addListener(
-            async ({ result, response }) => {
-                switch (result) {
+            async ({ msgType, response }) => {
+                switch (msgType) {
                     case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
                         setInstalled(false);
                         setExtensionLoadingAndPending();

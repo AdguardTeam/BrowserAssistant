@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import { PROTOCOLS, PROTOCOL_TO_PORT_MAP } from '../popup/stores/consts';
 
 /**
@@ -60,4 +61,34 @@ export const flattenNestedObj = (obj, propName) => {
             acc[key] = value[propName];
             return acc;
         }, {});
+};
+
+/**
+ * Checks if at least one value of the object is strictly equal to true
+ * @param {Object.<string, any>} states
+ * @returns {boolean}
+ */
+export const checkSomeIsTrue = (states) => {
+    return Object.values(states)
+        .some((state) => state === true);
+};
+
+export const createGlobalActions = (globalVar, actionTypes, apiName, apiType) => {
+    // eslint-disable-next-line no-param-reassign
+    globalVar[apiName] = {};
+    Object.values(actionTypes)
+        .forEach((msgType) => {
+            // eslint-disable-next-line no-param-reassign
+            globalVar[apiName][msgType] = async (...args) => {
+                try {
+                    await browser.runtime.sendMessage({
+                        apiType,
+                        msgType,
+                        params: [...args],
+                    });
+                } catch (error) {
+                    // Ignore message
+                }
+            };
+        });
 };
