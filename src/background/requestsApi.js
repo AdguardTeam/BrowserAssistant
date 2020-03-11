@@ -1,17 +1,17 @@
-import { RequestTypes } from '../lib/types';
+import { REQUEST_TYPES } from '../lib/types';
 import api from './Api';
 import versions from './versions';
 
 class RequestsApi {
     getCurrentAppState() {
         return api.makeRequest({
-            type: RequestTypes.getCurrentAppState,
+            type: REQUEST_TYPES.getCurrentAppState,
         });
     }
 
     getCurrentFilteringState(url, port, forceStartApp = false) {
         return api.makeRequest({
-            type: RequestTypes.getCurrentFilteringState,
+            type: REQUEST_TYPES.getCurrentFilteringState,
             parameters: {
                 url,
                 port,
@@ -22,7 +22,7 @@ class RequestsApi {
 
     setProtectionStatus(isEnabled) {
         return api.makeRequest({
-            type: RequestTypes.setProtectionStatus,
+            type: REQUEST_TYPES.setProtectionStatus,
             parameters: {
                 isEnabled,
             },
@@ -38,28 +38,28 @@ class RequestsApi {
      */
     setFilteringStatus(parameters) {
         return api.makeRequest({
-            type: RequestTypes.setFilteringStatus,
+            type: REQUEST_TYPES.setFilteringStatus,
             parameters,
         });
     }
 
     addRule(ruleText) {
         return api.makeRequest({
-            type: RequestTypes.addRule,
+            type: REQUEST_TYPES.addRule,
             parameters: { ruleText },
         });
     }
 
     removeRule(ruleText) {
         return api.makeRequest({
-            type: RequestTypes.removeRule,
+            type: REQUEST_TYPES.removeRule,
             parameters: { ruleText },
         });
     }
 
     removeCustomRules(url) {
         return api.makeRequest({
-            type: RequestTypes.removeCustomRules,
+            type: REQUEST_TYPES.removeCustomRules,
             parameters: { url },
         });
     }
@@ -67,7 +67,7 @@ class RequestsApi {
 
     openOriginalCert(domain, port) {
         return api.makeRequest({
-            type: RequestTypes.openOriginalCert,
+            type: REQUEST_TYPES.openOriginalCert,
             parameters: { domain, port },
         });
     }
@@ -80,26 +80,26 @@ class RequestsApi {
      */
     reportSite(params) {
         return api.makeRequest({
-            type: RequestTypes.reportSite,
+            type: REQUEST_TYPES.reportSite,
             parameters: { ...params, userAgent: versions.userAgent },
         });
     }
 
     openFilteringLog() {
         return api.makeRequest({
-            type: RequestTypes.openFilteringLog,
+            type: REQUEST_TYPES.openFilteringLog,
         });
     }
 
     openSettings() {
         return api.makeRequest({
-            type: RequestTypes.openSettings,
+            type: REQUEST_TYPES.openSettings,
         });
     }
 
     updateApp() {
         return api.makeRequest({
-            type: RequestTypes.updateApp,
+            type: REQUEST_TYPES.updateApp,
         });
     }
 }

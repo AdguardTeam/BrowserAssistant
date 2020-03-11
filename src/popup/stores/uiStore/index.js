@@ -2,11 +2,11 @@ import {
     action, observable, computed,
 } from 'mobx';
 import {
-    defaultModalState,
-    eventTypeToModalStateMap,
+    DEFAULT_MODAL_STATE,
+    EVENT_TYPE_TO_MODAL_STATE_MAP,
     ORIGINAL_CERT_STATUS,
     HTTP_FILTERING_STATUS,
-    secureStatusModalStates,
+    SECURE_STATUS_MODAL_STATES,
     SWITCHER_TRANSITION_TIME,
 } from '../consts';
 import { checkSomeIsTrue } from '../../../helpers';
@@ -24,9 +24,9 @@ class UiStore {
 
     @observable isExtensionPending = true;
 
-    @observable certStatusModalState = { ...defaultModalState };
+    @observable certStatusModalState = { ...DEFAULT_MODAL_STATE };
 
-    @observable secureStatusModalState = { ...defaultModalState };
+    @observable secureStatusModalState = { ...DEFAULT_MODAL_STATE };
 
     @observable userSettingsZoom = 1;
 
@@ -56,7 +56,7 @@ class UiStore {
         } = this.rootStore.settingsStore;
         const { certStatus } = this;
 
-        let modalInfo = secureStatusModalStates[currentProtocol];
+        let modalInfo = SECURE_STATUS_MODAL_STATES[currentProtocol];
 
         if (pageProtocol.isHttps) {
             modalInfo = modalInfo[originalCertStatus];
@@ -68,7 +68,7 @@ class UiStore {
                 modalInfo = modalInfo[protectionStatus];
             }
         }
-        return modalInfo || secureStatusModalStates.default;
+        return modalInfo || SECURE_STATUS_MODAL_STATES.default;
     }
 
     @computed get certStatus() {
@@ -85,7 +85,7 @@ class UiStore {
         const {
             isAppUpToDate,
             isExtensionUpdated,
-            isSetupCorrectly,
+            isSetupCorrect,
             isInstalled,
             isRunning,
             isProtectionEnabled,
@@ -96,11 +96,12 @@ class UiStore {
             isProtectionEnabled,
             isAppUpToDate,
             isExtensionUpdated,
-            isSetupCorrectly].every((state) => state === true);
+            isSetupCorrect].every((state) => state === true);
     }
 
     @action
-    updateCertStatusModalState = (eventType, newState = eventTypeToModalStateMap[eventType]) => {
+    updateCertStatusModalState = (eventType,
+        newState = EVENT_TYPE_TO_MODAL_STATE_MAP[eventType]) => {
         this.certStatusModalState = {
             ...this.certStatusModalState,
             ...newState,
@@ -109,11 +110,12 @@ class UiStore {
 
     @action
     resetCertStatusModalState = () => {
-        this.certStatusModalState = defaultModalState;
+        this.certStatusModalState = DEFAULT_MODAL_STATE;
     };
 
     @action
-    updateSecureStatusModalState = (eventType, newState = eventTypeToModalStateMap[eventType]) => {
+    updateSecureStatusModalState = (eventType,
+        newState = EVENT_TYPE_TO_MODAL_STATE_MAP[eventType]) => {
         this.secureStatusModalState = {
             ...this.secureStatusModalState,
             ...newState,

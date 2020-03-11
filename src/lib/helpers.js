@@ -1,4 +1,4 @@
-import { PROTOCOLS, protocolToPortMap } from '../popup/stores/consts';
+import { PROTOCOLS, PROTOCOL_TO_PORT_MAP } from '../popup/stores/consts';
 
 /**
  * Returns hostname of url if it was correct, otherwise return input url
@@ -24,7 +24,7 @@ export const getProtocol = (protocol) => {
 };
 
 export const getFormattedPortByProtocol = (port, protocol) => {
-    const defaultPort = protocolToPortMap[protocol];
+    const defaultPort = PROTOCOL_TO_PORT_MAP[protocol];
     return port === '' ? defaultPort : Number(port);
 };
 

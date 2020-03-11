@@ -8,7 +8,7 @@ import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStoreCtx from '../../stores';
-import { BACKGROUND_COMMANDS, HostResponseTypes, setupStates } from '../../../lib/types';
+import { BACKGROUND_COMMANDS, HOST_RESPONSE_TYPES, SETUP_STATES } from '../../../lib/types';
 import Loading from '../ui/Loading';
 
 Modal.setAppElement('#root');
@@ -22,7 +22,7 @@ const App = observer(() => {
             setInstalled,
             setIsAppUpToDate,
             setIsExtensionUpdated,
-            setIsSetupCorrectly,
+            setIsSetupCorrect,
         },
         uiStore: {
             setExtensionLoadingAndPending,
@@ -39,12 +39,12 @@ const App = observer(() => {
             const {
                 isAppUpToDate,
                 isExtensionUpdated,
-                isSetupCorrectly,
-            } = await browser.storage.local.get(setupStates);
+                isSetupCorrect,
+            } = await browser.storage.local.get(Object.keys(SETUP_STATES));
 
             setIsAppUpToDate(isAppUpToDate);
             setIsExtensionUpdated(isExtensionUpdated);
-            setIsSetupCorrectly(isSetupCorrectly);
+            setIsSetupCorrect(isSetupCorrect);
         })();
 
         browser.runtime.onMessage.addListener(
@@ -58,13 +58,13 @@ const App = observer(() => {
                         setInstalled(false);
                         setExtensionLoadingAndPending();
                         break;
-                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
+                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT:
                         setExtensionLoadingAndPending();
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
                         setExtensionLoading(true);
                         break;
-                    case HostResponseTypes.ok:
+                    case HOST_RESPONSE_TYPES.ok:
                         setExtensionLoadingAndPending();
                         break;
                     default:

@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { MessageTypes } from '../lib/types';
+import { MESSAGE_TYPES } from '../lib/types';
 import { startAssistant } from './start-assistant';
 import log from '../lib/logger';
 
@@ -8,7 +8,7 @@ try {
 
     // eslint-disable-next-line consistent-return
     browser.runtime.onMessage.addListener((request) => {
-        if (request.type === MessageTypes.getReferrer) {
+        if (request.type === MESSAGE_TYPES.getReferrer) {
             return Promise.resolve(document.referrer);
         }
     });

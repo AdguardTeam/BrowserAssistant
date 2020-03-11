@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import {
-    BACKGROUND_COMMANDS, MessageTypes, RequestTypes, setupStates,
+    BACKGROUND_COMMANDS, MESSAGE_TYPES, REQUEST_TYPES, SETUP_STATES,
 } from '../lib/types';
 import log from '../lib/logger';
 import browserApi from './browserApi';
@@ -11,7 +11,7 @@ import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../li
 import Api from './Api';
 
 class Tabs {
-    isSetupCorrectly = true;
+    isSetupCorrect = true;
 
     getCurrent = async () => {
         let tab;
@@ -33,16 +33,15 @@ class Tabs {
             if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {
                 log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest', tab);
 
-                this.isSetupCorrectly = false;
+                this.isSetupCorrect = false;
 
                 await browserApi.runtime.sendMessage(
-                    { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
-                );
-
-                await browser.storage.local.set(
-                    { [setupStates.isSetupCorrectly]: this.isSetupCorrectly }
+                    { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT }
                 );
             }
+            await browser.storage.local.set(
+                { [SETUP_STATES.isSetupCorrect]: this.isSetupCorrect }
+            );
         } catch (error) {
             log.error(error);
         }
@@ -64,14 +63,14 @@ class Tabs {
     };
 
     getReferrer = async () => {
-        return this.sendMessage(MessageTypes.getReferrer);
+        return this.sendMessage(MESSAGE_TYPES.getReferrer);
     };
 
     initAssistant = async () => {
         const tab = await this.getCurrent();
         await browser.tabs.executeScript(tab.id, { file: CONTENT_SCRIPT_NAME });
-        const options = { addRuleCallbackName: RequestTypes.addRule };
-        this.sendMessage(MessageTypes.initAssistant, options);
+        const options = { addRuleCallbackName: REQUEST_TYPES.addRule };
+        this.sendMessage(MESSAGE_TYPES.initAssistant, options);
     };
 
     openPage = (url = DOWNLOAD_LINK) => {
@@ -104,10 +103,10 @@ class Tabs {
 
         const { appState: { isInstalled, isRunning, isProtectionEnabled } } = response;
         const { isExtensionUpdated } = Api;
-        const { isSetupCorrectly } = this;
 
         const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,
-            isExtensionUpdated, isSetupCorrectly, isFilteringEnabled, isFilteringEnabled]
+            isExtensionUpdated, this.isSetupCorrect,
+            isFilteringEnabled, isFilteringEnabled]
             .every((state) => state === true);
 
         return isAppWorking;

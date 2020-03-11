@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill';
 import requests from './requestsApi';
 import api from './Api';
 import {
-    INNER_MESSAGING_TYPES, MessageTypes, RequestTypes,
+    INNER_MESSAGING_TYPES, MESSAGE_TYPES, REQUEST_TYPES,
 } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
@@ -24,11 +24,11 @@ function addRule(sender) {
 
 function handleMessage(sender) {
     switch (sender.type) {
-        case MessageTypes.initAssistant:
+        case MESSAGE_TYPES.initAssistant:
             return sendMessage(sender);
-        case MessageTypes.getReferrer:
+        case MESSAGE_TYPES.getReferrer:
             return sendMessage(sender);
-        case RequestTypes.addRule:
+        case REQUEST_TYPES.addRule:
             return addRule(sender);
         default:
             return null;

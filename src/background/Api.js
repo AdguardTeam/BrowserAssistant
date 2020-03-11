@@ -1,13 +1,13 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import {
-    AssistantTypes,
+    ASSISTANT_TYPES,
     BACKGROUND_COMMANDS,
-    HostResponseTypes,
-    HostTypes,
-    RequestTypes,
-    ResponseTypesPrefixes,
-    setupStates,
+    HOST_RESPONSE_TYPES,
+    HOST_TYPES,
+    REQUEST_TYPES,
+    RESPONSE_TYPE_PREFIXES,
+    SETUP_STATES,
 } from '../lib/types';
 import browserApi from './browserApi';
 import versions from './versions';
@@ -27,24 +27,24 @@ class Api {
         const { parameters } = response;
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
+        if (!response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
+        if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
 
             await browserApi.runtime.sendMessage({
-                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY,
+                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
             });
-            await browser.storage.local.set({ [setupStates.isAppUpToDate]: this.isAppUpToDate });
+            await browser.storage.local.set({ [SETUP_STATES.isAppUpToDate]: this.isAppUpToDate });
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
             await browserApi.runtime.sendMessage({
-                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY,
+                result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
             });
             await browser.storage.local.set(
-                { [setupStates.isExtensionUpdated]: this.isExtensionUpdated }
+                { [SETUP_STATES.isExtensionUpdated]: this.isExtensionUpdated }
             );
         }
 
@@ -53,7 +53,7 @@ class Api {
 
     init = () => {
         log.info('init');
-        this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
+        this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
         this.port.onMessage.addListener(this.responsesHandler);
 
         this.port.onDisconnect.addListener(
@@ -67,12 +67,12 @@ class Api {
     initRequest = async () => {
         try {
             await this.makeRequest({
-                type: RequestTypes.init,
+                type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
-                    type: AssistantTypes.nativeAssistant,
+                    type: ASSISTANT_TYPES.nativeAssistant,
                 },
-            }, ResponseTypesPrefixes.ADG_INIT);
+            }, RESPONSE_TYPE_PREFIXES.ADG_INIT);
         } catch (error) {
             log.error(error);
         }
@@ -90,7 +90,7 @@ class Api {
         this.init();
     };
 
-    makeReinit = async (message = BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY) => {
+    makeReinit = async (message = BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT) => {
         this.retryTimes -= 1;
 
         if (this.retryTimes) {
@@ -106,7 +106,7 @@ class Api {
         }
     };
 
-    makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
+    makeRequest = async (params, idPrefix = RESPONSE_TYPE_PREFIXES.ADG) => {
         const id = `${idPrefix}_${nanoid()}`;
 
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
@@ -125,11 +125,11 @@ class Api {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(pendingTimer);
 
-                    if (result === HostResponseTypes.ok) {
+                    if (result === HOST_RESPONSE_TYPES.ok) {
                         return resolve(msg);
                     }
 
-                    if (result === HostResponseTypes.error) {
+                    if (result === HOST_RESPONSE_TYPES.error) {
                         this.makeReinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }

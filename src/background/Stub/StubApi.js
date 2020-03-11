@@ -5,9 +5,9 @@
 
 import nanoid from 'nanoid';
 import {
-    AssistantTypes,
-    RequestTypes,
-    ResponseTypesPrefixes,
+    ASSISTANT_TYPES,
+    REQUEST_TYPES,
+    RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
 import browserApi from '../browserApi';
 import versions from '../versions';
@@ -24,11 +24,11 @@ class Api {
         const { parameters } = response;
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
+        if (!response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
+        if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             adguard.isAppUpToDate = this.isAppUpToDate;
 
@@ -42,18 +42,18 @@ class Api {
     init = async () => {
         try {
             await this.makeRequest({
-                type: RequestTypes.init,
+                type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
-                    type: AssistantTypes.nativeAssistant,
+                    type: ASSISTANT_TYPES.nativeAssistant,
                 },
-            }, ResponseTypesPrefixes.ADG_INIT);
+            }, RESPONSE_TYPE_PREFIXES.ADG_INIT);
         } catch (error) {
             log.error(error);
         }
     };
 
-    makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
+    makeRequest = async (params, idPrefix = RESPONSE_TYPE_PREFIXES.ADG) => {
         const id = `${idPrefix}_${nanoid()}`;
 
         log.info(`request ${id}`, params);

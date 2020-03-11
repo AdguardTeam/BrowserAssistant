@@ -6,7 +6,7 @@ import App from './components/App';
 import './styles/main.pcss';
 import log from '../lib/logger';
 import {
-    RequestTypes, TabActions, INNER_MESSAGING_TYPES, apiTypes,
+    REQUEST_TYPES, TAB_ACTIONS, INNER_MESSAGING_TYPES, API_TYPES,
 } from '../lib/types';
 import { rootStore } from './stores';
 
@@ -29,17 +29,17 @@ try {
         const { actionType, response } = msg;
 
         switch (actionType) {
-            case TabActions.getCurrentTabUrlProperties: {
+            case TAB_ACTIONS.getCurrentTabUrlProperties: {
                 setCurrentTabUrlProperties(response);
                 await getReferrer();
                 await getCurrentFilteringState();
                 break;
             }
-            case TabActions.getReferrer: {
+            case TAB_ACTIONS.getReferrer: {
                 await setReferrer(response);
                 break;
             }
-            case RequestTypes.reportSite: {
+            case REQUEST_TYPES.reportSite: {
                 await adguard.tabs.openPage(response.parameters.reportUrl);
 
                 /** The popup in Firefox is not closed after opening new tabs by Tabs API.
@@ -47,13 +47,13 @@ try {
                 window.location.reload();
                 break;
             }
-            case RequestTypes.setProtectionStatus: {
+            case REQUEST_TYPES.setProtectionStatus: {
                 await setProtection(response.appState.isProtectionEnabled);
                 await adguard.tabs.updateIconColor(response.appState.isProtectionEnabled);
                 break;
             }
-            case RequestTypes.openSettings:
-            case RequestTypes.openFilteringLog: {
+            case REQUEST_TYPES.openSettings:
+            case REQUEST_TYPES.openFilteringLog: {
                 window.close();
                 break;
             }
@@ -65,10 +65,10 @@ try {
 
     global.adguard = {};
 
-    const createGlobalActions = (globalVar, ActionTypes, apiName, apiType) => {
+    const createGlobalActions = (globalVar, actionTypes, apiName, apiType) => {
         // eslint-disable-next-line no-param-reassign
         globalVar[apiName] = {};
-        Object.values(ActionTypes)
+        Object.values(actionTypes)
             .forEach((actionType) => {
                 // eslint-disable-next-line no-param-reassign
                 globalVar[apiName][actionType] = async (...args) => {
@@ -85,10 +85,10 @@ try {
             });
     };
 
-    createGlobalActions(adguard, RequestTypes,
-        apiTypes.requests, INNER_MESSAGING_TYPES.API_REQUEST);
-    createGlobalActions(adguard, TabActions,
-        apiTypes.tabs, INNER_MESSAGING_TYPES.TAB_ACTION);
+    createGlobalActions(adguard, REQUEST_TYPES,
+        API_TYPES.requests, INNER_MESSAGING_TYPES.API_REQUEST);
+    createGlobalActions(adguard, TAB_ACTIONS,
+        API_TYPES.tabs, INNER_MESSAGING_TYPES.TAB_ACTION);
 
     ReactDOM.render(
         <Provider>

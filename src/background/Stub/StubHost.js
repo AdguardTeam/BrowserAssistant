@@ -6,7 +6,7 @@
 import nanoid from 'nanoid';
 import { ORIGINAL_CERT_STATUS } from '../../popup/stores/consts';
 import {
-    HostRequestTypes, HostResponseTypes, RequestTypes, ResponseTypesPrefixes,
+    HOST_REQUEST_TYPES, HOST_RESPONSE_TYPES, REQUEST_TYPES, RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
 import log from '../../lib/logger';
 import browserApi from '../browserApi';
@@ -162,7 +162,7 @@ class StubHost {
     #makeRequest = async (delay) => {
         const request = {
             id: `ADG_APP_STATE_RESPONSE_MESSAGE_${nanoid()}`,
-            type: HostRequestTypes.hostRequest,
+            type: HOST_REQUEST_TYPES.hostRequest,
             parameters: this.filteringStatus,
         };
         const response = await this.getStubResponse(request, delay);
@@ -174,11 +174,11 @@ class StubHost {
         const { parameters } = response;
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
+        if (!response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
+        if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             adguard.isAppUpToDate = this.isAppUpToDate;
 
@@ -209,7 +209,7 @@ class StubHost {
             id: `${id}_resp`,
             requestId: id,
             /** @param lastCheckTime {("ok" | "error")} * */
-            result: HostResponseTypes.ok,
+            result: HOST_RESPONSE_TYPES.ok,
             appState: this.appState,
             timestamp: new Date().toISOString(),
             data: null,
@@ -222,7 +222,7 @@ class StubHost {
         await this.#waitDelay(delay);
 
         switch (type) {
-            case RequestTypes.init:
+            case REQUEST_TYPES.init:
                 log.info('INIT');
 
                 response.parameters = {
@@ -235,10 +235,10 @@ class StubHost {
                 };
                 break;
 
-            case RequestTypes.getCurrentAppState:
+            case REQUEST_TYPES.getCurrentAppState:
                 log.info('GET CURRENT APP STATE');
                 break;
-            case RequestTypes.getCurrentFilteringState:
+            case REQUEST_TYPES.getCurrentFilteringState:
                 log.info('GET CURRENT FILTERING STATE');
 
                 response.parameters = this.filteringStatus;
@@ -249,35 +249,35 @@ class StubHost {
                     response.appState = this.appState;
                 }
                 break;
-            case RequestTypes.setProtectionStatus:
+            case REQUEST_TYPES.setProtectionStatus:
                 log.info('SET PROTECTION STATUS');
 
                 this.appState.isProtectionEnabled = parameters.isEnabled;
                 response.appState = this.appState;
                 break;
-            case RequestTypes.setFilteringStatus:
+            case REQUEST_TYPES.setFilteringStatus:
                 log.info('SET FILTERING STATUS');
 
                 this.filteringStatus.isFilteringEnabled = parameters.isEnabled;
                 this.filteringStatus.isHttpsFilteringEnabled = parameters.isHttpsEnabled;
                 break;
-            case RequestTypes.addRule:
+            case REQUEST_TYPES.addRule:
                 log.info('ADD RULE');
                 break;
-            case RequestTypes.removeRule:
+            case REQUEST_TYPES.removeRule:
                 log.info('REMOVE RULE');
                 break;
-            case RequestTypes.removeCustomRules:
+            case REQUEST_TYPES.removeCustomRules:
                 log.info('REMOVE CUSTOM RULES');
 
                 this.filteringStatus.isFilteringEnabled = true;
                 this.filteringStatus.isHttpsFilteringEnabled = true;
                 this.filteringStatus.isPageFilteredByUserFilter = false;
                 break;
-            case RequestTypes.openOriginalCert:
+            case REQUEST_TYPES.openOriginalCert:
                 log.info('OPEN ORIGINAL CERT');
                 break;
-            case RequestTypes.reportSite:
+            case REQUEST_TYPES.reportSite:
                 // Don't modify the object to log the correct state
                 response.parameters = {
                     ...response.parameters,
@@ -285,16 +285,16 @@ class StubHost {
                 };
                 log.info('REPORT SITE');
                 break;
-            case RequestTypes.openFilteringLog:
+            case REQUEST_TYPES.openFilteringLog:
                 log.info('OPEN FILTERING LOG');
                 break;
-            case RequestTypes.openSettings:
+            case REQUEST_TYPES.openSettings:
                 log.info('OPEN SETTINGS');
                 break;
-            case RequestTypes.updateApp:
+            case REQUEST_TYPES.updateApp:
                 log.info('UPDATE APP');
                 break;
-            case HostRequestTypes.hostRequest:
+            case HOST_REQUEST_TYPES.hostRequest:
                 log.info('HOST REQUEST');
                 break;
             default:

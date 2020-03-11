@@ -1,7 +1,7 @@
 import 'adguard-assistant';
 import browser from 'webextension-polyfill';
 import browserApi from '../background/browserApi';
-import { MessageTypes } from '../lib/types';
+import { MESSAGE_TYPES } from '../lib/types';
 
 export function startAssistant() {
     if (window.top !== window || !(document.documentElement instanceof HTMLElement)) {
@@ -12,7 +12,7 @@ export function startAssistant() {
 
     browser.runtime.onMessage.addListener((message) => {
         switch (message.type) {
-            case MessageTypes.initAssistant: {
+            case MESSAGE_TYPES.initAssistant: {
                 const { options } = message;
                 const { addRuleCallbackName } = options;
 

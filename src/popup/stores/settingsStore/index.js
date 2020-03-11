@@ -39,7 +39,7 @@ class SettingsStore {
 
     @observable isExtensionUpdated = true;
 
-    @observable isSetupCorrectly = true;
+    @observable isSetupCorrect = true;
 
     @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
@@ -62,8 +62,8 @@ class SettingsStore {
     };
 
     @action
-    setIsSetupCorrectly = (isSetupCorrectly) => {
-        this.isSetupCorrectly = isSetupCorrectly;
+    setIsSetupCorrect = (isSetupCorrect) => {
+        this.isSetupCorrect = isSetupCorrect;
     };
 
     @action

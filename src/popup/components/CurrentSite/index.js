@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStoreCtx from '../../stores';
-import { modalStatesNames, SHOW_MODAL_TIME } from '../../stores/consts';
+import { MODAL_STATES_NAMES, SHOW_MODAL_TIME } from '../../stores/consts';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
@@ -83,7 +83,7 @@ const CurrentSite = observer(() => {
         handleCertStatusModalState(event);
         event.persist();
         setTimeout(() => handleCertStatusModalState(event,
-            { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.LONG);
+            { [MODAL_STATES_NAMES.isEntered]: false }), SHOW_MODAL_TIME.LONG);
     };
 
     const handleSecureStatusModalState = (event, payload) => {
@@ -97,7 +97,7 @@ const CurrentSite = observer(() => {
         handleSecureStatusModalState(event);
         event.persist();
         setTimeout(() => handleSecureStatusModalState(event,
-            { [modalStatesNames.isEntered]: false }), SHOW_MODAL_TIME.SHORT);
+            { [MODAL_STATES_NAMES.isEntered]: false }), SHOW_MODAL_TIME.SHORT);
     };
 
     const shouldOpenCertStatusModal = (isCertStatusModalOpen
