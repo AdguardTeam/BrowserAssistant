@@ -17,7 +17,10 @@ try {
             getReferrer,
             setReferrer,
             setProtection,
-        }, requestsStore,
+        },
+        requestsStore: {
+            getCurrentFilteringState,
+        },
     } = rootStore;
 
     const port = browser.runtime.connect({ name: 'innerMessaging' });
@@ -29,7 +32,7 @@ try {
             case TabActions.getCurrentTabUrlProperties: {
                 setCurrentTabUrlProperties(response);
                 await getReferrer();
-                await requestsStore.getCurrentFilteringState();
+                await getCurrentFilteringState();
                 break;
             }
             case TabActions.getReferrer: {

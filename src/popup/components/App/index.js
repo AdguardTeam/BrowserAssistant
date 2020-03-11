@@ -35,6 +35,16 @@ const App = observer(() => {
         (async () => {
             await getCurrentTabUrlProperties();
             // TODO: normalizePopupScale
+
+            const {
+                isAppUpToDate,
+                isExtensionUpdated,
+                isSetupCorrectly,
+            } = await browser.storage.local.get(setupStates);
+
+            setIsAppUpToDate(isAppUpToDate);
+            setIsExtensionUpdated(isExtensionUpdated);
+            setIsSetupCorrectly(isSetupCorrectly);
         })();
 
         browser.runtime.onMessage.addListener(
@@ -48,27 +58,8 @@ const App = observer(() => {
                         setInstalled(false);
                         setExtensionLoadingAndPending();
                         break;
-                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY: {
-                        const { options } = response;
-
-                        if (Object.prototype.hasOwnProperty.call(options,
-                            setupStates.isAppUpToDate)) {
-                            const { isAppUpToDate } = options;
-                            // TODO: save in storage
-                            setIsAppUpToDate(isAppUpToDate);
-                        }
-                        if (Object.prototype.hasOwnProperty.call(options,
-                            setupStates.isExtensionUpdated)) {
-                            const { isExtensionUpdated } = options;
-                            setIsExtensionUpdated(isExtensionUpdated);
-                        }
-                        if (Object.prototype.hasOwnProperty.call(options,
-                            setupStates.isSetupCorrectly)) {
-                            const { isSetupCorrectly } = options;
-                            setIsSetupCorrectly(isSetupCorrectly);
-                        }
+                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
                         setExtensionLoadingAndPending();
-                    }
                         break;
                     case BACKGROUND_COMMANDS.SHOW_RELOAD:
                         setExtensionLoading(true);

@@ -35,10 +35,13 @@ class Tabs {
 
                 this.isSetupCorrectly = false;
 
-                await browserApi.runtime.sendMessage({
-                    result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY,
-                    options: { [setupStates.isSetupCorrectly]: this.isSetupCorrectly },
-                });
+                await browserApi.runtime.sendMessage(
+                    { result: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY }
+                );
+
+                await browser.storage.local.set(
+                    { [setupStates.isSetupCorrectly]: this.isSetupCorrectly }
+                );
             }
         } catch (error) {
             log.error(error);
