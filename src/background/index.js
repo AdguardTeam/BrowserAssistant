@@ -6,10 +6,11 @@ import {
 } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
+import browserApi from './browserApi';
 
 // eslint-disable-next-line consistent-return
-async function sendMessage(sender) {
-    const { type } = sender;
+async function sendMessage(msg) {
+    const { type } = msg;
     const tab = await tabs.getCurrent();
     const response = await browser.tabs.sendMessage(tab.id, { type });
     if (response) {
@@ -17,21 +18,40 @@ async function sendMessage(sender) {
     }
 }
 
-function addRule(sender) {
-    const { ruleText } = sender;
+function addRule(msg) {
+    const { ruleText } = msg;
     requests.addRule(ruleText);
 }
 
-function handleMessage(sender) {
-    switch (sender.type) {
+async function handleMessage(msg) {
+    switch (msg.type) {
         case MESSAGE_TYPES.initAssistant:
-            return sendMessage(sender);
         case MESSAGE_TYPES.getReferrer:
-            return sendMessage(sender);
+            await sendMessage(msg);
+            break;
         case REQUEST_TYPES.addRule:
-            return addRule(sender);
+            await addRule(msg);
+            break;
         default:
-            return null;
+            break;
+    }
+
+    const { apiType, result, params } = msg;
+
+    const mapApiTypeToApi = {
+        [INNER_MESSAGING_TYPES.API_REQUEST]: requests,
+        [INNER_MESSAGING_TYPES.TAB_ACTION]: tabs,
+    };
+
+    try {
+        const response = await mapApiTypeToApi[apiType][result].apply(null, params);
+
+        await browserApi.runtime.sendMessage({
+            result,
+            response,
+        });
+    } catch (error) {
+        // Ignore message
     }
 }
 
@@ -44,28 +64,3 @@ try {
 } catch (error) {
     log.error(error);
 }
-
-const onConnected = (port) => {
-    port.onMessage.addListener(async (msg) => {
-        const { apiType, result, params } = msg;
-
-        const mapApiTypeToApi = {
-            [INNER_MESSAGING_TYPES.API_REQUEST]: requests,
-            [INNER_MESSAGING_TYPES.TAB_ACTION]: tabs,
-        };
-
-
-        try {
-            const response = await mapApiTypeToApi[apiType][result].apply(null, params);
-
-            await port.postMessage({
-                result,
-                response,
-            });
-        } catch (error) {
-            // Ignore message
-        }
-    });
-};
-
-browser.runtime.onConnect.addListener(onConnected);

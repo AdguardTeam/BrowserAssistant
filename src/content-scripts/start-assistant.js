@@ -23,7 +23,6 @@ export function startAssistant() {
                 }
 
                 assistant.start(null, (rules) => {
-                    // TODO: change
                     browserApi.runtime.sendMessage({ type: addRuleCallbackName, ruleText: rules });
                 });
                 break;

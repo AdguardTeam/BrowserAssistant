@@ -44,8 +44,6 @@ const App = observer(() => {
         },
     } = useContext(rootStoreCtx);
 
-    const port = browser.runtime.connect({ name: 'innerMessaging' });
-
     global.adguard = {};
 
     const createGlobalActions = (globalVar, actionTypes, apiName, apiType) => {
@@ -56,7 +54,7 @@ const App = observer(() => {
                 // eslint-disable-next-line no-param-reassign
                 globalVar[apiName][result] = async (...args) => {
                     try {
-                        await port.postMessage({
+                        await browser.runtime.sendMessage({
                             apiType,
                             result,
                             params: [...args],
@@ -90,45 +88,8 @@ const App = observer(() => {
             setIsSetupCorrect(isSetupCorrect);
         })();
 
-        port.onMessage.addListener(async ({ result, response }) => {
-            switch (result) {
-                case TAB_ACTIONS.getCurrentTabUrlProperties: {
-                    setCurrentTabUrlProperties(response);
-                    await getReferrer();
-                    await getCurrentFilteringState();
-                    break;
-                }
-                case TAB_ACTIONS.getReferrer: {
-                    await setReferrer(response);
-                    break;
-                }
-                case REQUEST_TYPES.reportSite: {
-                    // TODO: repair
-                    await adguard.tabs.openPage(response.parameters.reportUrl);
-
-                    /** The popup in Firefox is not closed after opening new tabs by Tabs API.
-                     *  Reload re-renders popup. */
-                    window.location.reload();
-                    break;
-                }
-                case REQUEST_TYPES.setProtectionStatus: {
-                    await setProtection(response.appState.isProtectionEnabled);
-                    await adguard.tabs.updateIconColor(response.appState.isProtectionEnabled);
-                    break;
-                }
-                case REQUEST_TYPES.openSettings:
-                case REQUEST_TYPES.openFilteringLog: {
-                    window.close();
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        });
-
         browser.runtime.onMessage.addListener(
-            ({ result, response }) => {
+            async ({ result, response }) => {
                 switch (result) {
                     case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
                         setInstalled(false);
@@ -142,6 +103,29 @@ const App = observer(() => {
                         break;
                     case HOST_RESPONSE_TYPES.ok:
                         setExtensionLoadingAndPending();
+                        break;
+                    case TAB_ACTIONS.getCurrentTabUrlProperties:
+                        setCurrentTabUrlProperties(response);
+                        await getReferrer();
+                        await getCurrentFilteringState();
+                        break;
+                    case TAB_ACTIONS.getReferrer:
+                        await setReferrer(response);
+                        break;
+                    case REQUEST_TYPES.reportSite:
+                        await adguard.tabs.openPage(response.parameters.reportUrl);
+
+                        /** The popup in Firefox is not closed after opening new tabs by Tabs API.
+                         *  Reload re-renders popup. */
+                        window.location.reload();
+                        break;
+                    case REQUEST_TYPES.setProtectionStatus:
+                        await setProtection(response.appState.isProtectionEnabled);
+                        await adguard.tabs.updateIconColor(response.appState.isProtectionEnabled);
+                        break;
+                    case REQUEST_TYPES.openSettings:
+                    case REQUEST_TYPES.openFilteringLog:
+                        window.close();
                         break;
                     default:
                         break;
