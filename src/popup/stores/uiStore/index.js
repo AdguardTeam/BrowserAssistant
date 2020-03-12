@@ -10,6 +10,7 @@ import {
     SWITCHER_TRANSITION_TIME,
 } from '../consts';
 import { checkSomeIsTrue } from '../../../lib/helpers';
+import innerMessaging from '../../../lib/innerMessaging';
 
 class UiStore {
     constructor(rootStore) {
@@ -166,7 +167,7 @@ class UiStore {
 
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(() => {
-            adguard.tabs.reload();
+            innerMessaging.reload();
         }, SWITCHER_TRANSITION_TIME);
     };
 }

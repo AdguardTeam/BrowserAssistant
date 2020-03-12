@@ -1,4 +1,5 @@
 import log from '../../../lib/logger';
+import innerMessaging from '../../../lib/innerMessaging';
 
 class RequestsStore {
     constructor(rootStore) {
@@ -6,9 +7,14 @@ class RequestsStore {
     }
 
     getCurrentFilteringState = async (forceStartApp = false) => {
-        const { currentURL, currentPort } = this.rootStore.settingsStore;
+        const { currentURL: url, currentPort: port } = this.rootStore.settingsStore;
+
         try {
-            await adguard.requests.getCurrentFilteringState(currentURL, currentPort, forceStartApp);
+            await innerMessaging.getCurrentFilteringState({
+                url,
+                port,
+                forceStartApp,
+            });
         } catch (error) {
             log.error(error);
         }
@@ -16,7 +22,7 @@ class RequestsStore {
 
     getCurrentAppState = async () => {
         try {
-            await adguard.requests.getCurrentAppState();
+            await innerMessaging.getCurrentAppState();
         } catch (error) {
             log.error(error);
         }
@@ -24,14 +30,16 @@ class RequestsStore {
 
     setFilteringStatus = async () => {
         const {
-            currentURL, isFilteringEnabled,
-            isHttpsFilteringEnabled,
+            currentURL: url,
+            isFilteringEnabled: isEnabled,
+            isHttpsFilteringEnabled: isHttpsEnabled,
         } = this.rootStore.settingsStore;
+
         try {
-            await adguard.requests.setFilteringStatus({
-                url: currentURL,
-                isEnabled: isFilteringEnabled,
-                isHttpsEnabled: isHttpsFilteringEnabled,
+            await innerMessaging.setFilteringStatus({
+                url,
+                isEnabled,
+                isHttpsEnabled,
             });
         } catch (error) {
             log.error(error);
@@ -39,18 +47,27 @@ class RequestsStore {
     };
 
     openOriginalCert = async () => {
-        const { settingsStore: { currentTabHostname, currentPort } } = this.rootStore;
+        const {
+            currentTabHostname,
+            currentPort,
+        } = this.rootStore.settingsStore;
+
         try {
-            await adguard.requests.openOriginalCert(currentTabHostname, currentPort);
+            await innerMessaging.openOriginalCert({
+                domain: currentTabHostname,
+                port: currentPort,
+            });
         } catch (error) {
             log.error(error);
         }
     };
 
     removeCustomRules = async () => {
-        adguard.tabs.reload();
+        const { currentURL: url } = this.rootStore.settingsStore;
+
+        innerMessaging.reload();
         try {
-            await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
+            await innerMessaging.removeCustomRules({ url });
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
         } catch (error) {
             log.error(error);
@@ -58,10 +75,10 @@ class RequestsStore {
     };
 
     reportSite = async () => {
-        const { currentURL, referrer } = this.rootStore.settingsStore;
+        const { currentURL: url, referrer } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.reportSite({
-                url: currentURL,
+            await innerMessaging.reportSite({
+                url,
                 referrer,
             });
         } catch (error) {
@@ -71,27 +88,25 @@ class RequestsStore {
 
     openFilteringLog = async () => {
         try {
-            await adguard.requests.openFilteringLog();
+            await innerMessaging.openFilteringLog();
         } catch (error) {
             log.error(error);
         }
     };
 
     removeRule = async () => {
+        const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.removeRule(
-                this.rootStore.settingsStore.currentTabHostname
-            );
+            await innerMessaging.removeRule({ ruleText });
         } catch (error) {
             log.error(error);
         }
     };
 
     addRule = async () => {
+        const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.addRule(
-                this.rootStore.settingsStore.currentTabHostname
-            );
+            await innerMessaging.addRule({ ruleText });
         } catch (error) {
             log.error(error);
         }
@@ -100,7 +115,7 @@ class RequestsStore {
     setProtectionStatus = async (shouldEnableProtection) => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);
-            await adguard.requests.setProtectionStatus(shouldEnableProtection);
+            await innerMessaging.setProtectionStatus({ isEnabled: shouldEnableProtection });
             this.rootStore.uiStore.setProtectionTogglePending(false);
         } catch (error) {
             log.error(error);
@@ -118,7 +133,7 @@ class RequestsStore {
 
     updateApp = async () => {
         try {
-            await adguard.requests.updateApp();
+            await innerMessaging.updateApp();
         } catch (error) {
             log.error(error);
         }
@@ -126,7 +141,7 @@ class RequestsStore {
 
     openSettings = async () => {
         try {
-            await adguard.requests.openSettings();
+            await innerMessaging.openSettings();
         } catch (error) {
             log.error(error);
         }
@@ -134,7 +149,7 @@ class RequestsStore {
 
     startBlockingAd = async () => {
         try {
-            await adguard.tabs.initAssistant();
+            await innerMessaging.initAssistant();
         } catch (error) {
             log.error(error);
         }

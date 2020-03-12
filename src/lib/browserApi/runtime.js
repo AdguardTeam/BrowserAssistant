@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import log from '../../lib/logger';
+import log from '../logger';
 
 /**
  * This function moved into separate api file, in order to hide unhandled promise errors

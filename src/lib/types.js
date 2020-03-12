@@ -23,9 +23,9 @@ export const TAB_ACTIONS = {
     initAssistant: 'initAssistant',
 };
 
-export const INNER_MESSAGING_TYPES = {
-    API_REQUEST: 'API_REQUEST',
-    TAB_ACTION: 'TAB_ACTION',
+export const INNER_MESSAGE_TYPES = {
+    ...REQUEST_TYPES,
+    ...TAB_ACTIONS,
 };
 
 export const HOST_REQUEST_TYPES = {
@@ -41,7 +41,7 @@ export const ASSISTANT_TYPES = {
     nativeAssistant: 'nativeAssistant',
 };
 
-export const MESSAGE_TYPES = {
+export const CONTENT_MESSAGES = {
     getReferrer: 'getReferrer',
     initAssistant: 'initAssistant',
 };
@@ -65,9 +65,4 @@ export const SETUP_STATES = {
     isAppUpToDate: 'isAppUpToDate',
     isExtensionUpdated: 'isExtensionUpdated',
     isSetupCorrect: 'isSetupCorrect',
-};
-
-export const API_TYPES = {
-    requests: 'requests',
-    tabs: 'tabs',
 };

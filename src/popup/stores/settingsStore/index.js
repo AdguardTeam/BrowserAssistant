@@ -5,6 +5,7 @@ import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 import { DOWNLOAD_LINK } from '../../../lib/conts';
 import { CHROME_UPDATE_CRX, FIREFOX_UPDATE_XPI } from '../../../../tasks/consts';
+import innerMessaging from '../../../lib/innerMessaging';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -68,7 +69,7 @@ class SettingsStore {
 
     @action
     getReferrer = async () => {
-        await adguard.tabs.getReferrer();
+        await innerMessaging.getReferrer();
     };
 
     @action
@@ -79,7 +80,7 @@ class SettingsStore {
     @action
     getCurrentTabUrlProperties = async () => {
         try {
-            await adguard.tabs.getCurrentTabUrlProperties();
+            await innerMessaging.getCurrentTabUrlProperties();
         } catch (error) {
             log.error(error);
         }
@@ -102,7 +103,7 @@ class SettingsStore {
 
     @action
     openDownloadPage = () => {
-        adguard.tabs.openPage(DOWNLOAD_LINK);
+        innerMessaging.openPage(DOWNLOAD_LINK);
     };
 
     @action
@@ -148,7 +149,7 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = async (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        await adguard.tabs.updateIconColor(isFilteringEnabled);
+        await innerMessaging.updateIconColor(isFilteringEnabled);
     };
 
     @action
@@ -181,7 +182,7 @@ class SettingsStore {
     updateExtension = () => {
         const { isFirefox } = this;
         const updateLink = isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
-        adguard.tabs.openPage(updateLink);
+        innerMessaging.openPage(updateLink);
     };
 }
 

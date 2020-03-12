@@ -1,9 +1,9 @@
 import browser from 'webextension-polyfill';
 import {
-    BACKGROUND_COMMANDS, MESSAGE_TYPES, REQUEST_TYPES, SETUP_STATES,
+    BACKGROUND_COMMANDS, CONTENT_MESSAGES, REQUEST_TYPES, SETUP_STATES,
 } from '../lib/types';
 import log from '../lib/logger';
-import browserApi from './browserApi';
+import browserApi from '../lib/browserApi';
 import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import requests from './requestsApi';
 import actions from './actions';
@@ -48,13 +48,13 @@ class Tabs {
         return tab;
     };
 
-    sendMessage = async (type, options) => {
+    sendMessage = async (type, params) => {
         const tab = await this.getCurrent();
         let response;
         try {
             response = await browser.tabs.sendMessage(tab.id, {
                 type,
-                options,
+                params,
             });
         } catch (error) {
             // Ignore message
@@ -62,15 +62,20 @@ class Tabs {
         return response;
     };
 
+    // eslint-disable-next-line consistent-return
     getReferrer = async () => {
-        return this.sendMessage(MESSAGE_TYPES.getReferrer);
+        const tab = await this.getCurrent();
+        const response = await this.sendMessage(tab.id, { type: CONTENT_MESSAGES.getReferrer });
+        if (response) {
+            return Promise.resolve(response);
+        }
     };
 
     initAssistant = async () => {
         const tab = await this.getCurrent();
         await browser.tabs.executeScript(tab.id, { file: CONTENT_SCRIPT_NAME });
-        const options = { addRuleCallbackName: REQUEST_TYPES.addRule };
-        this.sendMessage(MESSAGE_TYPES.initAssistant, options);
+        const params = { addRuleCallbackName: REQUEST_TYPES.addRule };
+        this.sendMessage(CONTENT_MESSAGES.initAssistant, params);
     };
 
     openPage = (url = DOWNLOAD_LINK) => {
@@ -79,15 +84,15 @@ class Tabs {
 
     getCurrentTabUrlProperties = async () => {
         const tab = await this.getCurrent();
-        const url = tab.url || tab.pendingUrl;
+        const currentURL = tab.url || tab.pendingUrl;
 
-        const { hostname, port, protocol } = getUrlProperties(url);
+        const { hostname, port, protocol } = getUrlProperties(currentURL);
 
         const currentProtocol = getProtocol(protocol);
         const currentPort = getFormattedPortByProtocol(port, currentProtocol);
 
         return {
-            currentURL: url,
+            currentURL,
             currentPort,
             currentProtocol,
             hostname,
@@ -96,12 +101,15 @@ class Tabs {
 
     getIsAppWorking = async () => {
         const {
-            currentURL, currentPort,
+            currentURL: url, currentPort: port,
         } = await this.getCurrentTabUrlProperties();
-        const response = await requests.getCurrentFilteringState(currentURL, currentPort);
+        const response = await requests.getCurrentFilteringState({
+            url,
+            port,
+        });
         const { isFilteringEnabled } = response.parameters;
 
-        const { appState: { isInstalled, isRunning, isProtectionEnabled } } = response;
+        const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
         const { isExtensionUpdated } = Api;
 
         const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,

@@ -1,59 +1,32 @@
 import browser from 'webextension-polyfill';
 import requests from './requestsApi';
 import api from './Api';
-import {
-    INNER_MESSAGING_TYPES, MESSAGE_TYPES, REQUEST_TYPES,
-} from '../lib/types';
+import { INNER_MESSAGE_TYPES } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
-import browserApi from './browserApi';
+import browserApi from '../lib/browserApi';
 
-// eslint-disable-next-line consistent-return
-async function sendMessage(msg) {
-    const { type } = msg;
-    const tab = await tabs.getCurrent();
-    const response = await browser.tabs.sendMessage(tab.id, { type });
-    if (response) {
-        return Promise.resolve(response);
+const messageHandlers = {
+    ...tabs,
+    ...requests,
+};
+
+const handleMessage = async (msg) => {
+    const { type, params } = msg;
+    if (!Object.prototype.hasOwnProperty.call(INNER_MESSAGE_TYPES, type)) {
+        log.warn('Inner messaging type "%s" is not the message handler', type);
+        return;
     }
-}
-
-function addRule(msg) {
-    const { ruleText } = msg;
-    requests.addRule(ruleText);
-}
-
-async function handleMessage(msg) {
-    switch (msg.type) {
-        case MESSAGE_TYPES.initAssistant:
-        case MESSAGE_TYPES.getReferrer:
-            await sendMessage(msg);
-            break;
-        case REQUEST_TYPES.addRule:
-            await addRule(msg);
-            break;
-        default:
-            break;
-    }
-
-    const { apiType, msgType, params } = msg;
-
-    const mapApiTypeToApi = {
-        [INNER_MESSAGING_TYPES.API_REQUEST]: requests,
-        [INNER_MESSAGING_TYPES.TAB_ACTION]: tabs,
-    };
-
     try {
-        const response = await mapApiTypeToApi[apiType][msgType].apply(null, params);
-
+        const responseParams = await messageHandlers[type](params);
         await browserApi.runtime.sendMessage({
-            msgType,
-            response,
+            type,
+            params: responseParams,
         });
     } catch (error) {
         // Ignore message
     }
-}
+};
 
 try {
     api.init();

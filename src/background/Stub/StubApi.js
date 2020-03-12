@@ -9,10 +9,11 @@ import {
     REQUEST_TYPES,
     RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
-import browserApi from '../browserApi';
+import browserApi from '../../lib/browserApi';
 import versions from '../versions';
 import log from '../../lib/logger';
 import stubHost from './StubHost';
+import innerMessaging from '../../lib/innerMessaging';
 
 class Api {
     isAppUpToDate = true;
@@ -30,10 +31,10 @@ class Api {
 
         if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            adguard.isAppUpToDate = this.isAppUpToDate;
+            innerMessaging.isAppUpToDate = this.isAppUpToDate;
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
+            innerMessaging.isExtensionUpdated = this.isExtensionUpdated;
         }
 
         browserApi.runtime.sendMessage({ msgType: response.result, response });

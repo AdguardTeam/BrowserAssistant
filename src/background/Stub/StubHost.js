@@ -9,8 +9,9 @@ import {
     HOST_REQUEST_TYPES, HOST_RESPONSE_TYPES, REQUEST_TYPES, RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
 import log from '../../lib/logger';
-import browserApi from '../browserApi';
+import browserApi from '../../lib/browserApi';
 import versions from '../versions';
+import innerMessaging from '../../lib/innerMessaging';
 
 const { BASE_LOCALE } = require('../../../tasks/consts');
 
@@ -180,10 +181,10 @@ class StubHost {
 
         if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            adguard.isAppUpToDate = this.isAppUpToDate;
+            innerMessaging.isAppUpToDate = this.isAppUpToDate;
 
             this.isExtensionUpdated = parameters.isValidatedOnHost;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
+            innerMessaging.isExtensionUpdated = this.isExtensionUpdated;
         }
 
         browserApi.runtime.sendMessage({ result: response.result, response });
