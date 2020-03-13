@@ -8,7 +8,6 @@ import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
-import { SETUP_STATES } from '../../../lib/types';
 import Loading from '../ui/Loading';
 import responseHandler from '../../responseHandler';
 
@@ -17,10 +16,8 @@ Modal.setAppElement('#root');
 const App = observer(() => {
     const {
         settingsStore: {
-            getCurrentTabUrlProperties,
-            setIsAppUpToDate,
-            setIsExtensionUpdated,
-            setIsSetupCorrect,
+            updateCurrentTabInfo,
+            refreshUpdateStatusInfo,
         },
         uiStore: {
             requestStatus,
@@ -28,20 +25,10 @@ const App = observer(() => {
         },
     } = useContext(rootStore);
 
-
     useEffect(() => {
         (async () => {
-            await getCurrentTabUrlProperties();
-
-            const {
-                isAppUpToDate,
-                isExtensionUpdated,
-                isSetupCorrect,
-            } = await browser.storage.local.get(Object.keys(SETUP_STATES));
-
-            setIsAppUpToDate(isAppUpToDate);
-            setIsExtensionUpdated(isExtensionUpdated);
-            setIsSetupCorrect(isSetupCorrect);
+            await updateCurrentTabInfo();
+            await refreshUpdateStatusInfo();
         })();
 
         browser.runtime.onMessage.addListener(responseHandler);
@@ -51,7 +38,6 @@ const App = observer(() => {
     useLayoutEffect(() => {
         normalizePopupScale();
     });
-
     if (requestStatus.isError || requestStatus.isPending) {
         return (
             <AppWrapper>

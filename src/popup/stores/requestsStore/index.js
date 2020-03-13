@@ -92,7 +92,6 @@ class RequestsStore {
                 referrer,
             });
             this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
-            await innerMessaging.openPage(res.params.parameters.reportUrl);
 
             /** The popup in Firefox is not closed after opening new tabs by Tabs API.
              *  Reload re-renders popup. */
@@ -144,8 +143,6 @@ class RequestsStore {
             await this.rootStore.settingsStore.setProtection(
                 res.params.appState.isProtectionEnabled
             );
-
-            await innerMessaging.updateIconColor(res.params.appState.isProtectionEnabled);
 
             this.rootStore.uiStore.setProtectionTogglePending(false);
         } catch (error) {

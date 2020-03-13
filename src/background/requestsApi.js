@@ -18,20 +18,16 @@ class RequestsApi {
      */
     getCurrentFilteringState = ({ url, port, forceStartApp = false }) => api.makeRequest({
         type: REQUEST_TYPES.getCurrentFilteringState,
-        parameters: {
-            url,
-            port,
-            forceStartApp,
-        },
+        parameters: { url, port, forceStartApp },
     });
 
     /**
      * @param {boolean} parameters.isEnabled
      * @returns {Promise<object>}
      */
-    setProtectionStatus = (parameters) => api.makeRequest({
+    setProtectionStatus = ({ isEnabled }) => api.makeRequest({
         type: REQUEST_TYPES.setProtectionStatus,
-        parameters,
+        parameters: { isEnabled },
     });
 
     /**
@@ -41,36 +37,36 @@ class RequestsApi {
      * @param {string} parameters.url
      * @returns {function}
      */
-    setFilteringStatus = (parameters) => api.makeRequest({
+    setFilteringStatus = ({ isEnabled, isHttpsEnabled, url }) => api.makeRequest({
         type: REQUEST_TYPES.setFilteringStatus,
-        parameters,
+        parameters: { isEnabled, isHttpsEnabled, url },
     });
 
     /**
      * @param {string} parameters.ruleText
      * @returns {Promise<object>}
      */
-    addRule = (parameters) => api.makeRequest({
+    addRule = ({ ruleText }) => api.makeRequest({
         type: REQUEST_TYPES.addRule,
-        parameters,
+        parameters: { ruleText },
     });
 
     /**
      * @param {string} parameters.ruleText
      * @returns {Promise<object>}
      */
-    removeRule = (parameters) => api.makeRequest({
+    removeRule = ({ ruleText }) => api.makeRequest({
         type: REQUEST_TYPES.removeRule,
-        parameters,
+        parameters: { ruleText },
     });
 
     /**
      * @param {string} parameters.url
      * @returns {Promise<object>}
      */
-    removeCustomRules = (parameters) => api.makeRequest({
+    removeCustomRules = ({ url }) => api.makeRequest({
         type: REQUEST_TYPES.removeCustomRules,
-        parameters,
+        parameters: { url },
     });
 
     /**
@@ -78,9 +74,9 @@ class RequestsApi {
      * @param {number} parameters.port
      * @returns {Promise<object>}
      */
-    openOriginalCert = (parameters) => api.makeRequest({
+    openOriginalCert = ({ domain, port }) => api.makeRequest({
         type: REQUEST_TYPES.openOriginalCert,
-        parameters,
+        parameters: { domain, port },
     });
 
     /**
@@ -89,10 +85,11 @@ class RequestsApi {
      * @param {string} parameters.referrer
      * @returns {function}
      */
-    reportSite = (parameters) => api.makeRequest({
+    reportSite = ({ url, referrer }) => api.makeRequest({
         type: REQUEST_TYPES.reportSite,
         parameters: {
-            ...parameters,
+            url,
+            referrer,
             userAgent: versions.userAgent,
         },
     });

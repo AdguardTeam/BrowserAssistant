@@ -1,7 +1,4 @@
-import {
-    BACKGROUND_COMMANDS,
-    HOST_RESPONSE_TYPES,
-} from '../../lib/types';
+import { MESSAGE_TYPES } from '../../lib/types';
 import { root } from '../stores';
 
 const {
@@ -17,17 +14,18 @@ const {
 export default async (msg) => {
     const { type } = msg;
     switch (type) {
-        case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
+        case MESSAGE_TYPES.SHOW_IS_NOT_INSTALLED:
             setInstalled(false);
             setExtensionLoadingAndPending();
             break;
-        case BACKGROUND_COMMANDS.SHOW_RELOAD:
+        case MESSAGE_TYPES.SHOW_RELOAD:
             setExtensionLoading(true);
             break;
-        case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT:
-        case HOST_RESPONSE_TYPES.ok:
-        default:
+        case MESSAGE_TYPES.SHOW_SETUP_INCORRECT:
+        case MESSAGE_TYPES.ok:
             setExtensionLoadingAndPending();
+            break;
+        default:
             break;
     }
 };

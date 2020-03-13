@@ -2,12 +2,10 @@ import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import {
     ASSISTANT_TYPES,
-    BACKGROUND_COMMANDS,
-    HOST_RESPONSE_TYPES,
+    MESSAGE_TYPES,
     HOST_TYPES,
     REQUEST_TYPES,
     RESPONSE_TYPE_PREFIXES,
-    SETUP_STATES,
 } from '../lib/types';
 import browserApi from '../lib/browserApi';
 import versions from './versions';
@@ -24,31 +22,15 @@ class Api {
 
     responsesHandler = async (msg) => {
         log.info(`response ${msg.id}`, msg);
-        const { parameters } = msg;
-
         // Ignore requests without identifying prefix ADG
         if (!msg.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
             return;
         }
 
-        if (parameters && msg.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
-            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-
-            await browserApi.runtime.sendMessage({
-                type: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
-            });
-            await browser.storage.local.set({ [SETUP_STATES.isAppUpToDate]: this.isAppUpToDate });
-
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
-            await browserApi.runtime.sendMessage({
-                type: BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT,
-            });
-            await browser.storage.local.set(
-                { [SETUP_STATES.isExtensionUpdated]: this.isExtensionUpdated }
-            );
-        }
-
-        await browserApi.runtime.sendMessage({ type: msg.result, params: msg });
+        await browserApi.runtime.sendMessage({
+            type: msg.result,
+            params: msg,
+        });
     };
 
     init = () => {
@@ -57,7 +39,7 @@ class Api {
         this.port.onMessage.addListener(this.responsesHandler);
 
         this.port.onDisconnect.addListener(
-            () => this.makeReinit(BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED)
+            () => this.makeReinit(MESSAGE_TYPES.SHOW_IS_NOT_INSTALLED)
         );
 
         this.initRequest();
@@ -66,13 +48,27 @@ class Api {
 
     initRequest = async () => {
         try {
-            await this.makeRequest({
+            const msg = await this.makeRequest({
                 type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
                     type: ASSISTANT_TYPES.nativeAssistant,
                 },
             }, RESPONSE_TYPE_PREFIXES.ADG_INIT);
+
+            const { parameters } = msg;
+
+            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
+
+            await browserApi.runtime.sendMessage({
+                type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
+            });
+
+            this.isExtensionUpdated = parameters.isValidatedOnHost;
+
+            await browserApi.runtime.sendMessage({
+                type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
+            });
         } catch (error) {
             log.error(error);
         }
@@ -85,12 +81,12 @@ class Api {
     };
 
     reinit = async () => {
-        await browserApi.runtime.sendMessage({ type: BACKGROUND_COMMANDS.SHOW_RELOAD });
+        await browserApi.runtime.sendMessage({ type: MESSAGE_TYPES.SHOW_RELOAD });
         this.deinit();
         this.init();
     };
 
-    makeReinit = async (message = BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECT) => {
+    makeReinit = async (message = MESSAGE_TYPES.SHOW_SETUP_INCORRECT) => {
         this.retryTimes -= 1;
 
         if (this.retryTimes) {
@@ -123,11 +119,11 @@ class Api {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(timerId);
 
-                    if (result === HOST_RESPONSE_TYPES.ok) {
+                    if (result === MESSAGE_TYPES.ok) {
                         return resolve(msg);
                     }
 
-                    if (result === HOST_RESPONSE_TYPES.error) {
+                    if (result === MESSAGE_TYPES.error) {
                         this.makeReinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }

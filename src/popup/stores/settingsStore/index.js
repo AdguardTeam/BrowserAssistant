@@ -1,6 +1,7 @@
 import {
     action, computed, observable,
 } from 'mobx';
+import browser from 'webextension-polyfill';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 import { DOWNLOAD_LINK } from '../../../lib/conts';
@@ -52,6 +53,13 @@ class SettingsStore {
         });
     }
 
+    setUpdateStatusInfo = (statusInfo) => {
+        const { isAppUpToDate, isExtensionUpdated, isSetupCorrect } = statusInfo;
+        this.setIsAppUpToDate(isAppUpToDate);
+        this.setIsExtensionUpdated(isExtensionUpdated);
+        this.setIsSetupCorrect(isSetupCorrect);
+    };
+
     @action
     setIsAppUpToDate = (isAppUpToDate) => {
         this.isAppUpToDate = isAppUpToDate;
@@ -72,7 +80,7 @@ class SettingsStore {
         this.referrer = referrer;
     };
 
-    getCurrentTabUrlProperties = async () => {
+    updateCurrentTabInfo = async () => {
         try {
             const urlPropsRes = await innerMessaging.getCurrentTabUrlProperties();
             const referrerRes = await innerMessaging.getReferrer();
@@ -82,6 +90,11 @@ class SettingsStore {
         } catch (error) {
             log.error(error);
         }
+    };
+
+    refreshUpdateStatusInfo = async () => {
+        const res = await innerMessaging.getUpdateStatusInfo();
+        this.setUpdateStatusInfo(res.params);
     };
 
     @action
@@ -147,7 +160,6 @@ class SettingsStore {
     setHttpAndHttpsFilteringActive = async (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        await innerMessaging.updateIconColor(isFilteringEnabled);
     };
 
     @action
@@ -174,6 +186,7 @@ class SettingsStore {
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
         this.rootStore.translationStore.setLocale(locale);
+        browser.storage.local.set({ locale });
     };
 
     @action
