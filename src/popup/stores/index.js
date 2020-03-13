@@ -18,5 +18,5 @@ class RootStore {
     }
 }
 
-const rootStore = new RootStore();
-export default createContext(rootStore);
+export const root = new RootStore();
+export default createContext(root);

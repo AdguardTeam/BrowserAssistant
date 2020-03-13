@@ -68,19 +68,17 @@ class SettingsStore {
     };
 
     @action
-    getReferrer = async () => {
-        await innerMessaging.getReferrer();
+    setReferrer = (referrer = '') => {
+        this.referrer = referrer;
     };
 
-    @action
-    setReferrer = (referrer) => {
-        this.referrer = referrer || '';
-    };
-
-    @action
     getCurrentTabUrlProperties = async () => {
         try {
-            await innerMessaging.getCurrentTabUrlProperties();
+            const urlPropsRes = await innerMessaging.getCurrentTabUrlProperties();
+            const referrerRes = await innerMessaging.getReferrer();
+            this.setCurrentTabUrlProperties(urlPropsRes.params);
+            this.setReferrer(referrerRes.params);
+            await this.rootStore.requestsStore.getCurrentFilteringState();
         } catch (error) {
             log.error(error);
         }
@@ -180,8 +178,7 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        const { isFirefox } = this;
-        const updateLink = isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
+        const updateLink = this.isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
         innerMessaging.openPage(updateLink);
     };
 }

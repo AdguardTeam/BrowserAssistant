@@ -6,9 +6,11 @@ import log from '../logger';
  * @param args
  * @returns {Promise<void>}
  */
+// eslint-disable-next-line consistent-return
 const sendMessage = async (...args) => {
     try {
-        await browser.runtime.sendMessage(...args);
+        const res = await browser.runtime.sendMessage(...args);
+        return res;
     } catch (error) {
         if (!browser.runtime.lastError) {
             log.error(error);

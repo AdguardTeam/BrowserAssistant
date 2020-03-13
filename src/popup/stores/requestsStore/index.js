@@ -10,11 +10,14 @@ class RequestsStore {
         const { currentURL: url, currentPort: port } = this.rootStore.settingsStore;
 
         try {
-            await innerMessaging.getCurrentFilteringState({
+            const res = await innerMessaging.getCurrentFilteringState({
                 url,
                 port,
                 forceStartApp,
             });
+
+            this.rootStore.settingsStore.setCurrentFilteringState(res.params.parameters);
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -22,7 +25,8 @@ class RequestsStore {
 
     getCurrentAppState = async () => {
         try {
-            await innerMessaging.getCurrentAppState();
+            const res = await innerMessaging.getCurrentAppState();
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -36,11 +40,13 @@ class RequestsStore {
         } = this.rootStore.settingsStore;
 
         try {
-            await innerMessaging.setFilteringStatus({
+            const res = await innerMessaging.setFilteringStatus({
                 url,
                 isEnabled,
                 isHttpsEnabled,
             });
+
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -53,10 +59,12 @@ class RequestsStore {
         } = this.rootStore.settingsStore;
 
         try {
-            await innerMessaging.openOriginalCert({
+            const res = await innerMessaging.openOriginalCert({
                 domain: currentTabHostname,
                 port: currentPort,
             });
+
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -67,8 +75,10 @@ class RequestsStore {
 
         innerMessaging.reload();
         try {
-            await innerMessaging.removeCustomRules({ url });
+            const res = await innerMessaging.removeCustomRules({ url });
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
+
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -77,10 +87,16 @@ class RequestsStore {
     reportSite = async () => {
         const { currentURL: url, referrer } = this.rootStore.settingsStore;
         try {
-            await innerMessaging.reportSite({
+            const res = await innerMessaging.reportSite({
                 url,
                 referrer,
             });
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
+            await innerMessaging.openPage(res.params.parameters.reportUrl);
+
+            /** The popup in Firefox is not closed after opening new tabs by Tabs API.
+             *  Reload re-renders popup. */
+            window.location.reload();
         } catch (error) {
             log.error(error);
         }
@@ -88,7 +104,9 @@ class RequestsStore {
 
     openFilteringLog = async () => {
         try {
-            await innerMessaging.openFilteringLog();
+            const res = await innerMessaging.openFilteringLog();
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
+            window.close();
         } catch (error) {
             log.error(error);
         }
@@ -97,7 +115,8 @@ class RequestsStore {
     removeRule = async () => {
         const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
         try {
-            await innerMessaging.removeRule({ ruleText });
+            const res = await innerMessaging.removeRule({ ruleText });
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -106,7 +125,8 @@ class RequestsStore {
     addRule = async () => {
         const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
         try {
-            await innerMessaging.addRule({ ruleText });
+            const res = await innerMessaging.addRule({ ruleText });
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -115,7 +135,18 @@ class RequestsStore {
     setProtectionStatus = async (shouldEnableProtection) => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);
-            await innerMessaging.setProtectionStatus({ isEnabled: shouldEnableProtection });
+            const res = await innerMessaging.setProtectionStatus(
+                { isEnabled: shouldEnableProtection }
+            );
+
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
+
+            await this.rootStore.settingsStore.setProtection(
+                res.params.appState.isProtectionEnabled
+            );
+
+            await innerMessaging.updateIconColor(res.params.appState.isProtectionEnabled);
+
             this.rootStore.uiStore.setProtectionTogglePending(false);
         } catch (error) {
             log.error(error);
@@ -125,7 +156,8 @@ class RequestsStore {
     startApp = async () => {
         this.rootStore.uiStore.setExtensionLoading(true);
         try {
-            await this.getCurrentFilteringState(true);
+            const res = await this.getCurrentFilteringState(true);
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -133,7 +165,8 @@ class RequestsStore {
 
     updateApp = async () => {
         try {
-            await innerMessaging.updateApp();
+            const res = await innerMessaging.updateApp();
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }
@@ -141,7 +174,9 @@ class RequestsStore {
 
     openSettings = async () => {
         try {
-            await innerMessaging.openSettings();
+            const res = await innerMessaging.openSettings();
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
+            window.close();
         } catch (error) {
             log.error(error);
         }
@@ -149,7 +184,8 @@ class RequestsStore {
 
     startBlockingAd = async () => {
         try {
-            await innerMessaging.initAssistant();
+            const res = await innerMessaging.initAssistant();
+            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
         } catch (error) {
             log.error(error);
         }

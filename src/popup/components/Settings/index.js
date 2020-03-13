@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Switcher from './Switcher';
-import rootStoreCtx from '../../stores';
+import rootStore from '../../stores';
 import { SWITCHER_IDS } from '../../stores/consts';
 import './settings.pcss';
 
@@ -14,7 +14,7 @@ const Settings = observer(() => {
         },
         translationStore: { translate },
         uiStore: { globalTabIndex },
-    } = useContext(rootStoreCtx);
+    } = useContext(rootStore);
 
     const toggleFiltering = () => setFiltering(!isFilteringEnabled);
 

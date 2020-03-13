@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Modal from 'react-modal';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import rootStoreCtx from '../../../stores';
+import rootStore from '../../../stores';
 import { SECURE_STATUS_MODAL_IDS } from '../../../stores/consts';
 
 const SecureStatusModal = observer(({
@@ -11,7 +11,7 @@ const SecureStatusModal = observer(({
     const {
         uiStore: { secureStatusModalInfo },
         translationStore: { translate },
-    } = useContext(rootStoreCtx);
+    } = useContext(rootStore);
 
     const modalClass = classNames({
         modal: true,

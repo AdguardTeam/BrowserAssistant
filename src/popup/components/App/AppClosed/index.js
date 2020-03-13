@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import rootStoreCtx from '../../../stores';
+import rootStore from '../../../stores';
 import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 import './AppClosed.pcss';
@@ -113,7 +113,7 @@ function defineState(stores) {
 }
 
 const AppClosed = observer(() => {
-    const stores = useContext(rootStoreCtx);
+    const stores = useContext(rootStore);
     const { content, buttonText, onClick } = defineState(stores);
     const {
         uiStore: { requestStatus, globalTabIndex },

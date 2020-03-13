@@ -4,7 +4,6 @@ import api from './Api';
 import { INNER_MESSAGE_TYPES } from '../lib/types';
 import tabs from './tabs';
 import log from '../lib/logger';
-import browserApi from '../lib/browserApi';
 
 const messageHandlers = {
     ...tabs,
@@ -17,15 +16,13 @@ const handleMessage = async (msg) => {
         log.warn('Inner messaging type "%s" is not the message handler', type);
         return;
     }
-    try {
-        const responseParams = await messageHandlers[type](params);
-        await browserApi.runtime.sendMessage({
-            type,
-            params: responseParams,
-        });
-    } catch (error) {
-        // Ignore message
-    }
+
+    const responseParams = await messageHandlers[type](params);
+    // eslint-disable-next-line consistent-return
+    return Promise.resolve({
+        type,
+        params: responseParams,
+    });
 };
 
 try {

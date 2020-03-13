@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import rootStoreCtx from '../../stores';
+import rootStore from '../../stores';
 import './header.pcss';
 
 const Header = observer(() => {
@@ -23,7 +23,7 @@ const Header = observer(() => {
         translationStore: {
             translate,
         },
-    } = useContext(rootStoreCtx);
+    } = useContext(rootStore);
 
     const disableProtection = (e) => {
         setProtectionTogglePending(true);

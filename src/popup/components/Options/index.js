@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import Option from './Option';
-import rootStoreCtx from '../../stores';
+import rootStore from '../../stores';
 
 const getOptions = (stores) => {
     const {
@@ -60,7 +60,7 @@ const getOptions = (stores) => {
 };
 
 const Options = observer(() => {
-    const stores = useContext(rootStoreCtx);
+    const stores = useContext(rootStore);
     const options = getOptions(stores);
 
     return (
