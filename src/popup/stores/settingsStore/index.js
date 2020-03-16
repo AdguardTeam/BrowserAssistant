@@ -1,7 +1,6 @@
 import {
     action, computed, observable,
 } from 'mobx';
-import browser from 'webextension-polyfill';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 import { DOWNLOAD_LINK } from '../../../lib/conts';
@@ -54,10 +53,14 @@ class SettingsStore {
     }
 
     setUpdateStatusInfo = (statusInfo) => {
-        const { isAppUpToDate, isExtensionUpdated, isSetupCorrect } = statusInfo;
+        const {
+            isAppUpToDate, isExtensionUpdated, isSetupCorrect, locale,
+        } = statusInfo;
+
         this.setIsAppUpToDate(isAppUpToDate);
         this.setIsExtensionUpdated(isExtensionUpdated);
         this.setIsSetupCorrect(isSetupCorrect);
+        this.rootStore.translationStore.setLocale(locale);
     };
 
     @action
@@ -186,7 +189,6 @@ class SettingsStore {
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
         this.rootStore.translationStore.setLocale(locale);
-        browser.storage.local.set({ locale });
     };
 
     @action

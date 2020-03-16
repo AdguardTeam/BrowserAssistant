@@ -7,27 +7,28 @@ const getMessageHandler = (rootStore) => {
             setCurrentAppState,
         },
         uiStore: {
-            setExtensionLoadingAndPending,
             setExtensionLoading,
+            setExtensionPending,
         },
     } = rootStore;
 
     return async (msg) => {
         const { type, params } = msg;
+
+        setExtensionLoading(false);
+        setExtensionPending(false);
+
         switch (type) {
             case MESSAGE_TYPES.SHOW_IS_NOT_INSTALLED:
                 setInstalled(false);
-                setExtensionLoadingAndPending();
                 break;
             case MESSAGE_TYPES.SHOW_RELOAD:
                 setExtensionLoading(true);
                 break;
             case MESSAGE_TYPES.ERROR:
             case MESSAGE_TYPES.SHOW_SETUP_INCORRECT:
-                setExtensionLoadingAndPending();
                 break;
             case MESSAGE_TYPES.OK:
-                setExtensionLoadingAndPending();
                 await setCurrentAppState(params.appState);
                 break;
             default:

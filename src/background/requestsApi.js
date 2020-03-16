@@ -11,6 +11,7 @@ class RequestsApi {
     });
 
     /**
+     * @param {object} parameters
      * @param {string} parameters.url
      * @param {number} parameters.port
      * @param {boolean} parameters.forceStartApp
@@ -22,6 +23,7 @@ class RequestsApi {
     });
 
     /**
+     * @param {object} parameters
      * @param {boolean} parameters.isEnabled
      * @returns {Promise<object>}
      */
@@ -43,6 +45,7 @@ class RequestsApi {
     });
 
     /**
+     * @param {object} parameters
      * @param {string} parameters.ruleText
      * @returns {Promise<object>}
      */
@@ -52,6 +55,7 @@ class RequestsApi {
     });
 
     /**
+     * @param {object} parameters
      * @param {string} parameters.ruleText
      * @returns {Promise<object>}
      */
@@ -61,6 +65,7 @@ class RequestsApi {
     });
 
     /**
+     * @param {object} parameters
      * @param {string} parameters.url
      * @returns {Promise<object>}
      */
@@ -70,6 +75,7 @@ class RequestsApi {
     });
 
     /**
+     * @param {object} parameters
      * @param {string} parameters.domain
      * @param {number} parameters.port
      * @returns {Promise<object>}

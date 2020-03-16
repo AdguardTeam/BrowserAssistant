@@ -4,7 +4,27 @@ import actions from './actions';
 import tabs from './tabs';
 
 class Icon {
-    getIsAppWorking = async () => {
+    isFilteringEnabled = true;
+
+    isInstalled = true;
+
+    isRunning = true;
+
+    isProtectionEnabled = true;
+
+    isAppUpToDate = true;
+
+    isExtensionUpdated = true;
+
+    isSetupCorrect = true;
+
+    get isAppWorking() {
+        return [this.isInstalled, this.isRunning, this.isProtectionEnabled, this.isAppUpToDate,
+            this.isExtensionUpdated, tabs.isSetupCorrect, this.isFilteringEnabled]
+            .every((state) => state === true);
+    }
+
+    updateIsAppWorking = async () => {
         const {
             currentURL: url, currentPort: port,
         } = await tabs.getCurrentTabUrlProperties();
@@ -12,19 +32,21 @@ class Icon {
             url,
             port,
         });
-        const { isHttpsFilteringEnabled, isFilteringEnabled } = response.parameters;
-
+        const { isFilteringEnabled } = response.parameters;
         const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
-        const { isExtensionUpdated } = Api;
+        const { isExtensionUpdated, isAppUpToDate } = Api;
 
-        const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,
-            isExtensionUpdated, tabs.isSetupCorrect, isHttpsFilteringEnabled, isFilteringEnabled]
-            .every((state) => state === true);
+        this.isFilteringEnabled = isFilteringEnabled;
+        this.isInstalled = isInstalled;
+        this.isRunning = isRunning;
+        this.isProtectionEnabled = isProtectionEnabled;
+        this.isAppUpToDate = isAppUpToDate;
+        this.isExtensionUpdated = isExtensionUpdated;
 
-        return isAppWorking;
+        return this.isAppWorking;
     };
 
-    updateIconColor = async (isAppWorking, tabId) => {
+    updateIconColor = async (tabId) => {
         try {
             let id = tabId;
             if (!tabId) {
@@ -33,7 +55,7 @@ class Icon {
             }
 
             if (id) {
-                if (isAppWorking) {
+                if (this.isAppWorking) {
                     await actions.setIconEnabled(id);
                 } else {
                     await actions.setIconDisabled(id);
@@ -45,9 +67,8 @@ class Icon {
     };
 
     updateIconColorListener = async ({ tabId }) => {
-        const isAppWorking = await this.getIsAppWorking();
-
-        this.updateIconColor(isAppWorking, tabId);
+        await this.updateIsAppWorking();
+        this.updateIconColor(tabId);
     };
 
     updateIconColorReloadListener = async (tabId, changeInfo) => {

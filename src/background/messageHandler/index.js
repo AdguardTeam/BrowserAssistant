@@ -8,17 +8,20 @@ import log from '../../lib/logger';
 const messageHandler = async (msg) => {
     const { type, params } = msg;
     let responseParams;
+    log.info('locale', api.locale);
 
     switch (type) {
         case MESSAGE_TYPES.getCurrentFilteringState: {
             responseParams = await requests.getCurrentFilteringState(params);
-            await icon.updateIconColor(responseParams.parameters.isFilteringEnabled);
+            icon.isFilteringEnabled = responseParams.parameters.isFilteringEnabled;
+            await icon.updateIconColor();
             break;
         }
 
         case MESSAGE_TYPES.setProtectionStatus: {
             responseParams = await requests.setProtectionStatus(params);
-            await icon.updateIconColor(responseParams.appState.isProtectionEnabled);
+            icon.isProtectionEnabled = responseParams.appState.isProtectionEnabled;
+            await icon.updateIconColor();
             break;
         }
 
@@ -101,6 +104,7 @@ const messageHandler = async (msg) => {
         case MESSAGE_TYPES.getUpdateStatusInfo: {
             responseParams = {
                 isAppUpToDate: api.isAppUpToDate,
+                locale: api.locale,
                 isExtensionUpdated: api.isExtensionUpdated,
                 isSetupCorrect: tabs.isSetupCorrect,
             };

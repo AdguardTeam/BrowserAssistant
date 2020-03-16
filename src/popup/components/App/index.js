@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import { observer } from 'mobx-react';
@@ -25,23 +25,28 @@ const App = observer(() => {
             requestStatus,
             normalizePopupScale,
         },
+        translationStore: {
+            locale,
+        },
     } = root;
 
     const messageHandler = getMessageHandler(root);
 
     useEffect(() => {
         (async () => {
-            await updateCurrentTabInfo();
             await refreshUpdateStatusInfo();
+            normalizePopupScale();
+            await updateCurrentTabInfo();
         })();
 
         browser.runtime.onMessage.addListener(messageHandler);
         return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
-    useLayoutEffect(() => {
-        normalizePopupScale();
-    });
+    if (!locale) {
+        return (<Loading />);
+    }
+
     if (requestStatus.isError || requestStatus.isPending) {
         return (
             <AppWrapper>

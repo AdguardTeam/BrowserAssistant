@@ -1,6 +1,5 @@
 import { action, computed, observable } from 'mobx';
 import { createIntl } from 'react-intl';
-import browser from 'webextension-polyfill';
 import { browserLocale } from '../../../lib/conts';
 import messagesMap from '../../../_locales';
 
@@ -11,11 +10,7 @@ class TranslationStore {
         this.rootStore = rootStore;
     }
 
-    @observable locale = (
-        async () => {
-            const { locale } = await browser.storage.local.get('locale');
-            return locale || BASE_LOCALE;
-        })();
+    @observable locale = null;
 
     @action
     setLocale = (locale) => {

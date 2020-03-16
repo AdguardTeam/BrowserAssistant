@@ -126,6 +126,7 @@ class RequestsStore {
             const res = await innerMessaging.setProtectionStatus(
                 { isEnabled: shouldEnableProtection }
             );
+            this.rootStore.uiStore.setExtensionLoading(false);
 
             await this.rootStore.settingsStore.setCurrentAppState(res.appState);
             await this.rootStore.settingsStore.setProtection(res.appState.isProtectionEnabled);
@@ -137,9 +138,10 @@ class RequestsStore {
     };
 
     startApp = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
+            this.rootStore.uiStore.setExtensionLoading(true);
             await this.getCurrentFilteringState(true);
+            this.rootStore.uiStore.setExtensionLoading(false);
         } catch (error) {
             log.error(error);
         }

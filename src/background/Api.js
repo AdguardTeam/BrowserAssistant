@@ -11,12 +11,16 @@ import browserApi from '../lib/browserApi';
 import versions from './versions';
 import log from '../lib/logger';
 
+const { BASE_LOCALE } = require('../../tasks/consts');
+
 const MAX_RETRY_TIMES = 5;
 
 class Api {
     isAppUpToDate = true;
 
     isExtensionUpdated = true;
+
+    locale = BASE_LOCALE;
 
     retryTimes = MAX_RETRY_TIMES;
 
@@ -56,7 +60,7 @@ class Api {
                 },
             });
 
-            const { parameters } = res;
+            const { parameters, appState } = res;
 
             if (!res.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
                 return;
@@ -64,6 +68,7 @@ class Api {
 
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             this.isExtensionUpdated = parameters.isValidatedOnHost;
+            this.locale = appState.locale;
 
             if (!this.isAppUpToDate || !this.isExtensionUpdated) {
                 await browserApi.runtime.sendMessage({
