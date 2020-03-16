@@ -6,7 +6,7 @@ import messagesMap from '../../../_locales';
 
 const { BASE_LOCALE } = require('../../../../tasks/consts');
 
-class TranslationsStore {
+class TranslationStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
@@ -41,4 +41,4 @@ class TranslationsStore {
     translate = (id) => this.i18n.formatMessage({ id });
 }
 
-export default TranslationsStore;
+export default TranslationStore;

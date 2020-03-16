@@ -41,7 +41,7 @@ Builds will be located in the `build` directory.
 
 - `yarn artifacts:beta`, `yarn artifacts:release` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.
 
-## How to debug without AdGuard application
+## How to debug without AdGuard application [WIP: update]
 
 - Replace `Api.js` content with the following:
 

@@ -82,10 +82,10 @@ class SettingsStore {
 
     updateCurrentTabInfo = async () => {
         try {
-            const urlPropsRes = await innerMessaging.getCurrentTabUrlProperties();
-            const referrerRes = await innerMessaging.getReferrer();
-            this.setCurrentTabUrlProperties(urlPropsRes.params);
-            this.setReferrer(referrerRes.params);
+            const urlProps = await innerMessaging.getCurrentTabUrlProperties();
+            const referrer = await innerMessaging.getReferrer();
+            this.setCurrentTabUrlProperties(urlProps);
+            this.setReferrer(referrer);
             await this.rootStore.requestsStore.getCurrentFilteringState();
         } catch (error) {
             log.error(error);
@@ -94,7 +94,7 @@ class SettingsStore {
 
     refreshUpdateStatusInfo = async () => {
         const res = await innerMessaging.getUpdateStatusInfo();
-        this.setUpdateStatusInfo(res.params);
+        this.setUpdateStatusInfo(res);
     };
 
     @action

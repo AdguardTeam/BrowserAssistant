@@ -209,8 +209,8 @@ class StubHost {
         const response = {
             id: `${id}_resp`,
             requestId: id,
-            /** @param lastCheckTime {("ok" | "error")} * */
-            result: HOST_RESPONSE_TYPES.ok,
+            /** @param lastCheckTime {("OK" | "ERROR")} * */
+            result: HOST_RESPONSE_TYPES.OK,
             appState: this.appState,
             timestamp: new Date().toISOString(),
             data: null,

@@ -12,14 +12,13 @@ class Icon {
             url,
             port,
         });
-        const { isFilteringEnabled } = response.parameters;
+        const { isHttpsFilteringEnabled, isFilteringEnabled } = response.parameters;
 
         const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
         const { isExtensionUpdated } = Api;
 
         const isAppWorking = [isInstalled, isRunning, isProtectionEnabled,
-            isExtensionUpdated, tabs.isSetupCorrect,
-            isFilteringEnabled, isFilteringEnabled]
+            isExtensionUpdated, tabs.isSetupCorrect, isHttpsFilteringEnabled, isFilteringEnabled]
             .every((state) => state === true);
 
         return isAppWorking;

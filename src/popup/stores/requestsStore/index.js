@@ -16,7 +16,7 @@ class RequestsStore {
                 forceStartApp,
             });
 
-            this.rootStore.settingsStore.setCurrentFilteringState(res.params.parameters);
+            this.rootStore.settingsStore.setCurrentFilteringState(res.parameters);
         } catch (error) {
             log.error(error);
         }
@@ -25,7 +25,7 @@ class RequestsStore {
     getCurrentAppState = async () => {
         try {
             const res = await innerMessaging.getCurrentAppState();
-            this.rootStore.settingsStore.setCurrentAppState(res.params.appState);
+            this.rootStore.settingsStore.setCurrentAppState(res.appState);
         } catch (error) {
             log.error(error);
         }
@@ -68,7 +68,7 @@ class RequestsStore {
     removeCustomRules = async () => {
         const { currentURL: url } = this.rootStore.settingsStore;
 
-        innerMessaging.reload();
+        await innerMessaging.reload();
         try {
             await innerMessaging.removeCustomRules({ url });
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
@@ -123,15 +123,12 @@ class RequestsStore {
     setProtectionStatus = async (shouldEnableProtection) => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);
-            const { params } = await innerMessaging.setProtectionStatus(
+            const res = await innerMessaging.setProtectionStatus(
                 { isEnabled: shouldEnableProtection }
             );
 
-            await this.rootStore.settingsStore.setCurrentAppState(params.appState);
-
-            await this.rootStore.settingsStore.setProtection(
-                params.appState.isProtectionEnabled
-            );
+            await this.rootStore.settingsStore.setCurrentAppState(res.appState);
+            await this.rootStore.settingsStore.setProtection(res.appState.isProtectionEnabled);
 
             this.rootStore.uiStore.setProtectionTogglePending(false);
         } catch (error) {

@@ -28,7 +28,7 @@ class Api {
         }
 
         await browserApi.runtime.sendMessage({
-            type: msg.result,
+            type: MESSAGE_TYPES[msg.result.toUpperCase()],
             params: msg,
         });
     };
@@ -48,27 +48,28 @@ class Api {
 
     initRequest = async () => {
         try {
-            const msg = await this.makeRequest({
+            const res = await this.makeRequest({
                 type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
                     type: ASSISTANT_TYPES.nativeAssistant,
                 },
-            }, RESPONSE_TYPE_PREFIXES.ADG_INIT);
+            });
 
-            const { parameters } = msg;
+            const { parameters } = res;
+
+            if (!res.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+                return;
+            }
 
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-
-            await browserApi.runtime.sendMessage({
-                type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
-            });
-
             this.isExtensionUpdated = parameters.isValidatedOnHost;
 
-            await browserApi.runtime.sendMessage({
-                type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
-            });
+            if (!this.isAppUpToDate || !this.isExtensionUpdated) {
+                await browserApi.runtime.sendMessage({
+                    type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
+                });
+            }
         } catch (error) {
             log.error(error);
         }
@@ -119,11 +120,11 @@ class Api {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(timerId);
 
-                    if (result === MESSAGE_TYPES.ok) {
+                    if (MESSAGE_TYPES[result.toUpperCase()] === MESSAGE_TYPES.OK) {
                         return resolve(msg);
                     }
 
-                    if (result === MESSAGE_TYPES.error) {
+                    if (MESSAGE_TYPES[result.toUpperCase()] === MESSAGE_TYPES.ERROR) {
                         this.makeReinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }

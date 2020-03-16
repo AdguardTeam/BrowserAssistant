@@ -9,11 +9,13 @@ import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
-import responseHandler from '../../responseHandler';
+import getMessageHandler from '../../messageHandler';
 
 Modal.setAppElement('#root');
 
 const App = observer(() => {
+    const root = useContext(rootStore);
+
     const {
         settingsStore: {
             updateCurrentTabInfo,
@@ -23,7 +25,9 @@ const App = observer(() => {
             requestStatus,
             normalizePopupScale,
         },
-    } = useContext(rootStore);
+    } = root;
+
+    const messageHandler = getMessageHandler(root);
 
     useEffect(() => {
         (async () => {
@@ -31,8 +35,8 @@ const App = observer(() => {
             await refreshUpdateStatusInfo();
         })();
 
-        browser.runtime.onMessage.addListener(responseHandler);
-        return () => browser.runtime.onMessage.removeListener(responseHandler);
+        browser.runtime.onMessage.addListener(messageHandler);
+        return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
     useLayoutEffect(() => {

@@ -35,8 +35,8 @@ export const API_ACTIONS = {
 
 
 export const HOST_RESPONSE_TYPES = {
-    ok: 'ok',
-    error: 'error',
+    OK: 'OK',
+    ERROR: 'ERROR',
 };
 
 export const MESSAGE_TYPES = {
