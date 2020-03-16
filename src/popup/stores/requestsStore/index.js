@@ -85,9 +85,7 @@ class RequestsStore {
                 referrer,
             });
 
-            /** The popup in Firefox is not closed after opening new tabs by Tabs API.
-             *  Reload re-renders popup. */
-            window.location.reload();
+            window.close();
         } catch (error) {
             log.error(error);
         }

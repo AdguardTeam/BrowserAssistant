@@ -33,7 +33,7 @@ class Tabs {
                 this.isSetupCorrect = false;
 
                 await browserApi.runtime.sendMessage(
-                    { result: MESSAGE_TYPES.SHOW_SETUP_INCORRECT }
+                    { type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT }
                 );
             }
         } catch (error) {
@@ -58,8 +58,7 @@ class Tabs {
 
     // eslint-disable-next-line consistent-return
     getReferrer = async () => {
-        const tab = await this.getCurrent();
-        const response = await this.sendMessage(tab.id, { type: CONTENT_MESSAGES.getReferrer });
+        const response = await this.sendMessage(CONTENT_MESSAGES.getReferrer);
         if (response) {
             return Promise.resolve(response);
         }

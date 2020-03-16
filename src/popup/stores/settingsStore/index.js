@@ -155,12 +155,12 @@ class SettingsStore {
     };
 
     @action
-    setProtection = async (isProtectionEnabled) => {
+    setProtection = (isProtectionEnabled) => {
         this.isProtectionEnabled = isProtectionEnabled;
     };
 
     @action
-    setHttpAndHttpsFilteringActive = async (isFilteringEnabled, isHttpsFilteringEnabled) => {
+    setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
     };
