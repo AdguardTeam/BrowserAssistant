@@ -24,7 +24,7 @@ class Api {
 
     retryTimes = MAX_RETRY_TIMES;
 
-    responsesHandler = async (msg) => {
+    responseHandler = async (msg) => {
         log.info(`response ${msg.id}`, msg);
         // Ignore requests without identifying prefix ADG
         if (!msg.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
@@ -40,7 +40,7 @@ class Api {
     init = () => {
         log.info('init');
         this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
-        this.port.onMessage.addListener(this.responsesHandler);
+        this.port.onMessage.addListener(this.responseHandler);
 
         this.port.onDisconnect.addListener(
             () => this.makeReinit(MESSAGE_TYPES.SHOW_IS_NOT_INSTALLED)
@@ -62,10 +62,6 @@ class Api {
 
             const { parameters, appState } = res;
 
-            if (!res.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
-                return;
-            }
-
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
             this.isExtensionUpdated = parameters.isValidatedOnHost;
             this.locale = appState.locale;
@@ -83,7 +79,7 @@ class Api {
     deinit = () => {
         log.info('deinit');
         this.port.disconnect();
-        this.port.onMessage.removeListener(this.responsesHandler);
+        this.port.onMessage.removeListener(this.responseHandler);
     };
 
     reinit = async () => {

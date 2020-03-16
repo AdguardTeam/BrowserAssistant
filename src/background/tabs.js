@@ -23,7 +23,7 @@ class Tabs {
                 // return stub tab
                 return {
                     url: 'about:',
-                    id: browser.tabs.TAB_ID_NONE,
+                    id: 0,
                 };
             }
 

@@ -8,7 +8,6 @@ import log from '../../lib/logger';
 const messageHandler = async (msg) => {
     const { type, params } = msg;
     let responseParams;
-    log.info('locale', api.locale);
 
     switch (type) {
         case MESSAGE_TYPES.getCurrentFilteringState: {

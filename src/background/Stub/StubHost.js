@@ -10,12 +10,9 @@ import {
 } from '../../lib/types';
 import log from '../../lib/logger';
 import browserApi from '../../lib/browserApi';
-import versions from '../versions';
-import innerMessaging from '../../lib/innerMessaging';
 
 const { BASE_LOCALE } = require('../../../tasks/consts');
 
-// TODO: update testing logic
 class StubHost {
     delay = 500;
 
@@ -167,27 +164,21 @@ class StubHost {
             parameters: this.filteringStatus,
         };
         const response = await this.getStubResponse(request, delay);
-        return this.#initHandler(response);
+        return this.#responseHandler(response);
     };
 
-    #initHandler = (response) => {
-        log.info(`response ${response.id}`, response);
-        const { parameters } = response;
+    #responseHandler = (params) => {
+        log.info(`response ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
-            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            innerMessaging.isAppUpToDate = this.isAppUpToDate;
-
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
-            innerMessaging.isExtensionUpdated = this.isExtensionUpdated;
-        }
-
-        browserApi.runtime.sendMessage({ result: response.result, response });
+        browserApi.runtime.sendMessage({
+            type: params.result,
+            params,
+        });
     };
 
     /**

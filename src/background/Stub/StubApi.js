@@ -5,7 +5,7 @@
 
 import nanoid from 'nanoid';
 import {
-    ASSISTANT_TYPES,
+    ASSISTANT_TYPES, MESSAGE_TYPES,
     REQUEST_TYPES,
     RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
@@ -13,42 +13,48 @@ import browserApi from '../../lib/browserApi';
 import versions from '../versions';
 import log from '../../lib/logger';
 import stubHost from './StubHost';
-import innerMessaging from '../../lib/innerMessaging';
+
+const { BASE_LOCALE } = require('../../../tasks/consts');
 
 class Api {
     isAppUpToDate = true;
 
     isExtensionUpdated = true;
 
-    responsesHandler = (response) => {
-        log.info(`response ${response.id}`, response);
-        const { parameters } = response;
+    locale = BASE_LOCALE;
+
+    responsesHandler = (params) => {
+        log.info(`params ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG_INIT)) {
-            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            innerMessaging.isAppUpToDate = this.isAppUpToDate;
-
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
-            innerMessaging.isExtensionUpdated = this.isExtensionUpdated;
-        }
-
-        browserApi.runtime.sendMessage({ msgType: response.result, response });
+        browserApi.runtime.sendMessage({ type: params.result.toUpperCase(), params });
     };
 
     init = async () => {
         try {
-            await this.makeRequest({
+            const res = await this.makeRequest({
                 type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
                     type: ASSISTANT_TYPES.nativeAssistant,
                 },
             }, RESPONSE_TYPE_PREFIXES.ADG_INIT);
+
+            const { parameters, appState } = res;
+
+            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
+            this.isExtensionUpdated = parameters.isValidatedOnHost;
+            this.locale = appState.locale;
+
+            if (!this.isAppUpToDate || !this.isExtensionUpdated) {
+                await browserApi.runtime.sendMessage({
+                    type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
+                });
+            }
         } catch (error) {
             log.error(error);
         }
