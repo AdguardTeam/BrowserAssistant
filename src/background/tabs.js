@@ -44,6 +44,7 @@ class Tabs {
 
     sendMessage = async (type, params) => {
         const tab = await this.getCurrent();
+        await browser.tabs.executeScript(tab.id, { file: CONTENT_SCRIPT_NAME });
         let response;
         try {
             response = await browser.tabs.sendMessage(tab.id, {
@@ -58,15 +59,11 @@ class Tabs {
 
     // eslint-disable-next-line consistent-return
     getReferrer = async () => {
-        const response = await this.sendMessage(CONTENT_MESSAGES.getReferrer);
-        if (response) {
-            return Promise.resolve(response);
-        }
+        const referrer = await this.sendMessage(CONTENT_MESSAGES.getReferrer);
+        return referrer;
     };
 
     initAssistant = async () => {
-        const tab = await this.getCurrent();
-        await browser.tabs.executeScript(tab.id, { file: CONTENT_SCRIPT_NAME });
         const params = { addRuleCallbackName: REQUEST_TYPES.addRule };
         this.sendMessage(CONTENT_MESSAGES.initAssistant, params);
     };

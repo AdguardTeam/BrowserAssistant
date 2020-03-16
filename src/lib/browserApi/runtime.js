@@ -1,5 +1,4 @@
 import browser from 'webextension-polyfill';
-import log from '../logger';
 
 /**
  * This function moved into separate api file, in order to hide unhandled promise errors
@@ -12,9 +11,8 @@ const sendMessage = async (...args) => {
         const res = await browser.runtime.sendMessage(...args);
         return res;
     } catch (error) {
-        if (!browser.runtime.lastError) {
-            log.error(error);
-        }
+        // eslint-disable-next-line no-void
+        void browser.runtime.lastError;
     }
 };
 
