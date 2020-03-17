@@ -51,6 +51,10 @@ export const HOST_REQUEST_TYPES = {
     hostRequest: 'hostRequest',
 };
 
+export const RESPONSE_TYPE_PREFIXES = {
+    ADG: 'ADG',
+};
+
 export const ASSISTANT_TYPES = {
     nativeAssistant: 'nativeAssistant',
 };

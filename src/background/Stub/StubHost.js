@@ -6,7 +6,7 @@
 import nanoid from 'nanoid';
 import { ORIGINAL_CERT_STATUS } from '../../popup/stores/consts';
 import {
-    HOST_REQUEST_TYPES, HOST_RESPONSE_TYPES, REQUEST_TYPES,
+    HOST_REQUEST_TYPES, HOST_RESPONSE_TYPES, REQUEST_TYPES, RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
 import log from '../../lib/logger';
 import browserApi from '../../lib/browserApi';
@@ -169,6 +169,11 @@ class StubHost {
 
     #responseHandler = (params) => {
         log.info(`response ${params.id}`, params);
+
+        // Ignore requests without identifying prefix ADG
+        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+            return;
+        }
 
         browserApi.runtime.sendMessage({
             type: params.result,

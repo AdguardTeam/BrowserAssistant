@@ -5,8 +5,10 @@
 
 import nanoid from 'nanoid';
 import {
-    ASSISTANT_TYPES, MESSAGE_TYPES,
+    ASSISTANT_TYPES,
+    MESSAGE_TYPES,
     REQUEST_TYPES,
+    RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
 import browserApi from '../../lib/browserApi';
 import versions from '../versions';
@@ -24,6 +26,11 @@ class Api {
 
     responsesHandler = (params) => {
         log.info(`params ${params.id}`, params);
+
+        // Ignore requests without identifying prefix ADG
+        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+            return;
+        }
 
         browserApi.runtime.sendMessage({
             type: params.result.toUpperCase(),
@@ -58,7 +65,7 @@ class Api {
     };
 
     makeRequest = async (params) => {
-        const id = nanoid();
+        const id = `${RESPONSE_TYPE_PREFIXES.ADG}_${nanoid()}`;
 
         log.info(`request ${id}`, params);
 
