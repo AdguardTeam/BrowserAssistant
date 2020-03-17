@@ -23,7 +23,6 @@ const App = observer(() => {
         },
         uiStore: {
             requestStatus,
-            normalizePopupScale,
         },
         translationStore: {
             locale,
@@ -35,7 +34,6 @@ const App = observer(() => {
     useEffect(() => {
         (async () => {
             await refreshUpdateStatusInfo();
-            normalizePopupScale();
             await updateCurrentTabInfo();
         })();
 

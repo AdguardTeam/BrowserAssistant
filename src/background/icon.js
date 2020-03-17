@@ -18,6 +18,34 @@ class Icon {
 
     isSetupCorrect = true;
 
+    setIsFilteringEnabled = (isFilteringEnabled) => {
+        this.isFilteringEnabled = isFilteringEnabled;
+    };
+
+    setIsInstalled = (isInstalled) => {
+        this.isInstalled = isInstalled;
+    };
+
+    setIsRunning = (isRunning) => {
+        this.isRunning = isRunning;
+    };
+
+    setIsProtectionEnabled = (isProtectionEnabled) => {
+        this.isProtectionEnabled = isProtectionEnabled;
+    };
+
+    setIsAppUpToDate = (isAppUpToDate) => {
+        this.isAppUpToDate = isAppUpToDate;
+    };
+
+    setIsExtensionUpdated = (isExtensionUpdated) => {
+        this.isExtensionUpdated = isExtensionUpdated;
+    };
+
+    setIsSetupCorrect = (isSetupCorrect) => {
+        this.isSetupCorrect = isSetupCorrect;
+    };
+
     get isAppWorking() {
         return [this.isInstalled, this.isRunning, this.isProtectionEnabled, this.isAppUpToDate,
             this.isExtensionUpdated, tabs.isSetupCorrect, this.isFilteringEnabled]
@@ -36,12 +64,12 @@ class Icon {
         const { isInstalled, isRunning, isProtectionEnabled } = response.appState;
         const { isExtensionUpdated, isAppUpToDate } = Api;
 
-        this.isFilteringEnabled = isFilteringEnabled;
-        this.isInstalled = isInstalled;
-        this.isRunning = isRunning;
-        this.isProtectionEnabled = isProtectionEnabled;
-        this.isAppUpToDate = isAppUpToDate;
-        this.isExtensionUpdated = isExtensionUpdated;
+        this.setIsFilteringEnabled(isFilteringEnabled);
+        this.setIsInstalled(isInstalled);
+        this.setIsRunning(isRunning);
+        this.setIsProtectionEnabled(isProtectionEnabled);
+        this.setIsAppUpToDate(isAppUpToDate);
+        this.setIsExtensionUpdated(isExtensionUpdated);
 
         return this.isAppWorking;
     };

@@ -5,7 +5,6 @@ import {
     MESSAGE_TYPES,
     HOST_TYPES,
     REQUEST_TYPES,
-    RESPONSE_TYPE_PREFIXES,
 } from '../lib/types';
 import browserApi from '../lib/browserApi';
 import versions from './versions';
@@ -26,10 +25,6 @@ class Api {
 
     responseHandler = async (msg) => {
         log.info(`response ${msg.id}`, msg);
-        // Ignore requests without identifying prefix ADG
-        if (!msg.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
-            return;
-        }
 
         await browserApi.runtime.sendMessage({
             type: MESSAGE_TYPES[msg.result.toUpperCase()],
@@ -102,10 +97,11 @@ class Api {
         }
     };
 
-    makeRequest = async (params, idPrefix = RESPONSE_TYPE_PREFIXES.ADG) => {
-        const id = `${idPrefix}_${nanoid()}`;
+    makeRequest = async (params) => {
+        const id = nanoid();
 
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
+
         log.info(`request ${id}`, params);
 
         return new Promise((resolve, reject) => {

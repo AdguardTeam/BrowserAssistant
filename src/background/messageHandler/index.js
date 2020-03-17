@@ -7,117 +7,112 @@ import log from '../../lib/logger';
 
 const messageHandler = async (msg) => {
     const { type, params } = msg;
-    let responseParams;
 
     switch (type) {
         case MESSAGE_TYPES.getCurrentFilteringState: {
-            responseParams = await requests.getCurrentFilteringState(params);
-            icon.isFilteringEnabled = responseParams.parameters.isFilteringEnabled;
+            const responseParams = await requests.getCurrentFilteringState(params);
+            icon.setIsFilteringEnabled(responseParams.parameters.isFilteringEnabled);
             await icon.updateIconColor();
-            break;
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.setProtectionStatus: {
-            responseParams = await requests.setProtectionStatus(params);
-            icon.isProtectionEnabled = responseParams.appState.isProtectionEnabled;
+            const responseParams = await requests.setProtectionStatus(params);
+            icon.setIsProtectionEnabled(responseParams.appState.isProtectionEnabled);
             await icon.updateIconColor();
-            break;
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.setFilteringStatus: {
-            responseParams = await requests.setFilteringStatus(params);
-            break;
+            const responseParams = await requests.setFilteringStatus(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.addRule: {
-            responseParams = await requests.addRule(params);
-            break;
+            const responseParams = await requests.addRule(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.removeRule: {
-            responseParams = await requests.removeRule(params);
-            break;
+            const responseParams = await requests.removeRule(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.removeCustomRules: {
-            responseParams = await requests.removeCustomRules(params);
-            break;
+            const responseParams = await requests.removeCustomRules(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.openOriginalCert: {
-            responseParams = await requests.openOriginalCert(params);
-            break;
+            const responseParams = await requests.openOriginalCert(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.reportSite: {
-            responseParams = await requests.reportSite(params);
+            const responseParams = await requests.reportSite(params);
             await tabs.openPage(responseParams.parameters.reportUrl);
-            break;
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.openFilteringLog: {
-            responseParams = await requests.openFilteringLog(params);
-            break;
+            const responseParams = await requests.openFilteringLog(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.openSettings: {
-            responseParams = await requests.openSettings(params);
-            break;
+            const responseParams = await requests.openSettings(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.updateApp: {
-            responseParams = await requests.updateApp(params);
-            break;
+            const responseParams = await requests.updateApp(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.openPage: {
-            responseParams = await tabs.openPage(params);
-            break;
+            const responseParams = await tabs.openPage(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.reload: {
-            responseParams = await tabs.reload(params);
-            break;
+            const responseParams = await tabs.reload(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.getReferrer: {
-            responseParams = await tabs.getReferrer(params);
-            break;
+            const responseParams = await tabs.getReferrer(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.updateIconColor: {
-            responseParams = await icon.updateIconColor(params);
-            break;
+            const responseParams = await icon.updateIconColor(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.getCurrentTabUrlProperties: {
-            responseParams = await tabs.getCurrentTabUrlProperties(params);
-            break;
+            const responseParams = await tabs.getCurrentTabUrlProperties(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.initAssistant: {
-            responseParams = await tabs.initAssistant(params);
-            break;
+            const responseParams = await tabs.initAssistant(params);
+            return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.getUpdateStatusInfo: {
-            responseParams = {
+            const responseParams = {
                 isAppUpToDate: api.isAppUpToDate,
                 locale: api.locale,
                 isExtensionUpdated: api.isExtensionUpdated,
                 isSetupCorrect: tabs.isSetupCorrect,
             };
-            break;
+            return Promise.resolve(responseParams);
         }
-
         default: {
             log.warn('Inner messaging type "%s" is not in the message handlers', type);
-            return;
+            return Promise.resolve(null);
         }
     }
-
-    // eslint-disable-next-line consistent-return
-    return Promise.resolve(responseParams);
 };
 
 export default messageHandler;

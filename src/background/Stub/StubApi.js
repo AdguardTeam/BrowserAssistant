@@ -7,7 +7,6 @@ import nanoid from 'nanoid';
 import {
     ASSISTANT_TYPES, MESSAGE_TYPES,
     REQUEST_TYPES,
-    RESPONSE_TYPE_PREFIXES,
 } from '../../lib/types';
 import browserApi from '../../lib/browserApi';
 import versions from '../versions';
@@ -26,12 +25,10 @@ class Api {
     responsesHandler = (params) => {
         log.info(`params ${params.id}`, params);
 
-        // Ignore requests without identifying prefix ADG
-        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
-            return;
-        }
-
-        browserApi.runtime.sendMessage({ type: params.result.toUpperCase(), params });
+        browserApi.runtime.sendMessage({
+            type: params.result.toUpperCase(),
+            params,
+        });
     };
 
     init = async () => {
@@ -42,7 +39,7 @@ class Api {
                     ...versions,
                     type: ASSISTANT_TYPES.nativeAssistant,
                 },
-            }, RESPONSE_TYPE_PREFIXES.ADG_INIT);
+            });
 
             const { parameters, appState } = res;
 
@@ -60,8 +57,8 @@ class Api {
         }
     };
 
-    makeRequest = async (params, idPrefix = RESPONSE_TYPE_PREFIXES.ADG) => {
-        const id = `${idPrefix}_${nanoid()}`;
+    makeRequest = async (params) => {
+        const id = nanoid();
 
         log.info(`request ${id}`, params);
 
