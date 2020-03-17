@@ -35,8 +35,8 @@ export const API_ACTIONS = {
 
 
 export const HOST_RESPONSE_TYPES = {
-    OK: 'OK',
-    ERROR: 'ERROR',
+    OK: 'ok',
+    ERROR: 'error',
 };
 
 export const MESSAGE_TYPES = {
@@ -51,9 +51,7 @@ export const HOST_REQUEST_TYPES = {
     hostRequest: 'hostRequest',
 };
 
-export const RESPONSE_TYPE_PREFIXES = {
-    ADG: 'ADG',
-};
+export const ADG_PREFIX = 'ADG';
 
 export const ASSISTANT_TYPES = {
     nativeAssistant: 'nativeAssistant',

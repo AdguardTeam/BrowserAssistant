@@ -5,35 +5,28 @@ import {
     MESSAGE_TYPES,
     HOST_TYPES,
     REQUEST_TYPES,
-    RESPONSE_TYPE_PREFIXES,
+    ADG_PREFIX,
 } from '../lib/types';
 import browserApi from '../lib/browserApi';
 import versions from './versions';
 import log from '../lib/logger';
-
-const { BASE_LOCALE } = require('../../tasks/consts');
+import state from './State';
 
 const MAX_RETRY_TIMES = 5;
 
 class Api {
-    isAppUpToDate = true;
-
-    isExtensionUpdated = true;
-
-    locale = BASE_LOCALE;
-
     retryTimes = MAX_RETRY_TIMES;
 
     responseHandler = async (params) => {
         log.info(`response ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
-        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+        if (!params.requestId.startsWith(ADG_PREFIX)) {
             return;
         }
 
         await browserApi.runtime.sendMessage({
-            type: MESSAGE_TYPES[params.result.toUpperCase()],
+            type: params.result,
             params,
         });
     };
@@ -63,11 +56,11 @@ class Api {
 
             const { parameters, appState } = res;
 
-            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
-            this.locale = appState.locale;
+            state.setIsAppUpToDate(versions.apiVersion <= parameters.apiVersion);
+            state.setIsExtensionUpdated(parameters.isValidatedOnHost);
+            state.setLocale(appState.locale);
 
-            if (!this.isAppUpToDate || !this.isExtensionUpdated) {
+            if (!state.isAppUpToDate || !state.isExtensionUpdated) {
                 await browserApi.runtime.sendMessage({
                     type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
                 });
@@ -104,7 +97,7 @@ class Api {
     };
 
     makeRequest = async (params) => {
-        const id = `${RESPONSE_TYPE_PREFIXES.ADG}_${nanoid()}`;
+        const id = `${ADG_PREFIX}_${nanoid()}`;
 
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
 
@@ -123,11 +116,11 @@ class Api {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(timerId);
 
-                    if (MESSAGE_TYPES[result.toUpperCase()] === MESSAGE_TYPES.OK) {
+                    if (result === MESSAGE_TYPES.OK) {
                         return resolve(msg);
                     }
 
-                    if (MESSAGE_TYPES[result.toUpperCase()] === MESSAGE_TYPES.ERROR) {
+                    if (result === MESSAGE_TYPES.ERROR) {
                         this.makeReinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }

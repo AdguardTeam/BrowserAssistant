@@ -8,7 +8,7 @@ import {
     ASSISTANT_TYPES,
     MESSAGE_TYPES,
     REQUEST_TYPES,
-    RESPONSE_TYPE_PREFIXES,
+    ADG_PREFIX,
 } from '../../lib/types';
 import browserApi from '../../lib/browserApi';
 import versions from '../versions';
@@ -28,12 +28,12 @@ class Api {
         log.info(`params ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
-        if (!params.requestId.startsWith(RESPONSE_TYPE_PREFIXES.ADG)) {
+        if (!params.requestId.startsWith(ADG_PREFIX)) {
             return;
         }
 
         browserApi.runtime.sendMessage({
-            type: params.result.toUpperCase(),
+            type: params.result,
             params,
         });
     };
@@ -65,7 +65,7 @@ class Api {
     };
 
     makeRequest = async (params) => {
-        const id = `${RESPONSE_TYPE_PREFIXES.ADG}_${nanoid()}`;
+        const id = `${ADG_PREFIX}_${nanoid()}`;
 
         log.info(`request ${id}`, params);
 

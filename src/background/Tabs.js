@@ -6,10 +6,9 @@ import log from '../lib/logger';
 import browserApi from '../lib/browserApi';
 import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
 import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
+import state from './State';
 
 class Tabs {
-    isSetupCorrect = true;
-
     getCurrent = async () => {
         let tab;
 
@@ -30,7 +29,7 @@ class Tabs {
             if (!(Object.prototype.hasOwnProperty.call(tab, 'url'))) {
                 log.error('Browser tabs api error: no url property in the current tab. Checkout tabs permission in the manifest', tab);
 
-                this.isSetupCorrect = false;
+                state.setIsSetupCorrect(false);
 
                 await browserApi.runtime.sendMessage(
                     { type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT }

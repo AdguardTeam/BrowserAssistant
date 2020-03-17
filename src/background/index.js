@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 import api from './Api';
 import log from '../lib/logger';
-import icon from './icon';
+import icon from './Icon';
 import messageHandler from './messageHandler';
 
 try {

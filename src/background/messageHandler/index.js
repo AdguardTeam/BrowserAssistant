@@ -1,9 +1,9 @@
 import { MESSAGE_TYPES } from '../../lib/types';
 import requests from '../requestsApi';
-import icon from '../icon';
-import tabs from '../tabs';
-import api from '../Api';
+import icon from '../Icon';
+import tabs from '../Tabs';
 import log from '../../lib/logger';
+import state from '../State';
 
 const messageHandler = async (msg) => {
     const { type, params } = msg;
@@ -11,14 +11,14 @@ const messageHandler = async (msg) => {
     switch (type) {
         case MESSAGE_TYPES.getCurrentFilteringState: {
             const responseParams = await requests.getCurrentFilteringState(params);
-            icon.setIsFilteringEnabled(responseParams.parameters.isFilteringEnabled);
+            state.setIsFilteringEnabled(responseParams.parameters.isFilteringEnabled);
             await icon.updateIconColor();
             return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.setProtectionStatus: {
             const responseParams = await requests.setProtectionStatus(params);
-            icon.setIsProtectionEnabled(responseParams.appState.isProtectionEnabled);
+            state.setIsProtectionEnabled(responseParams.appState.isProtectionEnabled);
             await icon.updateIconColor();
             return Promise.resolve(responseParams);
         }
@@ -101,10 +101,10 @@ const messageHandler = async (msg) => {
 
         case MESSAGE_TYPES.getUpdateStatusInfo: {
             const responseParams = {
-                isAppUpToDate: api.isAppUpToDate,
-                locale: api.locale,
-                isExtensionUpdated: api.isExtensionUpdated,
-                isSetupCorrect: tabs.isSetupCorrect,
+                locale: state.locale,
+                isAppUpToDate: state.isAppUpToDate,
+                isExtensionUpdated: state.isExtensionUpdated,
+                isSetupCorrect: state.isSetupCorrect,
             };
             return Promise.resolve(responseParams);
         }
