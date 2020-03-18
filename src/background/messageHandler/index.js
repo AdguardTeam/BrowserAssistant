@@ -1,9 +1,10 @@
 import { MESSAGE_TYPES } from '../../lib/types';
-import requests from '../requestsApi';
+import requests from '../RequestsApi';
 import icon from '../Icon';
 import tabs from '../Tabs';
 import log from '../../lib/logger';
 import state from '../State';
+import { SWITCHER_TRANSITION_TIME } from '../../popup/stores/consts';
 
 const messageHandler = async (msg) => {
     const { type, params } = msg;
@@ -18,13 +19,17 @@ const messageHandler = async (msg) => {
 
         case MESSAGE_TYPES.setProtectionStatus: {
             const responseParams = await requests.setProtectionStatus(params);
-            state.setIsProtectionEnabled(responseParams.appState.isProtectionEnabled);
             await icon.updateIconColor();
             return Promise.resolve(responseParams);
         }
 
         case MESSAGE_TYPES.setFilteringStatus: {
             const responseParams = await requests.setFilteringStatus(params);
+
+            setTimeout(() => {
+                state.setIsFilteringEnabled(params.isEnabled);
+            }, SWITCHER_TRANSITION_TIME);
+
             return Promise.resolve(responseParams);
         }
 
@@ -81,11 +86,6 @@ const messageHandler = async (msg) => {
 
         case MESSAGE_TYPES.getReferrer: {
             const responseParams = await tabs.getReferrer(params);
-            return Promise.resolve(responseParams);
-        }
-
-        case MESSAGE_TYPES.updateIconColor: {
-            const responseParams = await icon.updateIconColor(params);
             return Promise.resolve(responseParams);
         }
 

@@ -16,7 +16,9 @@ class RequestsStore {
                 forceStartApp,
             });
 
-            this.rootStore.settingsStore.setCurrentFilteringState(res.parameters);
+            if (res) {
+                this.rootStore.settingsStore.setCurrentFilteringState(res.parameters);
+            }
         } catch (error) {
             log.error(error);
         }

@@ -19,7 +19,6 @@ export default {
     [MSG.openPage]: (params) => sendMessage(MSG.openPage, params),
     [MSG.reload]: () => sendMessage(MSG.reload),
     [MSG.getReferrer]: () => sendMessage(MSG.getReferrer),
-    [MSG.updateIconColor]: (params) => sendMessage(MSG.updateIconColor, params),
     [MSG.getCurrentTabUrlProperties]: (params) => {
         return sendMessage(MSG.getCurrentTabUrlProperties, params);
     },

@@ -32,7 +32,7 @@ class Tabs {
                 state.setIsSetupCorrect(false);
 
                 await browserApi.runtime.sendMessage(
-                    { type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT }
+                    { type: MESSAGE_TYPES.STOP_RELOAD }
                 );
             }
         } catch (error) {

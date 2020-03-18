@@ -49,6 +49,26 @@ class State {
         this.locale = locale;
     };
 
+    updateAppState = async (appState) => {
+        const {
+            isInstalled,
+            isRunning,
+            locale,
+            isProtectionEnabled,
+        } = appState;
+
+        this.setIsInstalled(isInstalled);
+        this.setIsRunning(isRunning);
+        this.setLocale(locale);
+        this.setIsProtectionEnabled(isProtectionEnabled);
+    };
+
+    updateAppSetup = (isAppUpToDate, isExtensionUpdated, locale) => {
+        this.setIsAppUpToDate(isAppUpToDate);
+        this.setIsExtensionUpdated(isExtensionUpdated);
+        this.setLocale(locale);
+    };
+
     get isAppWorking() {
         return [this.isInstalled, this.isRunning, this.isProtectionEnabled, this.isAppUpToDate,
             this.isExtensionUpdated, this.isSetupCorrect, this.isFilteringEnabled]

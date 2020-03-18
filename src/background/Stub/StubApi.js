@@ -56,7 +56,7 @@ class Api {
 
             if (!this.isAppUpToDate || !this.isExtensionUpdated) {
                 await browserApi.runtime.sendMessage({
-                    type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
+                    type: MESSAGE_TYPES.STOP_RELOAD,
                 });
             }
         } catch (error) {

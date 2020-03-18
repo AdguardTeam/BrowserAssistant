@@ -19,12 +19,13 @@ const getMessageHandler = (rootStore) => {
             case MESSAGE_TYPES.SHOW_IS_NOT_INSTALLED:
                 setInstalled(false);
                 break;
-            case MESSAGE_TYPES.SHOW_RELOAD:
+            case MESSAGE_TYPES.START_RELOAD:
                 setExtensionLoading(true);
                 return;
             case MESSAGE_TYPES.OK:
                 await setCurrentAppState(params.appState);
                 break;
+            case MESSAGE_TYPES.STOP_RELOAD:
             default:
                 break;
         }

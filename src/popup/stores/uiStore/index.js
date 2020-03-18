@@ -160,8 +160,8 @@ class UiStore {
     };
 
     reloadPageAfterSwitcherTransition = () => {
-        setTimeout(() => {
-            innerMessaging.reload();
+        setTimeout(async () => {
+            await innerMessaging.reload();
         }, SWITCHER_TRANSITION_TIME);
     };
 }

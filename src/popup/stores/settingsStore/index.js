@@ -121,9 +121,9 @@ class SettingsStore {
     };
 
     @action
-    setHttpsFiltering = (isHttpsFilteringEnabled) => {
+    setHttpsFiltering = async (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        this.rootStore.requestsStore.setFilteringStatus();
+        await this.rootStore.requestsStore.setFilteringStatus();
         this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 

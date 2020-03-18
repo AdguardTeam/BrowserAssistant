@@ -11,6 +11,7 @@ import browserApi from '../lib/browserApi';
 import versions from './versions';
 import log from '../lib/logger';
 import state from './State';
+import icon from './Icon';
 
 const MAX_RETRY_TIMES = 5;
 
@@ -24,6 +25,9 @@ class Api {
         if (!params.requestId.startsWith(ADG_PREFIX)) {
             return;
         }
+
+        await state.updateAppState(params.appState);
+        await icon.updateIconColor();
 
         await browserApi.runtime.sendMessage({
             type: params.result,
@@ -56,13 +60,15 @@ class Api {
 
             const { parameters, appState } = res;
 
-            state.setIsAppUpToDate(versions.apiVersion <= parameters.apiVersion);
-            state.setIsExtensionUpdated(parameters.isValidatedOnHost);
-            state.setLocale(appState.locale);
+            const isAppUpToDate = versions.apiVersion <= parameters.apiVersion;
+            const { isValidatedOnHost } = parameters;
+            const { locale } = appState;
+
+            state.updateAppSetup(isAppUpToDate, isValidatedOnHost, locale);
 
             if (!state.isAppUpToDate || !state.isExtensionUpdated) {
                 await browserApi.runtime.sendMessage({
-                    type: MESSAGE_TYPES.SHOW_SETUP_INCORRECT,
+                    type: MESSAGE_TYPES.STOP_RELOAD,
                 });
             }
         } catch (error) {
@@ -77,12 +83,12 @@ class Api {
     };
 
     reinit = async () => {
-        await browserApi.runtime.sendMessage({ type: MESSAGE_TYPES.SHOW_RELOAD });
+        await browserApi.runtime.sendMessage({ type: MESSAGE_TYPES.START_RELOAD });
         this.deinit();
         this.init();
     };
 
-    makeReinit = async (message = MESSAGE_TYPES.SHOW_SETUP_INCORRECT) => {
+    makeReinit = async (message = MESSAGE_TYPES.STOP_RELOAD) => {
         this.retryTimes -= 1;
 
         if (this.retryTimes) {
