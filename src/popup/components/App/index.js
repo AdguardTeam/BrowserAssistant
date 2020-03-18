@@ -8,79 +8,42 @@ import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
-import { BACKGROUND_COMMANDS, HostResponseTypes } from '../../../lib/types';
 import Loading from '../ui/Loading';
+import getMessageHandler from '../../messageHandler';
 
 Modal.setAppElement('#root');
 
 const App = observer(() => {
+    const root = useContext(rootStore);
+
     const {
         settingsStore: {
-            setCurrentFilteringState,
-            setCurrentAppState,
-            getCurrentTabHostname,
-            getReferrer,
-            setInstalled,
-        },
-        requestsStore: {
-            getCurrentFilteringState,
+            updateCurrentTabInfo,
+            refreshUpdateStatusInfo,
         },
         uiStore: {
-            setExtensionLoadingAndPending,
-            setExtensionLoading,
             requestStatus,
-            normalizePopupScale,
         },
-    } = useContext(rootStore);
+        translationStore: {
+            locale,
+        },
+    } = root;
+
+    const messageHandler = getMessageHandler(root);
 
     useEffect(() => {
         (async () => {
-            await getCurrentTabHostname();
-            normalizePopupScale();
-            await getReferrer();
-            await getCurrentFilteringState();
+            await refreshUpdateStatusInfo();
+            await updateCurrentTabInfo();
         })();
 
-        browser.runtime.onMessage.addListener(
-            (response) => {
-                const {
-                    parameters, appState, requestId, result,
-                } = response;
-
-                switch (result) {
-                    case BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED:
-                        setInstalled(false);
-                        setExtensionLoadingAndPending();
-                        break;
-                    case BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY:
-                        setExtensionLoadingAndPending();
-                        break;
-                    case BACKGROUND_COMMANDS.SHOW_RELOAD:
-                        setExtensionLoading(true);
-                        break;
-                    case HostResponseTypes.ok:
-                        setExtensionLoadingAndPending();
-                        break;
-                    default:
-                        break;
-                }
-
-                if (!requestId) {
-                    return;
-                }
-
-                if (parameters && parameters.originalCertStatus) {
-                    setCurrentFilteringState(parameters);
-                }
-
-                setCurrentAppState(appState);
-            }
-        );
-
-        return () => {
-            browser.runtime.onMessage.removeListener();
-        };
+        browser.runtime.onMessage.addListener(messageHandler);
+        return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
+
+    if (!locale) {
+        return (<Loading />);
+    }
 
     if (requestStatus.isError || requestStatus.isPending) {
         return (

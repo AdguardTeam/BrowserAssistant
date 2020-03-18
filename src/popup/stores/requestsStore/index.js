@@ -1,162 +1,172 @@
-import { action } from 'mobx';
 import log from '../../../lib/logger';
+import innerMessaging from '../../../lib/innerMessaging';
 
 class RequestsStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @action
     getCurrentFilteringState = async (forceStartApp = false) => {
-        const { currentURL, currentPort } = this.rootStore.settingsStore;
+        const { currentURL: url, currentPort: port } = this.rootStore.settingsStore;
+
         try {
-            await adguard.requests.getCurrentFilteringState(currentURL, currentPort, forceStartApp);
+            const res = await innerMessaging.getCurrentFilteringState({
+                url,
+                port,
+                forceStartApp,
+            });
+
+            if (res) {
+                this.rootStore.settingsStore.setCurrentFilteringState(res.parameters);
+            }
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     getCurrentAppState = async () => {
         try {
-            await adguard.requests.getCurrentAppState();
+            const res = await innerMessaging.getCurrentAppState();
+            this.rootStore.settingsStore.setCurrentAppState(res.appState);
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     setFilteringStatus = async () => {
         const {
-            currentURL, isFilteringEnabled,
-            isHttpsFilteringEnabled,
+            currentURL: url,
+            isFilteringEnabled: isEnabled,
+            isHttpsFilteringEnabled: isHttpsEnabled,
         } = this.rootStore.settingsStore;
+
         try {
-            await adguard.requests.setFilteringStatus({
-                url: currentURL,
-                isEnabled: isFilteringEnabled,
-                isHttpsEnabled: isHttpsFilteringEnabled,
+            await innerMessaging.setFilteringStatus({
+                url,
+                isEnabled,
+                isHttpsEnabled,
             });
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     openOriginalCert = async () => {
-        const { settingsStore: { currentTabHostname, currentPort } } = this.rootStore;
+        const {
+            currentTabHostname,
+            currentPort,
+        } = this.rootStore.settingsStore;
+
         try {
-            await adguard.requests.openOriginalCert(currentTabHostname, currentPort);
+            await innerMessaging.openOriginalCert({
+                domain: currentTabHostname,
+                port: currentPort,
+            });
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     removeCustomRules = async () => {
-        adguard.tabs.reload();
+        const { currentURL: url } = this.rootStore.settingsStore;
+
+        await innerMessaging.reload();
         try {
-            await adguard.requests.removeCustomRules(this.rootStore.settingsStore.currentURL);
+            await innerMessaging.removeCustomRules({ url });
             this.rootStore.uiStore.setPageFilteredByUserFilter(false);
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     reportSite = async () => {
-        const { currentURL, referrer } = this.rootStore.settingsStore;
+        const { currentURL: url, referrer } = this.rootStore.settingsStore;
         try {
-            const {
-                parameters: { reportUrl },
-            } = await adguard.requests.reportSite({ url: currentURL, referrer });
+            await innerMessaging.reportSite({
+                url,
+                referrer,
+            });
 
-            adguard.tabs.openPage(reportUrl);
-
-            /** The popup in Firefox is not closed after opening new tabs by Tabs API.
-             *  Reload re-renders popup. */
-            window.location.reload();
+            window.close();
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     openFilteringLog = async () => {
         try {
-            await adguard.requests.openFilteringLog();
+            await innerMessaging.openFilteringLog();
+            window.close();
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     removeRule = async () => {
+        const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.removeRule(
-                this.rootStore.settingsStore.currentTabHostname
-            );
+            await innerMessaging.removeRule({ ruleText });
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     addRule = async () => {
+        const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
         try {
-            await adguard.requests.addRule(
-                this.rootStore.settingsStore.currentTabHostname
-            );
+            await innerMessaging.addRule({ ruleText });
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     setProtectionStatus = async (shouldEnableProtection) => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);
-            const response = await adguard.requests.setProtectionStatus(shouldEnableProtection);
-            this.rootStore.settingsStore.setProtection(response.appState.isProtectionEnabled);
+            const res = await innerMessaging.setProtectionStatus(
+                { isEnabled: shouldEnableProtection }
+            );
+            this.rootStore.uiStore.setExtensionLoading(false);
+
+            await this.rootStore.settingsStore.setCurrentAppState(res.appState);
+            await this.rootStore.settingsStore.setProtection(res.appState.isProtectionEnabled);
+
             this.rootStore.uiStore.setProtectionTogglePending(false);
-            await adguard.tabs.updateIconColor(shouldEnableProtection);
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     startApp = async () => {
-        this.rootStore.uiStore.setExtensionLoading(true);
         try {
+            this.rootStore.uiStore.setExtensionLoading(true);
             await this.getCurrentFilteringState(true);
+            this.rootStore.uiStore.setExtensionLoading(false);
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     updateApp = async () => {
         try {
-            await adguard.requests.updateApp();
+            await innerMessaging.updateApp();
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     openSettings = async () => {
         try {
-            await adguard.requests.openSettings();
+            await innerMessaging.openSettings();
+            window.close();
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
     startBlockingAd = async () => {
         try {
-            await adguard.tabs.initAssistant();
+            await innerMessaging.initAssistant();
         } catch (error) {
             log.error(error);
         }

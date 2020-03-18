@@ -1,4 +1,4 @@
-export const protocolToPortMap = {
+export const PROTOCOL_TO_PORT_MAP = {
     HTTPS: 443,
     HTTP: 80,
     SECURED: 0,
@@ -21,7 +21,7 @@ export const WORKING_STATES = {
     IS_APP_INSTALLED: 'IS_APP_INSTALLED',
     IS_APP_RUNNING: 'IS_APP_RUNNING',
     IS_APP_UP_TO_DATE: 'IS_APP_UP_TO_DATE',
-    IS_APP_SETUP_CORRECTLY: 'IS_APP_SETUP_CORRECTLY',
+    IS_APP_SETUP_CORRECT: 'IS_APP_SETUP_CORRECT',
     IS_EXTENSION_UPDATED: 'IS_EXTENSION_UPDATED',
     IS_EXTENSION_RELOADING: 'IS_EXTENSION_RELOADING',
     IS_PROTECTION_ENABLED: 'IS_PROTECTION_ENABLED',
@@ -43,27 +43,27 @@ export const SHOW_MODAL_TIME = {
     LONG: 5000,
 };
 
-export const modalStatesNames = {
+export const MODAL_STATES_NAMES = {
     isHovered: 'isHovered',
     isFocused: 'isFocused',
     isEntered: 'isEntered',
     isClicked: 'isClicked',
 };
 
-export const defaultModalState = Object.values(modalStatesNames)
+export const DEFAULT_MODAL_STATE = Object.values(MODAL_STATES_NAMES)
     .reduce((acc, name) => {
         acc[name] = false;
         return acc;
     }, {});
 
 
-export const eventTypeToModalStateMap = {
-    mouseover: { [modalStatesNames.isHovered]: true },
-    mouseout: { [modalStatesNames.isHovered]: false },
-    focus: { [modalStatesNames.isFocused]: true },
-    blur: { [modalStatesNames.isFocused]: false },
-    keydown: { [modalStatesNames.isEntered]: true },
-    mousedown: { [modalStatesNames.isClicked]: true },
+export const EVENT_TYPE_TO_MODAL_STATE_MAP = {
+    mouseover: { [MODAL_STATES_NAMES.isHovered]: true },
+    mouseout: { [MODAL_STATES_NAMES.isHovered]: false },
+    focus: { [MODAL_STATES_NAMES.isFocused]: true },
+    blur: { [MODAL_STATES_NAMES.isFocused]: false },
+    keydown: { [MODAL_STATES_NAMES.isEntered]: true },
+    mousedown: { [MODAL_STATES_NAMES.isClicked]: true },
 };
 
 export const PROTOCOLS = {
@@ -77,7 +77,7 @@ export const HTTP_FILTERING_STATUS = {
     DISABLED: 'DISABLED',
 };
 
-export const secureStatusModalStates = {
+export const SECURE_STATUS_MODAL_STATES = {
     [PROTOCOLS.HTTPS]: {
         [ORIGINAL_CERT_STATUS.INVALID]: { info: 'website_cert_is_expired' },
         [ORIGINAL_CERT_STATUS.NOTFOUND]: { info: 'protection_is_enabled' },

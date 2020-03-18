@@ -1,4 +1,4 @@
-export const RequestTypes = {
+export const REQUEST_TYPES = {
     init: 'init',
     getCurrentAppState: 'getCurrentAppState',
     getCurrentFilteringState: 'getCurrentFilteringState',
@@ -14,35 +14,59 @@ export const RequestTypes = {
     updateApp: 'updateApp',
 };
 
-export const HostRequestTypes = {
-    hostRequest: 'hostRequest',
-};
-
-export const ResponseTypesPrefixes = {
-    ADG: 'ADG',
-    ADG_INIT: 'ADG_INIT',
-};
-
-export const AssistantTypes = {
-    nativeAssistant: 'nativeAssistant',
-};
-
-export const MessageTypes = {
+export const TAB_ACTIONS = {
+    openPage: 'openPage',
+    reload: 'reload',
     getReferrer: 'getReferrer',
+    updateIconColor: 'updateIconColor',
+    getCurrentTabUrlProperties: 'getCurrentTabUrlProperties',
     initAssistant: 'initAssistant',
-};
-
-export const HostResponseTypes = {
-    ok: 'ok',
-    error: 'error',
-};
-
-export const HostTypes = {
-    browserExtensionHost: 'com.adguard.browser_extension_host.nm',
 };
 
 export const BACKGROUND_COMMANDS = {
     SHOW_IS_NOT_INSTALLED: 'SHOW_IS_NOT_INSTALLED',
-    SHOW_RELOAD: 'SHOW_RELOAD',
-    SHOW_SETUP_INCORRECTLY: 'SHOW_SETUP_INCORRECTLY',
+    START_RELOAD: 'START_RELOAD',
+    STOP_RELOAD: 'STOP_RELOAD',
+};
+
+export const API_ACTIONS = {
+    getUpdateStatusInfo: 'getUpdateStatusInfo',
+};
+
+
+export const HOST_RESPONSE_TYPES = {
+    OK: 'ok',
+    ERROR: 'error',
+};
+
+export const MESSAGE_TYPES = {
+    ...REQUEST_TYPES,
+    ...TAB_ACTIONS,
+    ...API_ACTIONS,
+    ...BACKGROUND_COMMANDS,
+    ...HOST_RESPONSE_TYPES,
+};
+
+export const HOST_REQUEST_TYPES = {
+    hostRequest: 'hostRequest',
+};
+
+export const ADG_PREFIX = 'ADG';
+
+export const ASSISTANT_TYPES = {
+    nativeAssistant: 'nativeAssistant',
+};
+export const CONTENT_MESSAGES = {
+    getReferrer: 'getReferrer',
+    initAssistant: 'initAssistant',
+};
+
+export const HOST_TYPES = {
+    browserExtensionHost: 'com.adguard.browser_extension_host.nm',
+};
+
+export const SETUP_STATES = {
+    isAppUpToDate: 'isAppUpToDate',
+    isExtensionUpdated: 'isExtensionUpdated',
+    isSetupCorrect: 'isSetupCorrect',
 };

@@ -5,56 +5,67 @@
 
 import nanoid from 'nanoid';
 import {
-    AssistantTypes,
-    RequestTypes,
-    ResponseTypesPrefixes,
+    ASSISTANT_TYPES,
+    MESSAGE_TYPES,
+    REQUEST_TYPES,
+    ADG_PREFIX,
 } from '../../lib/types';
-import browserApi from '../browserApi';
+import browserApi from '../../lib/browserApi';
 import versions from '../versions';
 import log from '../../lib/logger';
 import stubHost from './StubHost';
+
+const { BASE_LOCALE } = require('../../../tasks/consts');
 
 class Api {
     isAppUpToDate = true;
 
     isExtensionUpdated = true;
 
-    responsesHandler = (response) => {
-        log.info(`response ${response.id}`, response);
-        const { parameters } = response;
+    locale = BASE_LOCALE;
+
+    responsesHandler = (params) => {
+        log.info(`params ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
+        if (!params.requestId.startsWith(ADG_PREFIX)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
-            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            adguard.isAppUpToDate = this.isAppUpToDate;
-
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
-        }
-
-        browserApi.runtime.sendMessage(response);
+        browserApi.runtime.sendMessage({
+            type: params.result,
+            params,
+        });
     };
 
     init = async () => {
         try {
-            await this.makeRequest({
-                type: RequestTypes.init,
+            const res = await this.makeRequest({
+                type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
-                    type: AssistantTypes.nativeAssistant,
+                    type: ASSISTANT_TYPES.nativeAssistant,
                 },
-            }, ResponseTypesPrefixes.ADG_INIT);
+            });
+
+            const { parameters, appState } = res;
+
+            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
+            this.isExtensionUpdated = parameters.isValidatedOnHost;
+            this.locale = appState.locale;
+
+            if (!this.isAppUpToDate || !this.isExtensionUpdated) {
+                await browserApi.runtime.sendMessage({
+                    type: MESSAGE_TYPES.STOP_RELOAD,
+                });
+            }
         } catch (error) {
             log.error(error);
         }
     };
 
-    makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
-        const id = `${idPrefix}_${nanoid()}`;
+    makeRequest = async (params) => {
+        const id = `${ADG_PREFIX}_${nanoid()}`;
 
         log.info(`request ${id}`, params);
 

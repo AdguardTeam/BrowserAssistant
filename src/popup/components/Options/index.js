@@ -18,7 +18,6 @@ const getOptions = (stores) => {
         },
         uiStore: {
             isPageFilteredByUserFilter,
-            closePopupWrapper,
         },
         translationStore: {
             translate,
@@ -36,7 +35,7 @@ const getOptions = (stores) => {
         {
             iconName: 'sandwich',
             text: translate('open_filtering_log'),
-            onClick: closePopupWrapper(openFilteringLog),
+            onClick: openFilteringLog,
             isDisabled: false,
             isVisible: true,
         },

@@ -63,7 +63,7 @@ const getStates = (stores) => {
             onClick: undefined,
         },
 
-        [WORKING_STATES.IS_APP_SETUP_CORRECTLY]: {
+        [WORKING_STATES.IS_APP_SETUP_CORRECT]: {
             content: translate('something_went_wrong'),
             buttonText: translate('reinstall'),
             onClick: () => {
@@ -82,15 +82,15 @@ function defineState(stores) {
         isProtectionEnabled,
         isAppUpToDate,
         isExtensionUpdated,
-        isSetupCorrectly,
+        isSetupCorrect,
     } = stores.settingsStore;
 
     if (!isInstalled) {
         return states[WORKING_STATES.IS_APP_INSTALLED];
     }
 
-    if (!isSetupCorrectly) {
-        return states[WORKING_STATES.IS_APP_SETUP_CORRECTLY];
+    if (!isSetupCorrect) {
+        return states[WORKING_STATES.IS_APP_SETUP_CORRECT];
     }
 
     if (!isRunning) {

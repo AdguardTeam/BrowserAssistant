@@ -1,10 +1,11 @@
 import {
-    action, computed, observable, runInAction,
+    action, computed, observable,
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
 import { DOWNLOAD_LINK } from '../../../lib/conts';
 import { CHROME_UPDATE_CRX, FIREFOX_UPDATE_XPI } from '../../../../tasks/consts';
+import innerMessaging from '../../../lib/innerMessaging';
 
 class SettingsStore {
     constructor(rootStore) {
@@ -35,11 +36,13 @@ class SettingsStore {
 
     @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
-    @observable isAppUpToDate = adguard.isAppUpToDate;
+    @observable isAppUpToDate = true;
 
-    @observable isExtensionUpdated = adguard.isExtensionUpdated;
+    @observable isExtensionUpdated = true;
 
-    @observable isSetupCorrectly = adguard.isSetupCorrectly;
+    @observable isSetupCorrect = true;
+
+    @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
     @computed get pageProtocol() {
         return ({
@@ -49,45 +52,78 @@ class SettingsStore {
         });
     }
 
-    @action
-    getReferrer = async () => {
-        const referrer = await adguard.tabs.getReferrer();
+    setUpdateStatusInfo = (statusInfo) => {
+        const {
+            isAppUpToDate, isExtensionUpdated, isSetupCorrect, locale,
+        } = statusInfo;
 
-        runInAction(() => {
-            this.referrer = referrer || '';
-        });
+        this.setIsAppUpToDate(isAppUpToDate);
+        this.setIsExtensionUpdated(isExtensionUpdated);
+        this.setIsSetupCorrect(isSetupCorrect);
+        this.rootStore.translationStore.setLocale(locale);
     };
 
     @action
-    getCurrentTabHostname = async () => {
-        try {
-            const {
-                currentURL,
-                currentPort,
-                currentProtocol,
-                hostname,
-            } = await adguard.tabs.getCurrentTabUrlProperties();
+    setIsAppUpToDate = (isAppUpToDate) => {
+        this.isAppUpToDate = isAppUpToDate;
+    };
 
-            runInAction(() => {
-                this.currentURL = currentURL;
-                this.currentTabHostname = hostname || this.currentURL;
-                this.currentPort = currentPort;
-                this.currentProtocol = currentProtocol;
-            });
+    @action
+    setIsExtensionUpdated = (isExtensionUpdated) => {
+        this.isExtensionUpdated = isExtensionUpdated;
+    };
+
+    @action
+    setIsSetupCorrect = (isSetupCorrect) => {
+        this.isSetupCorrect = isSetupCorrect;
+    };
+
+    @action
+    setReferrer = (referrer = '') => {
+        this.referrer = referrer;
+    };
+
+    updateCurrentTabInfo = async () => {
+        try {
+            const urlProps = await innerMessaging.getCurrentTabUrlProperties();
+            const referrer = await innerMessaging.getReferrer();
+            this.setCurrentTabUrlProperties(urlProps);
+            this.setReferrer(referrer);
+            await this.rootStore.requestsStore.getCurrentFilteringState();
         } catch (error) {
             log.error(error);
         }
     };
 
-    @action
-    openDownloadPage = () => {
-        adguard.tabs.openPage(DOWNLOAD_LINK);
+    refreshUpdateStatusInfo = async () => {
+        const res = await innerMessaging.getUpdateStatusInfo();
+        this.setUpdateStatusInfo(res);
     };
 
     @action
-    setHttpsFiltering = (isHttpsFilteringEnabled) => {
+    setCurrentTabUrlProperties = (urlProps) => {
+        const {
+            currentURL,
+            currentPort,
+            currentProtocol,
+            hostname,
+        } = urlProps;
+
+        this.currentURL = currentURL;
+        this.currentTabHostname = hostname || this.currentURL;
+        this.currentPort = currentPort;
+        this.currentProtocol = currentProtocol;
+    };
+
+    @action
+    openDownloadPage = () => {
+        innerMessaging.openPage(DOWNLOAD_LINK);
+    };
+
+    @action
+    setHttpsFiltering = async (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        this.rootStore.requestsStore.setFilteringStatus();
+        await this.rootStore.requestsStore.setFilteringStatus();
         this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 
@@ -119,15 +155,14 @@ class SettingsStore {
     };
 
     @action
-    setProtection = async (isProtectionEnabled) => {
+    setProtection = (isProtectionEnabled) => {
         this.isProtectionEnabled = isProtectionEnabled;
     };
 
     @action
-    setHttpAndHttpsFilteringActive = async (isFilteringEnabled, isHttpsFilteringEnabled) => {
+    setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        await adguard.tabs.updateIconColor(isFilteringEnabled);
     };
 
     @action
@@ -158,9 +193,8 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
-        const updateLink = isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
-        adguard.tabs.openPage(updateLink);
+        const updateLink = this.isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
+        innerMessaging.openPage(updateLink);
     };
 }
 

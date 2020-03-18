@@ -14,7 +14,6 @@ const Header = observer(() => {
             setProtectionStatus,
         },
         uiStore: {
-            closePopupWrapper,
             setProtectionTogglePending,
             isProtectionTogglePending,
             isAppWorking,
@@ -31,8 +30,6 @@ const Header = observer(() => {
         setProtectionStatus(false);
         e.target.blur();
     };
-
-    const openSettingsAndClosePopup = closePopupWrapper(openSettings);
 
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,
@@ -66,7 +63,7 @@ const Header = observer(() => {
                     title={translate('adg_settings')}
                     aria-label={translate('adg_settings')}
                     type="button"
-                    onClick={openSettingsAndClosePopup}
+                    onClick={openSettings}
                     tabIndex={globalTabIndex}
                 />
             </div>

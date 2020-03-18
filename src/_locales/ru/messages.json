@@ -26,6 +26,9 @@
     "adg_is_paused": {
         "message": "Защита AdGuard приостановлена"
     },
+    "adg_is_launching": {
+        "message": "AdGuard загружается..."
+    },
     "enable": {
         "message": "Включить"
     },

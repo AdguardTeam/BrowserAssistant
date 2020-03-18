@@ -5,12 +5,12 @@ import messagesMap from '../../../_locales';
 
 const { BASE_LOCALE } = require('../../../../tasks/consts');
 
-class TranslationsStore {
+class TranslationStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable locale = BASE_LOCALE;
+    @observable locale = null;
 
     @action
     setLocale = (locale) => {
@@ -36,4 +36,4 @@ class TranslationsStore {
     translate = (id) => this.i18n.formatMessage({ id });
 }
 
-export default TranslationsStore;
+export default TranslationStore;

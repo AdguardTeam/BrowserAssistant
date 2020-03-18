@@ -1,53 +1,47 @@
 import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
 import {
-    AssistantTypes,
-    BACKGROUND_COMMANDS,
-    HostResponseTypes,
-    HostTypes,
-    RequestTypes,
-    ResponseTypesPrefixes,
+    ASSISTANT_TYPES,
+    MESSAGE_TYPES,
+    HOST_TYPES,
+    REQUEST_TYPES,
+    ADG_PREFIX,
 } from '../lib/types';
-import browserApi from './browserApi';
+import browserApi from '../lib/browserApi';
 import versions from './versions';
 import log from '../lib/logger';
+import state from './State';
+import icon from './Icon';
 
 const MAX_RETRY_TIMES = 5;
 
 class Api {
-    isAppUpToDate = true;
-
-    isExtensionUpdated = true;
-
     retryTimes = MAX_RETRY_TIMES;
 
-    responsesHandler = (response) => {
-        log.info(`response ${response.id}`, response);
-        const { parameters } = response;
+    responseHandler = async (params) => {
+        log.info(`response ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
-        if (!response.requestId.startsWith(ResponseTypesPrefixes.ADG)) {
+        if (!params.requestId.startsWith(ADG_PREFIX)) {
             return;
         }
 
-        if (parameters && response.requestId.startsWith(ResponseTypesPrefixes.ADG_INIT)) {
-            this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            adguard.isAppUpToDate = this.isAppUpToDate;
+        await state.updateAppState(params.appState);
+        await icon.updateIconColor();
 
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
-            adguard.isExtensionUpdated = this.isExtensionUpdated;
-        }
-
-        browserApi.runtime.sendMessage(response);
+        await browserApi.runtime.sendMessage({
+            type: params.result,
+            params,
+        });
     };
 
     init = () => {
         log.info('init');
-        this.port = browser.runtime.connectNative(HostTypes.browserExtensionHost);
-        this.port.onMessage.addListener(this.responsesHandler);
+        this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
+        this.port.onMessage.addListener(this.responseHandler);
 
         this.port.onDisconnect.addListener(
-            () => this.makeReinit(BACKGROUND_COMMANDS.SHOW_IS_NOT_INSTALLED)
+            () => this.makeReinit(MESSAGE_TYPES.SHOW_IS_NOT_INSTALLED)
         );
 
         this.initRequest();
@@ -56,13 +50,27 @@ class Api {
 
     initRequest = async () => {
         try {
-            await this.makeRequest({
-                type: RequestTypes.init,
+            const res = await this.makeRequest({
+                type: REQUEST_TYPES.init,
                 parameters: {
                     ...versions,
-                    type: AssistantTypes.nativeAssistant,
+                    type: ASSISTANT_TYPES.nativeAssistant,
                 },
-            }, ResponseTypesPrefixes.ADG_INIT);
+            });
+
+            const { parameters, appState } = res;
+
+            const isAppUpToDate = versions.apiVersion <= parameters.apiVersion;
+            const { isValidatedOnHost } = parameters;
+            const { locale } = appState;
+
+            state.updateAppSetup(isAppUpToDate, isValidatedOnHost, locale);
+
+            if (!state.isAppUpToDate || !state.isExtensionUpdated) {
+                await browserApi.runtime.sendMessage({
+                    type: MESSAGE_TYPES.STOP_RELOAD,
+                });
+            }
         } catch (error) {
             log.error(error);
         }
@@ -71,55 +79,54 @@ class Api {
     deinit = () => {
         log.info('deinit');
         this.port.disconnect();
-        this.port.onMessage.removeListener(this.responsesHandler);
+        this.port.onMessage.removeListener(this.responseHandler);
     };
 
     reinit = async () => {
-        await browserApi.runtime.sendMessage({ result: BACKGROUND_COMMANDS.SHOW_RELOAD });
+        await browserApi.runtime.sendMessage({ type: MESSAGE_TYPES.START_RELOAD });
         this.deinit();
         this.init();
     };
 
-    makeReinit = async (message = BACKGROUND_COMMANDS.SHOW_SETUP_INCORRECTLY) => {
+    makeReinit = async (message = MESSAGE_TYPES.STOP_RELOAD) => {
         this.retryTimes -= 1;
 
         if (this.retryTimes) {
             this.reinit();
         } else {
             this.deinit();
-            await browserApi.runtime.sendMessage(
-                { result: message }
-            );
+            await browserApi.runtime.sendMessage({ type: message });
             this.retryTimes = MAX_RETRY_TIMES;
 
             log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
         }
     };
 
-    makeRequest = async (params, idPrefix = ResponseTypesPrefixes.ADG) => {
-        const id = `${idPrefix}_${nanoid()}`;
+    makeRequest = async (params) => {
+        const id = `${ADG_PREFIX}_${nanoid()}`;
 
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
+
         log.info(`request ${id}`, params);
 
         return new Promise((resolve, reject) => {
             const messageHandler = (msg) => {
                 const { requestId, result } = msg;
 
-                const pendingTimer = setTimeout(() => {
+                const timerId = setTimeout(() => {
                     reject(new Error('Native host is not responding.'));
                     this.port.onMessage.removeListener(messageHandler);
                 }, RESPONSE_TIMEOUT_MS);
 
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
-                    clearTimeout(pendingTimer);
+                    clearTimeout(timerId);
 
-                    if (result === HostResponseTypes.ok) {
+                    if (result === MESSAGE_TYPES.OK) {
                         return resolve(msg);
                     }
 
-                    if (result === HostResponseTypes.error) {
+                    if (result === MESSAGE_TYPES.ERROR) {
                         this.makeReinit();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }

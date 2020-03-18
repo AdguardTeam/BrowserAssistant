@@ -1,4 +1,4 @@
-import { getUrl } from './browserApi/runtime';
+import { getUrl } from '../lib/browserApi/runtime';
 import { lazyGet } from '../lib/helpers';
 import { ICON_COLORS } from '../lib/conts';
 

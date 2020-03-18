@@ -1,4 +1,4 @@
-import { PROTOCOLS, protocolToPortMap } from '../popup/stores/consts';
+import { PROTOCOLS, PROTOCOL_TO_PORT_MAP } from '../popup/stores/consts';
 
 /**
  * Returns hostname of url if it was correct, otherwise return input url
@@ -24,7 +24,7 @@ export const getProtocol = (protocol) => {
 };
 
 export const getFormattedPortByProtocol = (port, protocol) => {
-    const defaultPort = protocolToPortMap[protocol];
+    const defaultPort = PROTOCOL_TO_PORT_MAP[protocol];
     return port === '' ? defaultPort : Number(port);
 };
 
@@ -60,4 +60,14 @@ export const flattenNestedObj = (obj, propName) => {
             acc[key] = value[propName];
             return acc;
         }, {});
+};
+
+/**
+ * Checks if at least one value of the object is strictly equal to true
+ * @param {Object.<string, any>} states
+ * @returns {boolean}
+ */
+export const checkSomeIsTrue = (states) => {
+    return Object.values(states)
+        .some((state) => state === true);
 };
