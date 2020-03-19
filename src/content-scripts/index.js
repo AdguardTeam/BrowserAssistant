@@ -5,7 +5,8 @@ import log from '../lib/logger';
 import browserApi from '../lib/browserApi';
 
 const initialize = () => {
-    if (Window.prototype.___agcs_run) {
+    // Prevent running content script more than once
+    if (window.___agcs_run) {
         return;
     }
 
@@ -29,7 +30,7 @@ const initialize = () => {
         return Promise.resolve();
     });
 
-    Window.prototype.___agcs_run = true;
+    window.___agcs_run = true;
 };
 
 try {

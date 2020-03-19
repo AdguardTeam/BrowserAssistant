@@ -14,7 +14,7 @@ class TranslationStore {
 
     @action
     setLocale = (locale) => {
-        this.locale = locale;
+        this.locale = locale || BASE_LOCALE;
     };
 
     @computed
