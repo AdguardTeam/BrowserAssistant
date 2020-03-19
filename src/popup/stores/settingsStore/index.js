@@ -3,7 +3,7 @@ import {
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
-import { DOWNLOAD_LINK } from '../../../lib/conts';
+import { DOWNLOAD_LINK } from '../../../lib/consts';
 import { CHROME_UPDATE_CRX, FIREFOX_UPDATE_XPI } from '../../../../tasks/consts';
 import innerMessaging from '../../../lib/innerMessaging';
 

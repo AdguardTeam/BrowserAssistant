@@ -4,7 +4,7 @@ import {
 } from '../lib/types';
 import log from '../lib/logger';
 import browserApi from '../lib/browserApi';
-import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/conts';
+import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/consts';
 import { getFormattedPortByProtocol, getProtocol, getUrlProperties } from '../lib/helpers';
 import state from './State';
 

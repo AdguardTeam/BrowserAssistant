@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import { Prefs } from './prefs';
-import { ICON_COLORS } from '../lib/conts';
+import { ICON_COLORS } from '../lib/consts';
 
 const setIcon = async (path, tabId) => {
     const details = { path };

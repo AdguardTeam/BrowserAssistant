@@ -1,6 +1,6 @@
 import { getUrl } from '../lib/browserApi/runtime';
 import { lazyGet } from '../lib/helpers';
-import { ICON_COLORS } from '../lib/conts';
+import { ICON_COLORS } from '../lib/consts';
 
 const ICONS_PATH = 'assets/images/icons';
 
