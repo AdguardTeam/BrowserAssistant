@@ -1,7 +1,7 @@
 import { MESSAGE_TYPES as MSG } from '../types';
 import browserApi from '../browserApi';
 
-const sendMessage = (type, params) => browserApi.runtime.sendMessage({ type, params });
+const sendMessage = async (type, params) => browserApi.runtime.sendMessage({ type, params });
 
 export default {
     [MSG.getCurrentAppState]: () => sendMessage(MSG.getCurrentAppState),

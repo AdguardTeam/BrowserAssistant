@@ -83,6 +83,7 @@ class SettingsStore {
         this.referrer = referrer;
     };
 
+    @action
     updateCurrentTabInfo = async () => {
         try {
             const urlProps = await innerMessaging.getCurrentTabUrlProperties();

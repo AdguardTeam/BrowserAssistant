@@ -17,9 +17,17 @@ class TranslationStore {
         this.locale = locale;
     };
 
+    getLocale = () => {
+        return this.locale || this.getFallbackLocale();
+    };
+
+    getFallbackLocale = () => {
+        return messagesMap[browserLocale] ? browserLocale : BASE_LOCALE;
+    };
+
     @computed
     get i18n() {
-        const fallbackLocale = messagesMap[browserLocale] ? browserLocale : BASE_LOCALE;
+        const fallbackLocale = this.getFallbackLocale();
         const locale = messagesMap[this.locale] ? this.locale : fallbackLocale;
 
         const messages = {
