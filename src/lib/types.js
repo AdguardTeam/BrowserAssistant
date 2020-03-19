@@ -33,7 +33,6 @@ export const API_ACTIONS = {
     getUpdateStatusInfo: 'getUpdateStatusInfo',
 };
 
-
 export const HOST_RESPONSE_TYPES = {
     OK: 'ok',
     ERROR: 'error',

@@ -25,7 +25,7 @@ const App = observer(() => {
             requestStatus,
         },
         translationStore: {
-            locale,
+            getLocale,
         },
     } = root;
 
@@ -41,7 +41,7 @@ const App = observer(() => {
         return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
-    if (!locale) {
+    if (!getLocale()) {
         return (<Loading />);
     }
 
