@@ -1,6 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { createIntl } from 'react-intl';
-import { browserLocale } from '../../../lib/conts';
+import { browserLocale } from '../../../lib/consts';
 import messagesMap from '../../../_locales';
 
 const { BASE_LOCALE } = require('../../../../tasks/consts');
@@ -14,7 +14,7 @@ class TranslationStore {
 
     @action
     setLocale = (locale) => {
-        this.locale = locale;
+        this.locale = locale || BASE_LOCALE;
     };
 
     getLocale = () => {
