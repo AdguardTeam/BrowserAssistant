@@ -8,6 +8,7 @@ const Header = observer(() => {
     const {
         settingsStore: {
             isProtectionEnabled,
+            isAuthorized,
         },
         requestsStore: {
             openSettings,
@@ -26,6 +27,9 @@ const Header = observer(() => {
     } = useContext(rootStore);
 
     const disableProtection = (e) => {
+        if (!isAuthorized) {
+            return;
+        }
         setProtectionTogglePending(true);
         setProtectionStatus(false);
         e.target.blur();

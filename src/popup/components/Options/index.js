@@ -8,6 +8,7 @@ const getOptions = (stores) => {
         settingsStore: {
             isFilteringEnabled,
             pageProtocol,
+            isAuthorized,
         },
         requestsStore: {
             startBlockingAd,
@@ -50,10 +51,13 @@ const getOptions = (stores) => {
             iconName: 'icon-cross',
             text: translate('reset_custom_rules'),
             onClick: async () => {
+                if (!isAuthorized) {
+                    return;
+                }
                 await removeCustomRules();
                 await getCurrentFilteringState();
             },
-            isDisabled: false,
+            isDisabled: !isAuthorized,
             isVisible: isPageFilteredByUserFilter,
         },
     ]);

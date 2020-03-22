@@ -49,18 +49,24 @@ class State {
         this.locale = locale;
     };
 
+    setIsAuthorized = (isAuthorized) => {
+        this.isAuthorized = isAuthorized;
+    };
+
     updateAppState = async (appState) => {
         const {
             isInstalled,
             isRunning,
             locale,
             isProtectionEnabled,
+            isAuthorized,
         } = appState;
 
         this.setIsInstalled(isInstalled);
         this.setIsRunning(isRunning);
         this.setLocale(locale);
         this.setIsProtectionEnabled(isProtectionEnabled);
+        this.setIsAuthorized(isAuthorized);
     };
 
     updateAppSetup = (isAppUpToDate, isExtensionUpdated, locale) => {
@@ -73,6 +79,10 @@ class State {
         return [this.isInstalled, this.isRunning, this.isProtectionEnabled, this.isAppUpToDate,
             this.isExtensionUpdated, this.isSetupCorrect, this.isFilteringEnabled]
             .every((state) => state === true);
+    }
+
+    getIsAuthorized() {
+        return !!this.isAuthorized;
     }
 }
 

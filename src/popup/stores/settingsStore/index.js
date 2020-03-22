@@ -151,6 +151,11 @@ class SettingsStore {
     };
 
     @action
+    setAuthorized = (isAuthorized) => {
+        this.isAuthorized = isAuthorized;
+    };
+
+    @action
     setRunning = (isRunning) => {
         this.isRunning = isRunning;
     };
@@ -184,11 +189,12 @@ class SettingsStore {
     @action
     setCurrentAppState = (appState) => {
         const {
-            isInstalled, isRunning, isProtectionEnabled, locale,
+            isInstalled, isRunning, isProtectionEnabled, locale, isAuthorized,
         } = appState;
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+        this.setAuthorized(isAuthorized);
         this.rootStore.translationStore.setLocale(locale);
     };
 

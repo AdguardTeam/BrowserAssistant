@@ -9,6 +9,10 @@
         display: none;
     }
 
+    &--disabled {
+        opacity: 0.5;
+    }
+
     &__label {
         cursor: pointer;
         position: relative;
@@ -19,13 +23,12 @@
         opacity: 1;
         border: 0;
 
-        &--disabled {
+        &--unchecked {
             background-color: var(--grayd8);
         }
 
-        &--secured {
+        &--disabled {
             cursor: default;
-            background-color: var(--green-pale) !important;
         }
 
         &:before {
@@ -62,7 +65,7 @@
         font-size: 1.6rem;
         white-space: pre-line;
 
-        &--secured {
+        &--unchecked {
             color: var(--gray88);
         }
     }
