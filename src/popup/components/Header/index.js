@@ -37,6 +37,7 @@ const Header = observer(() => {
 
     const iconProtectionClass = classNames({
         'widget-popup__buttons': true,
+        'widget-popup__buttons--disabled': !isAuthorized,
         'widget-popup__buttons--pause': isProtectionEnabled,
         'widget-popup__buttons--start': !isProtectionEnabled || isProtectionTogglePending,
         'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
