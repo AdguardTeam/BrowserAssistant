@@ -106,7 +106,6 @@ const updateFirefoxManifest = async () => {
     const manifestPath = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
     const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
     manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
-    console.log(manifest);
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
 };
 
