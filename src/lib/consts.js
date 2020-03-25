@@ -6,7 +6,7 @@ export const ICON_COLORS = {
 };
 export const browserLocale = navigator.language.slice(0, 2);
 
-// This urls would be updated during extension build
+// These urls would be updated during extension build
 // Check webpack replace loader
 export const UPDATE_URL_FIREFOX = '{{UPDATE_URL_FIREFOX}}';
 export const UPDATE_URL_CHROME = '{{UPDATE_URL_CHROME}}';

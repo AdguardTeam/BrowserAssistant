@@ -50,8 +50,6 @@ const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistan
 // Path to the Firefox XPI (that we'll add to the update manifest)
 const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${XPI_NAME}`;
 
-
-
 module.exports = {
     LOCALES_PATH,
     ENV_MAP,
