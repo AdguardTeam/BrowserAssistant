@@ -6,7 +6,13 @@ const chalk = require('chalk');
 const credentials = require('../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
 const {
-    BROWSER_TYPES, ENV_MAP, FIREFOX_UPDATE_XPI, BUILD_PATH, MANIFEST_NAME, FIREFOX_UPDATER_FILENAME,
+    BROWSER_TYPES,
+    BUILD_PATH,
+    ENV_MAP,
+    FIREFOX_UPDATER_FILENAME,
+    FIREFOX_UPDATE_URL,
+    FIREFOX_UPDATE_XPI,
+    MANIFEST_NAME,
     XPI_NAME,
 } = require('./consts');
 const config = require('../package');
@@ -52,7 +58,7 @@ async function generateXpi() {
     }
 }
 
-const getFileContent = (
+const generateUpdateJson = (
     {
         // eslint-disable-next-line camelcase
         id, version, update_link, strict_min_version,
@@ -80,7 +86,7 @@ const createUpdateJson = async (manifest) => {
         // eslint-disable-next-line camelcase
         const { id, strict_min_version } = manifest.applications.gecko;
 
-        const fileContent = getFileContent(
+        const fileContent = generateUpdateJson(
             {
                 id, version: config.version, update_link: FIREFOX_UPDATE_XPI, strict_min_version,
             }
@@ -96,8 +102,16 @@ const createUpdateJson = async (manifest) => {
     }
 };
 
+const updateFirefoxManifest = async () => {
+    const manifestPath = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
+    const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
+    manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
+    await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
+};
+
 const generateFirefoxArtifacts = async () => {
     try {
+        await updateFirefoxManifest();
         await generateXpi();
         const manifest = await getFirefoxManifest();
         await createUpdateJson(manifest);
