@@ -4,7 +4,7 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
-const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('./consts');
+const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('./langConstants');
 
 const BASE_URL = 'https://twosky.adtidy.org/api/v1';
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;

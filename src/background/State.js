@@ -1,4 +1,4 @@
-const { BASE_LOCALE } = require('../../tasks/consts');
+const { BASE_LOCALE } = require('../../tasks/langConstants');
 
 class State {
     isFilteringEnabled = true;

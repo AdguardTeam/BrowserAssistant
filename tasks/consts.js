@@ -1,5 +1,4 @@
 const path = require('path');
-const [twoskyConfig] = require('../.twosky.json');
 
 const SRC_PATH = '../src';
 const LOCALES_PATH = path.join(__dirname, SRC_PATH, '_locales/en/messages');
@@ -51,16 +50,7 @@ const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistan
 // Path to the Firefox XPI (that we'll add to the update manifest)
 const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${XPI_NAME}`;
 
-const { base_locale: BASE_LOCALE, project_id: PROJECT_ID, languages: LANGUAGES } = twoskyConfig;
 
-/**
- * Users locale may be defined with only two chars (language code)
- * Here we provide a map of equivalent translation for such locales
- */
-const LOCALES_EQUIVALENTS_MAP = {
-    'pt-BR': 'pt',
-    'zh-CN': 'zh',
-};
 
 module.exports = {
     LOCALES_PATH,
@@ -79,8 +69,4 @@ module.exports = {
     FIREFOX_UPDATER_FILENAME,
     CRX_NAME,
     XPI_NAME,
-    BASE_LOCALE, // TODO do not use directly outside of tasks
-    PROJECT_ID,
-    LANGUAGES, // TODO do not use directly outside of tasks
-    LOCALES_EQUIVALENTS_MAP, // TODO do not use directly outside of tasks
 };

@@ -15,7 +15,7 @@ import versions from '../versions';
 import log from '../../lib/logger';
 import stubHost from './StubHost';
 
-const { BASE_LOCALE } = require('../../../tasks/consts');
+const { BASE_LOCALE } = require('../../../tasks/langConstants');
 
 class Api {
     isAppUpToDate = true;
