@@ -3,28 +3,37 @@ import classNames from 'classnames';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, checked, onClick, isSecured, tabIndex, isDisabled, label,
+    id, checked, onClick, tabIndex, isDisabled, label,
 }) => {
-    const switcherTextClass = classNames({
-        switcher__text: true,
-        'switcher__text--secured': isSecured,
+    const switcherClass = classNames('switcher', {
+        'switcher--disabled': isDisabled,
     });
 
-    const switcherClass = classNames({
-        switcher__label: true,
-        'switcher__label--disabled': isDisabled && !isSecured,
-        'switcher__label--secured': isSecured,
+    const textClass = classNames('switcher__text', {
+        'switcher__text--unchecked': !checked,
     });
+
+    const buttonClass = classNames('switcher__label', {
+        'switcher__label--unchecked': !checked,
+        'switcher__label--disabled': isDisabled,
+    });
+
+    const clickHandler = () => {
+        if (isDisabled) {
+            return;
+        }
+        onClick();
+    };
 
     const onKeyDown = (e) => {
         if (e.key === 'Enter') {
-            onClick();
+            clickHandler();
         }
         return undefined;
     };
 
     return (
-        <div className="switcher">
+        <div className={switcherClass}>
             <input
                 className="switcher__checkbox"
                 type="checkbox"
@@ -33,14 +42,14 @@ const Switcher = ({
                 checked={checked}
             />
             <button
-                className={switcherClass}
+                className={buttonClass}
                 type="button"
                 aria-labelledby={label}
                 tabIndex={tabIndex}
-                onClick={onClick}
+                onClick={clickHandler}
                 onKeyDown={onKeyDown}
             />
-            <div className={switcherTextClass}>{label}</div>
+            <div className={textClass}>{label}</div>
         </div>
     );
 };

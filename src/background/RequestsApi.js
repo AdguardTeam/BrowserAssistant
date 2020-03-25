@@ -37,7 +37,7 @@ class RequestsApi {
      * @param {boolean} parameters.isEnabled
      * @param {boolean} parameters.isHttpsEnabled
      * @param {string} parameters.url
-     * @returns {function}
+     * @returns {Promise<object>}
      */
     setFilteringStatus = ({ isEnabled, isHttpsEnabled, url }) => api.makeRequest({
         type: REQUEST_TYPES.setFilteringStatus,
@@ -89,7 +89,7 @@ class RequestsApi {
      * @param {object} parameters
      * @param {string} parameters.url
      * @param {string} parameters.referrer
-     * @returns {function}
+     * @returns {Promise<object>}
      */
     reportSite = ({ url, referrer }) => api.makeRequest({
         type: REQUEST_TYPES.reportSite,

@@ -19,6 +19,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             pageProtocol,
             originalCertStatus,
             isFilteringEnabled,
+            isAuthorized,
         },
         uiStore: {
             certStatus,
@@ -76,8 +77,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                         checked={!certStatus.isInvalid && pageProtocol.isHttps
                         && isHttpsFilteringEnabled}
                         onClick={toggleHttpsFiltering}
-                        isSecured={pageProtocol.isSecured}
-                        isDisabled={certStatus.isInvalid}
+                        isDisabled={certStatus.isInvalid || !isAuthorized}
                     />
                 </div>
             )}

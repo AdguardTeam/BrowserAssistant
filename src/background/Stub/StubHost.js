@@ -19,94 +19,134 @@ class StubHost {
     REPORT_URL = 'https://reports.adguard.com/ru/new_issue.html';
 
     filteringStatus = {
-        /** @param isFilteringEnabled boolean * */
+        /**
+         * @param {boolean} isFilteringEnabled
+         */
         isFilteringEnabled: true,
-        /** @param isHttpsFilteringEnabled boolean * */
+
+        /**
+         * @param {boolean} isHttpsFilteringEnabled
+         */
         isHttpsFilteringEnabled: true,
-        /** @param isPageFilteredByUserFilter boolean * */
+
+        /**
+         * @param {boolean} isPageFilteredByUserFilter
+         */
+
         isPageFilteredByUserFilter: false,
-        /** @param blockedAdsCount number * */
+        /**
+         * @param {number} blockedAdsCount
+         */
+
         blockedAdsCount: 0,
-        /** @param totalBlockedCount number * */
+        /**
+         * @param {number} totalBlockedCount
+         */
+
         totalBlockedCount: 346,
-        /** @param originalCertIssuer string * */
+        /**
+         * @param {string} originalCertIssuer
+         */
+
         originalCertIssuer: 'GTS CA 1O1',
-        /** @param originalCertStatus  {("valid" | "invalid" | "bypassed" | "notfound")}* */
+
+        /**
+         * @param {("valid" | "invalid" | "bypassed" | "notfound")} originalCertStatus
+         */
         originalCertStatus: ORIGINAL_CERT_STATUS.VALID,
     };
 
     appState = {
-        /** @param lastCheckTime string * */
+        /**
+         * @param {string} lastCheckTime
+         */
         lastCheckTime: new Date().toISOString(),
-        /** @param isInstalled boolean * */
+
+        /**
+         * @param {boolean} isInstalled
+         */
         isInstalled: true,
-        /** @param isRunning boolean * */
+
+        /**
+         * @param {boolean} isRunning
+         */
         isRunning: true,
-        /** @param isProtectionEnabled boolean* */
+
+        /**
+         * @param {boolean} isProtectionEnabled
+         */
         isProtectionEnabled: true,
-        /** @param locale string* */
+
+        /**
+         * @param isAuthorized boolean
+         */
+        isAuthorized: true,
+
+        /**
+         * {string} @param locale
+         */
         locale: BASE_LOCALE,
     };
 
     set isFilteringEnabled(isFilteringEnabled) {
         this.filteringStatus.isFilteringEnabled = isFilteringEnabled;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set isHttpsFilteringEnabled(isHttpsFilteringEnabled) {
         this.filteringStatus.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set isPageFilteredByUserFilter(isPageFilteredByUserFilter) {
         this.filteringStatus.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set blockedAdsCount(blockedAdsCount) {
         this.filteringStatus.blockedAdsCount = blockedAdsCount;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set totalBlockedCount(totalBlockedCount) {
         this.filteringStatus.totalBlockedCount = totalBlockedCount;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set originalCertIssuer(originalCertIssuer) {
         this.filteringStatus.originalCertIssuer = originalCertIssuer;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set originalCertStatus(originalCertStatus) {
         this.filteringStatus.originalCertStatus = originalCertStatus;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set lastCheckTime(lastCheckTime) {
         this.appState.lastCheckTime = lastCheckTime;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set isInstalled(isInstalled) {
         this.appState.isInstalled = isInstalled;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set isRunning(isRunning) {
         this.appState.isRunning = isRunning;
         this.appState.locale = isRunning ? this.appState.locale : '';
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set isProtectionEnabled(isProtectionEnabled) {
         this.appState.isProtectionEnabled = isProtectionEnabled;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     set locale(locale) {
         this.appState.locale = locale;
-        this.#makeRequest();
+        return this.#makeRequest();
     }
 
     get isFilteringEnabled() {

@@ -44,6 +44,8 @@ class SettingsStore {
 
     @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
+    @observable isAuthorized = true;
+
     @computed get pageProtocol() {
         return ({
             isHttp: this.currentProtocol === PROTOCOLS.HTTP,
@@ -151,6 +153,16 @@ class SettingsStore {
     };
 
     @action
+    setAuthorized = (isAuthorized) => {
+        // if isAuthorized is undefined do not change state
+        // mac app doesn't send isAuthorized information
+        if (isAuthorized !== true && isAuthorized !== false) {
+            return;
+        }
+        this.isAuthorized = isAuthorized;
+    };
+
+    @action
     setRunning = (isRunning) => {
         this.isRunning = isRunning;
     };
@@ -184,11 +196,12 @@ class SettingsStore {
     @action
     setCurrentAppState = (appState) => {
         const {
-            isInstalled, isRunning, isProtectionEnabled, locale,
+            isInstalled, isRunning, isProtectionEnabled, locale, isAuthorized,
         } = appState;
         this.setInstalled(isInstalled);
         this.setRunning(isRunning);
         this.setProtection(isProtectionEnabled);
+        this.setAuthorized(isAuthorized);
         this.rootStore.translationStore.setLocale(locale);
     };
 

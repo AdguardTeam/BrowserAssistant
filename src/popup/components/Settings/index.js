@@ -11,6 +11,7 @@ const Settings = observer(() => {
             isFilteringEnabled,
             pageProtocol,
             setFiltering,
+            isAuthorized,
         },
         translationStore: { translate },
         uiStore: { globalTabIndex },
@@ -18,14 +19,9 @@ const Settings = observer(() => {
 
     const toggleFiltering = () => setFiltering(!isFilteringEnabled);
 
-    const onClick = () => {
-        if (pageProtocol.isSecured) {
-            return;
-        }
-        toggleFiltering();
-    };
-
     const checked = pageProtocol.isSecured ? true : isFilteringEnabled;
+
+    const isDisabled = pageProtocol.isSecured || !isAuthorized;
 
     return (
         <div className="settings">
@@ -33,9 +29,8 @@ const Settings = observer(() => {
                 <Switcher
                     id={SWITCHER_IDS.GLOBAL_SWITCHER}
                     checked={checked}
-                    onClick={onClick}
-                    isSecured={pageProtocol.isSecured}
-                    isDisabled={pageProtocol.isSecured}
+                    onClick={toggleFiltering}
+                    isDisabled={isDisabled}
                     tabIndex={globalTabIndex}
                     label={translate(checked ? 'enabled' : 'disabled')}
                 />
