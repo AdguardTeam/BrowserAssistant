@@ -46,7 +46,7 @@ const getStates = (stores) => {
             content: translate('adg_is_paused'),
             buttonText: translate('enable'),
             onClick: async () => {
-                setProtectionStatus(true);
+                await setProtectionStatus(true);
                 await getCurrentFilteringState();
             },
         },
