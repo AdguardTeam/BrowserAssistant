@@ -37,17 +37,19 @@ const MANIFEST_NAME = 'manifest.json';
 // Chrome CRX certificate path
 const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
 
+const CHANNEL = ENV_MAP[process.env.NODE_ENV].outputPath;
+
 // Update manifest URL for the Chrome extension
-const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/beta/${CHROME_UPDATER_FILENAME}`;
+const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${CHROME_UPDATER_FILENAME}`;
 
 // Update manifest URL for the Firefox add-on
-const FIREFOX_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/beta/${FIREFOX_UPDATER_FILENAME}`;
+const FIREFOX_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${FIREFOX_UPDATER_FILENAME}`;
 
 // Path to the Chrome CRX (that we'll add to the update manifest)
-const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/beta/${CRX_NAME}`;
+const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${CRX_NAME}`;
 
 // Path to the Firefox XPI (that we'll add to the update manifest)
-const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/beta/${XPI_NAME}`;
+const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${XPI_NAME}`;
 
 const { base_locale: BASE_LOCALE, project_id: PROJECT_ID, languages: LANGUAGES } = twoskyConfig;
 
