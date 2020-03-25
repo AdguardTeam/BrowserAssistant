@@ -2,7 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { SRC_PATH, BUILD_PATH } = require('./consts');
+const {
+    SRC_PATH,
+    BUILD_PATH,
+    CHROME_UPDATE_CRX,
+    FIREFOX_UPDATE_XPI,
+} = require('./consts');
 const { getOutputPathByEnv } = require('./helpers');
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
@@ -40,6 +45,16 @@ const config = {
     },
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        { search: '{{UPDATE_URL_FIREFOX}}', replace: FIREFOX_UPDATE_XPI },
+                        { search: '{{UPDATE_URL_CHROME}}', replace: CHROME_UPDATE_CRX },
+                    ],
+                },
+            },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,

@@ -79,8 +79,8 @@ module.exports = {
     FIREFOX_UPDATER_FILENAME,
     CRX_NAME,
     XPI_NAME,
-    BASE_LOCALE,
+    BASE_LOCALE, // TODO do not use directly outside of tasks
     PROJECT_ID,
-    LANGUAGES,
-    LOCALES_EQUIVALENTS_MAP,
+    LANGUAGES, // TODO do not use directly outside of tasks
+    LOCALES_EQUIVALENTS_MAP, // TODO do not use directly outside of tasks
 };

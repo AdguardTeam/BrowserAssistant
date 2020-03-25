@@ -3,8 +3,7 @@ import {
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
 import log from '../../../lib/logger';
-import { DOWNLOAD_LINK } from '../../../lib/consts';
-import { CHROME_UPDATE_CRX, FIREFOX_UPDATE_XPI } from '../../../../tasks/consts';
+import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
 import innerMessaging from '../../../lib/innerMessaging';
 
 class SettingsStore {
@@ -207,7 +206,7 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        const updateLink = this.isFirefox ? FIREFOX_UPDATE_XPI : CHROME_UPDATE_CRX;
+        const updateLink = this.isFirefox ? UPDATE_URL_FIREFOX : UPDATE_URL_CHROME;
         innerMessaging.openPage(updateLink);
     };
 }
