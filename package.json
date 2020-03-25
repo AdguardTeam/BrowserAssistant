@@ -1,6 +1,6 @@
 {
     "name": "browser-assistant",
-    "version": "0.0.40",
+    "version": "0.0.41",
     "apiVersion": "1",
     "description": "AdGuard browser extension",
     "author": "adguard@adguard.com",
