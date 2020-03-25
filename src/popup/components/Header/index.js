@@ -25,9 +25,9 @@ const Header = observer(() => {
         },
     } = useContext(rootStore);
 
-    const disableProtection = (e) => {
+    const disableProtection = async (e) => {
         setProtectionTogglePending(true);
-        setProtectionStatus(false);
+        await setProtectionStatus(false);
         e.target.blur();
     };
 
