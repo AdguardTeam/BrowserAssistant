@@ -29,6 +29,7 @@ class Api {
         await state.updateAppState(params.appState);
         await icon.updateIconColor();
 
+        // TODO move step of notifying popup into State logic
         await browserApi.runtime.sendMessage({
             type: params.result,
             params,
