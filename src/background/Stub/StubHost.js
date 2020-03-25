@@ -11,7 +11,7 @@ import {
 import log from '../../lib/logger';
 import browserApi from '../../lib/browserApi';
 
-const { BASE_LOCALE } = require('../../../tasks/consts');
+const { BASE_LOCALE } = require('../../../tasks/langConstants');
 
 class StubHost {
     delay = 500;

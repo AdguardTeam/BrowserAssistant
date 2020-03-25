@@ -1,8 +1,6 @@
 import { flattenNestedObj } from '../lib/helpers';
 
-const { LOCALES_EQUIVALENTS_MAP } = require('../../tasks/consts');
-
-const { LANGUAGES } = require('../../tasks/consts');
+const { LANGUAGES, LOCALES_EQUIVALENTS_MAP } = require('../../tasks/langConstants');
 
 const messagesMap = Object.keys(LANGUAGES)
     .reduce((acc, language) => {

@@ -3,7 +3,7 @@ import { createIntl } from 'react-intl';
 import { browserLocale } from '../../../lib/consts';
 import messagesMap from '../../../_locales';
 
-const { BASE_LOCALE } = require('../../../../tasks/consts');
+const { BASE_LOCALE } = require('../../../../tasks/langConstants');
 
 class TranslationStore {
     constructor(rootStore) {
