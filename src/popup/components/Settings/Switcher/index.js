@@ -9,12 +9,7 @@ const Switcher = ({
         'switcher--disabled': isDisabled,
     });
 
-    const textClass = classNames('switcher__text', {
-        'switcher__text--unchecked': !checked,
-    });
-
     const buttonClass = classNames('switcher__label', {
-        'switcher__label--unchecked': !checked,
         'switcher__label--disabled': isDisabled,
     });
 
@@ -49,7 +44,7 @@ const Switcher = ({
                 onClick={clickHandler}
                 onKeyDown={onKeyDown}
             />
-            <div className={textClass}>{label}</div>
+            <div className="switcher__text">{label}</div>
         </div>
     );
 };
