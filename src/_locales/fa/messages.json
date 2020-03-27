@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "دستیار مرورگر AdGuard"
+    },
+    "description": {
+        "message": "افزونه ای برای برنامه دسکتاپ AdGuard. مدیریت فیلترینگ مستقیم از مرورگر،پنهان کردن عناصر آزار دهنده در دو کلیک."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard نصب نشده یا صحیح پیکربندی نشده است"
+    },
+    "get_adguard": {
+        "message": "دریافت AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard بروز رسانی نشده است"
+    },
+    "update": {
+        "message": "بروز رسانی"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard در اِجرا نیست"
+    },
+    "run_adg": {
+        "message": "اِجرای AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "حفاظت AdGuard متوقف شده است"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard در حال شروع..."
+    },
+    "enable": {
+        "message": "فعال کن"
+    },
+    "assistant_is_not_updated": {
+        "message": "دستیار بروز رسانی نشده است"
+    },
+    "something_went_wrong": {
+        "message": "مشکلی وجود دارد"
+    },
+    "reinstall": {
+        "message": "نصب مجدد"
+    },
+    "https_filtering": {
+        "message": "فیلترینگ HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "افزایش کیفیت مسدودسازی تبلیغ"
+    },
+    "verified_by": {
+        "message": "تایید شده توسط:"
+    },
+    "more_info": {
+        "message": "اطلاعات بیشتر"
+    },
+    "adg_protection": {
+        "message": "حفاظت AdGuard"
+    },
+    "adg_settings": {
+        "message": "تنظیمات AdGuard"
+    },
+    "block_ads": {
+        "message": "مسدودسازی تبلیغ در این سایت"
+    },
+    "open_filtering_log": {
+        "message": "بازکردن وقایع فیلترینگ"
+    },
+    "report_site": {
+        "message": "گزارش این وبسایت"
+    },
+    "reset_custom_rules": {
+        "message": "بازنشانی همه دستورات دستی برای این صفحه"
+    },
+    "cert_expired": {
+        "message": "AdGuard نمیتواند گواهینامه این سایت را تایید کند چون ریشه گواهینامه منقضی شده است"
+    },
+    "cert_absent": {
+        "message": "فیلترینگ HTTPS برای این سایت اجرا نشده است"
+    },
+    "site_not_using_private_protection": {
+        "message": "این سایت از ارتباط خصوصی استفاده نمی کند. کسی میتواند اطلاعاتی را که شما به سایت ارسال میکنید را ببینید یا تغییر دهد."
+    },
+    "not_secure": {
+        "message": "امن نیست"
+    },
+    "nothing_to_block_here": {
+        "message": "اینجا چیزی برای مسدود کردن نیست"
+    },
+    "secure_page": {
+        "message": "صفحه امن"
+    },
+    "not_filtering_https": {
+        "message": "پیش فرض، ما ترافیک HTTPS را برای سیستم پرداخت و سایت های بانک فیلتر نمی کنیم. میتوانید خودتان فیلترینگ را فعال کنید: در سمت چپ \"قفل\" زرد را فشار دهید."
+    },
+    "disabled": {
+        "message": "در این وبسایت غیر فعال شده"
+    },
+    "enabled": {
+        "message": "در این وبسایت فعال شده"
+    },
+    "protection_is_enabled": {
+        "message": "حفاظت فعال شده است"
+    },
+    "protection_is_disabled": {
+        "message": "حفاظت غیرفعال شده است"
+    },
+    "website_cert_is_expired": {
+        "message": "گواهینامه سایت منقضی شده است"
+    },
+    "expired": {
+        "message": "منقضی شده"
+    }
+}

@@ -1,4 +1,16 @@
 {
+    "name": {
+        "message": "Assistente di browser AdGuard"
+    },
+    "description": {
+        "message": "Estensione per l’app desktop di AdGuard. Gestisci i filtri direttamente dal browser, nascondi gli elementi fastidiosi in due click."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard non è installato o non è configurato correttamente"
+    },
+    "get_adguard": {
+        "message": "Ottien AdGuard"
+    },
     "adg_is_not_updated": {
         "message": "AdGuard non è aggiornato"
     },
@@ -8,8 +20,14 @@
     "adg_is_not_running": {
         "message": "AdGuard non è in esecuzione"
     },
+    "run_adg": {
+        "message": "Avvia AdGuard"
+    },
     "adg_is_paused": {
         "message": "La protezione di AdGuard è sospesa"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard si sta avviando..."
     },
     "enable": {
         "message": "Abilita"
@@ -22,6 +40,9 @@
     },
     "reinstall": {
         "message": "Reinstalla"
+    },
+    "https_filtering": {
+        "message": "Filtraggio HTTPS"
     },
     "increase_ab_block_quality": {
         "message": "Aumenta la qualità del blocco pubblicitario"
@@ -50,6 +71,12 @@
     "reset_custom_rules": {
         "message": "Resetta tutte le regole personalizzate per questa pagina"
     },
+    "cert_expired": {
+        "message": "AdGuard non ha potuto verificare il certificato di questo sito, perché il certificato di root è scaduto"
+    },
+    "cert_absent": {
+        "message": "Il filtraggio HTTPS non è stato eseguito per questo sito"
+    },
     "site_not_using_private_protection": {
         "message": "Il sito non sta usando una connessione privata. Qualcuno potrebbe vedere o cambiare le informazioni che invii attraverso il sito."
     },
@@ -70,5 +97,17 @@
     },
     "enabled": {
         "message": "Attivato su questo sito"
+    },
+    "protection_is_enabled": {
+        "message": "La protezione è attiva"
+    },
+    "protection_is_disabled": {
+        "message": "La protezione è disattivata"
+    },
+    "website_cert_is_expired": {
+        "message": "Il certificato del sito è scaduto"
+    },
+    "expired": {
+        "message": "Scaduto"
     }
 }

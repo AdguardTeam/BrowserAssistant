@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "Asistent Browser AdGuard"
+    },
+    "description": {
+        "message": "Extensia pentru programul desktop AdGuard. Gerează filtrarea în browser, ascunde elemente enervante în două click-uri."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard nu este instalat sau este configurat incorect"
+    },
+    "get_adguard": {
+        "message": "Obține AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard nu este actualizat"
+    },
+    "update": {
+        "message": "Actualizați"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard nu este pornit"
+    },
+    "run_adg": {
+        "message": "Porniți AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Protecție AdGuard în pauză"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard pornește..."
+    },
+    "enable": {
+        "message": "Activați"
+    },
+    "assistant_is_not_updated": {
+        "message": "Asistentul nu este actualizat"
+    },
+    "something_went_wrong": {
+        "message": "Ceva nu a mers bine"
+    },
+    "reinstall": {
+        "message": "Reinstalați"
+    },
+    "https_filtering": {
+        "message": "Filtrare HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Mărește calitatea blocării reclamelor"
+    },
+    "verified_by": {
+        "message": "Verificat de:"
+    },
+    "more_info": {
+        "message": "Alte informații"
+    },
+    "adg_protection": {
+        "message": "Protecție AdGuard"
+    },
+    "adg_settings": {
+        "message": "Setări AdGuard"
+    },
+    "block_ads": {
+        "message": "Blocați pub pe acest site"
+    },
+    "open_filtering_log": {
+        "message": "Deschide jurnal filtrare"
+    },
+    "report_site": {
+        "message": "Raportați site-ul"
+    },
+    "reset_custom_rules": {
+        "message": "Resetare reguli personalizate pe pagină"
+    },
+    "cert_expired": {
+        "message": "AdGuard nu poate verifica certificatul acestui site web deoarece certificatul root a expirat"
+    },
+    "cert_absent": {
+        "message": "Filtrarea HTTPS nu s-a efectuată pe acest site web"
+    },
+    "site_not_using_private_protection": {
+        "message": "Acest site nu utilizează o conexiune privată. Cineva ar putea vedea sau altera informația trimisă sau primită prin acest site."
+    },
+    "not_secure": {
+        "message": "Nesecurizat"
+    },
+    "nothing_to_block_here": {
+        "message": "Nimic de blocat aici"
+    },
+    "secure_page": {
+        "message": "Pagină sigură"
+    },
+    "not_filtering_https": {
+        "message": "În mod implicit, nu filtrăm traficul HTTPS pentru sisteme de plăți și site-uri web bancare. Puteți activa filtrarea manual tapând pe \"lacătul\" galben din stânga."
+    },
+    "disabled": {
+        "message": "Dezactivat pe acest site"
+    },
+    "enabled": {
+        "message": "Activat pe acest site"
+    },
+    "protection_is_enabled": {
+        "message": "Protecție activată"
+    },
+    "protection_is_disabled": {
+        "message": "Protecție dezactivată"
+    },
+    "website_cert_is_expired": {
+        "message": "Certificatul site-ului a expirat"
+    },
+    "expired": {
+        "message": "Expirat"
+    }
+}

@@ -1,1 +1,110 @@
-{}
+{
+    "name": {
+        "message": "AdGuard ผู้ช่วยเบราว์เซอร์"
+    },
+    "description": {
+        "message": "คำอธิบายของผู้ช่วยเบราว์เซอร์ AdGuard"
+    },
+    "adg_is_not_installed": {
+        "message": "ไม่ได้ติดตั้ง AdGuard"
+    },
+    "get_adguard": {
+        "message": "รับ AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard ไม่ได้รับการอัปเดต"
+    },
+    "update": {
+        "message": "อัปเดต"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard ไม่ทำงาน"
+    },
+    "run_adg": {
+        "message": "เรียกใช้ AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard หยุดการป้องกันชั่วคราว"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard กำลังเปิด..."
+    },
+    "enable": {
+        "message": "เปิดใช้งาน"
+    },
+    "assistant_is_not_updated": {
+        "message": "ไม่มีการอัปเดตผู้ช่วย"
+    },
+    "something_went_wrong": {
+        "message": "บางอย่างผิดปกติ"
+    },
+    "reinstall": {
+        "message": "ติดตั้งใหม่"
+    },
+    "https_filtering": {
+        "message": "การกรอง HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "เพิ่มคุณภาพของการปิดกั้นโฆษณา"
+    },
+    "verified_by": {
+        "message": "ตรวจสอบโดย:"
+    },
+    "more_info": {
+        "message": "ข้อมูลเพิ่มเติม"
+    },
+    "adg_protection": {
+        "message": "การป้องกันของ AdGuard"
+    },
+    "adg_settings": {
+        "message": "การตั้งค่า AdGuard"
+    },
+    "block_ads": {
+        "message": "ปิดกั้นโฆษณาบนเว็บไซต์นี้"
+    },
+    "open_filtering_log": {
+        "message": "เปิดบันทึกการกรอง"
+    },
+    "report_site": {
+        "message": "รายงานเว็บไซต์นี้"
+    },
+    "reset_custom_rules": {
+        "message": "รีเซ็ตกฎที่กำหนดเองทั้งหมดสำหรับหน้านี้"
+    },
+    "cert_expired": {
+        "message": "AdGuard ไม่สามารถยืนยันใบรับรองของเว็บไซต์นี้ได้เนื่องจากใบรับรองหลักหมดอายุแล้ว"
+    },
+    "site_not_using_private_protection": {
+        "message": "ไซต์ไม่ได้ใช้การเชื่อมต่อส่วนตัว บางคนอาจเห็นหรือเปลี่ยนแปลงข้อมูลที่คุณส่งหรือผ่านไซต์"
+    },
+    "not_secure": {
+        "message": "ไม่ปลอดภัย"
+    },
+    "nothing_to_block_here": {
+        "message": "ไม่มีอะไรให้ปิดกั้นที่นี่"
+    },
+    "secure_page": {
+        "message": "หน้าเว็บที่ปลอดภัย"
+    },
+    "not_filtering_https": {
+        "message": "ตามค่าเริ่มต้นเราจะไม่กรองการเข้าชม HTTPS สำหรับระบบการชำระเงินและเว็บไซต์ของธนาคาร คุณสามารถเปิดใช้งานการกรองด้วยตนเอง: แตะที่ \"ล็อก\" สีเหลืองที่ด้านซ้าย"
+    },
+    "disabled": {
+        "message": "ปิดใช้งานบนเว็บไซต์นี้"
+    },
+    "enabled": {
+        "message": "เปิดใช้งานบนเว็บไซต์นี้"
+    },
+    "protection_is_enabled": {
+        "message": "การป้องกันเปิดอยู่"
+    },
+    "protection_is_disabled": {
+        "message": "การป้องกันปิดอยู่"
+    },
+    "website_cert_is_expired": {
+        "message": "ใบรับรองเว็บไซต์หมดอายุแล้ว"
+    },
+    "expired": {
+        "message": "หมดอายุ"
+    }
+}

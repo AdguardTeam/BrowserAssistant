@@ -42,7 +42,7 @@
         "message": "Переустановить"
     },
     "https_filtering": {
-        "message": "HTTPS фильтрация"
+        "message": "HTTPS-фильтрация"
     },
     "increase_ab_block_quality": {
         "message": "Улучшает качество блокировки"
@@ -74,6 +74,9 @@
     "cert_expired": {
         "message": "AdGuard не может проверить сертификат этого сайта, т. к. срок действия корневого сертификата истёк"
     },
+    "cert_absent": {
+        "message": "HTTPS-фильтрация не была выполнена для этого сайта"
+    },
     "site_not_using_private_protection": {
         "message": "Этот сайт не использует защищённое подключение. Кто-нибудь может увидеть или изменить данные, которыми вы обмениваетесь с этим сайтом."
     },
@@ -81,7 +84,7 @@
         "message": "Не защищён"
     },
     "nothing_to_block_here": {
-        "message": "Блокировать нечего"
+        "message": "Здесь нечего блокировать"
     },
     "secure_page": {
         "message": "Защищённая страница"
@@ -94,5 +97,17 @@
     },
     "enabled": {
         "message": "Защита включена\nна этом сайте"
+    },
+    "protection_is_enabled": {
+        "message": "Защита включена"
+    },
+    "protection_is_disabled": {
+        "message": "Защита выключена"
+    },
+    "website_cert_is_expired": {
+        "message": "Сертификат сайта истёк"
+    },
+    "expired": {
+        "message": "Истёк"
     }
 }

@@ -1,1 +1,89 @@
-{}
+{
+    "name": {
+        "message": "AdGuard Асистент за блокиране на реклами в браузъра"
+    },
+    "description": {
+        "message": "ЗАДАЧИ"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard не е инсталирана или е неправилно конфигурирана"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard не е обновена"
+    },
+    "update": {
+        "message": "Обнови"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard не е стартирана"
+    },
+    "run_adg": {
+        "message": "Стартирай AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Защитата на AdGuard е на пауза"
+    },
+    "enable": {
+        "message": "Включи"
+    },
+    "assistant_is_not_updated": {
+        "message": "Асистентът не е обновен"
+    },
+    "something_went_wrong": {
+        "message": "Нещо се обърка"
+    },
+    "reinstall": {
+        "message": "Преинсталирай"
+    },
+    "increase_ab_block_quality": {
+        "message": "Повишава качеството на блокиране на реклами"
+    },
+    "verified_by": {
+        "message": "Проверена от:"
+    },
+    "more_info": {
+        "message": "Допълнителна информация"
+    },
+    "adg_protection": {
+        "message": "Защита на Adguard"
+    },
+    "adg_settings": {
+        "message": "Настройки на Adguard"
+    },
+    "block_ads": {
+        "message": "Блокирай рекламите на този сайт"
+    },
+    "open_filtering_log": {
+        "message": "Отвори дневника на филтрирането"
+    },
+    "report_site": {
+        "message": "Докладвай този сайт"
+    },
+    "reset_custom_rules": {
+        "message": "Нулирай всички персонализирани правила за тази страница"
+    },
+    "cert_expired": {
+        "message": "AdGuard не можа да потвърди сертификата на този уебсайт, тъй като основният сертификат е изтекъл"
+    },
+    "site_not_using_private_protection": {
+        "message": "Сайтът не използва частна връзка. Възможно е някой да може да види или промени информацията, която изпращате или получавате през сайта."
+    },
+    "not_secure": {
+        "message": "Не е подсигурен"
+    },
+    "nothing_to_block_here": {
+        "message": "Тук няма нищо за блокиране"
+    },
+    "secure_page": {
+        "message": "Защитена страница"
+    },
+    "not_filtering_https": {
+        "message": "По подразбиране не филтрираме HTTPS трафика за платежните системи и банковите уебсайтове. Можете да активирате филтрирането сами: докоснете жълтото „заключване“ отляво."
+    },
+    "disabled": {
+        "message": "Деактивирана на този уебсайт"
+    },
+    "enabled": {
+        "message": "Активирана на този уебсайт"
+    }
+}
