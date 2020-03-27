@@ -89,7 +89,7 @@ const config = {
                 context: 'src',
                 from: '_locales/',
                 to: '_locales/',
-                // Add suffixes to locales messages
+                // Add env suffixes to the extension name in locale files
                 transform: (content, path) => {
                     // ignore all paths except messages.json
                     if (path.indexOf('messages.json') === -1) {
