@@ -1,5 +1,3 @@
-const { BASE_LOCALE } = require('../../tasks/langConstants');
-
 class State {
     isFilteringEnabled = true;
 
@@ -14,8 +12,6 @@ class State {
     isExtensionUpdated = true;
 
     isSetupCorrect = true;
-
-    locale = BASE_LOCALE;
 
     setIsFilteringEnabled = (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;

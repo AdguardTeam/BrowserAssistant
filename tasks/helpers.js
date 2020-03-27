@@ -1,25 +1,15 @@
-const {
-    LOCALES_PATH, ENV_MAP, IS_DEV, LOCALES_EQUIVALENTS_MAP,
-} = require('./consts');
+const { ENV_MAP, IS_DEV } = require('./consts');
 const pJson = require('../package');
 const twoskyConfig = require('../.twosky.json');
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
 
-const getNameByEnv = (env) => {
-    // eslint-disable-next-line import/no-dynamic-require, global-require
-    const locales = require(LOCALES_PATH);
-    if (!locales) {
-        throw new Error(`Wrong path to locales ${LOCALES_PATH}`);
-    }
-    const { name } = locales;
-
+const appendEnvSuffix = (name, env) => {
     const envData = ENV_MAP[env];
     if (!envData) {
         throw new Error(`Wrong environment: ${env}`);
     }
-
-    return envData.name ? `${name.message} ${envData.name}` : `${name.message}`;
+    return envData.name ? `${name} ${envData.name}` : name;
 };
 
 const updateManifest = (manifestJson, browserManifestDiff) => {
@@ -30,12 +20,10 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
         throw new Error('unable to parse json from manifest');
     }
     const devPolicy = IS_DEV ? { content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'" } : {};
-    const name = getNameByEnv(process.env.NODE_ENV);
     const updatedManifest = {
         ...manifest,
         ...browserManifestDiff,
         ...devPolicy,
-        name,
         default_locale: baseLocale,
         version: pJson.version,
     };
@@ -50,14 +38,6 @@ const getOutputPathByEnv = (env) => {
     return envData.outputPath;
 };
 
-/**
- * Returns equivalent of specified locale code
- * @param {string} locale locale
- */
-const getEquivalent = (locale) => {
-    return LOCALES_EQUIVALENTS_MAP[locale] || locale;
-};
-
 module.exports = {
-    getNameByEnv, updateManifest, getOutputPathByEnv, getEquivalent,
+    appendEnvSuffix, updateManifest, getOutputPathByEnv,
 };

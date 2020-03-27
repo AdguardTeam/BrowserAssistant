@@ -4,7 +4,6 @@ export const ICON_COLORS = {
     GREEN: 'green',
     GREY: 'grey',
 };
-export const browserLocale = navigator.language.slice(0, 2);
 
 // These urls would be updated during extension build
 // Check webpack replace loader
