@@ -82,11 +82,11 @@ class UiStore {
         });
     }
 
+    // TODO get from background page
     @computed get isAppWorking() {
         const {
             isAppUpToDate,
-            isExtensionUpdated,
-            isSetupCorrect,
+            isValidatedOnHost,
             isInstalled,
             isRunning,
             isProtectionEnabled,
@@ -96,8 +96,8 @@ class UiStore {
             isRunning,
             isProtectionEnabled,
             isAppUpToDate,
-            isExtensionUpdated,
-            isSetupCorrect].every((state) => state === true);
+            isValidatedOnHost,
+        ].every((state) => state === true);
     }
 
     @action

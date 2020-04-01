@@ -17,9 +17,8 @@ export const REQUEST_TYPES = {
 export const TAB_ACTIONS = {
     openPage: 'openPage',
     reload: 'reload',
-    getReferrer: 'getReferrer',
+    getReferrer: 'getReferrer', // TODO use uppercase
     updateIconColor: 'updateIconColor',
-    getCurrentTabUrlProperties: 'getCurrentTabUrlProperties',
     initAssistant: 'initAssistant',
 };
 
@@ -44,6 +43,8 @@ export const MESSAGE_TYPES = {
     ...API_ACTIONS,
     ...BACKGROUND_COMMANDS,
     ...HOST_RESPONSE_TYPES,
+    STATE_UPDATED: 'stateUpdate',
+    GET_POPUP_DATA: 'getPopupData',
 };
 
 export const HOST_REQUEST_TYPES = {
@@ -51,6 +52,7 @@ export const HOST_REQUEST_TYPES = {
 };
 
 export const ADG_PREFIX = 'ADG';
+export const CUSTOM_REQUEST_PREFIX = 'ADG_CUSTOM';
 
 export const ASSISTANT_TYPES = {
     nativeAssistant: 'nativeAssistant',
@@ -62,10 +64,4 @@ export const CONTENT_MESSAGES = {
 
 export const HOST_TYPES = {
     browserExtensionHost: 'com.adguard.browser_extension_host.nm',
-};
-
-export const SETUP_STATES = {
-    isAppUpToDate: 'isAppUpToDate',
-    isExtensionUpdated: 'isExtensionUpdated',
-    isSetupCorrect: 'isSetupCorrect',
 };

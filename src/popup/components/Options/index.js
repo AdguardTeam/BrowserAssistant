@@ -9,13 +9,12 @@ const getOptions = (stores) => {
             isFilteringEnabled,
             pageProtocol,
             isAuthorized,
+            startBlockingAd,
         },
         requestsStore: {
-            startBlockingAd,
             openFilteringLog,
             reportSite,
             removeCustomRules,
-            getCurrentFilteringState,
         },
         uiStore: {
             isPageFilteredByUserFilter,
@@ -55,7 +54,8 @@ const getOptions = (stores) => {
                     return;
                 }
                 await removeCustomRules();
-                await getCurrentFilteringState();
+                // TODO check if this works
+                // await getCurrentFilteringState();
             },
             isDisabled: !isAuthorized,
             isVisible: isPageFilteredByUserFilter,

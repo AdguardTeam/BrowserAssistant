@@ -9,10 +9,10 @@ import './AppClosed.pcss';
 const getStates = (stores) => {
     const {
         settingsStore: {
-            openDownloadPage, updateExtension,
+            openDownloadPage, updateExtension, enableApp,
         },
         requestsStore: {
-            updateApp, startApp, setProtectionStatus, getCurrentFilteringState,
+            updateApp, startApp,
         },
         translationStore: { translate },
     } = stores;
@@ -46,8 +46,7 @@ const getStates = (stores) => {
             content: translate('adg_is_paused'),
             buttonText: translate('enable'),
             onClick: async () => {
-                await setProtectionStatus(true);
-                await getCurrentFilteringState();
+                enableApp();
             },
         },
 
@@ -62,15 +61,6 @@ const getStates = (stores) => {
             buttonText: <Loading />,
             onClick: undefined,
         },
-
-        [WORKING_STATES.IS_APP_SETUP_CORRECT]: {
-            content: translate('something_went_wrong'),
-            buttonText: translate('reinstall'),
-            onClick: () => {
-                openDownloadPage();
-                window.close();
-            },
-        },
     });
 };
 
@@ -81,16 +71,11 @@ function defineState(stores) {
         isRunning,
         isProtectionEnabled,
         isAppUpToDate,
-        isExtensionUpdated,
-        isSetupCorrect,
+        isValidatedOnHost,
     } = stores.settingsStore;
 
     if (!isInstalled) {
         return states[WORKING_STATES.IS_APP_INSTALLED];
-    }
-
-    if (!isSetupCorrect) {
-        return states[WORKING_STATES.IS_APP_SETUP_CORRECT];
     }
 
     if (!isRunning) {
@@ -105,7 +90,7 @@ function defineState(stores) {
         return states[WORKING_STATES.IS_APP_UP_TO_DATE];
     }
 
-    if (!isExtensionUpdated) {
+    if (!isValidatedOnHost) {
         return states[WORKING_STATES.IS_EXTENSION_UPDATED];
     }
 

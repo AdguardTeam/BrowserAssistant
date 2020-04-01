@@ -28,6 +28,18 @@ export const getFormattedPortByProtocol = (port, protocol) => {
     return port === '' ? defaultPort : Number(port);
 };
 
+export const getUrlProps = (url) => {
+    const { hostname, port, protocol } = getUrlProperties(url);
+    const formattedProtocol = getProtocol(protocol);
+
+    return {
+        url,
+        port: getFormattedPortByProtocol(port, formattedProtocol),
+        protocol: formattedProtocol,
+        hostname,
+    };
+};
+
 /**
  * Returns the value of the property from the cache,
  * otherwise, calculates it using the callback, memoizes it, and returns the value

@@ -20,7 +20,7 @@ const { BASE_LOCALE } = require('../../../tasks/langConstants');
 class Api {
     isAppUpToDate = true;
 
-    isExtensionUpdated = true;
+    isValidatedOnHost = true;
 
     locale = BASE_LOCALE;
 
@@ -51,10 +51,10 @@ class Api {
             const { parameters, appState } = res;
 
             this.isAppUpToDate = (versions.apiVersion <= parameters.apiVersion);
-            this.isExtensionUpdated = parameters.isValidatedOnHost;
+            this.isValidatedOnHost = parameters.isValidatedOnHost;
             this.locale = appState.locale;
 
-            if (!this.isAppUpToDate || !this.isExtensionUpdated) {
+            if (!this.isAppUpToDate || !this.isValidatedOnHost) {
                 await browserApi.runtime.sendMessage({
                     type: MESSAGE_TYPES.STOP_RELOAD,
                 });

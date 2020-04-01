@@ -43,19 +43,19 @@ Builds will be located in the `build` directory.
 
 ## How to debug without AdGuard application
 
-- Replace `Api.js` content with the following:
+- Replace `NativeHostApi.js` content with the following:
 
   ```
-  import api from './Stub/StubApi';
+  import nativeHostApi from './Stub/StubApi';
   import stubHost from './Stub/StubHost';
 
   // Expose stubHost to the global scope
   global.stubHost = stubHost;
-  export default api;
+  export default nativeHostApi;
   
   // Add to the 'OK' case in the popup message handler
-  if (params.parameters && params.parameters.originalCertStatus) {
-    setCurrentFilteringState(params.parameters);
+  if (data.parameters && data.parameters.originalCertStatus) {
+    setUrlFilteringState(data.parameters);
   }
   ```
 

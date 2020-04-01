@@ -9,41 +9,31 @@ import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
-import getMessageHandler from '../../messageHandler';
+import getMessageHandler from '../../messaging';
 
 Modal.setAppElement('#root');
 
 const App = observer(() => {
-    const root = useContext(rootStore);
+    const rootContext = useContext(rootStore);
 
-    const {
-        settingsStore: {
-            updateCurrentTabInfo,
-            refreshUpdateStatusInfo,
-        },
-        uiStore: {
-            requestStatus,
-        },
-        translationStore: {
-            getLocale,
-        },
-    } = root;
+    const { settingsStore, uiStore, translationStore } = rootContext;
 
-    const messageHandler = getMessageHandler(root);
+    const messageHandler = getMessageHandler(rootContext);
 
     useEffect(() => {
         (async () => {
-            await refreshUpdateStatusInfo();
-            await updateCurrentTabInfo();
+            await settingsStore.getPopupData();
         })();
 
         browser.runtime.onMessage.addListener(messageHandler);
         return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
-    if (!getLocale()) {
+    if (!translationStore.getLocale()) {
         return (<Loading />);
     }
+
+    const { requestStatus } = uiStore;
 
     if (requestStatus.isError || requestStatus.isPending) {
         return (

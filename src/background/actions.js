@@ -1,9 +1,8 @@
 import browser from 'webextension-polyfill';
 import { Prefs } from './prefs';
-import { ICON_COLORS } from '../lib/consts';
 
-const setIcon = async (path, tabId) => {
-    const details = { path };
+const setIcon = async (tabId, iconPath) => {
+    const details = { iconPath };
     if (tabId) {
         details.tabId = tabId;
     }
@@ -14,9 +13,9 @@ const setIcon = async (path, tabId) => {
     }
 };
 
-const setIconEnabled = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.GREEN], tabId);
+const setIconEnabled = (tabId) => setIcon(tabId, Prefs.ICONS.ENABLED);
 
-const setIconDisabled = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.GREY], tabId);
+const setIconDisabled = (tabId) => setIcon(tabId, Prefs.ICONS.DISABLED);
 
 const actions = {
     setIconEnabled,

@@ -7,35 +7,37 @@ class RequestsStore {
     }
 
     getCurrentFilteringState = async (forceStartApp = false) => {
-        const { currentURL: url, currentPort: port } = this.rootStore.settingsStore;
+        const { currentUrl: url, currentPort: port } = this.rootStore.settingsStore;
 
         try {
-            const res = await innerMessaging.getCurrentFilteringState({
+            const response = await innerMessaging.getUrlFilteringState({
                 url,
                 port,
                 forceStartApp,
             });
 
-            if (res) {
-                this.rootStore.settingsStore.setCurrentFilteringState(res.parameters);
+            if (response) {
+                this.rootStore.settingsStore.setUrlFilteringState(response.parameters);
             }
         } catch (error) {
+            // TODO handle ui state with errors
             log.error(error);
         }
     };
 
-    getCurrentAppState = async () => {
-        try {
-            const res = await innerMessaging.getCurrentAppState();
-            this.rootStore.settingsStore.setCurrentAppState(res.appState);
-        } catch (error) {
-            log.error(error);
-        }
-    };
+    // TODO remove
+    // getCurrentAppState = async () => {
+    //     try {
+    //         const res = await innerMessaging.getCurrentAppState();
+    //         this.rootStore.settingsStore.setCurrentAppState(res.appState);
+    //     } catch (error) {
+    //         log.error(error);
+    //     }
+    // };
 
     setFilteringStatus = async () => {
         const {
-            currentURL: url,
+            currentUrl: url,
             isFilteringEnabled: isEnabled,
             isHttpsFilteringEnabled: isHttpsEnabled,
         } = this.rootStore.settingsStore;
@@ -68,7 +70,7 @@ class RequestsStore {
     };
 
     removeCustomRules = async () => {
-        const { currentURL: url } = this.rootStore.settingsStore;
+        const { currentUrl: url } = this.rootStore.settingsStore;
 
         await innerMessaging.reload();
         try {
@@ -80,7 +82,7 @@ class RequestsStore {
     };
 
     reportSite = async () => {
-        const { currentURL: url, referrer } = this.rootStore.settingsStore;
+        const { currentUrl: url, referrer } = this.rootStore.settingsStore;
         try {
             await innerMessaging.reportSite({
                 url,
@@ -120,23 +122,6 @@ class RequestsStore {
         }
     };
 
-    setProtectionStatus = async (shouldEnableProtection) => {
-        try {
-            this.rootStore.uiStore.setExtensionLoading(true);
-            const res = await innerMessaging.setProtectionStatus(
-                { isEnabled: shouldEnableProtection }
-            );
-            this.rootStore.uiStore.setExtensionLoading(false);
-
-            await this.rootStore.settingsStore.setCurrentAppState(res.appState);
-            await this.rootStore.settingsStore.setProtection(res.appState.isProtectionEnabled);
-
-            this.rootStore.uiStore.setProtectionTogglePending(false);
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
     startApp = async () => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);
@@ -162,15 +147,6 @@ class RequestsStore {
         } catch (error) {
             log.error(error);
         }
-    };
-
-    startBlockingAd = async () => {
-        try {
-            await innerMessaging.initAssistant();
-        } catch (error) {
-            log.error(error);
-        }
-        window.close();
     };
 }
 

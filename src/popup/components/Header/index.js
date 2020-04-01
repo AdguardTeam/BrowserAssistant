@@ -9,10 +9,10 @@ const Header = observer(() => {
         settingsStore: {
             isProtectionEnabled,
             isAuthorized,
+            setProtectionStatus,
         },
         requestsStore: {
             openSettings,
-            setProtectionStatus,
         },
         uiStore: {
             setProtectionTogglePending,
