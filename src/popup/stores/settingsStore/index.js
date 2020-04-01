@@ -106,14 +106,14 @@ class SettingsStore {
     @action
     setHttpsFiltering = async (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        await this.rootStore.requestsStore.setFilteringStatus();
+        await this.setFilteringStatus();
         this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 
     @action
     setFiltering = async (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
-        await this.rootStore.requestsStore.setFilteringStatus();
+        await this.setFilteringStatus();
         this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
     };
 
@@ -265,6 +265,37 @@ class SettingsStore {
                 domain: hostname,
                 port,
             });
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    setFilteringStatus = async () => {
+        try {
+            await innerMessaging.setFilteringStatus({
+                url: this.currentUrl,
+                isEnabled: this.isFilteringEnabled,
+                isHttpsEnabled: this.isHttpsFilteringEnabled,
+            });
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    updateApp = async () => {
+        try {
+            await innerMessaging.updateApp();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    startApp = async () => {
+        try {
+            this.rootStore.uiStore.setExtensionLoading(true);
+            // TODO figure out this method necessity
+            // await this.getCurrentFilteringState(true);
+            this.rootStore.uiStore.setExtensionLoading(false);
         } catch (error) {
             log.error(error);
         }

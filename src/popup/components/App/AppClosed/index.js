@@ -7,12 +7,7 @@ import Loading from '../../ui/Loading';
 import './AppClosed.pcss';
 
 const AppClosed = observer(() => {
-    const {
-        settingsStore,
-        translationStore,
-        requestsStore,
-        uiStore,
-    } = useContext(rootStore);
+    const { settingsStore, translationStore, uiStore } = useContext(rootStore);
 
     const { translate } = translationStore;
 
@@ -37,8 +32,8 @@ const AppClosed = observer(() => {
         [WORKING_STATES.IS_APP_UP_TO_DATE]: {
             content: translate('adg_is_not_updated'),
             buttonText: translate('update'),
-            onClick: () => {
-                requestsStore.updateApp(); // TODO move into settings store
+            onClick: async () => {
+                await settingsStore.updateApp();
                 window.close();
             },
         },
@@ -46,7 +41,7 @@ const AppClosed = observer(() => {
         [WORKING_STATES.IS_APP_RUNNING]: {
             content: translate('adg_is_not_running'),
             buttonText: translate('run_adg'),
-            onClick: requestsStore.startApp, // TODO move into settings store
+            onClick: settingsStore.startApp,
         },
 
         [WORKING_STATES.IS_PROTECTION_ENABLED]: {
