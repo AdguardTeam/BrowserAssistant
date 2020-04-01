@@ -22,6 +22,7 @@ const getMessageHandler = (rootStore) => {
                 break;
         }
 
+        // TODO consider removing
         uiStore.setExtensionLoading(false);
         uiStore.setExtensionPending(false);
     };

@@ -144,22 +144,6 @@ class UiStore {
         this.isProtectionTogglePending = isProtectionTogglePending;
     };
 
-    @action
-    getZoom = () => {
-        const popupZoom = ((window.outerWidth - 8) / window.innerWidth) - 0.02;
-        this.userSettingsZoom = popupZoom.toFixed(popupZoom < 3 ? 2 : 1);
-    };
-
-    /**
-     * Compensation for zooming in or out of the default window scale
-     * by multiplying by the inverse scale
-     * https://github.com/AdguardTeam/AdguardBrowserExtension/issues/1529
-     */
-    normalizePopupScale = () => {
-        this.getZoom();
-        document.body.style.zoom = 1 / this.userSettingsZoom;
-    };
-
     // TODO consider removing
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
