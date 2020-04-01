@@ -41,6 +41,21 @@ export const getUrlProps = (url) => {
 };
 
 /**
+ * Checks if string is valid url with http: or https: protocol
+ * @param {string} str
+ * @returns {boolean}
+ */
+export const isHttp = (str) => {
+    let url;
+    try {
+        url = new URL(str);
+    } catch (e) {
+        return false;
+    }
+    return /^https?:/.test(url.protocol);
+};
+
+/**
  * Returns the value of the property from the cache,
  * otherwise, calculates it using the callback, memoizes it, and returns the value
  * @param {object} obj

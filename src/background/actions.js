@@ -13,9 +13,13 @@ const setIcon = async (tabId, iconPath) => {
     }
 };
 
-const setIconEnabled = (tabId) => setIcon(tabId, Prefs.ICONS.ENABLED);
+const setIconEnabled = (tabId) => {
+    return setIcon(tabId, Prefs.ICONS.ENABLED);
+};
 
-const setIconDisabled = (tabId) => setIcon(tabId, Prefs.ICONS.DISABLED);
+const setIconDisabled = (tabId) => {
+    return setIcon(tabId, Prefs.ICONS.DISABLED);
+};
 
 const actions = {
     setIconEnabled,

@@ -6,23 +6,30 @@ import { WORKING_STATES } from '../../../stores/consts';
 import Loading from '../../ui/Loading';
 import './AppClosed.pcss';
 
-const getStates = (stores) => {
+const AppClosed = observer(() => {
     const {
-        settingsStore: {
-            openDownloadPage, updateExtension, enableApp,
-        },
-        requestsStore: {
-            updateApp, startApp,
-        },
-        translationStore: { translate },
-    } = stores;
+        settingsStore,
+        translationStore,
+        requestsStore,
+        uiStore,
+    } = useContext(rootStore);
 
-    return ({
+    const { translate } = translationStore;
+
+    const {
+        isInstalled,
+        isRunning,
+        isProtectionEnabled,
+        isAppUpToDate,
+        isValidatedOnHost,
+    } = settingsStore;
+
+    const states = {
         [WORKING_STATES.IS_APP_INSTALLED]: {
             content: translate('adg_is_not_installed'),
             buttonText: translate('get_adguard'),
             onClick: () => {
-                openDownloadPage();
+                settingsStore.openDownloadPage();
                 window.close();
             },
         },
@@ -31,7 +38,7 @@ const getStates = (stores) => {
             content: translate('adg_is_not_updated'),
             buttonText: translate('update'),
             onClick: () => {
-                updateApp();
+                requestsStore.updateApp(); // TODO move into settings store
                 window.close();
             },
         },
@@ -39,21 +46,21 @@ const getStates = (stores) => {
         [WORKING_STATES.IS_APP_RUNNING]: {
             content: translate('adg_is_not_running'),
             buttonText: translate('run_adg'),
-            onClick: startApp,
+            onClick: requestsStore.startApp, // TODO move into settings store
         },
 
         [WORKING_STATES.IS_PROTECTION_ENABLED]: {
             content: translate('adg_is_paused'),
             buttonText: translate('enable'),
             onClick: async () => {
-                enableApp();
+                await settingsStore.enableApp();
             },
         },
 
         [WORKING_STATES.IS_EXTENSION_UPDATED]: {
             content: translate('assistant_is_not_updated'),
             buttonText: translate('update'),
-            onClick: updateExtension,
+            onClick: settingsStore.updateExtension,
         },
 
         [WORKING_STATES.IS_EXTENSION_RELOADING]: {
@@ -61,48 +68,32 @@ const getStates = (stores) => {
             buttonText: <Loading />,
             onClick: undefined,
         },
-    });
-};
+    };
 
-function defineState(stores) {
-    const states = getStates(stores);
-    const {
-        isInstalled,
-        isRunning,
-        isProtectionEnabled,
-        isAppUpToDate,
-        isValidatedOnHost,
-    } = stores.settingsStore;
-
-    if (!isInstalled) {
-        return states[WORKING_STATES.IS_APP_INSTALLED];
+    let state;
+    switch (true) {
+        case !isInstalled:
+            state = states[WORKING_STATES.IS_APP_INSTALLED];
+            break;
+        case !isRunning:
+            state = states[WORKING_STATES.IS_APP_RUNNING];
+            break;
+        case !isProtectionEnabled:
+            state = states[WORKING_STATES.IS_PROTECTION_ENABLED];
+            break;
+        case !isAppUpToDate:
+            state = states[WORKING_STATES.IS_APP_UP_TO_DATE];
+            break;
+        case !isValidatedOnHost:
+            state = states[WORKING_STATES.IS_EXTENSION_UPDATED];
+            break;
+        default:
+            state = states[WORKING_STATES.IS_EXTENSION_RELOADING];
     }
 
-    if (!isRunning) {
-        return states[WORKING_STATES.IS_APP_RUNNING];
-    }
+    const { content, buttonText, onClick } = state;
 
-    if (!isProtectionEnabled) {
-        return states[WORKING_STATES.IS_PROTECTION_ENABLED];
-    }
-
-    if (!isAppUpToDate) {
-        return states[WORKING_STATES.IS_APP_UP_TO_DATE];
-    }
-
-    if (!isValidatedOnHost) {
-        return states[WORKING_STATES.IS_EXTENSION_UPDATED];
-    }
-
-    return states[WORKING_STATES.IS_EXTENSION_RELOADING];
-}
-
-const AppClosed = observer(() => {
-    const stores = useContext(rootStore);
-    const { content, buttonText, onClick } = defineState(stores);
-    const {
-        uiStore: { requestStatus, globalTabIndex },
-    } = stores;
+    const { requestStatus, globalTabIndex } = uiStore;
 
     const buttonClass = classnames({
         'app-closed__button': true,

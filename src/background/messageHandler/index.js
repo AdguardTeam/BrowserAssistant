@@ -39,7 +39,8 @@ const messageHandler = async (msg) => {
             const responseParams = await nativeHostApi.setFilteringStatus(data);
 
             setTimeout(() => {
-                state.setIsFilteringEnabled(data.isEnabled);
+                // TODO figure out method necessity
+                // state.setIsFilteringEnabled(data.isEnabled);
             }, SWITCHER_TRANSITION_TIME);
 
             return Promise.resolve(responseParams);

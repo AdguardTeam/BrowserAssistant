@@ -85,7 +85,7 @@ class SettingsStore {
         } = popupData;
 
         this.setUrlFilteringState(currentFilteringState);
-
+        this.setCurrentAppState(appState);
         this.setUpdateStatusInfo(updateStatusInfo);
 
         this.rootStore.translationStore.setLocale(appState.locale);
@@ -94,6 +94,8 @@ class SettingsStore {
             this.currentUrl = tab.url;
             this.referrer = referrer;
         });
+
+        this.rootStore.uiStore.setExtensionPending(false);
     };
 
     @action
@@ -121,14 +123,18 @@ class SettingsStore {
     };
 
     @action
-    setUrlFilteringState = (parameters) => {
+    setUrlFilteringState = (currentFilteringState) => {
+        if (!currentFilteringState) {
+            return;
+        }
+
         const {
             isFilteringEnabled,
             isHttpsFilteringEnabled,
             originalCertStatus,
             isPageFilteredByUserFilter,
             originalCertIssuer,
-        } = parameters;
+        } = currentFilteringState;
 
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;

@@ -1,60 +1,54 @@
+import isEqual from 'lodash/isEqual';
 import browserApi from '../lib/browserApi';
 import nativeHostApi from './NativeHostApi';
 import versions from './versions';
 import { MESSAGE_TYPES } from '../lib/types';
 import { BASE_LOCALE } from '../../tasks/langConstants';
 import notifier from '../lib/notifier';
-import { getUrlProps } from '../lib/helpers';
+import { getUrlProps, isHttp } from '../lib/helpers';
 
 class State {
-    /**
-     * Required flag, that determines whether the AdGuard app is installed on the computer
-     * @type {boolean}
-     */
-    isInstalled = true;
+    appState = {
+        /**
+         * Required flag, that determines whether the AdGuard app is installed on the computer
+         * @type {boolean}
+         */
+        isInstalled: true,
+        /**
+         * Required flag, that determines whether the AdGuard app is running
+         * @type {boolean}
+         */
+        isRunning: true,
+        /**
+         * Required flag, that determines whether the protection is enabled
+         * @type {boolean}
+         */
+        isProtectionEnabled: true,
+        /**
+         * Optional parameter from the app
+         * @type {string}
+         */
+        locale: BASE_LOCALE,
+        /**
+         * Optional parameter from the app, consider true unless is set to the false
+         * @type {boolean}
+         */
+        isAuthorized: true,
+    };
 
-    /**
-     * Required flag, that determines whether the AdGuard app is running
-     * @type {boolean}
-     */
-    isRunning = true;
-
-    /**
-     * Required flag, that determines whether the protection is enabled
-     * @type {boolean}
-     */
-    isProtectionEnabled = true;
-
-    /**
-     * Optional parameter from the app
-     * @type {string}
-     */
-    locale = BASE_LOCALE;
-
-    /**
-     * Optional parameter from the app, consider true unless is set to the false
-     * @type {boolean}
-     */
-    isAuthorized = true;
-
-    /**
-     * Parameter that determines if extension api version is up to date with app api version
-     * @type {boolean}
-     */
-    isAppUpToDate = true;
-
-    /**
-     * Flag, that determines whether the extensions api, specified by request's parameters
-     * is successfully validated on the host's side
-     * @type {boolean}
-     */
-    isValidatedOnHost = true;
-
-    /**
-     * Parameter that determines if filtering for url is enabled
-     * @type {boolean}
-     */
-    isFilteringEnabled = true;
+    updateStatusInfo = {
+        /**
+         * Parameter that determines if extension api version is up to date with app api version
+         * @type {boolean}
+         */
+        isAppUpToDate: true,
+        /**
+         * Flag, that determines whether the extensions api, specified by request's parameters
+         * is successfully validated on the host's side
+         * @type {boolean}
+         */
+        isValidatedOnHost: true,
+    };
 
     init = () => {
         nativeHostApi.addMessageListener(this.nativeHostMessagesHandler);
@@ -66,10 +60,11 @@ class State {
      * @param response
      */
     initMessageHandler = (response) => {
-        const { parameters } = response;
+        const { parameters, appState } = response;
         const isAppUpToDate = versions.apiVersion <= parameters.apiVersion;
         const { isValidatedOnHost } = parameters;
-        this.updateAppSetup(isAppUpToDate, isValidatedOnHost);
+        this.setAppState(appState);
+        this.setUpdateStatusInfo(isAppUpToDate, isValidatedOnHost);
     };
 
     /**
@@ -80,96 +75,14 @@ class State {
             return;
         }
 
-        this.updateAppState(message.appState);
+        this.setAppState(message.appState);
     };
 
     getAppState = () => {
-        return {
-            isInstalled: this.isInstalled,
-            isRunning: this.isRunning,
-            isProtectionEnabled: this.isProtectionEnabled,
-            locale: this.locale,
-            isAuthorized: this.isAuthorized,
-            isAppUpToDate: this.isAppUpToDate,
-            isValidatedOnHost: this.isValidatedOnHost,
-            isFilteringEnabled: this.isFilteringEnabled,
-        };
+        return this.appState;
     };
 
-    /**
-     *
-     * @param isFilteringEnabled
-     */
-    setIsFilteringEnabled = (isFilteringEnabled) => {
-        this.isFilteringEnabled = isFilteringEnabled;
-    };
-
-    /**
-     * Sets isInstalled, which is required
-     * @param {boolean} isInstalled
-     */
-    setIsInstalled = (isInstalled) => {
-        if (isInstalled === undefined) {
-            throw new Error('"isInstalled" can\'t be undefined');
-        }
-        this.isInstalled = isInstalled;
-    };
-
-    /**
-     * Sets required value isRunning
-     * @param {boolean} isRunning
-     */
-    setIsRunning = (isRunning) => {
-        if (isRunning === undefined) {
-            throw new Error('"isRunning" can\'t be undefined');
-        }
-        this.isRunning = isRunning;
-    };
-
-    /**
-     * Sets isProtectionEnabled
-     * @param {boolean} isProtectionEnabled
-     */
-    setIsProtectionEnabled = (isProtectionEnabled) => {
-        if (isProtectionEnabled === undefined) {
-            throw new Error('"isProtectionEnabled" can\'t be undefined');
-        }
-        this.isProtectionEnabled = isProtectionEnabled;
-    };
-
-    /**
-     * Sets locale get from the app
-     * This param is not required
-     * @param {string|undefined} locale
-     */
-    setLocale = (locale) => {
-        if (locale === undefined) {
-            return;
-        }
-        this.locale = locale;
-    };
-
-    /**
-     * Sets isAuthorized flag from the app
-     * This param is not required, consider user always authorized, unless this param wasn't set
-     * @param {boolean} isAuthorized
-     */
-    setIsAuthorized = (isAuthorized) => {
-        if (isAuthorized === undefined) {
-            return;
-        }
-        this.isAuthorized = isAuthorized;
-    };
-
-    setIsAppUpToDate = (isAppUpToDate) => {
-        this.isAppUpToDate = isAppUpToDate;
-    };
-
-    setIsValidatedOnHost = (isValidatedOnHost) => {
-        this.isValidatedOnHost = isValidatedOnHost;
-    };
-
-    updateAppState = (appState) => {
+    setAppState = (appState) => {
         const {
             isInstalled,
             isRunning,
@@ -178,15 +91,33 @@ class State {
             isAuthorized,
         } = appState;
 
-        this.setIsInstalled(isInstalled);
-        this.setIsRunning(isRunning);
-        this.setIsProtectionEnabled(isProtectionEnabled);
-        this.setLocale(locale);
-        this.setIsAuthorized(isAuthorized);
+        if ([isInstalled, isRunning, isProtectionEnabled].some((state) => state === undefined)) {
+            const message = `isInstalled=${isInstalled}, isRunning=${isRunning}, isProtectionEnabled=${isProtectionEnabled}`;
+            throw new Error(`All states should be defined: received ${message}`);
+        }
+        const nextAppState = {
+            ...this.appState,
+            isInstalled,
+            isRunning,
+            isProtectionEnabled,
+        };
 
-        this.notifyModules();
+        if (locale !== undefined) {
+            nextAppState.locale = locale;
+        }
+
+        if (isAuthorized !== undefined) {
+            nextAppState.isAuthorized = isAuthorized;
+        }
+
+        // Notify modules only when appState changes
+        if (!isEqual(this.appState, nextAppState)) {
+            this.appState = { ...this.appState, ...nextAppState };
+            this.notifyModules();
+        }
     };
 
+    // TODO where it is possible provide tab data
     notifyModules = async (tab) => {
         // Notify browser action tab about changed state
         notifier.notifyListeners(notifier.types.STATE_UPDATED, tab);
@@ -194,47 +125,62 @@ class State {
         // Notify popup about changed state
         await browserApi.runtime.sendMessage({
             type: MESSAGE_TYPES.STATE_UPDATED,
-            data: this.getAppState(), // TODO take data format from getPopupData
+            // TODO check what kind of message returns when
+            //  currentFilteringState changes in the program
+            data: {
+                appState: this.getAppState(),
+                updateStatusInfo: this.getUpdateStatusInfo(),
+                // TODO add currentFilteringState,
+            },
         });
     };
 
-    // TODO update this values from another place
-    updateAppSetup = (isAppUpToDate, isValidatedOnHost) => {
-        this.setIsAppUpToDate(isAppUpToDate);
-        this.setIsValidatedOnHost(isValidatedOnHost);
+    setUpdateStatusInfo = (isAppUpToDate, isValidatedOnHost) => {
+        const nextUpdateStatusInfo = {
+            isAppUpToDate,
+            isValidatedOnHost,
+        };
 
-        this.notifyModules();
+        // Notify modules only when updateStatusInfo changes
+        if (!isEqual(this.updateStatusInfo, nextUpdateStatusInfo)) {
+            this.updateStatusInfo = { ...this.updateStatusInfo, ...nextUpdateStatusInfo };
+            this.notifyModules();
+        }
     };
 
     isAppWorking() {
         return [
-            this.isInstalled,
-            this.isRunning,
-            this.isProtectionEnabled,
-            this.isAppUpToDate,
-            this.isValidatedOnHost,
+            this.appState.isInstalled,
+            this.appState.isRunning,
+            this.appState.isProtectionEnabled,
+            this.updateStatusInfo.isAppUpToDate,
+            this.updateStatusInfo.isValidatedOnHost,
         ].every((state) => state === true);
     }
 
-    // TODO consider moving this requests into provider
+    /**
+     * Returns current filtering state or null if was unable to retrieve it
+     * @param tab
+     * @returns {Promise<null|*>}
+     */
     getCurrentFilteringState = async (tab) => {
         const { url } = tab;
         const { port } = getUrlProps(url);
+        if (!isHttp(url) || !port) {
+            return null;
+        }
         const response = await nativeHostApi.getCurrentFilteringState(url, port);
-        this.updateAppState(response.appState); // TODO may be there won't be reason to update
+        this.setAppState(response.appState);
         return response.parameters;
     };
 
     getUpdateStatusInfo() {
-        return {
-            isAppUpToDate: this.isAppUpToDate,
-            isValidatedOnHost: this.isValidatedOnHost,
-        };
+        return this.updateStatusInfo;
     }
 
     setProtectionStatus = async (isEnabled) => {
         const response = await nativeHostApi.setProtectionStatus(isEnabled);
-        this.updateAppState(response.appState); // TODO consider removing
+        this.setAppState(response.appState);
         return response.appState;
     };
 }
