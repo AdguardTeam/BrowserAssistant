@@ -41,8 +41,6 @@ export default {
     },
     // eslint-disable-next-line max-len
     [MESSAGE_TYPES.setFilteringStatus]: (data) => sendMessage(MESSAGE_TYPES.setFilteringStatus, data),
-    [MESSAGE_TYPES.addRule]: (data) => sendMessage(MESSAGE_TYPES.addRule, data),
-    [MESSAGE_TYPES.removeRule]: (data) => sendMessage(MESSAGE_TYPES.removeRule, data),
     [MESSAGE_TYPES.openOriginalCert]: (data) => sendMessage(MESSAGE_TYPES.openOriginalCert, data),
     [MESSAGE_TYPES.updateApp]: () => sendMessage(MESSAGE_TYPES.updateApp),
     [MESSAGE_TYPES.openPage]: (data) => sendMessage(MESSAGE_TYPES.openPage, data),

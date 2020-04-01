@@ -43,40 +43,6 @@ class RequestsStore {
         }
     };
 
-    openOriginalCert = async () => {
-        const {
-            currentTabHostname,
-            currentPort,
-        } = this.rootStore.settingsStore;
-
-        try {
-            await innerMessaging.openOriginalCert({
-                domain: currentTabHostname,
-                port: currentPort,
-            });
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
-    removeRule = async () => {
-        const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
-        try {
-            await innerMessaging.removeRule({ ruleText });
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
-    addRule = async () => {
-        const { currentTabHostname: ruleText } = this.rootStore.settingsStore;
-        try {
-            await innerMessaging.addRule({ ruleText });
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
     startApp = async () => {
         try {
             this.rootStore.uiStore.setExtensionLoading(true);

@@ -256,6 +256,19 @@ class SettingsStore {
             log.error(error);
         }
     };
+
+    openOriginalCert = async () => {
+        const { hostname, port } = getUrlProps(this.currentUrl);
+
+        try {
+            await innerMessaging.openOriginalCert({
+                domain: hostname,
+                port,
+            });
+        } catch (error) {
+            log.error(error);
+        }
+    };
 }
 
 export default SettingsStore;
