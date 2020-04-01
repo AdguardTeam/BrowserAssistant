@@ -13,8 +13,8 @@ const setIcon = async (tabId, iconPath) => {
 
     try {
         await browser.browserAction.setIcon(details);
-    } catch (error) {
-        log.debug(error);
+    } catch (e) {
+        log.debug(e.message);
     }
 };
 

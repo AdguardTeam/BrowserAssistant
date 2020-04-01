@@ -94,15 +94,6 @@ class RequestsStore {
             log.error(error);
         }
     };
-
-    openSettings = async () => {
-        try {
-            await innerMessaging.openSettings();
-            window.close();
-        } catch (error) {
-            log.error(error);
-        }
-    };
 }
 
 export default RequestsStore;

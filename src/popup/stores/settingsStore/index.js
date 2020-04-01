@@ -247,6 +247,15 @@ class SettingsStore {
         }
         this.rootStore.uiStore.setPageFilteredByUserFilter(false);
     };
+
+    openSettings = async () => {
+        try {
+            await innerMessaging.openSettings();
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
 }
 
 export default SettingsStore;

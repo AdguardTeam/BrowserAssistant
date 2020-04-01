@@ -6,25 +6,27 @@ import './header.pcss';
 
 const Header = observer(() => {
     const {
-        settingsStore: {
-            isProtectionEnabled,
-            isAuthorized,
-            setProtectionStatus,
-        },
-        requestsStore: {
-            openSettings,
-        },
-        uiStore: {
-            setProtectionTogglePending,
-            isProtectionTogglePending,
-            isAppWorking,
-            requestStatus,
-            globalTabIndex,
-        },
-        translationStore: {
-            translate,
-        },
+        settingsStore,
+        uiStore,
+        translationStore,
     } = useContext(rootStore);
+
+    const {
+        isProtectionEnabled,
+        isAuthorized,
+        setProtectionStatus,
+        openSettings,
+    } = settingsStore;
+
+    const {
+        setProtectionTogglePending,
+        isProtectionTogglePending,
+        isAppWorking,
+        requestStatus,
+        globalTabIndex,
+    } = uiStore;
+
+    const { translate } = translationStore;
 
     const disableProtection = async (e) => {
         if (!isAuthorized) {
