@@ -20,7 +20,8 @@ class Icon {
 
         notifier.addSpecifiedListener(notifier.types.TAB_ACTIVATED, throttledUpdater);
         notifier.addSpecifiedListener(notifier.types.TAB_UPDATED, throttledUpdater);
-        notifier.addSpecifiedListener(notifier.types.STATE_UPDATED, throttledUpdater);
+        // TODO notify about updates only if state actually changes, now it causes recursion
+        // notifier.addSpecifiedListener(notifier.types.STATE_UPDATED, throttledUpdater);
     }
 
     updateIcon = async (tab) => {

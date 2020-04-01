@@ -1,9 +1,12 @@
-import { MESSAGE_TYPES as MSG, MESSAGE_TYPES } from '../types';
+import { MESSAGE_TYPES } from '../types';
 import browserApi from '../browserApi';
 
 const sendMessage = async (type, data) => browserApi.runtime.sendMessage({ type, data });
 
 export default {
+    getPopupData: (tab) => {
+        return sendMessage(MESSAGE_TYPES.GET_POPUP_DATA, { tab });
+    },
     getReferrer: (tab) => { // TODO consider using only id
         return sendMessage(MESSAGE_TYPES.getReferrer, { tab }); // TODO use uppercase
     },
@@ -13,9 +16,6 @@ export default {
     getUpdateStatusInfo: () => {
         return sendMessage(MESSAGE_TYPES.getUpdateStatusInfo);
     },
-    getPopupData: (tab) => {
-        return sendMessage(MESSAGE_TYPES.GET_POPUP_DATA, { tab });
-    },
     initAssistant: (tabId) => {
         // TODO rename message type uppercase
         return sendMessage(MESSAGE_TYPES.initAssistant, { tabId });
@@ -24,20 +24,25 @@ export default {
         // TODO rename message types uppercase
         return sendMessage(MESSAGE_TYPES.setProtectionStatus, { isEnabled });
     },
-    // TODO rename MSG to message types
-    // [MSG.getCurrentAppState]: () => sendMessage(MSG.getCurrentAppState),
-    // [MSG.getCurrentFilteringState]: (data) => sendMessage(MSG.getCurrentFilteringState, data),
-    // [MSG.setProtectionStatus]: (data) => sendMessage(MSG.setProtectionStatus, data),
-    [MSG.setFilteringStatus]: (data) => sendMessage(MSG.setFilteringStatus, data),
-    [MSG.addRule]: (data) => sendMessage(MSG.addRule, data),
-    [MSG.removeRule]: (data) => sendMessage(MSG.removeRule, data),
-    [MSG.removeCustomRules]: (data) => sendMessage(MSG.removeCustomRules, data),
-    [MSG.openOriginalCert]: (data) => sendMessage(MSG.openOriginalCert, data),
-    [MSG.reportSite]: (data) => sendMessage(MSG.reportSite, data),
-    [MSG.openFilteringLog]: () => sendMessage(MSG.openFilteringLog),
-    [MSG.openSettings]: () => sendMessage(MSG.openSettings),
-    [MSG.updateApp]: () => sendMessage(MSG.updateApp),
-    [MSG.openPage]: (data) => sendMessage(MSG.openPage, data),
-    [MSG.reload]: () => sendMessage(MSG.reload),
-    [MSG.getReferrer]: () => sendMessage(MSG.getReferrer),
+    reportSite: (url, referrer) => {
+        return sendMessage(MESSAGE_TYPES.reportSite, { url, referrer });
+    },
+    reload: (tab) => {
+        return sendMessage(MESSAGE_TYPES.reload, { tab });
+    },
+    removeCustomRules: (url) => {
+        return sendMessage(MESSAGE_TYPES.removeCustomRules, { url });
+    },
+    openFilteringLog: () => {
+        return sendMessage(MESSAGE_TYPES.openFilteringLog);
+    },
+    // eslint-disable-next-line max-len
+    [MESSAGE_TYPES.setFilteringStatus]: (data) => sendMessage(MESSAGE_TYPES.setFilteringStatus, data),
+    [MESSAGE_TYPES.addRule]: (data) => sendMessage(MESSAGE_TYPES.addRule, data),
+    [MESSAGE_TYPES.removeRule]: (data) => sendMessage(MESSAGE_TYPES.removeRule, data),
+    [MESSAGE_TYPES.openOriginalCert]: (data) => sendMessage(MESSAGE_TYPES.openOriginalCert, data),
+    [MESSAGE_TYPES.openSettings]: () => sendMessage(MESSAGE_TYPES.openSettings),
+    [MESSAGE_TYPES.updateApp]: () => sendMessage(MESSAGE_TYPES.updateApp),
+    [MESSAGE_TYPES.openPage]: (data) => sendMessage(MESSAGE_TYPES.openPage, data),
+    [MESSAGE_TYPES.getReferrer]: () => sendMessage(MESSAGE_TYPES.getReferrer),
 };

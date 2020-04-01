@@ -25,16 +25,6 @@ class RequestsStore {
         }
     };
 
-    // TODO remove
-    // getCurrentAppState = async () => {
-    //     try {
-    //         const res = await innerMessaging.getCurrentAppState();
-    //         this.rootStore.settingsStore.setCurrentAppState(res.appState);
-    //     } catch (error) {
-    //         log.error(error);
-    //     }
-    // };
-
     setFilteringStatus = async () => {
         const {
             currentUrl: url,
@@ -64,41 +54,6 @@ class RequestsStore {
                 domain: currentTabHostname,
                 port: currentPort,
             });
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
-    removeCustomRules = async () => {
-        const { currentUrl: url } = this.rootStore.settingsStore;
-
-        await innerMessaging.reload();
-        try {
-            await innerMessaging.removeCustomRules({ url });
-            this.rootStore.uiStore.setPageFilteredByUserFilter(false);
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
-    reportSite = async () => {
-        const { currentUrl: url, referrer } = this.rootStore.settingsStore;
-        try {
-            await innerMessaging.reportSite({
-                url,
-                referrer,
-            });
-
-            window.close();
-        } catch (error) {
-            log.error(error);
-        }
-    };
-
-    openFilteringLog = async () => {
-        try {
-            await innerMessaging.openFilteringLog();
-            window.close();
         } catch (error) {
             log.error(error);
         }

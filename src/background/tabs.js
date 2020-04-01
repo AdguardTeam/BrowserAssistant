@@ -87,9 +87,8 @@ class Tabs {
         browser.tabs.create({ url });
     };
 
-    reload = async () => {
+    reload = async (tab) => {
         try {
-            const tab = await this.getCurrent();
             await browser.tabs.reload(tab.id);
         } catch (error) {
             log.error(error);

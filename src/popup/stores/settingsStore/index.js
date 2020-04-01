@@ -158,7 +158,7 @@ class SettingsStore {
     /**
      * Starts assistant
      */
-    startBlockingAd = async () => {
+    initAssistant = async () => {
         const tab = await tabs.getCurrent();
         await innerMessaging.initAssistant(tab.id);
         window.close();
@@ -193,7 +193,8 @@ class SettingsStore {
         return tab;
     };
 
-    @action updateUrlFilteringState = async () => {
+    @action
+    updateUrlFilteringState = async () => {
         const tab = await this.getCurrentTab();
         const response = await innerMessaging.getUrlFilteringState(tab);
         this.setUrlFilteringState(response);
@@ -209,7 +210,37 @@ class SettingsStore {
         await this.updateUrlFilteringState();
 
         uiStore.setExtensionLoading(false);
-    }
+    };
+
+    openFilteringLog = async () => {
+        try {
+            await innerMessaging.openFilteringLog();
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    reportSite = async () => {
+        try {
+            await innerMessaging.reportSite(this.currentUrl, this.referrer);
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    // TODO after custom rules removal update current state of the page
+    removeCustomRules = async () => {
+        try {
+            await innerMessaging.removeCustomRules(this.currentUrl);
+            const tab = await tabs.getCurrent();
+            await innerMessaging.reload(tab);
+        } catch (error) {
+            log.error(error);
+        }
+        this.rootStore.uiStore.setPageFilteredByUserFilter(false);
+    };
 }
 
 export default SettingsStore;

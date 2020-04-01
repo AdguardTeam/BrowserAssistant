@@ -56,7 +56,8 @@ const messageHandler = async (msg) => {
         }
 
         case MESSAGE_TYPES.removeCustomRules: {
-            const responseParams = await nativeHostApi.removeCustomRules(data);
+            const { url } = data;
+            const responseParams = await nativeHostApi.removeCustomRules(url);
             return Promise.resolve(responseParams);
         }
 
@@ -66,9 +67,9 @@ const messageHandler = async (msg) => {
         }
 
         case MESSAGE_TYPES.reportSite: {
-            const responseParams = await nativeHostApi.reportSite(data);
-            await tabs.openPage(responseParams.parameters.reportUrl);
-            return Promise.resolve(responseParams);
+            const response = await nativeHostApi.reportSite(data);
+            await tabs.openPage(response.parameters.reportUrl);
+            return Promise.resolve(response);
         }
 
         case MESSAGE_TYPES.openFilteringLog: {
@@ -92,7 +93,8 @@ const messageHandler = async (msg) => {
         }
 
         case MESSAGE_TYPES.reload: {
-            const responseParams = await tabs.reload(data);
+            const { tab } = data;
+            const responseParams = await tabs.reload(tab);
             return Promise.resolve(responseParams);
         }
 

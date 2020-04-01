@@ -11,6 +11,7 @@ import {
 } from '../consts';
 import { checkSomeIsTrue } from '../../../lib/helpers';
 import innerMessaging from '../../../lib/innerMessaging';
+import tabs from '../../../background/tabs';
 
 class UiStore {
     constructor(rootStore) {
@@ -159,9 +160,11 @@ class UiStore {
         document.body.style.zoom = 1 / this.userSettingsZoom;
     };
 
+    // TODO consider removing
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
-            await innerMessaging.reload();
+            const tab = await tabs.getCurrent();
+            await innerMessaging.reload(tab);
         }, SWITCHER_TRANSITION_TIME);
     };
 }

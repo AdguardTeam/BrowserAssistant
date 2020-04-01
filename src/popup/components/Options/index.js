@@ -3,73 +3,54 @@ import { observer } from 'mobx-react';
 import Option from './Option';
 import rootStore from '../../stores';
 
-const getOptions = (stores) => {
+const Options = observer(() => {
     const {
-        settingsStore: {
-            isFilteringEnabled,
-            pageProtocol,
-            isAuthorized,
-            startBlockingAd,
-        },
-        requestsStore: {
-            openFilteringLog,
-            reportSite,
-            removeCustomRules,
-        },
-        uiStore: {
-            isPageFilteredByUserFilter,
-        },
-        translationStore: {
-            translate,
-        },
-    } = stores;
+        settingsStore,
+        uiStore,
+        translationStore,
+    } = useContext(rootStore);
 
-    return ([
+    const { isFilteringEnabled, pageProtocol, isAuthorized } = settingsStore;
+
+    const buttons = [
         {
             iconName: 'block-ad',
-            text: translate('block_ads'),
-            onClick: startBlockingAd,
+            text: translationStore.translate('block_ads'),
+            onClick: settingsStore.initAssistant,
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
         {
             iconName: 'sandwich',
-            text: translate('open_filtering_log'),
-            onClick: openFilteringLog,
+            text: translationStore.translate('open_filtering_log'),
+            onClick: settingsStore.openFilteringLog,
             isDisabled: false,
             isVisible: true,
         },
         {
             iconName: 'thumb-down',
-            text: translate('report_site'),
-            onClick: reportSite,
+            text: translationStore.translate('report_site'),
+            onClick: settingsStore.reportSite,
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },
         {
             iconName: 'icon-cross',
-            text: translate('reset_custom_rules'),
+            text: translationStore.translate('reset_custom_rules'),
             onClick: async () => {
                 if (!isAuthorized) {
                     return;
                 }
-                await removeCustomRules();
-                // TODO check if this works
-                // await getCurrentFilteringState();
+                await settingsStore.removeCustomRules();
             },
             isDisabled: !isAuthorized,
-            isVisible: isPageFilteredByUserFilter,
+            isVisible: uiStore.isPageFilteredByUserFilter,
         },
-    ]);
-};
-
-const Options = observer(() => {
-    const stores = useContext(rootStore);
-    const options = getOptions(stores);
+    ];
 
     return (
         <div className="actions">
-            {options.map(({
+            {buttons.map(({
                 iconName, text, onClick, isDisabled, isVisible,
             }) => (
                 isVisible && (
@@ -79,7 +60,7 @@ const Options = observer(() => {
                         text={text}
                         onClick={onClick}
                         isDisabled={isDisabled}
-                        tabIndex={stores.uiStore.globalTabIndex}
+                        tabIndex={uiStore.globalTabIndex}
                     />
                 )
             ))}

@@ -264,14 +264,15 @@ class NativeHostApi {
     });
 
     /**
-     * @param {object} parameters
-     * @param {string} parameters.url
+     * @param {string} url
      * @returns {Promise<object>}
      */
-    removeCustomRules = ({ url }) => this.makeRequest({
-        type: REQUEST_TYPES.removeCustomRules,
-        parameters: { url },
-    });
+    removeCustomRules = (url) => {
+        return this.makeRequest({
+            type: REQUEST_TYPES.removeCustomRules,
+            parameters: { url },
+        });
+    };
 
     /**
      * @param {object} parameters
