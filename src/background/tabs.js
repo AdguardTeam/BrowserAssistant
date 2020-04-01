@@ -21,6 +21,7 @@ class Tabs {
             try {
                 tab = await browser.tabs.get(tabId);
             } catch (e) {
+                log.debug(e.message);
                 return; // ignore errors happening when we try to get removed tabs
             }
             if (tab && tab.active) {
@@ -79,6 +80,7 @@ class Tabs {
         try {
             this.sendMessage(tabId, CONTENT_MESSAGES.initAssistant, params);
         } catch (e) {
+            log.debug(e.message);
             // ignore errors, which could happen if try to inject on service pages
         }
     };

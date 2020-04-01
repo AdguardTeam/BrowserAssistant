@@ -28,7 +28,7 @@ class NativeHostApi {
      * @returns {Promise<void>}
      */
     incomingMessageHandler = async (incomingMessage) => {
-        log.info(`response ${incomingMessage.id}`, incomingMessage);
+        log.debug(`response ${incomingMessage.id}`, incomingMessage);
 
         // Ignore requests without identifying prefix ADG
         if (!incomingMessage.requestId.startsWith(ADG_PREFIX)) {

@@ -208,7 +208,7 @@ class StubHost {
     };
 
     #responseHandler = (params) => {
-        log.info(`response ${params.id}`, params);
+        log.debug(`response ${params.id}`, params);
 
         // Ignore requests without identifying prefix ADG
         if (!params.requestId.startsWith(ADG_PREFIX)) {
