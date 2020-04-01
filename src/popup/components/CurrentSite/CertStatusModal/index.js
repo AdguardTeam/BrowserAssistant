@@ -78,6 +78,7 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                         && isHttpsFilteringEnabled}
                         onClick={toggleHttpsFiltering}
                         isDisabled={certStatus.isInvalid || !isAuthorized}
+                        label={translate('https_filtering')}
                     />
                 </div>
             )}
