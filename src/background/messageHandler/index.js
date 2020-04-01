@@ -1,18 +1,19 @@
-import { MESSAGE_TYPES } from '../../lib/types';
+import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../../lib/types';
 import nativeHostApi from '../NativeHostApi';
 import tabs from '../tabs';
-import log from '../../lib/logger';
-import state from '../State';
+import state from '../state';
 import { SWITCHER_TRANSITION_TIME } from '../../popup/stores/consts';
 
 const messageHandler = async (msg) => {
     const { type, data } = msg;
 
     switch (type) {
-        case MESSAGE_TYPES.GET_POPUP_DATA: {
+        case POPUP_MESSAGES.GET_POPUP_DATA: {
             const { tab } = data;
             const referrer = await tabs.getReferrer(tab);
+            console.log(referrer);
             const currentFilteringState = await state.getCurrentFilteringState(tab);
+            console.log(currentFilteringState);
             const updateStatusInfo = await state.getUpdateStatusInfo();
             const appState = await state.getAppState();
 
@@ -24,19 +25,24 @@ const messageHandler = async (msg) => {
             };
         }
 
-        case MESSAGE_TYPES.getCurrentFilteringState: {
+        case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {
             const { url } = data;
             return state.getCurrentFilteringState(url);
         }
 
-        case MESSAGE_TYPES.setProtectionStatus: {
+        case POPUP_MESSAGES.SET_PROTECTION_STATUS: {
             const { isEnabled } = data;
             const resultAppState = await state.setProtectionStatus(isEnabled);
             return Promise.resolve(resultAppState);
         }
 
-        case MESSAGE_TYPES.setFilteringStatus: {
-            const responseParams = await nativeHostApi.setFilteringStatus(data);
+        case POPUP_MESSAGES.SET_FILTERING_STATUS: {
+            const { isEnabled, isHttpsEnabled, url } = data;
+            const responseParams = await nativeHostApi.setFilteringStatus(
+                isEnabled,
+                isHttpsEnabled,
+                url
+            );
 
             setTimeout(() => {
                 // TODO figure out method necessity
@@ -46,81 +52,67 @@ const messageHandler = async (msg) => {
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.addRule: {
-            const responseParams = await nativeHostApi.addRule(data);
-            return Promise.resolve(responseParams);
-        }
-
-        case MESSAGE_TYPES.removeRule: {
-            const responseParams = await nativeHostApi.removeRule(data);
-            return Promise.resolve(responseParams);
-        }
-
-        case MESSAGE_TYPES.removeCustomRules: {
+        case POPUP_MESSAGES.REMOVE_CUSTOM_RULES: {
             const { url } = data;
             const responseParams = await nativeHostApi.removeCustomRules(url);
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.openOriginalCert: {
-            const responseParams = await nativeHostApi.openOriginalCert(data);
+        case POPUP_MESSAGES.OPEN_ORIGINAL_CERT: {
+            const { domain, port } = data;
+            const responseParams = await nativeHostApi.openOriginalCert(domain, port);
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.reportSite: {
-            const response = await nativeHostApi.reportSite(data);
+        case POPUP_MESSAGES.REPORT_SITE: {
+            const { url, referrer } = data;
+            const response = await nativeHostApi.reportSite(url, referrer);
             await tabs.openPage(response.parameters.reportUrl);
             return Promise.resolve(response);
         }
 
-        case MESSAGE_TYPES.openFilteringLog: {
+        case POPUP_MESSAGES.OPEN_FILTERING_LOG: {
             const responseParams = await nativeHostApi.openFilteringLog();
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.openSettings: {
+        case POPUP_MESSAGES.OPEN_SETTINGS: {
             const responseParams = await nativeHostApi.openSettings();
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.updateApp: {
+        case POPUP_MESSAGES.UPDATE_APP: {
             const responseParams = await nativeHostApi.updateApp();
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.openPage: {
-            const responseParams = await tabs.openPage(data);
+        case POPUP_MESSAGES.OPEN_PAGE: {
+            const { url } = data;
+            const responseParams = await tabs.openPage(url);
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.reload: {
+        case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             const responseParams = await tabs.reload(tab);
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.getReferrer: {
-            const responseParams = await tabs.getReferrer(data);
-            return Promise.resolve(responseParams);
-        }
-
-        case MESSAGE_TYPES.initAssistant: {
+        case POPUP_MESSAGES.INIT_ASSISTANT: {
             const { tabId } = data;
             const responseParams = await tabs.initAssistant(tabId);
             return Promise.resolve(responseParams);
         }
 
-        case MESSAGE_TYPES.getUpdateStatusInfo: {
-            const responseParams = {
-                locale: state.locale,
-                isAppUpToDate: state.isAppUpToDate,
-                isValidatedOnHost: state.isValidatedOnHost,
-            };
+        // TODO check if there is possibility to block website fully from legacy assistant
+        case CONTENT_MESSAGES.ADD_RULE: {
+            const { ruleText } = data;
+            const responseParams = await nativeHostApi.addRule(ruleText);
             return Promise.resolve(responseParams);
         }
+
         default: {
-            log.warn('Inner messaging type "%s" is not in the message handlers', type);
-            return Promise.resolve(null);
+            throw new Error(`Unknown message type was sent: ${type}`);
         }
     }
 };

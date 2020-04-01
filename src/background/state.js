@@ -2,7 +2,7 @@ import isEqual from 'lodash/isEqual';
 import browserApi from '../lib/browserApi';
 import nativeHostApi from './NativeHostApi';
 import versions from './versions';
-import { MESSAGE_TYPES } from '../lib/types';
+import { POPUP_MESSAGES } from '../lib/types';
 import { BASE_LOCALE } from '../../tasks/langConstants';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
@@ -124,7 +124,7 @@ class State {
 
         // Notify popup about changed state
         await browserApi.runtime.sendMessage({
-            type: MESSAGE_TYPES.STATE_UPDATED,
+            type: POPUP_MESSAGES.STATE_UPDATED,
             // TODO check what kind of message returns when
             //  currentFilteringState changes in the program
             data: {
@@ -170,6 +170,7 @@ class State {
             return null;
         }
         const response = await nativeHostApi.getCurrentFilteringState(url, port);
+        console.log(response);
         this.setAppState(response.appState);
         return response.parameters;
     };

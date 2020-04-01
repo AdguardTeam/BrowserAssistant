@@ -13,9 +13,9 @@ const initialize = () => {
     browser.runtime.onMessage.addListener((message) => {
         const { type, data } = message;
         switch (type) {
-            case CONTENT_MESSAGES.getReferrer:
+            case CONTENT_MESSAGES.GET_REFERRER:
                 return Promise.resolve(document.referrer);
-            case CONTENT_MESSAGES.initAssistant: {
+            case CONTENT_MESSAGES.INIT_ASSISTANT: {
                 const { addRuleCallbackName } = data;
                 startAssistant(async (ruleText) => {
                     await browserApi.runtime.sendMessage({

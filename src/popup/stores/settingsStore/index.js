@@ -99,8 +99,8 @@ class SettingsStore {
     };
 
     @action
-    openDownloadPage = () => {
-        innerMessaging.openPage(DOWNLOAD_LINK);
+    openDownloadPage = async () => {
+        await innerMessaging.openPage(DOWNLOAD_LINK);
     };
 
     @action
@@ -202,7 +202,7 @@ class SettingsStore {
     @action
     updateUrlFilteringState = async () => {
         const tab = await this.getCurrentTab();
-        const response = await innerMessaging.getUrlFilteringState(tab);
+        const response = await innerMessaging.getUrlFilteringState(tab.url);
         this.setUrlFilteringState(response);
     };
 
@@ -272,11 +272,11 @@ class SettingsStore {
 
     setFilteringStatus = async () => {
         try {
-            await innerMessaging.setFilteringStatus({
-                url: this.currentUrl,
-                isEnabled: this.isFilteringEnabled,
-                isHttpsEnabled: this.isHttpsFilteringEnabled,
-            });
+            await innerMessaging.setFilteringStatus(
+                this.currentUrl,
+                this.isFilteringEnabled,
+                this.isHttpsFilteringEnabled
+            );
         } catch (error) {
             log.error(error);
         }

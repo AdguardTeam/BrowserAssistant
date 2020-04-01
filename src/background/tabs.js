@@ -1,9 +1,7 @@
 import browser from 'webextension-polyfill';
-import {
-    CONTENT_MESSAGES, REQUEST_TYPES,
-} from '../lib/types';
+import { CONTENT_MESSAGES } from '../lib/types';
 import log from '../lib/logger';
-import { DOWNLOAD_LINK, CONTENT_SCRIPT_NAME } from '../lib/consts';
+import { CONTENT_SCRIPT_NAME } from '../lib/consts';
 import notifier from '../lib/notifier';
 
 class Tabs {
@@ -68,7 +66,7 @@ class Tabs {
      */
     getReferrer = async (tab) => {
         try {
-            const response = await this.sendMessage(tab.id, CONTENT_MESSAGES.getReferrer);
+            const response = await this.sendMessage(tab.id, CONTENT_MESSAGES.GET_REFERRER);
             return response;
         } catch (e) {
             return '';
@@ -76,17 +74,17 @@ class Tabs {
     };
 
     initAssistant = async (tabId) => {
-        const params = { addRuleCallbackName: REQUEST_TYPES.addRule };
+        const params = { addRuleCallbackName: CONTENT_MESSAGES.ADD_RULE };
         try {
-            this.sendMessage(tabId, CONTENT_MESSAGES.initAssistant, params);
+            this.sendMessage(tabId, CONTENT_MESSAGES.INIT_ASSISTANT, params);
         } catch (e) {
             log.debug(e.message);
             // ignore errors, which could happen if try to inject on service pages
         }
     };
 
-    openPage = (url = DOWNLOAD_LINK) => {
-        browser.tabs.create({ url });
+    openPage = async (url) => {
+        await browser.tabs.create({ url });
     };
 
     reload = async (tab) => {

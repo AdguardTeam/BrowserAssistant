@@ -7,8 +7,8 @@ import {
     ASSISTANT_TYPES,
     CUSTOM_REQUEST_PREFIX,
     HOST_TYPES,
-    MESSAGE_TYPES,
     REQUEST_TYPES,
+    HOST_RESPONSE_TYPES,
 } from '../lib/types';
 
 class NativeHostApi {
@@ -114,7 +114,7 @@ class NativeHostApi {
      */
     reconnect = async () => {
         // TODO on reconnection send message to the popup to start reloading
-        // await browserApi.runtime.sendMessage({ type: MESSAGE_TYPES.START_RELOAD });
+        // await browserApi.runtime.sendMessage({ type: POPUP_MESSAGES.START_RELOAD });
         this.disconnect();
         await this.connect();
     };
@@ -157,11 +157,11 @@ class NativeHostApi {
                     this.port.onMessage.removeListener(messageHandler);
                     clearTimeout(timerId);
 
-                    if (result === MESSAGE_TYPES.OK) {
+                    if (result === HOST_RESPONSE_TYPES.OK) {
                         return resolve(msg);
                     }
 
-                    if (result === MESSAGE_TYPES.ERROR) {
+                    if (result === HOST_RESPONSE_TYPES.ERROR) {
                         this.reconnectWithRetry();
                         return reject(new Error(`Native host responded with status: ${result}.`));
                     }
@@ -202,7 +202,8 @@ class NativeHostApi {
     };
 
     /**
-     * @returns {Promise<object>}
+     * Returns current app state
+     * // TODO add return result info
      */
     getCurrentAppState = () => this.makeRequest({
         type: REQUEST_TYPES.getCurrentAppState,
@@ -213,7 +214,6 @@ class NativeHostApi {
      * @param {string} url
      * @param {number} port
      * @param {boolean} forceStartApp
-     * @returns {Promise<object>}
      */
     getCurrentFilteringState = (url, port, forceStartApp = false) => {
         return this.makeRequest({
@@ -224,7 +224,6 @@ class NativeHostApi {
 
     /**
      * @param {boolean} isEnabled
-     * @returns {Promise<object>}
      */
     setProtectionStatus = (isEnabled) => this.makeRequest({
         type: REQUEST_TYPES.setProtectionStatus,
@@ -232,34 +231,22 @@ class NativeHostApi {
     });
 
     /**
-     * @param {object} parameters
-     * @param {boolean} parameters.isEnabled
-     * @param {boolean} parameters.isHttpsEnabled
-     * @param {string} parameters.url
-     * @returns {Promise<object>}
+     * Sets filtering status
+     * @param {boolean} isEnabled
+     * @param {boolean} isHttpsEnabled
+     * @param {string} url
      */
-    setFilteringStatus = ({ isEnabled, isHttpsEnabled, url }) => this.makeRequest({
+    setFilteringStatus = (isEnabled, isHttpsEnabled, url) => this.makeRequest({
         type: REQUEST_TYPES.setFilteringStatus,
         parameters: { isEnabled, isHttpsEnabled, url },
     });
 
     /**
-     * @param {object} parameters
-     * @param {string} parameters.ruleText
+     * @param {string} ruleText
      * @returns {Promise<object>}
      */
-    addRule = ({ ruleText }) => this.makeRequest({
+    addRule = (ruleText) => this.makeRequest({
         type: REQUEST_TYPES.addRule,
-        parameters: { ruleText },
-    });
-
-    /**
-     * @param {object} parameters
-     * @param {string} parameters.ruleText
-     * @returns {Promise<object>}
-     */
-    removeRule = ({ ruleText }) => this.makeRequest({
-        type: REQUEST_TYPES.removeRule,
         parameters: { ruleText },
     });
 
@@ -275,23 +262,21 @@ class NativeHostApi {
     };
 
     /**
-     * @param {object} parameters
-     * @param {string} parameters.domain
-     * @param {number} parameters.port
+     * @param {string} domain
+     * @param {number} port
      * @returns {Promise<object>}
      */
-    openOriginalCert = ({ domain, port }) => this.makeRequest({
+    openOriginalCert = (domain, port) => this.makeRequest({
         type: REQUEST_TYPES.openOriginalCert,
         parameters: { domain, port },
     });
 
     /**
-     * @param {object} parameters
-     * @param {string} parameters.url
-     * @param {string} parameters.referrer
+     * @param {string} url
+     * @param {string} referrer
      * @returns {Promise<object>}
      */
-    reportSite = ({ url, referrer }) => this.makeRequest({
+    reportSite = (url, referrer) => this.makeRequest({
         type: REQUEST_TYPES.reportSite,
         parameters: {
             url,
@@ -301,21 +286,21 @@ class NativeHostApi {
     });
 
     /**
-     * @returns {Promise<object>}
+     * Sends message to open filtering log
      */
     openFilteringLog = () => this.makeRequest({
         type: REQUEST_TYPES.openFilteringLog,
     });
 
     /**
-     * @returns {Promise<object>}
+     * Sends message to open settings
      */
     openSettings = () => this.makeRequest({
         type: REQUEST_TYPES.openSettings,
     });
 
     /**
-     * @returns {Promise<object>}
+     * Sends message to update app
      */
     updateApp = () => this.makeRequest({
         type: REQUEST_TYPES.updateApp,

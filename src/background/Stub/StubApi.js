@@ -6,7 +6,7 @@
 import nanoid from 'nanoid';
 import {
     ASSISTANT_TYPES,
-    MESSAGE_TYPES,
+    POPUP_MESSAGES,
     REQUEST_TYPES,
     ADG_PREFIX,
 } from '../../lib/types';
@@ -56,7 +56,7 @@ class Api {
 
             if (!this.isAppUpToDate || !this.isValidatedOnHost) {
                 await browserApi.runtime.sendMessage({
-                    type: MESSAGE_TYPES.STOP_RELOAD,
+                    type: POPUP_MESSAGES.STOP_RELOAD,
                 });
             }
         } catch (error) {

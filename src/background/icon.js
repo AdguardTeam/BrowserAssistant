@@ -1,6 +1,6 @@
 import throttle from 'lodash/throttle';
 import actions from './actions';
-import state from './State';
+import state from './state';
 import notifier from '../lib/notifier';
 import tabs from './tabs';
 

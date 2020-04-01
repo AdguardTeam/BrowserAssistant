@@ -6,10 +6,11 @@
 import nanoid from 'nanoid';
 import { ORIGINAL_CERT_STATUS } from '../../popup/stores/consts';
 import {
-    HOST_REQUEST_TYPES, HOST_RESPONSE_TYPES, REQUEST_TYPES, ADG_PREFIX,
+    HOST_REQUEST_TYPES, REQUEST_TYPES, ADG_PREFIX,
 } from '../../lib/types';
 import log from '../../lib/logger';
 import browserApi from '../../lib/browserApi';
+
 
 const { BASE_LOCALE } = require('../../../tasks/langConstants');
 
@@ -295,9 +296,6 @@ class StubHost {
                 break;
             case REQUEST_TYPES.addRule:
                 log.info('ADD RULE');
-                break;
-            case REQUEST_TYPES.removeRule:
-                log.info('REMOVE RULE');
                 break;
             case REQUEST_TYPES.removeCustomRules:
                 log.info('REMOVE CUSTOM RULES');

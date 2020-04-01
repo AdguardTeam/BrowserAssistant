@@ -1,48 +1,48 @@
-import { MESSAGE_TYPES } from '../types';
+import { POPUP_MESSAGES } from '../types';
 import browserApi from '../browserApi';
 
 const sendMessage = async (type, data) => browserApi.runtime.sendMessage({ type, data });
 
 export default {
     getPopupData: (tab) => {
-        return sendMessage(MESSAGE_TYPES.GET_POPUP_DATA, { tab });
+        return sendMessage(POPUP_MESSAGES.GET_POPUP_DATA, { tab });
     },
-    getReferrer: (tab) => { // TODO consider using only id
-        return sendMessage(MESSAGE_TYPES.getReferrer, { tab }); // TODO use uppercase
-    },
-    getUrlFilteringState: (url, forceStart) => {
-        return sendMessage(MESSAGE_TYPES.getCurrentFilteringState, { url, forceStart });
-    },
-    getUpdateStatusInfo: () => {
-        return sendMessage(MESSAGE_TYPES.getUpdateStatusInfo);
+    getUrlFilteringState: (url) => {
+        return sendMessage(POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE, { url });
     },
     initAssistant: (tabId) => {
         // TODO rename message type uppercase
-        return sendMessage(MESSAGE_TYPES.initAssistant, { tabId });
+        return sendMessage(POPUP_MESSAGES.INIT_ASSISTANT, { tabId });
     },
     setProtectionStatus: (isEnabled) => {
         // TODO rename message types uppercase
-        return sendMessage(MESSAGE_TYPES.setProtectionStatus, { isEnabled });
+        return sendMessage(POPUP_MESSAGES.SET_PROTECTION_STATUS, { isEnabled });
     },
     reportSite: (url, referrer) => {
-        return sendMessage(MESSAGE_TYPES.reportSite, { url, referrer });
+        return sendMessage(POPUP_MESSAGES.REPORT_SITE, { url, referrer });
     },
     reload: (tab) => {
-        return sendMessage(MESSAGE_TYPES.reload, { tab });
+        return sendMessage(POPUP_MESSAGES.RELOAD, { tab });
     },
     removeCustomRules: (url) => {
-        return sendMessage(MESSAGE_TYPES.removeCustomRules, { url });
+        return sendMessage(POPUP_MESSAGES.REMOVE_CUSTOM_RULES, { url });
     },
     openFilteringLog: () => {
-        return sendMessage(MESSAGE_TYPES.openFilteringLog);
+        return sendMessage(POPUP_MESSAGES.OPEN_FILTERING_LOG);
     },
     openSettings: () => {
-        return sendMessage(MESSAGE_TYPES.openSettings);
+        return sendMessage(POPUP_MESSAGES.OPEN_SETTINGS);
     },
-    // eslint-disable-next-line max-len
-    [MESSAGE_TYPES.setFilteringStatus]: (data) => sendMessage(MESSAGE_TYPES.setFilteringStatus, data),
-    [MESSAGE_TYPES.openOriginalCert]: (data) => sendMessage(MESSAGE_TYPES.openOriginalCert, data),
-    [MESSAGE_TYPES.updateApp]: () => sendMessage(MESSAGE_TYPES.updateApp),
-    [MESSAGE_TYPES.openPage]: (data) => sendMessage(MESSAGE_TYPES.openPage, data),
-    [MESSAGE_TYPES.getReferrer]: () => sendMessage(MESSAGE_TYPES.getReferrer),
+    setFilteringStatus: (url, isEnabled, isHttpsEnabled) => {
+        return sendMessage(POPUP_MESSAGES.SET_FILTERING_STATUS, { url, isEnabled, isHttpsEnabled });
+    },
+    openOriginalCert: (domain, port) => {
+        return sendMessage(POPUP_MESSAGES.OPEN_ORIGINAL_CERT, { domain, port });
+    },
+    updateApp: () => {
+        return sendMessage(POPUP_MESSAGES.UPDATE_APP);
+    },
+    openPage: (url) => {
+        return sendMessage(POPUP_MESSAGES.OPEN_PAGE, { url });
+    },
 };
