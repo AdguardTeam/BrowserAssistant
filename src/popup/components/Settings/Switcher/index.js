@@ -43,6 +43,7 @@ const Switcher = ({
                 tabIndex={tabIndex}
                 onClick={clickHandler}
                 onKeyDown={onKeyDown}
+                title={label}
             />
             <div className="switcher__text">{label}</div>
         </div>

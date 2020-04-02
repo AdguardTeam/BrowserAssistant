@@ -125,7 +125,12 @@ const CurrentSite = observer(() => {
                         || (!pageProtocol.isHttps && isPageStatusModalOpen))
                     && <div className="arrow-up" />}
                 </div>
-                <div className="current-site__name">{currentTabHostname}</div>
+                <h2
+                    tabIndex={uiStore.globalTabIndex}
+                    className="current-site__name"
+                >
+                    {currentTabHostname}
+                </h2>
 
                 <CertStatusModal
                     isOpen={pageProtocol.isHttps && shouldOpenCertStatusModal}
@@ -142,7 +147,7 @@ const CurrentSite = observer(() => {
                 />
             </div>
             <div
-                role="menu"
+                role="status"
                 tabIndex={uiStore.globalTabIndex}
                 className={secureStatusClass}
                 onMouseOver={handleSecureStatusModalState}

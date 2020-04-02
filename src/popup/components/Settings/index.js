@@ -35,7 +35,6 @@ const Settings = observer(() => {
                     label={translate(checked ? 'enabled' : 'disabled')}
                 />
             </div>
-            <hr className="horizontal-line" />
         </div>
     );
 });
