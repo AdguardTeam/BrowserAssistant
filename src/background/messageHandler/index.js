@@ -11,20 +11,27 @@ const messageHandler = async (msg) => {
         case POPUP_MESSAGES.GET_POPUP_DATA: {
             const { tab } = data;
             const referrer = await tabs.getReferrer(tab);
+            let currentFilteringState;
             try {
-                const currentFilteringState = await state.getCurrentFilteringState(tab);
+                currentFilteringState = await state.getCurrentFilteringState(tab);
+            } catch (e) {
                 const updateStatusInfo = await state.getUpdateStatusInfo();
                 const appState = await state.getAppState();
-                console.log(updateStatusInfo, appState, currentFilteringState);
                 return {
                     referrer,
-                    currentFilteringState,
                     updateStatusInfo,
                     appState,
+                    hostError: e.message,
                 };
-            } catch (e) {
-                console.log(e);
             }
+            const updateStatusInfo = await state.getUpdateStatusInfo();
+            const appState = await state.getAppState();
+            return {
+                referrer,
+                updateStatusInfo,
+                appState,
+                currentFilteringState,
+            };
         }
 
         case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {

@@ -6,6 +6,7 @@ import { POPUP_MESSAGES } from '../lib/types';
 import { BASE_LOCALE } from '../../tasks/langConstants';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
+import log from '../lib/logger';
 
 class State {
     appState = {
@@ -189,7 +190,7 @@ class State {
         try {
             appState = await nativeHostApi.getCurrentAppState();
         } catch (e) {
-            console.log(e);
+            log.error(e);
         }
         this.setAppState(appState);
         return appState;

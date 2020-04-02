@@ -12,8 +12,6 @@ const AppWrapper = observer(({ children }) => {
         e.stopPropagation();
     };
 
-    console.log(isPending);
-
     const disableWhileLoading = isPending ? disableEvent : undefined;
 
     return (

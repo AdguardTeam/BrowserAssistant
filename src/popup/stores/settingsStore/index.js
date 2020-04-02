@@ -44,6 +44,8 @@ class SettingsStore {
 
     @observable isAuthorized = false;
 
+    @observable hostError = null;
+
     @computed
     get currentTabHostname() {
         return getUrlProps(this.currentUrl).hostname;
@@ -82,6 +84,14 @@ class SettingsStore {
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await innerMessaging.getPopupData(tab);
+
+        if (popupData.hostError) {
+            runInAction(() => {
+                this.hostError = popupData.hostError;
+                this.rootStore.uiStore.setExtensionLoading(false);
+            });
+            return;
+        }
 
         const {
             referrer,
@@ -320,6 +330,11 @@ class SettingsStore {
             log.error(error);
         }
     };
+
+    @computed
+    get hasHostError() {
+        return this.hostError !== null;
+    }
 }
 
 export default SettingsStore;

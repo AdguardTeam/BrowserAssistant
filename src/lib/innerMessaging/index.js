@@ -11,11 +11,9 @@ export default {
         return sendMessage(POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE, { url });
     },
     initAssistant: (tabId) => {
-        // TODO rename message type uppercase
         return sendMessage(POPUP_MESSAGES.INIT_ASSISTANT, { tabId });
     },
     setProtectionStatus: (isEnabled) => {
-        // TODO rename message types uppercase
         return sendMessage(POPUP_MESSAGES.SET_PROTECTION_STATUS, { isEnabled });
     },
     reportSite: (url, referrer) => {

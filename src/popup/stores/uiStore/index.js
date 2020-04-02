@@ -5,11 +5,8 @@ import {
     ORIGINAL_CERT_STATUS,
     HTTP_FILTERING_STATUS,
     SECURE_STATUS_MODAL_STATES,
-    SWITCHER_TRANSITION_TIME,
 } from '../consts';
 import { checkSomeIsTrue } from '../../../lib/helpers';
-import innerMessaging from '../../../lib/innerMessaging';
-import tabs from '../../../background/tabs';
 
 class UiStore {
     constructor(rootStore) {

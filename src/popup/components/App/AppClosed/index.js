@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import rootStore from '../../../stores';
-import { WORKING_STATES } from '../../../stores/consts';
 import './AppClosed.pcss';
 
 const AppClosed = observer(() => {
@@ -16,10 +15,20 @@ const AppClosed = observer(() => {
         isProtectionEnabled,
         isAppUpToDate,
         isValidatedOnHost,
+        hasHostError,
+        openDownloadPage,
     } = settingsStore;
 
     const states = {
-        [WORKING_STATES.APP_IS_NOT_INSTALLED]: {
+        ERROR_OCCURRED: {
+            content: translate('something_went_wrong'),
+            buttonText: translate('reinstall'),
+            onClick: () => {
+                openDownloadPage();
+                window.close();
+            },
+        },
+        APP_IS_NOT_INSTALLED: {
             content: translate('adg_is_not_installed'),
             buttonText: translate('get_adguard'),
             onClick: () => {
@@ -27,7 +36,7 @@ const AppClosed = observer(() => {
                 window.close();
             },
         },
-        [WORKING_STATES.APP_IS_NOT_UP_TO_DATE]: {
+        APP_IS_NOT_UP_TO_DATE: {
             content: translate('adg_is_not_updated'),
             buttonText: translate('update'),
             onClick: () => {
@@ -35,19 +44,19 @@ const AppClosed = observer(() => {
                 window.close();
             },
         },
-        [WORKING_STATES.APP_IS_NOT_RUNNING]: {
+        APP_IS_NOT_RUNNING: {
             content: translate('adg_is_not_running'),
             buttonText: translate('run_adg'),
             onClick: settingsStore.startApp,
         },
-        [WORKING_STATES.PROTECTION_IS_NOT_ENABLED]: {
+        PROTECTION_IS_NOT_ENABLED: {
             content: translate('adg_is_paused'),
             buttonText: translate('enable'),
             onClick: async () => {
                 await settingsStore.enableApp();
             },
         },
-        [WORKING_STATES.EXTENSION_IS_NOT_UPDATED]: {
+        EXTENSION_IS_NOT_UPDATED: {
             content: translate('assistant_is_not_updated'),
             buttonText: translate('update'),
             onClick: () => {
@@ -55,33 +64,37 @@ const AppClosed = observer(() => {
                 window.close();
             },
         },
-        [WORKING_STATES.EXTENSION_IS_RELOADING]: {
+        EXTENSION_IS_RELOADING: {
             content: translate('adg_is_launching'),
         },
     };
 
     let state;
     if (uiStore.isLoading) {
-        state = states[WORKING_STATES.EXTENSION_IS_RELOADING];
+        state = states.EXTENSION_IS_RELOADING;
     } else {
         switch (true) {
+            case hasHostError:
+                // state = states.ERROR_OCCURRED;
+                state = states.APP_IS_NOT_INSTALLED;
+                break;
             case !isValidatedOnHost:
-                state = states[WORKING_STATES.EXTENSION_IS_NOT_UPDATED];
+                state = states.EXTENSION_IS_NOT_UPDATED;
                 break;
             case !isAppUpToDate:
-                state = states[WORKING_STATES.APP_IS_NOT_UP_TO_DATE];
+                state = states.APP_IS_NOT_UP_TO_DATE;
                 break;
             case !isInstalled:
-                state = states[WORKING_STATES.APP_IS_NOT_INSTALLED];
+                state = states.APP_IS_NOT_INSTALLED;
                 break;
             case !isRunning:
-                state = states[WORKING_STATES.APP_IS_NOT_RUNNING];
+                state = states.APP_IS_NOT_RUNNING;
                 break;
             case !isProtectionEnabled:
-                state = states[WORKING_STATES.PROTECTION_IS_NOT_ENABLED];
+                state = states.PROTECTION_IS_NOT_ENABLED;
                 break;
             default:
-                state = states[WORKING_STATES.EXTENSION_IS_RELOADING];
+                state = states.EXTENSION_IS_RELOADING;
         }
     }
 
