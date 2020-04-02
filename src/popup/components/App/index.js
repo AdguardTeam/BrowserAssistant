@@ -22,7 +22,6 @@ const App = observer(() => {
 
     useEffect(() => {
         (async () => {
-            console.log('get popup data');
             await settingsStore.getPopupData();
         })();
 
@@ -31,11 +30,8 @@ const App = observer(() => {
     }, []);
 
     const { isAppWorking } = settingsStore;
-    const { isPending, isLoading } = uiStore;
 
-    console.log(isLoading, isPending, isAppWorking);
-
-    if (!isAppWorking || isLoading) {
+    if (!isAppWorking || uiStore.isLoading) {
         return (
             <AppWrapper>
                 <AppClosed />

@@ -11,18 +11,20 @@ const messageHandler = async (msg) => {
         case POPUP_MESSAGES.GET_POPUP_DATA: {
             const { tab } = data;
             const referrer = await tabs.getReferrer(tab);
-            console.log(referrer);
-            const currentFilteringState = await state.getCurrentFilteringState(tab);
-            console.log(currentFilteringState);
-            const updateStatusInfo = await state.getUpdateStatusInfo();
-            const appState = await state.getAppState();
-
-            return {
-                referrer,
-                currentFilteringState,
-                updateStatusInfo,
-                appState,
-            };
+            try {
+                const currentFilteringState = await state.getCurrentFilteringState(tab);
+                const updateStatusInfo = await state.getUpdateStatusInfo();
+                const appState = await state.getAppState();
+                console.log(updateStatusInfo, appState, currentFilteringState);
+                return {
+                    referrer,
+                    currentFilteringState,
+                    updateStatusInfo,
+                    appState,
+                };
+            } catch (e) {
+                console.log(e);
+            }
         }
 
         case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {

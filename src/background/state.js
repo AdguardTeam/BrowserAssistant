@@ -13,17 +13,17 @@ class State {
          * Required flag, that determines whether the AdGuard app is installed on the computer
          * @type {boolean}
          */
-        isInstalled: true,
+        isInstalled: false,
         /**
          * Required flag, that determines whether the AdGuard app is running
          * @type {boolean}
          */
-        isRunning: true,
+        isRunning: false,
         /**
          * Required flag, that determines whether the protection is enabled
          * @type {boolean}
          */
-        isProtectionEnabled: true,
+        isProtectionEnabled: false,
         /**
          * Optional parameter from the app
          * @type {string}
@@ -41,13 +41,13 @@ class State {
          * Parameter that determines if extension api version is up to date with app api version
          * @type {boolean}
          */
-        isAppUpToDate: true,
+        isAppUpToDate: false,
         /**
          * Flag, that determines whether the extensions api, specified by request's parameters
          * is successfully validated on the host's side
          * @type {boolean}
          */
-        isValidatedOnHost: true,
+        isValidatedOnHost: false,
     };
 
     init = () => {
@@ -183,6 +183,17 @@ class State {
         this.setAppState(response.appState);
         return response.appState;
     };
+
+    getCurrentAppState = async () => {
+        let appState;
+        try {
+            appState = await nativeHostApi.getCurrentAppState();
+        } catch (e) {
+            console.log(e);
+        }
+        this.setAppState(appState);
+        return appState;
+    }
 }
 
 export default new State();

@@ -1,4 +1,9 @@
-import { action, computed, observable, runInAction, } from 'mobx';
+import {
+    action,
+    computed,
+    observable,
+    runInAction,
+} from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
 import innerMessaging from '../../../lib/innerMessaging'; // TODO consider rename of this
@@ -99,7 +104,6 @@ class SettingsStore {
     openDownloadPage = async () => {
         await innerMessaging.openPage(DOWNLOAD_LINK);
     };
-
 
     // TODO reload pages when real response was received from background
     reloadPageAfterSwitcherTransition = () => {

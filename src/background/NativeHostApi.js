@@ -12,14 +12,18 @@ import {
 } from '../lib/types';
 
 class NativeHostApi {
-    MAX_RETRY_TIMES = 5;
-
-    retryTimes = this.MAX_RETRY_TIMES;
-
     listeners = [];
 
     constructor() {
-        this.connect();
+        this.initModule();
+    }
+
+    async initModule() {
+        try {
+            await this.connect();
+        } catch (e) {
+            log.debug(e);
+        }
     }
 
     /**
@@ -35,7 +39,6 @@ class NativeHostApi {
             return;
         }
 
-        // TODO seems like unnecessary, consider removing
         // Ignore requests with single request prefix, they have their own handlers
         if (incomingMessage.requestId.includes(CUSTOM_REQUEST_PREFIX)) {
             return;
@@ -83,20 +86,19 @@ class NativeHostApi {
         this.port.onMessage.addListener(this.incomingMessageHandler);
 
         this.port.onDisconnect.addListener(
-            async () => {
+            () => {
                 if (browser.runtime.lastError) {
-                    log.info(browser.runtime.lastError.message);
+                    log.error(browser.runtime.lastError.message);
                 }
-                await this.reconnectWithRetry();
             }
         );
 
-        await this.sendInitialRequest();
+        await this.sendInitialRequest(false);
     };
 
-    sendInitialRequest = async () => {
+    sendInitialRequest = async (shouldReconnect) => {
         const { version, apiVersion, userAgent } = versions;
-        const response = await this.init({ version, userAgent, apiVersion });
+        const response = await this.init({ version, userAgent, apiVersion }, shouldReconnect);
         this.initMessageHandler(response);
     };
 
@@ -104,7 +106,7 @@ class NativeHostApi {
      * Disconnect from the native host
      */
     disconnect = () => {
-        log.info('Disconnecting from native host');
+        log.debug('Disconnecting from native host');
         this.port.disconnect();
         this.port.onMessage.removeListener(this.incomingMessageHandler);
     };
@@ -113,43 +115,49 @@ class NativeHostApi {
      * Reconnect to the native host
      */
     reconnect = async () => {
-        // TODO on reconnection send message to the popup to start reloading
-        // await browserApi.runtime.sendMessage({ type: POPUP_MESSAGES.START_RELOAD });
+        log.debug('Trying to reconnect to native host...');
         this.disconnect();
         await this.connect();
     };
 
-    reconnectWithRetry = async () => {
-        this.retryTimes -= 1;
-
-        if (this.retryTimes) {
-            await this.reconnect();
-        } else {
-            this.disconnect();
-            // TODO figure out purpose of this function
-            //  Seems like it is used in order to stop loading loader on the browser action popup
-            // await browserApi.runtime.sendMessage({ type: message });
-
-            // TODO notify state module about error via listeners
-            this.retryTimes = this.MAX_RETRY_TIMES;
-            log.error('Disconnected from native host: could not find correct app manifest or host is not responding');
+    /**
+     * Makes request with
+     * @param params
+     * @param tryReconnect - by default function retries to reconnect
+     * @returns {Promise<unknown>}
+     */
+    makeRequest = async (params, tryReconnect = true) => {
+        try {
+            return await this.makeRequestOnce(params);
+        } catch (e) {
+            if (tryReconnect) {
+                log.debug('Was unable to send request...');
+                try {
+                    await this.reconnect();
+                    return await this.makeRequestOnce(params);
+                } catch (e) {
+                    log.debug('Was unable to reconnect to the native host');
+                    throw e;
+                }
+            }
+            throw (e);
         }
     };
 
-    makeRequest = async (params) => {
+    makeRequestOnce = async (params) => {
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
 
-        // Use CUSTOM_REQUEST_PREFIX in order to ignore this requests in the income message handler
+        // Use CUSTOM_REQUEST_PREFIX in order to ignore this requests in the incomingMessageHandler
         const id = `${ADG_PREFIX}_${CUSTOM_REQUEST_PREFIX}_${nanoid()}`;
 
         log.info(`Sending request: ${id}`, params);
 
         return new Promise((resolve, reject) => {
-            const messageHandler = (msg) => {
-                const { requestId, result } = msg;
+            const messageHandler = (message) => {
+                const { requestId, result } = message;
 
                 const timerId = setTimeout(() => {
-                    reject(new Error('Native host is not responding.'));
+                    reject(new Error('Native host is not responding too long'));
                     this.port.onMessage.removeListener(messageHandler);
                 }, RESPONSE_TIMEOUT_MS);
 
@@ -158,38 +166,40 @@ class NativeHostApi {
                     clearTimeout(timerId);
 
                     if (result === HOST_RESPONSE_TYPES.OK) {
-                        return resolve(msg);
+                        resolve(message);
+                        return;
                     }
 
                     if (result === HOST_RESPONSE_TYPES.ERROR) {
-                        this.reconnectWithRetry();
-                        return reject(new Error(`Native host responded with status: ${result}.`));
+                        reject(new Error(`Native host responded with message: ${message}.`));
                     }
                 }
-                return '';
             };
 
-            try {
-                this.port.postMessage({ id, ...params });
-            } catch (error) {
-                log.error(error);
-                this.port.onMessage.removeListener(messageHandler);
-                // TODO after successful reconnection send message again otherwise reject error
-                this.reconnectWithRetry();
-            }
+            this.port.onDisconnect.addListener(() => {
+                if (browser.runtime.lastError) {
+                    reject(new Error(browser.runtime.lastError.message));
+                }
+            });
 
             this.port.onMessage.addListener(messageHandler);
+            try {
+                this.port.postMessage({ id, ...params });
+            } catch (e) {
+                reject(e);
+            }
         });
     };
 
     /**
      * Sends initial request to the native host
-     * @param {string} version
-     * @param {string} userAgent
-     * @param {string} apiVersion
-     * @returns {Promise<unknown>}
+     * @param version
+     * @param userAgent
+     * @param apiVersion
+     * @param tryReconnect
+     * @returns {Promise<*>}
      */
-    init = ({ version, userAgent, apiVersion }) => {
+    init = ({ version, userAgent, apiVersion }, tryReconnect = false) => {
         return this.makeRequest({
             type: REQUEST_TYPES.init,
             parameters: {
@@ -198,16 +208,21 @@ class NativeHostApi {
                 userAgent,
                 type: ASSISTANT_TYPES.nativeAssistant,
             },
-        });
+        }, tryReconnect);
     };
 
     /**
      * Returns current app state
-     * // TODO add return result info
      */
-    getCurrentAppState = () => this.makeRequest({
-        type: REQUEST_TYPES.getCurrentAppState,
-    });
+    getCurrentAppState = async () => {
+        const response = await this.makeRequest({
+            type: REQUEST_TYPES.getCurrentAppState,
+        });
+        if (!response || !response.appState) {
+            throw new Error('Wrong data scheme received');
+        }
+        return response.appState;
+    };
 
     /**
      * Returns filtering state for url, used to get state of current tab
