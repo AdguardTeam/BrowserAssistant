@@ -1,8 +1,6 @@
 import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../../lib/types';
-import nativeHostApi from '../NativeHostApi';
 import tabs from '../tabs';
 import state from '../state';
-import { SWITCHER_TRANSITION_TIME } from '../../popup/stores/consts';
 
 const messageHandler = async (msg) => {
     const { type, data } = msg;
@@ -47,83 +45,78 @@ const messageHandler = async (msg) => {
 
         case POPUP_MESSAGES.SET_FILTERING_STATUS: {
             const { isEnabled, isHttpsEnabled, url } = data;
-            const responseParams = await nativeHostApi.setFilteringStatus(
+            await state.setFilteringStatus(
                 isEnabled,
                 isHttpsEnabled,
                 url
             );
-
-            setTimeout(() => {
-                // TODO figure out method necessity
-                // state.setIsFilteringEnabled(data.isEnabled);
-            }, SWITCHER_TRANSITION_TIME);
-
-            return Promise.resolve(responseParams);
+            break;
         }
 
         case POPUP_MESSAGES.REMOVE_CUSTOM_RULES: {
             const { url } = data;
-            const responseParams = await nativeHostApi.removeCustomRules(url);
-            return Promise.resolve(responseParams);
+            await state.removeCustomRules(url);
+            break;
         }
 
         case POPUP_MESSAGES.OPEN_ORIGINAL_CERT: {
             const { domain, port } = data;
-            const responseParams = await nativeHostApi.openOriginalCert(domain, port);
-            return Promise.resolve(responseParams);
+            await state.openOriginalCert(domain, port);
+            break;
         }
 
         case POPUP_MESSAGES.REPORT_SITE: {
             const { url, referrer } = data;
-            const response = await nativeHostApi.reportSite(url, referrer);
-            await tabs.openPage(response.parameters.reportUrl);
-            return Promise.resolve(response);
+            const reportUrl = await state.reportSite(url, referrer);
+            await tabs.openPage(reportUrl);
+            break;
         }
 
         case POPUP_MESSAGES.OPEN_FILTERING_LOG: {
-            const responseParams = await nativeHostApi.openFilteringLog();
-            return Promise.resolve(responseParams);
+            await state.openFilteringLog();
+            break;
         }
 
         case POPUP_MESSAGES.OPEN_SETTINGS: {
-            const responseParams = await nativeHostApi.openSettings();
-            return Promise.resolve(responseParams);
+            await state.openSettings();
+            break;
         }
 
         case POPUP_MESSAGES.UPDATE_APP: {
-            const responseParams = await nativeHostApi.updateApp();
-            return Promise.resolve(responseParams);
+            await state.updateApp();
+            break;
         }
 
         case POPUP_MESSAGES.OPEN_PAGE: {
             const { url } = data;
-            const responseParams = await tabs.openPage(url);
-            return Promise.resolve(responseParams);
+            await tabs.openPage(url);
+            break;
         }
 
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
-            const responseParams = await tabs.reload(tab);
-            return Promise.resolve(responseParams);
+            await tabs.reload(tab);
+            break;
         }
 
         case POPUP_MESSAGES.INIT_ASSISTANT: {
             const { tabId } = data;
-            const responseParams = await tabs.initAssistant(tabId);
-            return Promise.resolve(responseParams);
+            await tabs.initAssistant(tabId);
+            break;
         }
 
-        // TODO check if there is possibility to block website fully from legacy assistant
         case CONTENT_MESSAGES.ADD_RULE: {
             const { ruleText } = data;
-            const responseParams = await nativeHostApi.addRule(ruleText);
-            return Promise.resolve(responseParams);
+            await state.addRule(ruleText);
+            break;
         }
 
         default: {
             throw new Error(`Unknown message type was sent: ${type}`);
         }
     }
+
+    return Promise.resolve();
 };
 
 export default messageHandler;

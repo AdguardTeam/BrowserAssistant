@@ -43,11 +43,11 @@ Builds will be located in the `build` directory.
 
 ## How to debug without AdGuard application
 
-- Replace `NativeHostApi.js` content with the following:
+- Replace `nativeHostApi.js` content with the following:
 
   ```
   import nativeHostApi from './Stub/StubApi';
-  import stubHost from './Stub/StubHost';
+  import stubHost from './Stub/StubHostApi';
 
   // Expose stubHost to the global scope
   global.stubHost = stubHost;

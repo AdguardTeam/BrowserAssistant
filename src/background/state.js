@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import browserApi from '../lib/browserApi';
-import nativeHostApi from './NativeHostApi';
+import nativeHostApi from './nativeHostApi';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import { BASE_LOCALE } from '../../tasks/langConstants';
@@ -194,6 +194,52 @@ class State {
         }
         this.setAppState(appState);
         return appState;
+    };
+
+    setFilteringStatus = async (isEnabled, isHttpsEnabled, url) => {
+        const response = await nativeHostApi.setFilteringStatus(
+            isEnabled,
+            isHttpsEnabled,
+            url
+        );
+        this.setAppState(response.appState);
+    };
+
+    removeCustomRules = async (url) => {
+        const response = await nativeHostApi.removeCustomRules(url);
+        this.setAppState(response.appState);
+    };
+
+    openOriginalCert = async (domain, port) => {
+        const response = await nativeHostApi.openOriginalCert(domain, port);
+        this.setAppState(response.appState);
+    };
+
+    reportSite = async (url, referrer) => {
+        const response = await nativeHostApi.reportSite(url, referrer);
+        // TODO figure out how to update state on every response
+        this.setAppState(response.appState);
+        return response.parameters.reportUrl;
+    };
+
+    openFilteringLog = async () => {
+        const response = await nativeHostApi.openFilteringLog();
+        this.setAppState(response.appState);
+    };
+
+    openSettings = async () => {
+        const response = await nativeHostApi.openSettings();
+        this.setAppState(response.appState);
+    };
+
+    updateApp = async () => {
+        const response = await nativeHostApi.updateApp();
+        this.setAppState(response.appState);
+    };
+
+    addRule = async (ruleText) => {
+        const response = await nativeHostApi.addRule(ruleText);
+        this.setAppState(response.appState);
     }
 }
 

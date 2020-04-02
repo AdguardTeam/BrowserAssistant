@@ -83,7 +83,15 @@ class Tabs {
         }
     };
 
+    /**
+     * Opens required url
+     * @param {string} url
+     * @returns {Promise<void>}
+     */
     openPage = async (url) => {
+        if (!url) {
+            throw new Error(`Open page requires url, received, ${url}`);
+        }
         await browser.tabs.create({ url });
     };
 
