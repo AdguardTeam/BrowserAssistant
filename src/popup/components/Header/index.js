@@ -16,12 +16,11 @@ const Header = observer(() => {
         isAuthorized,
         setProtectionStatus,
         openSettings,
+        isAppWorking,
     } = settingsStore;
 
     const {
-        isLoading,
-        isAppWorking,
-        requestStatus,
+        isPending,
         globalTabIndex,
     } = uiStore;
 
@@ -41,14 +40,14 @@ const Header = observer(() => {
         'widget-popup__buttons--disabled': !isAuthorized,
         'widget-popup__buttons--pause': isProtectionEnabled,
         // start button is displayed during disconnection, in order to create smooth ux
-        'widget-popup__buttons--start': !isProtectionEnabled || isLoading,
-        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending, // TODO consider removing isPending
+        'widget-popup__buttons--start': isPending,
+        'widget-popup__buttons--hidden': !isAppWorking,
     });
 
     const iconSettingsClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--settings': true,
-        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending, // TODO consider removing isPending
+        'widget-popup__buttons--hidden': !isAppWorking,
     });
 
     return (

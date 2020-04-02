@@ -10,7 +10,12 @@ const Options = observer(() => {
         translationStore,
     } = useContext(rootStore);
 
-    const { isFilteringEnabled, pageProtocol, isAuthorized } = settingsStore;
+    const {
+        isFilteringEnabled,
+        pageProtocol,
+        isAuthorized,
+        isPageFilteredByUserFilter,
+    } = settingsStore;
 
     const buttons = [
         {
@@ -44,7 +49,7 @@ const Options = observer(() => {
                 await settingsStore.removeCustomRules();
             },
             isDisabled: !isAuthorized,
-            isVisible: uiStore.isPageFilteredByUserFilter,
+            isVisible: isPageFilteredByUserFilter,
         },
     ];
 

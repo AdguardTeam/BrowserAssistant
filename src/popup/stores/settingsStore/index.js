@@ -1,7 +1,5 @@
-import {
-    action, computed, observable, runInAction,
-} from 'mobx';
-import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
+import { action, computed, observable, runInAction, } from 'mobx';
+import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
 import innerMessaging from '../../../lib/innerMessaging'; // TODO consider rename of this
 import tabs from '../../../background/tabs';
@@ -19,25 +17,27 @@ class SettingsStore {
 
     @observable originalCertIssuer = '';
 
+    @observable isPageFilteredByUserFilter = false;
+
     @observable isHttpsFilteringEnabled = false;
 
     @observable isFilteringEnabled = false;
 
-    @observable isInstalled = true;
+    @observable isInstalled = false;
 
-    @observable isRunning = true;
+    @observable isRunning = false;
 
-    @observable isProtectionEnabled = true;
+    @observable isProtectionEnabled = false;
 
     @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
-    @observable isAppUpToDate = true;
+    @observable isAppUpToDate = false;
 
-    @observable isValidatedOnHost = true;
+    @observable isValidatedOnHost = false;
 
     @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
-    @observable isAuthorized = true;
+    @observable isAuthorized = false;
 
     @computed
     get currentTabHostname() {
@@ -74,6 +74,7 @@ class SettingsStore {
 
     @action
     getPopupData = async () => {
+        this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await innerMessaging.getPopupData(tab);
 
@@ -84,18 +85,14 @@ class SettingsStore {
             appState,
         } = popupData;
 
-        this.setUrlFilteringState(currentFilteringState);
-        this.setCurrentAppState(appState);
-        this.setUpdateStatusInfo(updateStatusInfo);
-
-        this.rootStore.translationStore.setLocale(appState.locale);
-
         runInAction(() => {
             this.currentUrl = tab.url;
             this.referrer = referrer;
+            this.setUrlFilteringState(currentFilteringState);
+            this.setCurrentAppState(appState);
+            this.setUpdateStatusInfo(updateStatusInfo);
+            this.rootStore.uiStore.setExtensionLoading(false);
         });
-
-        this.rootStore.uiStore.setExtensionPending(false);
     };
 
     @action
@@ -103,18 +100,27 @@ class SettingsStore {
         await innerMessaging.openPage(DOWNLOAD_LINK);
     };
 
+
+    // TODO reload pages when real response was received from background
+    reloadPageAfterSwitcherTransition = () => {
+        setTimeout(async () => {
+            const tab = await this.getCurrentTab();
+            await innerMessaging.reload(tab);
+        }, SWITCHER_TRANSITION_TIME);
+    };
+
     @action
     setHttpsFiltering = async (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
         await this.setFilteringStatus();
-        this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
+        this.reloadPageAfterSwitcherTransition();
     };
 
     @action
     setFiltering = async (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
         await this.setFilteringStatus();
-        this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
+        this.reloadPageAfterSwitcherTransition();
     };
 
     @action
@@ -140,7 +146,7 @@ class SettingsStore {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
         this.originalCertStatus = ORIGINAL_CERT_STATUS[originalCertStatus.toUpperCase()];
         this.originalCertIssuer = originalCertIssuer;
-        this.rootStore.uiStore.setPageFilteredByUserFilter(isPageFilteredByUserFilter);
+        this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
     };
 
     @action
@@ -154,6 +160,17 @@ class SettingsStore {
         this.isAuthorized = isAuthorized; // TODO check that isAuthorized is not broken
         this.rootStore.translationStore.setLocale(locale);
     };
+
+    @computed
+    get isAppWorking() {
+        return [
+            this.isInstalled,
+            this.isRunning,
+            this.isProtectionEnabled,
+            this.isAppUpToDate,
+            this.isValidatedOnHost,
+        ].every((state) => state === true);
+    }
 
     @action
     updateExtension = () => {
@@ -178,10 +195,12 @@ class SettingsStore {
     setProtectionStatus = async (isEnabled) => {
         const { uiStore } = this.rootStore;
         try {
-            uiStore.setExtensionLoading(true);
+            uiStore.setExtensionPending(true);
             const appState = await innerMessaging.setProtectionStatus(isEnabled);
-            await this.setCurrentAppState(appState);
-            uiStore.setExtensionLoading(false);
+            runInAction(async () => {
+                this.setCurrentAppState(appState);
+                uiStore.setExtensionPending(false);
+            });
         } catch (error) {
             // TODO handle errors correctly
             log.error(error);
@@ -199,22 +218,23 @@ class SettingsStore {
     };
 
     @action
-    updateUrlFilteringState = async () => {
+    getUrlFilteringState = async () => {
         const tab = await this.getCurrentTab();
-        const response = await innerMessaging.getUrlFilteringState(tab.url);
-        this.setUrlFilteringState(response);
+        return innerMessaging.getUrlFilteringState(tab.url);
     };
 
     @action
     enableApp = async () => {
         const { uiStore } = this.rootStore;
-        uiStore.setExtensionLoading(true);
+        uiStore.setExtensionPending(true);
 
         const appState = await innerMessaging.setProtectionStatus(true);
-        this.setCurrentAppState(appState);
-        await this.updateUrlFilteringState();
-
-        uiStore.setExtensionLoading(false);
+        const urlFilteringState = await this.getUrlFilteringState();
+        runInAction(async () => {
+            this.setCurrentAppState(appState);
+            this.setUrlFilteringState(urlFilteringState);
+            uiStore.setExtensionPending(false);
+        });
     };
 
     openFilteringLog = async () => {
@@ -288,10 +308,10 @@ class SettingsStore {
 
     startApp = async () => {
         try {
-            this.rootStore.uiStore.setExtensionLoading(true);
+            this.rootStore.uiStore.setExtensionPending(true);
             // TODO figure out this method necessity
             // await this.getCurrentFilteringState(true);
-            this.rootStore.uiStore.setExtensionLoading(false);
+            this.rootStore.uiStore.setExtensionPending(false);
         } catch (error) {
             log.error(error);
         }

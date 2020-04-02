@@ -1,6 +1,4 @@
-import {
-    action, observable, computed,
-} from 'mobx';
+import { action, observable, computed } from 'mobx';
 import {
     DEFAULT_MODAL_STATE,
     EVENT_TYPE_TO_MODAL_STATE_MAP,
@@ -18,19 +16,21 @@ class UiStore {
         this.rootStore = rootStore;
     }
 
-    @observable isPageFilteredByUserFilter = false;
+    /**
+     * Flag shows that extension has started to get information from native host on first start
+     * @type {boolean}
+     */
+    @observable isLoading = true;
 
-    @observable isLoading = false;
-
-    @observable isProtectionTogglePending = false;
-
-    @observable isExtensionPending = true;
+    /**
+     * Flag is set to the true when popup executes requests to the background
+     * @type {boolean}
+     */
+    @observable isPending = false;
 
     @observable certStatusModalState = { ...DEFAULT_MODAL_STATE };
 
     @observable secureStatusModalState = { ...DEFAULT_MODAL_STATE };
-
-    @observable userSettingsZoom = 1;
 
     @computed get isCertStatusModalOpen() {
         return checkSomeIsTrue(this.certStatusModalState);
@@ -42,14 +42,6 @@ class UiStore {
 
     @computed get globalTabIndex() {
         return (this.isLoading ? -1 : 0);
-    }
-
-    @computed get requestStatus() {
-        return ({
-            isSuccess: this.isAppWorking === true,
-            isError: this.isAppWorking === false,
-            isPending: this.isExtensionPending === true,
-        });
     }
 
     @computed get secureStatusModalInfo() {
@@ -83,24 +75,6 @@ class UiStore {
         });
     }
 
-    // TODO get from background page
-    @computed get isAppWorking() {
-        const {
-            isAppUpToDate,
-            isValidatedOnHost,
-            isInstalled,
-            isRunning,
-            isProtectionEnabled,
-        } = this.rootStore.settingsStore;
-
-        return [isInstalled,
-            isRunning,
-            isProtectionEnabled,
-            isAppUpToDate,
-            isValidatedOnHost,
-        ].every((state) => state === true);
-    }
-
     @action
     updateCertStatusModalState = (eventType,
         newState = EVENT_TYPE_TO_MODAL_STATE_MAP[eventType]) => {
@@ -131,25 +105,7 @@ class UiStore {
 
     @action
     setExtensionPending = (isPending) => {
-        this.isExtensionPending = isPending;
-    };
-
-    @action
-    setPageFilteredByUserFilter = (isPageFilteredByUserFilter) => {
-        this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
-    };
-
-    @action
-    setProtectionTogglePending = (isProtectionTogglePending) => {
-        this.isProtectionTogglePending = isProtectionTogglePending;
-    };
-
-    // TODO consider removing
-    reloadPageAfterSwitcherTransition = () => {
-        setTimeout(async () => {
-            const tab = await tabs.getCurrent();
-            await innerMessaging.reload(tab);
-        }, SWITCHER_TRANSITION_TIME);
+        this.isPending = isPending;
     };
 }
 

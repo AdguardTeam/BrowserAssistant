@@ -16,12 +16,13 @@ Modal.setAppElement('#root');
 const App = observer(() => {
     const rootContext = useContext(rootStore);
 
-    const { settingsStore, uiStore, translationStore } = rootContext;
+    const { settingsStore, uiStore } = rootContext;
 
     const messageHandler = getMessageHandler(rootContext);
 
     useEffect(() => {
         (async () => {
+            console.log('get popup data');
             await settingsStore.getPopupData();
         })();
 
@@ -29,13 +30,12 @@ const App = observer(() => {
         return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
-    if (!translationStore.getLocale()) {
-        return (<Loading />);
-    }
+    const { isAppWorking } = settingsStore;
+    const { isPending, isLoading } = uiStore;
 
-    const { requestStatus } = uiStore;
+    console.log(isLoading, isPending, isAppWorking);
 
-    if (requestStatus.isError || requestStatus.isPending) {
+    if (!isAppWorking || isLoading) {
         return (
             <AppWrapper>
                 <AppClosed />
@@ -43,7 +43,7 @@ const App = observer(() => {
         );
     }
 
-    if (requestStatus.isSuccess) {
+    if (isAppWorking) {
         return (
             <AppWrapper>
                 <CurrentSite />
