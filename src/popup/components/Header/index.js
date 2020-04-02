@@ -19,8 +19,7 @@ const Header = observer(() => {
     } = settingsStore;
 
     const {
-        setProtectionTogglePending,
-        isProtectionTogglePending,
+        isLoading,
         isAppWorking,
         requestStatus,
         globalTabIndex,
@@ -32,7 +31,7 @@ const Header = observer(() => {
         if (!isAuthorized) {
             return;
         }
-        setProtectionTogglePending(true);
+        e.persist();
         await setProtectionStatus(false);
         e.target.blur();
     };
@@ -41,14 +40,15 @@ const Header = observer(() => {
         'widget-popup__buttons': true,
         'widget-popup__buttons--disabled': !isAuthorized,
         'widget-popup__buttons--pause': isProtectionEnabled,
-        'widget-popup__buttons--start': !isProtectionEnabled || isProtectionTogglePending,
-        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
+        // start button is displayed during disconnection, in order to create smooth ux
+        'widget-popup__buttons--start': !isProtectionEnabled || isLoading,
+        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending, // TODO consider removing isPending
     });
 
     const iconSettingsClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--settings': true,
-        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
+        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending, // TODO consider removing isPending
     });
 
     return (

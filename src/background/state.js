@@ -170,7 +170,6 @@ class State {
             return null;
         }
         const response = await nativeHostApi.getCurrentFilteringState(url, port);
-        console.log(response);
         this.setAppState(response.appState);
         return response.parameters;
     };

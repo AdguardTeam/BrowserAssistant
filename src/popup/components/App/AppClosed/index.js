@@ -28,7 +28,6 @@ const AppClosed = observer(() => {
                 window.close();
             },
         },
-
         [WORKING_STATES.IS_APP_UP_TO_DATE]: {
             content: translate('adg_is_not_updated'),
             buttonText: translate('update'),
@@ -37,13 +36,11 @@ const AppClosed = observer(() => {
                 window.close();
             },
         },
-
         [WORKING_STATES.IS_APP_RUNNING]: {
             content: translate('adg_is_not_running'),
             buttonText: translate('run_adg'),
             onClick: settingsStore.startApp,
         },
-
         [WORKING_STATES.IS_PROTECTION_ENABLED]: {
             content: translate('adg_is_paused'),
             buttonText: translate('enable'),
@@ -51,13 +48,11 @@ const AppClosed = observer(() => {
                 await settingsStore.enableApp();
             },
         },
-
         [WORKING_STATES.IS_EXTENSION_UPDATED]: {
             content: translate('assistant_is_not_updated'),
             buttonText: translate('update'),
             onClick: settingsStore.updateExtension,
         },
-
         [WORKING_STATES.IS_EXTENSION_RELOADING]: {
             content: translate('adg_is_launching'),
             buttonText: <Loading />,

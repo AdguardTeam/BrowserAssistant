@@ -179,12 +179,11 @@ class SettingsStore {
         const { uiStore } = this.rootStore;
         try {
             uiStore.setExtensionLoading(true);
-            const response = await innerMessaging.setProtectionStatus(isEnabled);
+            const appState = await innerMessaging.setProtectionStatus(isEnabled);
+            await this.setCurrentAppState(appState);
             uiStore.setExtensionLoading(false);
-            await this.setCurrentAppState(response.appState);
-            uiStore.setProtectionTogglePending(false);
         } catch (error) {
-            // TODO handle error correctly
+            // TODO handle errors correctly
             log.error(error);
         }
     };
@@ -261,10 +260,7 @@ class SettingsStore {
         const { hostname, port } = getUrlProps(this.currentUrl);
 
         try {
-            await innerMessaging.openOriginalCert({
-                domain: hostname,
-                port,
-            });
+            await innerMessaging.openOriginalCert(hostname, port);
         } catch (error) {
             log.error(error);
         }
