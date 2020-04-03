@@ -43,23 +43,33 @@ Builds will be located in the `build` directory.
 
 ## How to debug without AdGuard application
 
-- Replace `nativeHostApi.js` content with the following:
+- Go to file `src/background/api/index.js` and read instructions
 
-  ```
-  import nativeHostApi from './Stub/StubApi';
-  import stubHost from './Stub/StubHostApi';
-
-  // Expose stubHost to the global scope
-  global.stubHost = stubHost;
-  export default nativeHostApi;
-  
-  // Add to the 'OK' case in the popup message handler
-  if (data.parameters && data.parameters.originalCertStatus) {
-    setUrlFilteringState(data.parameters);
-  }
-  ```
-
-- Whenever you need to change the API state, do it via the browser console from the background page (e.g., `stubHost.isProtectionEnabled = false` disables AdGuard protection).
+- Whenever you need to change the API state, do it via the browser console from the background page (e.g., `hostData.appState.isProtectionEnabled = false` disables AdGuard protection).
+- Structure of the hostData
+```
+    result: 'ok',
+    version: '7.3.2496',
+    apiVersion: '3',
+    isValidatedOnHost: true,
+    reportUrl: 'https://reports.adguard.com/en/new_issue.html?url=http://example.org/',
+    appState: {
+        isRunning: true,
+        isProtectionEnabled: true,
+        isInstalled: true,
+        isAuthorized: true,
+        locale: 'ru',
+    },
+    currentFilteringState: {
+        isFilteringEnabled: true,
+        isHttpsFilteringEnabled: true,
+        isPageFilteredByUserFilter: false,
+        blockedAdsCount: 180,
+        totalBlockedCount: 1234,
+        originalCertIssuer: 'RapidSSL RSA CA',
+        originalCertStatus: 'valid',
+    },
+```
 
 ## Minimum supported browser versions
 | Browser                 	| Version 	|

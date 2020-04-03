@@ -1,4 +1,5 @@
 import isEqual from 'lodash/isEqual';
+import throttle from 'lodash/throttle';
 import browserApi from '../lib/browserApi';
 import api from './api';
 import versions from './versions';
@@ -122,8 +123,14 @@ class State {
         }
     };
 
+    notifyTimeoutMs = 40;
+
+    /**
+     * Notifies modules about state changes
+     * Throttle function, so we can call it whenever we want
+     */
     // TODO where it is possible provide tab data
-    notifyModules = async (tab) => {
+    notifyModules = throttle(async (tab) => {
         // Notify browser action tab about changed state
         notifier.notifyListeners(notifier.types.STATE_UPDATED, tab);
 
@@ -135,7 +142,7 @@ class State {
                 updateStatusInfo: this.getUpdateStatusInfo(),
             },
         });
-    };
+    }, this.notifyTimeoutMs, { leading: false });
 
     setUpdateStatusInfo = (isAppUpToDate, isValidatedOnHost) => {
         const nextUpdateStatusInfo = {

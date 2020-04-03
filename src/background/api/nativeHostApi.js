@@ -324,6 +324,4 @@ class NativeHostApi extends AbstractApi {
     });
 }
 
-const nativeHostApi = new NativeHostApi();
-
-export default nativeHostApi;
+export default new NativeHostApi();

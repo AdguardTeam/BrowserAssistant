@@ -1,20 +1,212 @@
-import browser from 'webextension-polyfill';
 import nanoid from 'nanoid';
+import AbstractApi from './AbstractApi';
 import log from '../../lib/logger';
 import versions from '../versions';
 import {
     ADG_PREFIX,
     ASSISTANT_TYPES,
     CUSTOM_REQUEST_PREFIX,
-    HOST_TYPES,
     REQUEST_TYPES,
-    HOST_RESPONSE_TYPES,
 } from '../../lib/types';
 
-class StubHostApi {
+let hostData = {
+    result: 'ok',
+    version: '7.3.2496',
+    apiVersion: '3',
+    isValidatedOnHost: true,
+    reportUrl: 'https://reports.adguard.com/en/new_issue.html?url=http://example.org/',
+    appState: {
+        isRunning: true,
+        isProtectionEnabled: true,
+        isInstalled: true,
+        isAuthorized: true,
+        locale: 'ru',
+    },
+    currentFilteringState: {
+        isFilteringEnabled: true,
+        isHttpsFilteringEnabled: true,
+        isPageFilteredByUserFilter: false,
+        blockedAdsCount: 180,
+        totalBlockedCount: 1234,
+        originalCertIssuer: 'RapidSSL RSA CA',
+        originalCertStatus: 'valid',
+    },
+};
+
+const observer = (() => {
+    const callbacks = [];
+    const subscribe = (cb) => {
+        if (callbacks.includes(cb)) {
+            return;
+        }
+        callbacks.push(cb);
+    };
+
+    const notify = (prop, value) => {
+        callbacks.forEach((cb) => {
+            cb(prop, value);
+        });
+    };
+
+    /**
+     * Checks if value isPrimitive
+     * @param value
+     * @returns {boolean}
+     */
+    const isPrimitive = (value) => {
+        return (value !== Object(value));
+    };
+
+    /**
+     * Traces sets to the properties in the object
+     * @param obj
+     * @returns {*}
+     */
+    const traceChanges = (obj) => {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const key of Object.keys(obj)) {
+            if (!isPrimitive(obj[key])) {
+                // eslint-disable-next-line no-param-reassign
+                obj[key] = traceChanges(obj[key]);
+            }
+        }
+
+        const handler = {
+            set(...args) {
+                const [, prop, value] = args;
+                notify(prop, value);
+                Reflect.set(...args);
+            },
+        };
+
+        return new Proxy(obj, handler);
+    };
+
+    return {
+        subscribe,
+        notify,
+        traceChanges,
+    };
+})();
+
+hostData = observer.traceChanges(hostData);
+global.hostData = hostData;
+
+const sleep = (timeout) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, timeout);
+    });
+};
+
+const generateResponse = async (type, async = true) => {
+    if (async) {
+        await sleep(500);
+    }
+
+    const response = {
+        id: nanoid(),
+    };
+
+    switch (type) {
+        case REQUEST_TYPES.init: {
+            return {
+                ...response,
+                appState: hostData.appState,
+                parameters: {
+                    version: hostData.version,
+                    apiVersion: hostData.apiVersion,
+                    isValidatedOnHost: hostData.isValidatedOnHost,
+                },
+            };
+        }
+        case REQUEST_TYPES.getCurrentAppState: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.getCurrentFilteringState: {
+            return {
+                ...response,
+                appState: hostData.appState,
+                parameters: hostData.currentFilteringState,
+            };
+        }
+        case REQUEST_TYPES.setProtectionStatus: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.setFilteringStatus: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.addRule: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.removeRule: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.removeCustomRules: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.openOriginalCert: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.reportSite: {
+            return {
+                ...response,
+                parameters: {
+                    reportUrl: hostData.reportUrl,
+                },
+            };
+        }
+        case REQUEST_TYPES.openFilteringLog: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.openSettings: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        case REQUEST_TYPES.updateApp: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
+        default:
+            log.error(`Incorrect request type received: "${type}"`);
+            throw new Error(`Incorrect request type received: "${type}"`);
+    }
+};
+
+class StubHostApi extends AbstractApi {
     listeners = [];
 
     constructor() {
+        super();
         this.initModule();
     }
 
@@ -33,16 +225,6 @@ class StubHostApi {
      */
     incomingMessageHandler = async (incomingMessage) => {
         log.debug(`response ${incomingMessage.id}`, incomingMessage);
-
-        // Ignore requests without identifying prefix ADG
-        if (!incomingMessage.requestId.startsWith(ADG_PREFIX)) {
-            return;
-        }
-
-        // Ignore requests with single request prefix, they have their own handlers
-        if (incomingMessage.requestId.includes(CUSTOM_REQUEST_PREFIX)) {
-            return;
-        }
 
         // Call listener callbacks
         if (this.listeners.length > 0) {
@@ -80,19 +262,10 @@ class StubHostApi {
      * Connect to the native host
      */
     connect = async () => {
-        log.info('Connecting to the native host');
-        this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
-
-        this.port.onMessage.addListener(this.incomingMessageHandler);
-
-        this.port.onDisconnect.addListener(
-            () => {
-                if (browser.runtime.lastError) {
-                    log.error(browser.runtime.lastError.message);
-                }
-            }
-        );
-
+        observer.subscribe(async () => {
+            const message = await generateResponse(REQUEST_TYPES.getCurrentAppState, false);
+            this.incomingMessageHandler(message);
+        });
         await this.sendInitialRequest(false);
     };
 
@@ -107,8 +280,6 @@ class StubHostApi {
      */
     disconnect = () => {
         log.debug('Disconnecting from native host');
-        this.port.disconnect();
-        this.port.onMessage.removeListener(this.incomingMessageHandler);
     };
 
     /**
@@ -145,50 +316,10 @@ class StubHostApi {
     };
 
     makeRequestOnce = async (params) => {
-        const RESPONSE_TIMEOUT_MS = 60 * 1000;
-
-        // Use CUSTOM_REQUEST_PREFIX in order to ignore this requests in the incomingMessageHandler
         const id = `${ADG_PREFIX}_${CUSTOM_REQUEST_PREFIX}_${nanoid()}`;
-
         log.info(`Sending request: ${id}`, params);
-
-        return new Promise((resolve, reject) => {
-            const messageHandler = (message) => {
-                const { requestId, result } = message;
-
-                const timerId = setTimeout(() => {
-                    reject(new Error('Native host is not responding too long'));
-                    this.port.onMessage.removeListener(messageHandler);
-                }, RESPONSE_TIMEOUT_MS);
-
-                if (id === requestId) {
-                    this.port.onMessage.removeListener(messageHandler);
-                    clearTimeout(timerId);
-
-                    if (result === HOST_RESPONSE_TYPES.OK) {
-                        resolve(message);
-                        return;
-                    }
-
-                    if (result === HOST_RESPONSE_TYPES.ERROR) {
-                        reject(new Error(`Native host responded with message: ${JSON.stringify(message)}.`));
-                    }
-                }
-            };
-
-            this.port.onDisconnect.addListener(() => {
-                if (browser.runtime.lastError) {
-                    reject(new Error(browser.runtime.lastError.message));
-                }
-            });
-
-            this.port.onMessage.addListener(messageHandler);
-            try {
-                this.port.postMessage({ id, ...params });
-            } catch (e) {
-                reject(e);
-            }
-        });
+        const { type } = params;
+        return generateResponse(type);
     };
 
     /**
@@ -322,6 +453,4 @@ class StubHostApi {
     });
 }
 
-const stubHostApi = new StubHostApi();
-
-export default stubHostApi;
+export default new StubHostApi();
