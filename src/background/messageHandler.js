@@ -1,6 +1,6 @@
-import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../../lib/types';
-import tabs from '../tabs';
-import state from '../state';
+import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
+import tabs from './tabs';
+import state from './state';
 
 const messageHandler = async (msg) => {
     const { type, data } = msg;
