@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 import nanoid from 'nanoid';
-import log from '../lib/logger';
-import versions from './versions';
+import log from '../../lib/logger';
+import versions from '../versions';
 import {
     ADG_PREFIX,
     ASSISTANT_TYPES,
@@ -9,9 +9,9 @@ import {
     HOST_TYPES,
     REQUEST_TYPES,
     HOST_RESPONSE_TYPES,
-} from '../lib/types';
+} from '../../lib/types';
 
-class NativeHostApi {
+class StubHostApi {
     listeners = [];
 
     constructor() {
@@ -171,7 +171,7 @@ class NativeHostApi {
                     }
 
                     if (result === HOST_RESPONSE_TYPES.ERROR) {
-                        reject(new Error(`Native host responded with message: ${message}.`));
+                        reject(new Error(`Native host responded with message: ${JSON.stringify(message)}.`));
                     }
                 }
             };
@@ -322,6 +322,6 @@ class NativeHostApi {
     });
 }
 
-const nativeHostApi = new NativeHostApi();
+const stubHostApi = new StubHostApi();
 
-export default nativeHostApi;
+export default stubHostApi;

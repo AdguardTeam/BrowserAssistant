@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import browserApi from '../lib/browserApi';
-import nativeHostApi from './nativeHostApi';
+import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import { BASE_LOCALE } from '../../tasks/langConstants';
@@ -52,8 +52,8 @@ class State {
     };
 
     init = () => {
-        nativeHostApi.addMessageListener(this.nativeHostMessagesHandler);
-        nativeHostApi.addInitMessageHandler(this.initMessageHandler);
+        api.addMessageListener(this.nativeHostMessagesHandler);
+        api.addInitMessageHandler(this.initMessageHandler);
     };
 
     /**
@@ -170,7 +170,7 @@ class State {
         if (!isHttp(url) || !port) {
             return null;
         }
-        const response = await nativeHostApi.getCurrentFilteringState(url, port);
+        const response = await api.getCurrentFilteringState(url, port);
         this.setAppState(response.appState);
         return response.parameters;
     };
@@ -180,7 +180,7 @@ class State {
     }
 
     setProtectionStatus = async (isEnabled) => {
-        const response = await nativeHostApi.setProtectionStatus(isEnabled);
+        const response = await api.setProtectionStatus(isEnabled);
         this.setAppState(response.appState);
         return response.appState;
     };
@@ -188,7 +188,7 @@ class State {
     getCurrentAppState = async () => {
         let appState;
         try {
-            appState = await nativeHostApi.getCurrentAppState();
+            appState = await api.getCurrentAppState();
         } catch (e) {
             log.error(e);
         }
@@ -197,7 +197,7 @@ class State {
     };
 
     setFilteringStatus = async (isEnabled, isHttpsEnabled, url) => {
-        const response = await nativeHostApi.setFilteringStatus(
+        const response = await api.setFilteringStatus(
             isEnabled,
             isHttpsEnabled,
             url
@@ -206,39 +206,39 @@ class State {
     };
 
     removeCustomRules = async (url) => {
-        const response = await nativeHostApi.removeCustomRules(url);
+        const response = await api.removeCustomRules(url);
         this.setAppState(response.appState);
     };
 
     openOriginalCert = async (domain, port) => {
-        const response = await nativeHostApi.openOriginalCert(domain, port);
+        const response = await api.openOriginalCert(domain, port);
         this.setAppState(response.appState);
     };
 
     reportSite = async (url, referrer) => {
-        const response = await nativeHostApi.reportSite(url, referrer);
+        const response = await api.reportSite(url, referrer);
         // TODO figure out how to update state on every response
         this.setAppState(response.appState);
         return response.parameters.reportUrl;
     };
 
     openFilteringLog = async () => {
-        const response = await nativeHostApi.openFilteringLog();
+        const response = await api.openFilteringLog();
         this.setAppState(response.appState);
     };
 
     openSettings = async () => {
-        const response = await nativeHostApi.openSettings();
+        const response = await api.openSettings();
         this.setAppState(response.appState);
     };
 
     updateApp = async () => {
-        const response = await nativeHostApi.updateApp();
+        const response = await api.updateApp();
         this.setAppState(response.appState);
     };
 
     addRule = async (ruleText) => {
-        const response = await nativeHostApi.addRule(ruleText);
+        const response = await api.addRule(ruleText);
         this.setAppState(response.appState);
     }
 }
