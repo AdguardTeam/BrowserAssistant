@@ -7,8 +7,16 @@ const messageHandler = async (msg) => {
 
     switch (type) {
         case POPUP_MESSAGES.GET_POPUP_DATA: {
+            if (!state.isAppWorking()) {
+                return {
+                    appState: state.getAppState(),
+                    updateStatusInfo: state.getUpdateStatusInfo(),
+                };
+            }
             const { tab } = data;
             const referrer = await tabs.getReferrer(tab);
+            const updateStatusInfo = state.getUpdateStatusInfo();
+            const appState = state.getAppState();
             let currentFilteringState;
             try {
                 currentFilteringState = await state.getCurrentFilteringState(tab);
@@ -22,8 +30,6 @@ const messageHandler = async (msg) => {
                     hostError: e.message,
                 };
             }
-            const updateStatusInfo = await state.getUpdateStatusInfo();
-            const appState = await state.getAppState();
             return {
                 referrer,
                 updateStatusInfo,
@@ -33,8 +39,15 @@ const messageHandler = async (msg) => {
         }
 
         case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {
-            const { url } = data;
-            return state.getCurrentFilteringState(url);
+            const { tab, forceStart } = data;
+            return state.getCurrentFilteringState(tab, forceStart);
+        }
+
+        case POPUP_MESSAGES.GET_APP_STATE: {
+            return {
+                appState: state.getAppState(),
+                updateStatusInfo: state.getUpdateStatusInfo(),
+            };
         }
 
         case POPUP_MESSAGES.SET_PROTECTION_STATUS: {

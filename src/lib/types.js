@@ -19,6 +19,7 @@ export const POPUP_MESSAGES = {
     STATE_UPDATED: 'popup.state.updated',
     GET_POPUP_DATA: 'popup.get.popup.data',
     GET_CURRENT_FILTERING_STATE: 'popup.get.current.filtering.state',
+    GET_APP_STATE: 'popup.get.current.app.state',
     SET_PROTECTION_STATUS: 'popup.set.protection.status',
     REPORT_SITE: 'popup.report.site',
     RELOAD: 'popup.reload',

@@ -75,7 +75,7 @@ const AppClosed = observer(() => {
     } else {
         switch (true) {
             case hasHostError:
-                // state = states.ERROR_OCCURRED;
+            case !isInstalled:
                 state = states.APP_IS_NOT_INSTALLED;
                 break;
             case !isValidatedOnHost:
@@ -83,9 +83,6 @@ const AppClosed = observer(() => {
                 break;
             case !isAppUpToDate:
                 state = states.APP_IS_NOT_UP_TO_DATE;
-                break;
-            case !isInstalled:
-                state = states.APP_IS_NOT_INSTALLED;
                 break;
             case !isRunning:
                 state = states.APP_IS_NOT_RUNNING;

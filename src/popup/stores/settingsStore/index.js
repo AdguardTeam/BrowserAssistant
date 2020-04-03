@@ -278,6 +278,7 @@ class SettingsStore {
         } catch (error) {
             log.error(error);
         }
+        // TODO check purpose of this method
         this.rootStore.uiStore.setPageFilteredByUserFilter(false);
     };
 
@@ -323,9 +324,15 @@ class SettingsStore {
     startApp = async () => {
         try {
             this.rootStore.uiStore.setExtensionPending(true);
-            // TODO figure out this method necessity
-            // await this.getCurrentFilteringState(true);
-            this.rootStore.uiStore.setExtensionPending(false);
+            const tab = await tabs.getCurrent();
+            const currentFilteringState = await innerMessaging.getUrlFilteringState(tab, true);
+            const response = await innerMessaging.getAppState();
+            runInAction(() => {
+                this.setUrlFilteringState(currentFilteringState);
+                this.setCurrentAppState(response.appState);
+                this.setUpdateStatusInfo(response.updateStatusInfo);
+                this.rootStore.uiStore.setExtensionPending(false);
+            });
         } catch (error) {
             log.error(error);
         }

@@ -24,13 +24,15 @@ class Icon {
     }
 
     updateIcon = async (tab) => {
-        const currentFilteringState = await state.getCurrentFilteringState(tab);
-        let isFilteringEnabled = true;
-        if (currentFilteringState) {
-            isFilteringEnabled = currentFilteringState.isFilteringEnabled;
+        if (!state.isAppWorking()) {
+            await actions.setIconDisabled(tab.id); // TODO update all tabs
+            return;
         }
-        const isAppWorking = state.isAppWorking();
-        if (isFilteringEnabled && isAppWorking) {
+        const currentFilteringState = await state.getCurrentFilteringState(tab);
+        const isFilteringEnabled = currentFilteringState
+            ? currentFilteringState.isFilteringEnabled
+            : true;
+        if (isFilteringEnabled) {
             await actions.setIconEnabled(tab.id);
         } else {
             await actions.setIconDisabled(tab.id);

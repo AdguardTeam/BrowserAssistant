@@ -7,8 +7,11 @@ export default {
     getPopupData: (tab) => {
         return sendMessage(POPUP_MESSAGES.GET_POPUP_DATA, { tab });
     },
-    getUrlFilteringState: (url) => {
-        return sendMessage(POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE, { url });
+    getUrlFilteringState: (tab, forceStart = false) => {
+        return sendMessage(POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE, { tab, forceStart });
+    },
+    getAppState: () => {
+        return sendMessage(POPUP_MESSAGES.GET_APP_STATE);
     },
     initAssistant: (tabId) => {
         return sendMessage(POPUP_MESSAGES.INIT_ASSISTANT, { tabId });

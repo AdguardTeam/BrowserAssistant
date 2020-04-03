@@ -83,6 +83,10 @@ class State {
         return this.appState;
     };
 
+    getUpdateStatusInfo() {
+        return this.updateStatusInfo;
+    }
+
     setAppState = (appState) => {
         const {
             isInstalled,
@@ -126,12 +130,9 @@ class State {
         // Notify popup about changed state
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.STATE_UPDATED,
-            // TODO check what kind of message returns when
-            //  currentFilteringState changes in the program
             data: {
                 appState: this.getAppState(),
                 updateStatusInfo: this.getUpdateStatusInfo(),
-                // TODO add currentFilteringState,
             },
         });
     };
@@ -161,23 +162,20 @@ class State {
 
     /**
      * Returns current filtering state or null if was unable to retrieve it
-     * @param tab
+     * @param {{id: number, url: string}} tab
+     * @param {boolean} forceStart
      * @returns {Promise<null|*>}
      */
-    getCurrentFilteringState = async (tab) => {
+    getCurrentFilteringState = async (tab, forceStart = false) => {
         const { url } = tab;
         const { port } = getUrlProps(url);
         if (!isHttp(url) || !port) {
             return null;
         }
-        const response = await api.getCurrentFilteringState(url, port);
+        const response = await api.getCurrentFilteringState(url, port, forceStart);
         this.setAppState(response.appState);
         return response.parameters;
     };
-
-    getUpdateStatusInfo() {
-        return this.updateStatusInfo;
-    }
 
     setProtectionStatus = async (isEnabled) => {
         const response = await api.setProtectionStatus(isEnabled);
