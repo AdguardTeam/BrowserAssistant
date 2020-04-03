@@ -129,7 +129,6 @@ class State {
      * Notifies modules about state changes
      * Throttle function, so we can call it whenever we want
      */
-    // TODO where it is possible provide tab data
     notifyModules = throttle(async (tab) => {
         // Notify browser action tab about changed state
         notifier.notifyListeners(notifier.types.STATE_UPDATED, tab);

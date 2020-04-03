@@ -8,7 +8,7 @@ const getMessageHandler = (rootStore) => {
 
         switch (type) {
             case POPUP_MESSAGES.STATE_UPDATED:
-                settingsStore.setAppState(data.appState);
+                settingsStore.setCurrentAppState(data.appState);
                 settingsStore.setUpdateStatusInfo(data.updateStatusInfo);
                 break;
             default:
