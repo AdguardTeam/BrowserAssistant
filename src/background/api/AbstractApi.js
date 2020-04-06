@@ -3,6 +3,9 @@ const notImplemented = (functionName) => {
     return new Error(`Method "${functionName}" is not implemented`);
 };
 
+/**
+ * Abstract class used to reflect methods used in the native host api
+ */
 export default class AbstractApi {
     listeners = [];
 

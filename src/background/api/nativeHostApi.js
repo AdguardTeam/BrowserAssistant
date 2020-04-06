@@ -11,6 +11,10 @@ import {
     REQUEST_TYPES,
 } from '../../lib/types';
 
+/**
+ * Module implements methods used to communicate with native host via native messaging
+ * https://developer.chrome.com/apps/nativeMessaging
+ */
 class NativeHostApi extends AbstractApi {
     listeners = [];
 

@@ -1,4 +1,7 @@
-export class Notifier {
+/**
+ * Implements notifier which allows other modules to subscribe to events or notify about events
+ */
+class Notifier {
     types = {};
 
     events = {};
