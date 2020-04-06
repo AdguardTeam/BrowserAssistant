@@ -209,9 +209,12 @@ class SettingsStore {
         const { uiStore } = this.rootStore;
         try {
             uiStore.setExtensionPending(true);
+            const tab = await this.getCurrentTab();
             const appState = await messagesSender.setProtectionStatus(isEnabled);
+            const urlFilteringState = await messagesSender.getUrlFilteringState(tab);
             runInAction(async () => {
                 this.setCurrentAppState(appState);
+                this.setUrlFilteringState(urlFilteringState);
                 uiStore.setExtensionPending(false);
             });
         } catch (error) {
@@ -227,26 +230,6 @@ class SettingsStore {
             this.currentUrl = tab.url;
         });
         return tab;
-    };
-
-    @action
-    getUrlFilteringState = async () => {
-        const tab = await this.getCurrentTab();
-        return messagesSender.getUrlFilteringState(tab.url);
-    };
-
-    @action
-    enableApp = async () => {
-        const { uiStore } = this.rootStore;
-        uiStore.setExtensionPending(true);
-
-        const appState = await messagesSender.setProtectionStatus(true);
-        const urlFilteringState = await this.getUrlFilteringState();
-        runInAction(async () => {
-            this.setCurrentAppState(appState);
-            this.setUrlFilteringState(urlFilteringState);
-            uiStore.setExtensionPending(false);
-        });
     };
 
     openFilteringLog = async () => {
@@ -268,10 +251,17 @@ class SettingsStore {
     };
 
     removeCustomRules = async () => {
+        const { uiStore } = this.rootStore;
         try {
-            await messagesSender.removeCustomRules(this.currentUrl);
+            uiStore.setExtensionPending(true);
             const tab = await tabs.getCurrent();
-            await messagesSender.reload(tab);
+            await messagesSender.removeCustomRules(this.currentUrl);
+            const urlFilteringState = await messagesSender.getUrlFilteringState(tab);
+            runInAction(async () => {
+                this.setUrlFilteringState(urlFilteringState);
+                uiStore.setExtensionPending(false);
+                await messagesSender.reload(tab);
+            });
         } catch (error) {
             log.error(error);
         }

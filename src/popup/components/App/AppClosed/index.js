@@ -53,7 +53,7 @@ const AppClosed = observer(() => {
             content: translate('adg_is_paused'),
             buttonText: translate('enable'),
             onClick: async () => {
-                await settingsStore.enableApp();
+                await settingsStore.setProtectionStatus(true);
             },
         },
         EXTENSION_IS_NOT_UPDATED: {
