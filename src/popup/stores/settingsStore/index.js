@@ -6,7 +6,7 @@ import {
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
-import innerMessaging from '../../../lib/innerMessaging';
+import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
 import { getUrlProps } from '../../../lib/helpers';
 import log from '../../../lib/logger';
@@ -83,7 +83,7 @@ class SettingsStore {
     getPopupData = async () => {
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
-        const popupData = await innerMessaging.getPopupData(tab);
+        const popupData = await messagesSender.getPopupData(tab);
 
         if (popupData.hostError) {
             runInAction(() => {
@@ -112,13 +112,13 @@ class SettingsStore {
 
     @action
     openDownloadPage = async () => {
-        await innerMessaging.openPage(DOWNLOAD_LINK);
+        await messagesSender.openPage(DOWNLOAD_LINK);
     };
 
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
             const tab = await this.getCurrentTab();
-            await innerMessaging.reload(tab);
+            await messagesSender.reload(tab);
         }, SWITCHER_TRANSITION_TIME);
     };
 
@@ -188,7 +188,7 @@ class SettingsStore {
     @action
     updateExtension = () => {
         const updateLink = this.isFirefox ? UPDATE_URL_FIREFOX : UPDATE_URL_CHROME;
-        innerMessaging.openPage(updateLink);
+        messagesSender.openPage(updateLink);
     };
 
     /**
@@ -196,7 +196,7 @@ class SettingsStore {
      */
     initAssistant = async () => {
         const tab = await tabs.getCurrent();
-        await innerMessaging.initAssistant(tab.id);
+        await messagesSender.initAssistant(tab.id);
         window.close();
     };
 
@@ -209,7 +209,7 @@ class SettingsStore {
         const { uiStore } = this.rootStore;
         try {
             uiStore.setExtensionPending(true);
-            const appState = await innerMessaging.setProtectionStatus(isEnabled);
+            const appState = await messagesSender.setProtectionStatus(isEnabled);
             runInAction(async () => {
                 this.setCurrentAppState(appState);
                 uiStore.setExtensionPending(false);
@@ -232,7 +232,7 @@ class SettingsStore {
     @action
     getUrlFilteringState = async () => {
         const tab = await this.getCurrentTab();
-        return innerMessaging.getUrlFilteringState(tab.url);
+        return messagesSender.getUrlFilteringState(tab.url);
     };
 
     @action
@@ -240,7 +240,7 @@ class SettingsStore {
         const { uiStore } = this.rootStore;
         uiStore.setExtensionPending(true);
 
-        const appState = await innerMessaging.setProtectionStatus(true);
+        const appState = await messagesSender.setProtectionStatus(true);
         const urlFilteringState = await this.getUrlFilteringState();
         runInAction(async () => {
             this.setCurrentAppState(appState);
@@ -251,7 +251,7 @@ class SettingsStore {
 
     openFilteringLog = async () => {
         try {
-            await innerMessaging.openFilteringLog();
+            await messagesSender.openFilteringLog();
             window.close();
         } catch (error) {
             log.error(error);
@@ -260,7 +260,7 @@ class SettingsStore {
 
     reportSite = async () => {
         try {
-            await innerMessaging.reportSite(this.currentUrl, this.referrer);
+            await messagesSender.reportSite(this.currentUrl, this.referrer);
             window.close();
         } catch (error) {
             log.error(error);
@@ -269,9 +269,9 @@ class SettingsStore {
 
     removeCustomRules = async () => {
         try {
-            await innerMessaging.removeCustomRules(this.currentUrl);
+            await messagesSender.removeCustomRules(this.currentUrl);
             const tab = await tabs.getCurrent();
-            await innerMessaging.reload(tab);
+            await messagesSender.reload(tab);
         } catch (error) {
             log.error(error);
         }
@@ -279,7 +279,7 @@ class SettingsStore {
 
     openSettings = async () => {
         try {
-            await innerMessaging.openSettings();
+            await messagesSender.openSettings();
             window.close();
         } catch (error) {
             log.error(error);
@@ -290,7 +290,7 @@ class SettingsStore {
         const { hostname, port } = getUrlProps(this.currentUrl);
 
         try {
-            await innerMessaging.openOriginalCert(hostname, port);
+            await messagesSender.openOriginalCert(hostname, port);
         } catch (error) {
             log.error(error);
         }
@@ -298,7 +298,7 @@ class SettingsStore {
 
     setFilteringStatus = async () => {
         try {
-            await innerMessaging.setFilteringStatus(
+            await messagesSender.setFilteringStatus(
                 this.currentUrl,
                 this.isFilteringEnabled,
                 this.isHttpsFilteringEnabled
@@ -310,7 +310,7 @@ class SettingsStore {
 
     updateApp = async () => {
         try {
-            await innerMessaging.updateApp();
+            await messagesSender.updateApp();
         } catch (error) {
             log.error(error);
         }
@@ -320,8 +320,8 @@ class SettingsStore {
         try {
             this.rootStore.uiStore.setExtensionPending(true);
             const tab = await tabs.getCurrent();
-            const currentFilteringState = await innerMessaging.getUrlFilteringState(tab, true);
-            const response = await innerMessaging.getAppState();
+            const currentFilteringState = await messagesSender.getUrlFilteringState(tab, true);
+            const response = await messagesSender.getAppState();
             runInAction(() => {
                 this.setUrlFilteringState(currentFilteringState);
                 this.setCurrentAppState(response.appState);

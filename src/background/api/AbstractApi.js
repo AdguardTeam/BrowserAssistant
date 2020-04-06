@@ -69,7 +69,7 @@ export default class AbstractApi {
     };
 
     /**
-     * Makes request with
+     * Makes request
      * @param params
      * @param tryReconnect - by default function retries to reconnect
      * @returns {Promise<unknown>}

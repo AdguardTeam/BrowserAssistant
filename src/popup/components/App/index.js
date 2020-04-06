@@ -9,7 +9,7 @@ import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
-import getMessageHandler from '../../messaging';
+import getMessageReceiver from '../../messaging/receiver';
 
 Modal.setAppElement('#root');
 
@@ -18,7 +18,7 @@ const App = observer(() => {
 
     const { settingsStore, uiStore } = rootContext;
 
-    const messageHandler = getMessageHandler(rootContext);
+    const messageHandler = getMessageReceiver(rootContext);
 
     useEffect(() => {
         (async () => {

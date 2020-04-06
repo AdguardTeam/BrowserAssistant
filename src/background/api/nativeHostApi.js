@@ -122,17 +122,17 @@ class NativeHostApi extends AbstractApi {
     };
 
     /**
-     * Makes request with
+     * Makes request with reconnection by default
      * @param params
      * @param tryReconnect - by default function retries to reconnect
-     * @returns {Promise<unknown>}
+     * @returns {Promise<*>}
      */
     makeRequest = async (params, tryReconnect = true) => {
         try {
             return await this.makeRequestOnce(params);
         } catch (e) {
             if (tryReconnect) {
-                log.debug('Was unable to send request...');
+                log.debug('Was unable to send request');
                 try {
                     await this.reconnect();
                     return await this.makeRequestOnce(params);
@@ -199,10 +199,11 @@ class NativeHostApi extends AbstractApi {
 
     /**
      * Sends initial request to the native host
-     * @param version
-     * @param userAgent
-     * @param apiVersion
-     * @param tryReconnect
+     * @param parameters
+     * @param {string} parameters.version
+     * @param {string} parameters.userAgent
+     * @param {string} parameters.apiVersion
+     * @param {boolean} tryReconnect
      * @returns {Promise<*>}
      */
     init = ({ version, userAgent, apiVersion }, tryReconnect = false) => {
@@ -224,9 +225,6 @@ class NativeHostApi extends AbstractApi {
         const response = await this.makeRequest({
             type: REQUEST_TYPES.getCurrentAppState,
         });
-        if (!response || !response.appState) {
-            throw new Error('Wrong data scheme received');
-        }
         return response.appState;
     };
 
@@ -244,6 +242,7 @@ class NativeHostApi extends AbstractApi {
     };
 
     /**
+     * Sets protections status of the app
      * @param {boolean} isEnabled
      */
     setProtectionStatus = (isEnabled) => this.makeRequest({

@@ -1,6 +1,6 @@
 import { POPUP_MESSAGES } from '../../lib/types';
 
-const getMessageHandler = (rootStore) => {
+const getMessageReceiver = (rootStore) => {
     const { settingsStore } = rootStore;
 
     return async (message) => {
@@ -17,4 +17,4 @@ const getMessageHandler = (rootStore) => {
     };
 };
 
-export default getMessageHandler;
+export default getMessageReceiver;

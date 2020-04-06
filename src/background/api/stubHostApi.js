@@ -92,6 +92,11 @@ const observer = (() => {
 hostData = observer.traceChanges(hostData);
 global.hostData = hostData;
 
+/**
+ * Async function waiting for timeout
+ * @param timeout
+ * @returns {Promise<void>}
+ */
 const sleep = (timeout) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -100,6 +105,12 @@ const sleep = (timeout) => {
     });
 };
 
+/**
+ * Generates response similar to the real native host response
+ * @param {string} type - request type
+ * @param {boolean} async - boolean flag to generate non async response,
+ *  used to handle subscribed changes
+ */
 const generateResponse = async (type, async = true) => {
     if (async) {
         await sleep(500);
@@ -292,17 +303,17 @@ class StubHostApi extends AbstractApi {
     };
 
     /**
-     * Makes request with
+     * Makes request with reconnection by default
      * @param params
      * @param tryReconnect - by default function retries to reconnect
-     * @returns {Promise<unknown>}
+     * @returns {Promise<*>}
      */
     makeRequest = async (params, tryReconnect = true) => {
         try {
             return await this.makeRequestOnce(params);
         } catch (e) {
             if (tryReconnect) {
-                log.debug('Was unable to send request...');
+                log.debug('Was unable to send request');
                 try {
                     await this.reconnect();
                     return await this.makeRequestOnce(params);
@@ -388,6 +399,7 @@ class StubHostApi extends AbstractApi {
     });
 
     /**
+     * Sends request to add rule in the app
      * @param {string} ruleText
      * @returns {Promise<object>}
      */
@@ -397,6 +409,7 @@ class StubHostApi extends AbstractApi {
     });
 
     /**
+     * Sends request to remove all custom rules for the current url
      * @param {string} url
      * @returns {Promise<object>}
      */
@@ -408,6 +421,7 @@ class StubHostApi extends AbstractApi {
     };
 
     /**
+     * Sends request to the app to open window with certificate description
      * @param {string} domain
      * @param {number} port
      * @returns {Promise<object>}
@@ -418,6 +432,7 @@ class StubHostApi extends AbstractApi {
     });
 
     /**
+     * Sends request to the app to generate report url
      * @param {string} url
      * @param {string} referrer
      * @returns {Promise<object>}

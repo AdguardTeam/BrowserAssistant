@@ -4,6 +4,9 @@ import log from '../lib/logger';
 import { CONTENT_SCRIPT_NAME } from '../lib/consts';
 import notifier from '../lib/notifier';
 
+/**
+ * Manages interaction with tabs
+ */
 class Tabs {
     constructor() {
         browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
@@ -48,11 +51,22 @@ class Tabs {
         return this.prepareTab(tabs[0]);
     };
 
+    /**
+     * Returns all active tabs
+     * @returns {Promise<{url: string, id: number}[]>}
+     */
     getActiveTabs = async () => {
         const activeTabs = await browser.tabs.query({ active: true });
         return activeTabs.map((tab) => this.prepareTab(tab));
     };
 
+    /**
+     * Sends message to the tab, previously executing there content script
+     * @param tabId
+     * @param type
+     * @param data
+     * @returns {Promise<*>}
+     */
     sendMessage = async (tabId, type, data) => {
         await browser.tabs.executeScript(tabId, { file: CONTENT_SCRIPT_NAME });
         const response = await browser.tabs.sendMessage(tabId, { type, data });
@@ -73,10 +87,15 @@ class Tabs {
         }
     };
 
+    /**
+     * Sends message to init assistant on the page, and passes it callback name
+     * @param tabId
+     * @returns {Promise<void>}
+     */
     initAssistant = async (tabId) => {
-        const params = { addRuleCallbackName: CONTENT_MESSAGES.ADD_RULE };
+        const data = { addRuleCallbackName: CONTENT_MESSAGES.ADD_RULE };
         try {
-            this.sendMessage(tabId, CONTENT_MESSAGES.INIT_ASSISTANT, params);
+            this.sendMessage(tabId, CONTENT_MESSAGES.INIT_ASSISTANT, data);
         } catch (e) {
             log.debug(e.message);
             // ignore errors, which could happen if try to inject on service pages
@@ -95,6 +114,11 @@ class Tabs {
         await browser.tabs.create({ url });
     };
 
+    /**
+     * Reloads required tab
+     * @param tab
+     * @returns {Promise<void>}
+     */
     reload = async (tab) => {
         try {
             await browser.tabs.reload(tab.id);

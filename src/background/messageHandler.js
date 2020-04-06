@@ -2,8 +2,15 @@ import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
 
-const messageHandler = async (msg) => {
-    const { type, data } = msg;
+/**
+ * Handles incoming messages to the background page
+ * @param message
+ * @param {string} message.type
+ * @param {*} message.data
+ * @returns {Promise<*>}
+ */
+const messageHandler = async (message) => {
+    const { type, data } = message;
 
     switch (type) {
         case POPUP_MESSAGES.GET_POPUP_DATA: {

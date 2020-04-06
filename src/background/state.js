@@ -9,6 +9,10 @@ import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
 import log from '../lib/logger';
 
+/**
+ * This class handles app state
+ * All requests to the native host should be made through this class
+ */
 class State {
     appState = {
         /**
@@ -80,14 +84,24 @@ class State {
         this.setAppState(message.appState);
     };
 
+    /**
+     * Returns current app state
+     */
     getAppState = () => {
         return this.appState;
     };
 
+    /**
+     * Returns update status info
+     */
     getUpdateStatusInfo() {
         return this.updateStatusInfo;
     }
 
+    /**
+     * Validates app state, sets app state and notifies external modules that state has changed
+     * @param {*} appState
+     */
     setAppState = (appState) => {
         const {
             isInstalled,
@@ -123,7 +137,7 @@ class State {
         }
     };
 
-    notifyTimeoutMs = 40;
+    NOTIFY_TIMEOUT_MS = 40;
 
     /**
      * Notifies modules about state changes
@@ -141,8 +155,13 @@ class State {
                 updateStatusInfo: this.getUpdateStatusInfo(),
             },
         });
-    }, this.notifyTimeoutMs, { leading: false });
+    }, this.NOTIFY_TIMEOUT_MS, { leading: false });
 
+    /**
+     * Sets update status info and notifies external modules when it changes
+     * @param isAppUpToDate
+     * @param isValidatedOnHost
+     */
     setUpdateStatusInfo = (isAppUpToDate, isValidatedOnHost) => {
         const nextUpdateStatusInfo = {
             isAppUpToDate,
@@ -156,6 +175,10 @@ class State {
         }
     };
 
+    /**
+     * Checks if app is working
+     * @returns {boolean}
+     */
     isAppWorking() {
         return [
             this.appState.isInstalled,

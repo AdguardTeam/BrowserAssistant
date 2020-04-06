@@ -1,5 +1,5 @@
-import { POPUP_MESSAGES } from '../types';
-import browserApi from '../browserApi';
+import { POPUP_MESSAGES } from '../../lib/types';
+import browserApi from '../../lib/browserApi';
 
 const sendMessage = async (type, data) => browserApi.runtime.sendMessage({ type, data });
 
