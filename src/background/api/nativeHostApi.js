@@ -9,7 +9,6 @@ import {
     CUSTOM_REQUEST_PREFIX,
     HOST_TYPES,
     REQUEST_TYPES,
-    HOST_RESPONSE_TYPES,
 } from '../../lib/types';
 
 class NativeHostApi extends AbstractApi {
@@ -148,6 +147,11 @@ class NativeHostApi extends AbstractApi {
 
     makeRequestOnce = async (params) => {
         const RESPONSE_TIMEOUT_MS = 60 * 1000;
+
+        const HOST_RESPONSE_TYPES = {
+            OK: 'ok',
+            ERROR: 'error',
+        };
 
         // Use CUSTOM_REQUEST_PREFIX in order to ignore this requests in the incomingMessageHandler
         const id = `${ADG_PREFIX}_${CUSTOM_REQUEST_PREFIX}_${nanoid()}`;

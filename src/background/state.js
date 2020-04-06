@@ -178,7 +178,15 @@ class State {
         if (!isHttp(url) || !port) {
             return null;
         }
-        const response = await api.getCurrentFilteringState(url, port, forceStart);
+
+        let response;
+        try {
+            response = await api.getCurrentFilteringState(url, port, forceStart);
+        } catch (e) {
+            log.debug(e);
+            return null;
+        }
+
         this.setAppState(response.appState);
         return response.parameters;
     };
@@ -221,7 +229,6 @@ class State {
 
     reportSite = async (url, referrer) => {
         const response = await api.reportSite(url, referrer);
-        // TODO figure out how to update state on every response
         this.setAppState(response.appState);
         return response.parameters.reportUrl;
     };

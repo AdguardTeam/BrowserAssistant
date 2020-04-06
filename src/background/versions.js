@@ -1,6 +1,5 @@
 const config = require('../../package.json');
 
-// TODO Consider removing this somewhere
 const versions = {
     version: config.version,
     apiVersion: config.apiVersion,

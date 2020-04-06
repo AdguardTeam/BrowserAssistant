@@ -6,7 +6,7 @@ import {
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
-import innerMessaging from '../../../lib/innerMessaging'; // TODO consider rename of this
+import innerMessaging from '../../../lib/innerMessaging';
 import tabs from '../../../background/tabs';
 import { getUrlProps } from '../../../lib/helpers';
 import log from '../../../lib/logger';
@@ -115,7 +115,6 @@ class SettingsStore {
         await innerMessaging.openPage(DOWNLOAD_LINK);
     };
 
-    // TODO reload pages when real response was received from background
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
             const tab = await this.getCurrentTab();
@@ -171,7 +170,7 @@ class SettingsStore {
         this.isInstalled = isInstalled;
         this.isProtectionEnabled = isProtectionEnabled;
         this.isRunning = isRunning;
-        this.isAuthorized = isAuthorized; // TODO check that isAuthorized is not broken
+        this.isAuthorized = isAuthorized;
         this.rootStore.translationStore.setLocale(locale);
     };
 
@@ -216,7 +215,6 @@ class SettingsStore {
                 uiStore.setExtensionPending(false);
             });
         } catch (error) {
-            // TODO handle errors correctly
             log.error(error);
         }
     };
@@ -269,7 +267,6 @@ class SettingsStore {
         }
     };
 
-    // TODO after custom rules removal update current state of the page
     removeCustomRules = async () => {
         try {
             await innerMessaging.removeCustomRules(this.currentUrl);
@@ -278,8 +275,6 @@ class SettingsStore {
         } catch (error) {
             log.error(error);
         }
-        // TODO check purpose of this method
-        this.rootStore.uiStore.setPageFilteredByUserFilter(false);
     };
 
     openSettings = async () => {

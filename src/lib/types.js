@@ -1,4 +1,3 @@
-// TODO move request types inside native host api
 export const REQUEST_TYPES = {
     init: 'init',
     getCurrentAppState: 'getCurrentAppState',
@@ -49,10 +48,4 @@ export const ASSISTANT_TYPES = {
 
 export const HOST_TYPES = {
     browserExtensionHost: 'com.adguard.browser_extension_host.nm',
-};
-
-// TODO use only inside api
-export const HOST_RESPONSE_TYPES = {
-    OK: 'ok',
-    ERROR: 'error',
 };

@@ -25,13 +25,16 @@ class Icon {
 
     updateIcon = async (tab) => {
         if (!state.isAppWorking()) {
-            await actions.setIconDisabled(tab.id); // TODO update all tabs
+            await actions.setIconDisabled(tab.id);
             return;
         }
+
         const currentFilteringState = await state.getCurrentFilteringState(tab);
+
         const isFilteringEnabled = currentFilteringState
             ? currentFilteringState.isFilteringEnabled
             : true;
+
         if (isFilteringEnabled) {
             await actions.setIconEnabled(tab.id);
         } else {
