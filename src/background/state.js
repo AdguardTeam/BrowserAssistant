@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
+import browser from 'webextension-polyfill';
 import browserApi from '../lib/browserApi';
 import api from './api';
 import versions from './versions';
@@ -8,6 +9,7 @@ import { BASE_LOCALE } from '../../tasks/langConstants';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
 import log from '../lib/logger';
+import { Prefs } from './prefs';
 
 /**
  * This class handles app state
@@ -34,7 +36,7 @@ class State {
          * Optional parameter from the app
          * @type {string}
          */
-        locale: BASE_LOCALE,
+        locale: Prefs.platform.isMacOs() ? browser.i18n.getUILanguage() : BASE_LOCALE,
         /**
          * Optional parameter from the app, consider true unless is set to the false
          * @type {boolean}
@@ -122,7 +124,9 @@ class State {
             isProtectionEnabled,
         };
 
-        if (locale !== undefined) {
+        // Ignore locale received from the mac app, because mac os sets language for whole system,
+        // but language is better determined by browser itself
+        if (locale !== undefined && !Prefs.platform.isMacOs()) {
             nextAppState.locale = locale;
         }
 

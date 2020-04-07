@@ -1,11 +1,12 @@
 import { action, computed, observable } from 'mobx';
 import { createIntl } from 'react-intl';
+import browser from 'webextension-polyfill';
 import messagesMap from '../../../_locales';
 import checkLocale from './checkLocale';
 
 const { BASE_LOCALE } = require('../../../../tasks/langConstants');
 
-const browserLocale = navigator.language;
+const browserLocale = browser.i18n.getUILanguage();
 
 class TranslationStore {
     constructor(rootStore) {
@@ -29,18 +30,18 @@ class TranslationStore {
      * 1. Returns application locale if has translations
      * 2. Returns browser locale if has translations
      * 3. Returns base locale
-     * @returns {{locale: string, originalKey: string}} locale
+     * @returns {{locale: string, matchedKey: string}} locale
      */
     getLocale = () => {
         let result = checkLocale(messagesMap, this.locale);
 
         if (result.suitable) {
-            return { locale: result.locale, originalKey: result.originalKey, };
+            return { locale: result.locale, matchedKey: result.matchedKey };
         }
 
         result = checkLocale(messagesMap, browserLocale);
         return result.suitable
-            ? { locale: result.locale, originalKey: result.originalKey }
+            ? { locale: result.locale, matchedKey: result.matchedKey }
             : BASE_LOCALE;
     };
 
@@ -48,7 +49,7 @@ class TranslationStore {
     get i18n() {
         const result = this.getLocale();
 
-        const messages = messagesMap[result.originalKey];
+        const messages = messagesMap[result.matchedKey];
 
         // createIntl doesnt accepts locales codes longer than 2 chars
         // and here it is not important, so we left only two chars

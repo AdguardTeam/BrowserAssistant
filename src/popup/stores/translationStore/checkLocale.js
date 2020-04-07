@@ -7,7 +7,7 @@ const checkPartialKeyMatch = (keysToCheck, key) => {
 const checkLocale = (messagesMap, locale) => {
     const result = {
         suitable: false,
-        originalKey: locale,
+        matchedKey: locale,
         locale,
     };
 
@@ -23,10 +23,10 @@ const checkLocale = (messagesMap, locale) => {
     }
 
     // check partial key match
-    const originalKey = checkPartialKeyMatch(Object.keys(messagesMap), locale);
-    if (originalKey) {
+    const matchedKey = checkPartialKeyMatch(Object.keys(messagesMap), locale);
+    if (matchedKey) {
         result.suitable = true;
-        result.originalKey = originalKey;
+        result.matchedKey = matchedKey;
         return result;
     }
 
@@ -36,6 +36,7 @@ const checkLocale = (messagesMap, locale) => {
         if (messagesMap[underscored]) {
             result.suitable = true;
             result.locale = underscored;
+            result.matchedKey = underscored;
             return result;
         }
 
@@ -44,6 +45,7 @@ const checkLocale = (messagesMap, locale) => {
         if (messagesMap[hyphened]) {
             result.suitable = true;
             result.locale = hyphened;
+            result.matchedKey = hyphened;
             return result;
         }
 
@@ -52,14 +54,15 @@ const checkLocale = (messagesMap, locale) => {
         if (messagesMap[shortened]) {
             result.suitable = true;
             result.locale = shortened;
+            result.matchedKey = shortened;
             return result;
         }
 
         // check partial key match for shortened locale
-        const originalKey = checkPartialKeyMatch(Object.keys(messagesMap), shortened);
-        if (originalKey) {
+        const matchedKey = checkPartialKeyMatch(Object.keys(messagesMap), shortened);
+        if (matchedKey) {
             result.suitable = true;
-            result.originalKey = originalKey;
+            result.matchedKey = matchedKey;
             return result;
         }
     }
