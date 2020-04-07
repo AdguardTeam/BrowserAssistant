@@ -16,7 +16,7 @@ Modal.setAppElement('#root');
 const App = observer(() => {
     const rootContext = useContext(rootStore);
 
-    const { settingsStore, uiStore } = rootContext;
+    const { settingsStore, uiStore, translationStore } = rootContext;
 
     const messageHandler = getMessageReceiver(rootContext);
 
@@ -30,6 +30,12 @@ const App = observer(() => {
     }, []);
 
     const { isAppWorking } = settingsStore;
+
+    if (!translationStore.isReadyToDisplayMessages) {
+        return (
+            <AppWrapper />
+        );
+    }
 
     if (!isAppWorking || uiStore.isLoading) {
         return (

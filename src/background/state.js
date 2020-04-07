@@ -190,6 +190,14 @@ class State {
     }
 
     /**
+     * Returns app locale key
+     * @returns {string}
+     */
+    getLocale() {
+        return this.appState.locale;
+    }
+
+    /**
      * Returns current filtering state or null if was unable to retrieve it
      * @param {{id: number, url: string}} tab
      * @param {boolean} forceStart

@@ -19,31 +19,40 @@ class TranslationStore {
         this.locale = locale;
     };
 
+    @computed
+    get isReadyToDisplayMessages() {
+        return !!this.locale;
+    }
+
     /**
      * Returns locale in the next order
      * 1. Returns application locale if has translations
      * 2. Returns browser locale if has translations
      * 3. Returns base locale
-     * @returns {string} locale
+     * @returns {{locale: string, originalKey: string}} locale
      */
     getLocale = () => {
         let result = checkLocale(messagesMap, this.locale);
+
         if (result.suitable) {
-            return result.locale;
+            return { locale: result.locale, originalKey: result.originalKey, };
         }
+
         result = checkLocale(messagesMap, browserLocale);
-        return result.suitable ? result.locale : BASE_LOCALE;
+        return result.suitable
+            ? { locale: result.locale, originalKey: result.originalKey }
+            : BASE_LOCALE;
     };
 
     @computed
     get i18n() {
-        let locale = this.getLocale();
+        const result = this.getLocale();
 
-        const messages = messagesMap[locale];
+        const messages = messagesMap[result.originalKey];
 
         // createIntl doesnt accepts locales codes longer than 2 chars
         // and here it is not important, so we left only two chars
-        locale = locale.slice(0, 2);
+        const locale = result.locale.slice(0, 2);
         return createIntl({
             locale,
             messages,

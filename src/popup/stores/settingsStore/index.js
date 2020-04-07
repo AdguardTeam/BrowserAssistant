@@ -81,6 +81,9 @@ class SettingsStore {
 
     @action
     getPopupData = async () => {
+        // Get locale at the beginning in order to show messages as faster as possible
+        const locale = await messagesSender.getLocale();
+        this.rootStore.translationStore.setLocale(locale);
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await messagesSender.getPopupData(tab);
