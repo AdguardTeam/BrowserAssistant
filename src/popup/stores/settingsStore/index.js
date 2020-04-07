@@ -1,49 +1,65 @@
 import {
-    action, computed, observable,
+    action,
+    computed,
+    observable,
+    runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, PROTOCOLS } from '../consts';
-import log from '../../../lib/logger';
+import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
-import innerMessaging from '../../../lib/innerMessaging';
+import messagesSender from '../../messaging/sender';
+import tabs from '../../../background/tabs';
+import { getUrlProps } from '../../../lib/helpers';
+import log from '../../../lib/logger';
 
 class SettingsStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable currentTabHostname = '';
-
-    @observable currentURL = '';
-
-    @observable currentPort = 0;
-
-    @observable currentProtocol = PROTOCOLS.SECURED;
+    @observable currentUrl = '';
 
     @observable referrer = '';
 
     @observable originalCertIssuer = '';
 
+    @observable isPageFilteredByUserFilter = false;
+
     @observable isHttpsFilteringEnabled = false;
 
     @observable isFilteringEnabled = false;
 
-    @observable isInstalled = true;
+    @observable isInstalled = false;
 
-    @observable isRunning = true;
+    @observable isRunning = false;
 
-    @observable isProtectionEnabled = true;
+    @observable isProtectionEnabled = false;
 
     @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
-    @observable isAppUpToDate = true;
+    @observable isAppUpToDate = false;
 
-    @observable isExtensionUpdated = true;
-
-    @observable isSetupCorrect = true;
+    @observable isValidatedOnHost = false;
 
     @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
-    @observable isAuthorized = true;
+    @observable isAuthorized = false;
+
+    @observable hostError = null;
+
+    @computed
+    get currentTabHostname() {
+        return getUrlProps(this.currentUrl).hostname;
+    }
+
+    @computed
+    get currentPort() {
+        return getUrlProps(this.currentUrl).port;
+    }
+
+    @computed
+    get currentProtocol() {
+        return getUrlProps(this.currentUrl).protocol;
+    }
 
     @computed get pageProtocol() {
         return ({
@@ -53,97 +69,71 @@ class SettingsStore {
         });
     }
 
+    @action
     setUpdateStatusInfo = (statusInfo) => {
         const {
-            isAppUpToDate, isExtensionUpdated, isSetupCorrect, locale,
+            isAppUpToDate, isValidatedOnHost,
         } = statusInfo;
 
-        this.setIsAppUpToDate(isAppUpToDate);
-        this.setIsExtensionUpdated(isExtensionUpdated);
-        this.setIsSetupCorrect(isSetupCorrect);
-        this.rootStore.translationStore.setLocale(locale);
-    };
-
-    @action
-    setIsAppUpToDate = (isAppUpToDate) => {
         this.isAppUpToDate = isAppUpToDate;
+        this.isValidatedOnHost = isValidatedOnHost;
     };
 
     @action
-    setIsExtensionUpdated = (isExtensionUpdated) => {
-        this.isExtensionUpdated = isExtensionUpdated;
-    };
+    getPopupData = async () => {
+        this.rootStore.uiStore.setExtensionLoading(true);
+        const tab = await tabs.getCurrent();
+        const popupData = await messagesSender.getPopupData(tab);
 
-    @action
-    setIsSetupCorrect = (isSetupCorrect) => {
-        this.isSetupCorrect = isSetupCorrect;
-    };
-
-    @action
-    setReferrer = (referrer = '') => {
-        this.referrer = referrer;
-    };
-
-    @action
-    updateCurrentTabInfo = async () => {
-        try {
-            const urlProps = await innerMessaging.getCurrentTabUrlProperties();
-            const referrer = await innerMessaging.getReferrer();
-            this.setCurrentTabUrlProperties(urlProps);
-            this.setReferrer(referrer);
-            await this.rootStore.requestsStore.getCurrentFilteringState();
-        } catch (error) {
-            log.error(error);
+        if (popupData.hostError) {
+            runInAction(() => {
+                this.hostError = popupData.hostError;
+                this.rootStore.uiStore.setExtensionLoading(false);
+            });
+            return;
         }
-    };
 
-    refreshUpdateStatusInfo = async () => {
-        const res = await innerMessaging.getUpdateStatusInfo();
-        this.setUpdateStatusInfo(res);
-    };
-
-    @action
-    setCurrentTabUrlProperties = (urlProps) => {
         const {
-            currentURL,
-            currentPort,
-            currentProtocol,
-            hostname,
-        } = urlProps;
+            referrer,
+            currentFilteringState,
+            updateStatusInfo,
+            appState,
+        } = popupData;
 
-        this.currentURL = currentURL;
-        this.currentTabHostname = hostname || this.currentURL;
-        this.currentPort = currentPort;
-        this.currentProtocol = currentProtocol;
+        runInAction(() => {
+            this.currentUrl = tab.url;
+            this.referrer = referrer;
+            this.setUrlFilteringState(currentFilteringState);
+            this.setCurrentAppState(appState);
+            this.setUpdateStatusInfo(updateStatusInfo);
+            this.rootStore.uiStore.setExtensionLoading(false);
+        });
     };
 
     @action
-    openDownloadPage = () => {
-        innerMessaging.openPage(DOWNLOAD_LINK);
+    openDownloadPage = async () => {
+        await messagesSender.openPage(DOWNLOAD_LINK);
+    };
+
+    reloadPageAfterSwitcherTransition = () => {
+        setTimeout(async () => {
+            const tab = await this.getCurrentTab();
+            await messagesSender.reload(tab);
+        }, SWITCHER_TRANSITION_TIME);
     };
 
     @action
     setHttpsFiltering = async (isHttpsFilteringEnabled) => {
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-        await this.rootStore.requestsStore.setFilteringStatus();
-        this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
+        await this.setFilteringStatus();
+        this.reloadPageAfterSwitcherTransition();
     };
 
     @action
     setFiltering = async (isFilteringEnabled) => {
         this.isFilteringEnabled = isFilteringEnabled;
-        await this.rootStore.requestsStore.setFilteringStatus();
-        this.rootStore.uiStore.reloadPageAfterSwitcherTransition();
-    };
-
-    @action
-    setOriginalCertStatus = (status) => {
-        this.originalCertStatus = ORIGINAL_CERT_STATUS[status.toUpperCase()];
-    };
-
-    @action
-    setOriginalCertIssuer = (originalCertIssuer) => {
-        this.originalCertIssuer = originalCertIssuer;
+        await this.setFilteringStatus();
+        this.reloadPageAfterSwitcherTransition();
     };
 
     @action
@@ -152,44 +142,24 @@ class SettingsStore {
     };
 
     @action
-    setAuthorized = (isAuthorized) => {
-        // if isAuthorized is undefined do not change state
-        // mac app doesn't send isAuthorized information
-        if (isAuthorized !== true && isAuthorized !== false) {
+    setUrlFilteringState = (currentFilteringState) => {
+        if (!currentFilteringState) {
             return;
         }
-        this.isAuthorized = isAuthorized;
-    };
 
-    @action
-    setRunning = (isRunning) => {
-        this.isRunning = isRunning;
-    };
-
-    @action
-    setProtection = (isProtectionEnabled) => {
-        this.isProtectionEnabled = isProtectionEnabled;
-    };
-
-    @action
-    setHttpAndHttpsFilteringActive = (isFilteringEnabled, isHttpsFilteringEnabled) => {
-        this.isFilteringEnabled = isFilteringEnabled;
-        this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-    };
-
-    @action
-    setCurrentFilteringState = (parameters) => {
         const {
             isFilteringEnabled,
             isHttpsFilteringEnabled,
             originalCertStatus,
             isPageFilteredByUserFilter,
             originalCertIssuer,
-        } = parameters;
-        this.setHttpAndHttpsFilteringActive(isFilteringEnabled, isHttpsFilteringEnabled);
-        this.setOriginalCertStatus(originalCertStatus);
-        this.setOriginalCertIssuer(originalCertIssuer);
-        this.rootStore.uiStore.setPageFilteredByUserFilter(isPageFilteredByUserFilter);
+        } = currentFilteringState;
+
+        this.isFilteringEnabled = isFilteringEnabled;
+        this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+        this.originalCertStatus = ORIGINAL_CERT_STATUS[originalCertStatus.toUpperCase()];
+        this.originalCertIssuer = originalCertIssuer;
+        this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
     };
 
     @action
@@ -197,18 +167,166 @@ class SettingsStore {
         const {
             isInstalled, isRunning, isProtectionEnabled, locale, isAuthorized,
         } = appState;
-        this.setInstalled(isInstalled);
-        this.setRunning(isRunning);
-        this.setProtection(isProtectionEnabled);
-        this.setAuthorized(isAuthorized);
+        this.isInstalled = isInstalled;
+        this.isProtectionEnabled = isProtectionEnabled;
+        this.isRunning = isRunning;
+        this.isAuthorized = isAuthorized;
         this.rootStore.translationStore.setLocale(locale);
     };
+
+    @computed
+    get isAppWorking() {
+        return [
+            this.isInstalled,
+            this.isRunning,
+            this.isProtectionEnabled,
+            this.isAppUpToDate,
+            this.isValidatedOnHost,
+        ].every((state) => state === true);
+    }
 
     @action
     updateExtension = () => {
         const updateLink = this.isFirefox ? UPDATE_URL_FIREFOX : UPDATE_URL_CHROME;
-        innerMessaging.openPage(updateLink);
+        messagesSender.openPage(updateLink);
     };
+
+    /**
+     * Starts assistant
+     */
+    initAssistant = async () => {
+        const tab = await tabs.getCurrent();
+        await messagesSender.initAssistant(tab.id);
+        window.close();
+    };
+
+    /**
+     * Switches protection status
+     * @param {boolean} isEnabled
+     * @returns {Promise<void>}
+     */
+    setProtectionStatus = async (isEnabled) => {
+        const { uiStore } = this.rootStore;
+        try {
+            uiStore.setExtensionPending(true);
+            const tab = await this.getCurrentTab();
+            const appState = await messagesSender.setProtectionStatus(isEnabled);
+            const urlFilteringState = await messagesSender.getUrlFilteringState(tab);
+            runInAction(async () => {
+                this.setCurrentAppState(appState);
+                this.setUrlFilteringState(urlFilteringState);
+                uiStore.setExtensionPending(false);
+            });
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    @action
+    getCurrentTab = async () => {
+        const tab = await tabs.getCurrent();
+        runInAction(() => {
+            // update current url just in case
+            this.currentUrl = tab.url;
+        });
+        return tab;
+    };
+
+    openFilteringLog = async () => {
+        try {
+            await messagesSender.openFilteringLog();
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    reportSite = async () => {
+        try {
+            await messagesSender.reportSite(this.currentUrl, this.referrer);
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    removeCustomRules = async () => {
+        const { uiStore } = this.rootStore;
+        try {
+            uiStore.setExtensionPending(true);
+            const tab = await tabs.getCurrent();
+            await messagesSender.removeCustomRules(this.currentUrl);
+            const urlFilteringState = await messagesSender.getUrlFilteringState(tab);
+            runInAction(async () => {
+                this.setUrlFilteringState(urlFilteringState);
+                uiStore.setExtensionPending(false);
+                await messagesSender.reload(tab);
+            });
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    openSettings = async () => {
+        try {
+            await messagesSender.openSettings();
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    openOriginalCert = async () => {
+        const { hostname, port } = getUrlProps(this.currentUrl);
+
+        try {
+            await messagesSender.openOriginalCert(hostname, port);
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    setFilteringStatus = async () => {
+        try {
+            await messagesSender.setFilteringStatus(
+                this.currentUrl,
+                this.isFilteringEnabled,
+                this.isHttpsFilteringEnabled
+            );
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    updateApp = async () => {
+        try {
+            await messagesSender.updateApp();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    startApp = async () => {
+        try {
+            this.rootStore.uiStore.setExtensionPending(true);
+            const tab = await tabs.getCurrent();
+            const currentFilteringState = await messagesSender.getUrlFilteringState(tab, true);
+            const response = await messagesSender.getAppState();
+            runInAction(() => {
+                this.setUrlFilteringState(currentFilteringState);
+                this.setCurrentAppState(response.appState);
+                this.setUpdateStatusInfo(response.updateStatusInfo);
+                this.rootStore.uiStore.setExtensionPending(false);
+            });
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
+    @computed
+    get hasHostError() {
+        return this.hostError !== null;
+    }
 }
 
 export default SettingsStore;

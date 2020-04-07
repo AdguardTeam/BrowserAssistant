@@ -1,22 +1,46 @@
 import browser from 'webextension-polyfill';
+import log from '../lib/logger';
 import { Prefs } from './prefs';
-import { ICON_COLORS } from '../lib/consts';
 
-const setIcon = async (path, tabId) => {
-    const details = { path };
-    if (tabId) {
-        details.tabId = tabId;
-    }
+const setIcon = async (details) => {
     try {
         await browser.browserAction.setIcon(details);
-    } catch (error) {
-        // Ignore message 'No tab with id: 123' after closing many tabs quickly
+    } catch (e) {
+        log.debug(e.message);
     }
 };
 
-const setIconEnabled = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.GREEN], tabId);
+/**
+ * Sets icon enabled. In order to remove blinking we set icon twice:
+ * 1. for general browser action
+ * 2. for tab browser action if tabId is provided
+ * @param {number} [tabId]
+ * @returns {Promise<void>}
+ */
+const setIconEnabled = async (tabId) => {
+    const details = { path: Prefs.ICONS.ENABLED };
+    await setIcon(details);
+    if (tabId) {
+        details.tabId = tabId;
+        await setIcon(details);
+    }
+};
 
-const setIconDisabled = (tabId) => setIcon(Prefs.ICONS[ICON_COLORS.GREY], tabId);
+/**
+ * Sets browser cation icon disabled. In order to remove blinking we set icon twice:
+ * 1. for general browser action
+ * 2. for tab browser action if tabId is provided
+ * @param {number} [tabId]
+ * @returns {Promise<void>}
+ */
+const setIconDisabled = async (tabId) => {
+    const details = { path: Prefs.ICONS.DISABLED };
+    await setIcon(details);
+    if (tabId) {
+        details.tabId = tabId;
+        await setIcon(details);
+    }
+};
 
 const actions = {
     setIconEnabled,

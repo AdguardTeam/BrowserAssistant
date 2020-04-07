@@ -1,6 +1,6 @@
 {
     "name": "browser-assistant",
-    "version": "0.0.48",
+    "version": "0.0.51",
     "apiVersion": "1",
     "description": "AdGuard browser extension",
     "author": "adguard@adguard.com",
@@ -73,8 +73,9 @@
         "zip-webpack-plugin": "^3.0.0"
     },
     "dependencies": {
-        "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant",
+        "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant#4.3.32",
         "classnames": "^2.2.6",
+        "lodash": "^4.17.15",
         "mobx": "^5.15.4",
         "mobx-react": "^6.1.8",
         "nanoid": "^2.1.11",

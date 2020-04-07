@@ -1,18 +1,17 @@
 import { getUrl } from '../lib/browserApi/runtime';
 import { lazyGet } from '../lib/helpers';
-import { ICON_COLORS } from '../lib/consts';
 
 const ICONS_PATH = 'assets/images/icons';
 
 export const Prefs = {
     get ICONS() {
-        return lazyGet(Prefs, 'ICONS', () => ({
-            [ICON_COLORS.GREEN]: {
+        return lazyGet(Prefs, 'ICON', () => ({
+            ENABLED: {
                 19: getUrl(`${ICONS_PATH}/green-19.png`),
                 38: getUrl(`${ICONS_PATH}/green-38.png`),
                 128: getUrl(`${ICONS_PATH}/green-128.png`),
             },
-            [ICON_COLORS.GREY]: {
+            DISABLED: {
                 19: getUrl(`${ICONS_PATH}/grey-19.png`),
                 38: getUrl(`${ICONS_PATH}/grey-38.png`),
             },

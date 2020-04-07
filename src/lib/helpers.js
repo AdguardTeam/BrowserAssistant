@@ -28,6 +28,33 @@ export const getFormattedPortByProtocol = (port, protocol) => {
     return port === '' ? defaultPort : Number(port);
 };
 
+export const getUrlProps = (url) => {
+    const { hostname, port, protocol } = getUrlProperties(url);
+    const formattedProtocol = getProtocol(protocol);
+
+    return {
+        url,
+        port: getFormattedPortByProtocol(port, formattedProtocol),
+        protocol: formattedProtocol,
+        hostname,
+    };
+};
+
+/**
+ * Checks if string is valid url with http: or https: protocol
+ * @param {string} str
+ * @returns {boolean}
+ */
+export const isHttp = (str) => {
+    let url;
+    try {
+        url = new URL(str);
+    } catch (e) {
+        return false;
+    }
+    return /^https?:/.test(url.protocol);
+};
+
 /**
  * Returns the value of the property from the cache,
  * otherwise, calculates it using the callback, memoizes it, and returns the value

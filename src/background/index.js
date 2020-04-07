@@ -1,15 +1,12 @@
 import browser from 'webextension-polyfill';
-import api from './Api';
 import log from '../lib/logger';
-import icon from './Icon';
 import messageHandler from './messageHandler';
+import state from './state';
+import './icon';
 
 try {
-    api.init();
-
+    state.init();
     browser.runtime.onMessage.addListener(messageHandler);
-    browser.tabs.onActivated.addListener(icon.updateIconColorListener);
-    browser.tabs.onUpdated.addListener(icon.updateIconColorReloadListener);
 } catch (error) {
     log.error(error);
 }

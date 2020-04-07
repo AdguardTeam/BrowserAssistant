@@ -11,15 +11,16 @@ const initialize = () => {
     }
 
     browser.runtime.onMessage.addListener((message) => {
-        switch (message.type) {
-            case CONTENT_MESSAGES.getReferrer:
+        const { type, data } = message;
+        switch (type) {
+            case CONTENT_MESSAGES.GET_REFERRER:
                 return Promise.resolve(document.referrer);
-            case CONTENT_MESSAGES.initAssistant: {
-                const { addRuleCallbackName } = message.params;
+            case CONTENT_MESSAGES.INIT_ASSISTANT: {
+                const { addRuleCallbackName } = data;
                 startAssistant(async (ruleText) => {
                     await browserApi.runtime.sendMessage({
                         type: addRuleCallbackName,
-                        params: { ruleText },
+                        data: { ruleText },
                     });
                 });
                 return Promise.resolve();

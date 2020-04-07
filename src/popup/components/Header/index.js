@@ -6,31 +6,31 @@ import './header.pcss';
 
 const Header = observer(() => {
     const {
-        settingsStore: {
-            isProtectionEnabled,
-            isAuthorized,
-        },
-        requestsStore: {
-            openSettings,
-            setProtectionStatus,
-        },
-        uiStore: {
-            setProtectionTogglePending,
-            isProtectionTogglePending,
-            isAppWorking,
-            requestStatus,
-            globalTabIndex,
-        },
-        translationStore: {
-            translate,
-        },
+        settingsStore,
+        uiStore,
+        translationStore,
     } = useContext(rootStore);
+
+    const {
+        isProtectionEnabled,
+        isAuthorized,
+        setProtectionStatus,
+        openSettings,
+        isAppWorking,
+    } = settingsStore;
+
+    const {
+        isPending,
+        globalTabIndex,
+    } = uiStore;
+
+    const { translate } = translationStore;
 
     const disableProtection = async (e) => {
         if (!isAuthorized) {
             return;
         }
-        setProtectionTogglePending(true);
+        e.persist();
         await setProtectionStatus(false);
         e.target.blur();
     };
@@ -39,14 +39,15 @@ const Header = observer(() => {
         'widget-popup__buttons': true,
         'widget-popup__buttons--disabled': !isAuthorized,
         'widget-popup__buttons--pause': isProtectionEnabled,
-        'widget-popup__buttons--start': !isProtectionEnabled || isProtectionTogglePending,
-        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
+        // start button is displayed during disconnection, in order to create smooth ux
+        'widget-popup__buttons--start': isPending,
+        'widget-popup__buttons--hidden': !isAppWorking,
     });
 
     const iconSettingsClass = classNames({
         'widget-popup__buttons': true,
         'widget-popup__buttons--settings': true,
-        'widget-popup__buttons--hidden': !isAppWorking || requestStatus.isPending,
+        'widget-popup__buttons--hidden': !isAppWorking,
     });
 
     return (

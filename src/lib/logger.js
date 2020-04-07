@@ -1,3 +1,4 @@
+// TODO switch to a less verbose level later
 const CURRENT_LEVEL = 'DEBUG';
 
 const LEVELS = {
