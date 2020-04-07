@@ -146,6 +146,7 @@ const CurrentSite = observer(() => {
                     header={header}
                 />
             </div>
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
             <div
                 role="status"
                 tabIndex={uiStore.globalTabIndex}

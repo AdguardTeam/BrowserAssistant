@@ -5,15 +5,14 @@ import Header from '../../Header';
 import Loading from '../../ui/Loading';
 
 const AppWrapper = observer(({ children }) => {
-    const {
-        uiStore: { isLoading, requestStatus: { isPending } },
-    } = useContext(rootStore);
+    const { uiStore } = useContext(rootStore);
+    const { isPending } = uiStore;
 
     const disableEvent = (e) => {
         e.stopPropagation();
     };
 
-    const disableWhileLoading = isLoading ? disableEvent : undefined;
+    const disableWhileLoading = isPending ? disableEvent : undefined;
 
     return (
         <div
@@ -21,7 +20,7 @@ const AppWrapper = observer(({ children }) => {
             onClickCapture={disableWhileLoading}
         >
             <Header />
-            {isLoading && !isPending && (<Loading />)}
+            {isPending && (<Loading />)}
             {children}
         </div>
     );

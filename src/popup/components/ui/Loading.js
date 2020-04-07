@@ -1,9 +1,8 @@
 import React from 'react';
 import './Loading.pcss';
 
-const Loading = ({ title }) => (
+const Loading = () => (
     <div className="loading--wrapper">
-        {title && <header className="loading--header">{title}</header>}
         <div className="loading" />
     </div>
 );

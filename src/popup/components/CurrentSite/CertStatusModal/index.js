@@ -8,37 +8,34 @@ import { SWITCHER_IDS, CERT_STATES } from '../../../stores/consts';
 import './modal.pcss';
 
 const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
+    const { settingsStore, uiStore, translationStore } = useContext(rootStore);
     const {
-        requestsStore: {
-            openOriginalCert,
-        },
-        settingsStore: {
-            setHttpsFiltering,
-            isHttpsFilteringEnabled,
-            originalCertIssuer,
-            pageProtocol,
-            originalCertStatus,
-            isFilteringEnabled,
-            isAuthorized,
-        },
-        uiStore: {
-            certStatus,
-            globalTabIndex,
-        },
-        translationStore: {
-            translate,
-        },
-    } = useContext(rootStore);
+        setHttpsFiltering,
+        isHttpsFilteringEnabled,
+        originalCertIssuer,
+        pageProtocol,
+        originalCertStatus,
+        isFilteringEnabled,
+        isAuthorized,
+        openOriginalCert,
+    } = settingsStore;
 
-    const toggleHttpsFiltering = () => {
+    const {
+        certStatus,
+        globalTabIndex,
+    } = uiStore;
+
+    const { translate } = translationStore;
+
+    const toggleHttpsFiltering = async () => {
         if (!certStatus.isInvalid) {
-            setHttpsFiltering(!isHttpsFilteringEnabled);
+            await setHttpsFiltering(!isHttpsFilteringEnabled);
         }
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = async (e) => {
         if (e.key === 'Enter') {
-            openOriginalCert();
+            await openOriginalCert();
         }
     };
 

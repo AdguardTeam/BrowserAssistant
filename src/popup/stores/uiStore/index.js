@@ -1,35 +1,33 @@
-import {
-    action, observable, computed,
-} from 'mobx';
+import { action, observable, computed } from 'mobx';
 import {
     DEFAULT_MODAL_STATE,
     EVENT_TYPE_TO_MODAL_STATE_MAP,
     ORIGINAL_CERT_STATUS,
     HTTP_FILTERING_STATUS,
     SECURE_STATUS_MODAL_STATES,
-    SWITCHER_TRANSITION_TIME,
 } from '../consts';
 import { checkSomeIsTrue } from '../../../lib/helpers';
-import innerMessaging from '../../../lib/innerMessaging';
 
 class UiStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable isPageFilteredByUserFilter = false;
+    /**
+     * Flag shows that extension has started to get information from native host on first start
+     * @type {boolean}
+     */
+    @observable isLoading = true;
 
-    @observable isLoading = false;
-
-    @observable isProtectionTogglePending = false;
-
-    @observable isExtensionPending = true;
+    /**
+     * Flag is set to the true when popup executes requests to the background
+     * @type {boolean}
+     */
+    @observable isPending = false;
 
     @observable certStatusModalState = { ...DEFAULT_MODAL_STATE };
 
     @observable secureStatusModalState = { ...DEFAULT_MODAL_STATE };
-
-    @observable userSettingsZoom = 1;
 
     @computed get isCertStatusModalOpen() {
         return checkSomeIsTrue(this.certStatusModalState);
@@ -41,14 +39,6 @@ class UiStore {
 
     @computed get globalTabIndex() {
         return (this.isLoading ? -1 : 0);
-    }
-
-    @computed get requestStatus() {
-        return ({
-            isSuccess: this.isAppWorking === true,
-            isError: this.isAppWorking === false,
-            isPending: this.isExtensionPending === true,
-        });
     }
 
     @computed get secureStatusModalInfo() {
@@ -82,24 +72,6 @@ class UiStore {
         });
     }
 
-    @computed get isAppWorking() {
-        const {
-            isAppUpToDate,
-            isExtensionUpdated,
-            isSetupCorrect,
-            isInstalled,
-            isRunning,
-            isProtectionEnabled,
-        } = this.rootStore.settingsStore;
-
-        return [isInstalled,
-            isRunning,
-            isProtectionEnabled,
-            isAppUpToDate,
-            isExtensionUpdated,
-            isSetupCorrect].every((state) => state === true);
-    }
-
     @action
     updateCertStatusModalState = (eventType,
         newState = EVENT_TYPE_TO_MODAL_STATE_MAP[eventType]) => {
@@ -130,39 +102,7 @@ class UiStore {
 
     @action
     setExtensionPending = (isPending) => {
-        this.isExtensionPending = isPending;
-    };
-
-    @action
-    setPageFilteredByUserFilter = (isPageFilteredByUserFilter) => {
-        this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
-    };
-
-    @action
-    setProtectionTogglePending = (isProtectionTogglePending) => {
-        this.isProtectionTogglePending = isProtectionTogglePending;
-    };
-
-    @action
-    getZoom = () => {
-        const popupZoom = ((window.outerWidth - 8) / window.innerWidth) - 0.02;
-        this.userSettingsZoom = popupZoom.toFixed(popupZoom < 3 ? 2 : 1);
-    };
-
-    /**
-     * Compensation for zooming in or out of the default window scale
-     * by multiplying by the inverse scale
-     * https://github.com/AdguardTeam/AdguardBrowserExtension/issues/1529
-     */
-    normalizePopupScale = () => {
-        this.getZoom();
-        document.body.style.zoom = 1 / this.userSettingsZoom;
-    };
-
-    reloadPageAfterSwitcherTransition = () => {
-        setTimeout(async () => {
-            await innerMessaging.reload();
-        }, SWITCHER_TRANSITION_TIME);
+        this.isPending = isPending;
     };
 }
 

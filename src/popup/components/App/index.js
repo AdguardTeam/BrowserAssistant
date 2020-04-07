@@ -9,43 +9,29 @@ import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
-import getMessageHandler from '../../messageHandler';
+import getMessageReceiver from '../../messaging/receiver';
 
 Modal.setAppElement('#root');
 
 const App = observer(() => {
-    const root = useContext(rootStore);
+    const rootContext = useContext(rootStore);
 
-    const {
-        settingsStore: {
-            updateCurrentTabInfo,
-            refreshUpdateStatusInfo,
-        },
-        uiStore: {
-            requestStatus,
-        },
-        translationStore: {
-            getLocale,
-        },
-    } = root;
+    const { settingsStore, uiStore } = rootContext;
 
-    const messageHandler = getMessageHandler(root);
+    const messageHandler = getMessageReceiver(rootContext);
 
     useEffect(() => {
         (async () => {
-            await refreshUpdateStatusInfo();
-            await updateCurrentTabInfo();
+            await settingsStore.getPopupData();
         })();
 
         browser.runtime.onMessage.addListener(messageHandler);
         return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
-    if (!getLocale()) {
-        return (<Loading />);
-    }
+    const { isAppWorking } = settingsStore;
 
-    if (requestStatus.isError || requestStatus.isPending) {
+    if (!isAppWorking || uiStore.isLoading) {
         return (
             <AppWrapper>
                 <AppClosed />
@@ -53,7 +39,7 @@ const App = observer(() => {
         );
     }
 
-    if (requestStatus.isSuccess) {
+    if (isAppWorking) {
         return (
             <AppWrapper>
                 <CurrentSite />
