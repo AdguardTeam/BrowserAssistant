@@ -2,7 +2,7 @@ const path = require('path');
 
 const SRC_PATH = '../src';
 const LOCALES_PATH = path.join(__dirname, SRC_PATH, '_locales/en/messages');
-const ENV_MAP = {
+const CHANNEL_MAP = {
     dev: {
         outputPath: 'dev',
         name: 'Dev',
@@ -23,7 +23,7 @@ const BROWSER_TYPES = {
     EDGE: 'edge',
 };
 
-const IS_DEV = process.env.NODE_ENV === 'dev';
+const IS_DEV = process.env.CHANNEL === 'dev';
 
 // Build output path
 const BUILD_PATH = '../build';
@@ -35,11 +35,11 @@ const MANIFEST_NAME = 'manifest.json';
 
 // Chrome CRX certificate paths
 const CERTIFICATE_PATHS = {
-    beta: './private/AdguardBrowserAssistant/cert-beta.pem',
-    release: './private/AdguardBrowserAssistant/cert-release.pem',
+    beta: './private/AdguardBrowserAssistant/certificate-beta.pem',
+    release: './private/AdguardBrowserAssistant/certificate-release.pem',
 };
 
-const CHANNEL = ENV_MAP[process.env.NODE_ENV].outputPath;
+const CHANNEL = CHANNEL_MAP[process.env.CHANNEL].outputPath;
 
 // Update manifest URL for the Chrome extension
 const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${CHROME_UPDATER_FILENAME}`;
@@ -55,7 +55,7 @@ const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassista
 
 module.exports = {
     LOCALES_PATH,
-    ENV_MAP,
+    CHANNEL_MAP,
     SRC_PATH,
     IS_DEV,
     BUILD_PATH,

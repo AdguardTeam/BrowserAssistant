@@ -29,8 +29,8 @@ Builds will be located in the `build` directory.
 
 ## CRX Beta and Release Builds
 
-- Put the repository with the `cert-beta.pem`, `cert-release.pem` files to the project root directory.
-- `yarn crx:beta` and `yarn crx:release` create web extension files for Chromium and Google Chrome browsers - build, zipped build, and update manifest XML document. You must have the `cert-beta.pem` or `cert-release.pem` to run the corresponding command.
+- Put the repository with the `certificate-beta.pem`, `certificate-release.pem` files to the project root directory.
+- `yarn crx:beta` and `yarn crx:release` create web extension files for Chromium and Google Chrome browsers - build, zipped build, and update manifest XML document. You must have the `certificate-beta.pem` or `certificate-release.pem` to run the corresponding command.
 
 ## XPI Builds
 

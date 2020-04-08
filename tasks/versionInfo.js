@@ -2,12 +2,12 @@
 const { promises: fs } = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const { BUILD_PATH, ENV_MAP } = require('./consts');
+const { BUILD_PATH, CHANNEL_MAP } = require('./consts');
 const config = require('../package');
 
 const content = `version=${config.version}`;
-const { NODE_ENV } = process.env;
-const { outputPath } = ENV_MAP[NODE_ENV];
+const { CHANNEL } = process.env;
+const { outputPath } = CHANNEL_MAP[CHANNEL];
 const FILENAME = 'build.txt';
 
 const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath, FILENAME);

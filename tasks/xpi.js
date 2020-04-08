@@ -8,7 +8,7 @@ const credentials = require('../private/AdguardBrowserAssistant/mozilla_credenti
 const {
     BROWSER_TYPES,
     BUILD_PATH,
-    ENV_MAP,
+    CHANNEL_MAP,
     FIREFOX_UPDATER_FILENAME,
     FIREFOX_UPDATE_URL,
     FIREFOX_UPDATE_XPI,
@@ -18,11 +18,11 @@ const {
 const config = require('../package');
 
 const { apiKey, apiSecret } = credentials;
-const { NODE_ENV } = process.env;
-const { outputPath } = ENV_MAP[NODE_ENV];
+const { CHANNEL } = process.env;
+const { outputPath } = CHANNEL_MAP[CHANNEL];
 const BUILD = 'build';
 
-const buildDir = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath);
+const buildDir = path.resolve(BUILD, CHANNEL_MAP[CHANNEL].outputPath);
 const fileDir = path.resolve(buildDir, FIREFOX_UPDATER_FILENAME);
 
 const getFirefoxManifest = async () => {
@@ -35,7 +35,7 @@ const getFirefoxManifest = async () => {
 };
 
 async function generateXpi() {
-    const sourceDir = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX);
+    const sourceDir = path.resolve(BUILD, CHANNEL_MAP[CHANNEL].outputPath, BROWSER_TYPES.FIREFOX);
 
     const { downloadedFiles } = await webExt.default.cmd.sign({
         apiKey,
@@ -103,7 +103,7 @@ const createUpdateJson = async (manifest) => {
 };
 
 const updateFirefoxManifest = async () => {
-    const manifestPath = path.resolve(BUILD, ENV_MAP[NODE_ENV].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
+    const manifestPath = path.resolve(BUILD, CHANNEL_MAP[CHANNEL].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
     const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
     manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));

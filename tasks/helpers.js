@@ -1,15 +1,15 @@
-const { ENV_MAP, IS_DEV } = require('./consts');
+const { CHANNEL_MAP, IS_DEV } = require('./consts');
 const pJson = require('../package');
 const twoskyConfig = require('../.twosky.json');
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
 
-const appendEnvSuffix = (name, env) => {
-    const envData = ENV_MAP[env];
-    if (!envData) {
-        throw new Error(`Wrong environment: ${env}`);
+const appendChannelSuffix = (name, channel) => {
+    const channelData = CHANNEL_MAP[channel];
+    if (!channelData) {
+        throw new Error(`Wrong channel: ${channel}`);
     }
-    return envData.name ? `${name} ${envData.name}` : name;
+    return channelData.name ? `${name} ${channelData.name}` : name;
 };
 
 const updateManifest = (manifestJson, browserManifestDiff) => {
@@ -30,14 +30,14 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));
 };
 
-const getOutputPathByEnv = (env) => {
-    const envData = ENV_MAP[env];
-    if (!envData) {
-        throw new Error(`Wrong environment: ${env}`);
+const getOutputPathByChannel = (channel) => {
+    const channelData = CHANNEL_MAP[channel];
+    if (!channelData) {
+        throw new Error(`Wrong channel: ${channel}`);
     }
-    return envData.outputPath;
+    return channelData.outputPath;
 };
 
 module.exports = {
-    appendEnvSuffix, updateManifest, getOutputPathByEnv,
+    appendChannelSuffix, updateManifest, getOutputPathByChannel,
 };

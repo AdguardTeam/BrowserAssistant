@@ -4,14 +4,14 @@ const path = require('path');
 const Crx = require('crx');
 const chalk = require('chalk');
 const {
-    CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, ENV_MAP, CERTIFICATE_PATHS,
+    CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, CHANNEL_MAP, CERTIFICATE_PATHS,
     CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME, CRX_NAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
 const config = require('../package');
 
-const { NODE_ENV } = process.env;
-const { outputPath } = ENV_MAP[NODE_ENV];
+const { CHANNEL } = process.env;
+const { outputPath } = CHANNEL_MAP[CHANNEL];
 
 const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath);
 const LOAD_PATH = path
@@ -21,13 +21,13 @@ const MANIFEST_PATH = path.resolve(
 );
 
 const getPrivateKey = async () => {
-    const certPath = CERTIFICATE_PATHS[NODE_ENV];
+    const certificatePath = CERTIFICATE_PATHS[CHANNEL];
     try {
-        const privateKey = await fs.readFile(certPath);
-        console.log(chalk.greenBright(`\nThe certificate is read from ${certPath}\n`));
+        const privateKey = await fs.readFile(certificatePath);
+        console.log(chalk.greenBright(`\nThe certificate is read from ${certificatePath}\n`));
         return privateKey;
     } catch (error) {
-        console.error(chalk.redBright(`Can not create ${CRX_NAME} - the valid certificate is not found in ${certPath} - ${error.message}\n`));
+        console.error(chalk.redBright(`Can not create ${CRX_NAME} - the valid certificate is not found in ${certificatePath} - ${error.message}\n`));
         throw error;
     }
 };
