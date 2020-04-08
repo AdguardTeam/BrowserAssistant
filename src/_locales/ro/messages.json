@@ -75,7 +75,7 @@
         "message": "AdGuard nu poate verifica certificatul acestui site web deoarece certificatul root a expirat"
     },
     "cert_absent": {
-        "message": "Filtrarea HTTPS nu s-a efectuată pe acest site web"
+        "message": "Filtrarea HTTPS nu s-a efectuat pe acest site web"
     },
     "site_not_using_private_protection": {
         "message": "Acest site nu utilizează o conexiune privată. Cineva ar putea vedea sau altera informația trimisă sau primită prin acest site."
