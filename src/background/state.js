@@ -36,7 +36,7 @@ class State {
          * Optional parameter from the app
          * @type {string}
          */
-        locale: Prefs.platform.isMacOs() ? browser.i18n.getUILanguage() : BASE_LOCALE,
+        locale: BASE_LOCALE,
         /**
          * Optional parameter from the app, consider true unless is set to the false
          * @type {boolean}
@@ -124,9 +124,7 @@ class State {
             isProtectionEnabled,
         };
 
-        // Ignore locale received from the mac app, because mac os sets language for whole system,
-        // but language is better determined by browser itself
-        if (locale !== undefined && !Prefs.platform.isMacOs()) {
+        if (locale !== undefined) {
             nextAppState.locale = locale;
         }
 

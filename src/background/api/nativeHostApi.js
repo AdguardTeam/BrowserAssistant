@@ -37,7 +37,7 @@ class NativeHostApi extends AbstractApi {
      * @returns {Promise<void>}
      */
     incomingMessageHandler = async (incomingMessage) => {
-        log.debug(`response ${incomingMessage.id}`, incomingMessage);
+        log.debug(`Received response: ${incomingMessage.requestId}`, incomingMessage);
 
         // Ignore requests without identifying prefix ADG
         if (!incomingMessage.requestId.startsWith(ADG_PREFIX)) {
