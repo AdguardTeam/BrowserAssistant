@@ -48,7 +48,7 @@ class SettingsStore {
 
     @computed
     get currentTabHostname() {
-        return getUrlProps(this.currentUrl).hostname;
+        return getUrlProps(this.currentUrl).hostname || this.currentUrl;
     }
 
     @computed
