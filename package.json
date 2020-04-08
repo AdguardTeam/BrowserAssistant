@@ -23,7 +23,7 @@
         "crx:beta": "export CHANNEL=beta; yarn build:chrome && node tasks/crx.js",
         "crx:release": "export CHANNEL=release; yarn build:chrome && node tasks/crx.js",
         "xpi": "yarn build:firefox && node tasks/xpi.js",
-        "ci:increment": "node tasks/increment.js",
+        "ci:increment": "yarn version --patch --no-git-tag-version",
         "artifacts:beta": "export CHANNEL=beta; yarn crx:beta && yarn xpi && node tasks/versionInfo.js",
         "artifacts:release": "export CHANNEL=release; yarn crx:release && yarn xpi && node tasks/versionInfo.js",
         "clear": "rm -rf build ; rm -rf node_modules"
