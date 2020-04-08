@@ -1,1 +1,98 @@
-{}
+{
+    "name": {
+        "message": "AdGuard Böngészősegéd"
+    },
+    "description": {
+        "message": "Bővítmény az AdGuard asztali alkalmazáshoz. Böngészőbeli szűrés és zavaró elemek elrejtése két kattintással."
+    },
+    "adg_is_not_installed": {
+        "message": "Az AdGuard nincs telepítve, vagy nem megfelelően van beállítva"
+    },
+    "get_adguard": {
+        "message": "AdGuard beszerzése"
+    },
+    "adg_is_not_updated": {
+        "message": "Az AdGuard nincs frissítve"
+    },
+    "update": {
+        "message": "Frissítés"
+    },
+    "adg_is_not_running": {
+        "message": "Az AdGuard nincs elindítva"
+    },
+    "run_adg": {
+        "message": "AdGuard indítása"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard védelem szüneteltetve"
+    },
+    "adg_is_launching": {
+        "message": "Az AdGuard elindul..."
+    },
+    "enable": {
+        "message": "Bekapcsolás"
+    },
+    "assistant_is_not_updated": {
+        "message": "A Segéd nincs frissítve"
+    },
+    "something_went_wrong": {
+        "message": "Valami hiba történt"
+    },
+    "reinstall": {
+        "message": "Újratelepítés"
+    },
+    "https_filtering": {
+        "message": "HTTPS szűrés"
+    },
+    "increase_ab_block_quality": {
+        "message": "Javítja a hirdetésblokkolás minőségét"
+    },
+    "verified_by": {
+        "message": "Hitelesítette:"
+    },
+    "more_info": {
+        "message": "További információk"
+    },
+    "adg_protection": {
+        "message": "AdGuard Védelem"
+    },
+    "adg_settings": {
+        "message": "AdGuard beállítások"
+    },
+    "block_ads": {
+        "message": "Hirdetések blokkolása ezen az oldalon"
+    },
+    "open_filtering_log": {
+        "message": "Szűrőnapló megnyitása"
+    },
+    "report_site": {
+        "message": "Oldal jelentése"
+    },
+    "reset_custom_rules": {
+        "message": "Egyéni szabályok visszaállítása az oldalon"
+    },
+    "cert_expired": {
+        "message": "Az AdGuard nem tudta azonosítani a weboldalt, mert az alaptanusítvány elavult"
+    },
+    "cert_absent": {
+        "message": "HTTPS szűrés nincs alkalmazva ezen a weblapon"
+    },
+    "site_not_using_private_protection": {
+        "message": "Ez a weblap nem biztonságos. Láthatják és módosíthatják az általad küldött információkat."
+    },
+    "not_secure": {
+        "message": "Nem biztonságos"
+    },
+    "nothing_to_block_here": {
+        "message": "Itt nincs semmi blokkolható"
+    },
+    "secure_page": {
+        "message": "Biztonságos oldal"
+    },
+    "disabled": {
+        "message": "Kikapcsolva ezen az oldalon"
+    },
+    "enabled": {
+        "message": "Bekapcsolva ezen az oldalon"
+    }
+}

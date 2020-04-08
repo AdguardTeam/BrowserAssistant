@@ -37,7 +37,7 @@ class NativeHostApi extends AbstractApi {
      * @returns {Promise<void>}
      */
     incomingMessageHandler = async (incomingMessage) => {
-        log.debug(`response ${incomingMessage.id}`, incomingMessage);
+        log.debug(`Received response: ${incomingMessage.requestId}`, incomingMessage);
 
         // Ignore requests without identifying prefix ADG
         if (!incomingMessage.requestId.startsWith(ADG_PREFIX)) {
@@ -91,7 +91,12 @@ class NativeHostApi extends AbstractApi {
         this.port.onMessage.addListener(this.incomingMessageHandler);
 
         this.port.onDisconnect.addListener(
-            () => {
+            (details) => {
+                // firefox keeps errors in the details object
+                if (details.error) {
+                    log.error(details.error);
+                }
+                // chrome keeps error in the runtime.lastError object
                 if (browser.runtime.lastError) {
                     log.error(browser.runtime.lastError.message);
                 }
@@ -150,7 +155,7 @@ class NativeHostApi extends AbstractApi {
     };
 
     makeRequestOnce = async (params) => {
-        const RESPONSE_TIMEOUT_MS = 60 * 1000;
+        const RESPONSE_TIMEOUT_MS = 10 * 1000;
 
         const HOST_RESPONSE_TYPES = {
             OK: 'ok',
@@ -163,13 +168,10 @@ class NativeHostApi extends AbstractApi {
         log.info(`Sending request: ${id}`, params);
 
         return new Promise((resolve, reject) => {
+            let timerId;
+
             const messageHandler = (message) => {
                 const { requestId, result } = message;
-
-                const timerId = setTimeout(() => {
-                    reject(new Error('Native host is not responding too long'));
-                    this.port.onMessage.removeListener(messageHandler);
-                }, RESPONSE_TIMEOUT_MS);
 
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
@@ -185,6 +187,11 @@ class NativeHostApi extends AbstractApi {
                     }
                 }
             };
+
+            timerId = setTimeout(() => {
+                reject(new Error('Native host is not responding too long'));
+                this.port.onMessage.removeListener(messageHandler);
+            }, RESPONSE_TIMEOUT_MS);
 
             this.port.onDisconnect.addListener(() => {
                 if (browser.runtime.lastError) {

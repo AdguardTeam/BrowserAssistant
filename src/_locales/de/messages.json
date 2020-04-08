@@ -1,5 +1,113 @@
 {
     "name": {
         "message": "AdGuard Browser-Assistent"
+    },
+    "description": {
+        "message": "Die Erweiterung für AdGuard Desktop-Programm. Verwaltet die Filterung direkt im Browser, versteckt lästige Elemente."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard ist nicht installiert oder wurde falsch konfiguriert"
+    },
+    "get_adguard": {
+        "message": "AdGuard holen"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard ist nicht aktualisiert"
+    },
+    "update": {
+        "message": "Aktualisieren"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard wird nicht ausgeführt"
+    },
+    "run_adg": {
+        "message": "AdGuard starten"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard-Schutz ist angehalten"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard wird gestartet"
+    },
+    "enable": {
+        "message": "Aktivieren"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistent wurde nicht aktualisiert"
+    },
+    "something_went_wrong": {
+        "message": "Ein Problem ist aufgetreten"
+    },
+    "reinstall": {
+        "message": "Neu installieren"
+    },
+    "https_filtering": {
+        "message": "HTTPS-Filterung"
+    },
+    "increase_ab_block_quality": {
+        "message": "Die Qualität der Werbeblockierung erhöhen"
+    },
+    "verified_by": {
+        "message": "Geprüft durch:"
+    },
+    "more_info": {
+        "message": "Weitere Informationen"
+    },
+    "adg_protection": {
+        "message": "AdGuard-Schutz"
+    },
+    "adg_settings": {
+        "message": "AdGuard-Einstellungen"
+    },
+    "block_ads": {
+        "message": "Auf dieser Website blockieren"
+    },
+    "open_filtering_log": {
+        "message": "Filter-Protokoll öffnen"
+    },
+    "report_site": {
+        "message": "Diese Webseite melden"
+    },
+    "reset_custom_rules": {
+        "message": "Eigene Regeln für diese Seite zurücksetzen"
+    },
+    "cert_expired": {
+        "message": "AdGuard konnte das Zertifikat dieser Website nicht überprüfen, da das Stammzertifikat abgelaufen ist."
+    },
+    "cert_absent": {
+        "message": "Für diese Website wurde keine HTTPS-Filterung ausgeführt"
+    },
+    "site_not_using_private_protection": {
+        "message": "Die Seite verwendet keine private Verbindung. Jemand könnte die von Ihnen gesendeten oder über die Website erhaltenen Informationen einsehen oder ändern."
+    },
+    "not_secure": {
+        "message": "Nicht sicher"
+    },
+    "nothing_to_block_here": {
+        "message": "Hier gibt es nichts zu blocken"
+    },
+    "secure_page": {
+        "message": "Sichere Seite"
+    },
+    "not_filtering_https": {
+        "message": "Standardmäßig filtern wir den HTTPS-Verkehr für Zahlungssysteme und Banken-Websites nicht. Sie können die Filterung selbst aktivieren: Tippen Sie auf das gelbe Schloss auf der linken Seite."
+    },
+    "disabled": {
+        "message": "Auf dieser Webseite deaktiviert"
+    },
+    "enabled": {
+        "message": "Auf dieser Webseite aktiviert"
+    },
+    "protection_is_enabled": {
+        "message": "Schutz ist aktiviert"
+    },
+    "protection_is_disabled": {
+        "message": "Schutz ist deaktiviert"
+    },
+    "website_cert_is_expired": {
+        "message": "Das Zertifikat der Website ist abgelaufen"
+    },
+    "expired": {
+        "message": "Abgelaufen"
     }
 }

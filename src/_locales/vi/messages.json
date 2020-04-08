@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "Trợ lý duyệt của AdGuard"
+    },
+    "description": {
+        "message": "Tiện ích đi kèm của ứng dụng AdGuard trên máy tính. Quản lý tốt việc lọc trên trình duyệt, ẩn những thứ phiền phức trong hai click."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard chưa được cài hoặc được tinh chỉnh sai"
+    },
+    "get_adguard": {
+        "message": "Tải AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard chưa được cập nhật"
+    },
+    "update": {
+        "message": "Cập nhật"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard chưa được khởi động"
+    },
+    "run_adg": {
+        "message": "Khởi động Adguard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard tạm dừng bảo vệ"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard đang chạy..."
+    },
+    "enable": {
+        "message": "Kích hoạt"
+    },
+    "assistant_is_not_updated": {
+        "message": "Trợ lý AdGuard cần được cập nhật"
+    },
+    "something_went_wrong": {
+        "message": "Đã xảy ra lỗi"
+    },
+    "reinstall": {
+        "message": "Cài đặt lại"
+    },
+    "https_filtering": {
+        "message": "Bộ lọc HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Cải thiện việc chặn quảng cáo"
+    },
+    "verified_by": {
+        "message": "Được chứng nhận bởi:"
+    },
+    "more_info": {
+        "message": "Tìm hiểu thêm"
+    },
+    "adg_protection": {
+        "message": "Sự bảo vệ của AdGuard"
+    },
+    "adg_settings": {
+        "message": "Cài đặt AdGuard"
+    },
+    "block_ads": {
+        "message": "Chặn quảng cáo trên website này"
+    },
+    "open_filtering_log": {
+        "message": "Mở nhật ký lọc"
+    },
+    "report_site": {
+        "message": "Báo cáo trang này"
+    },
+    "reset_custom_rules": {
+        "message": "Thiết lập mặc định các tuỳ chọn cho trang"
+    },
+    "cert_expired": {
+        "message": "AdGuard không thể xác minh chứng chỉ của trang này do chứng chỉ gốc đã hết hạn"
+    },
+    "cert_absent": {
+        "message": "Bộ lọc HTTPS không chạy được đối với trang web này"
+    },
+    "site_not_using_private_protection": {
+        "message": "Trang không sử dụng kết nối bảo mật. Ai đó có thể xem hoặc thay đổi thông tin bạn cung cấp cho trang, hoặc vượt qua trang."
+    },
+    "not_secure": {
+        "message": "Không bảo mật"
+    },
+    "nothing_to_block_here": {
+        "message": "Không có gì để chặn ở đây"
+    },
+    "secure_page": {
+        "message": "Trang bảo mật tốt"
+    },
+    "not_filtering_https": {
+        "message": "Mặc định chúng tôi không lọc lưu thông HTTPS cho các hệ thống thanh toán và trang web của ngân hàng. Bạn có thể tự bật bộ lọc: nhấn vào hình khoá màu vàng ở bên trái."
+    },
+    "disabled": {
+        "message": "Đã được tắt ở trang này"
+    },
+    "enabled": {
+        "message": "Đã được bật ở trang này"
+    },
+    "protection_is_enabled": {
+        "message": "Bảo vệ được khởi động"
+    },
+    "protection_is_disabled": {
+        "message": "Bảo vệ không được khởi động"
+    },
+    "website_cert_is_expired": {
+        "message": "Chứng chỉ của trang đã hết hạn"
+    },
+    "expired": {
+        "message": "Đã hết hạn"
+    }
+}

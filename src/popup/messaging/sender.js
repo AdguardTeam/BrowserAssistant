@@ -4,6 +4,9 @@ import browserApi from '../../lib/browserApi';
 const sendMessage = async (type, data) => browserApi.runtime.sendMessage({ type, data });
 
 export default {
+    getLocale: () => {
+        return sendMessage(POPUP_MESSAGES.GET_APP_LOCALE);
+    },
     getPopupData: (tab) => {
         return sendMessage(POPUP_MESSAGES.GET_POPUP_DATA, { tab });
     },

@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "AdGuard tarayıcı asistanı"
+    },
+    "description": {
+        "message": "AdGuard tarayıcı asistanı açıklaması"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard kurulu değil"
+    },
+    "get_adguard": {
+        "message": "AdGuard'ı edinin"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard güncel değil"
+    },
+    "update": {
+        "message": "Güncelle"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard çalışmıyor"
+    },
+    "run_adg": {
+        "message": "AdGuard'ı Çalıştır"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard koruması duraklatıldı"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard başlatılıyor..."
+    },
+    "enable": {
+        "message": "Etkinleştir"
+    },
+    "assistant_is_not_updated": {
+        "message": "Asistan güncel değil"
+    },
+    "something_went_wrong": {
+        "message": "Birşeyler yanlış gitti"
+    },
+    "reinstall": {
+        "message": "Tekrar yükle"
+    },
+    "https_filtering": {
+        "message": "HTTPS filtreleme"
+    },
+    "increase_ab_block_quality": {
+        "message": "Reklam engelleme kalitesini artırır"
+    },
+    "verified_by": {
+        "message": "Doğrulandı:"
+    },
+    "more_info": {
+        "message": "Daha fazla bilgi"
+    },
+    "adg_protection": {
+        "message": "AdGuard Koruması"
+    },
+    "adg_settings": {
+        "message": "AdGuard Ayarları"
+    },
+    "block_ads": {
+        "message": "Bu sitede reklam engelle"
+    },
+    "open_filtering_log": {
+        "message": "Filtreleme günlüğünü aç"
+    },
+    "report_site": {
+        "message": "Bu siteyi rapor et"
+    },
+    "reset_custom_rules": {
+        "message": "Bu sayfa için mevcut olan tüm özel kuralları sıfırlayın"
+    },
+    "cert_expired": {
+        "message": "AdGuard bu web sitesini doğrulayamadı, çünkü kök sertifikasının süresi dolmuş"
+    },
+    "cert_absent": {
+        "message": "Bu web sitesi için HTTPS filtrelemesi gerçekleştirilmedi"
+    },
+    "site_not_using_private_protection": {
+        "message": "Bu site gizli bir bağlantı kullanmıyor. Başka şahıslar bu site ile kurduğunuz iletişim sırasında ilettiğiniz veya aldığınız bilgileri görebilir veya değiştirebilir."
+    },
+    "not_secure": {
+        "message": "Güvenli değil"
+    },
+    "nothing_to_block_here": {
+        "message": "Burada engellenebilecek bir şey yok"
+    },
+    "secure_page": {
+        "message": "Güvenli sayfa"
+    },
+    "not_filtering_https": {
+        "message": "Varsayılan olarak, ödeme sistemleri ve banka web sitelerinin kullandığı HTTPS trafiğini filtrelemiyoruz. İsterseniz filtrelemeyi etkinleştirebilirsiniz: soldaki sarı \"kilit\" simgesini tıklayın."
+    },
+    "disabled": {
+        "message": "Bu sitede devre dışı bırakıldı"
+    },
+    "enabled": {
+        "message": "Bu sitede etkinleştirildi"
+    },
+    "protection_is_enabled": {
+        "message": "Koruma etkin"
+    },
+    "protection_is_disabled": {
+        "message": "Koruma devre dışı"
+    },
+    "website_cert_is_expired": {
+        "message": "Web site sertifikası sona ermiş"
+    },
+    "expired": {
+        "message": "Sona erdi"
+    }
+}

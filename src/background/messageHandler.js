@@ -45,6 +45,10 @@ const messageHandler = async (message) => {
             };
         }
 
+        case POPUP_MESSAGES.GET_APP_LOCALE: {
+            return state.getLocale();
+        }
+
         case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {
             const { tab, forceStart } = data;
             return state.getCurrentFilteringState(tab, forceStart);

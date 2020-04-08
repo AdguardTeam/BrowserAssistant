@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuard浏览器助手"
+    },
+    "description": {
+        "message": "计划"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard未安装或配置不正确"
+    },
+    "get_adguard": {
+        "message": "获取AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard 未被更新"
+    },
+    "update": {
+        "message": "更新"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard 未运行！"
+    },
+    "run_adg": {
+        "message": "运行 AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard已暂停防护"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard 正在启动…"
+    },
+    "enable": {
+        "message": "启用"
+    },
+    "assistant_is_not_updated": {
+        "message": "助手未更新"
+    },
+    "something_went_wrong": {
+        "message": "发生错误"
+    },
+    "reinstall": {
+        "message": "重新安装"
+    },
+    "https_filtering": {
+        "message": "HTTPS 过滤"
+    },
+    "increase_ab_block_quality": {
+        "message": "提高广告拦截质量"
+    },
+    "verified_by": {
+        "message": "由 验证"
+    },
+    "more_info": {
+        "message": "更多信息"
+    },
+    "adg_protection": {
+        "message": "AdGuard保护"
+    },
+    "adg_settings": {
+        "message": "AdGuard 设置"
+    },
+    "block_ads": {
+        "message": "拦截此网站上的广告"
+    },
+    "open_filtering_log": {
+        "message": "打开过滤日志"
+    },
+    "report_site": {
+        "message": "报告此站点"
+    },
+    "reset_custom_rules": {
+        "message": "重置该页面的所有自定义规则"
+    },
+    "cert_expired": {
+        "message": "因根证书过期，AdGuard无法验证该站点的证书"
+    },
+    "cert_absent": {
+        "message": "HTTPS过滤未在该网站上执行"
+    },
+    "site_not_using_private_protection": {
+        "message": "此站点为使用私密链接。某些人可能可以查看或更改您通过网站发送或获取的信息。"
+    },
+    "not_secure": {
+        "message": "不安全"
+    },
+    "nothing_to_block_here": {
+        "message": "没有可阻拦的东西"
+    },
+    "secure_page": {
+        "message": "安全页面"
+    },
+    "not_filtering_https": {
+        "message": "我们默认不过滤支付系统和银行网站的HTTPS流量。您可自行启用过滤：点击左侧的黄色“锁”"
+    },
+    "disabled": {
+        "message": "在该网站上禁用"
+    },
+    "enabled": {
+        "message": "在此网站上启用"
+    },
+    "protection_is_enabled": {
+        "message": "保护已开启"
+    },
+    "protection_is_disabled": {
+        "message": "防护已禁用"
+    },
+    "website_cert_is_expired": {
+        "message": "网站证书过期"
+    },
+    "expired": {
+        "message": "已过期"
+    }
+}

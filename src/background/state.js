@@ -1,10 +1,10 @@
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
+import browser from 'webextension-polyfill';
 import browserApi from '../lib/browserApi';
 import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
-import { BASE_LOCALE } from '../../tasks/langConstants';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
 import log from '../lib/logger';
@@ -32,9 +32,9 @@ class State {
         isProtectionEnabled: false,
         /**
          * Optional parameter from the app
-         * @type {string}
+         * @type {string|null}
          */
-        locale: BASE_LOCALE,
+        locale: null,
         /**
          * Optional parameter from the app, consider true unless is set to the false
          * @type {boolean}
@@ -88,7 +88,16 @@ class State {
      * Returns current app state
      */
     getAppState = () => {
-        return this.appState;
+        let { locale } = this.appState;
+        // if no locale use browser locale
+        if (!locale) {
+            locale = browser.i18n.getUILanguage();
+        }
+
+        return {
+            ...this.appState,
+            locale,
+        };
     };
 
     /**
@@ -187,6 +196,14 @@ class State {
             this.updateStatusInfo.isAppUpToDate,
             this.updateStatusInfo.isValidatedOnHost,
         ].every((state) => state === true);
+    }
+
+    /**
+     * Returns app locale key
+     * @returns {string}
+     */
+    getLocale() {
+        return this.appState.locale || browser.i18n.getUILanguage();
     }
 
     /**

@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "Asisten AdGuard untuk Browser"
+    },
+    "description": {
+        "message": "Ekstensi yang Berguna dari program desktop pemblokir iklan Adguard. Atur proses filtering iklan tepat dari dalam browser anda, sembunyikan elemen yang mengganggu hanya dalam dua klik."
+    },
+    "adg_is_not_installed": {
+        "message": "Adguard tidak di install atau di konfigurasi dengan tidak benar"
+    },
+    "get_adguard": {
+        "message": "Unduh AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "Adguard tidak di update"
+    },
+    "update": {
+        "message": "Perbaharui"
+    },
+    "adg_is_not_running": {
+        "message": "Adguard sedang tidak berjalan"
+    },
+    "run_adg": {
+        "message": "Jalankan Adguard"
+    },
+    "adg_is_paused": {
+        "message": "Proteksi Adguard sedang di jeda"
+    },
+    "adg_is_launching": {
+        "message": "Membuka AdGuard..."
+    },
+    "enable": {
+        "message": "Aktifkan"
+    },
+    "assistant_is_not_updated": {
+        "message": "Asisten Browser tidak di update"
+    },
+    "something_went_wrong": {
+        "message": "Sesuatu hal sedang ada yang salah"
+    },
+    "reinstall": {
+        "message": "Install ulang"
+    },
+    "https_filtering": {
+        "message": "Pemfilteran HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Tingkatkan kualitas dari Ad-Blocking"
+    },
+    "verified_by": {
+        "message": "Di verifikasi oleh:"
+    },
+    "more_info": {
+        "message": "Informasi lebih banyak"
+    },
+    "adg_protection": {
+        "message": "Proteksi Adguard"
+    },
+    "adg_settings": {
+        "message": "Pengaturan Adguard"
+    },
+    "block_ads": {
+        "message": "Blok iklan di website ini"
+    },
+    "open_filtering_log": {
+        "message": "Buka catatan filtering"
+    },
+    "report_site": {
+        "message": "Laporkan website ini"
+    },
+    "reset_custom_rules": {
+        "message": "Reset seluruh aturan custom untuk halaman ini"
+    },
+    "cert_expired": {
+        "message": "Adguard tak bisa memverifikasi sertifikat website ini karena sertifikat aslinya telah kadaluarsa"
+    },
+    "cert_absent": {
+        "message": "Pemfilteran HTTPS tidak dilakukan untuk situs web ini"
+    },
+    "site_not_using_private_protection": {
+        "message": "Situs ini tidak menggunakan koneksi privat. Seseorang mungkin bisa saja melihat atau merubah informasi yang kamu kirim atau terima melalui situs ini."
+    },
+    "not_secure": {
+        "message": "Tidak aman"
+    },
+    "nothing_to_block_here": {
+        "message": "Tak ada yang dapat di blok di sini"
+    },
+    "secure_page": {
+        "message": "Halaman ini aman"
+    },
+    "not_filtering_https": {
+        "message": "Pada pengaturan bawaan, kami tak memfilter arus aliran data HTTPS untuk sistem pembayaran dan website bank. Kamu bisa mengaktifkan sendiri filteringnya: cukup tekan tombol kuning \"kunci\" di sebelah kiri."
+    },
+    "disabled": {
+        "message": "Non-aktifkan di website ini"
+    },
+    "enabled": {
+        "message": "Aktifkan pada website ini"
+    },
+    "protection_is_enabled": {
+        "message": "Perlindungan aktif"
+    },
+    "protection_is_disabled": {
+        "message": "Perlindungan nonaktif"
+    },
+    "website_cert_is_expired": {
+        "message": "Sertifikat situs web ini kedaluwarsa"
+    },
+    "expired": {
+        "message": "Kedaluwarsa"
+    }
+}

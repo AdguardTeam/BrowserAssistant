@@ -1,6 +1,5 @@
 export const DOWNLOAD_LINK = 'https://adguard.com/forward.html?action=download&from=popup&app=browser_assistant';
 export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
-export const browserLocale = navigator.language.slice(0, 2);
 
 // These urls would be updated during extension build
 // Check webpack replace loader

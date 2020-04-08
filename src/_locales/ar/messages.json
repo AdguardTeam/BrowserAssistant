@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "مساعد المتصفح AdGuard"
+    },
+    "description": {
+        "message": "امتداد لتطبيق AdGuard لسطح المكتب. إدارة التصفية مباشرة من المتصفح لإخفاء العناصر المزعجة بنقرتين."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard غير مثبت أو تم تكوينه بشكل غير صحيح"
+    },
+    "get_adguard": {
+        "message": "أحصل على AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "لم يتم تحديث AdGuard"
+    },
+    "update": {
+        "message": "تحديث"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard لا يعمل"
+    },
+    "run_adg": {
+        "message": "تشغيل AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "تم إيقاف حماية AdGuard مؤقتًا"
+    },
+    "adg_is_launching": {
+        "message": "يتم إطلاق AdGuard..."
+    },
+    "enable": {
+        "message": "تفعيل"
+    },
+    "assistant_is_not_updated": {
+        "message": "لم يتم تحديث المساعد"
+    },
+    "something_went_wrong": {
+        "message": "حصل خطأ ما"
+    },
+    "reinstall": {
+        "message": "إعادة تثبيت"
+    },
+    "https_filtering": {
+        "message": "تصفيه HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "زيادة جودة حظر الإعلانات"
+    },
+    "verified_by": {
+        "message": "تم التحقق بواسطة:"
+    },
+    "more_info": {
+        "message": "معلومات اكثر"
+    },
+    "adg_protection": {
+        "message": "حماية AdGuard"
+    },
+    "adg_settings": {
+        "message": "إعدادات AdGuard"
+    },
+    "block_ads": {
+        "message": "قم بحظر الإعلانات على هذا الموقع"
+    },
+    "open_filtering_log": {
+        "message": "فتح سجل التصفية"
+    },
+    "report_site": {
+        "message": "التبليغ عن الموقع"
+    },
+    "reset_custom_rules": {
+        "message": "إعادة تعيين كافة القواعد المخصصة لهذه الصفحة"
+    },
+    "cert_expired": {
+        "message": "تعذر على AdGuard التحقق من شهادة موقع الويب هذا بسبب انتهاء صلاحية شهادة الجذر"
+    },
+    "cert_absent": {
+        "message": "لم يتم تنفيذ تصفية HTTPS لهذا الموقع"
+    },
+    "site_not_using_private_protection": {
+        "message": "الموقع لا يستخدم اتصال خاص. قد يتمكن شخص ما من رؤية أو تغيير المعلومات التي ترسلها أو تحصل عليها من خلال الموقع."
+    },
+    "not_secure": {
+        "message": "غير آمن"
+    },
+    "nothing_to_block_here": {
+        "message": "لا يوجد شيء يمكن حظره هنا"
+    },
+    "secure_page": {
+        "message": "صفحة آمنة"
+    },
+    "not_filtering_https": {
+        "message": "بشكل افتراضي، لا نقوم بتصفية حركة مرور HTTPS لنظام الدفع ومواقع البنك. يمكنك تمكين التصفية بنفسك:  اضغط على\"القفل\" الأصفر الموجود على اليسار"
+    },
+    "disabled": {
+        "message": "مُعطَّلة على هذا الموقع"
+    },
+    "enabled": {
+        "message": "تَعمل على هذا الموقع"
+    },
+    "protection_is_enabled": {
+        "message": "الحماية فعالة"
+    },
+    "protection_is_disabled": {
+        "message": "الحماية معطَّلة"
+    },
+    "website_cert_is_expired": {
+        "message": "شهادة الموقع منتهية الصلاحية"
+    },
+    "expired": {
+        "message": "منتهي الصلاحية"
+    }
+}

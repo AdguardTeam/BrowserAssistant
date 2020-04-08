@@ -8,7 +8,7 @@ const {
     CHROME_UPDATE_CRX,
     FIREFOX_UPDATE_XPI,
 } = require('./consts');
-const { getOutputPathByEnv } = require('./helpers');
+const { getOutputPathByEnv, appendEnvSuffix } = require('./helpers');
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
@@ -89,6 +89,19 @@ const config = {
                 context: 'src',
                 from: '_locales/',
                 to: '_locales/',
+                // Add env suffixes to the extension name in locale files
+                transform: (content, path) => {
+                    // ignore all paths except messages.json
+                    if (path.indexOf('messages.json') === -1) {
+                        return content;
+                    }
+                    const messages = JSON.parse(content.toString());
+                    if (messages && messages.name) {
+                        // eslint-disable-next-line max-len
+                        messages.name.message = appendEnvSuffix(messages.name.message, process.env.NODE_ENV);
+                    }
+                    return Buffer.from(JSON.stringify(messages, null, 4));
+                },
             },
         ]),
         new HtmlWebpackPlugin({

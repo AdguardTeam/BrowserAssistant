@@ -1,1 +1,113 @@
-{}
+{
+    "name": {
+        "message": "Pembantu Pelayar AdGuard"
+    },
+    "description": {
+        "message": "Penyambung untuk aplikasi desktop AdGuard. Uuruskan saringan terus dari dalam pelayar, Sembunyi elemen menjengkelkan dalam dua klik."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard tidak dipasang atau ditetapkan dengan betul"
+    },
+    "get_adguard": {
+        "message": "Dapatkan AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard tidak dikemaskini"
+    },
+    "update": {
+        "message": "Kemaskini"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard tidak dijalankan"
+    },
+    "run_adg": {
+        "message": "Jalankan AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Perlindungan AdGuard dihenti sebentar"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard sedang dilancarkan..."
+    },
+    "enable": {
+        "message": "Aktifkan"
+    },
+    "assistant_is_not_updated": {
+        "message": "Pembantu tidak dikemaskini"
+    },
+    "something_went_wrong": {
+        "message": "Berlaku sesuatu ralat"
+    },
+    "reinstall": {
+        "message": "Pasang semula"
+    },
+    "https_filtering": {
+        "message": "Penyaringan HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Tambahkan kualiti halangan iklan"
+    },
+    "verified_by": {
+        "message": "Disahkan oleh:"
+    },
+    "more_info": {
+        "message": "Lebih Maklumat"
+    },
+    "adg_protection": {
+        "message": "Perlindungan AdGuard"
+    },
+    "adg_settings": {
+        "message": "Tetapan AdGuard"
+    },
+    "block_ads": {
+        "message": "Halang iklan di laman ini"
+    },
+    "open_filtering_log": {
+        "message": "Buka log penyaringan"
+    },
+    "report_site": {
+        "message": "Laporkan laman ini"
+    },
+    "reset_custom_rules": {
+        "message": "Tetap semula peraturan khusus untuk laman ini"
+    },
+    "cert_expired": {
+        "message": "AdGuard tidak dapat mengesahkan sijil laman ini disebabkan sijil pentadbir telah luput"
+    },
+    "cert_absent": {
+        "message": "Saringan HTTPS tidak dilakukan pada laman ini"
+    },
+    "site_not_using_private_protection": {
+        "message": "Laman ini tidak menggunakan sambungan peribadi. Seseorang mungkin boleh lihat atau ubah maklumat yang anda hantar atau terima melalui laman ini."
+    },
+    "not_secure": {
+        "message": "Tidak selamat"
+    },
+    "nothing_to_block_here": {
+        "message": "Tiada apa untuk dihalang disini"
+    },
+    "secure_page": {
+        "message": "Laman selamat"
+    },
+    "not_filtering_https": {
+        "message": "Secara lalai, kami tidak menyaring trafik HTTPS untuk sistem pembayaran dan laman bank. Anda boleh aktifkan saringan ini sendiri: tekan \"kunci\" kuning di sebelah kiri."
+    },
+    "disabled": {
+        "message": "Nyahaktifkan di laman ini"
+    },
+    "enabled": {
+        "message": "Aktifkan di laman ini"
+    },
+    "protection_is_enabled": {
+        "message": "Perlindungan diaktifkan"
+    },
+    "protection_is_disabled": {
+        "message": "Perlindungan dinyahaktif"
+    },
+    "website_cert_is_expired": {
+        "message": "Sijil laman telah luput"
+    },
+    "expired": {
+        "message": "Luput"
+    }
+}

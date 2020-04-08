@@ -41,6 +41,9 @@
     "reinstall": {
         "message": "Réinstaller"
     },
+    "https_filtering": {
+        "message": "Filtrage HTTPS"
+    },
     "increase_ab_block_quality": {
         "message": "Augmente la qualité du blocage des publicités"
     },
@@ -70,6 +73,9 @@
     },
     "cert_expired": {
         "message": "AdGuard n’a pas pu vérifier le certificat de ce site Web, car le certificat racine a expiré"
+    },
+    "cert_absent": {
+        "message": "Le filtrage HTTPS n'a pas été effectué pour ce site Web"
     },
     "site_not_using_private_protection": {
         "message": "Ce site n’utilise pas une connexion privée. Il est possible que quelqu’un puisse voir ou modifier les informations que vous envoyez ou obtenez via le site."

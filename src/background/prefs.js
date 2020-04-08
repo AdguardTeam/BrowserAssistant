@@ -17,4 +17,14 @@ export const Prefs = {
             },
         }));
     },
+    get platform() {
+        return lazyGet(Prefs, 'platform', () => ({
+            isWindowsOs() {
+                return navigator.userAgent.toLowerCase().indexOf('win') >= 0;
+            },
+            isMacOs() {
+                return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            },
+        }));
+    },
 };
