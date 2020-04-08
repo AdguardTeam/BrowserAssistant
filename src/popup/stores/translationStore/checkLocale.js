@@ -16,22 +16,17 @@ const checkLocale = (messagesMap, locale) => {
         return result;
     }
 
+    // eslint-disable-next-line no-param-reassign
+    locale = locale.toLowerCase();
+
     // strict match
     if (messagesMap[locale]) {
         result.suitable = true;
         return result;
     }
 
-    // check partial key match
-    const matchedKey = checkPartialKeyMatch(Object.keys(messagesMap), locale);
-    if (matchedKey) {
-        result.suitable = true;
-        result.matchedKey = matchedKey;
-        return result;
-    }
-
     if (locale.length > 2) {
-        // try to replace hyphens to underscores
+        // try to look up key with replaced hyphens to underscores
         const underscored = locale.replace(/-/g, '_');
         if (messagesMap[underscored]) {
             result.suitable = true;
@@ -40,7 +35,7 @@ const checkLocale = (messagesMap, locale) => {
             return result;
         }
 
-        // try to replace underscores to hyphens
+        // try to look up key with replaced underscores to hyphens
         const hyphened = locale.replace(/_/g, '-');
         if (messagesMap[hyphened]) {
             result.suitable = true;
@@ -49,22 +44,17 @@ const checkLocale = (messagesMap, locale) => {
             return result;
         }
 
-        // try to shorten long locales
+        // try to look up shortened long locales
         const shortened = locale.slice(0, 2);
-        if (messagesMap[shortened]) {
-            result.suitable = true;
-            result.locale = shortened;
-            result.matchedKey = shortened;
-            return result;
-        }
+        return checkLocale(messagesMap, shortened);
+    }
 
-        // check partial key match for shortened locale
-        const matchedKey = checkPartialKeyMatch(Object.keys(messagesMap), shortened);
-        if (matchedKey) {
-            result.suitable = true;
-            result.matchedKey = matchedKey;
-            return result;
-        }
+    // check partial key match, e.g "zh" when in messagesMap we have "zh_cn" and "zh_tw"
+    const matchedKey = checkPartialKeyMatch(Object.keys(messagesMap), locale);
+    if (matchedKey) {
+        result.suitable = true;
+        result.matchedKey = matchedKey;
+        return result;
     }
 
     return result;

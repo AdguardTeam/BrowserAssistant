@@ -1,6 +1,5 @@
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
-import browser from 'webextension-polyfill';
 import browserApi from '../lib/browserApi';
 import api from './api';
 import versions from './versions';
@@ -9,7 +8,6 @@ import { BASE_LOCALE } from '../../tasks/langConstants';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
 import log from '../lib/logger';
-import { Prefs } from './prefs';
 
 /**
  * This class handles app state
