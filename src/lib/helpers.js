@@ -1,20 +1,37 @@
-import { PROTOCOLS, PROTOCOL_TO_PORT_MAP } from '../popup/stores/consts';
+import {
+    PROTOCOLS,
+    PROTOCOL_TO_PORT_MAP,
+} from '../popup/stores/consts';
+
+/**
+ * @typedef {Object} urlObj
+ * @property {number} x - The X Coordinate
+ * @property {string} urlObj.hash
+ * @property {string} urlObj.host
+ * @property {string} urlObj.hostname
+ * @property {string} urlObj.href
+ * @property {string} urlObj.origin
+ * @property {string} urlObj.password
+ * @property {string} urlObj.pathname
+ * @property {string} urlObj.port
+ * @property {string} urlObj.protocol
+ * @property {string} urlObj.search
+ * @property {function} urlObj.searchParams
+ * @property {string} urlObj.username
+ */
 
 /**
  * Returns hostname of url if it was correct, otherwise return input url
  * @param {string} url
- * @returns {string}
+ * @returns {urlObj | string}
  */
 export const getUrlProperties = (url) => {
-    let urlObj;
-
     try {
-        urlObj = new URL(url);
+        const urlObj = new URL(url);
+        return urlObj;
     } catch (e) {
         return url;
     }
-
-    return urlObj;
 };
 
 export const getProtocol = (protocol) => {
@@ -41,7 +58,7 @@ export const getUrlProps = (url) => {
 };
 
 /**
- * Checks if string is valid url with http: or https: protocol
+ * Checks if string is a valid url with http: or https: protocol
  * @param {string} str
  * @returns {boolean}
  */
@@ -53,6 +70,21 @@ export const isHttp = (str) => {
         return false;
     }
     return /^https?:/.test(url.protocol);
+};
+
+/**
+ * Checks if string is a browser extension url with chrome-extension: or moz-extension: protocol
+ * @param {string} url
+ * @returns {boolean}
+ */
+export const isExtensionProtocol = (str) => {
+    let url;
+    try {
+        url = new URL(str);
+    } catch (e) {
+        return false;
+    }
+    return /^(chrome|moz)-extension:/.test(url.protocol);
 };
 
 /**

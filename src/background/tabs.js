@@ -37,8 +37,8 @@ class Tabs {
      * @returns {{id: number, url: string}}
      */
     prepareTab = (tab) => {
-        const { url, id } = tab;
-        return { url, id };
+        const { url, id, title } = tab;
+        return { url, id, title };
     };
 
     /**

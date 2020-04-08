@@ -8,7 +8,7 @@ import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../co
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
-import { getUrlProps } from '../../../lib/helpers';
+import { isExtensionProtocol, getUrlProps } from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
 class SettingsStore {
@@ -104,7 +104,7 @@ class SettingsStore {
         } = popupData;
 
         runInAction(() => {
-            this.currentUrl = tab.url;
+            this.currentUrl = isExtensionProtocol(tab.url) ? tab.title : tab.url;
             this.referrer = referrer;
             this.setUrlFilteringState(currentFilteringState);
             this.setCurrentAppState(appState);
