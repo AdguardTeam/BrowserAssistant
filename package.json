@@ -20,11 +20,12 @@
         "watch": "NODE_ENV=dev run-s \"build:chrome --watch\"",
         "watch:firefox": "NODE_ENV=dev run-s \"build:firefox --watch\"",
         "watch:all": "run-s watch watch:firefox",
-        "crx": "yarn build:chrome && node tasks/crx.js",
+        "crx:beta": "NODE_ENV=beta yarn build:chrome && NODE_ENV=beta node tasks/crx.js",
+        "crx:release": "NODE_ENV=release yarn build:chrome && NODE_ENV=release node tasks/crx.js",
         "xpi": "yarn build:firefox && node tasks/xpi.js",
         "ci:increment": "node tasks/increment.js",
-        "artifacts:beta": "NODE_ENV=beta yarn crx && NODE_ENV=beta yarn xpi && NODE_ENV=beta node tasks/versionInfo.js",
-        "artifacts:release": "NODE_ENV=release yarn crx && NODE_ENV=release yarn xpi && NODE_ENV=release node tasks/versionInfo.js",
+        "artifacts:beta": "yarn crx:beta && NODE_ENV=beta yarn xpi && NODE_ENV=beta node tasks/versionInfo.js",
+        "artifacts:release": "yarn crx:release && NODE_ENV=release yarn xpi && NODE_ENV=release node tasks/versionInfo.js",
         "clear": "rm -rf build ; rm -rf node_modules"
     },
     "devDependencies": {

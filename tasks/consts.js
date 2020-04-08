@@ -33,8 +33,11 @@ const CHROME_UPDATER_FILENAME = 'update.xml';
 const FIREFOX_UPDATER_FILENAME = 'update.json';
 const MANIFEST_NAME = 'manifest.json';
 
-// Chrome CRX certificate path
-const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
+// Chrome CRX certificate paths
+const CERTIFICATE_PATHS = {
+    beta: './private/AdguardBrowserAssistant/cert-beta.pem',
+    release: './private/AdguardBrowserAssistant/cert-release.pem',
+};
 
 const CHANNEL = ENV_MAP[process.env.NODE_ENV].outputPath;
 
@@ -56,7 +59,7 @@ module.exports = {
     SRC_PATH,
     IS_DEV,
     BUILD_PATH,
-    CERTIFICATE_PATH,
+    CERTIFICATE_PATHS,
     MANIFEST_NAME,
     BROWSER_TYPES,
     CHROME_UPDATE_URL,
