@@ -60,7 +60,6 @@ export const PROTOCOLS = {
     HTTPS: 'HTTPS',
     HTTP: 'HTTP',
     SECURED: 'SECURED',
-    EXTENSION: 'EXTENSION',
 };
 
 export const HTTP_FILTERING_STATUS = {

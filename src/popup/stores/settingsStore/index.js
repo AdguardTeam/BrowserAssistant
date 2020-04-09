@@ -8,7 +8,7 @@ import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../co
 import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
-import { getUrlProps } from '../../../lib/helpers';
+import { getFormattedProtocol, getUrlProps, isExtensionProtocol } from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
 class SettingsStore {
@@ -60,17 +60,23 @@ class SettingsStore {
 
     @computed
     get currentProtocol() {
-        return getUrlProps(this.currentUrl).protocol;
+        const { protocol } = getUrlProps(this.currentUrl);
+        return getFormattedProtocol(protocol);
     }
 
     @computed get pageProtocol() {
+        const { protocol } = getUrlProps(this.currentUrl);
         return ({
             isHttp: this.currentProtocol === PROTOCOLS.HTTP,
             isHttps: this.currentProtocol === PROTOCOLS.HTTPS,
-            isSecured: this.currentProtocol === PROTOCOLS.SECURED
-                || this.currentProtocol === PROTOCOLS.EXTENSION,
-            isExtension: this.currentProtocol === PROTOCOLS.EXTENSION,
+            isSecured: this.currentProtocol === PROTOCOLS.SECURED,
+            isExtension: this.currentProtocol === PROTOCOLS.SECURED
+                && isExtensionProtocol(protocol),
         });
+    }
+
+    @computed get pageInfo() {
+        return this.pageProtocol.isExtension ? this.currentTitle : this.currentTabHostname;
     }
 
     @action

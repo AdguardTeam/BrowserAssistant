@@ -41,28 +41,37 @@ export const getUrlProperties = (url) => {
  */
 export const isExtensionProtocol = (protocol) => /^(chrome|moz)-extension:/.test(protocol);
 
-export const getProtocol = (protocol) => {
-    if (isExtensionProtocol(protocol)) {
-        return PROTOCOLS.EXTENSION;
-    }
-    const formattedProtocol = protocol && protocol.slice(0, -1)
-        .toUpperCase();
-    return PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
-};
-
-export const getFormattedPortByProtocol = (port, protocol) => {
+/**
+ * @param {string} port
+ * @param {'HTTPS' | 'HTTP' | 'SECURED'} protocol
+ * @returns {number}
+ */
+export const getFormattedPort = (port, protocol) => {
     const defaultPort = PROTOCOL_TO_PORT_MAP[protocol];
     return port === '' ? defaultPort : Number(port);
 };
 
+/**
+ * @param {string} protocol
+ * @returns {'HTTPS' | 'HTTP' | 'SECURED'}
+ */
+export const getFormattedProtocol = (protocol) => {
+    const formattedProtocol = protocol.slice(0, -1).toUpperCase();
+    return PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
+};
+
+/**
+ * @param {string} url
+ * @returns {{* protocol: string, hostname: string, port: number}}
+ */
 export const getUrlProps = (url) => {
     const { hostname, port, protocol } = getUrlProperties(url);
-    const formattedProtocol = getProtocol(protocol);
+    const formattedProtocol = getFormattedProtocol(protocol);
+    const formattedPort = getFormattedPort(port, formattedProtocol);
 
     return {
-        url,
-        port: getFormattedPortByProtocol(port, formattedProtocol),
-        protocol: formattedProtocol,
+        port: formattedPort,
+        protocol,
         hostname,
     };
 };
