@@ -8,15 +8,15 @@ const {
     CHROME_UPDATE_CRX,
     FIREFOX_UPDATE_XPI,
 } = require('./consts');
-const { getOutputPathByEnv, appendEnvSuffix } = require('./helpers');
+const { getOutputPathByBuildEnv, appendBuildEnvSuffix } = require('./helpers');
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
 const CONTENT_SCRIPTS_PATH = path.resolve(__dirname, SRC_PATH, 'content-scripts');
 
-const IS_DEV = process.env.NODE_ENV === 'dev';
+const IS_DEV = process.env.BUILD_ENV === 'dev';
 
-const OUTPUT_PATH = getOutputPathByEnv(process.env.NODE_ENV);
+const OUTPUT_PATH = getOutputPathByBuildEnv(process.env.BUILD_ENV);
 
 const cleanOptions = IS_DEV ? { cleanAfterEveryBuildPatterns: ['!**/*.json', '!assets/**/*'] } : {};
 
@@ -89,7 +89,7 @@ const config = {
                 context: 'src',
                 from: '_locales/',
                 to: '_locales/',
-                // Add env suffixes to the extension name in locale files
+                // Add build environment suffixes to the extension name in locale files
                 transform: (content, path) => {
                     // ignore all paths except messages.json
                     if (path.indexOf('messages.json') === -1) {
@@ -98,7 +98,7 @@ const config = {
                     const messages = JSON.parse(content.toString());
                     if (messages && messages.name) {
                         // eslint-disable-next-line max-len
-                        messages.name.message = appendEnvSuffix(messages.name.message, process.env.NODE_ENV);
+                        messages.name.message = appendBuildEnvSuffix(messages.name.message, process.env.BUILD_ENV);
                     }
                     return Buffer.from(JSON.stringify(messages, null, 4));
                 },

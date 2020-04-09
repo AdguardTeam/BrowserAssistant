@@ -1,15 +1,15 @@
-const { ENV_MAP, IS_DEV } = require('./consts');
+const { BUILD_ENVS_MAP, IS_DEV } = require('./consts');
 const pJson = require('../package');
 const twoskyConfig = require('../.twosky.json');
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
 
-const appendEnvSuffix = (name, env) => {
-    const envData = ENV_MAP[env];
-    if (!envData) {
-        throw new Error(`Wrong environment: ${env}`);
+const appendBuildEnvSuffix = (name, buildEnv) => {
+    const buildEnvData = BUILD_ENVS_MAP[buildEnv];
+    if (!buildEnvData) {
+        throw new Error(`Wrong build environment: ${buildEnv}`);
     }
-    return envData.name ? `${name} ${envData.name}` : name;
+    return buildEnvData.name ? `${name} ${buildEnvData.name}` : name;
 };
 
 const updateManifest = (manifestJson, browserManifestDiff) => {
@@ -30,14 +30,16 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));
 };
 
-const getOutputPathByEnv = (env) => {
-    const envData = ENV_MAP[env];
-    if (!envData) {
-        throw new Error(`Wrong environment: ${env}`);
+const getOutputPathByBuildEnv = (buildEnv) => {
+    const buildEnvData = BUILD_ENVS_MAP[buildEnv];
+    if (!buildEnvData) {
+        throw new Error(`Wrong build environment: ${buildEnv}`);
     }
-    return envData.outputPath;
+    return buildEnvData.outputPath;
 };
 
 module.exports = {
-    appendEnvSuffix, updateManifest, getOutputPathByEnv,
+    appendBuildEnvSuffix,
+    updateManifest,
+    getOutputPathByBuildEnv,
 };

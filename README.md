@@ -27,10 +27,10 @@ Builds will be located in the `build` directory.
 - `yarn locales:upload` used to upload base `en` locale
 - `yarn locales:download` run to download and save all locales
 
-## CRX Builds
+## CRX Beta and Release Builds
 
-- Put the repository with the `certificate.pem` file to the project root directory.
-- `yarn crx` create web extension files for Chromium and Google Chrome browsers - build, zipped build, and update manifest XML document. You must have the `certificate.pem` to run this command
+- Put the repository with the `certificate-beta.pem`, `certificate-release.pem` files to the project root directory.
+- `yarn crx:beta` and `yarn crx:release` create web extension files for Chromium and Google Chrome browsers - build, zipped build, and update manifest XML document. You must have the `certificate-beta.pem` or `certificate-release.pem` to run the corresponding command.
 
 ## XPI Builds
 

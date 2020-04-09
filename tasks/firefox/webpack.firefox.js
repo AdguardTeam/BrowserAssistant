@@ -19,8 +19,8 @@ const plugins = [
     ]),
 ];
 
-const { NODE_ENV } = process.env;
-if (NODE_ENV === 'beta' || NODE_ENV === 'release') {
+const { BUILD_ENV } = process.env;
+if (BUILD_ENV === 'beta' || BUILD_ENV === 'release') {
     plugins.push(
         new ZipWebpackPlugin({
             path: '../',

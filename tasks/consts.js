@@ -2,7 +2,7 @@ const path = require('path');
 
 const SRC_PATH = '../src';
 const LOCALES_PATH = path.join(__dirname, SRC_PATH, '_locales/en/messages');
-const ENV_MAP = {
+const BUILD_ENVS_MAP = {
     dev: {
         outputPath: 'dev',
         name: 'Dev',
@@ -23,7 +23,7 @@ const BROWSER_TYPES = {
     EDGE: 'edge',
 };
 
-const IS_DEV = process.env.NODE_ENV === 'dev';
+const IS_DEV = process.env.BUILD_ENV === 'dev';
 
 // Build output path
 const BUILD_PATH = '../build';
@@ -33,30 +33,33 @@ const CHROME_UPDATER_FILENAME = 'update.xml';
 const FIREFOX_UPDATER_FILENAME = 'update.json';
 const MANIFEST_NAME = 'manifest.json';
 
-// Chrome CRX certificate path
-const CERTIFICATE_PATH = './private/AdguardBrowserAssistant/certificate.pem';
+// Chrome CRX certificate paths
+const CERTIFICATE_PATHS = {
+    beta: './private/AdguardBrowserAssistant/certificate-beta.pem',
+    release: './private/AdguardBrowserAssistant/certificate-release.pem',
+};
 
-const CHANNEL = ENV_MAP[process.env.NODE_ENV].outputPath;
+const BUILD_ENV = BUILD_ENVS_MAP[process.env.BUILD_ENV].outputPath;
 
 // Update manifest URL for the Chrome extension
-const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${CHROME_UPDATER_FILENAME}`;
+const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${BUILD_ENV}/${CHROME_UPDATER_FILENAME}`;
 
 // Update manifest URL for the Firefox add-on
-const FIREFOX_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${FIREFOX_UPDATER_FILENAME}`;
+const FIREFOX_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${BUILD_ENV}/${FIREFOX_UPDATER_FILENAME}`;
 
 // Path to the Chrome CRX (that we'll add to the update manifest)
-const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${CRX_NAME}`;
+const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/${BUILD_ENV}/${CRX_NAME}`;
 
 // Path to the Firefox XPI (that we'll add to the update manifest)
-const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${CHANNEL}/${XPI_NAME}`;
+const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${BUILD_ENV}/${XPI_NAME}`;
 
 module.exports = {
     LOCALES_PATH,
-    ENV_MAP,
+    BUILD_ENVS_MAP,
     SRC_PATH,
     IS_DEV,
     BUILD_PATH,
-    CERTIFICATE_PATH,
+    CERTIFICATE_PATHS,
     MANIFEST_NAME,
     BROWSER_TYPES,
     CHROME_UPDATE_URL,
