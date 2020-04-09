@@ -14,6 +14,7 @@ const CurrentSite = observer(() => {
         isHttpsFilteringEnabled,
         isFilteringEnabled,
         currentTabHostname,
+        currentTitle,
         originalCertIssuer,
     } = settingsStore;
 
@@ -129,7 +130,7 @@ const CurrentSite = observer(() => {
                     tabIndex={uiStore.globalTabIndex}
                     className="current-site__name"
                 >
-                    {currentTabHostname}
+                    {pageProtocol.isExtension ? currentTitle : currentTabHostname}
                 </h2>
 
                 <CertStatusModal

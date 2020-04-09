@@ -34,7 +34,17 @@ export const getUrlProperties = (url) => {
     }
 };
 
+/**
+ * Checks if string is chrome-extension: or moz-extension: protocol
+ * @param {string} url
+ * @returns {boolean}
+ */
+export const isExtensionProtocol = (protocol) => /^(chrome|moz)-extension:/.test(protocol);
+
 export const getProtocol = (protocol) => {
+    if (isExtensionProtocol(protocol)) {
+        return PROTOCOLS.EXTENSION;
+    }
     const formattedProtocol = protocol && protocol.slice(0, -1)
         .toUpperCase();
     return PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
@@ -70,21 +80,6 @@ export const isHttp = (str) => {
         return false;
     }
     return /^https?:/.test(url.protocol);
-};
-
-/**
- * Checks if string is a browser extension url with chrome-extension: or moz-extension: protocol
- * @param {string} url
- * @returns {boolean}
- */
-export const isExtensionProtocol = (str) => {
-    let url;
-    try {
-        url = new URL(str);
-    } catch (e) {
-        return false;
-    }
-    return /^(chrome|moz)-extension:/.test(url.protocol);
 };
 
 /**
