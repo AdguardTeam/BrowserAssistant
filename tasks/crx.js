@@ -4,14 +4,14 @@ const path = require('path');
 const Crx = require('crx');
 const chalk = require('chalk');
 const {
-    CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, CHANNEL_MAP, CERTIFICATE_PATHS,
+    CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, BUILD_ENVS_MAP, CERTIFICATE_PATHS,
     CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME, CRX_NAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
 const config = require('../package');
 
-const { CHANNEL_ENV } = process.env;
-const { outputPath } = CHANNEL_MAP[CHANNEL_ENV];
+const { BUILD_ENV } = process.env;
+const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
 
 const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath);
 const LOAD_PATH = path
@@ -21,7 +21,7 @@ const MANIFEST_PATH = path.resolve(
 );
 
 const getPrivateKey = async () => {
-    const certificatePath = CERTIFICATE_PATHS[CHANNEL_ENV];
+    const certificatePath = CERTIFICATE_PATHS[BUILD_ENV];
     try {
         const privateKey = await fs.readFile(certificatePath);
         console.log(chalk.greenBright(`\nThe certificate is read from ${certificatePath}\n`));

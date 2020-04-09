@@ -1,15 +1,15 @@
-const { CHANNEL_MAP, IS_DEV } = require('./consts');
+const { BUILD_ENVS_MAP, IS_DEV } = require('./consts');
 const pJson = require('../package');
 const twoskyConfig = require('../.twosky.json');
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
 
-const appendChannelSuffix = (name, channel) => {
-    const channelData = CHANNEL_MAP[channel];
-    if (!channelData) {
-        throw new Error(`Wrong channel: ${channel}`);
+const appendBuildEnvSuffix = (name, buildEnv) => {
+    const buildEnvData = BUILD_ENVS_MAP[buildEnv];
+    if (!buildEnvData) {
+        throw new Error(`Wrong build environment: ${buildEnv}`);
     }
-    return channelData.name ? `${name} ${channelData.name}` : name;
+    return buildEnvData.name ? `${name} ${buildEnvData.name}` : name;
 };
 
 const updateManifest = (manifestJson, browserManifestDiff) => {
@@ -30,14 +30,16 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));
 };
 
-const getOutputPathByChannel = (channel) => {
-    const channelData = CHANNEL_MAP[channel];
-    if (!channelData) {
-        throw new Error(`Wrong channel: ${channel}`);
+const getOutputPathByBuildEnv = (buildEnv) => {
+    const buildEnvData = BUILD_ENVS_MAP[buildEnv];
+    if (!buildEnvData) {
+        throw new Error(`Wrong build environment: ${buildEnv}`);
     }
-    return channelData.outputPath;
+    return buildEnvData.outputPath;
 };
 
 module.exports = {
-    appendChannelSuffix, updateManifest, getOutputPathByChannel,
+    appendBuildEnvSuffix,
+    updateManifest,
+    getOutputPathByBuildEnv,
 };

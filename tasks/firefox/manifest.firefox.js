@@ -1,4 +1,4 @@
-const channelMap = {
+const BUILD_ENVS_MAP = {
     dev: 'browserassistantdev@adguard.com',
     beta: 'browserassistantbeta@adguard.com',
     release: 'browserassistant@adguard.com',
@@ -7,7 +7,7 @@ const channelMap = {
 module.exports = {
     applications: {
         gecko: {
-            id: channelMap[process.env.CHANNEL_ENV],
+            id: BUILD_ENVS_MAP[process.env.BUILD_ENV],
             strict_min_version: '54.0',
         },
     },
