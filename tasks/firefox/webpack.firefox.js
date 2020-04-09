@@ -19,8 +19,8 @@ const plugins = [
     ]),
 ];
 
-const { CHANNEL } = process.env;
-if (CHANNEL === 'beta' || CHANNEL === 'release') {
+const { CHANNEL_ENV } = process.env;
+if (CHANNEL_ENV === 'beta' || CHANNEL_ENV === 'release') {
     plugins.push(
         new ZipWebpackPlugin({
             path: '../',

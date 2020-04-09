@@ -7,7 +7,7 @@ const channelMap = {
 module.exports = {
     applications: {
         gecko: {
-            id: channelMap[process.env.CHANNEL],
+            id: channelMap[process.env.CHANNEL_ENV],
             strict_min_version: '54.0',
         },
     },

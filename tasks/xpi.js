@@ -18,11 +18,11 @@ const {
 const config = require('../package');
 
 const { apiKey, apiSecret } = credentials;
-const { CHANNEL } = process.env;
-const { outputPath } = CHANNEL_MAP[CHANNEL];
+const { CHANNEL_ENV } = process.env;
+const { outputPath } = CHANNEL_MAP[CHANNEL_ENV];
 const BUILD = 'build';
 
-const buildDir = path.resolve(BUILD, CHANNEL_MAP[CHANNEL].outputPath);
+const buildDir = path.resolve(BUILD, CHANNEL_MAP[CHANNEL_ENV].outputPath);
 const fileDir = path.resolve(buildDir, FIREFOX_UPDATER_FILENAME);
 
 const getFirefoxManifest = async () => {
@@ -35,7 +35,8 @@ const getFirefoxManifest = async () => {
 };
 
 async function generateXpi() {
-    const sourceDir = path.resolve(BUILD, CHANNEL_MAP[CHANNEL].outputPath, BROWSER_TYPES.FIREFOX);
+    const sourceDir = path.resolve(BUILD, CHANNEL_MAP[CHANNEL_ENV].outputPath,
+        BROWSER_TYPES.FIREFOX);
 
     const { downloadedFiles } = await webExt.default.cmd.sign({
         apiKey,
@@ -88,7 +89,10 @@ const createUpdateJson = async (manifest) => {
 
         const fileContent = generateUpdateJson(
             {
-                id, version: config.version, update_link: FIREFOX_UPDATE_XPI, strict_min_version,
+                id,
+                version: config.version,
+                update_link: FIREFOX_UPDATE_XPI,
+                strict_min_version,
             }
         );
 
@@ -103,7 +107,7 @@ const createUpdateJson = async (manifest) => {
 };
 
 const updateFirefoxManifest = async () => {
-    const manifestPath = path.resolve(BUILD, CHANNEL_MAP[CHANNEL].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
+    const manifestPath = path.resolve(BUILD, CHANNEL_MAP[CHANNEL_ENV].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
     const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
     manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));

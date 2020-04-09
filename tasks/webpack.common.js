@@ -14,9 +14,9 @@ const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
 const CONTENT_SCRIPTS_PATH = path.resolve(__dirname, SRC_PATH, 'content-scripts');
 
-const IS_DEV = process.env.CHANNEL === 'dev';
+const IS_DEV = process.env.CHANNEL_ENV === 'dev';
 
-const OUTPUT_PATH = getOutputPathByChannel(process.env.CHANNEL);
+const OUTPUT_PATH = getOutputPathByChannel(process.env.CHANNEL_ENV);
 
 const cleanOptions = IS_DEV ? { cleanAfterEveryBuildPatterns: ['!**/*.json', '!assets/**/*'] } : {};
 
@@ -98,7 +98,7 @@ const config = {
                     const messages = JSON.parse(content.toString());
                     if (messages && messages.name) {
                         // eslint-disable-next-line max-len
-                        messages.name.message = appendChannelSuffix(messages.name.message, process.env.CHANNEL);
+                        messages.name.message = appendChannelSuffix(messages.name.message, process.env.CHANNEL_ENV);
                     }
                     return Buffer.from(JSON.stringify(messages, null, 4));
                 },

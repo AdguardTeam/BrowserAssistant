@@ -6,8 +6,8 @@ const { BUILD_PATH, CHANNEL_MAP } = require('./consts');
 const config = require('../package');
 
 const content = `version=${config.version}`;
-const { CHANNEL } = process.env;
-const { outputPath } = CHANNEL_MAP[CHANNEL];
+const { CHANNEL_ENV } = process.env;
+const { outputPath } = CHANNEL_MAP[CHANNEL_ENV];
 const FILENAME = 'build.txt';
 
 const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath, FILENAME);

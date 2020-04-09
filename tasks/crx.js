@@ -10,8 +10,8 @@ const {
 const { updateManifest } = require('./helpers');
 const config = require('../package');
 
-const { CHANNEL } = process.env;
-const { outputPath } = CHANNEL_MAP[CHANNEL];
+const { CHANNEL_ENV } = process.env;
+const { outputPath } = CHANNEL_MAP[CHANNEL_ENV];
 
 const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath);
 const LOAD_PATH = path
@@ -21,7 +21,7 @@ const MANIFEST_PATH = path.resolve(
 );
 
 const getPrivateKey = async () => {
-    const certificatePath = CERTIFICATE_PATHS[CHANNEL];
+    const certificatePath = CERTIFICATE_PATHS[CHANNEL_ENV];
     try {
         const privateKey = await fs.readFile(certificatePath);
         console.log(chalk.greenBright(`\nThe certificate is read from ${certificatePath}\n`));
