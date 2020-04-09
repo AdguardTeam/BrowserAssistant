@@ -13,8 +13,8 @@ const CurrentSite = observer(() => {
         pageProtocol,
         isHttpsFilteringEnabled,
         isFilteringEnabled,
-        currentTabHostname,
         originalCertIssuer,
+        pageInfo,
     } = settingsStore;
 
     const {
@@ -125,11 +125,8 @@ const CurrentSite = observer(() => {
                         || (!pageProtocol.isHttps && isPageStatusModalOpen))
                     && <div className="arrow-up" />}
                 </div>
-                <h2
-                    tabIndex={uiStore.globalTabIndex}
-                    className="current-site__name"
-                >
-                    {currentTabHostname}
+                <h2 tabIndex={uiStore.globalTabIndex} className="current-site__name">
+                    {pageInfo}
                 </h2>
 
                 <CertStatusModal

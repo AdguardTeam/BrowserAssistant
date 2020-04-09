@@ -1,47 +1,83 @@
-import { PROTOCOLS, PROTOCOL_TO_PORT_MAP } from '../popup/stores/consts';
+import {
+    PROTOCOLS,
+    PROTOCOL_TO_PORT_MAP,
+} from '../popup/stores/consts';
+
+/**
+ * @typedef {Object} urlObj
+ * @property {number} x - The X Coordinate
+ * @property {string} urlObj.hash
+ * @property {string} urlObj.host
+ * @property {string} urlObj.hostname
+ * @property {string} urlObj.href
+ * @property {string} urlObj.origin
+ * @property {string} urlObj.password
+ * @property {string} urlObj.pathname
+ * @property {string} urlObj.port
+ * @property {string} urlObj.protocol
+ * @property {string} urlObj.search
+ * @property {function} urlObj.searchParams
+ * @property {string} urlObj.username
+ */
 
 /**
  * Returns hostname of url if it was correct, otherwise return input url
  * @param {string} url
- * @returns {string}
+ * @returns {urlObj | string}
  */
 export const getUrlProperties = (url) => {
-    let urlObj;
-
     try {
-        urlObj = new URL(url);
+        const urlObj = new URL(url);
+        return urlObj;
     } catch (e) {
         return url;
     }
-
-    return urlObj;
 };
 
-export const getProtocol = (protocol) => {
-    const formattedProtocol = protocol && protocol.slice(0, -1)
-        .toUpperCase();
-    return PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
-};
+/**
+ * Checks if string is chrome-extension: or moz-extension: protocol
+ * @param {string} url
+ * @returns {boolean}
+ */
+export const isExtensionProtocol = (protocol) => /^(chrome|moz)-extension:/.test(protocol);
 
-export const getFormattedPortByProtocol = (port, protocol) => {
+/**
+ * @param {string} port
+ * @param {'HTTPS' | 'HTTP' | 'SECURED'} protocol
+ * @returns {number}
+ */
+export const getFormattedPort = (port, protocol) => {
     const defaultPort = PROTOCOL_TO_PORT_MAP[protocol];
     return port === '' ? defaultPort : Number(port);
 };
 
+/**
+ * @param {string} protocol
+ * @returns {'HTTPS' | 'HTTP' | 'SECURED'}
+ */
+export const getFormattedProtocol = (protocol) => {
+    const formattedProtocol = protocol.slice(0, -1).toUpperCase();
+    return PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
+};
+
+/**
+ * @param {string} url
+ * @returns {{* protocol: string, hostname: string, port: number}}
+ */
 export const getUrlProps = (url) => {
     const { hostname, port, protocol } = getUrlProperties(url);
-    const formattedProtocol = getProtocol(protocol);
+    const formattedProtocol = getFormattedProtocol(protocol);
+    const formattedPort = getFormattedPort(port, formattedProtocol);
 
     return {
-        url,
-        port: getFormattedPortByProtocol(port, formattedProtocol),
-        protocol: formattedProtocol,
+        port: formattedPort,
+        protocol,
         hostname,
     };
 };
 
 /**
- * Checks if string is valid url with http: or https: protocol
+ * Checks if string is a valid url with http: or https: protocol
  * @param {string} str
  * @returns {boolean}
  */
