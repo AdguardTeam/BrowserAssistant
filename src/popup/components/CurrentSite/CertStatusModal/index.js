@@ -63,22 +63,20 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             onRequestClose={onRequestClose}
             shouldFocusAfterRender={false}
         >
-            {isFilteringEnabled && (
-                <div className="modal__info--upper">
-                    <div className="modal__header--container">
-                        <div className="modal__header">{translate('https_filtering')}</div>
-                        <div className="modal__text modal__text--additional">{translate('increase_ab_block_quality')}</div>
-                    </div>
-                    <Switcher
-                        id={SWITCHER_IDS.HTTPS_SWITCHER}
-                        checked={!certStatus.isInvalid && pageProtocol.isHttps
-                        && isHttpsFilteringEnabled}
-                        onClick={toggleHttpsFiltering}
-                        isDisabled={certStatus.isInvalid || !isAuthorized}
-                        label={translate('https_filtering')}
-                    />
+            <div className="modal__info--upper">
+                <div className="modal__header--container">
+                    <div className="modal__header">{translate('https_filtering')}</div>
+                    <div className="modal__text modal__text--additional">{translate('increase_ab_block_quality')}</div>
                 </div>
-            )}
+                <Switcher
+                    id={SWITCHER_IDS.HTTPS_SWITCHER}
+                    checked={!certStatus.isInvalid && pageProtocol.isHttps
+                        && isHttpsFilteringEnabled}
+                    onClick={toggleHttpsFiltering}
+                    isDisabled={certStatus.isInvalid || !isAuthorized}
+                    label={translate('https_filtering')}
+                />
+            </div>
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
                 <div className="modal__text modal__text--red modal__text--upper">
                     {translate(CERT_STATES[originalCertStatus])}
