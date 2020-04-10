@@ -47,8 +47,10 @@ const Options = observer(() => {
                     return;
                 }
                 await settingsStore.removeCustomRules();
-                /* User should open popup to allow content script
-                   injection after page reload in Firefox. */
+
+                /* Extension loses activeTab permission after page reload in Firefox,
+                 so user should open popup to allow content script injection.
+                 https://developer.mozilla.org/ru/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions */
                 window.close();
             },
             isDisabled: !isAuthorized,
