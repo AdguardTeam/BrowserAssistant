@@ -67,15 +67,17 @@ export const HTTP_FILTERING_STATUS = {
     DISABLED: 'DISABLED',
 };
 
+const FILTERING_STATES_MODAL_INFO = {
+    [HTTP_FILTERING_STATUS.ENABLED]: { info: 'protection_is_enabled' },
+    [HTTP_FILTERING_STATUS.DISABLED]: { info: 'protection_is_disabled' },
+};
+
 export const SECURE_STATUS_MODAL_STATES = {
     [PROTOCOLS.HTTPS]: {
         [ORIGINAL_CERT_STATUS.INVALID]: { info: 'website_cert_is_expired' },
-        [ORIGINAL_CERT_STATUS.NOTFOUND]: { info: 'protection_is_enabled' },
-        [ORIGINAL_CERT_STATUS.BYPASSED]: { info: 'protection_is_enabled' },
-        [ORIGINAL_CERT_STATUS.VALID]: {
-            [HTTP_FILTERING_STATUS.ENABLED]: { info: 'protection_is_enabled' },
-            [HTTP_FILTERING_STATUS.DISABLED]: { info: 'protection_is_disabled' },
-        },
+        [ORIGINAL_CERT_STATUS.NOTFOUND]: FILTERING_STATES_MODAL_INFO,
+        [ORIGINAL_CERT_STATUS.BYPASSED]: FILTERING_STATES_MODAL_INFO,
+        [ORIGINAL_CERT_STATUS.VALID]: FILTERING_STATES_MODAL_INFO,
     },
     [PROTOCOLS.HTTP]: {
         modalId: SECURE_STATUS_MODAL_IDS.NOT_SECURE,
@@ -89,7 +91,7 @@ export const SECURE_STATUS_MODAL_STATES = {
         header: 'secure_page',
         info: 'secure_page',
     },
-    default: {
+    DEFAULT: {
         modalId: SECURE_STATUS_MODAL_IDS.BANK,
         message: 'not_filtering_https',
         header: 'secure_page',

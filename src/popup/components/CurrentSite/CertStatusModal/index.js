@@ -15,7 +15,6 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         originalCertIssuer,
         pageProtocol,
         originalCertStatus,
-        isFilteringEnabled,
         isAuthorized,
         openOriginalCert,
     } = settingsStore;
@@ -44,14 +43,13 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         'modal__cert-status--small': certStatus.isNotFound || certStatus.isBypassed
             || (certStatus.isInvalid && !originalCertIssuer),
         'modal__cert-status--large': certStatus.isInvalid && originalCertIssuer,
-        'modal__cert-status--smallest': certStatus.isValid && !isFilteringEnabled,
         // This case can happen only as result of host mistake
         'modal__cert-status--tiny': certStatus.isValid && !originalCertIssuer,
     });
 
     const lowerInfoClass = classNames({
         'modal__info--lower': certStatus.isValid,
-        'modal__info--lower--no-padding': certStatus.isInvalid || (pageProtocol.isHttps && !isFilteringEnabled),
+        'modal__info--lower--no-padding': certStatus.isInvalid,
     });
 
     return (
