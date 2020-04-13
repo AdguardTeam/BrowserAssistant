@@ -56,7 +56,7 @@ export const getFormattedPort = (port, protocol) => {
  * @returns {'HTTPS' | 'HTTP' | 'SECURED'}
  */
 export const getFormattedProtocol = (protocol) => {
-    const formattedProtocol = protocol.slice(0, -1).toUpperCase();
+    const formattedProtocol = protocol && protocol.slice(0, -1).toUpperCase();
     return PROTOCOLS[formattedProtocol] || PROTOCOLS.SECURED;
 };
 

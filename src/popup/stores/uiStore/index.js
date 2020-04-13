@@ -47,19 +47,19 @@ class UiStore {
         } = this.rootStore.settingsStore;
         const { certStatus } = this;
 
-        let modalInfo = SECURE_STATUS_MODAL_STATES[currentProtocol];
+        let MODAL_INFO = SECURE_STATUS_MODAL_STATES[currentProtocol];
 
         if (pageProtocol.isHttps) {
-            modalInfo = modalInfo[originalCertStatus];
+            MODAL_INFO = MODAL_INFO[originalCertStatus];
 
-            if (certStatus.isValid) {
-                const protectionStatus = isFilteringEnabled
+            if (!certStatus.isInvalid) {
+                const PROTECTION_STATUS = isFilteringEnabled
                     ? HTTP_FILTERING_STATUS.ENABLED : HTTP_FILTERING_STATUS.DISABLED;
 
-                modalInfo = modalInfo[protectionStatus];
+                MODAL_INFO = MODAL_INFO[PROTECTION_STATUS];
             }
         }
-        return modalInfo || SECURE_STATUS_MODAL_STATES.default;
+        return MODAL_INFO || SECURE_STATUS_MODAL_STATES.DEFAULT;
     }
 
     @computed get certStatus() {

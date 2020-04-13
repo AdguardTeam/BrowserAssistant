@@ -15,7 +15,6 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         originalCertIssuer,
         pageProtocol,
         originalCertStatus,
-        isFilteringEnabled,
         isAuthorized,
         openOriginalCert,
     } = settingsStore;
@@ -44,14 +43,13 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
         'modal__cert-status--small': certStatus.isNotFound || certStatus.isBypassed
             || (certStatus.isInvalid && !originalCertIssuer),
         'modal__cert-status--large': certStatus.isInvalid && originalCertIssuer,
-        'modal__cert-status--smallest': certStatus.isValid && !isFilteringEnabled,
         // This case can happen only as result of host mistake
         'modal__cert-status--tiny': certStatus.isValid && !originalCertIssuer,
     });
 
     const lowerInfoClass = classNames({
         'modal__info--lower': certStatus.isValid,
-        'modal__info--lower--no-padding': certStatus.isInvalid || (pageProtocol.isHttps && !isFilteringEnabled),
+        'modal__info--lower--no-padding': certStatus.isInvalid,
     });
 
     return (
@@ -63,22 +61,20 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
             onRequestClose={onRequestClose}
             shouldFocusAfterRender={false}
         >
-            {isFilteringEnabled && (
-                <div className="modal__info--upper">
-                    <div className="modal__header--container">
-                        <div className="modal__header">{translate('https_filtering')}</div>
-                        <div className="modal__text modal__text--additional">{translate('increase_ab_block_quality')}</div>
-                    </div>
-                    <Switcher
-                        id={SWITCHER_IDS.HTTPS_SWITCHER}
-                        checked={!certStatus.isInvalid && pageProtocol.isHttps
-                        && isHttpsFilteringEnabled}
-                        onClick={toggleHttpsFiltering}
-                        isDisabled={certStatus.isInvalid || !isAuthorized}
-                        label={translate('https_filtering')}
-                    />
+            <div className="modal__info--upper">
+                <div className="modal__header--container">
+                    <div className="modal__header">{translate('https_filtering')}</div>
+                    <div className="modal__text modal__text--additional">{translate('increase_ab_block_quality')}</div>
                 </div>
-            )}
+                <Switcher
+                    id={SWITCHER_IDS.HTTPS_SWITCHER}
+                    checked={!certStatus.isInvalid && pageProtocol.isHttps
+                        && isHttpsFilteringEnabled}
+                    onClick={toggleHttpsFiltering}
+                    isDisabled={certStatus.isInvalid || !isAuthorized}
+                    label={translate('https_filtering')}
+                />
+            </div>
             {!certStatus.isValid && CERT_STATES[originalCertStatus] && (
                 <div className="modal__text modal__text--red modal__text--upper">
                     {translate(CERT_STATES[originalCertStatus])}
