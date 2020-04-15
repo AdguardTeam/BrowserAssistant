@@ -42,7 +42,7 @@ class TranslationStore {
         result = checkLocale(messagesMap, browserLocale);
         return result.suitable
             ? { locale: result.locale, matchedKey: result.matchedKey }
-            : BASE_LOCALE;
+            : { locale: BASE_LOCALE, matchedKey: BASE_LOCALE };
     };
 
     @computed
