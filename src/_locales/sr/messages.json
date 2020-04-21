@@ -2,6 +2,9 @@
     "name": {
         "message": "AdGuard pomoćnik za preglednike"
     },
+    "description": {
+        "message": "Proširenje za aplikaciju Adgarde Desktop. Upravlja filtriranjem direktno iz pregledača, sakriva iritirajuće elemente na dva klika."
+    },
     "adg_is_not_installed": {
         "message": "AdGuard nije instaliran ili neispravno konfigurusan"
     },

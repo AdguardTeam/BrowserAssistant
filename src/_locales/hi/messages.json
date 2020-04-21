@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "Adguard ब्राउज़र सहायक"
+    },
+    "description": {
+        "message": "AdGuard डेस्कटॉप ऐप के लिए एक्सटेंशन। ब्राउज़र से दाएं फ़िल्टर करने का प्रबंधन करता है, दो क्लिक में कष्टप्रद तत्वों को छुपाता है।"
+    },
+    "adg_is_not_installed": {
+        "message": "Adguard गलत तरीके से स्थापित या कॉन्फ़िगर नहीं किया गया है"
+    },
+    "get_adguard": {
+        "message": "Adguard स्थापित करें"
+    },
+    "adg_is_not_updated": {
+        "message": "Adguard अपडेट नहीं किया गया है"
+    },
+    "update": {
+        "message": "अपडेट करें"
+    },
+    "adg_is_not_running": {
+        "message": "Adguard नहीं चल रहा है"
+    },
+    "run_adg": {
+        "message": "AdGuard चलाएं"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard सुरक्षा रोक दी गई है"
+    },
+    "adg_is_launching": {
+        "message": "Adguard लॉन्च हो रहा है"
+    },
+    "enable": {
+        "message": "सक्षम"
+    },
+    "assistant_is_not_updated": {
+        "message": "Adguard अपडेट नहीं है"
+    },
+    "something_went_wrong": {
+        "message": "कुछ गलत हो गया"
+    },
+    "reinstall": {
+        "message": "पुनर्स्थापना"
+    },
+    "https_filtering": {
+        "message": "HTTPS फ़िल्टरिंग"
+    },
+    "increase_ab_block_quality": {
+        "message": "विज्ञापन अवरोधन की गुणवत्ता बढ़ाएं"
+    },
+    "verified_by": {
+        "message": "के द्वारा सत्यापित:"
+    },
+    "more_info": {
+        "message": "अधिक जानकारी"
+    },
+    "adg_protection": {
+        "message": "Adguard सुरक्षा"
+    },
+    "adg_settings": {
+        "message": "Adguard समायोजन"
+    },
+    "block_ads": {
+        "message": "वेबसाइट पर विज्ञापनों को अवरुद्ध करें"
+    },
+    "open_filtering_log": {
+        "message": "फ़िल्टरिंग लॉग खोलें"
+    },
+    "report_site": {
+        "message": "इस वेबसाइट की रिपोर्ट करें"
+    },
+    "reset_custom_rules": {
+        "message": "इस पृष्ठ के लिए सभी कस्टम नियम रीसेट करें"
+    },
+    "cert_expired": {
+        "message": "AdGuard इस वेबसाइट के प्रमाणपत्र को सत्यापित नहीं कर सका क्योंकि रूट प्रमाणपत्र की समय सीमा समाप्त हो गई है"
+    },
+    "cert_absent": {
+        "message": "इस वेबसाइट के लिए HTTPS फ़िल्टरिंग का प्रदर्शन नहीं किया गया था"
+    },
+    "site_not_using_private_protection": {
+        "message": "साइट एक निजी कनेक्शन का उपयोग नहीं कर रही है। कोई व्यक्ति आपके द्वारा साइट के माध्यम से भेजी जाने वाली जानकारी को देखने या बदलने में सक्षम हो सकता है।"
+    },
+    "not_secure": {
+        "message": "सुरक्षित नहीं है"
+    },
+    "nothing_to_block_here": {
+        "message": "यहां ब्लॉक करने के लिए कुछ भी नहीं"
+    },
+    "secure_page": {
+        "message": "सुरक्षित पृष्ठ"
+    },
+    "not_filtering_https": {
+        "message": "डिफ़ॉल्ट रूप से, हम भुगतान प्रणाली और बैंक वेबसाइटों के लिए HTTPS ट्रैफ़िक को फ़िल्टर नहीं करते हैं। आप अपने आप को फ़िल्टर करने में सक्षम कर सकते हैं: बाईं ओर पीले \"लॉक\" पर टैप करें।"
+    },
+    "disabled": {
+        "message": "इस वेबसाइट पर अक्षम"
+    },
+    "enabled": {
+        "message": "इस वेबसाइट पर सक्षम है"
+    },
+    "protection_is_enabled": {
+        "message": "संरक्षण क्रियाशील है"
+    },
+    "protection_is_disabled": {
+        "message": "सुरक्षा अक्षम है"
+    },
+    "website_cert_is_expired": {
+        "message": "वेबसाइट का प्रमाणपत्र समाप्त हो गया है"
+    },
+    "expired": {
+        "message": "समय सीमा समाप्त"
+    }
+}
