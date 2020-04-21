@@ -89,10 +89,25 @@
     "secure_page": {
         "message": "Biztonságos oldal"
     },
+    "not_filtering_https": {
+        "message": "Alapértelmezés szerint nem szűrjük a HTTPS forgalmat a fizetési rendszerek és a bankok webhelyei számára. Ha ön szeretné engedélyezni a szűrés éritnse meg a sárga \"lakatot\" a bal oldalon."
+    },
     "disabled": {
         "message": "Kikapcsolva ezen az oldalon"
     },
     "enabled": {
         "message": "Bekapcsolva ezen az oldalon"
+    },
+    "protection_is_enabled": {
+        "message": "Védelem engedélyezve"
+    },
+    "protection_is_disabled": {
+        "message": "Védelem kikapcsolva"
+    },
+    "website_cert_is_expired": {
+        "message": "A webhely tanusítványa lejárt"
+    },
+    "expired": {
+        "message": "Lejárt"
     }
 }

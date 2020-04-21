@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "Asystent przeglądarki AdGuard"
+    },
+    "description": {
+        "message": "Rozszerzenie aplikacji komputerowej AdGuard. Zarządza filtrowaniem w przeglądarce, ukrywa irytujące elementy za pomocą 2 kliknięć."
+    },
+    "adg_is_not_installed": {
+        "message": "Adguard nie jest zainstalowany"
+    },
+    "get_adguard": {
+        "message": "Uzyskaj AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "Adguard jest nieaktualny"
+    },
+    "update": {
+        "message": "Aktualizuj"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard nie działa"
+    },
+    "run_adg": {
+        "message": "Włącz AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "Ochrona AdGuard jest wstrzymana"
+    },
+    "adg_is_launching": {
+        "message": "Uruchamianie AdGuard..."
+    },
+    "enable": {
+        "message": "Włącz"
+    },
+    "assistant_is_not_updated": {
+        "message": "Asystent jest nieaktualny"
+    },
+    "something_went_wrong": {
+        "message": "Coś poszło nie tak"
+    },
+    "reinstall": {
+        "message": "Zainstaluj ponownie"
+    },
+    "https_filtering": {
+        "message": "Filtrowanie HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Zwiększ jakość blokowania reklam"
+    },
+    "verified_by": {
+        "message": "Zweryfikowane przez:"
+    },
+    "more_info": {
+        "message": "Więcej informacji"
+    },
+    "adg_protection": {
+        "message": "Ochrona AdGuard"
+    },
+    "adg_settings": {
+        "message": "Ustawienia AdGuard"
+    },
+    "block_ads": {
+        "message": "Blokuj reklamy na tej stronie"
+    },
+    "open_filtering_log": {
+        "message": "Otwórz dziennik filtrowania"
+    },
+    "report_site": {
+        "message": "Zgłoś tę stronę"
+    },
+    "reset_custom_rules": {
+        "message": "Zresetuj wszystkie niestandardowe reguły dla tej strony"
+    },
+    "cert_expired": {
+        "message": "AdGuard nie mógł zweryfikować certyfikatu tej witryny, ponieważ certyfikat główny wygasł"
+    },
+    "cert_absent": {
+        "message": "Filtrowanie HTTPS nie zostało wykonane dla tej witryny"
+    },
+    "site_not_using_private_protection": {
+        "message": "Ta strona nie używa zabezpieczonej sieci. Ktokolwiek może widzieć, bądź zmienić informację, które przesyłasz przez stronę."
+    },
+    "not_secure": {
+        "message": "Niezabezpieczone"
+    },
+    "nothing_to_block_here": {
+        "message": "Nie ma tu nic do zablokowania"
+    },
+    "secure_page": {
+        "message": "Bezpieczna strona"
+    },
+    "not_filtering_https": {
+        "message": "Domyślnie nie filtrujemy połączeń HTTPS dla systemów płatniczych i stron bankowych. Możesz włączyć tą opcję, klikając na żółtą kłódkę po lewej stronie."
+    },
+    "disabled": {
+        "message": "Wyłączone na tej stronie"
+    },
+    "enabled": {
+        "message": "Włączone na tej stronie"
+    },
+    "protection_is_enabled": {
+        "message": "Ochrona jest włączona"
+    },
+    "protection_is_disabled": {
+        "message": "Ochrona jest wyłączona"
+    },
+    "website_cert_is_expired": {
+        "message": "Certyfikat strony wygasł"
+    },
+    "expired": {
+        "message": "Wygasł"
+    }
+}
