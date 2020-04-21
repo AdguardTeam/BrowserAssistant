@@ -5,7 +5,7 @@ import {
     runInAction,
 } from 'mobx';
 import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
-import { DOWNLOAD_LINK, UPDATE_URL_CHROME, UPDATE_URL_FIREFOX } from '../../../lib/consts';
+import { DOWNLOAD_LINK, EXTENSION_DOWNLOAD_LINK } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
 import { getFormattedProtocol, getUrlProps, isExtensionProtocol } from '../../../lib/helpers';
@@ -201,8 +201,7 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        const updateLink = this.isFirefox ? UPDATE_URL_FIREFOX : UPDATE_URL_CHROME;
-        messagesSender.openPage(updateLink);
+        messagesSender.openPage(EXTENSION_DOWNLOAD_LINK);
     };
 
     /**
