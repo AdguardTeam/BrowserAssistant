@@ -468,4 +468,8 @@ class StubHostApi extends AbstractApi {
     });
 }
 
-export default new StubHostApi();
+const stubHostApi = new StubHostApi();
+
+global.stubHostApi = stubHostApi;
+
+export default stubHostApi;

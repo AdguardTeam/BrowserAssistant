@@ -155,7 +155,8 @@ class NativeHostApi extends AbstractApi {
     };
 
     makeRequestOnce = async (params) => {
-        const RESPONSE_TIMEOUT_MS = 10 * 1000;
+        // Requests can be executed too long time on application launch
+        const RESPONSE_TIMEOUT_MS = 1000 * 60 * 5;
 
         const HOST_RESPONSE_TYPES = {
             OK: 'ok',
@@ -170,11 +171,18 @@ class NativeHostApi extends AbstractApi {
         return new Promise((resolve, reject) => {
             let timerId;
 
+            const errorHandler = () => {
+                if (browser.runtime.lastError) {
+                    reject(new Error(browser.runtime.lastError.message));
+                }
+            };
+
             const messageHandler = (message) => {
                 const { requestId, result } = message;
 
                 if (id === requestId) {
                     this.port.onMessage.removeListener(messageHandler);
+                    this.port.onDisconnect.removeListener(errorHandler);
                     clearTimeout(timerId);
 
                     if (result === HOST_RESPONSE_TYPES.OK) {
@@ -188,18 +196,15 @@ class NativeHostApi extends AbstractApi {
                 }
             };
 
+            this.port.onMessage.addListener(messageHandler);
+            this.port.onDisconnect.addListener(errorHandler);
+
             timerId = setTimeout(() => {
-                reject(new Error('Native host is not responding too long'));
                 this.port.onMessage.removeListener(messageHandler);
+                this.port.onDisconnect.removeListener(errorHandler);
+                reject(new Error('Native host is not responding too long'));
             }, RESPONSE_TIMEOUT_MS);
 
-            this.port.onDisconnect.addListener(() => {
-                if (browser.runtime.lastError) {
-                    reject(new Error(browser.runtime.lastError.message));
-                }
-            });
-
-            this.port.onMessage.addListener(messageHandler);
             try {
                 this.port.postMessage({ id, ...params });
             } catch (e) {
