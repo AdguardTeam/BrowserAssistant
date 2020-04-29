@@ -45,6 +45,7 @@ class UiStore {
         const {
             pageProtocol, currentProtocol, originalCertStatus, isFilteringEnabled,
         } = this.rootStore.settingsStore;
+
         const { certStatus } = this;
 
         let MODAL_INFO = SECURE_STATUS_MODAL_STATES[currentProtocol];

@@ -14,12 +14,24 @@ const messageHandler = async (message) => {
 
     switch (type) {
         case POPUP_MESSAGES.GET_POPUP_DATA: {
+            try {
+                await state.getCurrentAppState();
+            } catch (e) {
+                return {
+                    appState: state.getAppState(),
+                    updateStatusInfo: state.getUpdateStatusInfo(),
+                    hostError: e.message,
+                };
+            }
+
+            // There is no need to check tab info if app is not working
             if (!state.isAppWorking()) {
                 return {
                     appState: state.getAppState(),
                     updateStatusInfo: state.getUpdateStatusInfo(),
                 };
             }
+
             const { tab } = data;
             const referrer = await tabs.getReferrer(tab);
             const updateStatusInfo = state.getUpdateStatusInfo();
