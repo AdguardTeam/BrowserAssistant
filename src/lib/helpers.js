@@ -48,7 +48,7 @@ export const isExtensionProtocol = (protocol) => /^(chrome|moz)-extension:/.test
  */
 export const getFormattedPort = (port, protocol) => {
     const defaultPort = PROTOCOL_TO_PORT_MAP[protocol];
-    return port === '' ? defaultPort : Number(port);
+    return port === '' || !port ? defaultPort : Number(port);
 };
 
 /**

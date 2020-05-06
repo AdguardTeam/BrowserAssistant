@@ -6,7 +6,7 @@ import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
-import { getUrlProps, isHttp } from '../lib/helpers';
+import { getUrlProps } from '../lib/helpers';
 import log from '../lib/logger';
 
 /**
@@ -111,7 +111,7 @@ class State {
      * Validates app state, sets app state and notifies external modules that state has changed
      * @param {*} appState
      */
-    setAppState = (appState) => {
+    setAppState = (appState = {}) => {
         const {
             isInstalled,
             isRunning,
@@ -124,6 +124,7 @@ class State {
             const message = `isInstalled=${isInstalled}, isRunning=${isRunning}, isProtectionEnabled=${isProtectionEnabled}`;
             throw new Error(`All states should be defined: received ${message}`);
         }
+
         const nextAppState = {
             ...this.appState,
             isInstalled,
@@ -215,9 +216,6 @@ class State {
     getCurrentFilteringState = async (tab, forceStart = false) => {
         const { url } = tab;
         const { port } = getUrlProps(url);
-        if (!isHttp(url) || !port) {
-            return null;
-        }
 
         let response;
         try {
@@ -238,12 +236,7 @@ class State {
     };
 
     getCurrentAppState = async () => {
-        let appState;
-        try {
-            appState = await api.getCurrentAppState();
-        } catch (e) {
-            log.error(e);
-        }
+        const appState = await api.getCurrentAppState();
         this.setAppState(appState);
         return appState;
     };

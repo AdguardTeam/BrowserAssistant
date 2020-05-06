@@ -150,7 +150,7 @@ class NativeHostApi extends AbstractApi {
                     throw e;
                 }
             }
-            throw (e);
+            throw e;
         }
     };
 
