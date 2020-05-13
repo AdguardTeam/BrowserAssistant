@@ -39,7 +39,10 @@ Builds will be located in the `build` directory.
 
 ## Artifacts
 
-- `yarn artifacts:beta`, `yarn artifacts:release` create Chrome and Firefox builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.
+- `CREDENTIALS_PASSWORD=<password> yarn artifacts:beta`
+- `CREDENTIALS_PASSWORD=<password> yarn artifacts:release`
+
+Respectively creates Chrome and Firefox beta and release builds, zipped builds, documents for update and text file containing current version, signs the Firefox build.
 
 ## How to debug without AdGuard application
 

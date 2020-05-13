@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 const webExt = require('web-ext');
 const path = require('path');
-const { promises: fs } = require('fs');
+const fs = require('fs').promises;
 const chalk = require('chalk');
-const credentials = require('../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
 const {
     BROWSER_TYPES,
@@ -17,7 +16,6 @@ const {
 } = require('./consts');
 const config = require('../package');
 
-const { apiKey, apiSecret } = credentials;
 const { BUILD_ENV } = process.env;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
 const BUILD = 'build';
@@ -37,6 +35,15 @@ const getFirefoxManifest = async () => {
 async function generateXpi() {
     const sourceDir = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath,
         BROWSER_TYPES.FIREFOX);
+
+    const credentialsPath = path.resolve(__dirname, '../private/AdguardBrowserAssistant/mozilla_credentials.json');
+
+    // require called here in order to escape errors, until this module is really necessary
+    // eslint-disable-next-line global-require
+    const cryptor = require('../private/cryptor/dist');
+    const credentialsContent = await cryptor(process.env.CREDENTIALS_PASSWORD)
+        .getDecryptedContent(credentialsPath);
+    const { apiKey, apiSecret } = JSON.parse(credentialsContent);
 
     const { downloadedFiles } = await webExt.default.cmd.sign({
         apiKey,
