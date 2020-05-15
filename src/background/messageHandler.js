@@ -49,6 +49,18 @@ const messageHandler = async (message) => {
                     hostError: e.message,
                 };
             }
+
+            // For pages without http or https currentFilteringState would be null
+            if (!currentFilteringState) {
+                const updateStatusInfo = await state.getUpdateStatusInfo();
+                const appState = await state.getAppState();
+                return {
+                    referrer,
+                    updateStatusInfo,
+                    appState,
+                };
+            }
+
             return {
                 referrer,
                 updateStatusInfo,

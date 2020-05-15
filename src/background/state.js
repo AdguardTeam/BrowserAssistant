@@ -6,7 +6,7 @@ import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
-import { getUrlProps } from '../lib/helpers';
+import { getUrlProps, isHttp } from '../lib/helpers';
 import log from '../lib/logger';
 
 /**
@@ -208,22 +208,22 @@ class State {
     }
 
     /**
-     * Returns current filtering state or null if was unable to retrieve it
+     * Returns current filtering state or null if url is not http
      * @param {{id: number, url: string}} tab
      * @param {boolean} forceStart
      * @returns {Promise<null|*>}
      */
     getCurrentFilteringState = async (tab, forceStart = false) => {
-        const { url } = tab;
-        const { port } = getUrlProps(url);
+        const url = tab?.url;
 
-        let response;
-        try {
-            response = await api.getCurrentFilteringState(url, port, forceStart);
-        } catch (e) {
-            log.debug(e);
+        // Do not send empty urls or non http urls, see - AG-2360
+        if (!url || !isHttp(url)) {
             return null;
         }
+
+        const { port } = getUrlProps(url);
+
+        const response = await api.getCurrentFilteringState(url, port, forceStart);
 
         this.setAppState(response.appState);
         return response.parameters;
