@@ -100,6 +100,38 @@ async function upload() {
     return response.data;
 }
 
+
+const getLocaleTranslations = async (locale) => {
+    const filePath = path.join(LOCALES_DIR, locale, FILENAME);
+    const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+    return JSON.parse(fileContent);
+};
+
+const checkTranslationLevel = async () => {
+    const REQUIRED_LOCALES = ['ru', 'de', 'fr', 'ja', 'zh_CN'];
+    const REQUIRED_LVL_OF_TRANSLATIONS = 100;
+
+    const baseLocaleTranslations = await getLocaleTranslations(BASE_LOCALE);
+    const baseLocaleMessagesCount = Object.keys(baseLocaleTranslations).length;
+
+    const results = await Promise.all(REQUIRED_LOCALES.map(async (locale) => {
+        const localeTranslations = await getLocaleTranslations(locale);
+        const localeMessagesCount = Object.keys(localeTranslations).length;
+        const level = (localeMessagesCount / baseLocaleMessagesCount) * 100;
+        return { locale, level, translated: localeMessagesCount };
+    }));
+
+    const filteredResults = results.filter((result) => {
+        return result.level < REQUIRED_LVL_OF_TRANSLATIONS;
+    });
+
+    if (filteredResults.length > 0) {
+        throw new Error(`Languages required to have ${baseLocaleMessagesCount} messages, but received: ${JSON.stringify(filteredResults)}`);
+    }
+
+    return results;
+};
+
 /**
  * You need set environment variable LOCALES=DOWNLOAD|UPLOAD when run the script
  */
@@ -116,6 +148,15 @@ if (process.env.LOCALES === 'DOWNLOAD') {
     upload()
         .then((result) => {
             console.log(`Upload was successful with response: ${JSON.stringify(result)}`);
+        })
+        .catch((e) => {
+            console.log(e.message);
+            process.exit(1);
+        });
+} else if (process.env.LOCALES === 'CHECK') {
+    checkTranslationLevel()
+        .then(() => {
+            console.log('Languages have required level of translations');
         })
         .catch((e) => {
             console.log(e.message);

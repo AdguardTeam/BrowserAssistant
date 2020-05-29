@@ -17,6 +17,7 @@
         "test:watch": "jest --watch",
         "locales:download": "LOCALES=DOWNLOAD node tasks/locales.js",
         "locales:upload": "LOCALES=UPLOAD node tasks/locales.js",
+        "locales:check": "LOCALES=CHECK node tasks/locales.js",
         "watch": "BUILD_ENV=dev run-s \"build:chrome --watch\"",
         "watch:firefox": "BUILD_ENV=dev run-s \"build:firefox --watch\"",
         "watch:all": "run-s watch watch:firefox",
