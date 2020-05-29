@@ -69,7 +69,7 @@
         "message": "Prijavi ovu stranicu"
     },
     "reset_custom_rules": {
-        "message": "Poništi sva prilagođena pravila za ovu stranicu"
+        "message": "Poništi sva prilagođena pravila"
     },
     "cert_expired": {
         "message": "AdGuard nije mogao potvrditi certifikat ove web stranice, jer je root certifikat istekao"

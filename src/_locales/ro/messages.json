@@ -24,7 +24,7 @@
         "message": "Porniți AdGuard"
     },
     "adg_is_paused": {
-        "message": "Protecție AdGuard în pauză"
+        "message": "Protecția AdGuard este în pauză"
     },
     "adg_is_launching": {
         "message": "AdGuard pornește..."
@@ -69,7 +69,7 @@
         "message": "Raportați site-ul"
     },
     "reset_custom_rules": {
-        "message": "Resetare reguli personalizate pe pagină"
+        "message": "Resetați regulile personalizate pe pagină"
     },
     "cert_expired": {
         "message": "AdGuard nu poate verifica certificatul acestui site web deoarece certificatul root a expirat"

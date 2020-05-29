@@ -78,7 +78,7 @@
         "message": "El filtrado HTTPS no ha sido realizado para este sitio web"
     },
     "site_not_using_private_protection": {
-        "message": "El sitio no está usando una conexión privada. Alguien podría ver o cambiar la información que usted envía o recibe a través del sitio."
+        "message": "El sitio no está usando una conexión privada. Alguien podría ver o cambiar la información que envías o recibes a través del sitio."
     },
     "not_secure": {
         "message": "No es seguro"
@@ -90,7 +90,7 @@
         "message": "Página segura"
     },
     "not_filtering_https": {
-        "message": "De manera predeterminada, no filtramos el tráfico HTTPS para sistemas de pago y sitios web bancarios. Puede habilitar el filtrado usted mismo: toque el \"candado\" amarillo a la izquierda."
+        "message": "De manera predeterminada, no filtramos el tráfico HTTPS para sistemas de pago y sitios web bancarios. Puedes habilitar el filtrado tu mismo: toca el \"candado\" amarillo a la izquierda."
     },
     "disabled": {
         "message": "Deshabilitado en este sitio web"

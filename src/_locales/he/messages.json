@@ -1,39 +1,12 @@
 {
-    "name": {
-        "message": "עוזר הדפדפן של AdGuard"
-    },
-    "description": {
-        "message": "אדגארד מאפשרת הרחבה שימושית לחסימת תכנית וקבצים במערכת עצמה, יעיל בסינון מודעות ישירות מהדפדפן, מסתיר אלמנטים מציקים בשתי לחיצות"
-    },
-    "adg_is_not_installed": {
-        "message": "אדגארד אינו מותקן או מוגדר בצורה שגויה"
-    },
-    "get_adguard": {
-        "message": "הפעל את AdGuard"
-    },
-    "adg_is_not_updated": {
-        "message": "אדגארג לא מעודכן"
-    },
     "update": {
-        "message": "עדכון"
-    },
-    "adg_is_not_running": {
-        "message": "אדגארד לא פעיל"
-    },
-    "run_adg": {
-        "message": "פתח את אדגארד"
-    },
-    "adg_is_paused": {
-        "message": "הגנת אדגארד מושהת"
-    },
-    "adg_is_launching": {
-        "message": "AdGuard נטען..."
+        "message": "עדכן"
     },
     "enable": {
         "message": "אפשר"
     },
     "assistant_is_not_updated": {
-        "message": "אדגארג לא מעודכן"
+        "message": "המסייע אינו מעודכן"
     },
     "something_went_wrong": {
         "message": "משהו השתבש"
@@ -47,38 +20,20 @@
     "increase_ab_block_quality": {
         "message": "מעלה את איכות חסימת הפרסומות"
     },
-    "verified_by": {
-        "message": "מאושר ע\"י:"
-    },
     "more_info": {
-        "message": "מידע נוסף"
-    },
-    "adg_protection": {
-        "message": "הגנת אדגארד"
-    },
-    "adg_settings": {
-        "message": "הגדרות אדגארד"
+        "message": "עוד מידע"
     },
     "block_ads": {
-        "message": "חסום מודעות באתר זה"
+        "message": "חסום פרסומות באתר זה"
     },
     "open_filtering_log": {
-        "message": "פתח יומן סינון"
+        "message": "פתח את יומן הסינון"
     },
     "report_site": {
-        "message": "דווח על בעיה באתר זה"
+        "message": "דווח על אתר זה"
     },
     "reset_custom_rules": {
-        "message": "איופס כל ההגדרות המותאמות אישית בדף זה"
-    },
-    "cert_expired": {
-        "message": "AdGuard לא יכול היה לאמת את את התעודה של אתר זה, כיוון שפג תוקפה של תעודת השורש"
-    },
-    "cert_absent": {
-        "message": "סינון HTTPS לא בוצע על אתר זה"
-    },
-    "site_not_using_private_protection": {
-        "message": "אתר זה אינו משתמש בחיבור מאובטח. יתכן ומישהו יוכל לנתר או לשנות מידע שאתה שולח או מקבל באתר זה."
+        "message": "אפס את כל הכללים המותאמים אישית עבור דף זה"
     },
     "not_secure": {
         "message": "לא מאובטח"
@@ -89,25 +44,22 @@
     "secure_page": {
         "message": "דף מאובטח"
     },
-    "not_filtering_https": {
-        "message": "אין אנו מסננים כברירת מחדל, תעבורת HTTPS עבור אתרי תשלום או בנק. תוכל להפעיל סינון זה בעצמך: לחץ על המנעול הצהוב שמשמאל."
-    },
     "disabled": {
-        "message": "מבוטל באתר זה"
+        "message": "מושבת באתר זה"
     },
     "enabled": {
         "message": "מאופשר באתר זה"
     },
     "protection_is_enabled": {
-        "message": "הגנה פעילה"
+        "message": "הגנה מאופשרת"
     },
     "protection_is_disabled": {
         "message": "הגנה מושבתת"
     },
     "website_cert_is_expired": {
-        "message": "פג תוקפה של התעודה של אתר זה"
+        "message": "תעודת האתר פגה"
     },
     "expired": {
-        "message": "פג תוקף"
+        "message": "פג"
     }
 }
