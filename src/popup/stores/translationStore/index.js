@@ -33,6 +33,7 @@ class TranslationStore {
      * @returns {{locale: string, matchedKey: string}} locale
      */
     getLocale = () => {
+        console.log(this.locale);
         let result = checkLocale(messagesMap, this.locale);
 
         if (result.suitable) {
@@ -48,6 +49,8 @@ class TranslationStore {
     @computed
     get i18n() {
         const result = this.getLocale();
+
+        console.log(result);
 
         const messages = messagesMap[result.matchedKey];
 
