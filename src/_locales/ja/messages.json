@@ -1,0 +1,113 @@
+{
+    "name": {
+        "message": "AdGuardブラウザアシスタント"
+    },
+    "description": {
+        "message": "AdGuardデスクトップアプリの拡張機能。ブラウザから直接フィルタリングを管理できるようにし、迷惑な要素を数クリックすで隠すことができます。"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuardがインストールされていないか、正しく設定されていません。"
+    },
+    "get_adguard": {
+        "message": "AdGuardを入手する"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuardが更新されていません。"
+    },
+    "update": {
+        "message": "更新する"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuardが起動していません。"
+    },
+    "run_adg": {
+        "message": "AdGuardを起動する"
+    },
+    "adg_is_paused": {
+        "message": "AdGuardによる保護は一時停止中です。"
+    },
+    "adg_is_launching": {
+        "message": "AdGuardが起動中..."
+    },
+    "enable": {
+        "message": "再開する"
+    },
+    "assistant_is_not_updated": {
+        "message": "アシスタントが更新されていません。"
+    },
+    "something_went_wrong": {
+        "message": "問題が発生しました。"
+    },
+    "reinstall": {
+        "message": "再インストール"
+    },
+    "https_filtering": {
+        "message": "HTTPSフィルタリング"
+    },
+    "increase_ab_block_quality": {
+        "message": "広告ブロック質を向上させます。"
+    },
+    "verified_by": {
+        "message": "証明元:"
+    },
+    "more_info": {
+        "message": "詳細はこちら"
+    },
+    "adg_protection": {
+        "message": "AdGuardによる保護"
+    },
+    "adg_settings": {
+        "message": "AdGuard設定"
+    },
+    "block_ads": {
+        "message": "このページで広告をブロックする"
+    },
+    "open_filtering_log": {
+        "message": "フィルタリングログを開く"
+    },
+    "report_site": {
+        "message": "このページについてクレームを報告する"
+    },
+    "reset_custom_rules": {
+        "message": "このページに対するカスタムルールを全部リセット"
+    },
+    "cert_expired": {
+        "message": "ルート証明書の有効期限が切れているため、AdGuardはこのWebサイトの証明書を確認できませんでした。"
+    },
+    "cert_absent": {
+        "message": "このウェブサイトに対しHTTPSフィルタリングは実行されませんでした。"
+    },
+    "site_not_using_private_protection": {
+        "message": "このウェブサイトはプライベート接続を使用していません。あなたがサイトを介して送信・受信する情報を他人が閲覧・変更できる恐れがあります。"
+    },
+    "not_secure": {
+        "message": "非セキュア"
+    },
+    "nothing_to_block_here": {
+        "message": "ブロックするものなし"
+    },
+    "secure_page": {
+        "message": "セキュアなページ"
+    },
+    "not_filtering_https": {
+        "message": "デフォルトでは、支払いシステムと銀行のWebサイトのHTTPS通信を私たちはフィルタリングしていません。ご自身でフィルタリングを有効にするには黄色のロックアイコンをタップしてください。"
+    },
+    "disabled": {
+        "message": "このウェブサイトでブロックする: オフ"
+    },
+    "enabled": {
+        "message": "本ウェブサイトでブロックする: オン"
+    },
+    "protection_is_enabled": {
+        "message": "保護が有効になっています。"
+    },
+    "protection_is_disabled": {
+        "message": "保護は無効になっています。"
+    },
+    "website_cert_is_expired": {
+        "message": "ウェブサイト証明書の有効期限が切れています。"
+    },
+    "expired": {
+        "message": "期限切れ"
+    }
+}
