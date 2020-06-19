@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard 设置"
     },
+    "pause_filtering": {
+        "message": "暂停过滤 30 秒"
+    },
     "block_ads": {
         "message": "拦截此网站上的广告"
     },

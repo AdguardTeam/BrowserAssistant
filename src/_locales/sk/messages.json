@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Nastavenia AdGuard"
     },
+    "pause_filtering": {
+        "message": "Nefiltrovať počas 30 sekúnd"
+    },
     "block_ads": {
         "message": "Blokovať reklamy na tejto stránke"
     },

@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "تنظیمات AdGuard"
     },
+    "pause_filtering": {
+        "message": "به مدت 30 ثانیه فیلتر نکن"
+    },
     "block_ads": {
         "message": "مسدودسازی تبلیغ در این سایت"
     },

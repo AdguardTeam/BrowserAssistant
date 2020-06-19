@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard-indstillinger"
     },
+    "pause_filtering": {
+        "message": "Filtrer ikke i 30 sekunder"
+    },
     "block_ads": {
         "message": "Bloker annoncer på denne webside"
     },
