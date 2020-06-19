@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
-import { MODAL_STATES_NAMES, SHOW_MODAL_TIME } from '../../stores/consts';
+import {
+    MODAL_STATES_NAMES,
+    SHOW_MODAL_TIME,
+    PAUSE_FILTERING_TIMER,
+    PAUSE_FILTERING_TIMER_TICK_MS,
+} from '../../stores/consts';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
@@ -32,6 +37,22 @@ const CurrentSite = observer(() => {
     const {
         translate,
     } = translationStore;
+
+    const [time, setTime] = useState(PAUSE_FILTERING_TIMER);
+
+    useEffect(() => {
+        const timedId = setInterval(() => setTime((time) => {
+            if (time === '0') {
+                clearTimeout(timedId);
+                return '0';
+            }
+            return (parseInt(time, 10) - 1).toString();
+        }), PAUSE_FILTERING_TIMER_TICK_MS);
+
+        return () => {
+            clearTimeout(timedId);
+        };
+    }, []);
 
     const getHandlerForHttpsSite = (handler) => {
         if (pageProtocol.isHttps) {
@@ -68,6 +89,8 @@ const CurrentSite = observer(() => {
         'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || certStatus.isInvalid)) || pageProtocol.isHttp,
         'current-site__secure-status--modal': modalId,
     });
+
+    const timerClass = classNames('timer', { 'timer--hidden': time === '0' });
 
     const handleCertStatusModalState = (event, payload) => {
         if (!isFilteringEnabled && !certStatus.isValid) {
@@ -155,7 +178,10 @@ const CurrentSite = observer(() => {
             >
                 {translate(info)}
             </div>
-            <time className="timer">00:30</time>
+            <time className={timerClass}>
+                00:
+                {time.padStart(2, '0')}
+            </time>
         </div>
     );
 });
