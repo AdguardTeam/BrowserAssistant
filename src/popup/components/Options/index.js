@@ -15,13 +15,14 @@ const Options = observer(() => {
         pageProtocol,
         isAuthorized,
         isPageFilteredByUserFilter,
+        pauseFiltering,
     } = settingsStore;
 
     const buttons = [
         {
             iconName: 'clock',
             text: translationStore.translate('pause_filtering'),
-            onClick: console.log,
+            onClick: pauseFiltering,
             isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
             isVisible: true,
         },

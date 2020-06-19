@@ -341,6 +341,17 @@ class NativeHostApi extends AbstractApi {
     updateApp = () => this.makeRequest({
         type: REQUEST_TYPES.updateApp,
     });
+
+    /**
+     * Sends message to disable filtering temporarily
+     * @param {string} url
+     * @param {number} timeout
+     * @returns {Promise<object>}
+     */
+    temporarilyDisableFiltering = (url, timeout) => this.makeRequest({
+        type: REQUEST_TYPES.temporarilyDisableFiltering,
+        parameters: { url, timeout },
+    });
 }
 
 export default new NativeHostApi();

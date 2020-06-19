@@ -101,6 +101,6 @@ export const SECURE_STATUS_MODAL_STATES = {
 
 export const SWITCHER_TRANSITION_TIME = 150;
 
-export const PAUSE_FILTERING_TIMER = '30';
+export const PAUSE_FILTERING_TIMEOUT = '30';
 
 export const PAUSE_FILTERING_TIMER_TICK_MS = 1000;

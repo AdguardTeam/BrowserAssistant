@@ -4,7 +4,13 @@ import {
     observable,
     runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
+import {
+    ORIGINAL_CERT_STATUS,
+    PROTOCOLS,
+    PAUSE_FILTERING_TIMEOUT,
+    SWITCHER_TRANSITION_TIME,
+    PAUSE_FILTERING_TIMER_TICK_MS,
+} from '../consts';
 import { DOWNLOAD_LINK, EXTENSION_DOWNLOAD_LINK } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
@@ -47,6 +53,18 @@ class SettingsStore {
     @observable isAuthorized = false;
 
     @observable hostError = null;
+
+    @observable disableFilteringTimeout = '0';
+
+    @computed
+    get isFilteringPaused(){
+        return parseInt(this.disableFilteringTimeout, 10) > 0;
+    }
+
+    @action
+    setDisableFilteringTimeout = (disableFilteringTimeout) => {
+        this.disableFilteringTimeout = disableFilteringTimeout;
+    }
 
     @computed
     get currentTabHostname() {
@@ -335,6 +353,34 @@ class SettingsStore {
             log.error(error);
         }
     };
+
+    temporarilyDisableFiltering = async (disableFilteringTimeout = PAUSE_FILTERING_TIMEOUT) => {
+        this.setDisableFilteringTimeout(disableFilteringTimeout);
+
+        await messagesSender.temporarilyDisableFiltering(
+            this.currentUrl,
+            this.disableFilteringTimeout
+        );
+    };
+
+    pauseFiltering = async () => {
+        await this.temporarilyDisableFiltering(PAUSE_FILTERING_TIMEOUT);
+
+        const timedId = setInterval(() => {
+            if (!this.isFilteringPaused) {
+                clearTimeout(timedId);
+                return '0';
+            }
+            this.setDisableFilteringTimeout((parseInt(this.disableFilteringTimeout, 10) - 1).toString());
+        }, PAUSE_FILTERING_TIMER_TICK_MS);
+
+        return timedId;
+    }
+
+    @computed
+    get timer() {
+        return `00:${this.disableFilteringTimeout.padStart(2, '0')}`
+    }
 
     @computed
     get hasHostError() {

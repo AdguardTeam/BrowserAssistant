@@ -11,6 +11,7 @@ export const REQUEST_TYPES = {
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
     updateApp: 'updateApp',
+    temporarilyDisableFiltering: 'temporarilyDisableFiltering',
 };
 
 // Browser action popup messages
@@ -31,6 +32,7 @@ export const POPUP_MESSAGES = {
     UPDATE_APP: 'popup.update.app',
     OPEN_PAGE: 'popup.open.page',
     INIT_ASSISTANT: 'popup.init.assistant',
+    TEMPORARILY_DISABLE_FILTERING: 'popup.temporarily.disable.filtering',
 };
 
 // Content script messages

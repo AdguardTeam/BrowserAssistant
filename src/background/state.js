@@ -7,7 +7,6 @@ import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
-import log from '../lib/logger';
 
 /**
  * This class handles app state
@@ -284,7 +283,12 @@ class State {
     addRule = async (ruleText) => {
         const response = await api.addRule(ruleText);
         this.setAppState(response.appState);
-    }
+    };
+
+    temporarilyDisableFiltering = async (url, timeout) => {
+        const response = await api.temporarilyDisableFiltering(url, timeout);
+        this.setAppState(response.appState);
+    };
 }
 
 export default new State();

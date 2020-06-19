@@ -207,6 +207,12 @@ const generateResponse = async (type, async = true) => {
                 appState: hostData.appState,
             };
         }
+        case REQUEST_TYPES.temporarilyDisableFiltering: {
+            return {
+                ...response,
+                appState: hostData.appState,
+            };
+        }
         default:
             log.error(`Incorrect request type received: "${type}"`);
             throw new Error(`Incorrect request type received: "${type}"`);
@@ -465,6 +471,17 @@ class StubHostApi extends AbstractApi {
      */
     updateApp = () => this.makeRequest({
         type: REQUEST_TYPES.updateApp,
+    });
+
+    /**
+     * Sends message to disable filtering temporarily
+     * @param {string} url
+     * @param {number} timeout
+     * @returns {Promise<object>}
+     */
+    temporarilyDisableFiltering = (url, timeout) => this.makeRequest({
+        type: REQUEST_TYPES.temporarilyDisableFiltering,
+        parameters: { url, timeout },
     });
 }
 

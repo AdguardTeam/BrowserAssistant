@@ -159,6 +159,12 @@ const messageHandler = async (message) => {
             break;
         }
 
+        case POPUP_MESSAGES.TEMPORARILY_DISABLE_FILTERING: {
+            const { url, timeout } = data;
+            await state.temporarilyDisableFiltering(url, timeout);
+            break;
+        }
+
         default: {
             throw new Error(`Unknown message type was sent: ${type}`);
         }

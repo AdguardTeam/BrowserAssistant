@@ -185,4 +185,14 @@ export default class AbstractApi {
     updateApp = () => {
         throw notImplemented('updateApp');
     };
+
+    /**
+     * Sends message to disable filtering temporarily
+     * @param {string} url
+     * @param {number} timeout
+     * @returns {Promise<object>}
+     */
+    temporarilyDisableFiltering = (url, timeout) => {
+        throw notImplemented('temporarilyDisableFiltering');
+    };
 }
