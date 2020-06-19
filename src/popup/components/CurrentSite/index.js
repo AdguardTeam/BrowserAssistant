@@ -128,7 +128,6 @@ const CurrentSite = observer(() => {
                 <h2 tabIndex={uiStore.globalTabIndex} className="current-site__name">
                     {pageInfo}
                 </h2>
-
                 <CertStatusModal
                     isOpen={pageProtocol.isHttps && shouldOpenCertStatusModal}
                     onRequestClose={resetCertStatusModalState}
@@ -156,6 +155,7 @@ const CurrentSite = observer(() => {
             >
                 {translate(info)}
             </div>
+            <time className="timer">00:30</time>
         </div>
     );
 });

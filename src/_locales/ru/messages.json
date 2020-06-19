@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Настройки AdGuard"
     },
+    "pause_filtering": {
+        "message": "Не фильтровать 30 секунд"
+    },
     "block_ads": {
         "message": "Блокировать рекламу на этом сайте"
     },

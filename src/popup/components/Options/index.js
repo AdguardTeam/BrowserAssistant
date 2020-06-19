@@ -19,6 +19,13 @@ const Options = observer(() => {
 
     const buttons = [
         {
+            iconName: 'clock',
+            text: translationStore.translate('pause_filtering'),
+            onClick: console.log,
+            isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
+            isVisible: true,
+        },
+        {
             iconName: 'block-ad',
             text: translationStore.translate('block_ads'),
             onClick: settingsStore.initAssistant,
