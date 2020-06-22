@@ -24,6 +24,8 @@ const messageHandler = async (message) => {
                 };
             }
 
+            const { hostInfo } = state;
+
             // There is no need to check tab info if app is not working
             if (!state.isAppWorking()) {
                 return {
@@ -47,6 +49,7 @@ const messageHandler = async (message) => {
                     updateStatusInfo,
                     appState,
                     hostError: e.message,
+                    hostInfo,
                 };
             }
 
@@ -58,6 +61,7 @@ const messageHandler = async (message) => {
                     referrer,
                     updateStatusInfo,
                     appState,
+                    hostInfo,
                 };
             }
 
@@ -66,6 +70,7 @@ const messageHandler = async (message) => {
                 updateStatusInfo,
                 appState,
                 currentFilteringState,
+                hostInfo,
             };
         }
 
@@ -159,9 +164,15 @@ const messageHandler = async (message) => {
             break;
         }
 
+        // TODO: send message if popup was closed
+        // TODO: check word in Firefox
         case POPUP_MESSAGES.TEMPORARILY_DISABLE_FILTERING: {
-            const { url, timeout } = data;
+            const { url, timeout, tab } = data;
             await state.temporarilyDisableFiltering(url, timeout);
+            await tabs.reload(tab);
+            setTimeout(() => {
+                tabs.reload(tab);
+            }, parseInt(timeout, 10) * 1000);
             break;
         }
 

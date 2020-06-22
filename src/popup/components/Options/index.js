@@ -16,21 +16,17 @@ const Options = observer(() => {
         isAuthorized,
         isPageFilteredByUserFilter,
         pauseFiltering,
+        isFilteringPauseSupported,
     } = settingsStore;
 
+const isDisabled = !isFilteringEnabled || pageProtocol.isSecured;
+
     const buttons = [
-        {
-            iconName: 'clock',
-            text: translationStore.translate('pause_filtering'),
-            onClick: pauseFiltering,
-            isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
-            isVisible: true,
-        },
         {
             iconName: 'block-ad',
             text: translationStore.translate('block_ads'),
             onClick: settingsStore.initAssistant,
-            isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
+            isDisabled,
             isVisible: true,
         },
         {
@@ -44,7 +40,7 @@ const Options = observer(() => {
             iconName: 'thumb-down',
             text: translationStore.translate('report_site'),
             onClick: settingsStore.reportSite,
-            isDisabled: !isFilteringEnabled || pageProtocol.isSecured,
+            isDisabled,
             isVisible: true,
         },
         {
@@ -65,6 +61,16 @@ const Options = observer(() => {
             isVisible: isPageFilteredByUserFilter,
         },
     ];
+
+    if (isFilteringPauseSupported) {
+        buttons.unshift({
+            iconName: 'clock',
+            text: translationStore.translate('pause_filtering'),
+            onClick: pauseFiltering,
+            isDisabled,
+            isVisible: true,
+        });
+    }
 
     return (
         <div className="actions">

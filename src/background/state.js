@@ -66,10 +66,11 @@ class State {
      */
     initMessageHandler = (response) => {
         const { parameters, appState } = response;
-        const isAppUpToDate = versions.apiVersion <= parameters.apiVersion;
-        const { isValidatedOnHost } = parameters;
+        const { isValidatedOnHost, apiVersion, version, platform } = parameters;
+        const isAppUpToDate = versions.apiVersion <= apiVersion;
         this.setAppState(appState);
         this.setUpdateStatusInfo(isAppUpToDate, isValidatedOnHost);
+        this.setHostInfo(platform, version);
     };
 
     /**
@@ -182,6 +183,18 @@ class State {
             this.updateStatusInfo = { ...this.updateStatusInfo, ...nextUpdateStatusInfo };
             this.notifyModules();
         }
+    };
+
+    /**
+     * Sets host info
+     * @param platform
+     * @param version
+     */
+    setHostInfo = (platform, version) => {
+        this.hostInfo = {
+            platform,
+            version
+        };
     };
 
     /**

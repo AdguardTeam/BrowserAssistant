@@ -7,14 +7,19 @@ import {
 import {
     ORIGINAL_CERT_STATUS,
     PROTOCOLS,
-    PAUSE_FILTERING_TIMEOUT,
     SWITCHER_TRANSITION_TIME,
-    PAUSE_FILTERING_TIMER_TICK_MS,
+    PAUSE_FILTERING_TIMEOUT_MS,
+    PAUSE_FILTERING_TIMER_TICK_MS, PLATFORMS, FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
 } from '../consts';
 import { DOWNLOAD_LINK, EXTENSION_DOWNLOAD_LINK } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
-import { getFormattedProtocol, getUrlProps, isExtensionProtocol } from '../../../lib/helpers';
+import {
+    compareSemver,
+    getFormattedProtocol,
+    getUrlProps,
+    isExtensionProtocol,
+} from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
 class SettingsStore {
@@ -48,17 +53,31 @@ class SettingsStore {
 
     @observable isValidatedOnHost = false;
 
+    @observable hostPlatform = '';
+
+    @observable hostVersion = '';
+
     @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
     @observable isAuthorized = false;
 
     @observable hostError = null;
 
-    @observable disableFilteringTimeout = '0';
+    @observable disableFilteringTimeout = 0;
+
+    @computed
+    get isFilteringPauseSupported(){
+        return this.hostPlatform === PLATFORMS.WINDOWS && compareSemver(this.hostVersion, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
+    }
+
+    @computed
+    get disableFilteringTimeoutMs() {
+        return (this.disableFilteringTimeout / 1000).toString(10);
+    }
 
     @computed
     get isFilteringPaused(){
-        return parseInt(this.disableFilteringTimeout, 10) > 0;
+        return this.disableFilteringTimeout > 0;
     }
 
     @action
@@ -100,11 +119,14 @@ class SettingsStore {
     @action
     setUpdateStatusInfo = (statusInfo) => {
         const {
-            isAppUpToDate, isValidatedOnHost,
+            isAppUpToDate, isValidatedOnHost, platform, version,
         } = statusInfo;
 
         this.isAppUpToDate = isAppUpToDate;
         this.isValidatedOnHost = isValidatedOnHost;
+        this.platform = platform;
+        this.version = version;
+        console.log(this.platform, this.version);
     };
 
     @action
@@ -115,6 +137,7 @@ class SettingsStore {
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await messagesSender.getPopupData(tab);
+        console.log(popupData);
 
         if (popupData.hostError) {
             runInAction(() => {
@@ -129,12 +152,18 @@ class SettingsStore {
             currentFilteringState,
             updateStatusInfo,
             appState,
+            hostInfo: {
+                version,
+                platform
+            }
         } = popupData;
 
         runInAction(() => {
             this.currentUrl = tab.url;
             this.currentTitle = tab.title;
             this.referrer = referrer;
+            this.hostVersion = version;
+            this.hostPlatform = platform;
             this.setUrlFilteringState(currentFilteringState);
             this.setCurrentAppState(appState);
             this.setUpdateStatusInfo(updateStatusInfo);
@@ -354,32 +383,34 @@ class SettingsStore {
         }
     };
 
-    temporarilyDisableFiltering = async (disableFilteringTimeout = PAUSE_FILTERING_TIMEOUT) => {
-        this.setDisableFilteringTimeout(disableFilteringTimeout);
+    temporarilyDisableFiltering = async () => {
+        const tab = await this.getCurrentTab();
 
         await messagesSender.temporarilyDisableFiltering(
             this.currentUrl,
-            this.disableFilteringTimeout
+            this.disableFilteringTimeoutMs,
+            tab,
         );
     };
 
     pauseFiltering = async () => {
-        await this.temporarilyDisableFiltering(PAUSE_FILTERING_TIMEOUT);
+        this.setDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
+        await this.temporarilyDisableFiltering();
 
-        const timedId = setInterval(() => {
+        const timerId = setInterval(() => {
             if (!this.isFilteringPaused) {
-                clearTimeout(timedId);
-                return '0';
+                clearTimeout(timerId);
+                return 0;
             }
-            this.setDisableFilteringTimeout((parseInt(this.disableFilteringTimeout, 10) - 1).toString());
+            this.setDisableFilteringTimeout(this.disableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS);
         }, PAUSE_FILTERING_TIMER_TICK_MS);
 
-        return timedId;
+        return timerId;
     }
 
     @computed
     get timer() {
-        return `00:${this.disableFilteringTimeout.padStart(2, '0')}`
+        return `00:${this.disableFilteringTimeoutMs.padStart(2, '0')}`
     }
 
     @computed
