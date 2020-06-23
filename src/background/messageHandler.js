@@ -109,6 +109,9 @@ const messageHandler = async (message) => {
                 isHttpsEnabled,
                 url
             );
+
+            state.setTemporarilyDisableFilteringTimeout(0);
+            await state.updateTemporarilyDisableFilteringTimeout();
             break;
         }
 
@@ -187,16 +190,20 @@ const messageHandler = async (message) => {
             const timerId = setInterval(() => {
                 if (state.temporarilyDisableFilteringTimeout < 0) {
                     clearTimeout(timerId);
+
                     tabs.reload(tab);
-                    getCurrentFilteringState(tab).then((filteringState) => {
-                        updateCurrentFilteringState(filteringState);
-                    });
+
+                    getCurrentFilteringState(tab)
+                        .then(updateCurrentFilteringState);
                     return;
                 }
-                updateTemporarilyDisableFilteringTimeout();
-                setTemporarilyDisableFilteringTimeout(
-                    state.temporarilyDisableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS
-                );
+
+                updateTemporarilyDisableFilteringTimeout()
+                    .then(() => {
+                        setTemporarilyDisableFilteringTimeout(
+                            state.temporarilyDisableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS
+                        );
+                    });
             }, PAUSE_FILTERING_TIMER_TICK_MS);
             break;
         }
