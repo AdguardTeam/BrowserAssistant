@@ -387,7 +387,8 @@ class SettingsStore {
     temporarilyDisableFiltering = async () => {
         const tab = await this.getCurrentTab();
         await messagesSender.temporarilyDisableFiltering(tab);
-        // TODO: update popup state and rerender
+        const filteringStatus = await messagesSender.getUrlFilteringState(tab);
+        this.setUrlFilteringState(filteringStatus);
     };
 
     @computed

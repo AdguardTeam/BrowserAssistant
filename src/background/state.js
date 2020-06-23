@@ -78,6 +78,26 @@ class State {
         });
     }
 
+    updateCurrentFilteringState = async (currentFilteringState) => {
+        await browserApi.runtime.sendMessage({
+            type: POPUP_MESSAGES.UPDATE_CURRENT_FILTERING_STATE,
+            data: {
+                currentFilteringState,
+            },
+        });
+    }
+
+    setFilteringState = async () => {
+        const { temporarilyDisableFilteringTimeout } = this;
+
+        await browserApi.runtime.sendMessage({
+            type: POPUP_MESSAGES.SET_FILTERING_STATUS,
+            data: {
+                temporarilyDisableFilteringTimeout,
+            },
+        });
+    }
+
     init = () => {
         api.addMessageListener(this.nativeHostMessagesHandler);
         api.addInitMessageHandler(this.initMessageHandler);

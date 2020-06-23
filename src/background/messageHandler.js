@@ -31,7 +31,6 @@ const messageHandler = async (message) => {
                 };
             }
 
-
             // There is no need to check tab info if app is not working
             if (!state.isAppWorking()) {
                 return {
@@ -177,6 +176,8 @@ const messageHandler = async (message) => {
                 setTemporarilyDisableFilteringTimeout,
                 temporarilyDisableFiltering,
                 updateTemporarilyDisableFilteringTimeout,
+                getCurrentFilteringState,
+                updateCurrentFilteringState,
             } = state;
 
             setTemporarilyDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
@@ -187,6 +188,9 @@ const messageHandler = async (message) => {
                 if (state.temporarilyDisableFilteringTimeout < 0) {
                     clearTimeout(timerId);
                     tabs.reload(tab);
+                    getCurrentFilteringState(tab).then((filteringState) => {
+                        updateCurrentFilteringState(filteringState);
+                    });
                     return;
                 }
                 updateTemporarilyDisableFilteringTimeout();
