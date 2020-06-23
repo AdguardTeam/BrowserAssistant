@@ -100,14 +100,3 @@ export const SECURE_STATUS_MODAL_STATES = {
 };
 
 export const SWITCHER_TRANSITION_TIME = 150;
-
-export const PAUSE_FILTERING_TIMEOUT_MS = 30000;
-
-export const PAUSE_FILTERING_TIMER_TICK_MS = 1000;
-
-export const PLATFORMS = {
-    WINDOWS: 'windows',
-    MAC: 'mac',
-}
-
-export const FILTERING_PAUSE_VERSION_SUPPORT_SINCE = '7.5';

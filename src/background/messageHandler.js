@@ -1,6 +1,10 @@
 import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
+import {
+    PAUSE_FILTERING_TIMEOUT_MS,
+    PAUSE_FILTERING_TIMER_TICK_MS
+} from '../lib/consts';
 
 /**
  * Handles incoming messages to the background page
@@ -167,14 +171,29 @@ const messageHandler = async (message) => {
             break;
         }
 
-        // TODO: send message if popup was closed
         case POPUP_MESSAGES.TEMPORARILY_DISABLE_FILTERING: {
-            const { url, timeout, tab } = data;
-            await state.temporarilyDisableFiltering(url, timeout);
+            const { tab, tab: { url } } = data;
+            const {
+                setTemporarilyDisableFilteringTimeout,
+                temporarilyDisableFiltering,
+                updateTemporarilyDisableFilteringTimeout,
+            } = state;
+
+            setTemporarilyDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
+            await temporarilyDisableFiltering(url, (PAUSE_FILTERING_TIMEOUT_MS / 1000).toString());
             await tabs.reload(tab);
-            setTimeout(() => {
-                tabs.reload(tab);
-            }, parseInt(timeout, 10) * 1000);
+
+            const timerId = setInterval(() => {
+                if (state.temporarilyDisableFilteringTimeout < 0) {
+                    clearTimeout(timerId);
+                    tabs.reload(tab);
+                    return;
+                }
+                updateTemporarilyDisableFilteringTimeout();
+                setTemporarilyDisableFilteringTimeout(
+                    state.temporarilyDisableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS
+                );
+            }, PAUSE_FILTERING_TIMER_TICK_MS);
             break;
         }
 

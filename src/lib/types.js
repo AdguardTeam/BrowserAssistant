@@ -33,6 +33,7 @@ export const POPUP_MESSAGES = {
     OPEN_PAGE: 'popup.open.page',
     INIT_ASSISTANT: 'popup.init.assistant',
     TEMPORARILY_DISABLE_FILTERING: 'popup.temporarily.disable.filtering',
+    UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT: 'popup.update.temporarily.disable.filtering.timeout',
 };
 
 // Content script messages

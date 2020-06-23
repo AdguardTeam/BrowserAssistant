@@ -7,6 +7,7 @@ import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
+import { PAUSE_FILTERING_TIMEOUT_MS } from '../lib/consts';
 
 /**
  * This class handles app state
@@ -54,6 +55,23 @@ class State {
          */
         isValidatedOnHost: false,
     };
+
+    temporarilyDisableFilteringTimeout = PAUSE_FILTERING_TIMEOUT_MS;
+
+    setTemporarilyDisableFilteringTimeout = (temporarilyDisableFilteringTimeout) => {
+        this.temporarilyDisableFilteringTimeout = temporarilyDisableFilteringTimeout;
+    }
+
+    updateTemporarilyDisableFilteringTimeout = async () => {
+        const { temporarilyDisableFilteringTimeout } = this;
+
+        await browserApi.runtime.sendMessage({
+            type: POPUP_MESSAGES.UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT,
+            data: {
+                temporarilyDisableFilteringTimeout,
+            },
+        });
+    }
 
     init = () => {
         api.addMessageListener(this.nativeHostMessagesHandler);

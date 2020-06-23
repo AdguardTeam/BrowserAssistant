@@ -8,10 +8,13 @@ import {
     ORIGINAL_CERT_STATUS,
     PROTOCOLS,
     SWITCHER_TRANSITION_TIME,
-    PAUSE_FILTERING_TIMEOUT_MS,
-    PAUSE_FILTERING_TIMER_TICK_MS, PLATFORMS, FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
 } from '../consts';
-import { DOWNLOAD_LINK, EXTENSION_DOWNLOAD_LINK } from '../../../lib/consts';
+import {
+    DOWNLOAD_LINK,
+    EXTENSION_DOWNLOAD_LINK,
+    FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
+    PLATFORMS,
+} from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
 import {
@@ -383,28 +386,9 @@ class SettingsStore {
 
     temporarilyDisableFiltering = async () => {
         const tab = await this.getCurrentTab();
-
-        await messagesSender.temporarilyDisableFiltering(
-            this.currentUrl,
-            this.disableFilteringTimeoutMs,
-            tab,
-        );
+        await messagesSender.temporarilyDisableFiltering(tab);
+        // TODO: update popup state and rerender
     };
-
-    pauseFiltering = async () => {
-        this.setDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
-        await this.temporarilyDisableFiltering();
-
-        const timerId = setInterval(() => {
-            if (!this.isFilteringPaused) {
-                clearTimeout(timerId);
-                return 0;
-            }
-            this.setDisableFilteringTimeout(this.disableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS);
-        }, PAUSE_FILTERING_TIMER_TICK_MS);
-
-        return timerId;
-    }
 
     @computed
     get timer() {
