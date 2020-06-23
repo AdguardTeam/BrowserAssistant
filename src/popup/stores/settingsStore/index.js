@@ -126,7 +126,6 @@ class SettingsStore {
         this.isValidatedOnHost = isValidatedOnHost;
         this.platform = platform;
         this.version = version;
-        console.log(this.platform, this.version);
     };
 
     @action
@@ -137,7 +136,6 @@ class SettingsStore {
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await messagesSender.getPopupData(tab);
-        console.log(popupData);
 
         if (popupData.hostError) {
             runInAction(() => {

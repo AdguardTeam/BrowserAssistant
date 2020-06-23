@@ -14,6 +14,8 @@ const messageHandler = async (message) => {
 
     switch (type) {
         case POPUP_MESSAGES.GET_POPUP_DATA: {
+            const { hostInfo } = state;
+
             try {
                 await state.getCurrentAppState();
             } catch (e) {
@@ -21,16 +23,17 @@ const messageHandler = async (message) => {
                     appState: state.getAppState(),
                     updateStatusInfo: state.getUpdateStatusInfo(),
                     hostError: e.message,
+                    hostInfo,
                 };
             }
 
-            const { hostInfo } = state;
 
             // There is no need to check tab info if app is not working
             if (!state.isAppWorking()) {
                 return {
                     appState: state.getAppState(),
                     updateStatusInfo: state.getUpdateStatusInfo(),
+                    hostInfo,
                 };
             }
 
@@ -165,7 +168,6 @@ const messageHandler = async (message) => {
         }
 
         // TODO: send message if popup was closed
-        // TODO: check word in Firefox
         case POPUP_MESSAGES.TEMPORARILY_DISABLE_FILTERING: {
             const { url, timeout, tab } = data;
             await state.temporarilyDisableFiltering(url, timeout);

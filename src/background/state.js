@@ -66,7 +66,9 @@ class State {
      */
     initMessageHandler = (response) => {
         const { parameters, appState } = response;
-        const { isValidatedOnHost, apiVersion, version, platform } = parameters;
+        const {
+            isValidatedOnHost, apiVersion, version, platform,
+        } = parameters;
         const isAppUpToDate = versions.apiVersion <= apiVersion;
         this.setAppState(appState);
         this.setUpdateStatusInfo(isAppUpToDate, isValidatedOnHost);
@@ -193,7 +195,7 @@ class State {
     setHostInfo = (platform, version) => {
         this.hostInfo = {
             platform,
-            version
+            version,
         };
     };
 

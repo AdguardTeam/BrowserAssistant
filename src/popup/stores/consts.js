@@ -107,7 +107,6 @@ export const PAUSE_FILTERING_TIMER_TICK_MS = 1000;
 
 export const PLATFORMS = {
     WINDOWS: 'windows',
-    // FIXME correct
     MAC: 'mac',
 }
 
