@@ -185,7 +185,7 @@ const messageHandler = async (message) => {
             } = state;
 
             setPausedFilteringUrl(tab.url);
-            setTemporarilyDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS * 2);
+            setTemporarilyDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
             await temporarilyDisableFiltering(url, (PAUSE_FILTERING_TIMEOUT_MS / 1000).toString());
             await tabs.reload(tab);
 
