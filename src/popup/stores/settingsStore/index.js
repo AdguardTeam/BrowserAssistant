@@ -68,6 +68,8 @@ class SettingsStore {
 
     @observable disableFilteringTimeout = 0;
 
+    @observable pausedFilteringUrl = '';
+
     @computed
     get isFilteringPauseSupported(){
         return this.hostPlatform === PLATFORMS.WINDOWS && compareSemver(this.hostVersion, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
@@ -79,13 +81,8 @@ class SettingsStore {
     }
 
     @computed
-    get isFilteringPaused(){
-        return this.disableFilteringTimeout > 0;
-    }
-
-    @action
-    setDisableFilteringTimeout = (disableFilteringTimeout) => {
-        this.disableFilteringTimeout = disableFilteringTimeout;
+    get shouldShowPausedFilteringTimer(){
+        return this.currentUrl === this.pausedFilteringUrl && this.disableFilteringTimeout > 0;
     }
 
     @computed
@@ -117,6 +114,16 @@ class SettingsStore {
 
     @computed get pageInfo() {
         return this.pageProtocol.isExtension ? this.currentTitle : this.currentTabHostname;
+    }
+
+    @action
+    setDisableFilteringTimeout = (disableFilteringTimeout) => {
+        this.disableFilteringTimeout = disableFilteringTimeout;
+    }
+
+    @action
+    setPausedFilteringUrl = (pausedFilteringUrl) => {
+        this.pausedFilteringUrl = pausedFilteringUrl;
     }
 
     @action
@@ -386,6 +393,7 @@ class SettingsStore {
 
     temporarilyDisableFiltering = async () => {
         const tab = await this.getCurrentTab();
+        this.setPausedFilteringUrl(tab.url);
         await messagesSender.temporarilyDisableFiltering(tab);
         const filteringStatus = await messagesSender.getUrlFilteringState(tab);
         this.setUrlFilteringState(filteringStatus);

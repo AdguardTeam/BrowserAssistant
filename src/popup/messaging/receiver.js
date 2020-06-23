@@ -13,6 +13,7 @@ const getMessageReceiver = (rootStore) => {
                 break;
             case POPUP_MESSAGES.UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT:
                 settingsStore.setDisableFilteringTimeout(data.temporarilyDisableFilteringTimeout);
+                settingsStore.setPausedFilteringUrl(data.pausedFilteringUrl);
                 break;
             case POPUP_MESSAGES.UPDATE_CURRENT_FILTERING_STATE:
                 settingsStore.setUrlFilteringState(data.currentFilteringState);

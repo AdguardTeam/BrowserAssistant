@@ -63,17 +63,25 @@ class State {
 
     temporarilyDisableFilteringTimeout = PAUSE_FILTERING_TIMEOUT_MS;
 
+    pausedFilteringUrl = '';
+
     setTemporarilyDisableFilteringTimeout = (temporarilyDisableFilteringTimeout) => {
         this.temporarilyDisableFilteringTimeout = temporarilyDisableFilteringTimeout;
     }
 
+    setPausedFilteringUrl = (pausedFilteringUrl) => {
+        console.log('setPausedFilteringUrl', pausedFilteringUrl);
+        this.pausedFilteringUrl = pausedFilteringUrl;
+    }
+
     updateTemporarilyDisableFilteringTimeout = async () => {
-        const { temporarilyDisableFilteringTimeout } = this;
+        const { temporarilyDisableFilteringTimeout, pausedFilteringUrl } = this;
 
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT,
             data: {
                 temporarilyDisableFilteringTimeout,
+                pausedFilteringUrl,
             },
         });
     }

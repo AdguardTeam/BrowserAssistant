@@ -19,7 +19,7 @@ const CurrentSite = observer(() => {
         originalCertIssuer,
         pageInfo,
         timer,
-        isFilteringPaused,
+        shouldShowPausedFilteringTimer,
     } = settingsStore;
 
     const {
@@ -74,7 +74,7 @@ const CurrentSite = observer(() => {
         'current-site__secure-status--modal': modalId,
     });
 
-    const timerClass = classNames('timer', { 'timer--hidden': !isFilteringPaused });
+    const timerClass = classNames('timer', { 'timer--hidden': !shouldShowPausedFilteringTimer });
 
     const handleCertStatusModalState = (event, payload) => {
         if (!isFilteringEnabled && !certStatus.isValid) {
