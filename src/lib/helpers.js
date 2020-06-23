@@ -143,6 +143,7 @@ export const compareSemver = (a, b) => {
         const nb = Number(pb[i]);
         if (na > nb) return 1;
         if (nb > na) return -1;
+        const { isNaN } = Number;
         if (!isNaN(na) && isNaN(nb)) return 1;
         if (isNaN(na) && !isNaN(nb)) return -1;
     }

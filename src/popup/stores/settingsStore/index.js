@@ -156,7 +156,7 @@ class SettingsStore {
             hostInfo: {
                 version,
                 platform
-            }
+            },
         } = popupData;
 
         runInAction(() => {

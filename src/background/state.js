@@ -56,6 +56,11 @@ class State {
         isValidatedOnHost: false,
     };
 
+    hostInfo = {
+        platform: '',
+        version: '',
+    }
+
     temporarilyDisableFilteringTimeout = PAUSE_FILTERING_TIMEOUT_MS;
 
     setTemporarilyDisableFilteringTimeout = (temporarilyDisableFilteringTimeout) => {

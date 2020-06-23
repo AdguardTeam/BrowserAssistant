@@ -3,7 +3,7 @@ import tabs from './tabs';
 import state from './state';
 import {
     PAUSE_FILTERING_TIMEOUT_MS,
-    PAUSE_FILTERING_TIMER_TICK_MS
+    PAUSE_FILTERING_TIMER_TICK_MS,
 } from '../lib/consts';
 
 /**
