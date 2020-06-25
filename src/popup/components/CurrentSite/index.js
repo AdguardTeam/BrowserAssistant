@@ -20,6 +20,9 @@ const CurrentSite = observer(() => {
         pageInfo,
         shouldShowFilteringPauseTimer,
         filteringPauseTimer,
+        reloadPage,
+        showReloadButtonFlag,
+        setShowReloadButtonFlag,
     } = settingsStore;
 
     const {
@@ -97,6 +100,11 @@ const CurrentSite = observer(() => {
         return updateSecureStatusModalState(event.type, payload);
     };
 
+    const handlePageReload = () => {
+        reloadPage();
+        setShowReloadButtonFlag(false);
+    };
+
     const onKeyEnterDownSecure = (event) => {
         if (event.key !== 'Enter') {
             return;
@@ -162,7 +170,18 @@ const CurrentSite = observer(() => {
             >
                 {translate(info)}
             </div>
-            <time className={timerClass}>{filteringPauseTimer}</time>
+            {showReloadButtonFlag
+                ? (
+                    <button
+                        onClick={handlePageReload}
+                        type="button"
+                        className="reload-button"
+                        title={translate('reload_page')}
+                    >
+                        {translate('reload_page')}
+                    </button>
+                )
+                : <time className={timerClass}>{filteringPauseTimer}</time>}
         </div>
     );
 });

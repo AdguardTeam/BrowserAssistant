@@ -55,4 +55,7 @@ export default {
     getFilteringPauseSupportedFlag: () => {
         return sendMessage(POPUP_MESSAGES.GET_FILTERING_PAUSE_SUPPORTED_FLAG);
     },
+    getShowReloadButtonFlag: () => {
+        return sendMessage(POPUP_MESSAGES.GET_SHOW_RELOAD_BUTTON_FLAG);
+    },
 };

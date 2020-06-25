@@ -23,8 +23,13 @@ const messageHandler = async (message) => {
             return state.isFilteringPauseSupported();
         }
 
+        case POPUP_MESSAGES.GET_SHOW_RELOAD_BUTTON_FLAG: {
+            return state.showReloadButtonFlag();
+        }
+
         case POPUP_MESSAGES.GET_POPUP_DATA: {
             const { tab } = data;
+            state.setCurrentUrl(tab.url);
             const popupData = await handleGetPopupData(tab);
             return popupData;
         }
@@ -103,6 +108,7 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
+            delete state.showReloadButtonFlagMap[state.currentUrl];
             break;
         }
 

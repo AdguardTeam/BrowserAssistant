@@ -65,12 +65,20 @@ class State {
         version: '',
     }
 
-    filteringPauseTimeout = FILTERING_PAUSE_TIMEOUT_MS;
+    filteringPauseUrlToTimeoutMap = {};
 
-    filteringPauseUrl = '';
+    showReloadButtonFlagMap = {}
 
-    setFilteringPauseTimeout = (filteringPauseTimeout) => {
-        this.filteringPauseTimeout = filteringPauseTimeout;
+    currentUrl = '';
+
+    setCurrentUrl = (currentUrl) => {
+        this.currentUrl = currentUrl;
+    }
+
+    setFilteringPauseTimeout = (
+        filteringPauseUrl, filteringPauseTimeout = FILTERING_PAUSE_TIMEOUT_MS
+    ) => {
+        this.filteringPauseUrlToTimeoutMap[filteringPauseUrl] = filteringPauseTimeout;
     }
 
     setFilteringPauseUrl = (filteringPauseUrl) => {
@@ -82,26 +90,26 @@ class State {
             && compareSemver(this.hostInfo.version, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
     }
 
-    updateFilteringPauseTimeout = async () => {
-        const {
-            filteringPauseTimeout,
-            filteringPauseUrl,
-        } = this;
+    showReloadButtonFlag = () => {
+        return this.showReloadButtonFlagMap[this.currentUrl];
+    }
 
+    updateFilteringPauseTimeout = async () => {
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
-                filteringPauseTimeout,
-                filteringPauseUrl,
+                filteringPauseTimeout: this.filteringPauseUrlToTimeoutMap[this.currentUrl],
+                filteringPauseUrl: this.currentUrl,
             },
         });
     }
 
-    updateCurrentFilteringState = async (currentFilteringState) => {
+    updateShowReloadButtonFlag = async (showReloadButtonFlag) => {
+        this.showReloadButtonFlagMap[this.currentUrl] = true;
         await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.UPDATE_CURRENT_FILTERING_STATE,
+            type: POPUP_MESSAGES.SHOW_RELOAD_BUTTON_FLAG,
             data: {
-                currentFilteringState,
+                showReloadButtonFlag,
             },
         });
     }

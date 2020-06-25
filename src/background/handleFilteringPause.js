@@ -7,38 +7,36 @@ const handleFilteringPause = async (tab, url) => {
         pauseFiltering,
         setFilteringPauseTimeout,
         updateFilteringPauseTimeout,
-        setFilteringPauseUrl,
-        getCurrentFilteringState,
-        updateCurrentFilteringState,
         isFilteringPauseSupported,
+        filteringPauseUrlToTimeoutMap,
     } = state;
 
     if (!isFilteringPauseSupported) {
         return;
     }
 
-    setFilteringPauseUrl(url);
-    setFilteringPauseTimeout(FILTERING_PAUSE_TIMEOUT_MS);
+    setFilteringPauseTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
     await pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
     await tabs.reload(tab);
 
     const timerId = setInterval(() => {
-        if (state.filteringPauseTimeout < 0) {
+        const timeout = state.filteringPauseUrlToTimeoutMap[url];
+
+        if (timeout < 0) {
             clearTimeout(timerId);
-
-            tabs.reload(tab);
-
-            getCurrentFilteringState(tab)
-                .then(updateCurrentFilteringState);
+            delete state.filteringPauseUrlToTimeoutMap[url];
+            state.updateShowReloadButtonFlag(true);
             return;
         }
 
-        updateFilteringPauseTimeout()
-            .then(() => {
-                setFilteringPauseTimeout(
-                    state.filteringPauseTimeout - FILTERING_PAUSE_TIMER_TICK_MS
-                );
-            });
+        (async () => {
+            if (Object.prototype.hasOwnProperty
+                .call(filteringPauseUrlToTimeoutMap, state.currentUrl)) {
+                await updateFilteringPauseTimeout();
+            }
+        })();
+
+        setFilteringPauseTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
     }, FILTERING_PAUSE_TIMER_TICK_MS);
 };
 

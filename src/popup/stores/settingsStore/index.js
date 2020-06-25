@@ -65,9 +65,12 @@ class SettingsStore {
 
     @observable isFilteringPauseSupported = false;
 
+    @observable showReloadButtonFlag = false;
+
     @computed
-    get filteringPauseTimeoutSec() {
-        return (this.filteringPauseTimeout / 1000).toString(10);
+    get filteringPauseTimer() {
+        const filteringPauseTimeoutSec = (this.filteringPauseTimeout / 1000).toString(10);
+        return `00:${filteringPauseTimeoutSec.padStart(2, '0')}`;
     }
 
     @computed
@@ -107,11 +110,6 @@ class SettingsStore {
     }
 
     @action
-    setFilteringPauseTimeout = (filteringPauseTimeout) => {
-        this.filteringPauseTimeout = filteringPauseTimeout;
-    };
-
-    @action
     setFilteringPauseSupported = (isFilteringPauseSupported) => {
         this.isFilteringPauseSupported = isFilteringPauseSupported;
     };
@@ -119,6 +117,16 @@ class SettingsStore {
     @action
     setFilteringPauseUrl = (filteringPauseUrl) => {
         this.filteringPauseUrl = filteringPauseUrl;
+    };
+
+    @action
+    setFilteringPauseTimeout = (filteringPauseTimeout) => {
+        this.filteringPauseTimeout = filteringPauseTimeout;
+    };
+
+    @action
+    setShowReloadButtonFlag = (showReloadButtonFlag) => {
+        this.showReloadButtonFlag = showReloadButtonFlag;
     };
 
     @action
@@ -142,6 +150,7 @@ class SettingsStore {
         const tab = await tabs.getCurrent();
         const popupData = await messagesSender.getPopupData(tab);
         const isFilteringPauseSupported = await messagesSender.getFilteringPauseSupportedFlag();
+        const showReloadButtonFlag = await messagesSender.getShowReloadButtonFlag();
 
         if (popupData.hostError) {
             runInAction(() => {
@@ -166,6 +175,7 @@ class SettingsStore {
             this.setCurrentAppState(appState);
             this.setUpdateStatusInfo(updateStatusInfo);
             this.setFilteringPauseSupported(isFilteringPauseSupported);
+            this.setShowReloadButtonFlag(showReloadButtonFlag);
             // Stop showing loading screen only when all popup data is received
             this.rootStore.uiStore.setExtensionLoading(false);
         });
@@ -176,10 +186,14 @@ class SettingsStore {
         await messagesSender.openPage(DOWNLOAD_LINK);
     };
 
+    reloadPage = async () => {
+        const tab = await this.getCurrentTab();
+        await messagesSender.reload(tab);
+    };
+
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
-            const tab = await this.getCurrentTab();
-            await messagesSender.reload(tab);
+            await this.reloadPage();
         }, SWITCHER_TRANSITION_TIME);
     };
 
@@ -384,17 +398,12 @@ class SettingsStore {
     };
 
     pauseFiltering = async () => {
+        this.setShowReloadButtonFlag(false);
         const tab = await this.getCurrentTab();
-        this.setFilteringPauseUrl(tab.url);
         await messagesSender.pauseFiltering(tab);
         const filteringStatus = await messagesSender.getUrlFilteringState(tab);
         this.setUrlFilteringState(filteringStatus);
     };
-
-    @computed
-    get filteringPauseTimer() {
-        return `00:${this.filteringPauseTimeoutSec.padStart(2, '0')}`;
-    }
 
     @computed
     get hasHostError() {
