@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Налаштування AdGuard"
     },
+    "pause_filtering": {
+        "message": "Не фільтрувати 30 секунд"
+    },
     "block_ads": {
         "message": "Блокувати рекламу на цьому сайті"
     },

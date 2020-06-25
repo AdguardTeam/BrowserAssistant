@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard 設定"
     },
+    "pause_filtering": {
+        "message": "計 30 秒不過濾"
+    },
     "block_ads": {
         "message": "封鎖於該網站上之廣告"
     },

@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Setări AdGuard"
     },
+    "pause_filtering": {
+        "message": "Nu filtra pentru 30 de secunde"
+    },
     "block_ads": {
         "message": "Blocați pub pe acest site"
     },

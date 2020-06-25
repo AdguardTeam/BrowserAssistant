@@ -92,9 +92,6 @@
     "secure_page": {
         "message": "Secure page"
     },
-    "reload_page": {
-        "message": "Reload page"
-    },
     "not_filtering_https": {
         "message": "By default, we don't filter HTTPS traffic for the payment system and bank websites. You can enable the filtering yourself: tap on the yellow \"lock\" on the left."
     },
