@@ -187,12 +187,12 @@ export default class AbstractApi {
     };
 
     /**
-     * Sends message to disable filtering temporarily
+     * Sends message to pause filtering
      * @param {string} url
      * @param {number} timeout
      * @returns {Promise<object>}
      */
-    temporarilyDisableFiltering = (url, timeout) => {
-        throw notImplemented('temporarilyDisableFiltering');
+    pauseFiltering = (url, timeout) => {
+        throw notImplemented('pauseFiltering');
     };
 }

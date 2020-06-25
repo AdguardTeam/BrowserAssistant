@@ -343,13 +343,13 @@ class NativeHostApi extends AbstractApi {
     });
 
     /**
-     * Sends message to disable filtering temporarily
+     * Sends message to pause filtering
      * @param {string} url
      * @param {number} timeout
      * @returns {Promise<object>}
      */
-    temporarilyDisableFiltering = (url, timeout) => this.makeRequest({
-        type: REQUEST_TYPES.temporarilyDisableFiltering,
+    pauseFiltering = (url, timeout) => this.makeRequest({
+        type: REQUEST_TYPES.pauseFiltering,
         parameters: { url, timeout },
     });
 }

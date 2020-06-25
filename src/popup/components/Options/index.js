@@ -16,7 +16,7 @@ const Options = observer(() => {
         isAuthorized,
         isPageFilteredByUserFilter,
         isFilteringPauseSupported,
-        temporarilyDisableFiltering,
+        pauseFiltering,
     } = settingsStore;
 
     const isDisabled = !isFilteringEnabled || pageProtocol.isSecured;
@@ -66,7 +66,7 @@ const Options = observer(() => {
         buttons.unshift({
             iconName: 'clock',
             text: translationStore.translate('pause_filtering'),
-            onClick: temporarilyDisableFiltering,
+            onClick: pauseFiltering,
             isDisabled,
             isVisible: true,
         });

@@ -55,8 +55,8 @@ const messageHandler = async (message) => {
                 url
             );
 
-            state.setTemporarilyDisableFilteringTimeout(0);
-            await state.updateTemporarilyDisableFilteringTimeout();
+            state.setFilteringPauseTimeout(0);
+            await state.updateFilteringPauseTimeout();
             break;
         }
 

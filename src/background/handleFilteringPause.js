@@ -1,15 +1,15 @@
 import state from './state';
-import { PAUSE_FILTERING_TIMEOUT_MS, PAUSE_FILTERING_TIMER_TICK_MS } from '../lib/consts';
+import { FILTERING_PAUSE_TIMEOUT_MS, FILTERING_PAUSE_TIMER_TICK_MS } from '../lib/consts';
 import tabs from './tabs';
 
 const handleFilteringPause = async (tab, url) => {
     const {
-        setTemporarilyDisableFilteringTimeout,
-        temporarilyDisableFiltering,
-        updateTemporarilyDisableFilteringTimeout,
+        pauseFiltering,
+        setFilteringPauseTimeout,
+        updateFilteringPauseTimeout,
+        setFilteringPauseUrl,
         getCurrentFilteringState,
         updateCurrentFilteringState,
-        setPausedFilteringUrl,
         isFilteringPauseSupported,
     } = state;
 
@@ -17,13 +17,13 @@ const handleFilteringPause = async (tab, url) => {
         return;
     }
 
-    setPausedFilteringUrl(url);
-    setTemporarilyDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
-    await temporarilyDisableFiltering(url, (PAUSE_FILTERING_TIMEOUT_MS / 1000).toString());
+    setFilteringPauseUrl(url);
+    setFilteringPauseTimeout(FILTERING_PAUSE_TIMEOUT_MS);
+    await pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
     await tabs.reload(tab);
 
     const timerId = setInterval(() => {
-        if (state.temporarilyDisableFilteringTimeout < 0) {
+        if (state.filteringPauseTimeout < 0) {
             clearTimeout(timerId);
 
             tabs.reload(tab);
@@ -33,13 +33,13 @@ const handleFilteringPause = async (tab, url) => {
             return;
         }
 
-        updateTemporarilyDisableFilteringTimeout()
+        updateFilteringPauseTimeout()
             .then(() => {
-                setTemporarilyDisableFilteringTimeout(
-                    state.temporarilyDisableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS
+                setFilteringPauseTimeout(
+                    state.filteringPauseTimeout - FILTERING_PAUSE_TIMER_TICK_MS
                 );
             });
-    }, PAUSE_FILTERING_TIMER_TICK_MS);
+    }, FILTERING_PAUSE_TIMER_TICK_MS);
 };
 
 export default handleFilteringPause;

@@ -207,7 +207,7 @@ const generateResponse = async (type, async = true) => {
                 appState: hostData.appState,
             };
         }
-        case REQUEST_TYPES.temporarilyDisableFiltering: {
+        case REQUEST_TYPES.pauseFiltering: {
             return {
                 ...response,
                 appState: hostData.appState,
@@ -474,13 +474,13 @@ class StubHostApi extends AbstractApi {
     });
 
     /**
-     * Sends message to disable filtering temporarily
+     * Sends message to pause filtering
      * @param {string} url
      * @param {number} timeout
      * @returns {Promise<object>}
      */
-    temporarilyDisableFiltering = (url, timeout) => this.makeRequest({
-        type: REQUEST_TYPES.temporarilyDisableFiltering,
+    pauseFiltering = (url, timeout) => this.makeRequest({
+        type: REQUEST_TYPES.pauseFiltering,
         parameters: { url, timeout },
     });
 }

@@ -9,7 +9,7 @@ import notifier from '../lib/notifier';
 import { compareSemver, getUrlProps, isHttp } from '../lib/helpers';
 import {
     FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
-    PAUSE_FILTERING_TIMEOUT_MS,
+    FILTERING_PAUSE_TIMEOUT_MS,
     PLATFORMS,
 } from '../lib/consts';
 
@@ -65,16 +65,16 @@ class State {
         version: '',
     }
 
-    temporarilyDisableFilteringTimeout = PAUSE_FILTERING_TIMEOUT_MS;
+    filteringPauseTimeout = FILTERING_PAUSE_TIMEOUT_MS;
 
-    pausedFilteringUrl = '';
+    filteringPauseUrl = '';
 
-    setTemporarilyDisableFilteringTimeout = (temporarilyDisableFilteringTimeout) => {
-        this.temporarilyDisableFilteringTimeout = temporarilyDisableFilteringTimeout;
+    setFilteringPauseTimeout = (filteringPauseTimeout) => {
+        this.filteringPauseTimeout = filteringPauseTimeout;
     }
 
-    setPausedFilteringUrl = (pausedFilteringUrl) => {
-        this.pausedFilteringUrl = pausedFilteringUrl;
+    setFilteringPauseUrl = (filteringPauseUrl) => {
+        this.filteringPauseUrl = filteringPauseUrl;
     }
 
     isFilteringPauseSupported = () => {
@@ -82,17 +82,17 @@ class State {
             && compareSemver(this.hostInfo.version, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
     }
 
-    updateTemporarilyDisableFilteringTimeout = async () => {
+    updateFilteringPauseTimeout = async () => {
         const {
-            temporarilyDisableFilteringTimeout,
-            pausedFilteringUrl,
+            filteringPauseTimeout,
+            filteringPauseUrl,
         } = this;
 
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
-                temporarilyDisableFilteringTimeout,
-                pausedFilteringUrl,
+                filteringPauseTimeout,
+                filteringPauseUrl,
             },
         });
     }
@@ -102,17 +102,6 @@ class State {
             type: POPUP_MESSAGES.UPDATE_CURRENT_FILTERING_STATE,
             data: {
                 currentFilteringState,
-            },
-        });
-    }
-
-    setFilteringState = async () => {
-        const { temporarilyDisableFilteringTimeout } = this;
-
-        await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.SET_FILTERING_STATUS,
-            data: {
-                temporarilyDisableFilteringTimeout,
             },
         });
     }
@@ -362,8 +351,8 @@ class State {
         this.setAppState(response.appState);
     };
 
-    temporarilyDisableFiltering = async (url, timeout) => {
-        const response = await api.temporarilyDisableFiltering(url, timeout);
+    pauseFiltering = async (url, timeout) => {
+        const response = await api.pauseFiltering(url, timeout);
         this.setAppState(response.appState);
     };
 }

@@ -49,7 +49,7 @@ export default {
     openPage: (url) => {
         return sendMessage(POPUP_MESSAGES.OPEN_PAGE, { url });
     },
-    temporarilyDisableFiltering: (tab) => {
+    pauseFiltering: (tab) => {
         return sendMessage(POPUP_MESSAGES.PAUSE_FILTERING, { tab });
     },
     getFilteringPauseSupportedFlag: () => {

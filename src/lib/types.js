@@ -11,7 +11,7 @@ export const REQUEST_TYPES = {
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
     updateApp: 'updateApp',
-    temporarilyDisableFiltering: 'temporarilyDisableFiltering',
+    pauseFiltering: 'pauseFiltering',
 };
 
 // Browser action popup messages

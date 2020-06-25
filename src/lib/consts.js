@@ -7,8 +7,8 @@ export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 export const UPDATE_URL_FIREFOX = '{{UPDATE_URL_FIREFOX}}';
 export const UPDATE_URL_CHROME = '{{UPDATE_URL_CHROME}}';
 
-export const PAUSE_FILTERING_TIMEOUT_MS = 30000;
-export const PAUSE_FILTERING_TIMER_TICK_MS = 1000;
+export const FILTERING_PAUSE_TIMEOUT_MS = 30000;
+export const FILTERING_PAUSE_TIMER_TICK_MS = 1000;
 export const PLATFORMS = {
     WINDOWS: 'windows',
     MAC: 'mac',
