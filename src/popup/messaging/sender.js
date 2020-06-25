@@ -50,6 +50,9 @@ export default {
         return sendMessage(POPUP_MESSAGES.OPEN_PAGE, { url });
     },
     temporarilyDisableFiltering: (tab) => {
-        return sendMessage(POPUP_MESSAGES.TEMPORARILY_DISABLE_FILTERING, { tab });
+        return sendMessage(POPUP_MESSAGES.PAUSE_FILTERING, { tab });
+    },
+    getFilteringPauseSupportedFlag: () => {
+        return sendMessage(POPUP_MESSAGES.GET_FILTERING_PAUSE_SUPPORTED_FLAG);
     },
 };

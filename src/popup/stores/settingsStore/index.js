@@ -12,13 +12,10 @@ import {
 import {
     DOWNLOAD_LINK,
     EXTENSION_DOWNLOAD_LINK,
-    FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
-    PLATFORMS,
 } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
 import {
-    compareSemver,
     getFormattedProtocol,
     getUrlProps,
     isExtensionProtocol,
@@ -56,33 +53,26 @@ class SettingsStore {
 
     @observable isValidatedOnHost = false;
 
-    @observable hostPlatform = '';
-
-    @observable hostVersion = '';
-
     @observable isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
 
     @observable isAuthorized = false;
 
     @observable hostError = null;
 
-    @observable disableFilteringTimeout = 0;
+    @observable filteringPauseTimeout = 0;
 
     @observable pausedFilteringUrl = '';
 
+    @observable isFilteringPauseSupported = false;
+
     @computed
-    get isFilteringPauseSupported(){
-        return this.hostPlatform === PLATFORMS.WINDOWS && compareSemver(this.hostVersion, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
+    get filteringPauseTimeoutSec() {
+        return (this.filteringPauseTimeout / 1000).toString(10);
     }
 
     @computed
-    get disableFilteringTimeoutMs() {
-        return (this.disableFilteringTimeout / 1000).toString(10);
-    }
-
-    @computed
-    get shouldShowPausedFilteringTimer(){
-        return this.currentUrl === this.pausedFilteringUrl && this.disableFilteringTimeout > 0;
+    get shouldShowFilteringPauseTimer() {
+        return this.currentUrl === this.pausedFilteringUrl && this.filteringPauseTimeout > 0;
     }
 
     @computed
@@ -117,14 +107,19 @@ class SettingsStore {
     }
 
     @action
-    setDisableFilteringTimeout = (disableFilteringTimeout) => {
-        this.disableFilteringTimeout = disableFilteringTimeout;
-    }
+    setFilteringPauseTimeout = (filteringPauseTimeout) => {
+        this.filteringPauseTimeout = filteringPauseTimeout;
+    };
+
+    @action
+    setFilteringPauseSupported = (isFilteringPauseSupported) => {
+        this.isFilteringPauseSupported = isFilteringPauseSupported;
+    };
 
     @action
     setPausedFilteringUrl = (pausedFilteringUrl) => {
         this.pausedFilteringUrl = pausedFilteringUrl;
-    }
+    };
 
     @action
     setUpdateStatusInfo = (statusInfo) => {
@@ -146,6 +141,7 @@ class SettingsStore {
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await messagesSender.getPopupData(tab);
+        const isFilteringPauseSupported = await messagesSender.getFilteringPauseSupportedFlag();
 
         if (popupData.hostError) {
             runInAction(() => {
@@ -160,21 +156,17 @@ class SettingsStore {
             currentFilteringState,
             updateStatusInfo,
             appState,
-            hostInfo: {
-                version,
-                platform
-            },
         } = popupData;
 
         runInAction(() => {
             this.currentUrl = tab.url;
             this.currentTitle = tab.title;
             this.referrer = referrer;
-            this.hostVersion = version;
-            this.hostPlatform = platform;
             this.setUrlFilteringState(currentFilteringState);
             this.setCurrentAppState(appState);
             this.setUpdateStatusInfo(updateStatusInfo);
+            this.setFilteringPauseSupported(isFilteringPauseSupported);
+            // Stop showing loading screen only when all popup data is received
             this.rootStore.uiStore.setExtensionLoading(false);
         });
     };
@@ -400,8 +392,8 @@ class SettingsStore {
     };
 
     @computed
-    get timer() {
-        return `00:${this.disableFilteringTimeoutMs.padStart(2, '0')}`
+    get filteringPauseTimer() {
+        return `00:${this.filteringPauseTimeoutSec.padStart(2, '0')}`;
     }
 
     @computed

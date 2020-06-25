@@ -100,7 +100,6 @@ async function upload() {
     return response.data;
 }
 
-
 const getLocaleTranslations = async (locale) => {
     const filePath = path.join(LOCALES_DIR, locale, FILENAME);
     const fileContent = await fs.promises.readFile(filePath, 'utf-8');

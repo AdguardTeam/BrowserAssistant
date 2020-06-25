@@ -11,8 +11,8 @@ const getMessageReceiver = (rootStore) => {
                 settingsStore.setCurrentAppState(data.appState);
                 settingsStore.setUpdateStatusInfo(data.updateStatusInfo);
                 break;
-            case POPUP_MESSAGES.UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT:
-                settingsStore.setDisableFilteringTimeout(data.temporarilyDisableFilteringTimeout);
+            case POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT:
+                settingsStore.setFilteringPauseTimeout(data.temporarilyDisableFilteringTimeout);
                 settingsStore.setPausedFilteringUrl(data.pausedFilteringUrl);
                 break;
             case POPUP_MESSAGES.UPDATE_CURRENT_FILTERING_STATE:

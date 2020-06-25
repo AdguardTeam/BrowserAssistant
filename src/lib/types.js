@@ -32,9 +32,10 @@ export const POPUP_MESSAGES = {
     UPDATE_APP: 'popup.update.app',
     OPEN_PAGE: 'popup.open.page',
     INIT_ASSISTANT: 'popup.init.assistant',
-    TEMPORARILY_DISABLE_FILTERING: 'popup.temporarily.disable.filtering',
-    UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT: 'popup.update.temporarily.disable.filtering.timeout',
+    PAUSE_FILTERING: 'popup.pause.filtering',
+    UPDATE_FILTERING_PAUSE_TIMEOUT: 'popup.update.filtering.pause.timeout',
     UPDATE_CURRENT_FILTERING_STATE: 'popup.update.current.filtering.state',
+    GET_FILTERING_PAUSE_SUPPORTED_FLAG: 'popup.get.filtering.pause.supported.flag',
 };
 
 // Content script messages

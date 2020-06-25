@@ -135,6 +135,15 @@ export const checkSomeIsTrue = (states) => {
         .some((state) => state === true);
 };
 
+/**
+ * If the semver string a is greater than b, return 1.
+ * If the semver string b is greater than a, return -1.
+ * If a equals b, return 0;
+ *
+ * @param {string} a
+ * @param {string} b
+ * @returns {-1 | 0 | 1}
+ */
 export const compareSemver = (a, b) => {
     const pa = a.split('.');
     const pb = b.split('.');

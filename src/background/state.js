@@ -6,8 +6,12 @@ import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
-import { getUrlProps, isHttp } from '../lib/helpers';
-import { PAUSE_FILTERING_TIMEOUT_MS } from '../lib/consts';
+import { compareSemver, getUrlProps, isHttp } from '../lib/helpers';
+import {
+    FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
+    PAUSE_FILTERING_TIMEOUT_MS,
+    PLATFORMS,
+} from '../lib/consts';
 
 /**
  * This class handles app state
@@ -70,15 +74,22 @@ class State {
     }
 
     setPausedFilteringUrl = (pausedFilteringUrl) => {
-        console.log('setPausedFilteringUrl', pausedFilteringUrl);
         this.pausedFilteringUrl = pausedFilteringUrl;
     }
 
+    isFilteringPauseSupported = () => {
+        return this.hostInfo.platform === PLATFORMS.WINDOWS
+            && compareSemver(this.hostInfo.version, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
+    }
+
     updateTemporarilyDisableFilteringTimeout = async () => {
-        const { temporarilyDisableFilteringTimeout, pausedFilteringUrl } = this;
+        const {
+            temporarilyDisableFilteringTimeout,
+            pausedFilteringUrl,
+        } = this;
 
         await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.UPDATE_TEMPORARILY_DISABLE_FILTERING_TIMEOUT,
+            type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
                 temporarilyDisableFilteringTimeout,
                 pausedFilteringUrl,

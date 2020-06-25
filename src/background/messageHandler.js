@@ -1,10 +1,8 @@
 import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
-import {
-    PAUSE_FILTERING_TIMEOUT_MS,
-    PAUSE_FILTERING_TIMER_TICK_MS,
-} from '../lib/consts';
+import handleFilteringPause from './handleFilteringPause';
+import handleGetPopupData from './handleGetPopupData';
 
 /**
  * Handles incoming messages to the background page
@@ -17,71 +15,18 @@ const messageHandler = async (message) => {
     const { type, data } = message;
 
     switch (type) {
-        case POPUP_MESSAGES.GET_POPUP_DATA: {
-            const { hostInfo } = state;
-
-            try {
-                await state.getCurrentAppState();
-            } catch (e) {
-                return {
-                    appState: state.getAppState(),
-                    updateStatusInfo: state.getUpdateStatusInfo(),
-                    hostError: e.message,
-                    hostInfo,
-                };
-            }
-
-            // There is no need to check tab info if app is not working
-            if (!state.isAppWorking()) {
-                return {
-                    appState: state.getAppState(),
-                    updateStatusInfo: state.getUpdateStatusInfo(),
-                    hostInfo,
-                };
-            }
-
-            const { tab } = data;
-            const referrer = await tabs.getReferrer(tab);
-            const updateStatusInfo = state.getUpdateStatusInfo();
-            const appState = state.getAppState();
-            let currentFilteringState;
-            try {
-                currentFilteringState = await state.getCurrentFilteringState(tab);
-            } catch (e) {
-                const updateStatusInfo = await state.getUpdateStatusInfo();
-                const appState = await state.getAppState();
-                return {
-                    referrer,
-                    updateStatusInfo,
-                    appState,
-                    hostError: e.message,
-                    hostInfo,
-                };
-            }
-
-            // For pages without http or https currentFilteringState would be null
-            if (!currentFilteringState) {
-                const updateStatusInfo = await state.getUpdateStatusInfo();
-                const appState = await state.getAppState();
-                return {
-                    referrer,
-                    updateStatusInfo,
-                    appState,
-                    hostInfo,
-                };
-            }
-
-            return {
-                referrer,
-                updateStatusInfo,
-                appState,
-                currentFilteringState,
-                hostInfo,
-            };
-        }
-
         case POPUP_MESSAGES.GET_APP_LOCALE: {
             return state.getLocale();
+        }
+
+        case POPUP_MESSAGES.GET_FILTERING_PAUSE_SUPPORTED_FLAG: {
+            return state.isFilteringPauseSupported();
+        }
+
+        case POPUP_MESSAGES.GET_POPUP_DATA: {
+            const { tab } = data;
+            const popupData = await handleGetPopupData(tab);
+            return popupData;
         }
 
         case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {
@@ -173,40 +118,9 @@ const messageHandler = async (message) => {
             break;
         }
 
-        case POPUP_MESSAGES.TEMPORARILY_DISABLE_FILTERING: {
+        case POPUP_MESSAGES.PAUSE_FILTERING: {
             const { tab, tab: { url } } = data;
-            const {
-                setTemporarilyDisableFilteringTimeout,
-                temporarilyDisableFiltering,
-                updateTemporarilyDisableFilteringTimeout,
-                getCurrentFilteringState,
-                updateCurrentFilteringState,
-                setPausedFilteringUrl,
-            } = state;
-
-            setPausedFilteringUrl(tab.url);
-            setTemporarilyDisableFilteringTimeout(PAUSE_FILTERING_TIMEOUT_MS);
-            await temporarilyDisableFiltering(url, (PAUSE_FILTERING_TIMEOUT_MS / 1000).toString());
-            await tabs.reload(tab);
-
-            const timerId = setInterval(() => {
-                if (state.temporarilyDisableFilteringTimeout < 0) {
-                    clearTimeout(timerId);
-
-                    tabs.reload(tab);
-
-                    getCurrentFilteringState(tab)
-                        .then(updateCurrentFilteringState);
-                    return;
-                }
-
-                updateTemporarilyDisableFilteringTimeout()
-                    .then(() => {
-                        setTemporarilyDisableFilteringTimeout(
-                            state.temporarilyDisableFilteringTimeout - PAUSE_FILTERING_TIMER_TICK_MS
-                        );
-                    });
-            }, PAUSE_FILTERING_TIMER_TICK_MS);
+            await handleFilteringPause(tab, url);
             break;
         }
 
