@@ -7,11 +7,7 @@ import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
 import { compareSemver, getUrlProps, isHttp } from '../lib/helpers';
-import {
-    FILTERING_PAUSE_VERSION_SUPPORT_SINCE,
-    FILTERING_PAUSE_TIMEOUT_MS,
-    PLATFORMS,
-} from '../lib/consts';
+import { FILTERING_PAUSE_VERSION_SUPPORT_SINCE } from '../lib/consts';
 
 /**
  * This class handles app state
@@ -63,36 +59,35 @@ class State {
     hostInfo = {
         platform: '',
         version: '',
-    }
+    };
 
     filteringPauseUrlToTimeoutMap = {};
 
-    showReloadButtonFlagMap = {}
+    showReloadButtonFlagMap = {};
 
     currentUrl = '';
 
     setCurrentUrl = (currentUrl) => {
         this.currentUrl = currentUrl;
-    }
+    };
 
-    setFilteringPauseTimeout = (
-        filteringPauseUrl, filteringPauseTimeout = FILTERING_PAUSE_TIMEOUT_MS
-    ) => {
+    setFilteringPauseTimeout = (filteringPauseUrl, filteringPauseTimeout) => {
         this.filteringPauseUrlToTimeoutMap[filteringPauseUrl] = filteringPauseTimeout;
-    }
+    };
 
-    setFilteringPauseUrl = (filteringPauseUrl) => {
-        this.filteringPauseUrl = filteringPauseUrl;
-    }
+    resetFilteringPauseTimeout = () => {
+        this.setFilteringPauseTimeout(this.currentUrl, 0);
+    };
 
     isFilteringPauseSupported = () => {
-        return this.hostInfo.platform === PLATFORMS.WINDOWS
-            && compareSemver(this.hostInfo.version, FILTERING_PAUSE_VERSION_SUPPORT_SINCE) >= 0;
-    }
+        const { version, platform } = this.hostInfo;
+        const minSupportVersion = FILTERING_PAUSE_VERSION_SUPPORT_SINCE[platform.toUpperCase()];
+        return compareSemver(version, minSupportVersion) >= 0;
+    };
 
     showReloadButtonFlag = () => {
         return this.showReloadButtonFlagMap[this.currentUrl];
-    }
+    };
 
     updateFilteringPauseTimeout = async () => {
         await browserApi.runtime.sendMessage({
@@ -102,7 +97,7 @@ class State {
                 filteringPauseUrl: this.currentUrl,
             },
         });
-    }
+    };
 
     updateShowReloadButtonFlag = async (showReloadButtonFlag) => {
         this.showReloadButtonFlagMap[this.currentUrl] = true;
@@ -112,7 +107,7 @@ class State {
                 showReloadButtonFlag,
             },
         });
-    }
+    };
 
     init = () => {
         api.addMessageListener(this.nativeHostMessagesHandler);

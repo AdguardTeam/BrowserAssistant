@@ -131,14 +131,10 @@ class SettingsStore {
 
     @action
     setUpdateStatusInfo = (statusInfo) => {
-        const {
-            isAppUpToDate, isValidatedOnHost, platform, version,
-        } = statusInfo;
+        const { isAppUpToDate, isValidatedOnHost } = statusInfo;
 
         this.isAppUpToDate = isAppUpToDate;
         this.isValidatedOnHost = isValidatedOnHost;
-        this.platform = platform;
-        this.version = version;
     };
 
     @action
@@ -149,8 +145,6 @@ class SettingsStore {
         this.rootStore.uiStore.setExtensionLoading(true);
         const tab = await tabs.getCurrent();
         const popupData = await messagesSender.getPopupData(tab);
-        const isFilteringPauseSupported = await messagesSender.getFilteringPauseSupportedFlag();
-        const showReloadButtonFlag = await messagesSender.getShowReloadButtonFlag();
 
         if (popupData.hostError) {
             runInAction(() => {
@@ -165,6 +159,8 @@ class SettingsStore {
             currentFilteringState,
             updateStatusInfo,
             appState,
+            isFilteringPauseSupported,
+            showReloadButtonFlag,
         } = popupData;
 
         runInAction(() => {

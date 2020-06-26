@@ -35,8 +35,6 @@ export const POPUP_MESSAGES = {
     PAUSE_FILTERING: 'popup.pause.filtering',
     UPDATE_FILTERING_PAUSE_TIMEOUT: 'popup.update.filtering.pause.timeout',
     SHOW_RELOAD_BUTTON_FLAG: 'popup.show.reload.button.flag',
-    GET_FILTERING_PAUSE_SUPPORTED_FLAG: 'popup.get.filtering.pause.supported.flag',
-    GET_SHOW_RELOAD_BUTTON_FLAG: 'popup.get.show.reload.button.flag',
 };
 
 // Content script messages

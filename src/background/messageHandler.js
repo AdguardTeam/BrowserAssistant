@@ -2,7 +2,7 @@ import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
 import handleFilteringPause from './handleFilteringPause';
-import handleGetPopupData from './handleGetPopupData';
+import getPopupData from './getPopupData';
 
 /**
  * Handles incoming messages to the background page
@@ -19,18 +19,10 @@ const messageHandler = async (message) => {
             return state.getLocale();
         }
 
-        case POPUP_MESSAGES.GET_FILTERING_PAUSE_SUPPORTED_FLAG: {
-            return state.isFilteringPauseSupported();
-        }
-
-        case POPUP_MESSAGES.GET_SHOW_RELOAD_BUTTON_FLAG: {
-            return state.showReloadButtonFlag();
-        }
-
         case POPUP_MESSAGES.GET_POPUP_DATA: {
             const { tab } = data;
             state.setCurrentUrl(tab.url);
-            const popupData = await handleGetPopupData(tab);
+            const popupData = await getPopupData(tab);
             return popupData;
         }
 
@@ -60,7 +52,7 @@ const messageHandler = async (message) => {
                 url
             );
 
-            state.setFilteringPauseTimeout(0);
+            state.resetFilteringPauseTimeout();
             await state.updateFilteringPauseTimeout();
             break;
         }

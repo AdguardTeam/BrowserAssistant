@@ -1,7 +1,10 @@
 import state from './state';
 import tabs from './tabs';
 
-const handleGetPopupData = async (tab) => {
+const getPopupData = async (tab) => {
+    const isFilteringPauseSupported = state.isFilteringPauseSupported();
+    const showReloadButtonFlag = state.showReloadButtonFlag();
+
     try {
         await state.getCurrentAppState();
     } catch (e) {
@@ -9,6 +12,8 @@ const handleGetPopupData = async (tab) => {
             appState: state.getAppState(),
             updateStatusInfo: state.getUpdateStatusInfo(),
             hostError: e.message,
+            isFilteringPauseSupported,
+            showReloadButtonFlag,
         };
     }
 
@@ -17,6 +22,8 @@ const handleGetPopupData = async (tab) => {
         return {
             appState: state.getAppState(),
             updateStatusInfo: state.getUpdateStatusInfo(),
+            isFilteringPauseSupported,
+            showReloadButtonFlag,
         };
     }
 
@@ -34,6 +41,8 @@ const handleGetPopupData = async (tab) => {
             updateStatusInfo,
             appState,
             hostError: e.message,
+            isFilteringPauseSupported,
+            showReloadButtonFlag,
         };
     }
 
@@ -45,6 +54,8 @@ const handleGetPopupData = async (tab) => {
             referrer,
             updateStatusInfo,
             appState,
+            isFilteringPauseSupported,
+            showReloadButtonFlag,
         };
     }
 
@@ -53,7 +64,9 @@ const handleGetPopupData = async (tab) => {
         updateStatusInfo,
         appState,
         currentFilteringState,
+        isFilteringPauseSupported,
+        showReloadButtonFlag,
     };
 };
 
-export default handleGetPopupData;
+export default getPopupData;
