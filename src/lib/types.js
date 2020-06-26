@@ -34,7 +34,6 @@ export const POPUP_MESSAGES = {
     INIT_ASSISTANT: 'popup.init.assistant',
     PAUSE_FILTERING: 'popup.pause.filtering',
     UPDATE_FILTERING_PAUSE_TIMEOUT: 'popup.update.filtering.pause.timeout',
-    SHOW_RELOAD_BUTTON_FLAG: 'popup.show.reload.button.flag',
 };
 
 // Content script messages

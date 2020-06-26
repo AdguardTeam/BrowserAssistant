@@ -42,14 +42,8 @@ class FilteringPause {
         });
     };
 
-    updateShowReloadButtonFlag = async (url, showReloadButtonFlag) => {
+    setShowReloadButtonFlag = (url, showReloadButtonFlag) => {
         this.showReloadButtonFlagMap[url] = showReloadButtonFlag;
-        await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.SHOW_RELOAD_BUTTON_FLAG,
-            data: {
-                showReloadButtonFlag,
-            },
-        });
     };
 
     pauseFiltering = async (url, timeout) => {
@@ -72,9 +66,7 @@ class FilteringPause {
 
             if (timeout < 0) {
                 clearTimeout(timerId);
-                delete this.filteringPauseUrlToTimeoutMap[url];
-                await this.updateShowReloadButtonFlag(url, true);
-                return;
+                this.setShowReloadButtonFlag(url, true);
             }
 
             if (url === state.currentUrl) {

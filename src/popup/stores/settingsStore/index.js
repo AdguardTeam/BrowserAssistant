@@ -138,14 +138,9 @@ class SettingsStore {
     };
 
     @action
-    getPopupData = async () => {
-        // Get locale at the beginning in order to show messages as faster as possible
-        const locale = await messagesSender.getLocale();
-        this.rootStore.translationStore.setLocale(locale);
-        this.rootStore.uiStore.setExtensionLoading(true);
-        const tab = await tabs.getCurrent();
-        const popupData = await messagesSender.getPopupData(tab);
-
+    updatePopupData = async (tab) => {
+        const currentTab = tab || await tabs.getCurrent();
+        const popupData = await messagesSender.getPopupData(currentTab);
         if (popupData.hostError) {
             runInAction(() => {
                 this.hostError = popupData.hostError;
@@ -164,14 +159,27 @@ class SettingsStore {
         } = popupData;
 
         runInAction(() => {
-            this.currentUrl = tab.url;
-            this.currentTitle = tab.title;
             this.referrer = referrer;
             this.setUrlFilteringState(currentFilteringState);
             this.setCurrentAppState(appState);
             this.setUpdateStatusInfo(updateStatusInfo);
             this.setFilteringPauseSupported(isFilteringPauseSupported);
             this.setShowReloadButtonFlag(showReloadButtonFlag);
+        });
+    }
+
+    @action
+    getPopupData = async () => {
+        // Get locale at the beginning in order to show messages as faster as possible
+        const locale = await messagesSender.getLocale();
+        this.rootStore.translationStore.setLocale(locale);
+        this.rootStore.uiStore.setExtensionLoading(true);
+        const tab = await tabs.getCurrent();
+        await this.updatePopupData(tab);
+
+        runInAction(() => {
+            this.currentUrl = tab.url;
+            this.currentTitle = tab.title;
             // Stop showing loading screen only when all popup data is received
             this.rootStore.uiStore.setExtensionLoading(false);
         });

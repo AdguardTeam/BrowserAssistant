@@ -3,7 +3,7 @@ import { POPUP_MESSAGES } from '../../lib/types';
 const getMessageReceiver = (rootStore) => {
     const { settingsStore } = rootStore;
 
-    return (message) => {
+    return async (message) => {
         const { type, data } = message;
 
         switch (type) {
@@ -14,9 +14,9 @@ const getMessageReceiver = (rootStore) => {
             case POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT:
                 settingsStore.setFilteringPauseUrl(data.filteringPauseUrl);
                 settingsStore.setFilteringPauseTimeout(data.filteringPauseTimeout);
-                break;
-            case POPUP_MESSAGES.SHOW_RELOAD_BUTTON_FLAG:
-                settingsStore.setShowReloadButtonFlag(data.showReloadButtonFlag);
+                if (data.filteringPauseTimeout < 0) {
+                    await settingsStore.updatePopupData();
+                }
                 break;
             default:
                 break;
