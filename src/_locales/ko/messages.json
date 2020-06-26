@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard 설정"
     },
+    "pause_filtering": {
+        "message": "30초 동안 차단 일시정지"
+    },
     "block_ads": {
         "message": "이 웹사이트에서 광고 차단"
     },

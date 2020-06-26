@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard Postavke"
     },
+    "pause_filtering": {
+        "message": "Ne filtriraj idućih 30 sekundi"
+    },
     "block_ads": {
         "message": "Blokiraj oglase na ovoj web stranici"
     },
