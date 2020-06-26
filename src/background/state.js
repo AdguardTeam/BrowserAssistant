@@ -6,8 +6,7 @@ import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
-import { compareSemver, getUrlProps, isHttp } from '../lib/helpers';
-import { FILTERING_PAUSE_VERSION_SUPPORT_SINCE } from '../lib/consts';
+import { getUrlProps, isHttp } from '../lib/helpers';
 
 /**
  * This class handles app state
@@ -61,52 +60,10 @@ class State {
         version: '',
     };
 
-    filteringPauseUrlToTimeoutMap = {};
-
-    showReloadButtonFlagMap = {};
-
-    currentUrl = '';
+    currentUrl = ''
 
     setCurrentUrl = (currentUrl) => {
         this.currentUrl = currentUrl;
-    };
-
-    setFilteringPauseTimeout = (filteringPauseUrl, filteringPauseTimeout) => {
-        this.filteringPauseUrlToTimeoutMap[filteringPauseUrl] = filteringPauseTimeout;
-    };
-
-    resetFilteringPauseTimeout = () => {
-        this.setFilteringPauseTimeout(this.currentUrl, 0);
-    };
-
-    isFilteringPauseSupported = () => {
-        const { version, platform } = this.hostInfo;
-        const minSupportVersion = FILTERING_PAUSE_VERSION_SUPPORT_SINCE[platform.toUpperCase()];
-        return compareSemver(version, minSupportVersion) >= 0;
-    };
-
-    showReloadButtonFlag = () => {
-        return this.showReloadButtonFlagMap[this.currentUrl];
-    };
-
-    updateFilteringPauseTimeout = async () => {
-        await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
-            data: {
-                filteringPauseTimeout: this.filteringPauseUrlToTimeoutMap[this.currentUrl],
-                filteringPauseUrl: this.currentUrl,
-            },
-        });
-    };
-
-    updateShowReloadButtonFlag = async (showReloadButtonFlag) => {
-        this.showReloadButtonFlagMap[this.currentUrl] = true;
-        await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.SHOW_RELOAD_BUTTON_FLAG,
-            data: {
-                showReloadButtonFlag,
-            },
-        });
     };
 
     init = () => {
@@ -351,11 +308,6 @@ class State {
 
     addRule = async (ruleText) => {
         const response = await api.addRule(ruleText);
-        this.setAppState(response.appState);
-    };
-
-    pauseFiltering = async (url, timeout) => {
-        const response = await api.pauseFiltering(url, timeout);
         this.setAppState(response.appState);
     };
 }

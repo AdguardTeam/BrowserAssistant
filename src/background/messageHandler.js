@@ -1,8 +1,8 @@
 import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
-import handleFilteringPause from './handleFilteringPause';
 import getPopupData from './getPopupData';
+import filteringPause from './filteringPause';
 
 /**
  * Handles incoming messages to the background page
@@ -52,8 +52,9 @@ const messageHandler = async (message) => {
                 url
             );
 
-            state.resetFilteringPauseTimeout();
-            await state.updateFilteringPauseTimeout();
+            filteringPause.resetFilteringPauseTimeout(url);
+            await filteringPause.updateFilteringPauseTimeout(url);
+            delete filteringPause.showReloadButtonFlagMap[url];
             break;
         }
 
@@ -100,7 +101,7 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
-            delete state.showReloadButtonFlagMap[state.currentUrl];
+            delete filteringPause.showReloadButtonFlagMap[state.currentUrl];
             break;
         }
 
@@ -117,8 +118,8 @@ const messageHandler = async (message) => {
         }
 
         case POPUP_MESSAGES.PAUSE_FILTERING: {
-            const { tab, tab: { url } } = data;
-            await handleFilteringPause(tab, url);
+            const { tab } = data;
+            await filteringPause.handleFilteringPause(tab);
             break;
         }
 
