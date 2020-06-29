@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "Beveiligde pagina"
     },
+    "reload_page": {
+        "message": "Pagina vernieuwen"
+    },
     "not_filtering_https": {
         "message": "Standaard filteren we geen HTTPS verkeer voor betaalsystemen en bank websites Je kan zelf het filteren inschakelen door op het gele slotje links te klikken."
     },

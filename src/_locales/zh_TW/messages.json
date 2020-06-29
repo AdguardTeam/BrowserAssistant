@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "安全的頁面"
     },
+    "reload_page": {
+        "message": "重新載入頁面"
+    },
     "not_filtering_https": {
         "message": "預設下，我們不過濾有關付款系統和銀行網站的 HTTPS 流量。您可靠您自己啟用該過濾：於在左側的黃色\"鎖頭\"上輕觸。"
     },

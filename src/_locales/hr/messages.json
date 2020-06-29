@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "Sigurna stranica"
     },
+    "reload_page": {
+        "message": "Ponovno učitaj stranicu"
+    },
     "not_filtering_https": {
         "message": "Prema zadanom, ne filtriramo HTTPS promet za platne sustave i web stranice banki. Možete sami omogućiti filtriranje: pritisnite žuti \"lokot\" s lijeve strane."
     },

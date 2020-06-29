@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "Sikker side"
     },
+    "reload_page": {
+        "message": "Genindlæs side"
+    },
     "not_filtering_https": {
         "message": "Som standard filtrerer vi ikke HTTPS-trafik for betalingssystemer og bankwebsteder. Du kan selv aktivere filtreringen: tryk på den gule \"lås\" til venstre."
     },

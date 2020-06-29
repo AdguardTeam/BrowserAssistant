@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "Pagină sigură"
     },
+    "reload_page": {
+        "message": "Reîncarcă pagina"
+    },
     "not_filtering_https": {
         "message": "În mod implicit, nu filtrăm traficul HTTPS pentru sisteme de plăți și site-uri web bancare. Puteți activa filtrarea manual tapând pe \"lacătul\" galben din stânga."
     },

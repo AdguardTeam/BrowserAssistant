@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "Página segura"
     },
+    "reload_page": {
+        "message": "Recargar página"
+    },
     "not_filtering_https": {
         "message": "De manera predeterminada, no filtramos el tráfico HTTPS para sistemas de pago y sitios web bancarios. Puedes habilitar el filtrado tu mismo: toca el \"candado\" amarillo a la izquierda."
     },
