@@ -136,7 +136,21 @@
 .reload-button {
     background-color: transparent;
     border: none;
-    cursor: pointer;
     font-size: 1.6rem;
-    text-decoration: underline;
+    color: var(--green-base);
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &__figure {
+        display: flex;
+    }
+
+    &__image {
+        width: 21px;
+        height: 16px;
+        margin-right: 3px;
+    }
 }

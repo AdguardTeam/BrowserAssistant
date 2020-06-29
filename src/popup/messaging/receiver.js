@@ -17,7 +17,7 @@ const getMessageReceiver = (rootStore) => {
 
                 settingsStore.setFilteringPauseUrl(currentUrl);
                 settingsStore.setFilteringPauseTimeout(filteringPauseTimeout);
-                if (data.filteringPauseTimeout < 0) {
+                if (filteringPauseTimeout < 0) {
                     await settingsStore.updatePopupData();
                 }
                 break;

@@ -168,7 +168,7 @@ const CurrentSite = observer(() => {
                 onFocus={handleSecureStatusModalState}
                 onBlur={handleSecureStatusModalState}
             >
-                {translate(info)}
+                {showReloadButtonFlag ? translate('reload_to_resume_filtering') : translate(info)}
             </div>
             {showReloadButtonFlag
                 ? (
@@ -178,7 +178,14 @@ const CurrentSite = observer(() => {
                         className="reload-button"
                         title={translate('reload_page')}
                     >
-                        {translate('reload_page')}
+                        <figure className="reload-button__figure">
+                            <img
+                                src="../../../assets/images/icon__reload.svg"
+                                className="reload-button__image"
+                                alt=""
+                            />
+                            <figcaption>{translate('reload_page')}</figcaption>
+                        </figure>
                     </button>
                 )
                 : <time className={timerClass}>{filteringPauseTimer}</time>}

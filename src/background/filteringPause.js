@@ -13,14 +13,14 @@ const FILTERING_PAUSE_TIMER_TICK_MS = 1000;
  * Handles filtering pause after the popup button "Do not filter for 30 seconds" is clicked
  */
 class FilteringPause {
-    filteringPauseUrlToTimeoutMap = {};
+    urlToTimeoutMap = {};
 
-    setFilteringPauseTimeout = (url, timeout) => {
-        this.filteringPauseUrlToTimeoutMap[url] = timeout;
+    setUrlTimeout = (url, timeout) => {
+        this.urlToTimeoutMap[url] = timeout;
     };
 
-    resetFilteringPauseTimeout = (url) => {
-        this.setFilteringPauseTimeout(url, 0);
+    resetUrlTimeout = (url) => {
+        this.setUrlTimeout(url, 0);
     };
 
     isFilteringPauseSupported = () => {
@@ -30,14 +30,14 @@ class FilteringPause {
     };
 
     showReloadButtonFlag = (url) => {
-        return this.filteringPauseUrlToTimeoutMap[url] < 0;
+        return this.urlToTimeoutMap[url] < 0;
     };
 
     updateFilteringPauseTimeout = async () => {
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
-                filteringPauseUrlToTimeoutMap: this.filteringPauseUrlToTimeoutMap,
+                filteringPauseUrlToTimeoutMap: this.urlToTimeoutMap,
             },
         });
     };
@@ -53,12 +53,12 @@ class FilteringPause {
             return;
         }
 
-        this.setFilteringPauseTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
+        this.setUrlTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
         await this.pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
         await tabs.reload(tab);
 
         const timerId = setInterval(async () => {
-            const timeout = this.filteringPauseUrlToTimeoutMap[url];
+            const timeout = this.urlToTimeoutMap[url];
 
             if (timeout < 0) {
                 clearTimeout(timerId);
@@ -66,7 +66,7 @@ class FilteringPause {
 
             await this.updateFilteringPauseTimeout();
 
-            this.setFilteringPauseTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
+            this.setUrlTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
         }, FILTERING_PAUSE_TIMER_TICK_MS);
     }
 }

@@ -51,7 +51,7 @@ const messageHandler = async (message) => {
                 url
             );
 
-            filteringPause.resetFilteringPauseTimeout(url);
+            filteringPause.resetUrlTimeout(url);
             await filteringPause.updateFilteringPauseTimeout(url);
             filteringPause.setShowReloadButtonFlag(url, false);
             break;
@@ -100,7 +100,7 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
-            filteringPause.setShowReloadButtonFlag(tab.url, false);
+            delete filteringPause.urlToTimeoutMap[tab.url];
             break;
         }
 
