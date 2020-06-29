@@ -120,6 +120,14 @@ const messageHandler = async (message) => {
             break;
         }
 
+        // fixme
+        case POPUP_MESSAGES.CONTACT_SUPPORT: {
+            const { url, referrer } = data;
+            const reportUrl = await state.reportSite(url, referrer);
+            await tabs.openPage(reportUrl);
+            break;
+        }
+
         case POPUP_MESSAGES.OPEN_FILTERING_LOG: {
             await state.openFilteringLog();
             break;

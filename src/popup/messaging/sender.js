@@ -49,4 +49,7 @@ export default {
     openPage: (url) => {
         return sendMessage(POPUP_MESSAGES.OPEN_PAGE, { url });
     },
+    contactSupport: (url, referrer) => {
+        return sendMessage(POPUP_MESSAGES.CONTACT_SUPPORT, { url, referrer });
+    },
 };

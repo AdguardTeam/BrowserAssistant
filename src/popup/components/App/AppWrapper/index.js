@@ -20,7 +20,7 @@ const AppWrapper = observer(({ children }) => {
             onClickCapture={disableWhileLoading}
         >
             <Header />
-            {isPending && (<Loading />)}
+            {isPending && <Loading />}
             {children}
         </div>
     );

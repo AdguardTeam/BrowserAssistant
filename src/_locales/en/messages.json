@@ -109,5 +109,8 @@
     },
     "expired": {
         "message": "Expired"
+    },
+    "contact_support": {
+        "message": "Contact support"
     }
 }

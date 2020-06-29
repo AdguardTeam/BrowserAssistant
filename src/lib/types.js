@@ -31,6 +31,7 @@ export const POPUP_MESSAGES = {
     UPDATE_APP: 'popup.update.app',
     OPEN_PAGE: 'popup.open.page',
     INIT_ASSISTANT: 'popup.init.assistant',
+    CONTACT_SUPPORT: 'popup.contact.support',
 };
 
 // Content script messages
