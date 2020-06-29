@@ -9,10 +9,11 @@ import state from './state';
 const FILTERING_PAUSE_TIMEOUT_MS = 30000;
 const FILTERING_PAUSE_TIMER_TICK_MS = 1000;
 
+/**
+ * Handles filtering pause after the popup button "Do not filter for 30 seconds" is clicked
+ */
 class FilteringPause {
     filteringPauseUrlToTimeoutMap = {};
-
-    showReloadButtonFlagMap = {};
 
     setFilteringPauseTimeout = (url, timeout) => {
         this.filteringPauseUrlToTimeoutMap[url] = timeout;
@@ -29,7 +30,7 @@ class FilteringPause {
     };
 
     showReloadButtonFlag = () => {
-        return this.showReloadButtonFlagMap[state.currentUrl];
+        return this.filteringPauseUrlToTimeoutMap[state.currentUrl] < 0;
     };
 
     updateFilteringPauseTimeout = async (url) => {
@@ -40,10 +41,6 @@ class FilteringPause {
                 filteringPauseUrl: url,
             },
         });
-    };
-
-    setShowReloadButtonFlag = (url, showReloadButtonFlag) => {
-        this.showReloadButtonFlagMap[url] = showReloadButtonFlag;
     };
 
     pauseFiltering = async (url, timeout) => {
@@ -66,7 +63,6 @@ class FilteringPause {
 
             if (timeout < 0) {
                 clearTimeout(timerId);
-                this.setShowReloadButtonFlag(url, true);
             }
 
             if (url === state.currentUrl) {
