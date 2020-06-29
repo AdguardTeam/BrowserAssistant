@@ -60,12 +60,6 @@ class State {
         version: '',
     };
 
-    currentUrl = ''
-
-    setCurrentUrl = (currentUrl) => {
-        this.currentUrl = currentUrl;
-    };
-
     init = () => {
         api.addMessageListener(this.nativeHostMessagesHandler);
         api.addInitMessageHandler(this.initMessageHandler);

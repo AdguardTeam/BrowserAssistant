@@ -29,16 +29,15 @@ class FilteringPause {
         return compareSemver(version, minSupportVersion) >= 0;
     };
 
-    showReloadButtonFlag = () => {
-        return this.filteringPauseUrlToTimeoutMap[state.currentUrl] < 0;
+    showReloadButtonFlag = (url) => {
+        return this.filteringPauseUrlToTimeoutMap[url] < 0;
     };
 
-    updateFilteringPauseTimeout = async (url) => {
+    updateFilteringPauseTimeout = async () => {
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
-                filteringPauseTimeout: this.filteringPauseUrlToTimeoutMap[url],
-                filteringPauseUrl: url,
+                filteringPauseUrlToTimeoutMap: this.filteringPauseUrlToTimeoutMap,
             },
         });
     };
@@ -65,9 +64,7 @@ class FilteringPause {
                 clearTimeout(timerId);
             }
 
-            if (url === state.currentUrl) {
-                await this.updateFilteringPauseTimeout(url);
-            }
+            await this.updateFilteringPauseTimeout();
 
             this.setFilteringPauseTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
         }, FILTERING_PAUSE_TIMER_TICK_MS);

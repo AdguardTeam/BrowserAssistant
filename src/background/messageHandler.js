@@ -21,7 +21,6 @@ const messageHandler = async (message) => {
 
         case POPUP_MESSAGES.GET_POPUP_DATA: {
             const { tab } = data;
-            state.setCurrentUrl(tab.url);
             const popupData = await getPopupData(tab);
             return popupData;
         }

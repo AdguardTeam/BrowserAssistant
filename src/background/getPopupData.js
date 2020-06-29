@@ -3,6 +3,8 @@ import tabs from './tabs';
 import filteringPause from './filteringPause';
 
 const getPopupData = async (tab) => {
+    const { url } = tab;
+
     try {
         await state.getCurrentAppState();
     } catch (e) {
@@ -11,7 +13,7 @@ const getPopupData = async (tab) => {
             updateStatusInfo: state.getUpdateStatusInfo(),
             hostError: e.message,
             isFilteringPauseSupported: filteringPause.isFilteringPauseSupported(),
-            showReloadButtonFlag: filteringPause.showReloadButtonFlag(),
+            showReloadButtonFlag: filteringPause.showReloadButtonFlag(url),
         };
     }
 
@@ -21,7 +23,7 @@ const getPopupData = async (tab) => {
             appState: state.getAppState(),
             updateStatusInfo: state.getUpdateStatusInfo(),
             isFilteringPauseSupported: filteringPause.isFilteringPauseSupported(),
-            showReloadButtonFlag: filteringPause.showReloadButtonFlag(),
+            showReloadButtonFlag: filteringPause.showReloadButtonFlag(url),
         };
     }
 
@@ -40,7 +42,7 @@ const getPopupData = async (tab) => {
             appState,
             hostError: e.message,
             isFilteringPauseSupported: filteringPause.isFilteringPauseSupported(),
-            showReloadButtonFlag: filteringPause.showReloadButtonFlag(),
+            showReloadButtonFlag: filteringPause.showReloadButtonFlag(url),
         };
     }
 
@@ -53,7 +55,7 @@ const getPopupData = async (tab) => {
             updateStatusInfo,
             appState,
             isFilteringPauseSupported: filteringPause.isFilteringPauseSupported(),
-            showReloadButtonFlag: filteringPause.showReloadButtonFlag(),
+            showReloadButtonFlag: filteringPause.showReloadButtonFlag(url),
         };
     }
 
@@ -63,7 +65,7 @@ const getPopupData = async (tab) => {
         appState,
         currentFilteringState,
         isFilteringPauseSupported: filteringPause.isFilteringPauseSupported(),
-        showReloadButtonFlag: filteringPause.showReloadButtonFlag(),
+        showReloadButtonFlag: filteringPause.showReloadButtonFlag(url),
     };
 };
 
