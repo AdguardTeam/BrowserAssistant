@@ -12,12 +12,16 @@ const getMessageReceiver = (rootStore) => {
                 settingsStore.setUpdateStatusInfo(data.updateStatusInfo);
                 break;
             case POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT: {
-                const { currentUrl } = settingsStore;
-                const filteringPauseTimeout = data.filteringPauseUrlToTimeoutMap[currentUrl];
+                const { currentTabHostname } = settingsStore;
+                const filteringPauseTimeout = data.filteringPauseMap[currentTabHostname];
 
-                settingsStore.setFilteringPauseUrl(currentUrl);
-                settingsStore.setFilteringPauseTimeout(filteringPauseTimeout);
-                if (filteringPauseTimeout < 0) {
+                if (filteringPauseTimeout === undefined) {
+                    break;
+                }
+
+                if (filteringPauseTimeout >= 0) {
+                    settingsStore.setFilteringPauseTimeout(filteringPauseTimeout);
+                } else {
                     await settingsStore.updatePopupData();
                 }
                 break;

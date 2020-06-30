@@ -61,8 +61,6 @@ class SettingsStore {
 
     @observable filteringPauseTimeout = 0;
 
-    @observable filteringPauseUrl = '';
-
     @observable isFilteringPauseSupported = false;
 
     @observable showReloadButtonFlag = false;
@@ -75,7 +73,7 @@ class SettingsStore {
 
     @computed
     get shouldShowFilteringPauseTimer() {
-        return this.currentUrl === this.filteringPauseUrl && this.filteringPauseTimeout > 0;
+        return this.filteringPauseTimeout > 0;
     }
 
     @computed
@@ -112,11 +110,6 @@ class SettingsStore {
     @action
     setFilteringPauseSupported = (isFilteringPauseSupported) => {
         this.isFilteringPauseSupported = isFilteringPauseSupported;
-    };
-
-    @action
-    setFilteringPauseUrl = (filteringPauseUrl) => {
-        this.filteringPauseUrl = filteringPauseUrl;
     };
 
     @action

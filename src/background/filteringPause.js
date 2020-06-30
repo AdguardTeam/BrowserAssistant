@@ -1,5 +1,5 @@
 import { FILTERING_PAUSE_VERSION_SUPPORT_SINCE } from '../lib/consts';
-import { compareSemver } from '../lib/helpers';
+import { compareSemver, getUrlProperties } from '../lib/helpers';
 import browserApi from '../lib/browserApi';
 import { POPUP_MESSAGES } from '../lib/types';
 import api from './api';
@@ -12,18 +12,29 @@ const FILTERING_PAUSE_TIMER_TICK_MS = 1000;
  * Handles filtering pause after the popup button "Do not filter for 30 seconds" is clicked
  */
 class FilteringPause {
-    urlToTimeoutMap = {};
+    hostnameToTimeoutMap = {};
 
-    setUrlTimeout = (url, timeout) => {
-        this.urlToTimeoutMap[url] = timeout;
+    getUrlHostname = (url) => {
+        return getUrlProperties(url).hostname;
     };
 
-    deleteUrlTimeout = (url) => {
-        delete this.urlToTimeoutMap[url];
-    }
+    setHostnameTimeout = (url, timeout) => {
+        const hostname = this.getUrlHostname(url);
+        this.hostnameToTimeoutMap[hostname] = timeout;
+    };
 
-    resetUrlTimeout = (url) => {
-        this.setUrlTimeout(url, 0);
+    getHostnameTimeout = (url) => {
+        const hostname = this.getUrlHostname(url);
+        return this.hostnameToTimeoutMap[hostname];
+    };
+
+    deleteHostnameTimeout = (url) => {
+        const hostname = this.getUrlHostname(url);
+        delete this.hostnameToTimeoutMap[hostname];
+    };
+
+    resetHostnameTimeout = (url) => {
+        this.setHostnameTimeout(url, 0);
     };
 
     isFilteringPauseSupported = () => {
@@ -33,7 +44,7 @@ class FilteringPause {
     };
 
     showReloadButtonFlag = (url) => {
-        const timeout = this.urlToTimeoutMap[url] || 0;
+        const timeout = this.getHostnameTimeout(url) || 0;
         return timeout < 0;
     };
 
@@ -41,7 +52,7 @@ class FilteringPause {
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
-                filteringPauseUrlToTimeoutMap: this.urlToTimeoutMap,
+                filteringPauseMap: this.hostnameToTimeoutMap,
             },
         });
     };
@@ -56,11 +67,11 @@ class FilteringPause {
             return;
         }
 
-        this.setUrlTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
+        this.setHostnameTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
         await this.pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
 
         const timerId = setInterval(async () => {
-            const timeout = this.urlToTimeoutMap[url];
+            const timeout = this.getHostnameTimeout(url);
 
             if (timeout < 0) {
                 clearTimeout(timerId);
@@ -68,9 +79,9 @@ class FilteringPause {
 
             await this.updateFilteringPauseTimeout();
 
-            this.setUrlTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
+            this.setHostnameTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
         }, FILTERING_PAUSE_TIMER_TICK_MS);
-    }
+    };
 }
 
 const filteringPause = new FilteringPause();

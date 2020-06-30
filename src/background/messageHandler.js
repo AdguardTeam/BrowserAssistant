@@ -51,9 +51,9 @@ const messageHandler = async (message) => {
                 url
             );
 
-            filteringPause.resetUrlTimeout(url);
+            filteringPause.resetHostnameTimeout(url);
             await filteringPause.updateFilteringPauseTimeout();
-            filteringPause.deleteUrlTimeout(url);
+            filteringPause.deleteHostnameTimeout(url);
             break;
         }
 
@@ -100,7 +100,7 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
-            filteringPause.deleteUrlTimeout(tab.url);
+            filteringPause.deleteHostnameTimeout(tab.url);
             break;
         }
 
