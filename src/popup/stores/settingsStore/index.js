@@ -265,7 +265,7 @@ class SettingsStore {
 
     contactSupport = async () => {
         try {
-            await messagesSender.contactSupport(this.currentUrl, this.referrer);
+            await messagesSender.contactSupport();
             window.close();
         } catch (error) {
             log.error(error);

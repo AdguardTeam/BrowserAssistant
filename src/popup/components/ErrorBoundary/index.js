@@ -2,8 +2,9 @@ import React from 'react';
 import log from '../../../lib/logger';
 import ClosedApp from '../App/AppClosed/ClosedApp';
 import Header from '../Header';
+import { StoreConsumer } from '../../stores';
 
-class Index extends React.Component {
+class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
         this.state = { error: null };
@@ -22,12 +23,20 @@ class Index extends React.Component {
         const { children } = this.props;
 
         return error ? (
-            <>
-                <Header />
-                <ClosedApp content={error.message} buttonText="contact_support" onClick={log.info} />
-            </>
+            <StoreConsumer>
+                {(props) => (
+                    <>
+                        <Header />
+                        <ClosedApp
+                            content="something_went_wrong"
+                            buttonText="contact_support"
+                            onClick={props.settingsStore.contactSupport}
+                        />
+                    </>
+                )}
+            </StoreConsumer>
         ) : children;
     }
 }
 
-export default Index;
+export default ErrorBoundary;

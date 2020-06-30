@@ -16,4 +16,8 @@ class RootStore {
     }
 }
 
-export default createContext(new RootStore());
+const StoreContext = createContext(new RootStore());
+
+export default StoreContext;
+
+export const StoreConsumer = StoreContext.Consumer;

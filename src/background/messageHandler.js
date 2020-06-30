@@ -1,6 +1,7 @@
 import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
+import { SUPPORT_LINK } from '../lib/consts';
 
 /**
  * Handles incoming messages to the background page
@@ -120,11 +121,8 @@ const messageHandler = async (message) => {
             break;
         }
 
-        // fixme
         case POPUP_MESSAGES.CONTACT_SUPPORT: {
-            const { url, referrer } = data;
-            const reportUrl = await state.reportSite(url, referrer);
-            await tabs.openPage(reportUrl);
+            await tabs.openPage(SUPPORT_LINK);
             break;
         }
 

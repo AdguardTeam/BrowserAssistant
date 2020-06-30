@@ -6,3 +6,6 @@ export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 // Check webpack replace loader
 export const UPDATE_URL_FIREFOX = '{{UPDATE_URL_FIREFOX}}';
 export const UPDATE_URL_CHROME = '{{UPDATE_URL_CHROME}}';
+
+// TODO: add tds link
+export const SUPPORT_LINK = 'https://adguard.com/support.html';
