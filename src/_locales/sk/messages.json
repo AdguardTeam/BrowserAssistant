@@ -92,6 +92,9 @@
     "secure_page": {
         "message": "Bezpečná stránka"
     },
+    "reload_to_resume_filtering": {
+        "message": "Znovu načítajte túto stránku a obnovte filtráciu"
+    },
     "not_filtering_https": {
         "message": "Štandardne nefiltrujeme HTTPS prevádzku pre stránky platobných systémov a bánk. Filtráciu môžete zapnúť nasledovne: kliknite vľavo na žlté \"zamknúť\"."
     },

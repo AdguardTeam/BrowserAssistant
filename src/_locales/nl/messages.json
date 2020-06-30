@@ -95,6 +95,9 @@
     "reload_page": {
         "message": "Pagina vernieuwen"
     },
+    "reload_to_resume_filtering": {
+        "message": "Deze pagina vernieuwen om filtering te hervatten"
+    },
     "not_filtering_https": {
         "message": "Standaard filteren we geen HTTPS verkeer voor betaalsystemen en bank websites Je kan zelf het filteren inschakelen door op het gele slotje links te klikken."
     },

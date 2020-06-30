@@ -13,6 +13,6 @@ export const PLATFORMS = {
 };
 
 export const FILTERING_PAUSE_VERSION_SUPPORT_SINCE = {
-    WINDOWS: '7.5',
-    MAC: '2.5',
+    WINDOWS: '7.5.0',
+    MAC: '2.5.0',
 };
