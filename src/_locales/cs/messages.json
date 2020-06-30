@@ -95,6 +95,9 @@
     "reload_page": {
         "message": "Obnovit stránku"
     },
+    "reload_to_resume_filtering": {
+        "message": "Obnovte tuto stránku a pokračujte ve filtrování"
+    },
     "not_filtering_https": {
         "message": "Ve výchozím nastavení nefiltrujeme přenos HTTPS pro platební systém a bankovní webové stránky. Filtrování můžete sami povolit: klepněte na žlutý „zámek“ vlevo."
     },

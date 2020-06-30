@@ -95,6 +95,9 @@
     "reload_page": {
         "message": "Ponovno učitaj stranicu"
     },
+    "reload_to_resume_filtering": {
+        "message": "Ponovno učitajte stranicu za nastavak filtriranja"
+    },
     "not_filtering_https": {
         "message": "Prema zadanom, ne filtriramo HTTPS promet za platne sustave i web stranice banki. Možete sami omogućiti filtriranje: pritisnite žuti \"lokot\" s lijeve strane."
     },
