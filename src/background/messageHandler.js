@@ -52,8 +52,8 @@ const messageHandler = async (message) => {
             );
 
             filteringPause.resetUrlTimeout(url);
-            await filteringPause.updateFilteringPauseTimeout(url);
-            filteringPause.setShowReloadButtonFlag(url, false);
+            await filteringPause.updateFilteringPauseTimeout();
+            filteringPause.deleteUrlTimeout(url);
             break;
         }
 
@@ -100,7 +100,7 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
-            delete filteringPause.urlToTimeoutMap[tab.url];
+            filteringPause.deleteUrlTimeout(tab.url);
             break;
         }
 
@@ -118,7 +118,8 @@ const messageHandler = async (message) => {
 
         case POPUP_MESSAGES.PAUSE_FILTERING: {
             const { tab } = data;
-            await filteringPause.handleFilteringPause(tab);
+            await filteringPause.handleFilteringPause(tab.url);
+            await tabs.reload(tab);
             break;
         }
 

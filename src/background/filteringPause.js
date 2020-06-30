@@ -3,7 +3,6 @@ import { compareSemver } from '../lib/helpers';
 import browserApi from '../lib/browserApi';
 import { POPUP_MESSAGES } from '../lib/types';
 import api from './api';
-import tabs from './tabs';
 import state from './state';
 
 const FILTERING_PAUSE_TIMEOUT_MS = 30000;
@@ -19,6 +18,10 @@ class FilteringPause {
         this.urlToTimeoutMap[url] = timeout;
     };
 
+    deleteUrlTimeout = (url) => {
+        delete this.urlToTimeoutMap[url];
+    }
+
     resetUrlTimeout = (url) => {
         this.setUrlTimeout(url, 0);
     };
@@ -30,7 +33,8 @@ class FilteringPause {
     };
 
     showReloadButtonFlag = (url) => {
-        return this.urlToTimeoutMap[url] < 0;
+        const timeout = this.urlToTimeoutMap[url] || 0;
+        return timeout < 0;
     };
 
     updateFilteringPauseTimeout = async () => {
@@ -47,15 +51,13 @@ class FilteringPause {
         state.setAppState(response.appState);
     };
 
-    handleFilteringPause = async (tab) => {
-        const { url } = tab;
+    handleFilteringPause = async (url) => {
         if (!this.isFilteringPauseSupported()) {
             return;
         }
 
         this.setUrlTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
         await this.pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
-        await tabs.reload(tab);
 
         const timerId = setInterval(async () => {
             const timeout = this.urlToTimeoutMap[url];
