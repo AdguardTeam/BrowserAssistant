@@ -40,6 +40,10 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.SET_PROTECTION_STATUS: {
             const { isEnabled } = data;
             const resultAppState = await state.setProtectionStatus(isEnabled);
+
+            filteringPause.resetAllHostnameTimeout();
+            await filteringPause.updateFilteringPauseTimeout();
+
             return Promise.resolve(resultAppState);
         }
 
@@ -51,9 +55,7 @@ const messageHandler = async (message) => {
                 url
             );
 
-            filteringPause.resetHostnameTimeout(url);
-            await filteringPause.updateFilteringPauseTimeout();
-            filteringPause.deleteHostnameTimeout(url);
+            await filteringPause.clearHostnameTimeout(url);
             break;
         }
 
@@ -100,7 +102,8 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
-            filteringPause.deleteHostnameTimeout(tab.url);
+
+            await filteringPause.clearHostnameTimeout(tab.url);
             break;
         }
 

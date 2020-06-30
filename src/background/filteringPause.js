@@ -37,6 +37,20 @@ class FilteringPause {
         this.setHostnameTimeout(url, 0);
     };
 
+    resetAllHostnameTimeout = () => {
+        this.hostnameToTimeoutMap = Object.keys(this.hostnameToTimeoutMap)
+            .reduce((acc, hostname) => {
+                acc[hostname] = 0;
+                return acc;
+            }, {});
+    };
+
+    clearHostnameTimeout = async (url) => {
+        this.resetHostnameTimeout(url);
+        await this.updateFilteringPauseTimeout();
+        this.deleteHostnameTimeout(url);
+    }
+
     isFilteringPauseSupported = () => {
         const { version, platform } = state.hostInfo;
         const minSupportVersion = FILTERING_PAUSE_VERSION_SUPPORT_SINCE[platform.toUpperCase()];
@@ -75,6 +89,11 @@ class FilteringPause {
 
             if (timeout < 0) {
                 clearTimeout(timerId);
+            }
+
+            if (timeout === undefined) {
+                clearTimeout(timerId);
+                return;
             }
 
             await this.updateFilteringPauseTimeout();

@@ -55,8 +55,7 @@ const CurrentSite = observer(() => {
         return undefined;
     };
 
-    const iconClass = classNames({
-        'current-site__icon': true,
+    const iconClass = classNames('current-site__icon', {
         'current-site__icon--checkmark': pageProtocol.isSecured,
         'current-site__icon--lock': pageProtocol.isHttps && !certStatus.isInvalid,
         'current-site__icon--lock--yellow': pageProtocol.isHttps && !isHttpsFilteringEnabled,
@@ -65,13 +64,11 @@ const CurrentSite = observer(() => {
         'current-site__icon--warning': (pageProtocol.isHttps && certStatus.isInvalid) || pageProtocol.isHttp,
     });
 
-    const securedClass = classNames({
-        'current-site__title': true,
+    const securedClass = classNames('current-site__title', {
         'current-site__title--secured': pageProtocol.isSecured,
     });
 
-    const secureStatusClass = classNames({
-        'current-site__secure-status': true,
+    const secureStatusClass = classNames('current-site__secure-status', {
         'current-site__secure-status--gray': pageProtocol.isSecured || isFilteringEnabled,
         'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || certStatus.isInvalid)) || pageProtocol.isHttp,
         'current-site__secure-status--modal': modalId,
@@ -157,19 +154,23 @@ const CurrentSite = observer(() => {
                     header={header}
                 />
             </div>
-            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-            <div
-                role="status"
-                tabIndex={uiStore.globalTabIndex}
-                className={secureStatusClass}
-                onMouseOver={handleSecureStatusModalState}
-                onMouseOut={handleSecureStatusModalState}
-                onKeyDown={onKeyEnterDownSecure}
-                onFocus={handleSecureStatusModalState}
-                onBlur={handleSecureStatusModalState}
-            >
-                {showReloadButtonFlag ? translate('reload_to_resume_filtering') : translate(info)}
-            </div>
+            {showReloadButtonFlag
+                ? <div className="current-site__secure-status">{translate('reload_to_resume_filtering')}</div>
+                : (
+                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+                    <div
+                        role="status"
+                        tabIndex={uiStore.globalTabIndex}
+                        className={secureStatusClass}
+                        onMouseOver={handleSecureStatusModalState}
+                        onMouseOut={handleSecureStatusModalState}
+                        onKeyDown={onKeyEnterDownSecure}
+                        onFocus={handleSecureStatusModalState}
+                        onBlur={handleSecureStatusModalState}
+                    >
+                        {translate(info)}
+                    </div>
+                )}
             {showReloadButtonFlag
                 ? (
                     <button
