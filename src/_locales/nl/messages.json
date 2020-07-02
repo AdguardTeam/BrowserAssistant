@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "Niet meer geldig"
+    },
+    "contact_support": {
+        "message": "Contact met support opnemen"
     }
 }

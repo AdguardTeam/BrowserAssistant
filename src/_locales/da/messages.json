@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "Udløbet"
+    },
+    "contact_support": {
+        "message": "Kontakt support"
     }
 }

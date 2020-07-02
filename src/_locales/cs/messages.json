@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "Vypršený"
+    },
+    "contact_support": {
+        "message": "Kontaktovat podporu"
     }
 }
