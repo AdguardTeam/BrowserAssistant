@@ -102,8 +102,6 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.RELOAD: {
             const { tab } = data;
             await tabs.reload(tab);
-
-            await filteringPause.clearHostnameTimeout(tab.url);
             break;
         }
 

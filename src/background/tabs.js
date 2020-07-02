@@ -3,6 +3,7 @@ import { CONTENT_MESSAGES } from '../lib/types';
 import log from '../lib/logger';
 import { CONTENT_SCRIPT_NAME } from '../lib/consts';
 import notifier from '../lib/notifier';
+import filteringPause from './filteringPause';
 
 /**
  * Manages interaction with tabs
@@ -11,6 +12,12 @@ class Tabs {
     constructor() {
         browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
             if (changeInfo.status === 'complete' || changeInfo.status === 'loading') {
+                const hostname = filteringPause.getUrlHostname(tab.url);
+
+                if (filteringPause.hostnameToTimeoutMap[hostname] < 0) {
+                    filteringPause.deleteHostnameTimeout(tab.url);
+                }
+
                 if (tab && tab.active) {
                     notifier.notifyListeners(notifier.types.TAB_UPDATED, this.prepareTab(tab));
                 }
@@ -38,7 +45,11 @@ class Tabs {
      */
     prepareTab = (tab) => {
         const { url, id, title } = tab;
-        return { url, id, title };
+        return {
+            url,
+            id,
+            title,
+        };
     };
 
     /**
@@ -47,7 +58,10 @@ class Tabs {
      */
     getCurrent = async () => {
         const { id: windowId } = await browser.windows.getCurrent();
-        const tabs = await browser.tabs.query({ active: true, windowId });
+        const tabs = await browser.tabs.query({
+            active: true,
+            windowId,
+        });
         return this.prepareTab(tabs[0]);
     };
 
@@ -69,7 +83,10 @@ class Tabs {
      */
     sendMessage = async (tabId, type, data) => {
         await browser.tabs.executeScript(tabId, { file: CONTENT_SCRIPT_NAME });
-        const response = await browser.tabs.sendMessage(tabId, { type, data });
+        const response = await browser.tabs.sendMessage(tabId, {
+            type,
+            data,
+        });
         return response;
     };
 
