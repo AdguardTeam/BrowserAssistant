@@ -7,5 +7,4 @@ export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 export const UPDATE_URL_FIREFOX = '{{UPDATE_URL_FIREFOX}}';
 export const UPDATE_URL_CHROME = '{{UPDATE_URL_CHROME}}';
 
-// TODO: add tds link
-export const SUPPORT_LINK = 'https://adguard.com/support.html';
+export const SUPPORT_LINK = 'https://adguard.com/forward.html?action=support&from=popup&app=browser_assistant';
