@@ -304,6 +304,11 @@ class State {
         const response = await api.addRule(ruleText);
         this.setAppState(response.appState);
     };
+
+    pauseFiltering = async (url, timeout) => {
+        const response = await api.pauseFiltering(url, timeout);
+        this.setAppState(response.appState);
+    };
 }
 
 export default new State();

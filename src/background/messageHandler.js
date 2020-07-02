@@ -42,7 +42,7 @@ const messageHandler = async (message) => {
             const resultAppState = await state.setProtectionStatus(isEnabled);
 
             filteringPause.resetAllHostnameTimeout();
-            await filteringPause.updateFilteringPauseTimeout();
+            await filteringPause.notifyPopup();
 
             return Promise.resolve(resultAppState);
         }

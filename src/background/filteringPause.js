@@ -2,7 +2,6 @@ import { FILTERING_PAUSE_VERSION_SUPPORT_SINCE } from '../lib/consts';
 import { compareSemver, getUrlProperties } from '../lib/helpers';
 import browserApi from '../lib/browserApi';
 import { POPUP_MESSAGES } from '../lib/types';
-import api from './api';
 import state from './state';
 
 const FILTERING_PAUSE_TIMEOUT_MS = 30000;
@@ -47,9 +46,9 @@ class FilteringPause {
 
     clearHostnameTimeout = async (url) => {
         this.resetHostnameTimeout(url);
-        await this.updateFilteringPauseTimeout();
+        await this.notifyPopup();
         this.deleteHostnameTimeout(url);
-    }
+    };
 
     isFilteringPauseSupported = () => {
         const { version, platform } = state.hostInfo;
@@ -58,11 +57,16 @@ class FilteringPause {
     };
 
     showReloadButtonFlag = (url) => {
-        const timeout = this.getHostnameTimeout(url) || 0;
+        const timeout = this.getHostnameTimeout(url);
+
+        if (timeout === undefined) {
+            return false;
+        }
+
         return timeout < 0;
     };
 
-    updateFilteringPauseTimeout = async () => {
+    notifyPopup = async () => {
         await browserApi.runtime.sendMessage({
             type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
             data: {
@@ -71,18 +75,13 @@ class FilteringPause {
         });
     };
 
-    pauseFiltering = async (url, timeout) => {
-        const response = await api.pauseFiltering(url, timeout);
-        state.setAppState(response.appState);
-    };
-
     handleFilteringPause = async (url) => {
         if (!this.isFilteringPauseSupported()) {
             return;
         }
 
         this.setHostnameTimeout(url, FILTERING_PAUSE_TIMEOUT_MS);
-        await this.pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
+        await state.pauseFiltering(url, (FILTERING_PAUSE_TIMEOUT_MS / 1000).toString());
 
         const timerId = setInterval(async () => {
             const timeout = this.getHostnameTimeout(url);
@@ -96,7 +95,7 @@ class FilteringPause {
                 return;
             }
 
-            await this.updateFilteringPauseTimeout();
+            await this.notifyPopup();
 
             this.setHostnameTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
         }, FILTERING_PAUSE_TIMER_TICK_MS);
