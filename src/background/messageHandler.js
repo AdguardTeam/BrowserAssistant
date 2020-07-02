@@ -44,7 +44,7 @@ const messageHandler = async (message) => {
             filteringPause.resetAllHostnameTimeout();
             await filteringPause.notifyPopup();
 
-            return Promise.resolve(resultAppState);
+            return resultAppState;
         }
 
         case POPUP_MESSAGES.SET_FILTERING_STATUS: {
