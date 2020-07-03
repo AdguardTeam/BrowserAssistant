@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard-indstillinger"
     },
+    "pause_filtering": {
+        "message": "Filtrer ikke i 30 sekunder"
+    },
     "block_ads": {
         "message": "Bloker annoncer på denne webside"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Sikker side"
     },
+    "reload_page": {
+        "message": "Genindlæs side"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Genindlæs denne side for at genoptage filtreringen"
+    },
     "not_filtering_https": {
         "message": "Som standard filtrerer vi ikke HTTPS-trafik for betalingssystemer og bankwebsteder. Du kan selv aktivere filtreringen: tryk på den gule \"lås\" til venstre."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Udløbet"
+    },
+    "contact_support": {
+        "message": "Kontakt support"
     }
 }

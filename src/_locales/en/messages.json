@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard Settings"
     },
+    "pause_filtering": {
+        "message": "Do not filter for 30 seconds"
+    },
     "block_ads": {
         "message": "Block ads on this website"
     },
@@ -88,6 +91,12 @@
     },
     "secure_page": {
         "message": "Secure page"
+    },
+    "reload_page": {
+        "message": "Reload page"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Reload this page to resume filtering"
     },
     "not_filtering_https": {
         "message": "By default, we don't filter HTTPS traffic for the payment system and bank websites. You can enable the filtering yourself: tap on the yellow \"lock\" on the left."

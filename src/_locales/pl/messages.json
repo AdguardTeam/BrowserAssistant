@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Ustawienia AdGuard"
     },
+    "pause_filtering": {
+        "message": "Nie filtruj przez 30 sekund"
+    },
     "block_ads": {
         "message": "Blokuj reklamy na tej stronie"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Bezpieczna strona"
     },
+    "reload_page": {
+        "message": "Odśwież stronę"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Załaduj ponownie stronę, aby wznowić filtrowanie"
+    },
     "not_filtering_https": {
         "message": "Domyślnie nie filtrujemy połączeń HTTPS dla systemów płatniczych i stron bankowych. Możesz włączyć tą opcję, klikając na żółtą kłódkę po lewej stronie."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Wygasł"
+    },
+    "contact_support": {
+        "message": "Skontaktuj się z pomocą techniczną"
     }
 }

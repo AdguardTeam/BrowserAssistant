@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Paramètres AdGuard"
     },
+    "pause_filtering": {
+        "message": "Ne pas filtrer pendant 30 secondes"
+    },
     "block_ads": {
         "message": "Bloquer les publicités sur ce site"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Page sécurisée"
     },
+    "reload_page": {
+        "message": "Rafraîchir la page"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Actualisez cette page pour reprendre le filtrage"
+    },
     "not_filtering_https": {
         "message": "Par défaut, nous ne filtrons pas le trafic HTTPS pour le système de paiement et les sites Web bancaires. Vous pouvez activer le filtrage vous-même : appuyez sur le « cadenas » jaune à gauche."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Expiré"
+    },
+    "contact_support": {
+        "message": "Contacter l'assistance technique"
     }
 }

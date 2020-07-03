@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Nastavenia AdGuard"
     },
+    "pause_filtering": {
+        "message": "Nefiltrovať počas 30 sekúnd"
+    },
     "block_ads": {
         "message": "Blokovať reklamy na tejto stránke"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Bezpečná stránka"
     },
+    "reload_page": {
+        "message": "Obnoviť stránku"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Znovu načítajte túto stránku a obnovte filtráciu"
+    },
     "not_filtering_https": {
         "message": "Štandardne nefiltrujeme HTTPS prevádzku pre stránky platobných systémov a bánk. Filtráciu môžete zapnúť nasledovne: kliknite vľavo na žlté \"zamknúť\"."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Vypršaný"
+    },
+    "contact_support": {
+        "message": "Kontaktovať podporu"
     }
 }
