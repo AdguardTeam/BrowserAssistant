@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "פג"
+    },
+    "contact_support": {
+        "message": "צור קשר עם תמיכה"
     }
 }

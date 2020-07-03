@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "Isteklo"
+    },
+    "contact_support": {
+        "message": "Kontaktirajte podršku"
     }
 }

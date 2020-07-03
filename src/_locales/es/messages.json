@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "Expirado"
+    },
+    "contact_support": {
+        "message": "Contactar asistencia técnica"
     }
 }
