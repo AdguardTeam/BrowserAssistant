@@ -4,7 +4,10 @@ import classNames from 'classnames';
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
 import rootStore from '../../stores';
-import { MODAL_STATES_NAMES, SHOW_MODAL_TIME } from '../../stores/consts';
+import {
+    MODAL_STATES_NAMES,
+    SHOW_MODAL_TIME,
+} from '../../stores/consts';
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {
@@ -15,6 +18,11 @@ const CurrentSite = observer(() => {
         isFilteringEnabled,
         originalCertIssuer,
         pageInfo,
+        shouldShowFilteringPauseTimer,
+        filteringPauseTimer,
+        reloadPage,
+        showReloadButtonFlag,
+        setShowReloadButtonFlag,
     } = settingsStore;
 
     const {
@@ -47,8 +55,7 @@ const CurrentSite = observer(() => {
         return undefined;
     };
 
-    const iconClass = classNames({
-        'current-site__icon': true,
+    const iconClass = classNames('current-site__icon', {
         'current-site__icon--checkmark': pageProtocol.isSecured,
         'current-site__icon--lock': pageProtocol.isHttps && !certStatus.isInvalid,
         'current-site__icon--lock--yellow': pageProtocol.isHttps && !isHttpsFilteringEnabled,
@@ -57,17 +64,17 @@ const CurrentSite = observer(() => {
         'current-site__icon--warning': (pageProtocol.isHttps && certStatus.isInvalid) || pageProtocol.isHttp,
     });
 
-    const securedClass = classNames({
-        'current-site__title': true,
+    const securedClass = classNames('current-site__title', {
         'current-site__title--secured': pageProtocol.isSecured,
     });
 
-    const secureStatusClass = classNames({
-        'current-site__secure-status': true,
+    const secureStatusClass = classNames('current-site__secure-status', {
         'current-site__secure-status--gray': pageProtocol.isSecured || isFilteringEnabled,
         'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || certStatus.isInvalid)) || pageProtocol.isHttp,
         'current-site__secure-status--modal': modalId,
     });
+
+    const timerClass = classNames('timer', { 'timer--hidden': !shouldShowFilteringPauseTimer });
 
     const handleCertStatusModalState = (event, payload) => {
         if (!isFilteringEnabled && !certStatus.isValid) {
@@ -88,6 +95,11 @@ const CurrentSite = observer(() => {
 
     const handleSecureStatusModalState = (event, payload) => {
         return updateSecureStatusModalState(event.type, payload);
+    };
+
+    const handlePageReload = () => {
+        reloadPage();
+        setShowReloadButtonFlag(false);
     };
 
     const onKeyEnterDownSecure = (event) => {
@@ -128,7 +140,6 @@ const CurrentSite = observer(() => {
                 <h2 tabIndex={uiStore.globalTabIndex} className="current-site__name">
                     {pageInfo}
                 </h2>
-
                 <CertStatusModal
                     isOpen={pageProtocol.isHttps && shouldOpenCertStatusModal}
                     onRequestClose={resetCertStatusModalState}
@@ -143,19 +154,42 @@ const CurrentSite = observer(() => {
                     header={header}
                 />
             </div>
-            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-            <div
-                role="status"
-                tabIndex={uiStore.globalTabIndex}
-                className={secureStatusClass}
-                onMouseOver={handleSecureStatusModalState}
-                onMouseOut={handleSecureStatusModalState}
-                onKeyDown={onKeyEnterDownSecure}
-                onFocus={handleSecureStatusModalState}
-                onBlur={handleSecureStatusModalState}
-            >
-                {translate(info)}
-            </div>
+            {showReloadButtonFlag
+                ? <div className="current-site__secure-status">{translate('reload_to_resume_filtering')}</div>
+                : (
+                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+                    <div
+                        role="status"
+                        tabIndex={uiStore.globalTabIndex}
+                        className={secureStatusClass}
+                        onMouseOver={handleSecureStatusModalState}
+                        onMouseOut={handleSecureStatusModalState}
+                        onKeyDown={onKeyEnterDownSecure}
+                        onFocus={handleSecureStatusModalState}
+                        onBlur={handleSecureStatusModalState}
+                    >
+                        {translate(info)}
+                    </div>
+                )}
+            {showReloadButtonFlag
+                ? (
+                    <button
+                        onClick={handlePageReload}
+                        type="button"
+                        className="reload-button"
+                        title={translate('reload_page')}
+                    >
+                        <figure className="reload-button__figure">
+                            <img
+                                src="../../../assets/images/icon__reload.svg"
+                                className="reload-button__image"
+                                alt=""
+                            />
+                            <figcaption>{translate('reload_page')}</figcaption>
+                        </figure>
+                    </button>
+                )
+                : <time className={timerClass}>{filteringPauseTimer}</time>}
         </div>
     );
 });

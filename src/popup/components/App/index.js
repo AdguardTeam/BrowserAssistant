@@ -55,7 +55,7 @@ const App = observer(() => {
         );
     }
 
-    return (<Loading />);
+    return <Loading />;
 });
 
 export default App;

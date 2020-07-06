@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard 设置"
     },
+    "pause_filtering": {
+        "message": "暂停过滤 30 秒"
+    },
     "block_ads": {
         "message": "拦截此网站上的广告"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "安全页面"
     },
+    "reload_page": {
+        "message": "重新加载页面"
+    },
+    "reload_to_resume_filtering": {
+        "message": "重新加载此页面以继续过滤"
+    },
     "not_filtering_https": {
         "message": "我们默认不过滤支付系统和银行网站的HTTPS流量。您可自行启用过滤：点击左侧的黄色“锁”"
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "已过期"
+    },
+    "contact_support": {
+        "message": "联系支持"
     }
 }

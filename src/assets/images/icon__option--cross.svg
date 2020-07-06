@@ -1,1 +1,8 @@
-<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M-6-6h24v24H-6z"/><g stroke="#DF3812" stroke-linecap="round"><path d="M1 1l10 10M11 1L1 11"/></g></g></svg>
+<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+        <path d="M-6-6h24v24H-6z"/>
+        <g stroke="#DF3812" stroke-linecap="round">
+            <path d="M1 1l10 10M11 1L1 11"/>
+        </g>
+    </g>
+</svg>

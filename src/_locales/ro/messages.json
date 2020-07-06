@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Setări AdGuard"
     },
+    "pause_filtering": {
+        "message": "Nu filtra pentru 30 de secunde"
+    },
     "block_ads": {
         "message": "Blocați pub pe acest site"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Pagină sigură"
     },
+    "reload_page": {
+        "message": "Reîncarcă pagina"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Reîncărcați pagina pentru a relua filtrarea"
+    },
     "not_filtering_https": {
         "message": "În mod implicit, nu filtrăm traficul HTTPS pentru sisteme de plăți și site-uri web bancare. Puteți activa filtrarea manual tapând pe \"lacătul\" galben din stânga."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Expirat"
+    },
+    "contact_support": {
+        "message": "Contactați Asistența"
     }
 }

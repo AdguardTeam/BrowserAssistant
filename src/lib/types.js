@@ -11,6 +11,7 @@ export const REQUEST_TYPES = {
     openFilteringLog: 'openFilteringLog',
     openSettings: 'openSettings',
     updateApp: 'updateApp',
+    pauseFiltering: 'pauseFiltering',
 };
 
 // Browser action popup messages
@@ -31,6 +32,8 @@ export const POPUP_MESSAGES = {
     UPDATE_APP: 'popup.update.app',
     OPEN_PAGE: 'popup.open.page',
     INIT_ASSISTANT: 'popup.init.assistant',
+    PAUSE_FILTERING: 'popup.pause.filtering',
+    UPDATE_FILTERING_PAUSE_TIMEOUT: 'popup.update.filtering.pause.timeout',
 };
 
 // Content script messages

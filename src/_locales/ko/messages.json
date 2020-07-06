@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard 설정"
     },
+    "pause_filtering": {
+        "message": "30초 동안 차단 일시정지"
+    },
     "block_ads": {
         "message": "이 웹사이트에서 광고 차단"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "안전한 연결"
     },
+    "reload_page": {
+        "message": "페이지 새로고침"
+    },
+    "reload_to_resume_filtering": {
+        "message": "필터링을 재개하려면 이 페이지를 새로고침"
+    },
     "not_filtering_https": {
         "message": "우리는 기본적으로 결제 시스템과 은행 웹사이트의 HTTPS 트래픽을 필터링하지 않습니다. 직접 활성화해서 필터링할 수 있습니다: 좌측의 노랑색 \"자물쇠\"를 눌러주세요."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "만료"
+    },
+    "contact_support": {
+        "message": "고객 지원"
     }
 }

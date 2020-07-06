@@ -1,6 +1,7 @@
 .current-site {
     &__container {
         z-index: var(--higher);
+        text-align: center;
     }
 
     &__name {
@@ -95,7 +96,6 @@
     }
 }
 
-
 .arrow-up {
     z-index: var(--higher);
     width: 0;
@@ -115,5 +115,41 @@
         position: absolute;
         top: 0.15rem;
         left: -1rem;
+    }
+}
+
+.timer {
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: var(--gray88);
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 2.2rem;
+    cursor: default;
+}
+
+.timer--hidden {
+    visibility: hidden;
+}
+
+.reload-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--green-base);
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &__figure {
+        display: flex;
+    }
+
+    &__image {
+        width: 21px;
+        height: 16px;
+        margin-right: 3px;
     }
 }

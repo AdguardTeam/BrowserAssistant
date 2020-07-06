@@ -6,3 +6,13 @@ export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 // Check webpack replace loader
 export const UPDATE_URL_FIREFOX = '{{UPDATE_URL_FIREFOX}}';
 export const UPDATE_URL_CHROME = '{{UPDATE_URL_CHROME}}';
+
+export const PLATFORMS = {
+    WINDOWS: 'windows',
+    MAC: 'mac',
+};
+
+export const FILTERING_PAUSE_VERSION_SUPPORT_SINCE = {
+    WINDOWS: '7.5.0',
+    MAC: '2.5.0',
+};

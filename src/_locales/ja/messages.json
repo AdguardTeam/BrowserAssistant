@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard設定"
     },
+    "pause_filtering": {
+        "message": "30秒間フィルタリングを行わない"
+    },
     "block_ads": {
         "message": "このページで広告をブロックする"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "セキュアなページ"
     },
+    "reload_page": {
+        "message": "ページを再読み込みする"
+    },
+    "reload_to_resume_filtering": {
+        "message": "フィルタリングを再開するにはこのページを再読み込みしてください。"
+    },
     "not_filtering_https": {
         "message": "デフォルトでは、支払いシステムと銀行のWebサイトのHTTPS通信を私たちはフィルタリングしていません。ご自身でフィルタリングを有効にするには黄色のロックアイコンをタップしてください。"
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "期限切れ"
+    },
+    "contact_support": {
+        "message": "サポートに連絡する"
     }
 }

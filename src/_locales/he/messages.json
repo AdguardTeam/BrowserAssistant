@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "הגדרות AdGuard"
     },
+    "pause_filtering": {
+        "message": "אל תסנן למשך 30 שניות"
+    },
     "block_ads": {
         "message": "חסום פרסומות באתר זה"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "דף מאובטח"
     },
+    "reload_page": {
+        "message": "טען מחדש דף"
+    },
+    "reload_to_resume_filtering": {
+        "message": "טען מחדש דף זה כדי להמשיך סינון"
+    },
     "not_filtering_https": {
         "message": "כברירת מחדל, אנחנו לא מסננים תעבורת HTTPS עבור מערכות תשלומים ואתרי בנק. אתה יכול לאפשר את הסינון בעצמך: הקש על \"המנעול\" הצהוב משמאל."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "פג"
+    },
+    "contact_support": {
+        "message": "צור קשר עם תמיכה"
     }
 }
