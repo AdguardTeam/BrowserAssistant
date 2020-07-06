@@ -52,6 +52,9 @@ class FilteringPause {
 
     isFilteringPauseSupported = () => {
         const { version, platform } = state.hostInfo;
+        if (!platform) {
+            return false;
+        }
         const minSupportVersion = FILTERING_PAUSE_VERSION_SUPPORT_SINCE[platform.toUpperCase()];
         return compareSemver(version, minSupportVersion) >= 0;
     };

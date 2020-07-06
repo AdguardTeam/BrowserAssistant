@@ -135,7 +135,7 @@ const messageHandler = async (message) => {
         }
     }
 
-    return Promise.resolve();
+    return;
 };
 
 export default messageHandler;
