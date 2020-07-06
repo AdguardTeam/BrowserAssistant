@@ -1,1 +1,9 @@
-<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle cx="8.333" cy="8.333" r="8.333" transform="matrix(1 0 0 -1 .667 17.333)" stroke="#CBCBCB"/><g transform="matrix(1 0 0 -1 5.667 14)"><path d="M3.333 3.333v5.834" stroke="#CBCBCB" stroke-linecap="round"/><circle fill="#CBCBCB" cx="3.333" cy=".833" r="1"/></g></g></svg>
+<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+        <circle cx="8.333" cy="8.333" r="8.333" transform="matrix(1 0 0 -1 .667 17.333)" stroke="#CBCBCB"/>
+        <g transform="matrix(1 0 0 -1 5.667 14)">
+            <path d="M3.333 3.333v5.834" stroke="#CBCBCB" stroke-linecap="round"/>
+            <circle fill="#CBCBCB" cx="3.333" cy=".833" r="1"/>
+        </g>
+    </g>
+</svg>

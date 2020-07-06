@@ -185,4 +185,14 @@ export default class AbstractApi {
     updateApp = () => {
         throw notImplemented('updateApp');
     };
+
+    /**
+     * Sends message to pause filtering
+     * @param {string} url
+     * @param {number} timeout
+     * @returns {Promise<object>}
+     */
+    pauseFiltering = (url, timeout) => {
+        throw notImplemented('pauseFiltering');
+    };
 }

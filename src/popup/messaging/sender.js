@@ -49,6 +49,9 @@ export default {
     openPage: (url) => {
         return sendMessage(POPUP_MESSAGES.OPEN_PAGE, { url });
     },
+    pauseFiltering: (tab) => {
+        return sendMessage(POPUP_MESSAGES.PAUSE_FILTERING, { tab });
+    },
     contactSupport: () => {
         return sendMessage(POPUP_MESSAGES.CONTACT_SUPPORT);
     },

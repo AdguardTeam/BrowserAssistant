@@ -7,4 +7,14 @@ export const CONTENT_SCRIPT_NAME = 'content-scripts.js';
 export const UPDATE_URL_FIREFOX = '{{UPDATE_URL_FIREFOX}}';
 export const UPDATE_URL_CHROME = '{{UPDATE_URL_CHROME}}';
 
+export const PLATFORMS = {
+    WINDOWS: 'windows',
+    MAC: 'mac',
+};
+
+export const FILTERING_PAUSE_VERSION_SUPPORT_SINCE = {
+    WINDOWS: '7.5.0',
+    MAC: '2.5.0',
+};
+
 export const SUPPORT_LINK = 'https://adguard.com/forward.html?action=support&from=popup&app=browser_assistant';

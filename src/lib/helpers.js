@@ -134,3 +134,27 @@ export const checkSomeIsTrue = (states) => {
     return Object.values(states)
         .some((state) => state === true);
 };
+
+/**
+ * If the semver string a is greater than b, return 1.
+ * If the semver string b is greater than a, return -1.
+ * If a equals b, return 0;
+ *
+ * @param {string} a
+ * @param {string} b
+ * @returns {-1 | 0 | 1}
+ */
+export const compareSemver = (a, b) => {
+    const pa = a.split('.');
+    const pb = b.split('.');
+    for (let i = 0; i < 3; i += 1) {
+        const na = Number(pa[i]);
+        const nb = Number(pb[i]);
+        if (na > nb) return 1;
+        if (nb > na) return -1;
+        const { isNaN } = Number;
+        if (!isNaN(na) && isNaN(nb)) return 1;
+        if (isNaN(na) && !isNaN(nb)) return -1;
+    }
+    return 0;
+};

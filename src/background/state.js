@@ -7,7 +7,6 @@ import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
 import { getUrlProps, isHttp } from '../lib/helpers';
-import log from '../lib/logger';
 
 /**
  * This class handles app state
@@ -56,6 +55,11 @@ class State {
         isValidatedOnHost: false,
     };
 
+    hostInfo = {
+        platform: '',
+        version: '',
+    };
+
     init = () => {
         api.addMessageListener(this.nativeHostMessagesHandler);
         api.addInitMessageHandler(this.initMessageHandler);
@@ -67,10 +71,13 @@ class State {
      */
     initMessageHandler = (response) => {
         const { parameters, appState } = response;
-        const isAppUpToDate = versions.apiVersion <= parameters.apiVersion;
-        const { isValidatedOnHost } = parameters;
+        const {
+            isValidatedOnHost, apiVersion, version, platform,
+        } = parameters;
+        const isAppUpToDate = versions.apiVersion <= apiVersion;
         this.setAppState(appState);
         this.setUpdateStatusInfo(isAppUpToDate, isValidatedOnHost);
+        this.setHostInfo(platform, version);
     };
 
     /**
@@ -186,6 +193,18 @@ class State {
     };
 
     /**
+     * Sets host info
+     * @param platform
+     * @param version
+     */
+    setHostInfo = (platform, version) => {
+        this.hostInfo = {
+            platform,
+            version,
+        };
+    };
+
+    /**
      * Checks if app is working
      * @returns {boolean}
      */
@@ -284,7 +303,12 @@ class State {
     addRule = async (ruleText) => {
         const response = await api.addRule(ruleText);
         this.setAppState(response.appState);
-    }
+    };
+
+    pauseFiltering = async (url, timeout) => {
+        const response = await api.pauseFiltering(url, timeout);
+        this.setAppState(response.appState);
+    };
 }
 
 export default new State();

@@ -46,7 +46,6 @@ export const DEFAULT_MODAL_STATE = Object.values(MODAL_STATES_NAMES)
         return acc;
     }, {});
 
-
 export const EVENT_TYPE_TO_MODAL_STATE_MAP = {
     mouseover: { [MODAL_STATES_NAMES.isHovered]: true },
     mouseout: { [MODAL_STATES_NAMES.isHovered]: false },

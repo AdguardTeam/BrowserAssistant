@@ -4,11 +4,22 @@ import {
     observable,
     runInAction,
 } from 'mobx';
-import { ORIGINAL_CERT_STATUS, PROTOCOLS, SWITCHER_TRANSITION_TIME } from '../consts';
-import { DOWNLOAD_LINK, EXTENSION_DOWNLOAD_LINK } from '../../../lib/consts';
+import {
+    ORIGINAL_CERT_STATUS,
+    PROTOCOLS,
+    SWITCHER_TRANSITION_TIME,
+} from '../consts';
+import {
+    DOWNLOAD_LINK,
+    EXTENSION_DOWNLOAD_LINK,
+} from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
 import tabs from '../../../background/tabs';
-import { getFormattedProtocol, getUrlProps, isExtensionProtocol } from '../../../lib/helpers';
+import {
+    getFormattedProtocol,
+    getUrlProps,
+    isExtensionProtocol,
+} from '../../../lib/helpers';
 import log from '../../../lib/logger';
 
 class SettingsStore {
@@ -48,6 +59,23 @@ class SettingsStore {
 
     @observable hostError = null;
 
+    @observable filteringPauseTimeout = 0;
+
+    @observable isFilteringPauseSupported = false;
+
+    @observable showReloadButtonFlag = false;
+
+    @computed
+    get filteringPauseTimer() {
+        const filteringPauseTimeoutSec = (this.filteringPauseTimeout / 1000).toString(10);
+        return `00:${filteringPauseTimeoutSec.padStart(2, '0')}`;
+    }
+
+    @computed
+    get shouldShowFilteringPauseTimer() {
+        return this.filteringPauseTimeout > 0;
+    }
+
     @computed
     get currentTabHostname() {
         return getUrlProps(this.currentUrl).hostname || this.currentUrl;
@@ -80,24 +108,32 @@ class SettingsStore {
     }
 
     @action
+    setFilteringPauseSupported = (isFilteringPauseSupported) => {
+        this.isFilteringPauseSupported = isFilteringPauseSupported;
+    };
+
+    @action
+    setFilteringPauseTimeout = (filteringPauseTimeout) => {
+        this.filteringPauseTimeout = filteringPauseTimeout;
+    };
+
+    @action
+    setShowReloadButtonFlag = (showReloadButtonFlag) => {
+        this.showReloadButtonFlag = showReloadButtonFlag;
+    };
+
+    @action
     setUpdateStatusInfo = (statusInfo) => {
-        const {
-            isAppUpToDate, isValidatedOnHost,
-        } = statusInfo;
+        const { isAppUpToDate, isValidatedOnHost } = statusInfo;
 
         this.isAppUpToDate = isAppUpToDate;
         this.isValidatedOnHost = isValidatedOnHost;
     };
 
     @action
-    getPopupData = async () => {
-        // Get locale at the beginning in order to show messages as faster as possible
-        const locale = await messagesSender.getLocale();
-        this.rootStore.translationStore.setLocale(locale);
-        this.rootStore.uiStore.setExtensionLoading(true);
-        const tab = await tabs.getCurrent();
-        const popupData = await messagesSender.getPopupData(tab);
-
+    updatePopupData = async (tab) => {
+        const currentTab = tab || await tabs.getCurrent();
+        const popupData = await messagesSender.getPopupData(currentTab);
         if (popupData.hostError) {
             runInAction(() => {
                 this.hostError = popupData.hostError;
@@ -111,15 +147,33 @@ class SettingsStore {
             currentFilteringState,
             updateStatusInfo,
             appState,
+            isFilteringPauseSupported,
+            showReloadButtonFlag,
         } = popupData;
 
         runInAction(() => {
-            this.currentUrl = tab.url;
-            this.currentTitle = tab.title;
             this.referrer = referrer;
             this.setUrlFilteringState(currentFilteringState);
             this.setCurrentAppState(appState);
             this.setUpdateStatusInfo(updateStatusInfo);
+            this.setFilteringPauseSupported(isFilteringPauseSupported);
+            this.setShowReloadButtonFlag(showReloadButtonFlag);
+        });
+    }
+
+    @action
+    getPopupData = async () => {
+        // Get locale at the beginning in order to show messages as faster as possible
+        const locale = await messagesSender.getLocale();
+        this.rootStore.translationStore.setLocale(locale);
+        this.rootStore.uiStore.setExtensionLoading(true);
+        const tab = await tabs.getCurrent();
+        await this.updatePopupData(tab);
+
+        runInAction(() => {
+            this.currentUrl = tab.url;
+            this.currentTitle = tab.title;
+            // Stop showing loading screen only when all popup data is received
             this.rootStore.uiStore.setExtensionLoading(false);
         });
     };
@@ -129,10 +183,14 @@ class SettingsStore {
         await messagesSender.openPage(DOWNLOAD_LINK);
     };
 
+    reloadPage = async () => {
+        const tab = await this.getCurrentTab();
+        await messagesSender.reload(tab);
+    };
+
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
-            const tab = await this.getCurrentTab();
-            await messagesSender.reload(tab);
+            await this.reloadPage();
         }, SWITCHER_TRANSITION_TIME);
     };
 
@@ -343,6 +401,14 @@ class SettingsStore {
         } catch (error) {
             log.error(error);
         }
+    };
+
+    pauseFiltering = async () => {
+        this.setShowReloadButtonFlag(false);
+        const tab = await this.getCurrentTab();
+        await messagesSender.pauseFiltering(tab);
+        const filteringStatus = await messagesSender.getUrlFilteringState(tab);
+        this.setUrlFilteringState(filteringStatus);
     };
 
     @computed

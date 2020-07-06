@@ -1,6 +1,8 @@
 import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
+import getPopupData from './getPopupData';
+import filteringPause from './filteringPause';
 import { SUPPORT_LINK } from '../lib/consts';
 
 /**
@@ -14,64 +16,14 @@ const messageHandler = async (message) => {
     const { type, data } = message;
 
     switch (type) {
-        case POPUP_MESSAGES.GET_POPUP_DATA: {
-            try {
-                await state.getCurrentAppState();
-            } catch (e) {
-                return {
-                    appState: state.getAppState(),
-                    updateStatusInfo: state.getUpdateStatusInfo(),
-                    hostError: e.message,
-                };
-            }
-
-            // There is no need to check tab info if app is not working
-            if (!state.isAppWorking()) {
-                return {
-                    appState: state.getAppState(),
-                    updateStatusInfo: state.getUpdateStatusInfo(),
-                };
-            }
-
-            const { tab } = data;
-            const referrer = await tabs.getReferrer(tab);
-            const updateStatusInfo = state.getUpdateStatusInfo();
-            const appState = state.getAppState();
-            let currentFilteringState;
-            try {
-                currentFilteringState = await state.getCurrentFilteringState(tab);
-            } catch (e) {
-                const updateStatusInfo = await state.getUpdateStatusInfo();
-                const appState = await state.getAppState();
-                return {
-                    referrer,
-                    updateStatusInfo,
-                    appState,
-                    hostError: e.message,
-                };
-            }
-
-            // For pages without http or https currentFilteringState would be null
-            if (!currentFilteringState) {
-                const updateStatusInfo = await state.getUpdateStatusInfo();
-                const appState = await state.getAppState();
-                return {
-                    referrer,
-                    updateStatusInfo,
-                    appState,
-                };
-            }
-
-            return {
-                referrer,
-                updateStatusInfo,
-                appState,
-                currentFilteringState,
-            };
-        }
-
         case POPUP_MESSAGES.GET_APP_LOCALE: {
             return state.getLocale();
+        }
+
+        case POPUP_MESSAGES.GET_POPUP_DATA: {
+            const { tab } = data;
+            const popupData = await getPopupData(tab);
+            return popupData;
         }
 
         case POPUP_MESSAGES.GET_CURRENT_FILTERING_STATE: {
@@ -89,7 +41,11 @@ const messageHandler = async (message) => {
         case POPUP_MESSAGES.SET_PROTECTION_STATUS: {
             const { isEnabled } = data;
             const resultAppState = await state.setProtectionStatus(isEnabled);
-            return Promise.resolve(resultAppState);
+
+            filteringPause.resetAllHostnameTimeout();
+            await filteringPause.notifyPopup();
+
+            return resultAppState;
         }
 
         case POPUP_MESSAGES.SET_FILTERING_STATUS: {
@@ -99,6 +55,8 @@ const messageHandler = async (message) => {
                 isHttpsEnabled,
                 url
             );
+
+            await filteringPause.clearHostnameTimeout(url);
             break;
         }
 
@@ -162,6 +120,13 @@ const messageHandler = async (message) => {
         case CONTENT_MESSAGES.ADD_RULE: {
             const { ruleText } = data;
             await state.addRule(ruleText);
+            break;
+        }
+
+        case POPUP_MESSAGES.PAUSE_FILTERING: {
+            const { tab } = data;
+            await filteringPause.handleFilteringPause(tab.url);
+            await tabs.reload(tab);
             break;
         }
 
