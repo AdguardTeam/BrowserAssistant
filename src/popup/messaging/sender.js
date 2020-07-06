@@ -52,4 +52,7 @@ export default {
     pauseFiltering: (tab) => {
         return sendMessage(POPUP_MESSAGES.PAUSE_FILTERING, { tab });
     },
+    contactSupport: () => {
+        return sendMessage(POPUP_MESSAGES.CONTACT_SUPPORT);
+    },
 };

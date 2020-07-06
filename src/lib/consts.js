@@ -16,3 +16,5 @@ export const FILTERING_PAUSE_VERSION_SUPPORT_SINCE = {
     WINDOWS: '7.5.0',
     MAC: '2.5.0',
 };
+
+export const SUPPORT_LINK = 'https://adguard.com/forward.html?action=support&from=popup&app=browser_assistant';

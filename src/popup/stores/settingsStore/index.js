@@ -321,6 +321,15 @@ class SettingsStore {
         }
     };
 
+    contactSupport = async () => {
+        try {
+            await messagesSender.contactSupport();
+            window.close();
+        } catch (error) {
+            log.error(error);
+        }
+    };
+
     removeCustomRules = async () => {
         const { uiStore } = this.rootStore;
         try {

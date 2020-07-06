@@ -3,6 +3,7 @@ import tabs from './tabs';
 import state from './state';
 import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
+import { SUPPORT_LINK } from '../lib/consts';
 
 /**
  * Handles incoming messages to the background page
@@ -78,6 +79,11 @@ const messageHandler = async (message) => {
             break;
         }
 
+        case POPUP_MESSAGES.CONTACT_SUPPORT: {
+            await tabs.openPage(SUPPORT_LINK);
+            break;
+        }
+
         case POPUP_MESSAGES.OPEN_FILTERING_LOG: {
             await state.openFilteringLog();
             break;
@@ -129,7 +135,7 @@ const messageHandler = async (message) => {
         }
     }
 
-    return Promise.resolve();
+    return;
 };
 
 export default messageHandler;

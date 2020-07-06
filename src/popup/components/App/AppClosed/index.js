@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
-import classnames from 'classnames';
 import rootStore from '../../../stores';
 import './AppClosed.pcss';
+import ClosedApp from './ClosedApp';
 
 const AppClosed = observer(() => {
-    const { settingsStore, translationStore, uiStore } = useContext(rootStore);
-
-    const { translate } = translationStore;
+    const { settingsStore, uiStore } = useContext(rootStore);
 
     const {
         isInstalled,
@@ -21,51 +19,51 @@ const AppClosed = observer(() => {
 
     const states = {
         ERROR_OCCURRED: {
-            content: translate('something_went_wrong'),
-            buttonText: translate('reinstall'),
+            content: 'something_went_wrong',
+            buttonText: 'reinstall',
             onClick: () => {
                 openDownloadPage();
                 window.close();
             },
         },
         APP_IS_NOT_INSTALLED: {
-            content: translate('adg_is_not_installed'),
-            buttonText: translate('get_adguard'),
+            content: 'adg_is_not_installed',
+            buttonText: 'get_adguard',
             onClick: () => {
                 settingsStore.openDownloadPage();
                 window.close();
             },
         },
         APP_IS_NOT_UP_TO_DATE: {
-            content: translate('adg_is_not_updated'),
-            buttonText: translate('update'),
+            content: 'adg_is_not_updated',
+            buttonText: 'update',
             onClick: () => {
                 settingsStore.updateApp();
                 window.close();
             },
         },
         APP_IS_NOT_RUNNING: {
-            content: translate('adg_is_not_running'),
-            buttonText: translate('run_adg'),
+            content: 'adg_is_not_running',
+            buttonText: 'run_adg',
             onClick: settingsStore.startApp,
         },
         PROTECTION_IS_NOT_ENABLED: {
-            content: translate('adg_is_paused'),
-            buttonText: translate('enable'),
+            content: 'adg_is_paused',
+            buttonText: 'enable',
             onClick: async () => {
                 await settingsStore.setProtectionStatus(true);
             },
         },
         EXTENSION_IS_NOT_UPDATED: {
-            content: translate('assistant_is_not_updated'),
-            buttonText: translate('update'),
+            content: 'assistant_is_not_updated',
+            buttonText: 'update',
             onClick: () => {
                 settingsStore.updateExtension();
                 window.close();
             },
         },
         EXTENSION_IS_RELOADING: {
-            content: translate('adg_is_launching'),
+            content: 'adg_is_launching',
         },
     };
 
@@ -99,36 +97,14 @@ const AppClosed = observer(() => {
 
     const { globalTabIndex, isLoading } = uiStore;
 
-    const buttonClass = classnames({
-        'app-closed__button': true,
-        'app-closed__button--transparent': isLoading,
-    });
-
-    const handleClick = (e) => {
-        e.target.blur();
-        if (onClick) {
-            onClick();
-        }
-    };
-
     return (
-        <div className="app-closed__container">
-            <div className="app-closed__status-container">
-                <header className="app-closed__status">{content}</header>
-            </div>
-            {buttonText && (
-            <div>
-                <button
-                    className={buttonClass}
-                    type="button"
-                    tabIndex={globalTabIndex}
-                    onClick={handleClick}
-                >
-                    {buttonText}
-                </button>
-            </div>
-            )}
-        </div>
+        <ClosedApp
+            isLoading={isLoading}
+            content={content}
+            buttonText={buttonText}
+            globalTabIndex={globalTabIndex}
+            onClick={onClick}
+        />
     );
 });
 
