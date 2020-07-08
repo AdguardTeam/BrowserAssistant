@@ -12,6 +12,7 @@ import { SUPPORT_LINK } from '../lib/consts';
  * @param {*} message.data
  * @returns {Promise<*>}
  */
+// eslint-disable-next-line consistent-return
 const messageHandler = async (message) => {
     const { type, data } = message;
 
@@ -134,8 +135,6 @@ const messageHandler = async (message) => {
             throw new Error(`Unknown message type was sent: ${type}`);
         }
     }
-
-    return;
 };
 
 export default messageHandler;

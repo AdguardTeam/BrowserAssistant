@@ -180,11 +180,6 @@ const CurrentSite = observer(() => {
                         title={translate('reload_page')}
                     >
                         <figure className="reload-button__figure">
-                            <img
-                                src="../../../assets/images/icon__reload.svg"
-                                className="reload-button__image"
-                                alt=""
-                            />
                             <figcaption>{translate('reload_page')}</figcaption>
                         </figure>
                     </button>
