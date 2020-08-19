@@ -69,7 +69,7 @@
         "message": "Open the filtering log"
     },
     "report_site": {
-        "message": "Report this website"
+        "message": "Report an issue"
     },
     "reset_custom_rules": {
         "message": "Reset all custom rules for this page"
