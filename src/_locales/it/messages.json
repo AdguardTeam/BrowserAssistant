@@ -30,7 +30,7 @@
         "message": "AdGuard si sta avviando..."
     },
     "enable": {
-        "message": "Abilita"
+        "message": "Attiva"
     },
     "assistant_is_not_updated": {
         "message": "Assistente non aggiornato"
@@ -45,7 +45,7 @@
         "message": "Filtraggio HTTPS"
     },
     "increase_ab_block_quality": {
-        "message": "Aumenta la qualità del blocco pubblicitario"
+        "message": "Aumenta la qualità del blocco per annunci"
     },
     "verified_by": {
         "message": "Verificato da:"
@@ -63,10 +63,10 @@
         "message": "Non filtrare per 30 secondi"
     },
     "block_ads": {
-        "message": "Blocca le pubblicità su questo sito"
+        "message": "Blocca annunci su questo sito"
     },
     "open_filtering_log": {
-        "message": "Apri il log dei filtri"
+        "message": "Apri registro filtri"
     },
     "report_site": {
         "message": "Segnala questo sito"
@@ -81,7 +81,7 @@
         "message": "Il filtraggio HTTPS non è stato eseguito per questo sito"
     },
     "site_not_using_private_protection": {
-        "message": "Il sito non sta usando una connessione privata. Qualcuno potrebbe vedere o cambiare le informazioni che invii attraverso il sito."
+        "message": "Il sito non sta utilizzando una connessione privata. Qualcuno potrebbe vedere o cambiare le informazioni inviate attraverso il sito."
     },
     "not_secure": {
         "message": "Non sicuro"
@@ -92,8 +92,14 @@
     "secure_page": {
         "message": "Pagina sicura"
     },
+    "reload_page": {
+        "message": "Ricarica pagina"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Ricarica questa pagina per riprendere il filtraggio"
+    },
     "not_filtering_https": {
-        "message": "Di norma, non filtriamo il traffico HTTPS per i sistemi di pagamento e i siti bancari. Puoi abilitare i filtri tu stesso: tocca sul \"lucchetto\" giallo sulla sinistra."
+        "message": "Di norma, non filtriamo il traffico HTTPS per i sistemi di pagamento e i siti bancari. Puoi attivare i filtri tu stesso: tocca il \"lucchetto\" giallo sulla sinistra."
     },
     "disabled": {
         "message": "Disattivato su questo sito"
@@ -105,12 +111,15 @@
         "message": "La protezione è attiva"
     },
     "protection_is_disabled": {
-        "message": "La protezione è disattivata"
+        "message": "Protezione disattivata"
     },
     "website_cert_is_expired": {
         "message": "Il certificato del sito è scaduto"
     },
     "expired": {
         "message": "Scaduto"
+    },
+    "contact_support": {
+        "message": "Contatta il supporto"
     }
 }

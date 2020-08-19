@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Pengaturan Adguard"
     },
+    "pause_filtering": {
+        "message": "Jangan saring selama 30 detik"
+    },
     "block_ads": {
         "message": "Blok iklan di website ini"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Halaman ini aman"
     },
+    "reload_page": {
+        "message": "Muat ulang halaman"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Muat ulang halaman untuk mengulang penyaringan"
+    },
     "not_filtering_https": {
         "message": "Pada pengaturan bawaan, kami tak memfilter arus aliran data HTTPS untuk sistem pembayaran dan website bank. Kamu bisa mengaktifkan sendiri filteringnya: cukup tekan tombol kuning \"kunci\" di sebelah kiri."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Kedaluwarsa"
+    },
+    "contact_support": {
+        "message": "Hubungi bantuan"
     }
 }

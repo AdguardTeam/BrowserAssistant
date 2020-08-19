@@ -118,5 +118,8 @@
     },
     "expired": {
         "message": "已到期的"
+    },
+    "contact_support": {
+        "message": "與支援聯繫"
     }
 }

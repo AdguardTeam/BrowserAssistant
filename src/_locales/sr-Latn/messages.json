@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "AdGuard postavke"
     },
+    "pause_filtering": {
+        "message": "Ne filtriraj u narednih 30 sekundi"
+    },
     "block_ads": {
         "message": "Blokiraj reklame na ovom sajtu"
     },
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Bezbedna stranica"
     },
+    "reload_page": {
+        "message": "Ponovo učitaj stranicu"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Ponovo učitajte ovu stranicu za nastavak filtriranja"
+    },
     "not_filtering_https": {
         "message": "Podrazumevano, ne filtriramo HTTPS saobraćaj za platne sisteme i sajtove banaka. Možete uključiti filtriranje: dodirnite na žuti \"katanac\" na levoj strani."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Istekla"
+    },
+    "contact_support": {
+        "message": "Kontaktiraj podršku"
     }
 }
