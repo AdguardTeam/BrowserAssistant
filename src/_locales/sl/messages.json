@@ -92,6 +92,12 @@
     "secure_page": {
         "message": "Varna stran"
     },
+    "reload_page": {
+        "message": "Znova naloži stran"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Ponovno naloži to stran za nadaljevanje filtriranja"
+    },
     "not_filtering_https": {
         "message": "Privzeto ne filtriramo prometa HTTPS za plačilne sisteme in bančne spletne strani. Filtriranje lahko omogočite sami: tapnite na rumeno \"ključavnico\" na levi strani."
     },
@@ -112,5 +118,8 @@
     },
     "expired": {
         "message": "Poteklo"
+    },
+    "contact_support": {
+        "message": "Obrnite se na podporo"
     }
 }

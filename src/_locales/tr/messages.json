@@ -1,12 +1,12 @@
 {
     "name": {
-        "message": "AdGuard tarayıcı asistanı"
+        "message": "AdGuard Tarayıcı Asistanı"
     },
     "description": {
-        "message": "AdGuard tarayıcı asistanı açıklaması"
+        "message": "AdGuard masaüstü uygulaması eklentisi. Filtrelemeyi doğrudan tarayıcıdan yönetir, can sıkıcı öğeleri iki tıklamayla gizler."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard kurulu değil"
+        "message": "AdGuard yüklenmemiş veya yanlış yapılandırılmış"
     },
     "get_adguard": {
         "message": "AdGuard'ı edinin"
@@ -36,7 +36,7 @@
         "message": "Asistan güncel değil"
     },
     "something_went_wrong": {
-        "message": "Birşeyler yanlış gitti"
+        "message": "Bir şeyler ters gitti"
     },
     "reinstall": {
         "message": "Tekrar yükle"
@@ -92,6 +92,12 @@
     "secure_page": {
         "message": "Güvenli sayfa"
     },
+    "reload_page": {
+        "message": "Sayfayı yenile"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Filtrelemeye devam etmek için bu sayfayı yenileyin"
+    },
     "not_filtering_https": {
         "message": "Varsayılan olarak, ödeme sistemleri ve banka web sitelerinin kullandığı HTTPS trafiğini filtrelemiyoruz. İsterseniz filtrelemeyi etkinleştirebilirsiniz: soldaki sarı \"kilit\" simgesini tıklayın."
     },
@@ -112,5 +118,8 @@
     },
     "expired": {
         "message": "Sona erdi"
+    },
+    "contact_support": {
+        "message": "Destek ile iletişime geçin"
     }
 }

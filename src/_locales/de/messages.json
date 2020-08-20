@@ -96,7 +96,7 @@
         "message": "Seite neu laden"
     },
     "reload_to_resume_filtering": {
-        "message": "Diese Seite neuladen, um die Filterung fortzusetzen"
+        "message": "Seite neu laden, um die Filterung fortzusetzen"
     },
     "not_filtering_https": {
         "message": "Standardmäßig filtern wir den HTTPS-Verkehr für Zahlungssysteme und Banken-Websites nicht. Sie können die Filterung selbst aktivieren: Tippen Sie auf das gelbe Schloss auf der linken Seite."

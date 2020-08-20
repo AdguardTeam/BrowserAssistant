@@ -6,7 +6,7 @@
         "message": "Uitbreiding voor AdGuard desktop app. Filtering beheren vanuit je browser, vervelende elementen verbergen met 2 muisklikken."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard is niet geïnstalleerd"
+        "message": "AdGuard is niet geïnstalleerd of niet juist geconfigureerd"
     },
     "get_adguard": {
         "message": "AdGuard aanschaffen"

@@ -92,6 +92,12 @@
     "secure_page": {
         "message": "Página segura"
     },
+    "reload_page": {
+        "message": "Recarregar página"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Recarregue esta página para retomar a filtragem"
+    },
     "not_filtering_https": {
         "message": "Por padrão, não filtramos o tráfego HTTPS para o sistema de pagamento e sites bancários. Você mesmo pode ativar a filtragem: toque no \"cadeado\" amarelo na esquerda."
     },
@@ -112,5 +118,8 @@
     },
     "expired": {
         "message": "Expirado"
+    },
+    "contact_support": {
+        "message": "Suporte"
     }
 }

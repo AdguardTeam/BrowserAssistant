@@ -1,6 +1,6 @@
 {
     "name": {
-        "message": "AdGuard Böngészősegéd"
+        "message": "AdGuard Böngésző Asszisztens"
     },
     "description": {
         "message": "Bővítmény az AdGuard asztali alkalmazáshoz. Böngészőbeli szűrés és zavaró elemek elrejtése két kattintással."
@@ -45,7 +45,7 @@
         "message": "HTTPS szűrés"
     },
     "increase_ab_block_quality": {
-        "message": "Javítja a hirdetésblokkolás minőségét"
+        "message": "Javítja a blokkolás minőségét"
     },
     "verified_by": {
         "message": "Hitelesítette:"
@@ -54,31 +54,34 @@
         "message": "További információk"
     },
     "adg_protection": {
-        "message": "AdGuard Védelem"
+        "message": "AdGuard védelem"
     },
     "adg_settings": {
         "message": "AdGuard beállítások"
+    },
+    "pause_filtering": {
+        "message": "Szüneteltetés 30 másodpercig"
     },
     "block_ads": {
         "message": "Hirdetések blokkolása ezen az oldalon"
     },
     "open_filtering_log": {
-        "message": "Szűrőnapló megnyitása"
+        "message": "Szűrési napló megnyitása"
     },
     "report_site": {
-        "message": "Oldal jelentése"
+        "message": "Webhely jelentése"
     },
     "reset_custom_rules": {
         "message": "Egyéni szabályok visszaállítása az oldalon"
     },
     "cert_expired": {
-        "message": "Az AdGuard nem tudta azonosítani a weboldalt, mert az alaptanusítvány elavult"
+        "message": "Az AdGuard nem tudta ellenőrizni a webhely tanúsítványát, mivel a gyökértanúsítvány lejárt"
     },
     "cert_absent": {
-        "message": "HTTPS szűrés nincs alkalmazva ezen a weblapon"
+        "message": "Nincs HTTPS szűrés alkalmazva ezen a webhelyen"
     },
     "site_not_using_private_protection": {
-        "message": "Ez a weblap nem biztonságos. Láthatják és módosíthatják az általad küldött információkat."
+        "message": "A webhely nem használ privát kapcsolatot. Bárki láthatja vagy módosíthatja azokat az információkat, amiket a webhelynek küld, vagy attól fogad."
     },
     "not_secure": {
         "message": "Nem biztonságos"
@@ -89,8 +92,14 @@
     "secure_page": {
         "message": "Biztonságos oldal"
     },
+    "reload_page": {
+        "message": "Oldal újratöltése"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Oldal újratöltése a szűrés folytatásához"
+    },
     "not_filtering_https": {
-        "message": "Alapértelmezés szerint nem szűrjük a HTTPS forgalmat a fizetési rendszerek és a bankok webhelyei számára. Ha ön szeretné engedélyezni a szűrés éritnse meg a sárga \"lakatot\" a bal oldalon."
+        "message": "Alapértelmezés szerint nem szűrjük a HTTPS forgalmat a fizetési rendszerek és a bankok webhelyei számára. Ha Ön szeretné engedélyezni a szűrést, éritnse meg a sárga \"lakatot\" a bal oldalon."
     },
     "disabled": {
         "message": "Kikapcsolva ezen az oldalon"
@@ -99,7 +108,7 @@
         "message": "Bekapcsolva ezen az oldalon"
     },
     "protection_is_enabled": {
-        "message": "Védelem engedélyezve"
+        "message": "Védelem bekapcsolva"
     },
     "protection_is_disabled": {
         "message": "Védelem kikapcsolva"
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Lejárt"
+    },
+    "contact_support": {
+        "message": "Kapcsolatfelvétel"
     }
 }
