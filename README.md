@@ -92,70 +92,53 @@ We are thankful to the developers of the libraries used to build our extension.
 
 ### `react`
 * Source: https://github.com/facebook/react
-* License: https://github.com/facebook/react/blob/master/LICENSE
 
 ### `webextension-polyfill`
 * Source: https://github.com/mozilla/webextension-polyfill
-* License: https://github.com/mozilla/webextension-polyfill/blob/master/LICENSE
 
 ### `react-intl`
 * Source: https://github.com/formatjs/formatjs/tree/main/packages/react-intl
-* License: https://github.com/formatjs/formatjs/blob/main/packages/react-intl/LICENSE.md
 
 ### `mobx`
 * Source: https://github.com/mobxjs/mobx
-* License: https://github.com/mobxjs/mobx/blob/mobx6/LICENSE
 
 ### `mobx-react`
 * Source: https://github.com/mobxjs/mobx-react
-* License: https://github.com/mobxjs/mobx-react/blob/master/LICENSE
 
 ### `lodash`
 * Source: https://github.com/lodash/lodash
-* License: https://github.com/lodash/lodash/blob/master/LICENSE
 
 ### `nanoid`
 * Source: https://github.com/ai/nanoid
-* License: https://github.com/ai/nanoid/blob/master/LICENSE
 
 ### `react-modal`
 * Source: https://github.com/reactjs/react-modal
-* License: https://github.com/reactjs/react-modal/blob/master/LICENSE
 
 ### `classnames`
 * Source: https://github.com/JedWatson/classnames
-* License: https://github.com/JedWatson/classnames/blob/master/LICENSE
 
 ### `babel`
 * Source: https://github.com/babel/babel
-* License: https://github.com/babel/babel/blob/main/LICENSE
 
 ### `axios`
 * Source: https://github.com/axios/axios
-* License: https://github.com/axios/axios/blob/master/LICENSE
 
 ### `crx`
 * Source: https://github.com/oncletom/crx
-* License: https://github.com/oncletom/crx/blob/master/LICENSE
 
 ### `eslint`
 * Source: https://github.com/eslint/eslint
-* License: https://github.com/eslint/eslint/blob/master/LICENSE
 
 ### `jest`
 * Source: https://github.com/facebook/jest
-* License: https://github.com/facebook/jest/blob/master/LICENSE
 
 ### `postcss`
 * Source: https://github.com/postcss/postcss
-* License: https://github.com/postcss/postcss/blob/master/LICENSE
 
 ### `web-ext`
 * Source: https://github.com/mozilla/web-ext
-* License: https://github.com/mozilla/web-ext/blob/master/LICENSE
 
 ### `webpack`
 * Source: https://github.com/webpack/webpack
-* License: https://github.com/webpack/webpack/blob/master/LICENSE
 
-This list is not full, but all dependencies are listed in the `package.json` file. 
+This list is not full, but all dependencies are in the `package.json` file. 
