@@ -86,3 +86,14 @@ Respectively creates Chrome and Firefox beta and release builds, zipped builds, 
 - Permission `tabs` allows to indicate the status of websites by changing the icon color
 - Permission `activeTabs` allows to inject script of adguard-assistant https://github.com/AdguardTeam/AdguardAssistant into the content page
 - Permission `nativeMessaging` allows to communicate with the native host
+
+## Acknowledgments
+This software wouldn't have been possible without:
+
+- [React](https://github.com/facebook/react)
+- [MobX](https://github.com/mobxjs/mobx)
+- [Babel](https://github.com/babel/babel)
+- [Jest](https://github.com/facebook/jest)
+- and many more npm packages.
+
+For a full list of all `npm` packages in use, please take a look at [package.json](package.json) file.
