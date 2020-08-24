@@ -88,57 +88,12 @@ Respectively creates Chrome and Firefox beta and release builds, zipped builds, 
 - Permission `nativeMessaging` allows to communicate with the native host
 
 ## Acknowledgments
-We are thankful to the developers of the libraries used to build our extension.
+This software wouldn't have been possible without:
 
-### `react`
-* Source: https://github.com/facebook/react
+- [React](https://github.com/facebook/react)
+- [MobX](https://github.com/mobxjs/mobx)
+- [Babel](https://github.com/babel/babel)
+- [Jest](https://github.com/facebook/jest)
+- and many more npm packages.
 
-### `webextension-polyfill`
-* Source: https://github.com/mozilla/webextension-polyfill
-
-### `react-intl`
-* Source: https://github.com/formatjs/formatjs/tree/main/packages/react-intl
-
-### `mobx`
-* Source: https://github.com/mobxjs/mobx
-
-### `mobx-react`
-* Source: https://github.com/mobxjs/mobx-react
-
-### `lodash`
-* Source: https://github.com/lodash/lodash
-
-### `nanoid`
-* Source: https://github.com/ai/nanoid
-
-### `react-modal`
-* Source: https://github.com/reactjs/react-modal
-
-### `classnames`
-* Source: https://github.com/JedWatson/classnames
-
-### `babel`
-* Source: https://github.com/babel/babel
-
-### `axios`
-* Source: https://github.com/axios/axios
-
-### `crx`
-* Source: https://github.com/oncletom/crx
-
-### `eslint`
-* Source: https://github.com/eslint/eslint
-
-### `jest`
-* Source: https://github.com/facebook/jest
-
-### `postcss`
-* Source: https://github.com/postcss/postcss
-
-### `web-ext`
-* Source: https://github.com/mozilla/web-ext
-
-### `webpack`
-* Source: https://github.com/webpack/webpack
-
-This list is not full, but all dependencies are in the `package.json` file. 
+For a full list of all `npm` packages in use, please take a look at [package.json](package.json) file.
