@@ -1,6 +1,6 @@
 {
     "name": {
-        "message": "AdGuard browser-assistent"
+        "message": "AdGuard Browser Assistent"
     },
     "description": {
         "message": "Udvidelse til AdGuards desktop-program. Administrerer filtrering direkte fra browseren, skjuler irriterende elementer i to klik."
@@ -69,7 +69,7 @@
         "message": "Åben filtreringslog"
     },
     "report_site": {
-        "message": "Rapporter denne hjemmeside"
+        "message": "Rapportér et problem"
     },
     "reset_custom_rules": {
         "message": "Nulstil alle brugerdefinerede regler for denne side"

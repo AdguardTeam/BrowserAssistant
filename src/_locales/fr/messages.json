@@ -69,7 +69,7 @@
         "message": "Ouvrir le journal de filtrage"
     },
     "report_site": {
-        "message": "Signaler ce site Web"
+        "message": "Signaler un problème"
     },
     "reset_custom_rules": {
         "message": "Réinitialiser toutes les règles personnalisées pour cette page"

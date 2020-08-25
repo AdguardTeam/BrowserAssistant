@@ -69,7 +69,7 @@
         "message": "打开过滤日志"
     },
     "report_site": {
-        "message": "报告此站点"
+        "message": "报告错误"
     },
     "reset_custom_rules": {
         "message": "重置该页面的所有自定义规则"
