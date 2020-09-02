@@ -69,10 +69,10 @@
         "message": "Apri registro filtri"
     },
     "report_site": {
-        "message": "Segnala questo sito"
+        "message": "Segnala un problema"
     },
     "reset_custom_rules": {
-        "message": "Resetta tutte le regole personalizzate per questa pagina"
+        "message": "Reimposta tutte le regole personalizzate per questa pagina"
     },
     "cert_expired": {
         "message": "AdGuard non ha potuto verificare il certificato di questo sito, perché il certificato di root è scaduto"

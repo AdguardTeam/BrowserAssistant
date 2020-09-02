@@ -69,7 +69,7 @@
         "message": "開啟該過濾記錄"
     },
     "report_site": {
-        "message": "報告該網站"
+        "message": "報告問題"
     },
     "reset_custom_rules": {
         "message": "重置關於該頁面之所有自訂的規則"
@@ -99,7 +99,7 @@
         "message": "重新載入此頁面以恢復過濾"
     },
     "not_filtering_https": {
-        "message": "預設下，我們不過濾有關付款系統和銀行網站的 HTTPS 流量。您可靠您自己啟用該過濾：於在左側的黃色\"鎖頭\"上輕觸。"
+        "message": "預設下，我們不過濾有關付款系統和銀行網站的 HTTPS 流量。您可靠您自己啟用該過濾：向在左側的黃色\"鎖頭\"輕觸。"
     },
     "disabled": {
         "message": "已於該網站上禁用"

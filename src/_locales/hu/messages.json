@@ -33,7 +33,7 @@
         "message": "Bekapcsolás"
     },
     "assistant_is_not_updated": {
-        "message": "A Segéd nincs frissítve"
+        "message": "Az Asszisztens nincs frissítve"
     },
     "something_went_wrong": {
         "message": "Valami hiba történt"
@@ -69,7 +69,7 @@
         "message": "Szűrési napló megnyitása"
     },
     "report_site": {
-        "message": "Webhely jelentése"
+        "message": "Probléma bejelentése"
     },
     "reset_custom_rules": {
         "message": "Egyéni szabályok visszaállítása az oldalon"

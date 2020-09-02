@@ -8,6 +8,9 @@
     "adg_is_not_installed": {
         "message": "AdGuard не е инсталирана или е неправилно конфигурирана"
     },
+    "get_adguard": {
+        "message": "Вземете AdGuard"
+    },
     "adg_is_not_updated": {
         "message": "AdGuard не е обновена"
     },
@@ -23,6 +26,9 @@
     "adg_is_paused": {
         "message": "Защитата на AdGuard е на пауза"
     },
+    "adg_is_launching": {
+        "message": "AdGuard стартира..."
+    },
     "enable": {
         "message": "Включи"
     },
@@ -34,6 +40,9 @@
     },
     "reinstall": {
         "message": "Преинсталирай"
+    },
+    "https_filtering": {
+        "message": "Филтриране на HTTPS"
     },
     "increase_ab_block_quality": {
         "message": "Повишава качеството на блокиране на реклами"
@@ -57,13 +66,16 @@
         "message": "Отвори дневника на филтрирането"
     },
     "report_site": {
-        "message": "Докладвай този сайт"
+        "message": "Съобщете за проблем"
     },
     "reset_custom_rules": {
         "message": "Нулирай всички персонализирани правила за тази страница"
     },
     "cert_expired": {
         "message": "AdGuard не можа да потвърди сертификата на този уебсайт, тъй като основният сертификат е изтекъл"
+    },
+    "cert_absent": {
+        "message": "Zа този уебсайт не е извършено HTTPS филтриране"
     },
     "site_not_using_private_protection": {
         "message": "Сайтът не използва частна връзка. Възможно е някой да може да види или промени информацията, която изпращате или получавате през сайта."
@@ -85,5 +97,20 @@
     },
     "enabled": {
         "message": "Активирана на този уебсайт"
+    },
+    "protection_is_enabled": {
+        "message": "Защитата е включена"
+    },
+    "protection_is_disabled": {
+        "message": "Защитата е деактивирана"
+    },
+    "website_cert_is_expired": {
+        "message": "Сертификатът за сайта е изтекъл"
+    },
+    "expired": {
+        "message": "Изтекъл"
+    },
+    "contact_support": {
+        "message": "Свържете се с еподдръжката"
     }
 }

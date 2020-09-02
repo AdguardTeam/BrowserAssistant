@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Cài đặt AdGuard"
     },
+    "pause_filtering": {
+        "message": "Không lọc trong 30 giây"
+    },
     "block_ads": {
         "message": "Chặn quảng cáo trên website này"
     },
@@ -66,7 +69,7 @@
         "message": "Mở nhật ký lọc"
     },
     "report_site": {
-        "message": "Báo cáo trang này"
+        "message": "Báo lỗi"
     },
     "reset_custom_rules": {
         "message": "Thiết lập mặc định các tuỳ chọn cho trang"
@@ -89,6 +92,12 @@
     "secure_page": {
         "message": "Trang bảo mật tốt"
     },
+    "reload_page": {
+        "message": "Tải lại trang"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Tải lại trang này để tiếp tục lọc"
+    },
     "not_filtering_https": {
         "message": "Mặc định chúng tôi không lọc lưu thông HTTPS cho các hệ thống thanh toán và trang web của ngân hàng. Bạn có thể tự bật bộ lọc: nhấn vào hình khoá màu vàng ở bên trái."
     },
@@ -109,5 +118,8 @@
     },
     "expired": {
         "message": "Đã hết hạn"
+    },
+    "contact_support": {
+        "message": "Liên hệ hỗ trợ"
     }
 }

@@ -69,7 +69,7 @@
         "message": "필터링 로그 열기"
     },
     "report_site": {
-        "message": "이 웹사이트에 관한 불만 사항 제출"
+        "message": "문제 신고하기"
     },
     "reset_custom_rules": {
         "message": "이 페이지에 대한 모든 사용자 규칙 초기화"

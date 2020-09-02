@@ -69,7 +69,7 @@
         "message": "フィルタリングログを開く"
     },
     "report_site": {
-        "message": "このページについてクレームを報告する"
+        "message": "問題・不具合を報告する"
     },
     "reset_custom_rules": {
         "message": "このページに対するカスタムルールを全部リセット"

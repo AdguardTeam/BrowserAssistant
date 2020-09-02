@@ -1,1 +1,110 @@
-{}
+{
+    "name": {
+        "message": "AdGuard Blaaierassistent"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard is nie geïnstalleer nie, of is verkeerd ingestel nie"
+    },
+    "get_adguard": {
+        "message": "Kry AdGuard hier"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard is nie opgedateer nie"
+    },
+    "update": {
+        "message": "Opdateer"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard loop nie"
+    },
+    "run_adg": {
+        "message": "Hardloop AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard-beskerming word onderbreek"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard begin..."
+    },
+    "enable": {
+        "message": "Aktiveer"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistent word nie opgedateer nie"
+    },
+    "something_went_wrong": {
+        "message": "Iets het verkeerd geloop"
+    },
+    "reinstall": {
+        "message": "Herinstalleer"
+    },
+    "https_filtering": {
+        "message": "HTTPS word gefilter"
+    },
+    "increase_ab_block_quality": {
+        "message": "Verhoog die gehalte van advertensieblokkering"
+    },
+    "verified_by": {
+        "message": "Bevestig deur:"
+    },
+    "more_info": {
+        "message": "Meer inligting"
+    },
+    "adg_protection": {
+        "message": "AdGuard Beskerming"
+    },
+    "adg_settings": {
+        "message": "AdGuard Instellings"
+    },
+    "block_ads": {
+        "message": "Blokkeer advertensies op hierdie webwerf"
+    },
+    "open_filtering_log": {
+        "message": "Maak die filterlogboek oop"
+    },
+    "report_site": {
+        "message": "Rapporteer probleem"
+    },
+    "reset_custom_rules": {
+        "message": "Stel alle pasgemaakte reëls vir hierdie bladsy terug"
+    },
+    "cert_expired": {
+        "message": "AdGuard kon nie die sertifikaat van hierdie webwerf verifieer nie omdat die wortelsertifikaat verval het"
+    },
+    "cert_absent": {
+        "message": "HTTPS-filtering is nie vir hierdie webwerf uitgevoer nie"
+    },
+    "site_not_using_private_protection": {
+        "message": "Die webwerf gebruik nie 'n private verbinding nie. Iemand kan die inligting wat u stuur deur die webwerf sien of verander."
+    },
+    "not_secure": {
+        "message": "Nie veilig nie"
+    },
+    "nothing_to_block_here": {
+        "message": "Niks om hier te blok nie"
+    },
+    "secure_page": {
+        "message": "Veilige bladsy"
+    },
+    "not_filtering_https": {
+        "message": "Ons filtreer standaard nie HTTPS-verkeer vir die betaalstelsel en bankwebwerwe nie. U kan die filter self inskakel: tik op die geel \"slot\" aan die linkerkant."
+    },
+    "disabled": {
+        "message": "Gestremd op hierdie webwerf"
+    },
+    "enabled": {
+        "message": "Op hierdie webwerf geaktiveer"
+    },
+    "protection_is_enabled": {
+        "message": "Beskerming is geaktiveer"
+    },
+    "protection_is_disabled": {
+        "message": "Beskerming is gedeaktiveer"
+    },
+    "website_cert_is_expired": {
+        "message": "Webwerf sertifikaat is verval"
+    },
+    "expired": {
+        "message": "Verval"
+    }
+}
