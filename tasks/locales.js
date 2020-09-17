@@ -216,7 +216,7 @@ if (process.env.LOCALES === 'DOWNLOAD') {
             console.log(e.message);
             process.exit(1);
         });
-} else if (process.env.LOCALES === 'CHECK_OURS') {
+} else if (process.env.LOCALES === 'CHECK_OUR') {
     checkTranslations(REQUIRED_LOCALES)
         .then(() => {
             console.log('Our languages have required level of translations');
