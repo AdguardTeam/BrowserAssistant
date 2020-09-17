@@ -4,7 +4,9 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
-const { BASE_LOCALE, PROJECT_ID, LANGUAGES } = require('./langConstants');
+const {
+    BASE_LOCALE, BASE_LOCALE_CONTENT, PROJECT_ID, LANGUAGES,
+} = require('./langConstants');
 
 const BASE_URL = 'https://twosky.adtidy.org/api/v1';
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
@@ -13,6 +15,10 @@ const FORMAT = 'json';
 const FILENAME = `messages.${FORMAT}`;
 const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
 const LOCALES_DIR = path.resolve(__dirname, '../src/_locales');
+const SRC_DIR = path.resolve(__dirname, '../src');
+
+const REQUIRED_LVL_OF_TRANSLATIONS = 100;
+const REQUIRED_LOCALES = ['ru', 'de', 'fr', 'ja', 'zh_CN'];
 
 /**
  * Build query string for downloading translations
@@ -106,17 +112,22 @@ const getLocaleTranslations = async (locale) => {
     return JSON.parse(fileContent);
 };
 
-const checkTranslationLevel = async () => {
-    const REQUIRED_LOCALES = ['ru', 'de', 'fr', 'ja', 'zh_CN'];
-    const REQUIRED_LVL_OF_TRANSLATIONS = 100;
+const printTranslationsResults = (results) => {
+    console.log('Translations readiness:');
+    results.forEach((e) => {
+        console.log(`${e.locale} -- ${e.level}%`);
+    });
+};
 
+const checkTranslations = async (locales, summary = false) => {
     const baseLocaleTranslations = await getLocaleTranslations(BASE_LOCALE);
     const baseLocaleMessagesCount = Object.keys(baseLocaleTranslations).length;
 
-    const results = await Promise.all(REQUIRED_LOCALES.map(async (locale) => {
+    const results = await Promise.all(locales.map(async (locale) => {
         const localeTranslations = await getLocaleTranslations(locale);
         const localeMessagesCount = Object.keys(localeTranslations).length;
-        const level = (localeMessagesCount / baseLocaleMessagesCount) * 100;
+        const strictLevel = ((localeMessagesCount / baseLocaleMessagesCount) * 100);
+        const level = Math.round((strictLevel + Number.EPSILON) * 100) / 100;
         return { locale, level, translated: localeMessagesCount };
     }));
 
@@ -124,11 +135,64 @@ const checkTranslationLevel = async () => {
         return result.level < REQUIRED_LVL_OF_TRANSLATIONS;
     });
 
-    if (filteredResults.length > 0) {
-        throw new Error(`Languages required to have ${baseLocaleMessagesCount} messages, but received: ${JSON.stringify(filteredResults)}`);
+    if (summary) {
+        printTranslationsResults(results);
+    } else if (filteredResults.length > 0) {
+        printTranslationsResults(filteredResults);
+        throw new Error('Locales above should be done ready for 100%.');
     }
 
     return results;
+};
+
+const traverseDir = (dir, callback) => {
+    fs.readdirSync(dir).forEach((file) => {
+        const fullPath = path.join(dir, file);
+        if (fs.lstatSync(fullPath).isDirectory()) {
+            traverseDir(fullPath, callback);
+        } else {
+            callback(fullPath);
+        }
+    });
+};
+
+const contains = (key, files) => {
+    for (let i = 0; i < files.length; i += 1) {
+        if (files[i].includes(key)) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const checkUnusedMessages = () => {
+    const files = [];
+
+    traverseDir(SRC_DIR, (path) => {
+        const canContain = (path.endsWith('.js') || path.endsWith('.json'))
+            && !path.includes(LOCALES_DIR);
+
+        if (canContain) {
+            files.push(fs.readFileSync(path).toString());
+        }
+    });
+
+    const unused = [];
+    Object.keys(BASE_LOCALE_CONTENT).forEach((key) => {
+        if (!contains(key, files)) {
+            unused.push(key);
+        }
+    });
+
+    if (unused.length > 0) {
+        console.log('Unused messages:');
+        unused.forEach((key) => {
+            console.log(key);
+        });
+        throw new Error('There should be no unused messages.');
+    } else {
+        console.log('There is no unused messages.');
+    }
 };
 
 /**
@@ -152,15 +216,33 @@ if (process.env.LOCALES === 'DOWNLOAD') {
             console.log(e.message);
             process.exit(1);
         });
-} else if (process.env.LOCALES === 'CHECK') {
-    checkTranslationLevel()
+} else if (process.env.LOCALES === 'CHECK_OURS') {
+    checkTranslations(REQUIRED_LOCALES)
         .then(() => {
-            console.log('Languages have required level of translations');
+            console.log('Our languages have required level of translations');
         })
         .catch((e) => {
             console.log(e.message);
             process.exit(1);
         });
+} else if (process.env.LOCALES === 'VALIDATE_ALL') {
+    checkTranslations(LOCALES)
+        .then(() => {
+            console.log('All languages have required level of translations');
+        })
+        .catch((e) => {
+            console.log(e.message);
+            process.exit(1);
+        });
+} else if (process.env.SUMMARY) {
+    checkTranslations(LOCALES, process.env.SUMMARY)
+        .then(() => {})
+        .catch((e) => {
+            console.log(e.message);
+            process.exit(1);
+        });
+} else if (process.env.UNUSED) {
+    checkUnusedMessages();
 } else {
     console.log('Option DOWNLOAD/UPLOAD locales is not set');
 }
