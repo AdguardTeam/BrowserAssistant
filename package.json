@@ -17,7 +17,7 @@
         "test:watch": "jest --watch",
         "locales:download": "LOCALES=DOWNLOAD node tasks/locales.js",
         "locales:upload": "LOCALES=UPLOAD node tasks/locales.js",
-        "locales:validate-min": "LOCALES=CHECK_OUR node tasks/locales.js",
+        "locales:check": "LOCALES=CHECK_OUR node tasks/locales.js",
         "locales:validate-all": "LOCALES=VALIDATE_ALL node tasks/locales.js",
         "locales:summary": "SUMMARY=true node tasks/locales.js",
         "locales:unused": "UNUSED=true node tasks/locales.js",
