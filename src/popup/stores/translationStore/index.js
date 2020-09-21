@@ -4,7 +4,7 @@ import browser from 'webextension-polyfill';
 import messagesMap from '../../../_locales';
 import checkLocale from './checkLocale';
 
-const { BASE_LOCALE } = require('../../../../tasks/langConstants');
+const { BASE_LOCALE } = require('../../../../tasks/translations/langConstants');
 
 const browserLocale = browser.i18n.getUILanguage();
 

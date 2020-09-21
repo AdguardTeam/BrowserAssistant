@@ -4,21 +4,31 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
+const { program } = require('commander');
+
 const {
-    BASE_LOCALE, BASE_LOCALE_CONTENT, PROJECT_ID, LANGUAGES,
+    BASE_LOCALE,
+    PROJECT_ID,
+    LANGUAGES,
+    BASE_URL,
+    SRC_RELATIVE_PATH,
+    SRC_FILENAME_EXTENSIONS,
+    LOCALES_RELATIVE_PATH,
+    FORMAT,
+    LOCALE_DATA_FILENAME,
+    REQUIRED_LOCALES,
+    THRESHOLD_PERCENTAGE,
 } = require('./langConstants');
 
-const BASE_URL = 'https://twosky.adtidy.org/api/v1';
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
 const BASE_UPLOAD_URL = `${BASE_URL}/upload`;
-const FORMAT = 'json';
-const FILENAME = `messages.${FORMAT}`;
 const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
-const LOCALES_DIR = path.resolve(__dirname, '../src/_locales');
-const SRC_DIR = path.resolve(__dirname, '../src');
+const LOCALES_DIR = path.resolve(__dirname, LOCALES_RELATIVE_PATH);
+const SRC_DIR = path.resolve(__dirname, SRC_RELATIVE_PATH);
 
-const REQUIRED_LVL_OF_TRANSLATIONS = 100;
-const REQUIRED_LOCALES = ['ru', 'de', 'fr', 'ja', 'zh_CN'];
+const BASE_LOCALE_CONTENT_LOCATION = `${LOCALES_RELATIVE_PATH}/${BASE_LOCALE}/${LOCALE_DATA_FILENAME}`;
+// eslint-disable-next-line import/no-dynamic-require
+const BASE_LOCALE_CONTENT = require(BASE_LOCALE_CONTENT_LOCATION);
 
 /**
  * Build query string for downloading translations
@@ -28,7 +38,7 @@ const getQueryString = (lang) => querystring.stringify({
     format: FORMAT,
     language: lang,
     project: PROJECT_ID,
-    filename: FILENAME,
+    filename: LOCALE_DATA_FILENAME,
 });
 
 /**
@@ -41,7 +51,7 @@ const getFormData = (filePath) => {
     formData.append('format', FORMAT);
     formData.append('language', BASE_LOCALE);
     formData.append('project', PROJECT_ID);
-    formData.append('filename', FILENAME);
+    formData.append('filename', LOCALE_DATA_FILENAME);
     formData.append('file', fs.createReadStream(filePath));
 
     return formData;
@@ -63,14 +73,14 @@ function saveFile(filePath, data) {
 /**
  * Entry point for downloading translations
  */
-async function downloadAndSave() {
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
-    for (const lang of LOCALES) {
+async function downloadAndSave(locales) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const lang of locales) {
         const downloadUrl = `${BASE_DOWNLOAD_URL}?${getQueryString(lang)}`;
         try {
             console.log(`Downloading: ${downloadUrl}`);
             const { data } = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
-            const filePath = path.join(LOCALES_DIR, lang, FILENAME);
+            const filePath = path.join(LOCALES_DIR, lang, LOCALE_DATA_FILENAME);
             await saveFile(filePath, data);
             console.log(`Successfully saved in: ${filePath}`);
         } catch (e) {
@@ -89,8 +99,8 @@ async function downloadAndSave() {
 /**
  * Entry point for uploading translations
  */
-async function upload() {
-    const filePath = path.join(LOCALES_DIR, BASE_LOCALE, FILENAME);
+async function uploadBaseLocale() {
+    const filePath = path.join(LOCALES_DIR, BASE_LOCALE, LOCALE_DATA_FILENAME);
     const formData = getFormData(filePath);
     let response;
 
@@ -107,7 +117,7 @@ async function upload() {
 }
 
 const getLocaleTranslations = async (locale) => {
-    const filePath = path.join(LOCALES_DIR, locale, FILENAME);
+    const filePath = path.join(LOCALES_DIR, locale, LOCALE_DATA_FILENAME);
     const fileContent = await fs.promises.readFile(filePath, 'utf-8');
     return JSON.parse(fileContent);
 };
@@ -132,14 +142,14 @@ const checkTranslations = async (locales, summary = false) => {
     }));
 
     const filteredResults = results.filter((result) => {
-        return result.level < REQUIRED_LVL_OF_TRANSLATIONS;
+        return result.level < THRESHOLD_PERCENTAGE;
     });
 
     if (summary) {
         printTranslationsResults(results);
     } else if (filteredResults.length > 0) {
         printTranslationsResults(filteredResults);
-        throw new Error('Locales above should be done ready for 100%.');
+        throw new Error('Locales above should be done for 100%.');
     }
 
     return results;
@@ -156,30 +166,27 @@ const traverseDir = (dir, callback) => {
     });
 };
 
-const contains = (key, files) => {
-    for (let i = 0; i < files.length; i += 1) {
-        if (files[i].includes(key)) {
-            return true;
-        }
+const canContainLocalesStrings = (path) => {
+    let isSupportedExtension = false;
+    for (let i = 0; i < SRC_FILENAME_EXTENSIONS.length; i += 1) {
+        isSupportedExtension = path.endsWith(SRC_FILENAME_EXTENSIONS[i]) || isSupportedExtension;
     }
-    return false;
+
+    return isSupportedExtension && !path.includes(LOCALES_DIR);
 };
 
 const checkUnusedMessages = () => {
-    const files = [];
+    const filesContents = [];
 
     traverseDir(SRC_DIR, (path) => {
-        const canContain = (path.endsWith('.js') || path.endsWith('.json'))
-            && !path.includes(LOCALES_DIR);
-
-        if (canContain) {
-            files.push(fs.readFileSync(path).toString());
+        if (canContainLocalesStrings(path)) {
+            filesContents.push(fs.readFileSync(path).toString());
         }
     });
 
     const unused = [];
     Object.keys(BASE_LOCALE_CONTENT).forEach((key) => {
-        if (!contains(key, files)) {
+        if (!filesContents.some((f) => f.includes(key))) {
             unused.push(key);
         }
     });
@@ -195,54 +202,102 @@ const checkUnusedMessages = () => {
     }
 };
 
-/**
- * You need set environment variable LOCALES=DOWNLOAD|UPLOAD when run the script
- */
-if (process.env.LOCALES === 'DOWNLOAD') {
-    downloadAndSave()
-        .then(() => {
-            console.log('Download was successful');
-        })
-        .catch((e) => {
-            console.log(e.message);
-            process.exit(1);
-        });
-} else if (process.env.LOCALES === 'UPLOAD') {
-    upload()
-        .then((result) => {
-            console.log(`Upload was successful with response: ${JSON.stringify(result)}`);
-        })
-        .catch((e) => {
-            console.log(e.message);
-            process.exit(1);
-        });
-} else if (process.env.LOCALES === 'CHECK_OUR') {
-    checkTranslations(REQUIRED_LOCALES)
-        .then(() => {
-            console.log('Our languages have required level of translations');
-        })
-        .catch((e) => {
-            console.log(e.message);
-            process.exit(1);
-        });
-} else if (process.env.LOCALES === 'VALIDATE_ALL') {
-    checkTranslations(LOCALES)
-        .then(() => {
-            console.log('All languages have required level of translations');
-        })
-        .catch((e) => {
-            console.log(e.message);
-            process.exit(1);
-        });
-} else if (process.env.SUMMARY) {
-    checkTranslations(LOCALES, process.env.SUMMARY)
-        .then(() => {})
-        .catch((e) => {
-            console.log(e.message);
-            process.exit(1);
-        });
-} else if (process.env.UNUSED) {
-    checkUnusedMessages();
-} else {
-    console.log('Option DOWNLOAD/UPLOAD locales is not set');
-}
+const download = async (locales) => {
+    try {
+        await downloadAndSave(locales);
+        console.log('Download was successful');
+        await checkTranslations(locales);
+        console.log('Locales have required level of translations');
+    } catch (e) {
+        console.log(e.message);
+        process.exit(1);
+    }
+};
+
+const upload = async () => {
+    try {
+        const result = await uploadBaseLocale();
+        console.log(`Upload was successful with response: ${JSON.stringify(result)}`);
+    } catch (e) {
+        console.log(e.message);
+        process.exit(1);
+    }
+};
+
+const validate = async (locales) => {
+    try {
+        await checkTranslations(locales);
+        console.log('Locales have required level of translations');
+    } catch (e) {
+        console.log(e.message);
+        process.exit(1);
+    }
+};
+
+const summary = async () => {
+    try {
+        await checkTranslations(LOCALES, true);
+    } catch (e) {
+        console.log(e.message);
+        process.exit(1);
+    }
+};
+
+const unused = async () => {
+    try {
+        await checkUnusedMessages();
+    } catch (e) {
+        console.log(e.message);
+        process.exit(1);
+    }
+};
+
+program
+    .command('info')
+    .description('Shows locales info')
+    .option('-s,--summary', 'for all locales translations readiness')
+    .option('-N,--unused', 'for unused base-lang strings')
+    .action((opts) => {
+        if (opts.summary && !opts.unused) {
+            summary();
+        } else if (!opts.summary && opts.unused) {
+            unused();
+        } else {
+            summary();
+            unused();
+        }
+    });
+
+program
+    .command('download')
+    .description('Downloads messages from localization service')
+    .option('-l,--locales [list...]', 'specific list of space-separated locales')
+    .action((opts) => {
+        const locales = opts.locales && opts.locales.length > 0 ? opts.locales : LOCALES;
+        download(locales);
+    });
+
+program
+    .command('upload')
+    .description('Uploads base messages to the localization service')
+    .action(upload);
+
+program
+    .command('validate')
+    .description('Validates translations')
+    .option('-R,--min', 'for only our required locales')
+    .option('-l,--locales [list...]', 'for specific list of space-separated locales')
+    .action((opts) => {
+        let locales;
+        if (opts.min) {
+            locales = REQUIRED_LOCALES;
+        } else if (opts.locales && opts.locales.length > 0) {
+            locales = opts.locales;
+        } else {
+            // defaults to validate all locales
+            locales = LOCALES;
+        }
+        validate(locales);
+    });
+
+program.parse(process.argv);
