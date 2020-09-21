@@ -5,6 +5,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const querystring = require('querystring');
 const { program } = require('commander');
+const chalk = require('chalk');
 
 const {
     BASE_LOCALE,
@@ -122,10 +123,27 @@ const getLocaleTranslations = async (locale) => {
     return JSON.parse(fileContent);
 };
 
+const successLog = (str) => {
+    console.log(chalk.green.bgBlack(str));
+};
+
+const failLog = (str) => {
+    console.log(chalk.bold.yellow.bgRed(str));
+};
+
+const warningLog = (str) => {
+    console.log(chalk.black.bgYellow(str));
+};
+
 const printTranslationsResults = (results) => {
     console.log('Translations readiness:');
     results.forEach((e) => {
-        console.log(`${e.locale} -- ${e.level}%`);
+        const record = `${e.locale} -- ${e.level}%`;
+        if (e.level < THRESHOLD_PERCENTAGE) {
+            failLog(record);
+        } else {
+            successLog(record);
+        }
     });
 };
 
@@ -192,22 +210,22 @@ const checkUnusedMessages = () => {
     });
 
     if (unused.length > 0) {
-        console.log('Unused messages:');
+        warningLog('Unused messages:');
         unused.forEach((key) => {
-            console.log(key);
+            warningLog(key);
         });
         throw new Error('There should be no unused messages.');
     } else {
-        console.log('There is no unused messages.');
+        successLog('There is no unused messages.');
     }
 };
 
 const download = async (locales) => {
     try {
         await downloadAndSave(locales);
-        console.log('Download was successful');
+        successLog('Download was successful');
         await checkTranslations(locales);
-        console.log('Locales have required level of translations');
+        successLog('Locales have required level of translations');
     } catch (e) {
         console.log(e.message);
         process.exit(1);
@@ -217,7 +235,7 @@ const download = async (locales) => {
 const upload = async () => {
     try {
         const result = await uploadBaseLocale();
-        console.log(`Upload was successful with response: ${JSON.stringify(result)}`);
+        successLog(`Upload was successful with response: ${JSON.stringify(result)}`);
     } catch (e) {
         console.log(e.message);
         process.exit(1);
@@ -227,7 +245,7 @@ const upload = async () => {
 const validate = async (locales) => {
     try {
         await checkTranslations(locales);
-        console.log('Locales have required level of translations');
+        successLog('Locales have required level of translations');
     } catch (e) {
         console.log(e.message);
         process.exit(1);
