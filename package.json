@@ -16,7 +16,7 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "locales:download": "node tasks/translations/index.js download",
-        "locales:upload": "node tasks/translations.js upload",
+        "locales:upload": "node tasks/translations/index.js upload",
         "locales:validate": "node tasks/translations/index.js validate",
         "locales:info": "node tasks/translations/index.js info",
         "watch": "BUILD_ENV=dev run-s \"build:chrome --watch\"",

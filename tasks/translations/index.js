@@ -27,10 +27,6 @@ const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
 const LOCALES_DIR = path.resolve(__dirname, LOCALES_RELATIVE_PATH);
 const SRC_DIR = path.resolve(__dirname, SRC_RELATIVE_PATH);
 
-const BASE_LOCALE_CONTENT_LOCATION = `${LOCALES_RELATIVE_PATH}/${BASE_LOCALE}/${LOCALE_DATA_FILENAME}`;
-// eslint-disable-next-line import/no-dynamic-require
-const BASE_LOCALE_CONTENT = require(BASE_LOCALE_CONTENT_LOCATION);
-
 /**
  * Build query string for downloading translations
  * @param {string} lang locale code
@@ -135,35 +131,67 @@ const warningLog = (str) => {
     console.log(chalk.black.bgYellow(str));
 };
 
+/**
+ * @typedef Result
+ * @property {string} locale
+ * @property {string} level % of translated
+ * @property {Array} untranslatedStrings
+ */
+
+/**
+ * Logs translations readiness
+ * @param {Result[]} results
+ */
 const printTranslationsResults = (results) => {
     console.log('Translations readiness:');
-    results.forEach((e) => {
-        const record = `${e.locale} -- ${e.level}%`;
-        if (e.level < THRESHOLD_PERCENTAGE) {
+    results.forEach((res) => {
+        const record = `${res.locale} -- ${res.level}%`;
+        if (res.level < THRESHOLD_PERCENTAGE) {
             failLog(record);
+            res.untranslatedStrings.forEach((str) => {
+                warningLog(`  ${str}`);
+            });
         } else {
             successLog(record);
         }
     });
 };
 
-const checkTranslations = async (locales, summary = false) => {
+/**
+ * Checks locales translations readiness
+ * @param {Array} locales list of locales to check
+ * @param {boolean} [isInfo=false] flag for info script
+ * @returns {Result[]} array of object with such properties:
+ * locale, level of transtalation readiness and untranslated strings array
+ */
+const checkTranslations = async (locales, isInfo = false) => {
     const baseLocaleTranslations = await getLocaleTranslations(BASE_LOCALE);
-    const baseLocaleMessagesCount = Object.keys(baseLocaleTranslations).length;
+    const baseMessages = Object.keys(baseLocaleTranslations);
+    const baseMessagesCount = baseMessages.length;
 
     const results = await Promise.all(locales.map(async (locale) => {
         const localeTranslations = await getLocaleTranslations(locale);
-        const localeMessagesCount = Object.keys(localeTranslations).length;
-        const strictLevel = ((localeMessagesCount / baseLocaleMessagesCount) * 100);
+        const localeMessages = Object.keys(localeTranslations);
+        const localeMessagesCount = localeMessages.length;
+
+        const strictLevel = ((localeMessagesCount / baseMessagesCount) * 100);
         const level = Math.round((strictLevel + Number.EPSILON) * 100) / 100;
-        return { locale, level, translated: localeMessagesCount };
+
+        const untranslatedStrings = [];
+        baseMessages.forEach((baseStr) => {
+            if (!localeMessages.includes(baseStr)) {
+                untranslatedStrings.push(baseStr);
+            }
+        });
+
+        return { locale, level, untranslatedStrings };
     }));
 
     const filteredResults = results.filter((result) => {
         return result.level < THRESHOLD_PERCENTAGE;
     });
 
-    if (summary) {
+    if (isInfo) {
         printTranslationsResults(results);
     } else if (filteredResults.length > 0) {
         printTranslationsResults(filteredResults);
@@ -173,50 +201,65 @@ const checkTranslations = async (locales, summary = false) => {
     return results;
 };
 
-const traverseDir = (dir, callback) => {
-    fs.readdirSync(dir).forEach((file) => {
-        const fullPath = path.join(dir, file);
-        if (fs.lstatSync(fullPath).isDirectory()) {
-            traverseDir(fullPath, callback);
-        } else {
-            callback(fullPath);
-        }
-    });
-};
-
-const canContainLocalesStrings = (path) => {
-    let isSupportedExtension = false;
+/**
+ * Checks file extension is it one of source files
+ * @param {string} filePath path to file
+ * @returns {boolean}
+ */
+const canContainLocalesStrings = (filePath) => {
+    let isSrcFile = false;
     for (let i = 0; i < SRC_FILENAME_EXTENSIONS.length; i += 1) {
-        isSupportedExtension = path.endsWith(SRC_FILENAME_EXTENSIONS[i]) || isSupportedExtension;
+        isSrcFile = filePath.endsWith(SRC_FILENAME_EXTENSIONS[i]) || isSrcFile;
     }
 
-    return isSupportedExtension && !path.includes(LOCALES_DIR);
+    return isSrcFile && !filePath.includes(LOCALES_DIR);
 };
 
-const checkUnusedMessages = () => {
-    const filesContents = [];
-
-    traverseDir(SRC_DIR, (path) => {
-        if (canContainLocalesStrings(path)) {
-            filesContents.push(fs.readFileSync(path).toString());
+/**
+ * Collects contents of source files in given directory
+ * @param {string} dirPath path to dir
+ * @param {Array} [contents=[]] result acc
+ * @returns {Array}
+ */
+const getSrcFilesContents = (dirPath, contents = []) => {
+    fs.readdirSync(dirPath).forEach((file) => {
+        const fullPath = path.join(dirPath, file);
+        if (fs.lstatSync(fullPath).isDirectory()) {
+            getSrcFilesContents(fullPath, contents);
+        } else if (canContainLocalesStrings(fullPath)) {
+            contents.push(fs.readFileSync(fullPath).toString());
         }
     });
+    return contents;
+};
+
+/**
+ * Checks if there are unused base-locale strings in source files
+ * @param {boolean} [isInfo=false]
+ */
+const checkUnusedMessages = async (isInfo = false) => {
+    const baseLocaleTranslations = await getLocaleTranslations(BASE_LOCALE);
+    const baseMessages = Object.keys(baseLocaleTranslations);
+
+    const filesContents = getSrcFilesContents(SRC_DIR);
 
     const unused = [];
-    Object.keys(BASE_LOCALE_CONTENT).forEach((key) => {
-        if (!filesContents.some((f) => f.includes(key))) {
-            unused.push(key);
+    baseMessages.forEach((message) => {
+        if (!filesContents.some((file) => file.includes(message))) {
+            unused.push(message);
         }
     });
 
-    if (unused.length > 0) {
+    if (unused.length === 0) {
+        successLog('There are no unused messages.');
+    } else {
         warningLog('Unused messages:');
         unused.forEach((key) => {
-            warningLog(key);
+            warningLog(`  ${key}`);
         });
-        throw new Error('There should be no unused messages.');
-    } else {
-        successLog('There is no unused messages.');
+        if (!isInfo) {
+            throw new Error('There should be no unused messages.');
+        }
     }
 };
 
@@ -234,6 +277,9 @@ const download = async (locales) => {
 
 const upload = async () => {
     try {
+        // check for unused base-locale strings before uploading
+        checkUnusedMessages();
+        // TODO: stop uploading if previous checking is unsuccessful
         const result = await uploadBaseLocale();
         successLog(`Upload was successful with response: ${JSON.stringify(result)}`);
     } catch (e) {
@@ -252,18 +298,18 @@ const validate = async (locales) => {
     }
 };
 
-const summary = async () => {
+const summary = async (isInfo) => {
     try {
-        await checkTranslations(LOCALES, true);
+        await checkTranslations(LOCALES, isInfo);
     } catch (e) {
         console.log(e.message);
         process.exit(1);
     }
 };
 
-const unused = async () => {
+const unused = async (isInfo) => {
     try {
-        await checkUnusedMessages();
+        await checkUnusedMessages(isInfo);
     } catch (e) {
         console.log(e.message);
         process.exit(1);
@@ -276,13 +322,14 @@ program
     .option('-s,--summary', 'for all locales translations readiness')
     .option('-N,--unused', 'for unused base-lang strings')
     .action((opts) => {
+        const IS_INFO = true;
         if (opts.summary && !opts.unused) {
-            summary();
+            summary(IS_INFO);
         } else if (!opts.summary && opts.unused) {
-            unused();
+            unused(IS_INFO);
         } else {
-            summary();
-            unused();
+            summary(IS_INFO);
+            unused(IS_INFO);
         }
     });
 
