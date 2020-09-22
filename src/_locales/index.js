@@ -1,6 +1,6 @@
 import { flattenNestedObj } from '../lib/helpers';
 
-const { LANGUAGES, FILENAME } = require('../../tasks/translations/langConstants');
+const { LANGUAGES, FILENAME } = require('../../tasks/translations/locales-constants');
 
 const messagesMap = Object.keys(LANGUAGES)
     .reduce((acc, language) => {

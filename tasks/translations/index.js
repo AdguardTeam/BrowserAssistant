@@ -19,7 +19,7 @@ const {
     LOCALE_DATA_FILENAME,
     REQUIRED_LOCALES,
     THRESHOLD_PERCENTAGE,
-} = require('./langConstants');
+} = require('./locales-constants');
 
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
 const BASE_UPLOAD_URL = `${BASE_URL}/upload`;
