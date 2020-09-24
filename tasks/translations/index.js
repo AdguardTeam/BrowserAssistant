@@ -23,7 +23,7 @@ const {
 
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
 const BASE_UPLOAD_URL = `${BASE_URL}/upload`;
-const LOCALES = Object.keys(LANGUAGES);// locales which will be downloaded
+const LOCALES = Object.keys(LANGUAGES); // locales which will be downloaded
 const LOCALES_DIR = path.resolve(__dirname, LOCALES_RELATIVE_PATH);
 const SRC_DIR = path.resolve(__dirname, SRC_RELATIVE_PATH);
 
@@ -119,16 +119,16 @@ const getLocaleTranslations = async (locale) => {
     return JSON.parse(fileContent);
 };
 
-const successLog = (str) => {
-    console.log(chalk.green.bgBlack(str));
-};
-
-const failLog = (str) => {
-    console.log(chalk.bold.yellow.bgRed(str));
-};
-
-const warningLog = (str) => {
-    console.log(chalk.black.bgYellow(str));
+const log = {
+    success: (str) => {
+        console.log(chalk.green.bgBlack(str));
+    },
+    warning: (str) => {
+        console.log(chalk.black.bgYellowBright(str));
+    },
+    error: (str) => {
+        console.log(chalk.bold.yellow.bgRed(str));
+    },
 };
 
 /**
@@ -147,14 +147,29 @@ const printTranslationsResults = (results) => {
     results.forEach((res) => {
         const record = `${res.locale} -- ${res.level}%`;
         if (res.level < THRESHOLD_PERCENTAGE) {
-            failLog(record);
+            log.error(record);
             res.untranslatedStrings.forEach((str) => {
-                warningLog(`  ${str}`);
+                log.warning(`  ${str}`);
             });
         } else {
-            successLog(record);
+            log.success(record);
         }
     });
+};
+
+const isEqualArrays = (arr1, arr2) => {
+    if (!arr1 || !arr2) {
+        return false;
+    }
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    for (let i = 0; i < arr1.length; i += 1) {
+        if (arr1[i] !== arr2[i]) {
+            return false;
+        }
+    }
+    return true;
 };
 
 /**
@@ -162,7 +177,7 @@ const printTranslationsResults = (results) => {
  * @param {Array} locales list of locales to check
  * @param {boolean} [isInfo=false] flag for info script
  * @returns {Result[]} array of object with such properties:
- * locale, level of transtalation readiness and untranslated strings array
+ * locale, level of translation readiness and untranslated strings array
  */
 const checkTranslations = async (locales, isInfo = false) => {
     const baseLocaleTranslations = await getLocaleTranslations(BASE_LOCALE);
@@ -193,9 +208,17 @@ const checkTranslations = async (locales, isInfo = false) => {
 
     if (isInfo) {
         printTranslationsResults(results);
-    } else if (filteredResults.length > 0) {
+    } else if (filteredResults.length === 0) {
+        let message = `Level of translations is required for locales: ${locales.join(', ')}`;
+        if (isEqualArrays(locales, LOCALES)) {
+            message = 'All locales have required level of translations';
+        } else if (isEqualArrays(locales, REQUIRED_LOCALES)) {
+            message = 'Our locales have required level of translations';
+        }
+        log.success(message);
+    } else {
         printTranslationsResults(filteredResults);
-        throw new Error('Locales above should be done for 100%.');
+        throw new Error('Locales above should be done for 100%');
     }
 
     return results;
@@ -210,6 +233,10 @@ const canContainLocalesStrings = (filePath) => {
     let isSrcFile = false;
     for (let i = 0; i < SRC_FILENAME_EXTENSIONS.length; i += 1) {
         isSrcFile = filePath.endsWith(SRC_FILENAME_EXTENSIONS[i]) || isSrcFile;
+
+        if (isSrcFile) {
+            break;
+        }
     }
 
     return isSrcFile && !filePath.includes(LOCALES_DIR);
@@ -251,14 +278,14 @@ const checkUnusedMessages = async (isInfo = false) => {
     });
 
     if (unused.length === 0) {
-        successLog('There are no unused messages.');
+        log.success('There are no unused messages');
     } else {
-        warningLog('Unused messages:');
+        log.warning('Unused messages:');
         unused.forEach((key) => {
-            warningLog(`  ${key}`);
+            log.warning(`  ${key}`);
         });
         if (!isInfo) {
-            throw new Error('There should be no unused messages.');
+            throw new Error('There should be no unused messages');
         }
     }
 };
@@ -266,9 +293,8 @@ const checkUnusedMessages = async (isInfo = false) => {
 const download = async (locales) => {
     try {
         await downloadAndSave(locales);
-        successLog('Download was successful');
-        await checkTranslations(locales);
-        successLog('Locales have required level of translations');
+        log.success('Download was successful');
+        await checkTranslations(REQUIRED_LOCALES);
     } catch (e) {
         console.log(e.message);
         process.exit(1);
@@ -278,10 +304,9 @@ const download = async (locales) => {
 const upload = async () => {
     try {
         // check for unused base-locale strings before uploading
-        checkUnusedMessages();
-        // TODO: stop uploading if previous checking is unsuccessful
+        await checkUnusedMessages();
         const result = await uploadBaseLocale();
-        successLog(`Upload was successful with response: ${JSON.stringify(result)}`);
+        log.success(`Upload was successful with response: ${JSON.stringify(result)}`);
     } catch (e) {
         console.log(e.message);
         process.exit(1);
@@ -291,7 +316,6 @@ const upload = async () => {
 const validate = async (locales) => {
     try {
         await checkTranslations(locales);
-        successLog('Locales have required level of translations');
     } catch (e) {
         console.log(e.message);
         process.exit(1);
@@ -323,11 +347,11 @@ program
     .option('-N,--unused', 'for unused base-lang strings')
     .action((opts) => {
         const IS_INFO = true;
-        if (opts.summary && !opts.unused) {
+        if (opts.summary) {
             summary(IS_INFO);
-        } else if (!opts.summary && opts.unused) {
+        } else if (opts.unused) {
             unused(IS_INFO);
-        } else {
+        } else if (!opts.summary && !opts.unused) {
             summary(IS_INFO);
             unused(IS_INFO);
         }

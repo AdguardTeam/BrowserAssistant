@@ -1,10 +1,13 @@
-/**
- * DO NOT IMPORT IN THIS FILE ANYTHING, BECAUSE IT IS ALSO USED IN EXTENSION CODEBASE
- */
+const [twoskyConfig] = require('../../.twosky.json');
 const inputConfig = require('./config.json');
 
 const {
-    twosky_config_path: TWOSKY_CONFIG_PATH,
+    base_locale: BASE_LOCALE,
+    project_id: PROJECT_ID,
+    languages: LANGUAGES,
+} = twoskyConfig;
+
+const {
     base_url: BASE_URL,
     source_relative_path: SRC_RELATIVE_PATH,
     supported_source_filename_extensions: SRC_FILENAME_EXTENSIONS,
@@ -14,14 +17,6 @@ const {
     required_locales: REQUIRED_LOCALES,
     threshold_percentage: THRESHOLD_PERCENTAGE,
 } = inputConfig;
-
-// eslint-disable-next-line import/no-dynamic-require
-const [twoskyConfig] = require(TWOSKY_CONFIG_PATH);
-const {
-    base_locale: BASE_LOCALE,
-    project_id: PROJECT_ID,
-    languages: LANGUAGES,
-} = twoskyConfig;
 
 module.exports = {
     BASE_LOCALE,

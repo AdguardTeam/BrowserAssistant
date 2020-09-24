@@ -1,7 +1,5 @@
 ## Locales script
 
-`yarn install` — first of all, install the dependencies in the local node_modules folder
-
 ### Synopsis
 ```
 yarn locales:[download | upload | validate | info]
