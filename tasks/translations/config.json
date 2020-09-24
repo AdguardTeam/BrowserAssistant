@@ -12,7 +12,8 @@
         "ru",
         "de",
         "fr",
-        "ja", 
+        "ja",
+        "ko",
         "zh_CN"
     ],
     "threshold_percentage": 100

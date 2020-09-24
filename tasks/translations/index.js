@@ -157,6 +157,12 @@ const printTranslationsResults = (results) => {
     });
 };
 
+/**
+ * Compares two array
+ * @param {Array} arr1
+ * @param {Array} arr2
+ * @returns {boolean}
+ */
 const isEqualArrays = (arr1, arr2) => {
     if (!arr1 || !arr2) {
         return false;
