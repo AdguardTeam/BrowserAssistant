@@ -8,9 +8,7 @@ const { program } = require('commander');
 const chalk = require('chalk');
 
 const {
-    BASE_LOCALE,
-    PROJECT_ID,
-    LANGUAGES,
+    TWOSKY_CONFIG_PATH,
     BASE_URL,
     SRC_RELATIVE_PATH,
     SRC_FILENAME_EXTENSIONS,
@@ -20,6 +18,15 @@ const {
     REQUIRED_LOCALES,
     THRESHOLD_PERCENTAGE,
 } = require('./locales-constants');
+
+const twoskyPath = path.join(__dirname, TWOSKY_CONFIG_PATH);
+const twoskyContent = fs.readFileSync(twoskyPath, { encoding: 'utf8' });
+const twoskyConfig = JSON.parse(twoskyContent)[0];
+const {
+    base_locale: BASE_LOCALE,
+    project_id: PROJECT_ID,
+    languages: LANGUAGES,
+} = twoskyConfig;
 
 const BASE_DOWNLOAD_URL = `${BASE_URL}/download`;
 const BASE_UPLOAD_URL = `${BASE_URL}/upload`;
