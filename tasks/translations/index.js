@@ -12,6 +12,7 @@ const {
     BASE_URL,
     SRC_RELATIVE_PATH,
     SRC_FILENAME_EXTENSIONS,
+    PERSISTENT_MESSAGES,
     LOCALES_RELATIVE_PATH,
     FORMAT,
     LOCALE_DATA_FILENAME,
@@ -285,7 +286,9 @@ const checkUnusedMessages = async (isInfo = false) => {
 
     const unused = [];
     baseMessages.forEach((message) => {
-        if (!filesContents.some((file) => file.includes(message))) {
+        const isUsedInFile = (file) => file.includes(`'${message}'`) || file.includes(`"${message}"`);
+        if (!PERSISTENT_MESSAGES.includes(message)
+            && !filesContents.some((file) => isUsedInFile(file))) {
             unused.push(message);
         }
     });

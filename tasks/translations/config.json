@@ -3,8 +3,11 @@
     "base_url": "https://twosky.adtidy.org/api/v1",
     "source_relative_path": "../../src",
     "supported_source_filename_extensions": [
-        ".js",
-        ".json"
+        ".js"
+    ],
+    "persistent_messages": [
+        "name",
+        "description"
     ],
     "locales_relative_path": "../../src/_locales",
     "locales_data_format": "json",
