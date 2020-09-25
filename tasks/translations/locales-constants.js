@@ -1,13 +1,9 @@
-const [twoskyConfig] = require('../../.twosky.json');
+const fs = require('fs');
+const path = require('path');
 const inputConfig = require('./config.json');
 
 const {
-    base_locale: BASE_LOCALE,
-    project_id: PROJECT_ID,
-    languages: LANGUAGES,
-} = twoskyConfig;
-
-const {
+    twosky_config_path: TWOSKY_CONFIG_PATH,
     base_url: BASE_URL,
     source_relative_path: SRC_RELATIVE_PATH,
     supported_source_filename_extensions: SRC_FILENAME_EXTENSIONS,
@@ -17,6 +13,16 @@ const {
     required_locales: REQUIRED_LOCALES,
     threshold_percentage: THRESHOLD_PERCENTAGE,
 } = inputConfig;
+
+const twoskyPath = path.join(__dirname, TWOSKY_CONFIG_PATH);
+const twoskyContent = fs.readFileSync(twoskyPath, { encoding: 'utf8' });
+const twoskyConfig = JSON.parse(twoskyContent)[0];
+
+const {
+    base_locale: BASE_LOCALE,
+    project_id: PROJECT_ID,
+    languages: LANGUAGES,
+} = twoskyConfig;
 
 module.exports = {
     BASE_LOCALE,
