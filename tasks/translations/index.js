@@ -284,11 +284,16 @@ const checkUnusedMessages = async (isInfo = false) => {
 
     const filesContents = getSrcFilesContents(SRC_DIR);
 
+    const isUsed = (message, file) => {
+        return file.includes(`'${message}'`) || file.includes(`"${message}"`);
+    };
+
     const unused = [];
     baseMessages.forEach((message) => {
-        const isUsedInFile = (file) => file.includes(`'${message}'`) || file.includes(`"${message}"`);
-        if (!PERSISTENT_MESSAGES.includes(message)
-            && !filesContents.some((file) => isUsedInFile(file))) {
+        if (PERSISTENT_MESSAGES.includes(message)) {
+            return;
+        }
+        if (!filesContents.some((file) => isUsed(message, file))) {
             unused.push(message);
         }
     });
