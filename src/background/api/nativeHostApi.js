@@ -100,6 +100,7 @@ class NativeHostApi extends AbstractApi {
                 if (browser.runtime.lastError) {
                     log.error(browser.runtime.lastError.message);
                 }
+                this.reconnect();
             }
         );
 
