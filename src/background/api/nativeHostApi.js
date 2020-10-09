@@ -95,13 +95,13 @@ class NativeHostApi extends AbstractApi {
                 let error;
                 // firefox keeps errors in the details object
                 if (details.error) {
-                    log.error(details.error);
                     error = details.error;
+                    log.error(error);
                 }
                 // chrome keeps error in the runtime.lastError object
                 if (browser.runtime.lastError) {
-                    log.error(browser.runtime.lastError.message);
                     error = browser.runtime.lastError.message;
+                    log.error(error);
                 }
                 // Reconnect on application update
                 if (error === 'Native host has exited.') {
