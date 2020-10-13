@@ -90,25 +90,28 @@ class NativeHostApi extends AbstractApi {
 
         this.port.onMessage.addListener(this.incomingMessageHandler);
 
-        this.port.onDisconnect.addListener(
-            (details) => {
-                let error;
-                // firefox keeps errors in the details object
-                if (details.error) {
-                    error = details.error;
-                    log.error(error);
-                }
-                // chrome keeps error in the runtime.lastError object
-                if (browser.runtime.lastError) {
-                    error = browser.runtime.lastError.message;
-                    log.error(error);
-                }
-                // Reconnect on application update
-                if (error === 'Native host has exited.') {
-                    this.connect();
-                }
+        this.port.onDisconnect.addListener((port) => {
+            // port.error is null in firefox by default and always undefined in chrome
+            const firefoxError = port.error;
+            const chromeError = browser.runtime.lastError?.message;
+
+            if (firefoxError === null) {
+                // In Firefox if the port disconnects with null error,
+                // we can assume that the process exited
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=1373005#c1
+                log.error('The port is disconnected. Native host has exited.');
             }
-        );
+            if (firefoxError) {
+                log.error(firefoxError);
+            }
+            if (chromeError) {
+                log.error(chromeError);
+            }
+            // Reconnect on application update
+            if (chromeError === 'Native host has exited.' || firefoxError === null) {
+                this.connect();
+            }
+        });
 
         await this.sendInitialRequest(false);
     };
