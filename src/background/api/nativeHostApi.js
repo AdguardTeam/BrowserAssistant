@@ -81,6 +81,10 @@ class NativeHostApi extends AbstractApi {
         this.initMessageHandler = handler;
     };
 
+    /**
+     * @param {object} port
+     * @returns {string | null | undefined} chrome or firefox error
+     */
     getError = (port) => browser.runtime.lastError?.message || port.error;
 
     disconnectHandler = (port) => {
