@@ -81,18 +81,13 @@ class NativeHostApi extends AbstractApi {
         this.initMessageHandler = handler;
     };
 
-    getErrors = (port) => ({
-        chromeError: browser.runtime.lastError?.message,
-        firefoxError: port.error,
-    })
+    getError = (port) => browser.runtime.lastError?.message || port.error;
 
     disconnectHandler = (port) => {
-        const { chromeError, firefoxError } = this.getErrors(port);
+        const error = this.getError(port);
 
-        if (chromeError) {
-            log.error(chromeError);
-        } else if (firefoxError) {
-            log.error(firefoxError);
+        if (error) {
+            log.error(error);
         }
     };
 
@@ -176,11 +171,7 @@ class NativeHostApi extends AbstractApi {
             let timerId;
 
             const errorHandler = (port) => {
-                const {
-                    chromeError,
-                    firefoxError,
-                } = this.getErrors(port);
-                const error = chromeError || firefoxError;
+                const error = this.getError(port);
 
                 if (error) {
                     reject(error);
