@@ -81,6 +81,21 @@ class NativeHostApi extends AbstractApi {
         this.initMessageHandler = handler;
     };
 
+    getErrors = (port) => ({
+        chromeError: browser.runtime.lastError?.message,
+        firefoxError: port.error,
+    })
+
+    disconnectHandler = (port) => {
+        const { chromeError, firefoxError } = this.getErrors(port);
+
+        if (chromeError) {
+            log.error(chromeError);
+        } else if (firefoxError) {
+            log.error(firefoxError);
+        }
+    };
+
     /**
      * Connect to the native host
      */
@@ -90,28 +105,7 @@ class NativeHostApi extends AbstractApi {
 
         this.port.onMessage.addListener(this.incomingMessageHandler);
 
-        this.port.onDisconnect.addListener((port) => {
-            // port.error is null in firefox by default and always undefined in chrome
-            const firefoxError = port.error;
-            const chromeError = browser.runtime.lastError?.message;
-
-            if (firefoxError === null) {
-                // In Firefox if the port disconnects with null error,
-                // we can assume that the process exited
-                // https://bugzilla.mozilla.org/show_bug.cgi?id=1373005#c1
-                log.error('The port is disconnected. Native host has exited.');
-            }
-            if (firefoxError) {
-                log.error(firefoxError);
-            }
-            if (chromeError) {
-                log.error(chromeError);
-            }
-            // Reconnect on application update
-            if (chromeError === 'Native host has exited.' || firefoxError === null) {
-                this.connect();
-            }
-        });
+        this.port.onDisconnect.addListener(this.disconnectHandler);
 
         await this.sendInitialRequest(false);
     };
@@ -181,9 +175,15 @@ class NativeHostApi extends AbstractApi {
         return new Promise((resolve, reject) => {
             let timerId;
 
-            const errorHandler = () => {
-                if (browser.runtime.lastError) {
-                    reject(new Error(browser.runtime.lastError.message));
+            const errorHandler = (port) => {
+                const {
+                    chromeError,
+                    firefoxError,
+                } = this.getErrors(port);
+                const error = chromeError || firefoxError;
+
+                if (error) {
+                    reject(error);
                 }
             };
 

@@ -10,7 +10,7 @@ import filteringPause from './filteringPause';
  */
 class Tabs {
     constructor() {
-        browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+        browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             if (changeInfo.status === 'complete' || changeInfo.status === 'loading') {
                 const hostname = filteringPause.getUrlHostname(tab.url);
 
