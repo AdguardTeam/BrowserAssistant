@@ -82,6 +82,20 @@ class NativeHostApi extends AbstractApi {
     };
 
     /**
+     * @param {object} port
+     * @returns {string | null | undefined} chrome or firefox error
+     */
+    getError = (port) => browser.runtime.lastError?.message || port.error;
+
+    disconnectHandler = (port) => {
+        const error = this.getError(port);
+
+        if (error) {
+            log.error(error);
+        }
+    };
+
+    /**
      * Connect to the native host
      */
     connect = async () => {
@@ -90,18 +104,7 @@ class NativeHostApi extends AbstractApi {
 
         this.port.onMessage.addListener(this.incomingMessageHandler);
 
-        this.port.onDisconnect.addListener(
-            (details) => {
-                // firefox keeps errors in the details object
-                if (details.error) {
-                    log.error(details.error);
-                }
-                // chrome keeps error in the runtime.lastError object
-                if (browser.runtime.lastError) {
-                    log.error(browser.runtime.lastError.message);
-                }
-            }
-        );
+        this.port.onDisconnect.addListener(this.disconnectHandler);
 
         await this.sendInitialRequest(false);
     };
@@ -171,9 +174,11 @@ class NativeHostApi extends AbstractApi {
         return new Promise((resolve, reject) => {
             let timerId;
 
-            const errorHandler = () => {
-                if (browser.runtime.lastError) {
-                    reject(new Error(browser.runtime.lastError.message));
+            const errorHandler = (port) => {
+                const error = this.getError(port);
+
+                if (error) {
+                    reject(error);
                 }
             };
 
