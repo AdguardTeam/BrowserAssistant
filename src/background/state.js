@@ -6,7 +6,10 @@ import api from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
-import { getUrlProps, isHttp } from '../lib/helpers';
+import {
+    getFormattedProtocol, getUrlProps, isHttp,
+} from '../lib/helpers';
+import { PROTOCOLS } from '../popup/stores/consts';
 
 /**
  * This class handles app state
@@ -59,6 +62,30 @@ class State {
         platform: '',
         version: '',
     };
+
+    urlInfo = {
+        isHttpsFilteringEnabled: false,
+        isFilteringEnabled: false,
+        isSecured: false,
+    }
+
+    set isHttpsFilteringEnabled(isHttpsFilteringEnabled) {
+        this.urlInfo.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+    }
+
+    set isFilteringEnabled(isFilteringEnabled) {
+        this.urlInfo.isFilteringEnabled = isFilteringEnabled;
+    }
+
+    set isSecured(isSecured) {
+        this.urlInfo.isSecured = isSecured;
+    }
+
+    updateSecured = (currentUrl) => {
+        const { protocol } = getUrlProps(currentUrl);
+
+        this.isSecured = getFormattedProtocol(protocol) === PROTOCOLS.SECURED;
+    }
 
     init = () => {
         api.addMessageListener(this.nativeHostMessagesHandler);
@@ -234,6 +261,7 @@ class State {
      */
     getCurrentFilteringState = async (tab, forceStart = false) => {
         const url = tab?.url;
+        this.updateSecured(url);
 
         // Do not send empty urls or non http urls, see - AG-2360
         if (!url || !isHttp(url)) {
@@ -243,9 +271,14 @@ class State {
         const { port } = getUrlProps(url);
 
         const response = await api.getCurrentFilteringState(url, port, forceStart);
+        const { appState, parameters } = response;
+        const { isFilteringEnabled, isHttpsFilteringEnabled } = parameters;
 
-        this.setAppState(response.appState);
-        return response.parameters;
+        this.setAppState(appState);
+        this.isFilteringEnabled = isFilteringEnabled;
+        this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
+
+        return parameters;
     };
 
     setProtectionStatus = async (isEnabled) => {
@@ -261,6 +294,9 @@ class State {
     };
 
     setFilteringStatus = async (isEnabled, isHttpsEnabled, url) => {
+        this.isEnabled = isEnabled;
+        this.isHttpsFilteringEnabled = isHttpsEnabled;
+
         const response = await api.setFilteringStatus(
             isEnabled,
             isHttpsEnabled,
