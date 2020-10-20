@@ -3,10 +3,10 @@
         "message": "AdGuard Böngésző Asszisztens"
     },
     "description": {
-        "message": "Bővítmény az AdGuard asztali alkalmazáshoz. Böngészőbeli szűrés és zavaró elemek elrejtése két kattintással."
+        "message": "Bővítmény az AdGuard asztali alkalmazáshoz. Könnyedén kezelheti a szűrést a böngészőből, valamint elrejthet elemeket két kattintással."
     },
     "adg_is_not_installed": {
-        "message": "Az AdGuard nincs telepítve, vagy nem megfelelően van beállítva"
+        "message": "Az AdGuard nincs telepítve, vagy nincs megfelelően beállítva"
     },
     "get_adguard": {
         "message": "AdGuard beszerzése"
@@ -27,7 +27,7 @@
         "message": "AdGuard védelem szüneteltetve"
     },
     "adg_is_launching": {
-        "message": "Az AdGuard elindul..."
+        "message": "Az AdGuard indul..."
     },
     "enable": {
         "message": "Bekapcsolás"
@@ -99,7 +99,7 @@
         "message": "Oldal újratöltése a szűrés folytatásához"
     },
     "not_filtering_https": {
-        "message": "Alapértelmezés szerint nem szűrjük a HTTPS forgalmat a fizetési rendszerek és a bankok webhelyei számára. Ha Ön szeretné engedélyezni a szűrést, éritnse meg a sárga \"lakatot\" a bal oldalon."
+        "message": "Alapértelmezés szerint nem szűrjük a HTTPS forgalmat a fizetési rendszerek és a bankok webhelyein. Ha Ön szeretné engedélyezni a szűrést, érintse meg a sárga \"lakatot\" a bal oldalon."
     },
     "disabled": {
         "message": "Kikapcsolva ezen az oldalon"
