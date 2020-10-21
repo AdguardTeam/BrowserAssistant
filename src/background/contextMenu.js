@@ -77,13 +77,15 @@ const contextMenuCallbackMappings = {
 
 /**
  * Creates context menu item
- * @param title {string} - id
+ * @param i18key {string} - i18 key
  * @param [onclick] {function}  - onclick handler
  */
-const addMenuItem = (title, onclick = contextMenuCallbackMappings[title]) => {
+const addMenuItem = (i18key) => {
+    const onclick = contextMenuCallbackMappings[i18key];
+
     const menuItem = {
         contexts: ['all'],
-        title: browser.i18n.getMessage(title),
+        title: browser.i18n.getMessage(i18key),
     };
 
     if (typeof onclick === 'function') {
