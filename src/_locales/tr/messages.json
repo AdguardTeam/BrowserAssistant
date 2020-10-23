@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Destek ile iletişime geçin"
+    },
+    "context_site_filtering_on": {
+        "message": "Bu sitede filtrelemeyi etkinleştir"
+    },
+    "context_site_filtering_off": {
+        "message": "Bu sitede filtrelemeyi kapat"
+    },
+    "context_block_site_ads": {
+        "message": "Bu sitede reklam engelle..."
+    },
+    "context_complaint_website": {
+        "message": "Bir sorun bildir..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard bu alan adında çalışamaz"
+    },
+    "context_disable_protection": {
+        "message": "AdGuard korumasını duraklat"
+    },
+    "context_enable_protection": {
+        "message": "AdGuard korumasını sürdür"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard koruması duraklatıldı"
+    },
+    "context_open_settings": {
+        "message": "AdGuard ayarları..."
+    },
+    "context_open_log": {
+        "message": "Filtreleme günlüğü..."
     }
 }

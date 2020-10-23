@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Contatta il supporto"
+    },
+    "context_site_filtering_on": {
+        "message": "Attiva filtraggio su questo sito internet"
+    },
+    "context_site_filtering_off": {
+        "message": "Disattiva filtraggio su questo sito internet"
+    },
+    "context_block_site_ads": {
+        "message": "Blocca annunci su questo sito..."
+    },
+    "context_complaint_website": {
+        "message": "Segnala un problema..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard non può funzionare su questo dominio"
+    },
+    "context_disable_protection": {
+        "message": "Sospendi protezione AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Riprendi protezione AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "La protezione di AdGuard è in pausa"
+    },
+    "context_open_settings": {
+        "message": "Impostazioni di AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Registro di filtraggio..."
     }
 }

@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "联系支持"
+    },
+    "context_site_filtering_on": {
+        "message": "开启此网站过滤"
+    },
+    "context_site_filtering_off": {
+        "message": "关闭此网站过滤"
+    },
+    "context_block_site_ads": {
+        "message": "拦截此网站上的广告..."
+    },
+    "context_complaint_website": {
+        "message": "报告问题..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard 无法运行于此域"
+    },
+    "context_disable_protection": {
+        "message": "暂停 AdGuard 防护"
+    },
+    "context_enable_protection": {
+        "message": "继续 AdGuard 防护"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard 防护已暂停"
+    },
+    "context_open_settings": {
+        "message": "AdGuard 设置..."
+    },
+    "context_open_log": {
+        "message": "过滤日志..."
     }
 }

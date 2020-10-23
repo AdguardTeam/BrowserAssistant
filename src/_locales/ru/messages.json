@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Написать в поддержку"
+    },
+    "context_site_filtering_on": {
+        "message": "Включить фильтрацию на этом сайте"
+    },
+    "context_site_filtering_off": {
+        "message": "Отключить фильтрацию на этом сайте"
+    },
+    "context_block_site_ads": {
+        "message": "Блокировать рекламу на этом сайте..."
+    },
+    "context_complaint_website": {
+        "message": "Сообщить о проблеме..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard не работает на этом домене"
+    },
+    "context_disable_protection": {
+        "message": "Приостановить защиту AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Возобновить защиту AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Защита AdGuard приостановлена"
+    },
+    "context_open_settings": {
+        "message": "Настройки AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Журнал фильтрации..."
     }
 }

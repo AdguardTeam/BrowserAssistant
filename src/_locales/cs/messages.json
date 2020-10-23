@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Kontaktovat podporu"
+    },
+    "context_site_filtering_on": {
+        "message": "Zapnout filtrování na této stránce"
+    },
+    "context_site_filtering_off": {
+        "message": "Vypnout filtrování na této stránce"
+    },
+    "context_block_site_ads": {
+        "message": "Zablokovat reklamy na této stránce..."
+    },
+    "context_complaint_website": {
+        "message": "Nahlásit problém..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard nefunguje na této doméně"
+    },
+    "context_disable_protection": {
+        "message": "Pozastavit ochranu AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Obnovit ochranu AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Ochrana AdGuard je pozastavena"
+    },
+    "context_open_settings": {
+        "message": "Nastavení AdGuardu..."
+    },
+    "context_open_log": {
+        "message": "Záznam filtrování..."
     }
 }
