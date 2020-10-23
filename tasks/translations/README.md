@@ -16,10 +16,9 @@ yarn locales:[download | upload | validate | info]
   - **-l**, **--locales** — for specific list of space-separated locales
     - **<list_of_locales>...** — locales to validate
 
-- `info` — shows locales info (defaults to `-N -s`):
+- `info` — shows info about unused base-lang strings and all locales translations readiness; in other words, defaults to `-N -s` which can be used separately:
   - **-N**, **--unused** — for unused base-lang strings
   - **-s**, **--summary** — for all locales translations readiness
-
 
 ### Examples
 ```
@@ -44,4 +43,14 @@ yarn locales:info
 
 After download you'll find the output locales in the `src/_locales/` folder.
 
-There is `config.json` with list of minimum required locales and other input data.
+List of minimum required locales and other input data are conteined in `config.json`. There are such properties defined:
+- `twosky_config_path` — relative path to twosky config file
+- `api_url` — twosky api url
+- `source_relative_path` — relative path to source files — where translation strings are used
+- `supported_source_filename_extensions` — supported extensions of source files
+- `persistent_messages` — strings protected from checking for it's translated versions
+- `locales_relative_path` — relative path to locales
+- `locales_data_format` — locales data format
+- `locales_data_filename` — locales data filename
+- `required_locales` — list of locales we main
+- `threshold_percentage` — percentage of translations readiness for locale to be validated successfully
