@@ -1,8 +1,11 @@
+const fs = require('fs');
+const path = require('path');
+
 const inputConfig = require('./config.json');
 
 const {
     twosky_config_path: TWOSKY_CONFIG_PATH,
-    base_url: BASE_URL,
+    api_url: API_URL,
     source_relative_path: SRC_RELATIVE_PATH,
     supported_source_filename_extensions: SRC_FILENAME_EXTENSIONS,
     persistent_messages: PERSISTENT_MESSAGES,
@@ -13,9 +16,21 @@ const {
     threshold_percentage: THRESHOLD_PERCENTAGE,
 } = inputConfig;
 
+const twoskyPath = path.join(__dirname, TWOSKY_CONFIG_PATH);
+const twoskyContent = fs.readFileSync(twoskyPath, { encoding: 'utf8' });
+const twoskyConfig = JSON.parse(twoskyContent)[0];
+const {
+    base_locale: BASE_LOCALE,
+    languages: LANGUAGES,
+    project_id: PROJECT_ID,
+} = twoskyConfig;
+
 module.exports = {
+    BASE_LOCALE,
+    LANGUAGES,
+    PROJECT_ID,
     TWOSKY_CONFIG_PATH,
-    BASE_URL,
+    API_URL,
     SRC_RELATIVE_PATH,
     SRC_FILENAME_EXTENSIONS,
     PERSISTENT_MESSAGES,
