@@ -65,9 +65,6 @@
     "open_filtering_log": {
         "message": "फ़िल्टरिंग लॉग खोलें"
     },
-    "report_site": {
-        "message": "इस वेबसाइट की रिपोर्ट करें"
-    },
     "reset_custom_rules": {
         "message": "इस पृष्ठ के लिए सभी कस्टम नियम रीसेट करें"
     },

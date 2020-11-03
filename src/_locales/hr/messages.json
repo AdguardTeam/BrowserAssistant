@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Kontaktirajte podršku"
+    },
+    "context_site_filtering_on": {
+        "message": "Omogući filtriranje na ovoj web stranici"
+    },
+    "context_site_filtering_off": {
+        "message": "Onemogući filtriranje na ovoj web stranici"
+    },
+    "context_block_site_ads": {
+        "message": "Blokiraj oglase na ovoj web stranici..."
+    },
+    "context_complaint_website": {
+        "message": "Prijavite problem..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard se ne može pokrenuti na ovoj domeni"
+    },
+    "context_disable_protection": {
+        "message": "Pauziraj AdGuard zaštitu"
+    },
+    "context_enable_protection": {
+        "message": "Nastavi AdGuard zaštitu"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard zaštita je pauzirana"
+    },
+    "context_open_settings": {
+        "message": "AdGuard postavke..."
+    },
+    "context_open_log": {
+        "message": "Zapisnik filtriranja..."
     }
 }
