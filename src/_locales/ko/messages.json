@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "고객 지원"
+    },
+    "context_site_filtering_on": {
+        "message": "이 웹사이트에서 필터링 켜기"
+    },
+    "context_site_filtering_off": {
+        "message": "이 웹사이트에서 필터링 끄기"
+    },
+    "context_block_site_ads": {
+        "message": "이 웹사이트에서 광고 차단..."
+    },
+    "context_complaint_website": {
+        "message": "버그 신고하기"
+    },
+    "context_site_filtering_disabled": {
+        "message": "이 도메인에서는 AdGuard를 실행할 수 없습니다"
+    },
+    "context_disable_protection": {
+        "message": "AdGuard 보호 일시 정지"
+    },
+    "context_enable_protection": {
+        "message": "AdGuard 보호 재시작"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard 보호가 일시 정지됨"
+    },
+    "context_open_settings": {
+        "message": "AdGuard 설정..."
+    },
+    "context_open_log": {
+        "message": "필터링 로그..."
     }
 }

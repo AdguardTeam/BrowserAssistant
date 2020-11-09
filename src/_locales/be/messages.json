@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Звярнуцца ў падтрымку"
+    },
+    "context_site_filtering_on": {
+        "message": "Уключыць фільтрацыю на гэтым сайце"
+    },
+    "context_site_filtering_off": {
+        "message": "Адключыць фільтрацыю на гэтым сайце"
+    },
+    "context_block_site_ads": {
+        "message": "Блакаваць рэкламу на гэтым сайце..."
+    },
+    "context_complaint_website": {
+        "message": "Паведаміць пра праблему..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard не працуе на гэтым дамене"
+    },
+    "context_disable_protection": {
+        "message": "Прыпыніць абарону AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Аднавіць абарону AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Абарона AdGuard прыпынена"
+    },
+    "context_open_settings": {
+        "message": "Налады AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Журнал фільтрацыі..."
     }
 }

@@ -63,7 +63,7 @@
         "message": "計 30 秒不過濾"
     },
     "block_ads": {
-        "message": "封鎖於該網站上之廣告"
+        "message": "封鎖於此網站上之廣告"
     },
     "open_filtering_log": {
         "message": "開啟該過濾記錄"
@@ -72,7 +72,7 @@
         "message": "報告問題"
     },
     "reset_custom_rules": {
-        "message": "重置關於該頁面之所有自訂的規則"
+        "message": "重置關於此頁面之所有自訂的規則"
     },
     "cert_expired": {
         "message": "因為該網站的根憑證已到期，AdGuard 無法確認其憑證"
@@ -102,10 +102,10 @@
         "message": "預設下，我們不過濾有關付款系統和銀行網站的 HTTPS 流量。您可靠您自己啟用該過濾：向在左側的黃色\"鎖頭\"輕觸。"
     },
     "disabled": {
-        "message": "已於該網站上禁用"
+        "message": "已對此網站禁用"
     },
     "enabled": {
-        "message": "已於該網站上啟用"
+        "message": "已對此網站啟用"
     },
     "protection_is_enabled": {
         "message": "防護被啟用"
@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "與支援聯繫"
+    },
+    "context_site_filtering_on": {
+        "message": "對此網站啟用過濾"
+    },
+    "context_site_filtering_off": {
+        "message": "對此網站禁用過濾"
+    },
+    "context_block_site_ads": {
+        "message": "封鎖於此網站上之廣告…"
+    },
+    "context_complaint_website": {
+        "message": "報告問題…"
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard 無法對此網域執行"
+    },
+    "context_disable_protection": {
+        "message": "暫停 AdGuard 防護"
+    },
+    "context_enable_protection": {
+        "message": "恢復 AdGuard 防護"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard 防護被暫停"
+    },
+    "context_open_settings": {
+        "message": "AdGuard 設定…"
+    },
+    "context_open_log": {
+        "message": "過濾記錄…"
     }
 }

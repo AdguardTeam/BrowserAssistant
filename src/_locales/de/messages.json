@@ -45,7 +45,7 @@
         "message": "HTTPS-Filterung"
     },
     "increase_ab_block_quality": {
-        "message": "Die Qualität der Werbeblockierung erhöhen"
+        "message": "Erhöht die Qualität der Werbungssperre"
     },
     "verified_by": {
         "message": "Geprüft durch:"
@@ -54,22 +54,22 @@
         "message": "Weitere Informationen"
     },
     "adg_protection": {
-        "message": "AdGuard-Schutz"
+        "message": "AdGuard-Schutz anhalten"
     },
     "adg_settings": {
         "message": "AdGuard-Einstellungen"
     },
     "pause_filtering": {
-        "message": "Für 30 Sekunden nicht blockieren"
+        "message": "Filtern für 30 Sekunden deaktivieren"
     },
     "block_ads": {
-        "message": "Auf dieser Website blockieren"
+        "message": "Zu sperrendes Element dieser Webseite auswählen"
     },
     "open_filtering_log": {
         "message": "Filter-Protokoll öffnen"
     },
     "report_site": {
-        "message": "Fehler senden"
+        "message": "Ein Problem melden"
     },
     "reset_custom_rules": {
         "message": "Eigene Regeln für diese Seite zurücksetzen"
@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Support kontaktieren"
+    },
+    "context_site_filtering_on": {
+        "message": "Filtern auf dieser Webseite aktivieren"
+    },
+    "context_site_filtering_off": {
+        "message": "Filtern auf dieser Website deaktivieren"
+    },
+    "context_block_site_ads": {
+        "message": "Werbung auf dieser Website blockieren..."
+    },
+    "context_complaint_website": {
+        "message": "Problem melden …"
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard funktioniert auf dieser Domain nicht"
+    },
+    "context_disable_protection": {
+        "message": "AdGuard-Schutz anhalten"
+    },
+    "context_enable_protection": {
+        "message": "AdGuard-Schutz fortsetzen"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard-Schutz ist angehalten"
+    },
+    "context_open_settings": {
+        "message": "AdGuard-Einstellungen..."
+    },
+    "context_open_log": {
+        "message": "Filter-Protokoll..."
     }
 }

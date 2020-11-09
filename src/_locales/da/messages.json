@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Kontakt support"
+    },
+    "context_site_filtering_on": {
+        "message": "Aktivér filtrering på dette websted"
+    },
+    "context_site_filtering_off": {
+        "message": "Deaktiver filtrering på dette websted"
+    },
+    "context_block_site_ads": {
+        "message": "Bloker annoncer på denne webside..."
+    },
+    "context_complaint_website": {
+        "message": "Rapportér et problem..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard kan ikke køre på dette domæne"
+    },
+    "context_disable_protection": {
+        "message": "Pause AdGuard beskyttelse"
+    },
+    "context_enable_protection": {
+        "message": "Genoptag AdGuard beskyttelse"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard beskyttelsen er pauset"
+    },
+    "context_open_settings": {
+        "message": "AdGuard indstillinger..."
+    },
+    "context_open_log": {
+        "message": "Filtreringslog..."
     }
 }

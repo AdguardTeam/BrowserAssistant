@@ -75,6 +75,15 @@ class Tabs {
     };
 
     /**
+     * Returns active tab
+     * @returns {Promise<{url: string, id: number}>}
+     */
+    getActiveTab = async () => {
+        const [tab] = await this.getActiveTabs();
+        return tab;
+    };
+
+    /**
      * Sends message to the tab, previously executing there content script
      * @param tabId
      * @param type

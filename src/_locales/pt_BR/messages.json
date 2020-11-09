@@ -69,7 +69,7 @@
         "message": "Abrir registro de filtragem"
     },
     "report_site": {
-        "message": "Reportar este site"
+        "message": "Reportar um problema"
     },
     "reset_custom_rules": {
         "message": "Diminui a qualidade de bloqueio de anúncios"
@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Suporte"
+    },
+    "context_site_filtering_on": {
+        "message": "Ativar filtragem neste site"
+    },
+    "context_site_filtering_off": {
+        "message": "Desativar filtragem neste site"
+    },
+    "context_block_site_ads": {
+        "message": "Bloquear anúncios neste site..."
+    },
+    "context_complaint_website": {
+        "message": "Reportar um problema..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "O AdGuard não pode ser executado neste domínio"
+    },
+    "context_disable_protection": {
+        "message": "Pausar proteção do AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Retomar proteção do AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Proteção do AdGuard está pausada"
+    },
+    "context_open_settings": {
+        "message": "Configurações do AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Registro de filtragem..."
     }
 }

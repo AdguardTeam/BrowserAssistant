@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Зв'язатися з підтримкою"
+    },
+    "context_site_filtering_on": {
+        "message": "Увімкнути фільтрування на цьому сайті"
+    },
+    "context_site_filtering_off": {
+        "message": "Вимкнути фільтрування на цьому сайті"
+    },
+    "context_block_site_ads": {
+        "message": "Блокувати рекламу на цьому сайті..."
+    },
+    "context_complaint_website": {
+        "message": "Повідомити про проблему..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard не може працювати на цьому домені"
+    },
+    "context_disable_protection": {
+        "message": "Призупинити захист AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Відновити захист AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Захист AdGuard призупинено"
+    },
+    "context_open_settings": {
+        "message": "Налаштування AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Журнал фільтрації..."
     }
 }
