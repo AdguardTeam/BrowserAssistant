@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "サポートに連絡する"
+    },
+    "context_site_filtering_on": {
+        "message": "このサイトでフィルタリングを有効にする"
+    },
+    "context_site_filtering_off": {
+        "message": "このサイトでフィルタリングを無効にする"
+    },
+    "context_block_site_ads": {
+        "message": "このサイトで広告を手動ブロックする…"
+    },
+    "context_complaint_website": {
+        "message": "不具合・問題を報告する…"
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuardはこのドメインで作動できません"
+    },
+    "context_disable_protection": {
+        "message": "AdGuardによる保護を一時停止する"
+    },
+    "context_enable_protection": {
+        "message": "AdGuardによる保護を再開する"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard保護は一時停止中です"
+    },
+    "context_open_settings": {
+        "message": "AdGuard 設定..."
+    },
+    "context_open_log": {
+        "message": "フィルタリング・ログ..."
     }
 }

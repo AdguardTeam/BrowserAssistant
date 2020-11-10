@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "צור קשר עם תמיכה"
+    },
+    "context_site_filtering_on": {
+        "message": "אפשר סינון באתר זה"
+    },
+    "context_site_filtering_off": {
+        "message": "השבת סינון באתר זה"
+    },
+    "context_block_site_ads": {
+        "message": "חסום פרסומות באתר זה…"
+    },
+    "context_complaint_website": {
+        "message": "דווח על סוגייה…"
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard אינו יכול לרוץ בתחום זה"
+    },
+    "context_disable_protection": {
+        "message": "השהה את הגנת AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "המשך את הגנת AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "הגנת AdGuard מושהת"
+    },
+    "context_open_settings": {
+        "message": "הגדרות AdGuard…"
+    },
+    "context_open_log": {
+        "message": "יומן סינון…"
     }
 }
