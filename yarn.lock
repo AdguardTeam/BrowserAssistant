@@ -1734,9 +1734,9 @@ addons-linter@1.26.0:
   optionalDependencies:
     fsevents "2.1.3"
 
-"adguard-assistant@https://github.com/AdguardTeam/AdguardAssistant#4.3.32":
-  version "4.3.32"
-  resolved "https://github.com/AdguardTeam/AdguardAssistant#e173f840f32de1a55b78aed19025d06b7ee36786"
+"adguard-assistant@https://github.com/AdguardTeam/AdguardAssistant#4.3.37":
+  version "4.3.37"
+  resolved "https://github.com/AdguardTeam/AdguardAssistant#8c39528d5eb9f3cc13011e810e65fc9de34909c9"
 
 adm-zip@~0.4.x:
   version "0.4.16"
