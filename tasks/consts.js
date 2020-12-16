@@ -45,7 +45,6 @@ const CERTIFICATE_PATHS = {
 };
 
 const { BUILD_ENV } = process.env;
-const IS_DEV = BUILD_ENV === 'dev';
 const deployPath = BUILD_ENVS_MAP[BUILD_ENV].outputPath;
 
 // Update manifest URL for the Chrome extension
@@ -65,7 +64,6 @@ module.exports = {
     BUILD_ENVS,
     BUILD_ENVS_MAP,
     SRC_PATH,
-    IS_DEV,
     BUILD_PATH,
     CERTIFICATE_PATHS,
     MANIFEST_NAME,
