@@ -2,6 +2,13 @@ const path = require('path');
 
 const SRC_PATH = '../src';
 const LOCALES_PATH = path.join(__dirname, SRC_PATH, '_locales/en/messages');
+
+const BUILD_ENVS = {
+    DEV: 'dev',
+    BETA: 'beta',
+    RELEASE: 'release',
+};
+
 const BUILD_ENVS_MAP = {
     dev: {
         outputPath: 'dev',
@@ -55,6 +62,7 @@ const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassista
 
 module.exports = {
     LOCALES_PATH,
+    BUILD_ENVS,
     BUILD_ENVS_MAP,
     SRC_PATH,
     IS_DEV,
