@@ -25,7 +25,7 @@ const BROWSER_TYPES = {
 
 // Build output path
 const BUILD_PATH = '../build';
-const CHROME_CRX = 'chrome.crx';
+const CRX_NAME = 'chrome.crx';
 const XPI_NAME = 'firefox.xpi';
 const CHROME_UPDATER_FILENAME = 'update.xml';
 const FIREFOX_UPDATER_FILENAME = 'update.json';
@@ -37,8 +37,7 @@ const CERTIFICATE_PATHS = {
     release: './private/AdguardBrowserAssistant/certificate-release.pem',
 };
 
-const { BUILD_ENV, BROWSER } = process.env;
-const CRX_NAME = `${BROWSER}.crx`;
+const { BUILD_ENV } = process.env;
 const IS_DEV = BUILD_ENV === 'dev';
 const deployPath = BUILD_ENVS_MAP[BUILD_ENV].outputPath;
 
@@ -49,7 +48,7 @@ const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistan
 const FIREFOX_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${FIREFOX_UPDATER_FILENAME}`;
 
 // Path to the Chrome CRX (that we'll add to the update manifest)
-const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${CHROME_CRX}`;
+const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${CRX_NAME}`;
 
 // Path to the Firefox XPI (that we'll add to the update manifest)
 const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${XPI_NAME}`;
