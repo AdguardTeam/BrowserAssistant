@@ -26,8 +26,8 @@
         "crx:release": "export BUILD_ENV=release; yarn build:chrome && node tasks/crx.js",
         "xpi": "yarn build:firefox && node tasks/xpi.js",
         "ci:increment": "yarn version --patch --no-git-tag-version",
-        "artifacts:beta": "export BUILD_ENV=beta; yarn crx:beta && yarn xpi && node tasks/versionInfo.js",
-        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn xpi && node tasks/versionInfo.js",
+        "artifacts:beta": "export BUILD_ENV=beta; yarn crx:beta && yarn xpi && yarn build:edge && node tasks/versionInfo.js",
+        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn xpi && yarn build:edge && node tasks/versionInfo.js",
         "clear": "rm -rf build ; rm -rf node_modules"
     },
     "devDependencies": {
