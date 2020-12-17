@@ -10,9 +10,9 @@
         "dev": "BUILD_ENV=dev run-p build:*",
         "beta": "BUILD_ENV=beta run-p build:*",
         "release": "BUILD_ENV=release run-p build:*",
-        "build:chrome": "webpack --config tasks/chrome/webpack.chrome.js",
-        "build:firefox": "webpack --config tasks/firefox/webpack.firefox.js",
-        "build:edge": "webpack --config tasks/edge/webpack.edge.js",
+        "build:chrome": "BROWSER=chrome webpack --config tasks/webpack.js",
+        "build:edge": "BROWSER=edge webpack --config tasks/webpack.js",
+        "build:firefox": "BROWSER=firefox webpack --config tasks/webpack.js",
         "test": "jest",
         "test:watch": "jest --watch",
         "locales:download": "node tasks/translations/index.js download",
@@ -27,7 +27,7 @@
         "xpi": "yarn build:firefox && node tasks/xpi.js",
         "ci:increment": "yarn version --patch --no-git-tag-version",
         "artifacts:beta": "export BUILD_ENV=beta; yarn crx:beta && yarn xpi && node tasks/versionInfo.js",
-        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn xpi && node tasks/versionInfo.js",
+        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn xpi && yarn build:edge && node tasks/versionInfo.js",
         "clear": "rm -rf build ; rm -rf node_modules"
     },
     "devDependencies": {
