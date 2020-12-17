@@ -75,7 +75,7 @@
         "message": "重置關於此頁面之所有自訂的規則"
     },
     "cert_expired": {
-        "message": "因為該網站的根憑證已到期，AdGuard 無法確認其憑證"
+        "message": "因為此網站的根憑證已到期，AdGuard 無法確認其憑證"
     },
     "cert_absent": {
         "message": "對於此網站，HTTPS 過濾未被執行"
