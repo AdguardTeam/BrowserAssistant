@@ -24,6 +24,62 @@ const OUTPUT_PATH = getOutputPathByBuildEnv(BUILD_ENV);
 
 const cleanOptions = IS_DEV ? { cleanAfterEveryBuildPatterns: ['!**/*.json', '!assets/**/*'] } : {};
 
+const plugins = [
+    new CleanWebpackPlugin(cleanOptions),
+    new CopyWebpackPlugin([
+        {
+            context: 'src',
+            from: 'assets/',
+            to: 'assets/',
+        },
+        {
+            context: 'src',
+            from: '_locales/',
+            to: '_locales/',
+            // Add build environment suffixes to the extension name in locale files
+            transform: (content, path) => {
+                // ignore all paths except messages.json
+                if (path.indexOf('messages.json') === -1) {
+                    return content;
+                }
+                const messages = JSON.parse(content.toString());
+                if (messages && messages.name) {
+                    // eslint-disable-next-line max-len
+                    messages.name.message = appendBuildEnvSuffix(messages.name.message, BUILD_ENV);
+                }
+                return Buffer.from(JSON.stringify(messages, null, 4));
+            },
+        },
+        {
+            from: path.resolve(__dirname, './manifest.common.json'),
+            to: 'manifest.json',
+            // eslint-disable-next-line no-unused-vars
+            transform: (content, path) => {
+                // eslint-disable-next-line global-require,import/no-dynamic-require
+                const manifestDiff = require(`./manifest.${BROWSER}`);
+                return updateManifest(content, manifestDiff);
+            },
+        },
+    ]),
+    new HtmlWebpackPlugin({
+        template: path.join(BACKGROUND_PATH, 'index.html'),
+        filename: 'background.html',
+        chunks: ['background'],
+    }),
+    new HtmlWebpackPlugin({
+        template: path.join(POPUP_PATH, 'index.html'),
+        filename: 'popup.html',
+        chunks: ['popup'],
+    }),
+];
+
+if (!IS_DEV) {
+    plugins.push(new ZipWebpackPlugin({
+        path: '../',
+        filename: `${BROWSER}.zip`,
+    }));
+}
+
 const config = {
     mode: IS_DEV ? 'development' : 'production',
     devtool: IS_DEV ? 'cheap-module-eval-source-map' : false,
@@ -81,59 +137,7 @@ const config = {
             },
         ],
     },
-    plugins: [
-        new CleanWebpackPlugin(cleanOptions),
-        new CopyWebpackPlugin([
-            {
-                context: 'src',
-                from: 'assets/',
-                to: 'assets/',
-            },
-            {
-                context: 'src',
-                from: '_locales/',
-                to: '_locales/',
-                // Add build environment suffixes to the extension name in locale files
-                transform: (content, path) => {
-                    // ignore all paths except messages.json
-                    if (path.indexOf('messages.json') === -1) {
-                        return content;
-                    }
-                    const messages = JSON.parse(content.toString());
-                    if (messages && messages.name) {
-                        // eslint-disable-next-line max-len
-                        messages.name.message = appendBuildEnvSuffix(messages.name.message, BUILD_ENV);
-                    }
-                    return Buffer.from(JSON.stringify(messages, null, 4));
-                },
-            },
-            {
-                from: path.resolve(__dirname, './manifest.common.json'),
-                to: 'manifest.json',
-                // eslint-disable-next-line no-unused-vars
-                transform: (content, path) => {
-                    // eslint-disable-next-line global-require,import/no-dynamic-require
-                    const manifestDiff = require(`./manifest.${BROWSER}`);
-                    return updateManifest(content, manifestDiff);
-                },
-            },
-        ]),
-        new HtmlWebpackPlugin({
-            template: path.join(BACKGROUND_PATH, 'index.html'),
-            filename: 'background.html',
-            chunks: ['background'],
-        }),
-        new HtmlWebpackPlugin({
-            template: path.join(POPUP_PATH, 'index.html'),
-            filename: 'popup.html',
-            chunks: ['popup'],
-        }),
-    ].concat(
-        IS_DEV ? [] : new ZipWebpackPlugin({
-            path: '../',
-            filename: `${BROWSER}.zip`,
-        })
-    ),
+    plugins,
 };
 
 module.exports = config;
