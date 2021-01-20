@@ -73,7 +73,7 @@
         "zip-webpack-plugin": "^3.0.0"
     },
     "dependencies": {
-        "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant#4.3.40",
+        "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant#4.3.42",
         "classnames": "^2.2.6",
         "lodash": "^4.17.15",
         "mobx": "^5.15.4",
