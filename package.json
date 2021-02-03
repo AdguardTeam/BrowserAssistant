@@ -75,7 +75,7 @@
     "dependencies": {
         "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant#4.3.43",
         "classnames": "^2.2.6",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "mobx": "^5.15.4",
         "mobx-react": "^6.1.8",
         "nanoid": "^2.1.11",
