@@ -13,6 +13,7 @@ const {
     FIREFOX_UPDATE_XPI,
     MANIFEST_NAME,
     XPI_NAME,
+    BUILD_ENVS,
 } = require('./consts');
 const config = require('../package');
 
@@ -116,7 +117,12 @@ const createUpdateJson = async (manifest) => {
 const updateFirefoxManifest = async () => {
     const manifestPath = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
     const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
-    manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
+    // TODO stop building xpi for next versions
+    // build xpi for release without update url, so firefox would search extension in the amo store
+    // https://discourse.mozilla.org/t/migrate-from-self-hosted-to-add-ons-store/5403
+    if (BUILD_ENV === BUILD_ENVS.RELEASE) {
+        manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
+    }
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
 };
 
