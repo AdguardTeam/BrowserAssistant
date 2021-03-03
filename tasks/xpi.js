@@ -120,7 +120,7 @@ const updateFirefoxManifest = async () => {
     // TODO stop building xpi for next versions
     // build xpi for release without update url, so firefox would search extension in the amo store
     // https://discourse.mozilla.org/t/migrate-from-self-hosted-to-add-ons-store/5403
-    if (BUILD_ENV === BUILD_ENVS.RELEASE) {
+    if (BUILD_ENV !== BUILD_ENVS.RELEASE) {
         manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
     }
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
