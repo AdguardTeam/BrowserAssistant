@@ -2,7 +2,7 @@
 version: 2
 deployment:
   name: browser assistant - deploy beta
-  source-plan: ADGEXT-BASPECS
+  source-plan: ADGEXT-BABETASPECS
 release-naming: ${bamboo.inject.version}-beta
 environments:
   - static.adguard.com
