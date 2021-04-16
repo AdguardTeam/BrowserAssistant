@@ -3,29 +3,25 @@ version: 2
 deployment:
   name: disable-amp - deploy release
 deployment-permissions:
-  - rgroups:
+  - groups:
       - extensions-developers
     permissions:
       - view
-      - edit
 environment-permissions:
   - static.adguard.com:
       - groups:
           - extensions-developers
         permissions:
           - view
-          - edit
           - deploy
   - Chrome WebStore:
       - groups:
           - extensions-developers
         permissions:
           - view
-          - edit
           - deploy
   - Addons Mozilla:
       - groups:
           - extensions-developers
         permissions:
           - view
-          - edit

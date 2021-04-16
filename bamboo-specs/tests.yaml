@@ -5,7 +5,7 @@ plan:
   key: BATESTSPECS
   name: browser assistant - test
 variables:
-  dockerNode: node:current-alpine3.12
+  dockerNode: node:15.14.0-buster-slim
 
 stages:
   - Test:

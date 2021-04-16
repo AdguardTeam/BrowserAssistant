@@ -8,7 +8,7 @@ environments:
   - static.adguard.com
   - Chrome WebStore
 static.adguard.com:
-  triggers: &id001 []
+  triggers: []
   tasks:
     - clean
     - checkout:
@@ -40,7 +40,7 @@ static.adguard.com:
             url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo?channel=adguard-qa
 
 Chrome WebStore:
-  triggers: *id001
+  triggers: []
   tasks:
     - clean
     - checkout:
