@@ -1,7 +1,7 @@
 ---
 version: 2
 deployment:
-  name: disable-amp - deploy release
+  name: browser assistant - deploy release
 deployment-permissions:
   - groups:
       - extensions-developers
