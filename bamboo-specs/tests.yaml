@@ -5,7 +5,7 @@ plan:
   key: BATESTSPECS
   name: browser assistant - test
 variables:
-  dockerNode: node:15.14.0-buster-slim
+  dockerNode: adguard/node-ssh:15.14--5
 
 stages:
   - Test:
@@ -35,6 +35,11 @@ Test:
 
             yarn install ${system.YARN_ARGS}
             yarn dev
+  artifacts:
+    - name: browser assistant dev
+      pattern: 'build/dev/**'
+      shared: true
+      required: true
   requirements:
     - adg-docker: 'true'
 

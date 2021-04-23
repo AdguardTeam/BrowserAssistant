@@ -5,7 +5,7 @@ plan:
   key: BAINCRSPECS
   name: browser assistant - increment version
 variables:
-  dockerNode: node:15.14.0-buster-slim
+  dockerNode: adguard/node-ssh:15.14--5
 
 stages:
   - Increment:
