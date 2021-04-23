@@ -1,0 +1,101 @@
+---
+version: 2
+plan:
+  project-key: ADGEXT
+  key: BARELEASESPECS
+  name: browser assistant - build release
+variables:
+  dockerNode: node:15.14.0-buster-slim
+
+stages:
+  - Build:
+      manual: 'false'
+      final: 'false'
+      jobs:
+        - Build
+
+Build:
+  key: BUILD
+  other:
+    clean-working-dir: true
+  docker:
+    image: ${bamboo.dockerNode}
+    volumes:
+      ${system.YARN_DIR}: "${bamboo.cacheYarn}"
+  tasks:
+    - checkout:
+        force-clean-build: 'true'
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            set -x
+            set -e
+            ls -alt
+
+            yarn install ${system.YARN_ARGS}
+            yarn lint
+            yarn test
+            yarn locales:validate --min
+            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:release
+
+    - inject-variables:
+        file: build/release/build.txt
+        scope: RESULT
+        namespace: inject
+    - any-task:
+        plugin-key: com.atlassian.bamboo.plugins.vcs:task.vcs.tagging
+        configuration:
+          selectedRepository: defaultRepository
+          tagName: v${bamboo.inject.version}
+  artifacts:
+    - name: edge.zip
+      location: build/release
+      pattern: edge.zip
+      shared: true
+      required: true
+    - name: build.txt
+      location: build/release
+      pattern: build.txt
+      shared: true
+      required: true
+    - name: chrome.crx
+      location: build/release
+      pattern: chrome.crx
+      shared: true
+      required: true
+    - name: chrome.zip
+      location: build/release
+      pattern: chrome.zip
+      shared: true
+      required: true
+    - name: firefox.zip
+      location: build/release
+      pattern: firefox.zip
+      shared: true
+      required: true
+    - name: update.xml
+      location: build/release
+      pattern: update.xml
+      shared: true
+      required: true
+  requirements:
+    - adg-docker: 'true'
+
+triggers: []
+
+branches:
+  create: manually
+  delete: never
+  link-to-jira: 'true'
+
+notifications:
+  - events:
+      - plan-status-changed
+    recipients:
+      - webhook:
+          name: Build webhook
+          url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo
+labels: []
+other:
+  concurrent-build-plugin: system-default
