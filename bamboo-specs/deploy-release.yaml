@@ -5,40 +5,8 @@ deployment:
   source-plan: ADGEXT-BARELEASESPECS
 release-naming: ${bamboo.inject.version}
 environments:
-  - static.adguard.com
   - Chrome WebStore
   - Addons Mozilla
-static.adguard.com:
-  triggers: []
-  tasks:
-    - clean
-    - checkout:
-        repository: bamboo-deploy-publisher
-        path: bamboo-deploy-publisher
-        force-clean-build: 'true'
-    - artifact-download:
-        artifacts:
-          - {}
-    - script:
-        interpreter: SHELL
-        scripts:
-          - |-
-            set -x
-            set -e
-            ls -la
-
-            ./bamboo-deploy-publisher/deploy.sh browser-assistant-release
-  final-tasks: []
-  variables: {}
-  requirements:
-    - adg-docker: 'true'
-  notifications:
-    - events:
-        - deployment-started-and-finished
-      recipients:
-        - webhook:
-            name: Deploy webhook
-            url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo?channel=adguard-qa
 
 Chrome WebStore:
   triggers: []
