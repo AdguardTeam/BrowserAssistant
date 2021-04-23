@@ -81,7 +81,7 @@
         "message": "Filtrowanie HTTPS nie zostało wykonane dla tej witryny"
     },
     "site_not_using_private_protection": {
-        "message": "Ta strona nie używa zabezpieczonej sieci. Ktokolwiek może widzieć, bądź zmienić informację, które przesyłasz przez stronę."
+        "message": "Witryna nie korzysta z bezpiecznego połączenia. Ktoś może zobaczyć lub zmienić informacje, które wysyłasz lub odbierasz za pośrednictwem tej witryny."
     },
     "not_secure": {
         "message": "Niezabezpieczone"

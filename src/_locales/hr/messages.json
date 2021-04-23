@@ -81,7 +81,7 @@
         "message": "HTTPS filtriranje nije izvršeno za ovu web stranicu"
     },
     "site_not_using_private_protection": {
-        "message": "Web stranica ne koristi privatnu vezu. Netko bi mogao vidjeti ili promijeniti informacije koje šaljete ili dobivate na web stranici."
+        "message": "Web stranica ne koristi sigurnu vezu. Netko bi mogao vidjeti ili promijeniti informacije koje šaljete ili dobivate na web stranici."
     },
     "not_secure": {
         "message": "Nije sigurno"

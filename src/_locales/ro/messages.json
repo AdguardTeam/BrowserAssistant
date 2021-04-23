@@ -81,7 +81,7 @@
         "message": "Filtrarea HTTPS nu s-a efectuat pe acest site web"
     },
     "site_not_using_private_protection": {
-        "message": "Acest site nu utilizează o conexiune privată. Cineva ar putea vedea sau altera informația trimisă sau primită prin acest site."
+        "message": "Site-ul nu utilizează o conexiune securizată. Cineva ar putea vedea sau altera informația trimisă sau primită prin acest site."
     },
     "not_secure": {
         "message": "Nesecurizat"

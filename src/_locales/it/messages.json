@@ -1,15 +1,15 @@
 {
     "name": {
-        "message": "Assistente di browser AdGuard"
+        "message": "Assistente Browser AdGuard"
     },
     "description": {
-        "message": "Estensione per l’app desktop di AdGuard. Gestisci i filtri direttamente dal browser, nascondi gli elementi fastidiosi in due click."
+        "message": "Estensione per l'app desktop di AdGuard. Gestisce il filtraggio direttamente dal browser e nasconde elementi fastidiosi in due clic."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard non è installato o non è configurato correttamente"
+        "message": "AdGuard non è installato o è configurato in modo errato"
     },
     "get_adguard": {
-        "message": "Ottien AdGuard"
+        "message": "Ottieni AdGuard"
     },
     "adg_is_not_updated": {
         "message": "AdGuard non è aggiornato"
@@ -45,7 +45,7 @@
         "message": "Filtraggio HTTPS"
     },
     "increase_ab_block_quality": {
-        "message": "Aumenta la qualità del blocco per annunci"
+        "message": "Aumenta la qualità del blocco degli annunci"
     },
     "verified_by": {
         "message": "Verificato da:"
@@ -63,10 +63,10 @@
         "message": "Non filtrare per 30 secondi"
     },
     "block_ads": {
-        "message": "Blocca annunci su questo sito"
+        "message": "Blocca annunci su questo sito web"
     },
     "open_filtering_log": {
-        "message": "Apri registro filtri"
+        "message": "Apri il registro di filtraggio"
     },
     "report_site": {
         "message": "Segnala un problema"
@@ -75,19 +75,19 @@
         "message": "Reimposta tutte le regole personalizzate per questa pagina"
     },
     "cert_expired": {
-        "message": "AdGuard non ha potuto verificare il certificato di questo sito, perché il certificato di root è scaduto"
+        "message": "AdGuard non ha potuto verificare il certificato di questo sito web perché il certificato root è scaduto"
     },
     "cert_absent": {
-        "message": "Il filtraggio HTTPS non è stato eseguito per questo sito"
+        "message": "Il filtraggio HTTPS non è stato eseguito per questo sito web"
     },
     "site_not_using_private_protection": {
-        "message": "Il sito non sta utilizzando una connessione privata. Qualcuno potrebbe vedere o cambiare le informazioni inviate attraverso il sito."
+        "message": "Il sito non utilizza una connessione sicura. Qualcuno potrebbe essere in grado di visualizzare o modificare le informazioni inviate od ottenute tramite il sito."
     },
     "not_secure": {
         "message": "Non sicuro"
     },
     "nothing_to_block_here": {
-        "message": "Nulla da bloccare qua"
+        "message": "Nulla da bloccare qui"
     },
     "secure_page": {
         "message": "Pagina sicura"
@@ -99,13 +99,13 @@
         "message": "Ricarica questa pagina per riprendere il filtraggio"
     },
     "not_filtering_https": {
-        "message": "Di norma, non filtriamo il traffico HTTPS per i sistemi di pagamento e i siti bancari. Puoi attivare i filtri tu stesso: tocca il \"lucchetto\" giallo sulla sinistra."
+        "message": "Di norma, non filtriamo il traffico HTTPS per i sistemi di pagamento e siti bancari. Puoi attivare il filtraggio tu stesso: clicca il \"lucchetto\" giallo sulla sinistra."
     },
     "disabled": {
-        "message": "Disattivato su questo sito"
+        "message": "Disattivato su questo sito web"
     },
     "enabled": {
-        "message": "Attivato su questo sito"
+        "message": "Attivato su questo sito web"
     },
     "protection_is_enabled": {
         "message": "La protezione è attiva"
@@ -123,19 +123,19 @@
         "message": "Contatta il supporto"
     },
     "context_site_filtering_on": {
-        "message": "Attiva filtraggio su questo sito internet"
+        "message": "Attiva filtraggio su questo sito web"
     },
     "context_site_filtering_off": {
-        "message": "Disattiva filtraggio su questo sito internet"
+        "message": "Disattiva filtraggio su questo sito web"
     },
     "context_block_site_ads": {
-        "message": "Blocca annunci su questo sito..."
+        "message": "Blocca annunci su questo sito web..."
     },
     "context_complaint_website": {
         "message": "Segnala un problema..."
     },
     "context_site_filtering_disabled": {
-        "message": "AdGuard non può funzionare su questo dominio"
+        "message": "AdGuard non può essere eseguito su questo dominio"
     },
     "context_disable_protection": {
         "message": "Sospendi protezione AdGuard"

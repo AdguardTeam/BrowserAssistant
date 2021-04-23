@@ -74,9 +74,6 @@
     "cert_absent": {
         "message": "HTTPS-filtering is nie vir hierdie webwerf uitgevoer nie"
     },
-    "site_not_using_private_protection": {
-        "message": "Die webwerf gebruik nie 'n private verbinding nie. Iemand kan die inligting wat u stuur deur die webwerf sien of verander."
-    },
     "not_secure": {
         "message": "Nie veilig nie"
     },

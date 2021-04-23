@@ -81,7 +81,7 @@
         "message": "Le filtrage HTTPS n'a pas été effectué pour ce site Web"
     },
     "site_not_using_private_protection": {
-        "message": "Ce site n’utilise pas une connexion privée. Il est possible que quelqu’un puisse voir ou modifier les informations que vous envoyez ou obtenez via le site."
+        "message": "Ce site n’utilise pas une connexion sécurisée. Il est possible que quelqu’un puisse voir ou modifier les informations que vous envoyez ou obtenez via le site."
     },
     "not_secure": {
         "message": "Non sécurisé"

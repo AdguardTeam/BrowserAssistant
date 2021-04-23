@@ -81,7 +81,7 @@
         "message": "Filtrování HTTPS nebylo pro tento web provedeno"
     },
     "site_not_using_private_protection": {
-        "message": "Tato webová stránka nepoužívá soukromé připojení. Někdo může vidět nebo změnit informace, které odešlete nebo stáhnete prostřednictvím webové stránky."
+        "message": "Tato webová stránka nepoužívá zabezpečené připojení. Někdo může vidět nebo změnit informace, které odešlete nebo stáhnete prostřednictvím webové stránky."
     },
     "not_secure": {
         "message": "Nezabezpečeno"

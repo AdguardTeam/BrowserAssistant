@@ -3,10 +3,10 @@
         "message": "AdGuard Browser Assistent"
     },
     "description": {
-        "message": "Udvidelse til AdGuards desktop-program. Administrerer filtrering direkte fra browseren, skjuler irriterende elementer i to klik."
+        "message": "Udvidelse til AdGuards computerprogram. Håndterer filtrering direkte fra browseren, skjuler irriterende elementer i to klik."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard er ikke installeret eller konfigureret forkert"
+        "message": "AdGuard er ikke installeret eller er forkert opsat"
     },
     "get_adguard": {
         "message": "Få AdGuard"
@@ -15,7 +15,7 @@
         "message": "AdGuard er ikke opdateret"
     },
     "update": {
-        "message": "Opdater"
+        "message": "Opdatér"
     },
     "adg_is_not_running": {
         "message": "AdGuard kører ikke"
@@ -24,13 +24,13 @@
         "message": "Kør AdGuard"
     },
     "adg_is_paused": {
-        "message": "AdGuard beskyttelsen er pauset"
+        "message": "AdGuard-beskyttelse sat på pause"
     },
     "adg_is_launching": {
         "message": "AdGuard starter..."
     },
     "enable": {
-        "message": "Aktiver"
+        "message": "Aktivér"
     },
     "assistant_is_not_updated": {
         "message": "Assistenten er ikke opdateret"
@@ -39,16 +39,16 @@
         "message": "Noget gik galt"
     },
     "reinstall": {
-        "message": "Geninstaller"
+        "message": "Geninstallér"
     },
     "https_filtering": {
         "message": "HTTPS-filtrering"
     },
     "increase_ab_block_quality": {
-        "message": "Øger kvaliteten af annonceblokering"
+        "message": "Øger kvaliteten af adblocking"
     },
     "verified_by": {
-        "message": "Verificeret af:"
+        "message": "Bekræftet af:"
     },
     "more_info": {
         "message": "Mere information"
@@ -60,28 +60,28 @@
         "message": "AdGuard-indstillinger"
     },
     "pause_filtering": {
-        "message": "Filtrer ikke i 30 sekunder"
+        "message": "Filtrér ikke i 30 sekunder"
     },
     "block_ads": {
-        "message": "Bloker annoncer på denne webside"
+        "message": "Blokér annoncer på dette websted"
     },
     "open_filtering_log": {
-        "message": "Åben filtreringslog"
+        "message": "Åbn filtreringsloggen"
     },
     "report_site": {
         "message": "Rapportér et problem"
     },
     "reset_custom_rules": {
-        "message": "Nulstil alle brugerdefinerede regler for denne side"
+        "message": "Nulstil alle tilpassede regler for denne side"
     },
     "cert_expired": {
-        "message": "AdGuard kunne ikke verificere dette websteds certifikat, fordi root-certifikatet er udløbet"
+        "message": "AdGuard kunne ikke bekræfte dette websteds certifikat, da root-certifikatet er udløbet"
     },
     "cert_absent": {
         "message": "HTTPS-filtrering blev ikke udført på dette websted"
     },
     "site_not_using_private_protection": {
-        "message": "Siden bruger ikke en privat forbindelse. En person kan muligvis se eller ændre de oplysninger, du sender eller får gennem webstedet."
+        "message": "Webstedet bruger ikke en sikker forbindelse. Andre kan muligvis se eller ændre de oplysninger, du sender eller modtager via webstedet."
     },
     "not_secure": {
         "message": "Ikke sikker"
@@ -99,19 +99,19 @@
         "message": "Genindlæs denne side for at genoptage filtreringen"
     },
     "not_filtering_https": {
-        "message": "Som standard filtrerer vi ikke HTTPS-trafik for betalingssystemer og bankwebsteder. Du kan selv aktivere filtreringen: tryk på den gule \"lås\" til venstre."
+        "message": "Som standard filtrerer AdGuard ikke HTTPS-trafikken for betalingssystemer og bankwebsteder. Du kan dog aktivere filtreringen ved at trykke på den gule \"lås\" til venstre."
     },
     "disabled": {
-        "message": "Deaktiveret på denne hjemmeside"
+        "message": "Deaktiveret på dette websted"
     },
     "enabled": {
-        "message": "Aktiveret på denne hjemmeside"
+        "message": "Aktiveret på dette websted"
     },
     "protection_is_enabled": {
-        "message": "Beskyttelsen er aktiveret"
+        "message": "Beskyttelse er aktiveret"
     },
     "protection_is_disabled": {
-        "message": "Beskyttelsen er deaktiveret"
+        "message": "Beskyttelse er deaktiveret"
     },
     "website_cert_is_expired": {
         "message": "Webstedscertifikat er udløbet"
@@ -126,10 +126,10 @@
         "message": "Aktivér filtrering på dette websted"
     },
     "context_site_filtering_off": {
-        "message": "Deaktiver filtrering på dette websted"
+        "message": "Deaktivér filtrering på dette websted"
     },
     "context_block_site_ads": {
-        "message": "Bloker annoncer på denne webside..."
+        "message": "Blokér annoncer på dette websted..."
     },
     "context_complaint_website": {
         "message": "Rapportér et problem..."
@@ -138,16 +138,16 @@
         "message": "AdGuard kan ikke køre på dette domæne"
     },
     "context_disable_protection": {
-        "message": "Pause AdGuard beskyttelse"
+        "message": "Sæt AdGuard-beskyttelse på pause"
     },
     "context_enable_protection": {
-        "message": "Genoptag AdGuard beskyttelse"
+        "message": "Genoptag AdGuard-beskyttelse"
     },
     "context_site_protection_disabled": {
-        "message": "AdGuard beskyttelsen er pauset"
+        "message": "AdGuard-beskyttelse er på pause"
     },
     "context_open_settings": {
-        "message": "AdGuard indstillinger..."
+        "message": "AdGuard-indstillinger..."
     },
     "context_open_log": {
         "message": "Filtreringslog..."

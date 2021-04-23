@@ -24,7 +24,7 @@
         "message": "הרץ את AdGuard"
     },
     "adg_is_paused": {
-        "message": "הגנת AdGuard מושהת"
+        "message": "הגנת AdGuard מושהית"
     },
     "adg_is_launching": {
         "message": "AdGuard נטען…"
@@ -81,7 +81,7 @@
         "message": "סינון HTTPS לא בוצע עבור אתר זה"
     },
     "site_not_using_private_protection": {
-        "message": "האתר אינו משתמש בחיבור פרטי. מישהו עשוי לראות או לשנות את המידע שאתה שולח או מקבל דרך האתר."
+        "message": "האתר אינו משתמש בחיבור מאובטח. מישהו עשוי לראות או לשנות את המידע שאתה שולח או מקבל דרך האתר."
     },
     "not_secure": {
         "message": "לא מאובטח"
@@ -144,7 +144,7 @@
         "message": "המשך את הגנת AdGuard"
     },
     "context_site_protection_disabled": {
-        "message": "הגנת AdGuard מושהת"
+        "message": "הגנת AdGuard מושהית"
     },
     "context_open_settings": {
         "message": "הגדרות AdGuard…"
