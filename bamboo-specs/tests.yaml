@@ -5,7 +5,7 @@ plan:
   key: BATESTSPECS
   name: browser assistant - test
 variables:
-  dockerNode: node:15.14.0-buster-slim
+  dockerNode: adguard/node-ssh:15.14--5
 
 stages:
   - Test:
@@ -35,6 +35,27 @@ Test:
 
             yarn install ${system.YARN_ARGS}
             yarn dev
+  artifacts:
+    - name: build.txt
+      location: build/dev
+      pattern: build.txt
+      shared: true
+      required: true
+    - name: chrome.zip
+      location: build/dev
+      pattern: chrome.zip
+      shared: true
+      required: true
+    - name: firefox.zip
+      location: build/dev
+      pattern: firefox.zip
+      shared: true
+      required: true
+    - name: edge.zip
+      location: build/dev
+      pattern: edge.zip
+      shared: true
+      required: true
   requirements:
     - adg-docker: 'true'
 

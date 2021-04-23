@@ -71,14 +71,11 @@ const plugins = [
         filename: 'popup.html',
         chunks: ['popup'],
     }),
-];
-
-if (!IS_DEV) {
-    plugins.push(new ZipWebpackPlugin({
+    new ZipWebpackPlugin({
         path: '../',
         filename: `${BROWSER}.zip`,
-    }));
-}
+    }),
+];
 
 const config = {
     mode: IS_DEV ? 'development' : 'production',
