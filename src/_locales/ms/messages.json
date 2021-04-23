@@ -77,9 +77,6 @@
     "cert_absent": {
         "message": "Saringan HTTPS tidak dilakukan pada laman ini"
     },
-    "site_not_using_private_protection": {
-        "message": "Laman ini tidak menggunakan sambungan peribadi. Seseorang mungkin boleh lihat atau ubah maklumat yang anda hantar atau terima melalui laman ini."
-    },
     "not_secure": {
         "message": "Tidak selamat"
     },

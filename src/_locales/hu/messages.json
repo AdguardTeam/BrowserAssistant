@@ -81,7 +81,7 @@
         "message": "Nincs HTTPS szűrés alkalmazva ezen a webhelyen"
     },
     "site_not_using_private_protection": {
-        "message": "A webhely nem használ privát kapcsolatot. Bárki láthatja vagy módosíthatja azokat az információkat, amiket a webhelynek küld, vagy attól fogad."
+        "message": "A webhely nem használ biztonságos kapcsolatot. Bárki láthatja vagy módosíthatja azokat az információkat, amiket a webhelynek küld, vagy attól fogad."
     },
     "not_secure": {
         "message": "Nem biztonságos"

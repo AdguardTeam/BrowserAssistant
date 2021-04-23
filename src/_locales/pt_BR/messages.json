@@ -72,7 +72,7 @@
         "message": "Reportar um problema"
     },
     "reset_custom_rules": {
-        "message": "Diminui a qualidade de bloqueio de anúncios"
+        "message": "Redefinir todas as regras personalizadas para esta página"
     },
     "cert_expired": {
         "message": "O AdGuard não pôde verificar o certificado deste site, pois o certificado de raiz expirou"
@@ -81,7 +81,7 @@
         "message": "A filtragem HTTPS não foi realizada neste site"
     },
     "site_not_using_private_protection": {
-        "message": "O site não usa uma conexão privada. Alguém pode ser capaz de ver ou alterar as informações que você enviar ou receber através do site."
+        "message": "O site não usa uma conexão segura. Alguém pode ser capaz de ver ou alterar as informações que você enviar ou receber através do site."
     },
     "not_secure": {
         "message": "Não segura"

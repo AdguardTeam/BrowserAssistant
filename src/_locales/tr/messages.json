@@ -72,7 +72,7 @@
         "message": "Bir sorun bildir"
     },
     "reset_custom_rules": {
-        "message": "Bu sayfa için mevcut olan tüm özel kuralları sıfırlayın"
+        "message": "Bu sayfa için tüm özel kuralları sıfırla"
     },
     "cert_expired": {
         "message": "AdGuard bu web sitesini doğrulayamadı, çünkü kök sertifikasının süresi dolmuş"
@@ -81,7 +81,7 @@
         "message": "Bu web sitesi için HTTPS filtrelemesi gerçekleştirilmedi"
     },
     "site_not_using_private_protection": {
-        "message": "Bu site gizli bir bağlantı kullanmıyor. Başka şahıslar bu site ile kurduğunuz iletişim sırasında ilettiğiniz veya aldığınız bilgileri görebilir veya değiştirebilir."
+        "message": "Bu site güvenli bir bağlantı kullanmıyor. Birisi site aracılığıyla gönderdiğiniz veya aldığınız bilgileri görebilir veya değiştirebilir."
     },
     "not_secure": {
         "message": "Güvenli değil"

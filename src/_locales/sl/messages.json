@@ -81,7 +81,7 @@
         "message": "Za to spletno stran ni bilo izvedeno filtriranje HTTPS"
     },
     "site_not_using_private_protection": {
-        "message": "Spletna stran ne uporablja zasebne povezave. Nekdo bo lahko videl ali spremenil informacije, ki jih pošljete ali dobite na spletni strani."
+        "message": "Spletna stran ne uporablja varne povezave. Nekdo bo lahko videl ali spremenil podatke, ki jih pošljete ali dobite prek spletni strani."
     },
     "not_secure": {
         "message": "Ni varna"

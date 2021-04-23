@@ -81,7 +81,7 @@
         "message": "Bộ lọc HTTPS không chạy được đối với trang web này"
     },
     "site_not_using_private_protection": {
-        "message": "Trang không sử dụng kết nối bảo mật. Ai đó có thể xem hoặc thay đổi thông tin bạn cung cấp cho trang, hoặc vượt qua trang."
+        "message": "Trang không sử dụng kết nối bảo mật. Ai đó có thể xem hoặc thay đổi thông tin bạn cung cấp cho trang hoặc nhận được từ trang."
     },
     "not_secure": {
         "message": "Không bảo mật"
@@ -121,5 +121,35 @@
     },
     "contact_support": {
         "message": "Liên hệ hỗ trợ"
+    },
+    "context_site_filtering_on": {
+        "message": "Vô hiệu hóa bộ lọc trên trang web này"
+    },
+    "context_site_filtering_off": {
+        "message": "Vô hiệu hóa bộ lọc trên trang web này"
+    },
+    "context_block_site_ads": {
+        "message": "Chặn quảng cáo trên trang web này..."
+    },
+    "context_complaint_website": {
+        "message": "Báo lỗi..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard không thể hoạt động trên tên miền này"
+    },
+    "context_disable_protection": {
+        "message": "Tạm dừng trình bảo vệ của AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Tiếp tục trình bảo vệ của AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Trình bảo vệ AdGuard đã tạm dừng"
+    },
+    "context_open_settings": {
+        "message": "Cài đặt AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Mở nhật ký lọc..."
     }
 }

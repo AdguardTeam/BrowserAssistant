@@ -63,7 +63,7 @@
         "message": "Filtern für 30 Sekunden deaktivieren"
     },
     "block_ads": {
-        "message": "Zu sperrendes Element dieser Webseite auswählen"
+        "message": "Werbung auf dieser Website sperren"
     },
     "open_filtering_log": {
         "message": "Filter-Protokoll öffnen"
@@ -129,13 +129,13 @@
         "message": "Filtern auf dieser Website deaktivieren"
     },
     "context_block_site_ads": {
-        "message": "Werbung auf dieser Website blockieren..."
+        "message": "Werbung auf dieser Website sperren …"
     },
     "context_complaint_website": {
         "message": "Problem melden …"
     },
     "context_site_filtering_disabled": {
-        "message": "AdGuard funktioniert auf dieser Domain nicht"
+        "message": "AdGuard kann auf dieser Domain nicht ausgeführt werden"
     },
     "context_disable_protection": {
         "message": "AdGuard-Schutz anhalten"

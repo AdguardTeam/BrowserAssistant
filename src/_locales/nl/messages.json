@@ -81,7 +81,7 @@
         "message": "HTTPS filtering niet uitgevoerd voor deze website"
     },
     "site_not_using_private_protection": {
-        "message": "Deze site gebruikt geen private verbinding. Iemand kan de informatie die je zendt naar of verkrijgt van deze site bekijken en wijzigen."
+        "message": "Deze site gebruikt geen veilige verbinding. Iemand kan de informatie die je zendt naar of verkrijgt van deze site bekijken en wijzigen."
     },
     "not_secure": {
         "message": "Niet veilig"

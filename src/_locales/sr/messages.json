@@ -80,9 +80,6 @@
     "cert_absent": {
         "message": "HTTPS filtriranje nije izvršeno nad ovim sajtom"
     },
-    "site_not_using_private_protection": {
-        "message": "Sajt ne koristi privatnu vezu. neko će možda moći da vidi ili promeni informacije koje šaljete ili primate preko sajta."
-    },
     "not_secure": {
         "message": "Nije bezbedno"
     },

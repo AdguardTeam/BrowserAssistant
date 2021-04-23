@@ -81,7 +81,7 @@
         "message": "對於此網站，HTTPS 過濾未被執行"
     },
     "site_not_using_private_protection": {
-        "message": "該網站未正在使用私人連線。某些人可能能夠查看或更改您通過該網站傳送或取得之資訊。"
+        "message": "該網站未正在使用安全的連線。某些人可能能夠查看或更改您通過該網站傳送或取得之資訊。"
     },
     "not_secure": {
         "message": "不安全的"

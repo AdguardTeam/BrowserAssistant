@@ -3,7 +3,7 @@
         "message": "AdGuard浏览器助手"
     },
     "description": {
-        "message": "计划"
+        "message": "用于 AdGuard 桌面端应用程序的扩展。直接从浏览器管理过滤，轻按几个键就可以隐藏恼人的元素。"
     },
     "adg_is_not_installed": {
         "message": "AdGuard未安装或配置不正确"
@@ -81,7 +81,7 @@
         "message": "HTTPS过滤未在该网站上执行"
     },
     "site_not_using_private_protection": {
-        "message": "此站点为使用私密链接。某些人可能可以查看或更改您通过网站发送或获取的信息。"
+        "message": "此网站链接不安全。某些人可以查看或更改您通过网站发送或获取的信息。"
     },
     "not_secure": {
         "message": "不安全"

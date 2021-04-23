@@ -81,7 +81,7 @@
         "message": "Pre túto webovú stránku nebola vykonaná filtrácia HTTPS"
     },
     "site_not_using_private_protection": {
-        "message": "Stránka nevyužíva súkromné pripojenie. Niekto môže vidieť alebo zmeniť informácie, ktoré pošlete alebo ktoré prejdú cez stránku."
+        "message": "Stránka nevyužíva súkromné pripojenie. Niekto môže vidieť alebo zmeniť informácie, ktoré odosielate alebo dostávate cez stránku."
     },
     "not_secure": {
         "message": "Nezabezpečené"

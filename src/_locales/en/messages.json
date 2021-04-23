@@ -81,7 +81,7 @@
         "message": "HTTPS filtering was not performed for this website"
     },
     "site_not_using_private_protection": {
-        "message": "The site isn't using a private connection. Someone might be able to see or change the information you send or get through the site."
+        "message": "The site isn't using a secure connection. Someone might be able to see or change the information you send or get through the site."
     },
     "not_secure": {
         "message": "Not secure"
