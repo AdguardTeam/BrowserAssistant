@@ -4,6 +4,8 @@ deployment:
   name: browser assistant - deploy release
   source-plan: ADGEXT-BARELEASESPECS
 release-naming: ${bamboo.inject.version}
+variables:
+  dockerNode: adguard/node-ssh:15.14--5
 environments:
   - Chrome WebStore
   - Addons Mozilla
@@ -43,6 +45,10 @@ Chrome WebStore:
             url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo?channel=adguard-qa
 
 Addons Mozilla:
+  docker:
+    image: ${bamboo.dockerNode}
+    volumes:
+      ${system.YARN_DIR}: "${bamboo.cacheYarn}"
   triggers: []
   tasks:
     - clean
