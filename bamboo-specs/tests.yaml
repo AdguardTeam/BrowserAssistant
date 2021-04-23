@@ -36,8 +36,24 @@ Test:
             yarn install ${system.YARN_ARGS}
             yarn dev
   artifacts:
-    - name: browser assistant dev
-      pattern: 'build/dev/**'
+    - name: build.txt
+      location: build/dev
+      pattern: build.txt
+      shared: true
+      required: true
+    - name: chrome.zip
+      location: build/dev
+      pattern: chrome.zip
+      shared: true
+      required: true
+    - name: firefox.zip
+      location: build/dev
+      pattern: firefox.zip
+      shared: true
+      required: true
+    - name: edge.zip
+      location: build/dev
+      pattern: edge.zip
       shared: true
       required: true
   requirements:
