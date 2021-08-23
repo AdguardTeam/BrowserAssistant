@@ -97,3 +97,54 @@ This software wouldn't have been possible without:
 - and many more npm packages.
 
 For a full list of all `npm` packages in use, please take a look at [package.json](package.json) file.
+
+## Testing Browser Assistant build
+
+### Preconditions
+
+* AdGuard installed and launched.
+* Browser Assistant build installed.
+
+### OSX instructions
+
+###### Step 1:
+* In Browser Assistant extension settings copy extension ID
+* Paste it in `devConfig.json` file in `chrome_extension_id` or `firefox_extension_id` area (see example below)
+* Save file in AdGuard folder `/Library/Application Support/com.adguard.mac.adguard/` or `/Library/Application Support/com.adguard.mac.adguard.debug/` depends on build configuration
+
+###### Step 2:
+* Open Terminal
+* Type `cd /Library/Application\ Support/com.adguard.mac.adguard/`
+* Type `sudo chown root devConfig.json`
+* Type `sudo chmod 444 devConfig.json`
+* Type your Mac password
+* Type `ls -la /Library/Application\ Support/com.adguard.mac.adguard/`
+###### Result:
+* `devConfig.json` file received root rights
+
+###### Step 3:
+* Restart AdGuard
+* Tap on the Browser Assistant icon in a browser
+
+### WINDOWS instructions
+
+###### Step 1:
+* In Browser Assistant extension settings copy extension ID
+* Paste it in `devConfig.json` file in `chrome_extension_id` or `firefox_extension_id` area (see example below)
+* Save file in AdGuard folder `C:\Program Files (x86)\Adguard`
+
+###### Step 2:
+* Restart AdGuard
+* Tap on the Browser Assistant icon in a browser
+
+## devConfig.json example
+```
+{
+  "chrome_extension_id": [
+    "biolhaiicomblcmahaljilbdppdnvyib"
+  ],
+  "firefox_extension_id": [
+    "extensionid@example.org"
+  ]
+}
+```
