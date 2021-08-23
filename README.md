@@ -112,7 +112,7 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 * Paste it in `devConfig.json` file in `chrome_extension_id` or `firefox_extension_id` area (see example below)
 * Save file in AdGuard folder `/Library/Application Support/com.adguard.mac.adguard/` or `/Library/Application Support/com.adguard.mac.adguard.debug/` depends on build configuration
 
-###### Steps 2:
+###### Step 2:
 * Open Terminal
 * Type `cd /Library/Application\ Support/com.adguard.mac.adguard/`
 * Type `sudo chown root devConfig.json`
@@ -122,7 +122,7 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 ###### Result:
 * `devConfig.json` file received root rights
 
-###### Steps 3:
+###### Step 3:
 * Restart AdGuard
 * Tap on the Browser Assistant icon in a browser
 
@@ -133,7 +133,7 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 * Paste it in `devConfig.json` file in `chrome_extension_id` or `firefox_extension_id` area (see example below)
 * Save file in AdGuard folder `C:\Program Files (x86)\Adguard`
 
-###### Steps 2:
+###### Step 2:
 * Restart AdGuard
 * Tap on the Browser Assistant icon in a browser
 
