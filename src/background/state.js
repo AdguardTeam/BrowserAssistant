@@ -1,5 +1,3 @@
-/* global chrome */
-
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 import browser from 'webextension-polyfill';
@@ -13,8 +11,6 @@ import {
 } from '../lib/helpers';
 import { PROTOCOLS } from '../popup/stores/consts';
 
-const NEW_TAB_URL = chrome ? 'chrome://newtab/' : 'about:newtab';
-const EXTENSIONS_TAB_URL = chrome ? 'chrome://extensions/' : 'about:addons';
 /**
  * This class handles app state
  * All requests to the native host should be made through this class
@@ -268,10 +264,7 @@ class State {
         this.updateSecured(url);
 
         // Do not send empty urls or non http urls, see - AG-2360
-        if (!(url && isHttp(url))
-            // AG-9738
-            && url !== NEW_TAB_URL
-            && url !== EXTENSIONS_TAB_URL) {
+        if (!forceStart && !(url && isHttp(url))) {
             return null;
         }
 
