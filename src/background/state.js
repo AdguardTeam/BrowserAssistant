@@ -271,6 +271,10 @@ class State {
         const { port } = getUrlProps(url);
 
         const response = await api.getCurrentFilteringState(url, port, forceStart);
+
+        if (!(response && Object.entries(response).length)) {
+            return null;
+        }
         const { appState, parameters } = response;
         const { isFilteringEnabled, isHttpsFilteringEnabled } = parameters;
 
