@@ -1,0 +1,155 @@
+{
+    "name": {
+        "message": "AdGuard Selainavustaja"
+    },
+    "description": {
+        "message": "AdGuard-työpöytäsovelluksen laajennus. Hallitsee suodatusta suoraan selaimesta ja piilottaa ärsyttävät elementit parilla klikkauksella."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard ei ole asennettu, tai se on määritetty väärin"
+    },
+    "get_adguard": {
+        "message": "Hanki AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard ei ole ajan tasalla"
+    },
+    "update": {
+        "message": "Päivitä"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard ei ole käynnissä"
+    },
+    "run_adg": {
+        "message": "Käynnistä AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuardin suojaus on pysäytetty"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard käynnistyy..."
+    },
+    "enable": {
+        "message": "Ota käyttöön"
+    },
+    "assistant_is_not_updated": {
+        "message": "Avustaja ei ole ajan tasalla"
+    },
+    "something_went_wrong": {
+        "message": "Jokin meni pieleen"
+    },
+    "reinstall": {
+        "message": "Asenna uudelleen"
+    },
+    "https_filtering": {
+        "message": "HTTPS-suodatus"
+    },
+    "increase_ab_block_quality": {
+        "message": "Parantaa mainosten eston laatua"
+    },
+    "verified_by": {
+        "message": "Todentaja:"
+    },
+    "more_info": {
+        "message": "Lisätietoja"
+    },
+    "adg_protection": {
+        "message": "AdGuardin suojaus"
+    },
+    "adg_settings": {
+        "message": "AdGuardin asetukset"
+    },
+    "pause_filtering": {
+        "message": "Pysäytä suodatus 30 sekunnin ajaksi"
+    },
+    "block_ads": {
+        "message": "Estä mainoksia tältä sivustolta"
+    },
+    "open_filtering_log": {
+        "message": "Avaa suodatushistoria"
+    },
+    "report_site": {
+        "message": "Ilmoita ongelmasta"
+    },
+    "reset_custom_rules": {
+        "message": "Tyhjennä sivulle luodut omat säännöt"
+    },
+    "cert_expired": {
+        "message": "AdGuard ei voinut vahvistaa sivuston varmennetta, koska juurivarmenne on erääntynyt"
+    },
+    "cert_absent": {
+        "message": "HTTPS-suodatusta ei suoritettu tälle sivustolle"
+    },
+    "site_not_using_private_protection": {
+        "message": "Tämä sivusto ei käytä salattua yhteyttä. Joku saattaa nähdä tai muuttaa tietoa, jota lähetät tai vastaanotat sivuston välityksellä."
+    },
+    "not_secure": {
+        "message": "Suojaamaton"
+    },
+    "nothing_to_block_here": {
+        "message": "Täällä ei ole mitään estettävää"
+    },
+    "secure_page": {
+        "message": "Suojattu sivu"
+    },
+    "reload_page": {
+        "message": "Päivitä sivu"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Päivitä sivu jatkaaksesi suodatusta"
+    },
+    "not_filtering_https": {
+        "message": "Oletuksena HTTPS-liikennettä ei suodateta maksujärjestelmissä eikä pankkisivustoilla. Voit ottaa suodatuksen itse käyttöön klikkaamalla vasemmalla olevaa keltaista \"lukkoa\"."
+    },
+    "disabled": {
+        "message": "Poistettu käytöstä tällä sivustolla"
+    },
+    "enabled": {
+        "message": "Sivusto suodatetaan"
+    },
+    "protection_is_enabled": {
+        "message": "Suojaus on käytössä"
+    },
+    "protection_is_disabled": {
+        "message": "Suojaus on poistettu käytöstä"
+    },
+    "website_cert_is_expired": {
+        "message": "Sivuston varmenne on erääntynyt"
+    },
+    "expired": {
+        "message": "Erääntynyt"
+    },
+    "contact_support": {
+        "message": "Ota yhteyttä tukeen"
+    },
+    "context_site_filtering_on": {
+        "message": "Suodata tämä sivusto"
+    },
+    "context_site_filtering_off": {
+        "message": "Älä suodata tätä sivustoa"
+    },
+    "context_block_site_ads": {
+        "message": "Estä mainoksia tältä sivustolta..."
+    },
+    "context_complaint_website": {
+        "message": "Ilmoita ongelmasta..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard ei voi toimia tällä verkkotunnuksella"
+    },
+    "context_disable_protection": {
+        "message": "Pysäytä AdGuardin suojaus"
+    },
+    "context_enable_protection": {
+        "message": "Jatka AdGuardin suojausta"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuardin suojaus on pysäytetty"
+    },
+    "context_open_settings": {
+        "message": "AdGuardin asetukset..."
+    },
+    "context_open_log": {
+        "message": "Suodatushistoria..."
+    }
+}
