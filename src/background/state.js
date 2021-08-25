@@ -272,7 +272,7 @@ class State {
 
         const response = await api.getCurrentFilteringState(url, port, forceStart);
 
-        if (!(response && Object.entries(response).length)) {
+        if (!response || Object.entries(response).length === 0) {
             return null;
         }
         const { appState, parameters } = response;
