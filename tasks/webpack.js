@@ -79,7 +79,7 @@ const plugins = [
 
 const config = {
     mode: IS_DEV ? 'development' : 'production',
-    devtool: IS_DEV ? 'cheap-module-eval-source-map' : false,
+    devtool: IS_DEV ? 'eval-source-map' : false,
     performance: {
         hints: false,
         maxEntrypointSize: 512000,
