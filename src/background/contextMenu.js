@@ -102,6 +102,12 @@ const addSeparator = () => {
 };
 
 const updateContextMenu = () => {
+    if (!state.appState.isAuthorized) {
+        addMenuItem(CONTEXT_MENU_ITEMS.context_open_settings);
+        addSeparator();
+        addMenuItem(CONTEXT_MENU_ITEMS.context_open_log);
+        return;
+    }
     if (!state.appState.isProtectionEnabled) {
         addMenuItem(CONTEXT_MENU_ITEMS.context_site_protection_disabled);
         addSeparator();

@@ -19,7 +19,7 @@ const Options = observer(() => {
         pauseFiltering,
     } = settingsStore;
 
-    const isDisabled = !isFilteringEnabled || pageProtocol.isSecured;
+    const isDisabled = !isFilteringEnabled || pageProtocol.isSecured || !isAuthorized;
 
     const buttons = [
         {
