@@ -1,6 +1,9 @@
-const { BUILD_ENVS_MAP, IS_DEV } = require('./consts');
+const { BUILD_ENVS, BUILD_ENVS_MAP } = require('./consts');
 const pJson = require('../package');
 const twoskyConfig = require('../.twosky.json');
+
+const { BUILD_ENV } = process.env;
+const IS_DEV = BUILD_ENV === BUILD_ENVS.DEV;
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
 
