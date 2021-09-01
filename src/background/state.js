@@ -273,6 +273,9 @@ class State {
         const response = await api.getCurrentFilteringState(url, port, forceStart);
 
         const { appState, parameters } = response;
+        if (!parameters) {
+            return null;
+        }
         const { isFilteringEnabled, isHttpsFilteringEnabled } = parameters;
 
         this.setAppState(appState);
