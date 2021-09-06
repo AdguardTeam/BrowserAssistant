@@ -264,14 +264,18 @@ class State {
         this.updateSecured(url);
 
         // Do not send empty urls or non http urls, see - AG-2360
-        if (!url || !isHttp(url)) {
+        if (!forceStart && !(url && isHttp(url))) {
             return null;
         }
 
         const { port } = getUrlProps(url);
 
         const response = await api.getCurrentFilteringState(url, port, forceStart);
+
         const { appState, parameters } = response;
+        if (!parameters) {
+            return null;
+        }
         const { isFilteringEnabled, isHttpsFilteringEnabled } = parameters;
 
         this.setAppState(appState);
