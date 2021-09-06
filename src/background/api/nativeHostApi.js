@@ -112,7 +112,9 @@ class NativeHostApi extends AbstractApi {
     sendInitialRequest = async (shouldReconnect) => {
         const { version, apiVersion, userAgent } = versions;
         const response = await this.init({ version, userAgent, apiVersion }, shouldReconnect);
-        this.initMessageHandler(response);
+        if (response && response.isRunning) {
+            this.initMessageHandler(response);
+        }
     };
 
     /**
