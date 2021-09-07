@@ -78,14 +78,15 @@ const contextMenuCallbackMappings = {
 /**
  * Creates context menu item
  * @param i18key {string} - i18 key
- * @param [onclick] {function}  - onclick handler
+ * @param {boolean} enabled
  */
-const addMenuItem = (i18key) => {
+const addMenuItem = (i18key, enabled = true) => {
     const onclick = contextMenuCallbackMappings[i18key];
 
     const menuItem = {
         contexts: ['all'],
         title: browser.i18n.getMessage(i18key),
+        enabled,
     };
 
     if (typeof onclick === 'function') {
@@ -109,7 +110,7 @@ const updateContextMenu = () => {
         return;
     }
     if (!state.appState.isProtectionEnabled) {
-        addMenuItem(CONTEXT_MENU_ITEMS.context_site_protection_disabled);
+        addMenuItem(CONTEXT_MENU_ITEMS.context_site_protection_disabled, false);
         addSeparator();
         addMenuItem(CONTEXT_MENU_ITEMS.context_open_log);
         addMenuItem(CONTEXT_MENU_ITEMS.context_open_settings);
