@@ -33,7 +33,7 @@ Test:
             set -e
             ls -alt
 
-            yarn install ${system.YARN_ARGS}
+            yarn install ${bamboo.varsYarn}
             yarn dev
   artifacts:
     - name: build.txt
