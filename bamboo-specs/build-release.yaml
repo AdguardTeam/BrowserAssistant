@@ -42,7 +42,7 @@ Build:
             yarn test
             yarn locales:validate --min
             CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:release
-
+            rm -rf node_modules
     - inject-variables:
         file: build/release/build.txt
         scope: RESULT
