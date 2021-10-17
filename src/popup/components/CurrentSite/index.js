@@ -77,9 +77,6 @@ const CurrentSite = observer(() => {
     const timerClass = classNames('timer', { 'timer--hidden': !shouldShowFilteringPauseTimer });
 
     const handleCertStatusModalState = (event, payload) => {
-        if (!isFilteringEnabled && !certStatus.isValid) {
-            return;
-        }
         updateCertStatusModalState(event.type, payload);
     };
 
