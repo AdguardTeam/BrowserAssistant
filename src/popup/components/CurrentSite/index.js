@@ -77,9 +77,6 @@ const CurrentSite = observer(() => {
     const timerClass = classNames('timer', { 'timer--hidden': !shouldShowFilteringPauseTimer });
 
     const handleCertStatusModalState = (event, payload) => {
-        if (!isFilteringEnabled && !certStatus.isValid) {
-            return;
-        }
         updateCertStatusModalState(event.type, payload);
     };
 
@@ -133,8 +130,9 @@ const CurrentSite = observer(() => {
                     onMouseOut={getHandlerForHttpSite(handleCertStatusModalState)}
                 >
                     {!pageProtocol.isSecured
-                    && (shouldOpenCertStatusModal
-                        || (!pageProtocol.isHttps && isPageStatusModalOpen))
+                        && (shouldOpenCertStatusModal
+                            || (!pageProtocol.isHttps
+                                && (isPageStatusModalOpen || isCertStatusModalOpen)))
                     && <div className="arrow-up" />}
                 </div>
                 <h2 tabIndex={uiStore.globalTabIndex} className="current-site__name">
