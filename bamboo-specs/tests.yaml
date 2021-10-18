@@ -33,8 +33,9 @@ Test:
             set -e
             ls -alt
 
-            yarn install ${system.YARN_ARGS}
+            yarn install ${bamboo.varsYarn}
             yarn dev
+            rm -rf node_modules
   artifacts:
     - name: build.txt
       location: build/dev
