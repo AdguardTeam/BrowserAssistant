@@ -16,6 +16,12 @@
         opacity: 0.8;
     }
 
+    @media (prefers-color-scheme: dark) {
+        &:before {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+    }
+
     &:after {
         content: "";
         position: fixed;

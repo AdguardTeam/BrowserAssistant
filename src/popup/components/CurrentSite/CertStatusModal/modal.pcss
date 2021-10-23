@@ -5,6 +5,7 @@
     border-radius: 0.5rem;
     padding: 1.6rem;
     background-color: var(--white);
+    color: var(--gray-base);
     border: 0.1rem solid var(--greyf3);
     width: 28.8rem;
     transform: translate(1.6rem, 15.8rem);
@@ -208,5 +209,11 @@
         left: 0;
         right: 0;
         bottom: 0;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .modal {
+        background-color: var(--gray-dark);
     }
 }
