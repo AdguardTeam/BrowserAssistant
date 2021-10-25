@@ -219,15 +219,17 @@ const generateResponse = async (type, async = true) => {
     }
 };
 
-class StubHostApi extends AbstractApi {
+export class StubHostApi extends AbstractApi {
     listeners = [];
 
-    constructor() {
+    constructor(nativeHostMessagesHandler, initMessageHandler) {
         super();
-        this.initModule();
+        this.initModule(nativeHostMessagesHandler, initMessageHandler);
     }
 
-    async initModule() {
+    async initModule(nativeHostMessagesHandler, initMessageHandler) {
+        this.addMessageListener(nativeHostMessagesHandler);
+        this.addInitMessageHandler(initMessageHandler);
         try {
             await this.connect();
         } catch (e) {
@@ -484,9 +486,3 @@ class StubHostApi extends AbstractApi {
         parameters: { url, timeout },
     });
 }
-
-const stubHostApi = new StubHostApi();
-
-global.stubHostApi = stubHostApi;
-
-export default stubHostApi;

@@ -2,7 +2,7 @@ import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 import browser from 'webextension-polyfill';
 import browserApi from '../lib/browserApi';
-import { NativeHostApi } from './api';
+import { Api } from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
@@ -114,7 +114,7 @@ class State {
     };
 
     init = () => {
-        this.api = new NativeHostApi(this.nativeHostMessagesHandler, this.initMessageHandler);
+        this.api = new Api(this.nativeHostMessagesHandler, this.initMessageHandler);
     };
 
     /**
