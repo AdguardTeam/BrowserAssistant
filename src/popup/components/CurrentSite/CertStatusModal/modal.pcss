@@ -11,6 +11,10 @@
     transform: translate(1.6rem, 15.8rem);
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1), 0 3rem 6rem rgba(0, 0, 0, 0.1);
 
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--gray-dark);
+    }
+
     &__cert-status {
         height: 19.4rem;
 
@@ -209,11 +213,5 @@
         left: 0;
         right: 0;
         bottom: 0;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .modal {
-        background-color: var(--gray-dark);
     }
 }
