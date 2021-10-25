@@ -486,3 +486,7 @@ export class StubHostApi extends AbstractApi {
         parameters: { url, timeout },
     });
 }
+
+const stubHostApi = new StubHostApi();
+
+global.stubHostApi = stubHostApi;
