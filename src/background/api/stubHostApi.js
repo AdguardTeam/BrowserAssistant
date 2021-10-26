@@ -230,6 +230,7 @@ export class StubHostApi extends AbstractApi {
     async initModule(nativeHostMessagesHandler, initMessageHandler) {
         this.addMessageListener(nativeHostMessagesHandler);
         this.addInitMessageHandler(initMessageHandler);
+        global.stubHostApi = this;
         try {
             await this.connect();
         } catch (e) {
@@ -486,7 +487,3 @@ export class StubHostApi extends AbstractApi {
         parameters: { url, timeout },
     });
 }
-
-const stubHostApi = new StubHostApi();
-
-global.stubHostApi = stubHostApi;
