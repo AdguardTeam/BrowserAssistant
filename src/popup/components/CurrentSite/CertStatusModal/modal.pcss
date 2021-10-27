@@ -5,10 +5,15 @@
     border-radius: 0.5rem;
     padding: 1.6rem;
     background-color: var(--white);
+    color: var(--gray-base);
     border: 0.1rem solid var(--greyf3);
     width: 28.8rem;
     transform: translate(1.6rem, 15.8rem);
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1), 0 3rem 6rem rgba(0, 0, 0, 0.1);
+
+    @media (prefers-color-scheme: dark) {
+        background-color: var(--gray-dark);
+    }
 
     &__cert-status {
         height: 19.4rem;
