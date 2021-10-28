@@ -225,12 +225,13 @@ export class StubHostApi extends AbstractApi {
     constructor(nativeHostMessagesHandler, initMessageHandler) {
         super();
         this.initModule(nativeHostMessagesHandler, initMessageHandler);
+        // add stubHostApi to global to debug via background page's console
+        global.stubHostApi = this;
     }
 
     async initModule(nativeHostMessagesHandler, initMessageHandler) {
         this.addMessageListener(nativeHostMessagesHandler);
         this.addInitMessageHandler(initMessageHandler);
-        global.stubHostApi = this;
         try {
             await this.connect();
         } catch (e) {
