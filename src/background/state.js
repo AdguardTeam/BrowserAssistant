@@ -2,7 +2,7 @@ import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 import browser from 'webextension-polyfill';
 import browserApi from '../lib/browserApi';
-import api from './api';
+import { Api } from './api';
 import versions from './versions';
 import { POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
@@ -87,11 +87,6 @@ class State {
         this.isSecured = getFormattedProtocol(protocol) === PROTOCOLS.SECURED;
     }
 
-    init = () => {
-        api.addMessageListener(this.nativeHostMessagesHandler);
-        api.addInitMessageHandler(this.initMessageHandler);
-    };
-
     /**
      * Handles init message response and updates app setup
      * @param response
@@ -116,6 +111,10 @@ class State {
         }
 
         this.setAppState(message.appState);
+    };
+
+    init = () => {
+        this.api = new Api(this.nativeHostMessagesHandler, this.initMessageHandler);
     };
 
     /**
@@ -270,7 +269,7 @@ class State {
 
         const { port } = getUrlProps(url);
 
-        const response = await api.getCurrentFilteringState(url, port, forceStart);
+        const response = await this.api.getCurrentFilteringState(url, port, forceStart);
 
         const { appState, parameters } = response;
         if (!parameters) {
@@ -286,13 +285,13 @@ class State {
     };
 
     setProtectionStatus = async (isEnabled) => {
-        const response = await api.setProtectionStatus(isEnabled);
+        const response = await this.api.setProtectionStatus(isEnabled);
         this.setAppState(response.appState);
         return response.appState;
     };
 
     getCurrentAppState = async () => {
-        const appState = await api.getCurrentAppState();
+        const appState = await this.api.getCurrentAppState();
         this.setAppState(appState);
         return appState;
     };
@@ -301,7 +300,7 @@ class State {
         this.isEnabled = isEnabled;
         this.isHttpsFilteringEnabled = isHttpsEnabled;
 
-        const response = await api.setFilteringStatus(
+        const response = await this.api.setFilteringStatus(
             isEnabled,
             isHttpsEnabled,
             url
@@ -310,43 +309,43 @@ class State {
     };
 
     removeCustomRules = async (url) => {
-        const response = await api.removeCustomRules(url);
+        const response = await this.api.removeCustomRules(url);
         this.setAppState(response.appState);
     };
 
     openOriginalCert = async (domain, port) => {
-        const response = await api.openOriginalCert(domain, port);
+        const response = await this.api.openOriginalCert(domain, port);
         this.setAppState(response.appState);
     };
 
     reportSite = async (url, referrer) => {
-        const response = await api.reportSite(url, referrer);
+        const response = await this.api.reportSite(url, referrer);
         this.setAppState(response.appState);
         return response.parameters.reportUrl;
     };
 
     openFilteringLog = async () => {
-        const response = await api.openFilteringLog();
+        const response = await this.api.openFilteringLog();
         this.setAppState(response.appState);
     };
 
     openSettings = async () => {
-        const response = await api.openSettings();
+        const response = await this.api.openSettings();
         this.setAppState(response.appState);
     };
 
     updateApp = async () => {
-        const response = await api.updateApp();
+        const response = await this.api.updateApp();
         this.setAppState(response.appState);
     };
 
     addRule = async (ruleText) => {
-        const response = await api.addRule(ruleText);
+        const response = await this.api.addRule(ruleText);
         this.setAppState(response.appState);
     };
 
     pauseFiltering = async (url, timeout) => {
-        const response = await api.pauseFiltering(url, timeout);
+        const response = await this.api.pauseFiltering(url, timeout);
         this.setAppState(response.appState);
     };
 }

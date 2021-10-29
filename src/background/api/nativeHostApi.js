@@ -15,15 +15,17 @@ import {
  * Module implements methods used to communicate with native host via native messaging
  * https://developer.chrome.com/apps/nativeMessaging
  */
-class NativeHostApi extends AbstractApi {
+export class NativeHostApi extends AbstractApi {
     listeners = [];
 
-    constructor() {
+    constructor(nativeHostMessagesHandler, initMessageHandler) {
         super();
-        this.initModule();
+        this.initModule(nativeHostMessagesHandler, initMessageHandler);
     }
 
-    async initModule() {
+    async initModule(nativeHostMessagesHandler, initMessageHandler) {
+        this.addMessageListener(nativeHostMessagesHandler);
+        this.addInitMessageHandler(initMessageHandler);
         try {
             await this.connect();
         } catch (e) {
@@ -358,5 +360,3 @@ class NativeHostApi extends AbstractApi {
         parameters: { url, timeout },
     });
 }
-
-export default new NativeHostApi();
