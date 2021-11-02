@@ -25,6 +25,16 @@ const {
     project_id: PROJECT_ID,
 } = twoskyConfig;
 
+/**
+ * Pairs of languages codes from crowdin and supported in extension
+ * extension_locale: crowdin_locale
+ */
+const LOCALE_PAIRS = {
+    nb: 'no',
+    bn: 'bn-IN',
+    sv: 'sv-SE',
+};
+
 module.exports = {
     BASE_LOCALE,
     LANGUAGES,
@@ -39,4 +49,5 @@ module.exports = {
     LOCALE_DATA_FILENAME,
     REQUIRED_LOCALES,
     THRESHOLD_PERCENTAGE,
+    LOCALE_PAIRS,
 };
