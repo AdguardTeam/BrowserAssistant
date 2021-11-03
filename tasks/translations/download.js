@@ -12,10 +12,10 @@ const {
     LOCALES_RELATIVE_PATH,
     FORMAT,
     LOCALE_DATA_FILENAME,
-    LOCALE_PAIRS,
 } = require('./locales-constants');
 
 const API_DOWNLOAD_URL = `${API_URL}/download`;
+const API_LOCALES_MAPPING_URL = `${API_URL}/locales_mapping`;
 const LOCALES_DIR = path.resolve(__dirname, LOCALES_RELATIVE_PATH);
 
 /**
@@ -49,9 +49,16 @@ function saveFile(filePath, data) {
  * Entry point for downloading translations
  */
 export const downloadAndSave = async (locales) => {
+    let localesMappings;
+    try {
+        const localesMappingsResponse = await axios.get(API_LOCALES_MAPPING_URL, { responseType: 'arraybuffer' });
+        localesMappings = localesMappingsResponse.locales_mappings;
+    } catch (e) {
+        throw new Error('Unable to download locales mappings');
+    }
     // eslint-disable-next-line no-restricted-syntax
     for (const lang of locales) {
-        const crowdinLocale = LOCALE_PAIRS[lang] || lang;
+        const crowdinLocale = localesMappings[lang] || lang;
         const downloadUrl = `${API_DOWNLOAD_URL}?${getQueryString(crowdinLocale)}`;
         try {
             log.info(`Downloading: ${downloadUrl}`);
