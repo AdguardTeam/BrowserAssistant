@@ -103,6 +103,9 @@ const addSeparator = () => {
 };
 
 const updateContextMenu = () => {
+    if (!state.isAppWorking()) {
+        return;
+    }
     if (!state.appState.isAuthorized) {
         addMenuItem(CONTEXT_MENU_ITEMS.context_open_settings);
         addSeparator();
