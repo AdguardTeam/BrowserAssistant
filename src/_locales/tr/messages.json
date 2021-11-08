@@ -60,7 +60,7 @@
         "message": "AdGuard Ayarları"
     },
     "pause_filtering": {
-        "message": "30 saniye boyunca filtreleme yapma"
+        "message": "30 saniyeliğine filtreleme yapma"
     },
     "block_ads": {
         "message": "Bu sitede reklam engelle"
@@ -75,7 +75,7 @@
         "message": "Bu sayfa için tüm özel kuralları sıfırla"
     },
     "cert_expired": {
-        "message": "AdGuard bu web sitesini doğrulayamadı, çünkü kök sertifikasının süresi dolmuş"
+        "message": "AdGuard, kök sertifikanın süresi dolduğundan bu web sitesinin sertifikasını doğrulayamadı"
     },
     "cert_absent": {
         "message": "Bu web sitesi için HTTPS filtrelemesi gerçekleştirilmedi"
@@ -96,7 +96,7 @@
         "message": "Sayfayı yenile"
     },
     "reload_to_resume_filtering": {
-        "message": "Filtrelemeye devam etmek için bu sayfayı yenileyin"
+        "message": "Filtrelemeye devam etmek için sayfayı yenile"
     },
     "not_filtering_https": {
         "message": "Varsayılan olarak, ödeme sistemleri ve banka web sitelerinin kullandığı HTTPS trafiğini filtrelemiyoruz. İsterseniz filtrelemeyi etkinleştirebilirsiniz: soldaki sarı \"kilit\" simgesini tıklayın."
@@ -120,7 +120,7 @@
         "message": "Sona erdi"
     },
     "contact_support": {
-        "message": "Destek ile iletişime geçin"
+        "message": "Destek ile iletişime geç"
     },
     "context_site_filtering_on": {
         "message": "Bu sitede filtrelemeyi etkinleştir"

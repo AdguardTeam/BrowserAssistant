@@ -109,5 +109,32 @@
     },
     "contact_support": {
         "message": "Свържете се с еподдръжката"
+    },
+    "context_site_filtering_on": {
+        "message": "Разреши филтрирането на този сайт"
+    },
+    "context_site_filtering_off": {
+        "message": "Забрани филтрирането на този сайт"
+    },
+    "context_block_site_ads": {
+        "message": "Блокирай рекламата на този сайт..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard не може да работи на този домейн"
+    },
+    "context_disable_protection": {
+        "message": "Пауза на защитата AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Пусни отново защитата AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard защитата е в пауза"
+    },
+    "context_open_settings": {
+        "message": "AdGuard настройки..."
+    },
+    "context_open_log": {
+        "message": "Дневник на филтрирането..."
     }
 }

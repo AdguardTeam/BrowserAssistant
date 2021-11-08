@@ -1,0 +1,155 @@
+{
+    "name": {
+        "message": "Assistent de navegador AdGuard"
+    },
+    "description": {
+        "message": "Extensió per a l'aplicació d'escriptori AdGuard. Gestiona el filtratge des del navegador, amaga elements molestos en dos clics."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard no està instal·lat o configurat incorrectament"
+    },
+    "get_adguard": {
+        "message": "Obtenir AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard no està actualitzat"
+    },
+    "update": {
+        "message": "Actualitza"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard no s'està executant"
+    },
+    "run_adg": {
+        "message": "Executar AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "La protecció d'AdGuard està aturada"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard s'està iniciant..."
+    },
+    "enable": {
+        "message": "Habilita"
+    },
+    "assistant_is_not_updated": {
+        "message": "L'assistent no està actualitzat"
+    },
+    "something_went_wrong": {
+        "message": "Alguna cosa ha sortit malament"
+    },
+    "reinstall": {
+        "message": "Reinstal·lar"
+    },
+    "https_filtering": {
+        "message": "Filtratge HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Augmenta la qualitat del bloqueig d'anuncis"
+    },
+    "verified_by": {
+        "message": "Verificat per:"
+    },
+    "more_info": {
+        "message": "Més informació"
+    },
+    "adg_protection": {
+        "message": "Protecció d'AdGuard"
+    },
+    "adg_settings": {
+        "message": "Configuració d'AdGuard"
+    },
+    "pause_filtering": {
+        "message": "No filtrar durant 30 segons"
+    },
+    "block_ads": {
+        "message": "Bloca els anuncis en aquest lloc web"
+    },
+    "open_filtering_log": {
+        "message": "Obre el registre de filtratge"
+    },
+    "report_site": {
+        "message": "Informar d’un problema"
+    },
+    "reset_custom_rules": {
+        "message": "Reinicia totes les regles personalitzades per aquesta pàgina"
+    },
+    "cert_expired": {
+        "message": "AdGuard no ha pogut verificar el certificat d'aquest lloc web perquè el certificat arrel ha caducat"
+    },
+    "cert_absent": {
+        "message": "No s'ha realitzat el filtratge HTTPS per aquest lloc web"
+    },
+    "site_not_using_private_protection": {
+        "message": "El lloc no està utilitzant una connexió privada. Algú podria veure o canviar la informació que envieu a través del lloc."
+    },
+    "not_secure": {
+        "message": "No és segur"
+    },
+    "nothing_to_block_here": {
+        "message": "No hi ha res per bloquejar aquí"
+    },
+    "secure_page": {
+        "message": "Pàgina segura"
+    },
+    "reload_page": {
+        "message": "Recarrega la pàgina"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Recarrega la pàgina per reprendre el filtratge"
+    },
+    "not_filtering_https": {
+        "message": "Per defecte, no filtrem el trànsit HTTPS per al sistema de pagament i els llocs web bancaris. Podeu permetre el filtratge a vosaltres mateixos: toqueu sobre el \"candau\" groc a l'esquerra."
+    },
+    "disabled": {
+        "message": "Desactivat en aquest lloc web"
+    },
+    "enabled": {
+        "message": "Activat en aquest lloc web"
+    },
+    "protection_is_enabled": {
+        "message": "La protecció està habilitada"
+    },
+    "protection_is_disabled": {
+        "message": "La protecció està deshabilitada"
+    },
+    "website_cert_is_expired": {
+        "message": "El certificat del lloc web ha expirat"
+    },
+    "expired": {
+        "message": "Expirat"
+    },
+    "contact_support": {
+        "message": "Contactar amb suport"
+    },
+    "context_site_filtering_on": {
+        "message": "Habilita el filtratge en aquest lloc web"
+    },
+    "context_site_filtering_off": {
+        "message": "Deshabilita el filtratge en aquest lloc web"
+    },
+    "context_block_site_ads": {
+        "message": "Bloquejar anuncis en aquest lloc web..."
+    },
+    "context_complaint_website": {
+        "message": "Informa d'un problema..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard no es pot executar en aquest domini"
+    },
+    "context_disable_protection": {
+        "message": "Pausa la protecció d'AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Reprendre la protecció d'AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "La protecció d'AdGuard està en pausa"
+    },
+    "context_open_settings": {
+        "message": "Configuració d'AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Registre del filtratge..."
+    }
+}

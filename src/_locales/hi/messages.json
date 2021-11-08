@@ -103,5 +103,35 @@
     },
     "expired": {
         "message": "समय सीमा समाप्त"
+    },
+    "context_site_filtering_on": {
+        "message": "\tइस वेबसाइट पर फ़िल्टरिंग सक्षम करें"
+    },
+    "context_site_filtering_off": {
+        "message": "\tइस वेबसाइट पर फ़िल्टरिंग सक्षम करें"
+    },
+    "context_block_site_ads": {
+        "message": "विज्ञापनों को किसी वेबसाइट पर ब्लॉक करें"
+    },
+    "context_complaint_website": {
+        "message": "मामले का विवरण करें..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "एडगार्ड  इस डोमेन पर नहीं चल सकता है"
+    },
+    "context_disable_protection": {
+        "message": "एडगार्ड सुरक्षा रोकें"
+    },
+    "context_enable_protection": {
+        "message": "एडगार्ड सुरक्षा रोकें"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard सुरक्षा रोक दी गई है"
+    },
+    "context_open_settings": {
+        "message": "AdGuard सेटिंग्स..."
+    },
+    "context_open_log": {
+        "message": "लॉग फ़िल्टर किया जा रहा है"
     }
 }

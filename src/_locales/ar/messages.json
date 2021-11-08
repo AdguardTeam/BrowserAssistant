@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "إعدادات AdGuard"
     },
+    "pause_filtering": {
+        "message": "عدم الفلترة لمده 30 ثانيه"
+    },
     "block_ads": {
         "message": "قم بحظر الإعلانات على هذا الموقع"
     },
@@ -106,5 +109,32 @@
     },
     "expired": {
         "message": "منتهي الصلاحية"
+    },
+    "context_site_filtering_on": {
+        "message": "تفعيل الفلترة في هذا الموقع"
+    },
+    "context_site_filtering_off": {
+        "message": "تعطيل الفلترة في هذا الموقع"
+    },
+    "context_block_site_ads": {
+        "message": "...حظر الإعلانات على هذا الموقع"
+    },
+    "context_site_filtering_disabled": {
+        "message": "على هذا النطاق AdGuard  لا يمكن تشغيل"
+    },
+    "context_disable_protection": {
+        "message": "إيقاف حماية AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "AdGuardاستئناف حماية"
+    },
+    "context_site_protection_disabled": {
+        "message": "حماية AdGuard متوقفة"
+    },
+    "context_open_settings": {
+        "message": "AdGuard إعدادات ..."
+    },
+    "context_open_log": {
+        "message": "سجل الفلترة"
     }
 }

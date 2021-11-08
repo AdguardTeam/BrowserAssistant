@@ -1,0 +1,155 @@
+{
+    "name": {
+        "message": "AdGuard webbläsarassistent"
+    },
+    "description": {
+        "message": "Tillägg för AdGuard-skrivbordsappen. Hanterar filtrering direkt från webbläsaren, döljer irriterande element i två klick."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard är inte installerat eller konfigurerat felaktigt"
+    },
+    "get_adguard": {
+        "message": "Skaffa AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard är inte uppdaterad"
+    },
+    "update": {
+        "message": "Uppdatera"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard kör inte"
+    },
+    "run_adg": {
+        "message": "Kör AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuardskyddet är pausat"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard startar..."
+    },
+    "enable": {
+        "message": "Aktivera"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistenten är inte uppdaterad"
+    },
+    "something_went_wrong": {
+        "message": "Något gick fel"
+    },
+    "reinstall": {
+        "message": "Ominstallera"
+    },
+    "https_filtering": {
+        "message": "HTTPS-filtrering"
+    },
+    "increase_ab_block_quality": {
+        "message": "Ökar kvaliteten på annonsblockeringen"
+    },
+    "verified_by": {
+        "message": "Verifierad av:"
+    },
+    "more_info": {
+        "message": "Mer information"
+    },
+    "adg_protection": {
+        "message": "AdGuardskydd"
+    },
+    "adg_settings": {
+        "message": "AdGuard Inställningar"
+    },
+    "pause_filtering": {
+        "message": "Pausa filtrering 30 sekunder"
+    },
+    "block_ads": {
+        "message": "Blockera annonser på den här webbplatsen"
+    },
+    "open_filtering_log": {
+        "message": "Öppna filtreringsloggen"
+    },
+    "report_site": {
+        "message": "Rapportera ett problem"
+    },
+    "reset_custom_rules": {
+        "message": "Återställ alla anpassade regler för den här sidan"
+    },
+    "cert_expired": {
+        "message": "AdGuard kunde inte verifiera webbplatsens certifikat eftersom rotcertifikatet har gått ut"
+    },
+    "cert_absent": {
+        "message": "HTTPS-filtrering utfördes inte för den här webbplatsen"
+    },
+    "site_not_using_private_protection": {
+        "message": "Webbplatsen använder inte en privat anslutning. Någon kanske kan se eller ändra informationen du skickar eller får via webbplatsen."
+    },
+    "not_secure": {
+        "message": "Inte säker"
+    },
+    "nothing_to_block_here": {
+        "message": "Ingenting att blockera här"
+    },
+    "secure_page": {
+        "message": "Säker sida"
+    },
+    "reload_page": {
+        "message": "Ladda om sidan"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Ladda om den här sidan för att återuppta filtreringen"
+    },
+    "not_filtering_https": {
+        "message": "Som standard filtrerar vi inte HTTPS-trafik för betalningssystem och bankwebbplatser. Du kan aktivera filtreringen själv: tryck på det gula \"låset\" till vänster."
+    },
+    "disabled": {
+        "message": "Inaktiverat på denna webbplats"
+    },
+    "enabled": {
+        "message": "Aktiverat på denna webbplats"
+    },
+    "protection_is_enabled": {
+        "message": "Skyddet är aktiverat"
+    },
+    "protection_is_disabled": {
+        "message": "Skyddet är inaktiverat"
+    },
+    "website_cert_is_expired": {
+        "message": "Webbplatscertifikatet har löpt ut"
+    },
+    "expired": {
+        "message": "Utgånget"
+    },
+    "contact_support": {
+        "message": "Kontakta supporten"
+    },
+    "context_site_filtering_on": {
+        "message": "Aktivera filtrering på den här webbplatsen"
+    },
+    "context_site_filtering_off": {
+        "message": "Inaktivera filtrering på den här webbplatsen"
+    },
+    "context_block_site_ads": {
+        "message": "Blockera annonser på den här webbplatsen ..."
+    },
+    "context_complaint_website": {
+        "message": "Rapportera ett problem..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard kan inte köras på den här domänen"
+    },
+    "context_disable_protection": {
+        "message": "Pausa AdGuard-skyddet"
+    },
+    "context_enable_protection": {
+        "message": "Återuppta AdGuard-skyddet"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard-skyddet är pausat"
+    },
+    "context_open_settings": {
+        "message": "AdGuard-inställningar ..."
+    },
+    "context_open_log": {
+        "message": "Filtreringslogg ..."
+    }
+}

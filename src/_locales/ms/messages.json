@@ -109,5 +109,32 @@
     },
     "contact_support": {
         "message": "Hubungi sokongan"
+    },
+    "context_site_filtering_on": {
+        "message": "Aktifkan penyaringan di laman web ini"
+    },
+    "context_site_filtering_off": {
+        "message": "Nyahktifkan penyaringan di laman web ini"
+    },
+    "context_block_site_ads": {
+        "message": "Halang iklan di laman ini..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard tidak dapat dijalankan di domain ini"
+    },
+    "context_disable_protection": {
+        "message": "Henti sebentar perlindungan AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "Mula kembali perlindungan AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "Perlindungan AdGuard dihentikan sebentar"
+    },
+    "context_open_settings": {
+        "message": "Tetapan AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Log penyaringan..."
     }
 }

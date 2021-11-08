@@ -6,7 +6,7 @@
         "message": "افزونه ای برای برنامه دسکتاپ AdGuard. مدیریت فیلترینگ مستقیم از مرورگر،پنهان کردن عناصر آزار دهنده در دو کلیک."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard نصب نشده یا صحیح پیکربندی نشده است"
+        "message": "AdGuard نصب نشده یا به طور صحیح پیکربندی نشده است"
     },
     "get_adguard": {
         "message": "دریافت AdGuard"
@@ -109,5 +109,35 @@
     },
     "expired": {
         "message": "منقضی شده"
+    },
+    "context_site_filtering_on": {
+        "message": "فعالسازی فیلترینگ در این وبسایت"
+    },
+    "context_site_filtering_off": {
+        "message": "غیرفعالسازی فیلترینگ در این وبسایت"
+    },
+    "context_block_site_ads": {
+        "message": "مسدودسازی تبلیغات در این وبسایت..."
+    },
+    "context_complaint_website": {
+        "message": "گزارش یک مشکل..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard نمیتواند در این دامنه اِجرا شود"
+    },
+    "context_disable_protection": {
+        "message": "وقفه حفاظت AdGuard"
+    },
+    "context_enable_protection": {
+        "message": "ادامه حفاظت AdGuard"
+    },
+    "context_site_protection_disabled": {
+        "message": "حفاظت AdGuard متوقف شده است"
+    },
+    "context_open_settings": {
+        "message": "تنظیمات AdGuard..."
+    },
+    "context_open_log": {
+        "message": "وقایع فیلترینگ..."
     }
 }

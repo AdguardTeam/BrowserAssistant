@@ -1,0 +1,155 @@
+{
+    "name": {
+        "message": "AdGuard-nettleserassistent"
+    },
+    "description": {
+        "message": "Utvidelse for AdGuard-skrivebordsprogrammet. Behandler filtrering direkte fra nettleseren, og skjuler irriterende elementer med to klikk."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard er ikke installert eller er satt opp feil"
+    },
+    "get_adguard": {
+        "message": "Hent AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard er ikke oppdatert"
+    },
+    "update": {
+        "message": "Oppdater"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard kjører ikke"
+    },
+    "run_adg": {
+        "message": "Kjør AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard-beskyttelse er satt på pause"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard starter opp …"
+    },
+    "enable": {
+        "message": "Skru på"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistenten er ikke oppdatert"
+    },
+    "something_went_wrong": {
+        "message": "Noe gikk galt"
+    },
+    "reinstall": {
+        "message": "Reinstaller"
+    },
+    "https_filtering": {
+        "message": "HTTPS-filtrering"
+    },
+    "increase_ab_block_quality": {
+        "message": "Øker kvaliteten på reklameblokkeringen"
+    },
+    "verified_by": {
+        "message": "Verifisert av:"
+    },
+    "more_info": {
+        "message": "Mere informasjon"
+    },
+    "adg_protection": {
+        "message": "AdGuard-beskyttelse"
+    },
+    "adg_settings": {
+        "message": "AdGuard-innstillinger"
+    },
+    "pause_filtering": {
+        "message": "Ikke filtrer i 30 sekunder"
+    },
+    "block_ads": {
+        "message": "Blokker reklamer på dette nettstedet"
+    },
+    "open_filtering_log": {
+        "message": "Åpne filtreringsloggen"
+    },
+    "report_site": {
+        "message": "Rapporter inn dette nettstedet"
+    },
+    "reset_custom_rules": {
+        "message": "Tilbakestill alle tilpassede regler for denne siden"
+    },
+    "cert_expired": {
+        "message": "AdGuard kunne ikke bekrefte dette nettstedets sertifikat fordi rotsertifikatet har utløpt"
+    },
+    "cert_absent": {
+        "message": "HTTPS-filtrering ble ikke utført på dette nettstedet"
+    },
+    "site_not_using_private_protection": {
+        "message": "Nettstedet bruker ikke en privat tilkobling. Noen kan kanskje se eller endre informasjonen som du sender eller mottar gjennom nettstedet."
+    },
+    "not_secure": {
+        "message": "Ikke sikker"
+    },
+    "nothing_to_block_here": {
+        "message": "Ingenting å blokkere her"
+    },
+    "secure_page": {
+        "message": "Sikker side"
+    },
+    "reload_page": {
+        "message": "Last inn siden på nytt"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Last inn denne siden på nytt for å sette i gang filtreringen igjen"
+    },
+    "not_filtering_https": {
+        "message": "Som standard filtrerer vi ikke HTTPS-trafikk for betalingssystemet og banksider. Du kan aktivere filtreringen selv: trykk på den gule \"låsen\" til venstre."
+    },
+    "disabled": {
+        "message": "Skrudd av på dette nettstedet"
+    },
+    "enabled": {
+        "message": "Påskrudd på dette nettstedet"
+    },
+    "protection_is_enabled": {
+        "message": "Beskyttelse er skrudd på"
+    },
+    "protection_is_disabled": {
+        "message": "Beskyttelse er skrudd av"
+    },
+    "website_cert_is_expired": {
+        "message": "Nettstedssertifikatet har utløpt"
+    },
+    "expired": {
+        "message": "Utløpt"
+    },
+    "contact_support": {
+        "message": "Kontakt brukerstøtte"
+    },
+    "context_site_filtering_on": {
+        "message": "Skru på filtrering på dette nettstedet"
+    },
+    "context_site_filtering_off": {
+        "message": "Skru av filtrering på dette nettstedet"
+    },
+    "context_block_site_ads": {
+        "message": "Blokker reklamer på dette nettstedet …"
+    },
+    "context_complaint_website": {
+        "message": "Meld inn et problem …"
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard kan ikke kjøre på dette domenet"
+    },
+    "context_disable_protection": {
+        "message": "Sett AdGuard-beskyttelsen på pause"
+    },
+    "context_enable_protection": {
+        "message": "Fortsett AdGuard-beskyttelse"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard-beskyttelse er satt på pause"
+    },
+    "context_open_settings": {
+        "message": "AdGuard-innstillinger …"
+    },
+    "context_open_log": {
+        "message": "Filtreringslogg …"
+    }
+}
