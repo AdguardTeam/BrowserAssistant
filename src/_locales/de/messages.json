@@ -69,7 +69,7 @@
         "message": "Filter-Protokoll öffnen"
     },
     "report_site": {
-        "message": "Ein Problem melden"
+        "message": "Diese Webseite melden …"
     },
     "reset_custom_rules": {
         "message": "Eigene Regeln für diese Seite zurücksetzen"
@@ -132,7 +132,7 @@
         "message": "Werbung auf dieser Website sperren …"
     },
     "context_complaint_website": {
-        "message": "Problem melden …"
+        "message": "Diese Webseite melden …"
     },
     "context_site_filtering_disabled": {
         "message": "AdGuard kann auf dieser Domain nicht ausgeführt werden"

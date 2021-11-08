@@ -80,6 +80,9 @@
     "cert_absent": {
         "message": "Pemfilteran HTTPS tidak dilakukan untuk situs web ini"
     },
+    "site_not_using_private_protection": {
+        "message": "Situs ini tidak menggunakan koneksi aman. Seseorang mungkin dapat melihat atau mengubah informasi yang Anda kirim atau dapatkan melalui situs."
+    },
     "not_secure": {
         "message": "Tidak aman"
     },

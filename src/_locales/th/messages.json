@@ -3,10 +3,10 @@
         "message": "AdGuard ผู้ช่วยเบราว์เซอร์"
     },
     "description": {
-        "message": "คำอธิบายของผู้ช่วยเบราว์เซอร์ AdGuard"
+        "message": "ส่วนขยาย AdGuard สำหรับแอปเดสก์ท็อป \nจัดการการกรองโดยตรงจากเบราว์เซอร์\nซ่อนองค์ประกอบที่น่ารำคาญในสองคลิก"
     },
     "adg_is_not_installed": {
-        "message": "ไม่ได้ติดตั้ง AdGuard"
+        "message": "ไม่ได้ติดตั้ง AdGuard หรือกำหนดค่าไม่ถูกต้อง"
     },
     "get_adguard": {
         "message": "รับ AdGuard"
@@ -106,5 +106,32 @@
     },
     "expired": {
         "message": "หมดอายุ"
+    },
+    "context_site_filtering_on": {
+        "message": "เปิดใช้งานการกรองบนเว็บไซต์นี้"
+    },
+    "context_site_filtering_off": {
+        "message": "ปิดใช้งานการกรองบนเว็บไซต์นี้"
+    },
+    "context_block_site_ads": {
+        "message": "ปิดกั้นโฆษณาบนเว็บไซต์"
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard ไม่สามารถทำงานบนโดเมนนี้ได้"
+    },
+    "context_disable_protection": {
+        "message": "หยุดการปกป้องจาก AdGuard ชั่วคราว"
+    },
+    "context_enable_protection": {
+        "message": "ดำเนินการป้องกัน AdGuard ต่อ"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard หยุดการป้องกันชั่วคราว"
+    },
+    "context_open_settings": {
+        "message": "AdGuard การตั้งค่า..."
+    },
+    "context_open_log": {
+        "message": "บันทึกการกรอง..."
     }
 }

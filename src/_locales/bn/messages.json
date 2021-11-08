@@ -1,0 +1,23 @@
+{
+    "update": {
+        "message": "আপডেট"
+    },
+    "adg_is_launching": {
+        "message": "অ্যাডগার্ড চালু হচ্ছে..."
+    },
+    "reinstall": {
+        "message": "পুনরায় ইনস্টল করুন"
+    },
+    "https_filtering": {
+        "message": "HTTPS ফিল্টারিং"
+    },
+    "adg_protection": {
+        "message": "অ্যাডগার্ড সুরক্ষা"
+    },
+    "adg_settings": {
+        "message": "অ্যাডগার্ড সেটিংস"
+    },
+    "report_site": {
+        "message": "একটি সমস্যা রিপোর্ট করুন"
+    }
+}

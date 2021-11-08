@@ -1,0 +1,155 @@
+{
+    "name": {
+        "message": "AdGuard Brauseri Assistent"
+    },
+    "description": {
+        "message": "Laiendus AdGuard töölauarakendusele. Haldab otse brauserist filtreerimist, peidab tüütuid elemente kahe klõpsuga."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard pole valesti installitud või konfigureeritud"
+    },
+    "get_adguard": {
+        "message": "Hankige AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuardit ei värskendatud"
+    },
+    "update": {
+        "message": "Värskendus"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard ei tööta"
+    },
+    "run_adg": {
+        "message": "Käivitage AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuardi kaitse on peatatud"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard käivitab..."
+    },
+    "enable": {
+        "message": "Luba"
+    },
+    "assistant_is_not_updated": {
+        "message": "Assistenti ei värskendatud"
+    },
+    "something_went_wrong": {
+        "message": "Midagi läks valesti"
+    },
+    "reinstall": {
+        "message": "Installige uuesti"
+    },
+    "https_filtering": {
+        "message": "HTTPS-i filtreerimine"
+    },
+    "increase_ab_block_quality": {
+        "message": "Tõstab reklaamide blokeerimise kvaliteeti"
+    },
+    "verified_by": {
+        "message": "Kontrollitud:"
+    },
+    "more_info": {
+        "message": "Rohkem informatsiooni"
+    },
+    "adg_protection": {
+        "message": "AdGuard kaitse"
+    },
+    "adg_settings": {
+        "message": "AdGuardi seaded"
+    },
+    "pause_filtering": {
+        "message": "Ärge filtreerige 30 sekundit"
+    },
+    "block_ads": {
+        "message": "Blokeeri sellel veebisaidil reklaamid"
+    },
+    "open_filtering_log": {
+        "message": "Avage filtreerimislogi"
+    },
+    "report_site": {
+        "message": "Teatage sellest veebisaidist"
+    },
+    "reset_custom_rules": {
+        "message": "Lähtestage selle lehe kõik kohandatud reeglid"
+    },
+    "cert_expired": {
+        "message": "AdGuard ei saanud selle veebisaidi sertifikaati kinnitada, kuna juursertifikaat on aegunud"
+    },
+    "cert_absent": {
+        "message": "Selle veebisaidi jaoks ei tehtud HTTPS-i filtreerimist"
+    },
+    "site_not_using_private_protection": {
+        "message": "Sait ei kasuta privaatset ühendust. Keegi võib-olla võib näha või muuta teie poolt saidi kaudu saadavat või saadavat teavet."
+    },
+    "not_secure": {
+        "message": "Pole kindel"
+    },
+    "nothing_to_block_here": {
+        "message": "Siin pole midagi blokeerida"
+    },
+    "secure_page": {
+        "message": "Turvaline leht"
+    },
+    "reload_page": {
+        "message": "Laadige leht uuesti"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Filtreerimise jätkamiseks laadige see leht uuesti üles"
+    },
+    "not_filtering_https": {
+        "message": "Vaikimisi ei filtreerita me HTTPS-i liiklust maksesüsteemi ja pankade veebisaitide jaoks. Filtreerimise saate ise lubada: koputage vasakul asuvat kollast lukku."
+    },
+    "disabled": {
+        "message": "Keelatud sellel veebisaidil"
+    },
+    "enabled": {
+        "message": "Sellel veebisaidil lubatud"
+    },
+    "protection_is_enabled": {
+        "message": "Kaitse on lubatud"
+    },
+    "protection_is_disabled": {
+        "message": "Kaitse on keelatud"
+    },
+    "website_cert_is_expired": {
+        "message": "Veebisaidi sertifikaat on aegunud"
+    },
+    "expired": {
+        "message": "Aegunud"
+    },
+    "contact_support": {
+        "message": "Võtke ühendust tugiteenusega"
+    },
+    "context_site_filtering_on": {
+        "message": "Luba filtreerimine sellel leheküljel"
+    },
+    "context_site_filtering_off": {
+        "message": "Keela filtreerimine sellel leheküljel"
+    },
+    "context_block_site_ads": {
+        "message": "Blokeeri reklaamid sellel leheküljel..."
+    },
+    "context_complaint_website": {
+        "message": "Teavita probleemist..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard ei saa sellel domeenil töötada"
+    },
+    "context_disable_protection": {
+        "message": "Peata AdGuardi kaitse"
+    },
+    "context_enable_protection": {
+        "message": "Jätka AdGuardi kaitset"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuardi kaitse on peatatud"
+    },
+    "context_open_settings": {
+        "message": "AdGuardi seaded..."
+    },
+    "context_open_log": {
+        "message": "Filtreerimise logi..."
+    }
+}
