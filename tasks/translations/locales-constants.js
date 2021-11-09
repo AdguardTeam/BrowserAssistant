@@ -25,6 +25,10 @@ const {
     project_id: PROJECT_ID,
 } = twoskyConfig;
 
+const LOCALE_PAIRS = {
+    bn: 'bn-IN',
+};
+
 module.exports = {
     BASE_LOCALE,
     LANGUAGES,
@@ -39,4 +43,5 @@ module.exports = {
     LOCALE_DATA_FILENAME,
     REQUIRED_LOCALES,
     THRESHOLD_PERCENTAGE,
+    LOCALE_PAIRS,
 };
