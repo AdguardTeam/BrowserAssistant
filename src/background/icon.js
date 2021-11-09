@@ -15,13 +15,12 @@ class Icon {
         const throttledUpdater = throttle(async (tab) => {
             if (tab) {
                 await this.updateIcon(tab);
-            } else {
-                // There may be opened more than one window opened
-                const activeTabs = await tabs.getActiveTabs();
-                activeTabs.forEach((tab) => {
-                    this.updateIcon(tab);
-                });
             }
+            // There may be opened more than one window opened
+            const activeTabs = await tabs.getActiveTabs();
+            activeTabs.forEach((tab) => {
+                this.updateIcon(tab);
+            });
         }, ICON_THROTTLE_TIMEOUT_MS);
 
         // Subscribe to events after which icon should update
