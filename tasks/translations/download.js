@@ -12,7 +12,6 @@ const {
     LOCALES_RELATIVE_PATH,
     FORMAT,
     LOCALE_DATA_FILENAME,
-    LOCALE_PAIRS,
 } = require('./locales-constants');
 
 const API_DOWNLOAD_URL = `${API_URL}/download`;
@@ -51,8 +50,7 @@ function saveFile(filePath, data) {
 export const downloadAndSave = async (locales) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const lang of locales) {
-        const crowdinLocale = LOCALE_PAIRS[lang] || lang;
-        const downloadUrl = `${API_DOWNLOAD_URL}?${getQueryString(crowdinLocale)}`;
+        const downloadUrl = `${API_DOWNLOAD_URL}?${getQueryString(lang)}`;
         try {
             log.info(`Downloading: ${downloadUrl}`);
             const { data } = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
