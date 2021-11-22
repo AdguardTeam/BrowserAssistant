@@ -10,6 +10,7 @@ import {
     HOST_TYPES,
     REQUEST_TYPES,
 } from '../../lib/types';
+import { consent } from '../consent';
 
 /**
  * Module implements methods used to communicate with native host via native messaging
@@ -142,6 +143,10 @@ export class NativeHostApi extends AbstractApi {
      * @returns {Promise<*>}
      */
     makeRequest = async (params, tryReconnect = true) => {
+        if (!consent.agreementReceived() && params.type !== REQUEST_TYPES.init) {
+            throw new Error('Requests to native host can be send only after consent agreement received');
+        }
+
         try {
             return await this.makeRequestOnce(params);
         } catch (e) {

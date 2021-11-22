@@ -17,6 +17,6 @@ const sendMessage = async (...args) => {
 
 export const getUrl = (url) => browser.runtime.getURL(url);
 
-export default {
+export const runtime = {
     sendMessage,
 };

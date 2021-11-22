@@ -6,6 +6,12 @@
     text-rendering: geometricPrecision;
 }
 
+#root,
+html,
+body {
+    height: 100%;
+}
+
 html {
     box-sizing: border-box;
     font-size: 10px;
@@ -14,12 +20,8 @@ html {
 body {
     font-family: var(--font-primary);
     background-color: var(--white);
-    width: 32rem;
-    max-width: 32rem;
-    min-height: 44rem;
     font-size: 2.5rem;
     font-weight: 400;
-    overflow: hidden;
     transition: min-height 0.15s linear;
     text-overflow: ellipsis;
 }

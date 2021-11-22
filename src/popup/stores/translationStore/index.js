@@ -1,6 +1,12 @@
-import { action, computed, observable } from 'mobx';
+import {
+    action,
+    computed,
+    makeObservable,
+    observable,
+} from 'mobx';
 import { createIntl } from 'react-intl';
 import browser from 'webextension-polyfill';
+
 import messagesMap from '../../../_locales';
 import checkLocale from './checkLocale';
 
@@ -10,6 +16,7 @@ const browserLocale = browser.i18n.getUILanguage();
 
 class TranslationStore {
     constructor(rootStore) {
+        makeObservable(this);
         this.rootStore = rootStore;
     }
 

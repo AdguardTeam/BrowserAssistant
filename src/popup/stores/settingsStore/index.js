@@ -1,9 +1,11 @@
 import {
     action,
     computed,
+    makeObservable,
     observable,
     runInAction,
 } from 'mobx';
+
 import {
     ORIGINAL_CERT_STATUS,
     PROTOCOLS,
@@ -24,6 +26,7 @@ import log from '../../../lib/logger';
 
 class SettingsStore {
     constructor(rootStore) {
+        makeObservable(this);
         this.rootStore = rootStore;
     }
 
@@ -64,6 +67,10 @@ class SettingsStore {
     @observable isFilteringPauseSupported = false;
 
     @observable showReloadButtonFlag = false;
+
+    @observable consentReceived = false;
+
+    @observable loadingConsent = true;
 
     @computed
     get filteringPauseTimer() {
@@ -162,8 +169,29 @@ class SettingsStore {
     }
 
     @action
+    setConsent = (consentReceived) => {
+        this.loadingConsent = false;
+        this.consentReceived = consentReceived;
+    };
+
+    @action
+    setLoadingConsent = (state) => {
+        this.loadingConsent = state;
+    };
+
+    @action
     getPopupData = async () => {
-        // Get locale at the beginning in order to show messages as faster as possible
+        // first check consent
+        this.setLoadingConsent(true);
+        const consentReceived = await messagesSender.getConsent();
+        this.setConsent(consentReceived);
+        this.setLoadingConsent(false);
+        if (!consentReceived) {
+            return;
+        }
+
+        // second get locale to show messages as faster as possible,
+        // for consent screen it is not important as it uses browser locale
         const locale = await messagesSender.getLocale();
         this.rootStore.translationStore.setLocale(locale);
         this.rootStore.uiStore.setExtensionLoading(true);

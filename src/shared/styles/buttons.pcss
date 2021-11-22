@@ -1,0 +1,49 @@
+.button {
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    outline: none;
+    box-sizing: border-box;
+    border: 0;
+
+    &[disabled] {
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    &--middle {
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 4px;
+        min-height: 32px;
+        min-width: 120px;
+        padding: 0 6px;
+
+        @media (min-width: 640px) {
+            min-height: 40px;
+        }
+    }
+
+    &--green {
+        color: var(--white);
+        background: var(--green400);
+        transition: 0.3s ease background-color;
+
+        &:hover {
+            background: var(--green700);
+        }
+    }
+
+    &--transparent {
+        border: 1px solid var(--gray-base);
+        color: var(--gray-base);
+        background: transparent;
+        transition: 0.3s ease background-color;
+
+        &:hover {
+            background: var(--gray100);
+        }
+    }
+}

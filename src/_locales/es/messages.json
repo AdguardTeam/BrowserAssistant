@@ -151,5 +151,29 @@
     },
     "context_open_log": {
         "message": "Registro de filtrado..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "¿Estás seguro de que deseas eliminar Asistente de navegador AdGuard?"
+    },
+    "post_install_consent_title": {
+        "message": "¡Gracias por instalar Asistente de navegador AdGuard!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "Esta extensión de navegador complementaria para las <link>aplicaciones de escritorio AdGuard</link> permite bloquear elementos, añadir sitios web a la lista de permitido y enviar informes desde el navegador."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "Cada vez que abres una nueva pestaña, el add-on se comunica con la aplicación independiente y pide información sobre el estado actual de la página. Para ello, envía la URL de la página actual a la aplicación independiente."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "Al instalar este add-on, aceptas nuestra <privacy>Política de Privacidad</privacy> y <terms>Condiciones de Uso</terms>."
+    },
+    "post_install_page_title": {
+        "message": "¡Gracias por instalar Asistente de navegador AdGuard!"
+    },
+    "post_install_page_agree_button": {
+        "message": "Aceptar"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "Desinstalar"
     }
 }

@@ -152,6 +152,34 @@ class Tabs {
             log.error(error);
         }
     };
+
+    /**
+     * Opens postinstall page
+     */
+    openPostInstallPage = async () => {
+        const postInstallPageUrl = browser.runtime.getURL('post-install.html');
+        await this.openPage(postInstallPageUrl);
+    }
+
+    /**
+     * Closes post install page if founds
+     * @returns {Promise<void>}
+     */
+    closePostInstall = async () => {
+        const postInstallPageUrl = browser.runtime.getURL('post-install.html');
+        const tabs = await browser.tabs.query({});
+        const postInstallTabs = tabs.filter((tab) => tab.url?.includes(postInstallPageUrl));
+        postInstallTabs.forEach((tab) => {
+            browser.tabs.remove(tab.id);
+        });
+    };
+
+    /**
+     * Closes tabs
+     */
+    closeTab = async (tabId) => {
+        await browser.tabs.remove(tabId);
+    }
 }
 
 const tabs = new Tabs();

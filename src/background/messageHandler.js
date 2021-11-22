@@ -1,9 +1,12 @@
-import { POPUP_MESSAGES, CONTENT_MESSAGES } from '../lib/types';
+import browser from 'webextension-polyfill';
+
+import { POPUP_MESSAGES, CONTENT_MESSAGES, POST_INSTALL_MESSAGES } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
 import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
 import { SUPPORT_LINK } from '../lib/consts';
+import { consent } from './consent';
 
 /**
  * Handles incoming messages to the background page
@@ -129,6 +132,21 @@ const messageHandler = async (message) => {
             await filteringPause.handleFilteringPause(tab.url);
             await tabs.reload(tab);
             break;
+        }
+
+        case POST_INSTALL_MESSAGES.UNINSTALL_EXTENSION: {
+            browser.management.uninstallSelf();
+            break;
+        }
+
+        case POST_INSTALL_MESSAGES.AGREE_WITH_CONDITIONS: {
+            await consent.setAgreementReceived();
+            await tabs.closePostInstall();
+            break;
+        }
+
+        case POPUP_MESSAGES.CONSENT_RECEIVED: {
+            return consent.agreementReceived();
         }
 
         default: {

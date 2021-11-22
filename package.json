@@ -7,10 +7,10 @@
     "license": "LGPL-3.0",
     "scripts": {
         "lint": "eslint .",
-        "dev": "BUILD_ENV=dev run-p build:*",
-        "beta": "BUILD_ENV=beta run-p build:*",
-        "release": "BUILD_ENV=release run-p build:*",
-        "build:chrome": "BROWSER=chrome webpack --config tasks/webpack.js && node tasks/versionInfo.js",
+        "dev": "export BUILD_ENV=dev; run-p build:* && node tasks/versionInfo.js",
+        "beta": "export BUILD_ENV=beta; run-p build:* && node tasks/versionInfo.js",
+        "release": "export BUILD_ENV=release; run-p build:* && node tasks/versionInfo.js",
+        "build:chrome": "BROWSER=chrome webpack --config tasks/webpack.js",
         "build:edge": "BROWSER=edge webpack --config tasks/webpack.js",
         "build:firefox": "BROWSER=firefox webpack --config tasks/webpack.js",
         "test": "jest",
@@ -29,6 +29,20 @@
         "artifacts:beta": "export BUILD_ENV=beta; yarn crx:beta && yarn xpi && node tasks/versionInfo.js",
         "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn build:firefox && yarn build:edge && node tasks/versionInfo.js",
         "clear": "rm -rf build ; rm -rf node_modules"
+    },
+    "dependencies": {
+        "@adguard/translate": "^0.2.5",
+        "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant#4.3.43",
+        "classnames": "^2.2.6",
+        "lodash": "^4.17.15",
+        "mobx": "^6.3.7",
+        "mobx-react": "^7.2.1",
+        "nanoid": "^2.1.11",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "react-intl": "^3.12.0",
+        "react-modal": "^3.11.2",
+        "webextension-polyfill": "^0.6.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
@@ -71,18 +85,5 @@
         "webpack": "^4.42.0",
         "webpack-cli": "^3.3.11",
         "zip-webpack-plugin": "^3.0.0"
-    },
-    "dependencies": {
-        "adguard-assistant": "https://github.com/AdguardTeam/AdguardAssistant#4.3.43",
-        "classnames": "^2.2.6",
-        "lodash": "^4.17.15",
-        "mobx": "^5.15.4",
-        "mobx-react": "^6.1.8",
-        "nanoid": "^2.1.11",
-        "react": "^16.13.0",
-        "react-dom": "^16.13.0",
-        "react-intl": "^3.12.0",
-        "react-modal": "^3.11.2",
-        "webextension-polyfill": "^0.6.0"
     }
 }

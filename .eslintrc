@@ -63,7 +63,8 @@
             "controlComponents": ["input"]
         }],
         "jsx-a11y/label-has-for": "off",
-        "react/prop-types": "off", // TODO remove this rule when app will grow bigger
+        "react/prop-types": "off",
+        "react/display-name": "off",
         "class-methods-use-this": "off",
         "comma-dangle": [
             "error",

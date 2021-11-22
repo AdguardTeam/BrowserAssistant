@@ -3,18 +3,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
+const webpack = require('webpack');
 const {
     SRC_PATH,
     BUILD_PATH,
     CHROME_UPDATE_CRX,
     FIREFOX_UPDATE_XPI,
     BUILD_ENVS,
+    BROWSER_TYPES,
 } = require('./consts');
 const { getOutputPathByBuildEnv, appendBuildEnvSuffix, updateManifest } = require('./helpers');
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
 const CONTENT_SCRIPTS_PATH = path.resolve(__dirname, SRC_PATH, 'content-scripts');
+const POST_INSTALL_PATH = path.resolve(__dirname, SRC_PATH, 'post-install');
 
 const { BROWSER, BUILD_ENV } = process.env;
 
@@ -61,6 +64,21 @@ const plugins = [
             },
         },
     ]),
+    new webpack.NormalModuleReplacementPlugin(/\.\/ConsentAbstract/, ((resource) => {
+        if (!resource.contextInfo.issuer.includes('background/consent/index.js')) {
+            return;
+        }
+        if (process.env.BROWSER === BROWSER_TYPES.FIREFOX) {
+            // eslint-disable-next-line no-param-reassign
+            resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentFirefox');
+        } else if (process.env.BROWSER === BROWSER_TYPES.CHROME
+            || process.env.BROWSER === BROWSER_TYPES.EDGE) {
+            // eslint-disable-next-line no-param-reassign
+            resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentChrome');
+        } else {
+            throw new Error(`There is no proxy api for browser: ${process.env.BROWSER}`);
+        }
+    })),
     new HtmlWebpackPlugin({
         template: path.join(BACKGROUND_PATH, 'index.html'),
         filename: 'background.html',
@@ -70,6 +88,11 @@ const plugins = [
         template: path.join(POPUP_PATH, 'index.html'),
         filename: 'popup.html',
         chunks: ['popup'],
+    }),
+    new HtmlWebpackPlugin({
+        template: path.join(POST_INSTALL_PATH, 'index.html'),
+        filename: 'post-install.html',
+        chunks: ['post-install'],
     }),
     new ZipWebpackPlugin({
         path: '../',
@@ -92,6 +115,7 @@ const config = {
         background: BACKGROUND_PATH,
         popup: POPUP_PATH,
         'content-scripts': CONTENT_SCRIPTS_PATH,
+        'post-install': POST_INSTALL_PATH,
     },
     output: {
         path: path.resolve(__dirname, BUILD_PATH, OUTPUT_PATH, BROWSER),

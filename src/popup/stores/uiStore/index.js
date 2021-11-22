@@ -1,4 +1,10 @@
-import { action, observable, computed } from 'mobx';
+import {
+    action,
+    observable,
+    computed,
+    makeObservable,
+} from 'mobx';
+
 import {
     DEFAULT_MODAL_STATE,
     EVENT_TYPE_TO_MODAL_STATE_MAP,
@@ -10,6 +16,7 @@ import { checkSomeIsTrue } from '../../../lib/helpers';
 
 class UiStore {
     constructor(rootStore) {
+        makeObservable(this);
         this.rootStore = rootStore;
     }
 

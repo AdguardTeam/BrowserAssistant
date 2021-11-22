@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import browser from 'webextension-polyfill';
 import { observer } from 'mobx-react';
+
 import Settings from '../Settings';
 import Options from '../Options';
 import CurrentSite from '../CurrentSite';
@@ -10,6 +11,7 @@ import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
 import getMessageReceiver from '../../messaging/receiver';
+import { TermsAgreement, ORIGIN } from '../../../shared/components/TermsAgreement';
 
 Modal.setAppElement('#root');
 
@@ -30,6 +32,25 @@ const App = observer(() => {
     }, []);
 
     const { isAppWorking } = settingsStore;
+
+    const onAgreement = async () => {
+        await settingsStore.getPopupData();
+    };
+
+    if (settingsStore.loadingConsent) {
+        return <Loading />;
+    }
+
+    if (!settingsStore.consentReceived) {
+        return (
+            <AppWrapper>
+                <TermsAgreement
+                    origin={ORIGIN.POPUP}
+                    onAgreement={onAgreement}
+                />
+            </AppWrapper>
+        );
+    }
 
     if (!translationStore.isReadyToDisplayMessages) {
         return (

@@ -35,6 +35,7 @@ export const POPUP_MESSAGES = {
     PAUSE_FILTERING: 'popup.pause.filtering',
     UPDATE_FILTERING_PAUSE_TIMEOUT: 'popup.update.filtering.pause.timeout',
     CONTACT_SUPPORT: 'popup.contact.support',
+    CONSENT_RECEIVED: 'popup.consent.received',
 };
 
 // Content script messages
@@ -42,6 +43,11 @@ export const CONTENT_MESSAGES = {
     GET_REFERRER: 'content.get.referrer',
     INIT_ASSISTANT: 'content.init.assistant',
     ADD_RULE: 'content.add.rule',
+};
+
+export const POST_INSTALL_MESSAGES = {
+    UNINSTALL_EXTENSION: 'postinstall.uninstall.extension',
+    AGREE_WITH_CONDITIONS: 'postinstall.agree.with.conditions',
 };
 
 export const ADG_PREFIX = 'ADG';
