@@ -55,7 +55,7 @@ export default {
     contactSupport: () => {
         return sendMessage(POPUP_MESSAGES.CONTACT_SUPPORT);
     },
-    getConsent: () => {
-        return sendMessage(POPUP_MESSAGES.CONSENT_RECEIVED);
+    getConsentRequired: () => {
+        return sendMessage(POPUP_MESSAGES.GET_CONSENT_REQUIRED);
     },
 };

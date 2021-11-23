@@ -41,7 +41,7 @@ const App = observer(() => {
         return <Loading />;
     }
 
-    if (!settingsStore.consentReceived) {
+    if (settingsStore.consentRequired) {
         return (
             <AppWrapper>
                 <TermsAgreement

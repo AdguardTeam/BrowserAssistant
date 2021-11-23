@@ -6,40 +6,40 @@ import ConsentAbstract from './ConsentAbstract';
  */
 export default class ConsentFirefox extends ConsentAbstract {
     /**
-     * Key used to store agreement value in the storage
+     * Key used to store consent flag in the storage
      * @type {string}
      */
-    AGREEMENT_STORAGE_KEY = 'consent.agreement';
+    CONSENT_REQUIRED_STORAGE_KEY = 'consent.required';
 
     /**
-     * Agreement property
-     * @type {boolean}
+     * Flag with consent required state
      */
-    agreement = false;
+    consentRequired = null;
 
-    /**
-     * Returns information about consent state
-     * @returns {boolean}
-     */
-    agreementReceived() {
-        return !!this.agreement;
+    isConsentRequired = () => {
+        if (this.consentRequired === null) {
+            this.consentRequired = this.getFromStorage();
+        }
+        return !!this.consentRequired;
     }
 
-    /**
-     * Sets consent agreement
-     * @returns {void}
-     */
-    setAgreementReceived() {
-        this.agreement = true;
-        localStorage.set(this.AGREEMENT_STORAGE_KEY, this.agreement);
+    setConsentRequired = (value) => {
+        this.consentRequired = value;
+        this.setToStorage(value);
     }
 
-    /**
-     * Retrieves consent agreement data from storage
-     * @returns {void}
-     */
-    init() {
-        const storedAgreement = localStorage.get(this.AGREEMENT_STORAGE_KEY);
-        this.agreement = !!storedAgreement;
-    }
+    getFromStorage = () => {
+        let result;
+        try {
+            result = JSON.parse(localStorage.get(this.CONSENT_REQUIRED_STORAGE_KEY));
+        } catch (e) {
+            result = false;
+        }
+        return result;
+    };
+
+    setToStorage = (value) => {
+        const stringifiedValue = JSON.stringify(value);
+        localStorage.set(this.CONSENT_REQUIRED_STORAGE_KEY, stringifiedValue);
+    };
 }

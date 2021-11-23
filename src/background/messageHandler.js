@@ -140,13 +140,13 @@ const messageHandler = async (message) => {
         }
 
         case POST_INSTALL_MESSAGES.AGREE_WITH_CONDITIONS: {
-            await consent.setAgreementReceived();
+            await consent.setConsentRequired(false);
             await tabs.closePostInstall();
             break;
         }
 
-        case POPUP_MESSAGES.CONSENT_RECEIVED: {
-            return consent.agreementReceived();
+        case POPUP_MESSAGES.GET_CONSENT_REQUIRED: {
+            return consent.isConsentRequired();
         }
 
         default: {

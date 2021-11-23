@@ -10,17 +10,23 @@ import browserApi from '../lib/browserApi';
 
 import './icon';
 
+// add listener on the upper level
+browser.runtime.onMessage.addListener(messageHandler);
+
+const onInstalled = async (runInfo) => {
+    if (runInfo.isFirstRun) {
+        consent.setConsentRequired(true);
+    }
+
+    if (consent.isConsentRequired() && browserApi.utils.isFirefoxBrowser) {
+        await tabs.openPostInstallPage();
+    }
+};
+
 (async () => {
     try {
-        browser.runtime.onMessage.addListener(messageHandler);
-
-        updateService.init();
-        consent.init();
+        updateService.init(onInstalled);
         state.init();
-
-        if (updateService.isFirstRun && browserApi.utils.isFirefoxBrowser) {
-            await tabs.openPostInstallPage();
-        }
     } catch (error) {
         log.error(error);
     }

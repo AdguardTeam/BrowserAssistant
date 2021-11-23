@@ -5,26 +5,19 @@ import ConsentAbstract from './ConsentAbstract';
  */
 export default class ConsentChrome extends ConsentAbstract {
     /**
-     * Always returns true for chrome
+     * Always returns false for chrome
      * @returns {boolean}
      */
-    agreementReceived() {
-        return true;
+    isConsentRequired() {
+        return false;
     }
 
     /**
-     * Does nothing
+     * Sets consent value
+     * @param {boolean} value
      * @returns {void}
      */
-    setAgreementReceived() {
-
-    }
-
-    /**
-     * Does nothing
-     * @returns {void}
-     */
-    init() {
-
+    // eslint-disable-next-line no-unused-vars
+    setConsentRequired(value) {
     }
 }

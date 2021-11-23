@@ -7,26 +7,20 @@
  */
 export default class ConsentAbstract {
     /**
-     * Returns information about consent state
+     * Returns true if consent is required
      * @returns {boolean}
      */
-    agreementReceived() {
+    isConsentRequired() {
         throw new Error('Not implemented');
     }
 
     /**
-     * Sets consent agreement
+     * Sets consent value
+     * @param {boolean} value
      * @returns {void}
      */
-    setAgreementReceived() {
-        throw new Error('Not implemented');
-    }
-
-    /**
-     * Retrieves consent agreement data from storage
-     * @returns {void}
-     */
-    init() {
+    // eslint-disable-next-line no-unused-vars
+    setConsentRequired(value) {
         throw new Error('Not implemented');
     }
 }

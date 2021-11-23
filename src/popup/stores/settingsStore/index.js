@@ -68,7 +68,7 @@ class SettingsStore {
 
     @observable showReloadButtonFlag = false;
 
-    @observable consentReceived = false;
+    @observable consentRequired = true;
 
     @observable loadingConsent = true;
 
@@ -169,9 +169,9 @@ class SettingsStore {
     }
 
     @action
-    setConsent = (consentReceived) => {
+    setConsentRequired = (consentRequired) => {
         this.loadingConsent = false;
-        this.consentReceived = consentReceived;
+        this.consentRequired = consentRequired;
     };
 
     @action
@@ -183,10 +183,10 @@ class SettingsStore {
     getPopupData = async () => {
         // first check consent
         this.setLoadingConsent(true);
-        const consentReceived = await messagesSender.getConsent();
-        this.setConsent(consentReceived);
+        const consentRequired = await messagesSender.getConsentRequired();
+        this.setConsentRequired(consentRequired);
         this.setLoadingConsent(false);
-        if (!consentReceived) {
+        if (consentRequired) {
             return;
         }
 

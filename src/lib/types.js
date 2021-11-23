@@ -35,7 +35,7 @@ export const POPUP_MESSAGES = {
     PAUSE_FILTERING: 'popup.pause.filtering',
     UPDATE_FILTERING_PAUSE_TIMEOUT: 'popup.update.filtering.pause.timeout',
     CONTACT_SUPPORT: 'popup.contact.support',
-    CONSENT_RECEIVED: 'popup.consent.received',
+    GET_CONSENT_REQUIRED: 'popup.get.consent.required',
 };
 
 // Content script messages
