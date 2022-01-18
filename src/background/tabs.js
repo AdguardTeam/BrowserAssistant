@@ -84,6 +84,18 @@ class Tabs {
     };
 
     /**
+     * Returns all tabs with url similar to current active tab
+     * @returns {Promise<{url: string, id: number}[]>}
+     */
+    getActiveAndSimilarTabs = async () => {
+        const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true });
+        const { url } = activeTab;
+        const similarTabs = await browser.tabs.query({ url });
+        return similarTabs
+            .map((tab) => this.prepareTab(tab));
+    };
+
+    /**
      * Sends message to the tab, previously executing there content script
      * @param tabId
      * @param type

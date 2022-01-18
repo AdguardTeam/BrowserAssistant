@@ -212,8 +212,10 @@ class SettingsStore {
     };
 
     reloadPage = async () => {
-        const tab = await this.getCurrentTab();
-        await messagesSender.reload(tab);
+        const tabsToReload = await tabs.getActiveAndSimilarTabs();
+        for (const tab of tabsToReload) {
+            await messagesSender.reload(tab);
+        }
     };
 
     reloadPageAfterSwitcherTransition = () => {
