@@ -16,7 +16,7 @@ import {
     EXTENSION_DOWNLOAD_LINK,
 } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
-import tabs from '../../../background/tabs';
+import tabs from '../../../lib/tabs';
 import {
     getFormattedProtocol,
     getUrlProps,

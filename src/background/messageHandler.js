@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 
 import { POPUP_MESSAGES, CONTENT_MESSAGES, POST_INSTALL_MESSAGES } from '../lib/types';
-import tabs from './tabs';
+import tabs from '../lib/tabs';
 import state from './state';
 import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';

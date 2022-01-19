@@ -2,7 +2,7 @@ import throttle from 'lodash/throttle';
 import actions from './actions';
 import state from './state';
 import notifier from '../lib/notifier';
-import tabs from './tabs';
+import tabs from '../lib/tabs';
 import { customizeContextMenu } from './contextMenu';
 
 /**

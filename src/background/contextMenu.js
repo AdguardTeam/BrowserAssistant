@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import state from './state';
-import tabs from './tabs';
+import tabs from '../lib/tabs';
 import filteringPause from './filteringPause';
 
 // Context menu items names and translations keys
