@@ -5,7 +5,7 @@ import messageHandler from './messageHandler';
 import state from './state';
 import { updateService } from './updateService';
 import { consent } from './consent';
-import tabs from '../lib/tabs';
+import tabs from './tabs';
 import browserApi from '../lib/browserApi';
 
 import './icon';

@@ -1,9 +1,9 @@
 import browser from 'webextension-polyfill';
-import { CONTENT_MESSAGES } from './types';
-import log from './logger';
-import { CONTENT_SCRIPT_NAME } from './consts';
-import notifier from './notifier';
-import filteringPause from '../background/filteringPause';
+import { CONTENT_MESSAGES } from '../lib/types';
+import log from '../lib/logger';
+import { CONTENT_SCRIPT_NAME } from '../lib/consts';
+import notifier from '../lib/notifier';
+import filteringPause from './filteringPause';
 
 /**
  * Manages interaction with tabs
@@ -88,8 +88,8 @@ class Tabs {
      * @returns {Promise<{url: string, id: number}[]>}
      */
     getActiveAndSimilarTabs = async () => {
-        const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true });
-        const { url } = activeTab;
+        const currentTab = await this.getCurrent();
+        const { url } = currentTab;
         const similarTabs = await browser.tabs.query({ url });
         return similarTabs
             .map((tab) => this.prepareTab(tab));

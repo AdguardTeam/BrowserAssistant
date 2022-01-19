@@ -1,5 +1,5 @@
 import state from './state';
-import tabs from '../lib/tabs';
+import tabs from './tabs';
 import filteringPause from './filteringPause';
 
 const getPopupData = async (tab) => {

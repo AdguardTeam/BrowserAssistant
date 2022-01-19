@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 
 import { POPUP_MESSAGES, CONTENT_MESSAGES, POST_INSTALL_MESSAGES } from '../lib/types';
-import tabs from '../lib/tabs';
+import tabs from './tabs';
 import state from './state';
 import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
@@ -147,6 +147,14 @@ const messageHandler = async (message) => {
 
         case POPUP_MESSAGES.GET_CONSENT_REQUIRED: {
             return consent.isConsentRequired();
+        }
+
+        case POPUP_MESSAGES.GET_CURRENT_TAB: {
+            return tabs.getCurrent();
+        }
+
+        case POPUP_MESSAGES.GET_ACTIVE_AND_SIMILAR_TABS: {
+            return tabs.getActiveAndSimilarTabs();
         }
 
         default: {

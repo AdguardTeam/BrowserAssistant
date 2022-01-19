@@ -58,4 +58,10 @@ export default {
     getConsentRequired: () => {
         return sendMessage(POPUP_MESSAGES.GET_CONSENT_REQUIRED);
     },
+    getCurrentTab: () => {
+        return sendMessage(POPUP_MESSAGES.GET_CURRENT_TAB);
+    },
+    getActiveAndSimilarTabs: () => {
+        return sendMessage(POPUP_MESSAGES.GET_ACTIVE_AND_SIMILAR_TABS);
+    },
 };
