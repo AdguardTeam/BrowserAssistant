@@ -31,6 +31,7 @@ const contextMenuCallbackMappings = {
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_on]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+        // eslint-disable-next-line no-restricted-syntax
         for (const tab of tabsToUpdate) {
             await state.setFilteringStatus(
                 true,
@@ -43,6 +44,7 @@ const contextMenuCallbackMappings = {
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_off]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+        // eslint-disable-next-line no-restricted-syntax
         for (const tab of tabsToUpdate) {
             await state.setFilteringStatus(
                 false,
@@ -57,6 +59,7 @@ const contextMenuCallbackMappings = {
         state.setProtectionStatus(true);
 
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+        // eslint-disable-next-line no-restricted-syntax
         for (const tab of tabsToUpdate) {
             await tabs.reload(tab);
         }
@@ -65,6 +68,7 @@ const contextMenuCallbackMappings = {
         state.setProtectionStatus(false);
 
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+        // eslint-disable-next-line no-restricted-syntax
         for (const tab of tabsToUpdate) {
             await tabs.reload(tab);
         }
@@ -77,6 +81,7 @@ const contextMenuCallbackMappings = {
     },
     [CONTEXT_MENU_ITEMS.pause_filtering]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+        // eslint-disable-next-line no-restricted-syntax
         for (const tab of tabsToUpdate) {
             await filteringPause.handleFilteringPause(tab.url);
             await tabs.reload(tab);

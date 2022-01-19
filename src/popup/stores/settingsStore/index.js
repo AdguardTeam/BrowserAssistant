@@ -213,9 +213,9 @@ class SettingsStore {
 
     reloadPage = async () => {
         const tabsToReload = await tabs.getActiveAndSimilarTabs();
-        for (const tab of tabsToReload) {
-            await messagesSender.reload(tab);
-        }
+        tabsToReload.forEach((tab) => {
+            tabs.reload(tab);
+        });
     };
 
     reloadPageAfterSwitcherTransition = () => {
@@ -370,7 +370,7 @@ class SettingsStore {
             runInAction(async () => {
                 this.setUrlFilteringState(urlFilteringState);
                 uiStore.setExtensionPending(false);
-                await messagesSender.reload(tab);
+                await this.reloadPage();
             });
         } catch (error) {
             log.error(error);
