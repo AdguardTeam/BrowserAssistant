@@ -88,10 +88,15 @@ class Tabs {
      * @returns {Promise<{url: string, id: number}[]>}
      */
     getActiveAndSimilarTabs = async () => {
-        const currentTab = await this.getCurrent();
-        const { url } = currentTab;
-        const similarTabs = await browser.tabs.query({ url });
-        return similarTabs
+        const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true });
+
+        const { url } = activeTab;
+        const urlObject = new URL(url);
+        const { hostname } = urlObject;
+
+        const allTabs = await browser.tabs.query({});
+        return allTabs
+            .filter((tab) => tab.url.includes(hostname))
             .map((tab) => this.prepareTab(tab));
     };
 
