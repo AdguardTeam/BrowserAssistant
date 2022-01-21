@@ -35,44 +35,44 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_site_filtering_on]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setFilteringStatus(
+        await Promise.all(tabsToUpdate.flatMap((tab) => [
+            state.setFilteringStatus(
                 true,
                 state.urlInfo.isHttpsFilteringEnabled,
                 tab.url
-            )
-                .then(() => filteringPause.clearHostnameTimeout(tab.url))
-                .then(() => tabs.reload(tab));
-        }));
+            ),
+            filteringPause.clearHostnameTimeout(tab.url),
+            tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_off]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setFilteringStatus(
+        await Promise.all(tabsToUpdate.flatMap((tab) => [
+            state.setFilteringStatus(
                 false,
                 state.urlInfo.isHttpsFilteringEnabled,
                 tab.url
-            )
-                .then(() => filteringPause.clearHostnameTimeout(tab.url))
-                .then(() => tabs.reload(tab));
-        }));
+            ),
+            filteringPause.clearHostnameTimeout(tab.url),
+            tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_enable_protection]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setProtectionStatus(true)
-                .then(() => tabs.reload(tab));
-        }));
+        await Promise.all(tabsToUpdate.flatMap((tab) => [
+            state.setProtectionStatus(true),
+            tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_disable_protection]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setProtectionStatus(false)
-                .then(() => tabs.reload(tab));
-        }));
+        await Promise.all(tabsToUpdate.flatMap((tab) => [
+            state.setProtectionStatus(false),
+            tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_open_settings]: () => {
         state.openSettings();
@@ -83,10 +83,10 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.pause_filtering]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return filteringPause.handleFilteringPause(tab.url)
-                .then(() => tabs.reload(tab));
-        }));
+        await Promise.all(tabsToUpdate.flatMap((tab) => [
+            filteringPause.handleFilteringPause(tab.url),
+            tabs.reload(tab),
+        ]));
     },
 };
 
