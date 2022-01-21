@@ -94,6 +94,7 @@ const types = {
     TAB_UPDATED: 'event.tab.updated',
     TAB_ACTIVATED: 'event.tab.activated',
     STATE_UPDATED: 'event.state.updated',
+    SETTING_UPDATED: 'event.setting.updated',
 };
 
 const notifier = new Notifier(types);
