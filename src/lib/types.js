@@ -50,6 +50,11 @@ export const POST_INSTALL_MESSAGES = {
     AGREE_WITH_CONDITIONS: 'postinstall.agree.with.conditions',
 };
 
+export const OPTIONS_UI_MESSAGES = {
+    SET_SETTING: 'options.ui.set.setting',
+    GET_SETTING: 'options.ui.get.setting',
+};
+
 export const ADG_PREFIX = 'ADG';
 export const CUSTOM_REQUEST_PREFIX = 'ADG_CUSTOM';
 
@@ -59,4 +64,8 @@ export const ASSISTANT_TYPES = {
 
 export const HOST_TYPES = {
     browserExtensionHost: 'com.adguard.browser_extension_host.nm',
+};
+
+export const SETTINGS = {
+    CONTEXT_MENU_ENABLED: 'context_menu_enabled',
 };

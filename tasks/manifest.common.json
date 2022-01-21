@@ -21,10 +21,16 @@
         "page": "background.html",
         "persistent": true
     },
+    "options_ui": {
+        "page": "options-ui.html",
+        "browser_style": true,
+        "chrome_style": true
+    },
     "permissions": [
         "nativeMessaging",
         "tabs",
         "activeTab",
-        "contextMenus"
+        "contextMenus",
+        "storage"
     ]
 }

@@ -18,6 +18,7 @@ const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
 const CONTENT_SCRIPTS_PATH = path.resolve(__dirname, SRC_PATH, 'content-scripts');
 const POST_INSTALL_PATH = path.resolve(__dirname, SRC_PATH, 'post-install');
+const OPTIONS_UI_PATH = path.resolve(__dirname, SRC_PATH, 'options-ui');
 
 const { BROWSER, BUILD_ENV } = process.env;
 
@@ -94,6 +95,11 @@ const plugins = [
         filename: 'post-install.html',
         chunks: ['post-install'],
     }),
+    new HtmlWebpackPlugin({
+        template: path.join(OPTIONS_UI_PATH, 'index.html'),
+        filename: 'options-ui.html',
+        chunks: ['options-ui'],
+    }),
     new ZipWebpackPlugin({
         path: '../',
         filename: `${BROWSER}.zip`,
@@ -116,6 +122,7 @@ const config = {
         popup: POPUP_PATH,
         'content-scripts': CONTENT_SCRIPTS_PATH,
         'post-install': POST_INSTALL_PATH,
+        'options-ui': OPTIONS_UI_PATH,
     },
     output: {
         path: path.resolve(__dirname, BUILD_PATH, OUTPUT_PATH, BROWSER),

@@ -7,6 +7,8 @@ import { updateService } from './updateService';
 import { consent } from './consent';
 import tabs from './tabs';
 import browserApi from '../lib/browserApi';
+import { settings } from './settings';
+import { contextMenu } from './contextMenu';
 
 import './icon';
 
@@ -25,8 +27,10 @@ const onInstalled = async (runInfo) => {
 
 (async () => {
     try {
+        await settings.init();
         updateService.init(onInstalled);
         state.init();
+        contextMenu.init();
     } catch (error) {
         log.error(error);
     }

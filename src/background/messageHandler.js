@@ -1,12 +1,18 @@
 import browser from 'webextension-polyfill';
 
-import { POPUP_MESSAGES, CONTENT_MESSAGES, POST_INSTALL_MESSAGES } from '../lib/types';
+import {
+    POPUP_MESSAGES,
+    CONTENT_MESSAGES,
+    POST_INSTALL_MESSAGES,
+    OPTIONS_UI_MESSAGES,
+} from '../lib/types';
 import tabs from './tabs';
 import state from './state';
 import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
 import { SUPPORT_LINK } from '../lib/consts';
 import { consent } from './consent';
+import { settings } from './settings';
 
 /**
  * Handles incoming messages to the background page
@@ -147,6 +153,14 @@ const messageHandler = async (message) => {
 
         case POPUP_MESSAGES.GET_CONSENT_REQUIRED: {
             return consent.isConsentRequired();
+        }
+
+        case OPTIONS_UI_MESSAGES.GET_SETTING: {
+            return settings.getSetting(data.key);
+        }
+
+        case OPTIONS_UI_MESSAGES.SET_SETTING: {
+            return settings.setSetting(data.key, data.value);
         }
 
         default: {
