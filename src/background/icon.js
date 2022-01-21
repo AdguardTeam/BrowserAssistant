@@ -1,9 +1,10 @@
 import throttle from 'lodash/throttle';
+
 import actions from './actions';
 import state from './state';
 import notifier from '../lib/notifier';
 import tabs from './tabs';
-import { customizeContextMenu } from './contextMenu';
+import { contextMenu } from './contextMenu';
 
 /**
  * This class handles browser action icon updates
@@ -37,12 +38,12 @@ class Icon {
     updateIcon = async (tab) => {
         if (!state.isAppWorking()) {
             await actions.setIconDisabled(tab.id);
-            customizeContextMenu();
+            contextMenu.customizeContextMenu();
             return;
         }
 
         const currentFilteringState = await state.getCurrentFilteringState(tab);
-        customizeContextMenu();
+        contextMenu.customizeContextMenu();
 
         const isFilteringEnabled = currentFilteringState
             ? currentFilteringState.isFilteringEnabled

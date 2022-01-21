@@ -1,7 +1,10 @@
 import browser from 'webextension-polyfill';
+
 import state from './state';
 import tabs from './tabs';
 import filteringPause from './filteringPause';
+import { settings } from './settings';
+import notifier from '../lib/notifier';
 
 // Context menu items names and translations keys
 const CONTEXT_MENU_ITEMS = {
@@ -141,8 +144,22 @@ const updateContextMenu = () => {
     }
 };
 
-export const customizeContextMenu = () => {
+const customizeContextMenu = () => {
     // clear old menu items before updating
     browser.contextMenus.removeAll();
-    updateContextMenu();
+    if (settings.contextMenuEnabled()) {
+        updateContextMenu();
+    }
+};
+
+const init = () => {
+    notifier.addSpecifiedListener(
+        notifier.types.SETTING_UPDATED,
+        customizeContextMenu
+    );
+};
+
+export const contextMenu = {
+    init,
+    customizeContextMenu,
 };
