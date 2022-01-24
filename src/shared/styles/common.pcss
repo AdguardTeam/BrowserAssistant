@@ -17,6 +17,14 @@ html {
     font-size: 10px;
 }
 
+@-moz-document url-prefix() {
+    html {
+        min-height: 500px;
+        width: 320px;
+        margin: auto;
+    }
+}
+
 body {
     font-family: var(--font-primary);
     background-color: var(--white);
