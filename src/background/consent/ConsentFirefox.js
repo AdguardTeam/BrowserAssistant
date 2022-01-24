@@ -1,4 +1,4 @@
-import { localStorage } from '../localStorage';
+import { storage } from '../storage';
 import ConsentAbstract from './ConsentAbstract';
 
 /**
@@ -16,30 +16,31 @@ export default class ConsentFirefox extends ConsentAbstract {
      */
     consentRequired = null;
 
-    isConsentRequired = () => {
+    isConsentRequired = async () => {
         if (this.consentRequired === null) {
-            this.consentRequired = this.getFromStorage();
+            this.consentRequired = await this.getFromStorage();
         }
         return !!this.consentRequired;
     }
 
-    setConsentRequired = (value) => {
+    setConsentRequired = async (value) => {
         this.consentRequired = value;
-        this.setToStorage(value);
+        await this.setToStorage(value);
     }
 
-    getFromStorage = () => {
+    getFromStorage = async () => {
         let result;
         try {
-            result = JSON.parse(localStorage.get(this.CONSENT_REQUIRED_STORAGE_KEY));
+            const isConsentRequired = await storage.get(this.CONSENT_REQUIRED_STORAGE_KEY);
+            result = JSON.parse(isConsentRequired);
         } catch (e) {
             result = false;
         }
         return result;
     };
 
-    setToStorage = (value) => {
+    setToStorage = async (value) => {
         const stringifiedValue = JSON.stringify(value);
-        localStorage.set(this.CONSENT_REQUIRED_STORAGE_KEY, stringifiedValue);
+        await storage.set(this.CONSENT_REQUIRED_STORAGE_KEY, stringifiedValue);
     };
 }

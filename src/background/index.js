@@ -17,10 +17,12 @@ browser.runtime.onMessage.addListener(messageHandler);
 
 const onInstalled = async (runInfo) => {
     if (runInfo.isFirstRun) {
-        consent.setConsentRequired(true);
+        await consent.setConsentRequired(true);
     }
 
-    if (consent.isConsentRequired() && browserApi.utils.isFirefoxBrowser) {
+    const isConsentRequired = await consent.isConsentRequired();
+
+    if (isConsentRequired && browserApi.utils.isFirefoxBrowser) {
         await tabs.openPostInstallPage();
     }
 };

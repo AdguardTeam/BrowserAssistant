@@ -30,6 +30,7 @@
         "nativeMessaging",
         "tabs",
         "activeTab",
-        "contextMenus"
+        "contextMenus",
+        "storage"
     ]
 }

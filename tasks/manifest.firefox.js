@@ -14,7 +14,4 @@ module.exports = {
     background: {
         page: 'background.html',
     },
-    permissions: [
-        'storage',
-    ],
 };

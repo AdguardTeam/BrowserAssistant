@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 const { BUILD_ENVS, BUILD_ENVS_MAP } = require('./consts');
 const pJson = require('../package');
 const twoskyConfig = require('../.twosky.json');
@@ -26,18 +24,12 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
     }
     const devPolicy = IS_DEV ? { content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'" } : {};
 
-    const permissions = _.uniq([
-        ...(manifest.permissions || []),
-        ...(browserManifestDiff.permissions || []),
-    ]);
-
     const updatedManifest = {
         ...manifest,
         ...browserManifestDiff,
         ...devPolicy,
         default_locale: baseLocale,
         version: pJson.version,
-        permissions,
     };
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));
 };

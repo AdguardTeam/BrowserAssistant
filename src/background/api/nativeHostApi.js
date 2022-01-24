@@ -143,7 +143,8 @@ export class NativeHostApi extends AbstractApi {
      * @returns {Promise<*>}
      */
     makeRequest = async (params, tryReconnect = true) => {
-        if (consent.isConsentRequired() && params.type !== REQUEST_TYPES.init) {
+        const isConsentRequired = await consent.isConsentRequired();
+        if (isConsentRequired && params.type !== REQUEST_TYPES.init) {
             throw new Error('Requests to native host can be send only after consent agreement received');
         }
 
