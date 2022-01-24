@@ -25,22 +25,16 @@ export default class ConsentFirefox extends ConsentAbstract {
 
     setConsentRequired = async (value) => {
         this.consentRequired = value;
-        await this.setToStorage(value);
+        await storage.set(this.CONSENT_REQUIRED_STORAGE_KEY, value);
     }
 
     getFromStorage = async () => {
         let result;
         try {
-            const isConsentRequired = await storage.get(this.CONSENT_REQUIRED_STORAGE_KEY);
-            result = JSON.parse(isConsentRequired);
+            result = await storage.get(this.CONSENT_REQUIRED_STORAGE_KEY);
         } catch (e) {
             result = false;
         }
         return result;
-    };
-
-    setToStorage = async (value) => {
-        const stringifiedValue = JSON.stringify(value);
-        await storage.set(this.CONSENT_REQUIRED_STORAGE_KEY, stringifiedValue);
     };
 }
