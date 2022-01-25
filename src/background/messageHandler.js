@@ -7,6 +7,7 @@ import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
 import { SUPPORT_LINK } from '../lib/consts';
 import { consent } from './consent';
+import log from '../lib/logger';
 
 /**
  * Handles incoming messages to the background page
@@ -16,7 +17,7 @@ import { consent } from './consent';
  * @returns {Promise<*>}
  */
 // eslint-disable-next-line consistent-return
-const messageHandler = async (message) => {
+export const messageHandler = async (message) => {
     const { type, data } = message;
 
     switch (type) {
@@ -163,4 +164,10 @@ const messageHandler = async (message) => {
     }
 };
 
-export default messageHandler;
+export const longLivedMessageHandler = (port) => {
+    log.debug(`Connecting to the port "${port.name}"`);
+
+    port.onDisconnect.addListener(() => {
+        log.debug(`Disconnected from the port "${port.name}"`);
+    });
+};
