@@ -84,7 +84,7 @@ class Tabs {
     };
 
     /**
-     * Returns all tabs with url similar to current active tab
+     * Returns all tabs with hostname similar to current active tab
      * @returns {Promise<{url: string, id: number}[]>}
      */
     getActiveAndSimilarTabs = async () => {

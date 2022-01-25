@@ -1,7 +1,10 @@
 import browser from 'webextension-polyfill';
+
 import state from './state';
 import tabs from './tabs';
 import filteringPause from './filteringPause';
+import { settings } from './settings';
+import notifier from '../lib/notifier';
 
 // Context menu items names and translations keys
 const CONTEXT_MENU_ITEMS = {
@@ -32,44 +35,44 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_site_filtering_on]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setFilteringStatus(
+        await Promise.all(tabsToUpdate.map(async (tab) => [
+            await state.setFilteringStatus(
                 true,
                 state.urlInfo.isHttpsFilteringEnabled,
                 tab.url
-            )
-                .then(() => filteringPause.clearHostnameTimeout(tab.url))
-                .then(() => tabs.reload(tab));
-        }));
+            ),
+            await filteringPause.clearHostnameTimeout(tab.url),
+            await tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_off]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setFilteringStatus(
+        await Promise.all(tabsToUpdate.map(async (tab) => [
+            await state.setFilteringStatus(
                 false,
                 state.urlInfo.isHttpsFilteringEnabled,
                 tab.url
-            )
-                .then(() => filteringPause.clearHostnameTimeout(tab.url))
-                .then(() => tabs.reload(tab));
-        }));
+            ),
+            await filteringPause.clearHostnameTimeout(tab.url),
+            await tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_enable_protection]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setProtectionStatus(true)
-                .then(() => tabs.reload(tab));
-        }));
+        await Promise.all(tabsToUpdate.map(async (tab) => [
+            await state.setProtectionStatus(true),
+            await tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_disable_protection]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return state.setProtectionStatus(false)
-                .then(() => tabs.reload(tab));
-        }));
+        await Promise.all(tabsToUpdate.map(async (tab) => [
+            await state.setProtectionStatus(false),
+            await tabs.reload(tab),
+        ]));
     },
     [CONTEXT_MENU_ITEMS.context_open_settings]: () => {
         state.openSettings();
@@ -80,10 +83,10 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.pause_filtering]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.map((tab) => {
-            return filteringPause.handleFilteringPause(tab.url)
-                .then(() => tabs.reload(tab));
-        }));
+        await Promise.all(tabsToUpdate.map(async (tab) => [
+            await filteringPause.handleFilteringPause(tab.url),
+            await tabs.reload(tab),
+        ]));
     },
 };
 
@@ -154,8 +157,22 @@ const updateContextMenu = () => {
     }
 };
 
-export const customizeContextMenu = () => {
+const customizeContextMenu = () => {
     // clear old menu items before updating
     browser.contextMenus.removeAll();
-    updateContextMenu();
+    if (settings.contextMenuEnabled()) {
+        updateContextMenu();
+    }
+};
+
+const init = () => {
+    notifier.addSpecifiedListener(
+        notifier.types.SETTING_UPDATED,
+        customizeContextMenu
+    );
+};
+
+export const contextMenu = {
+    init,
+    customizeContextMenu,
 };
