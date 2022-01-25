@@ -17,6 +17,16 @@ html {
     font-size: 10px;
 }
 
+/* fix for mozilla issue when popup icon is in overflow menu */
+/* https://github.com/AdguardTeam/BrowserAssistant/issues/48 */
+@-moz-document url-prefix() {
+    html {
+        min-height: 500px;
+        width: 320px;
+        margin: auto;
+    }
+}
+
 body {
     font-family: var(--font-primary);
     background-color: var(--white);
