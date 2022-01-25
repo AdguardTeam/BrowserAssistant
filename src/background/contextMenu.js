@@ -35,7 +35,7 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_site_filtering_on]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.flatMap(async (tab) => [
+        await Promise.all(tabsToUpdate.map(async (tab) => [
             await state.setFilteringStatus(
                 true,
                 state.urlInfo.isHttpsFilteringEnabled,
@@ -48,7 +48,7 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_site_filtering_off]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.flatMap(async (tab) => [
+        await Promise.all(tabsToUpdate.map(async (tab) => [
             await state.setFilteringStatus(
                 false,
                 state.urlInfo.isHttpsFilteringEnabled,
@@ -61,7 +61,7 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_enable_protection]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.flatMap(async (tab) => [
+        await Promise.all(tabsToUpdate.map(async (tab) => [
             await state.setProtectionStatus(true),
             await tabs.reload(tab),
         ]));
@@ -69,7 +69,7 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_disable_protection]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.flatMap(async (tab) => [
+        await Promise.all(tabsToUpdate.map(async (tab) => [
             await state.setProtectionStatus(false),
             await tabs.reload(tab),
         ]));
@@ -83,7 +83,7 @@ const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.pause_filtering]: async () => {
         const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await Promise.all(tabsToUpdate.flatMap(async (tab) => [
+        await Promise.all(tabsToUpdate.map(async (tab) => [
             await filteringPause.handleFilteringPause(tab.url),
             await tabs.reload(tab),
         ]));
