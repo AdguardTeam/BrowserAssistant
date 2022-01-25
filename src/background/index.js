@@ -30,7 +30,7 @@ const onInstalled = async (runInfo) => {
 (async () => {
     try {
         await settings.init();
-        updateService.init(onInstalled);
+        await updateService.init(onInstalled);
         state.init();
         contextMenu.init();
     } catch (error) {

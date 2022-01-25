@@ -1,5 +1,7 @@
 import { storage } from '../storage';
+import { localStorage } from '../localStorage';
 import ConsentAbstract from './ConsentAbstract';
+import log from '../../lib/logger';
 
 /**
  * Manages user consent with policies
@@ -36,5 +38,16 @@ export default class ConsentFirefox extends ConsentAbstract {
             result = false;
         }
         return result;
+    };
+
+    /**
+     * Migration from local storage to browser storage
+     */
+    storageMigration = async () => {
+        const isConsentRequired = JSON.parse(localStorage.get(this.CONSENT_REQUIRED_STORAGE_KEY));
+        if (isConsentRequired !== undefined) {
+            log.debug('Migrate consent setting from local storage to browser storage');
+            await this.setConsentRequired(isConsentRequired);
+        }
     };
 }
