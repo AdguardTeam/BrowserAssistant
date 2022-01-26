@@ -4,6 +4,7 @@ import log from '../lib/logger';
 import messageHandler from './messageHandler';
 import state from './state';
 import { updateService } from './updateService';
+import { migrationService } from './migrationService';
 import { consent } from './consent';
 import tabs from './tabs';
 import browserApi from '../lib/browserApi';
@@ -16,6 +17,10 @@ import './icon';
 browser.runtime.onMessage.addListener(messageHandler);
 
 const onInstalled = async (runInfo) => {
+    if (runInfo.isUpdate) {
+        await migrationService.migrate(runInfo.previousVersion);
+    }
+
     if (runInfo.isFirstRun) {
         await consent.setConsentRequired(true);
     }

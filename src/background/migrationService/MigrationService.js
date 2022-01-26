@@ -1,12 +1,12 @@
 import { compare } from 'compare-versions';
 
-import { localStorage } from './localStorage';
-import log from '../lib/logger';
-import { consent } from './consent';
+import { localStorage } from '../localStorage';
+import log from '../../lib/logger';
+import { consent } from '../consent';
 
 const STORAGE_MIGRATION_VERSION = '1.2.2';
 
-class MigrationService {
+export class MigrationService {
     async migrate(previousVersion) {
         // consent setting moved from local storage to
         // browser storage after version 1.2.2 in firefox only
@@ -30,4 +30,3 @@ class MigrationService {
     };
 }
 
-export const migrationService = new MigrationService();

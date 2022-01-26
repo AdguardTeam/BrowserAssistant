@@ -2,7 +2,6 @@ import browser from 'webextension-polyfill';
 
 import { localStorage } from './localStorage';
 import log from '../lib/logger';
-import { migrationService } from './MigrationService';
 
 /**
  * Service with data about current app state
@@ -55,10 +54,6 @@ class UpdateService {
 
         this.isFirstRun = (this.currentVersion !== this.previousVersion && !this.previousVersion);
         this.isUpdate = !!(this.currentVersion !== this.previousVersion && this.previousVersion);
-
-        if (this.isUpdate) {
-            await migrationService.migrate(this.previousVersion);
-        }
 
         this.setAppVersionInStorage(this.currentVersion);
 
