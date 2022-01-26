@@ -1,12 +1,8 @@
 import browser from 'webextension-polyfill';
-import { compare } from 'compare-versions';
 
 import { localStorage } from './localStorage';
 import log from '../lib/logger';
-import { consent } from './consent';
-
-// after version 1.2.2 consent setting moved from local storage to browser storage
-const MIGRATION_VERSION = '1.2.2';
+import { migrationService } from './MigrationService';
 
 /**
  * Service with data about current app state
@@ -60,9 +56,8 @@ class UpdateService {
         this.isFirstRun = (this.currentVersion !== this.previousVersion && !this.previousVersion);
         this.isUpdate = !!(this.currentVersion !== this.previousVersion && this.previousVersion);
 
-        // migrate from local storage to browser storage
-        if (this.isUpdate && compare(this.previousVersion, MIGRATION_VERSION, '<=')) {
-            await consent.storageMigration();
+        if (this.isUpdate) {
+            await migrationService.migrate(this.previousVersion);
         }
 
         this.setAppVersionInStorage(this.currentVersion);

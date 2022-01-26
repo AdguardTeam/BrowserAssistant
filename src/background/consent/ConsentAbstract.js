@@ -23,11 +23,4 @@ export default class ConsentAbstract {
     setConsentRequired(value) {
         throw new Error('Not implemented');
     }
-
-    /**
-     * Migration from local storage to browser storage
-     */
-    storageMigration() {
-        throw new Error('Not implemented');
-    }
 }
