@@ -1,6 +1,6 @@
 {
     "name": {
-        "message": "Assistente Browser AdGuard"
+        "message": "AdGuard Browser Assistant"
     },
     "description": {
         "message": "Estensione per l'app desktop di AdGuard. Gestisce il filtraggio direttamente dal browser e nasconde elementi fastidiosi in due clic."
@@ -153,27 +153,27 @@
         "message": "Registro di filtraggio..."
     },
     "post_install_confirm_uninstall": {
-        "message": "Sei sicuro di voler disinstallare il Assistente Browser di AdGuard?"
+        "message": "Sei sicuro di voler rimuovere AdGuard Browser Assistant?"
     },
     "post_install_consent_title": {
-        "message": "Grazie di aver installato il Assistente Browser di AdGuard!"
+        "message": "Grazie per aver installato AdGuard Browser Assistant!"
     },
     "post_install_consent_short_app_desc": {
-        "message": "Questa estensione del browser associata alle <link>app desktop di AdGuard</link> offre un accesso diretto dal browser a funzionalità come il blocco di elementi personalizzati, l'aggiunta alla lista bianca di un sito web o l'invio di una segnalazione."
+        "message": "Questa estensione browser complementare per le <link>App desktop AdGuard</link> offre l'accesso da browser a funzionalità come il blocco di elementi personalizzati, l'aggiunta di siti web a liste di elementi consentiti, e l'invio di segnalazioni."
     },
     "post_install_consent_sent_info_desc": {
-        "message": "Ogni volta che si apre una nuova scheda, il componente aggiuntivo comunica con l'app autonoma e richiede informazioni sullo stato della pagina corrente. Per farlo, invia l'URL della pagina corrente all'app autonoma."
+        "message": "Ogni volta che aprirai una nuova scheda, il componente aggiuntivo comunicherà con l'app autonoma e richiederà informazioni sullo stato della pagina corrente. Per fare ciò, invia l'URL della pagina corrente all'app autonoma."
     },
     "post_install_consent_policy_urls": {
-        "message": "Installando questo componente aggiuntivo, accetti la nostra <privacy>Politica sulla riservatezza</privacy> e <terms>Condizioni di utilizzo</terms>."
+        "message": "Installando questo componente aggiuntivo, accetterai la nostra <privacy>Politica sulla Riservatezza</privacy> e <terms>Condizioni di Utilizzo</terms>."
     },
     "post_install_page_title": {
-        "message": "Grazie di aver installato il Assistente Browser di AdGuard!"
+        "message": "Grazie per aver installato AdGuard Browser Assistant!"
     },
     "post_install_page_agree_button": {
-        "message": "Accetta"
+        "message": "Accetto"
     },
     "post_install_page_uninstall_button": {
-        "message": "Disinstallare"
+        "message": "Disinstalla"
     }
 }
