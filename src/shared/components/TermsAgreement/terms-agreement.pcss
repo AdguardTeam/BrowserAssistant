@@ -1,6 +1,9 @@
 .container-terms {
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     color: var(--gray-base);
+    max-width : 468px;
     min-height: 400px;
     padding: 24px;
 
@@ -71,6 +74,12 @@
 }
 
 html {
-    width: 700px !important;
-    max-width: 80%;
+    @media (min-width: 640px) {
+        width: 700px !important;
+        max-width: 80%;
+    }
+
+    & .container-terms {
+        max-width : initial;
+    }
 }
