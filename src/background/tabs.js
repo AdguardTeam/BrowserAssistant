@@ -91,7 +91,7 @@ class Tabs {
         const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true });
 
         if (!activeTab) {
-            log.warn('Unable to get active tab');
+            log.debug('Unable to get active tab');
             return [];
         }
 
