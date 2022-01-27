@@ -16,59 +16,70 @@
         font-size: 16px;
         line-height: 19px;
         margin-bottom: 8px;
-    
+
         @media (min-width: 640px) {
             font-size: 32px;
             line-height: 37px;
             margin-bottom: 24px;
         }
     }
-    
+
     .description {
         font-size: 14px;
         line-height: 16px;
         max-height: 220px;
         overflow: auto;
-    
+
         @media (min-width: 640px) {
             max-height: 100%;
             font-size: 16px;
             line-height: 19px;
         }
-    
+
         & p {
             margin-bottom: 8px;
-    
+
             @media (min-width: 640px) {
                 margin-bottom: 24px;
             }
         }
-    
+
         & a {
             color: var(--green400);
-    
+
             &:hover {
                 text-decoration: none;
             }
         }
     }
-    
+
     .controls {
         margin-top: auto;
         padding-top: 24px;
-    
+
         @media (min-width: 640px) {
             padding-top: 8px;
         }
-    
+
         &__btn {
             &:first-child {
                 margin-right: 8px;
-        
+
                 @media (min-width: 640px) {
                     margin-right: 24px;
                 }
             }
         }
+    }
+}
+
+html {
+    @media (min-width: 640px) {
+        width: 700px !important;
+        max-width: 80%;
+    }
+
+    & .container-terms {
+        max-width : initial;
     }
 }
