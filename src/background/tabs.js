@@ -90,6 +90,11 @@ class Tabs {
     getActiveAndSimilarTabs = async () => {
         const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true });
 
+        if (!activeTab) {
+            log.warn('Unable to get active tab');
+            return [];
+        }
+
         const { url } = activeTab;
         const urlObject = new URL(url);
         const { hostname } = urlObject;
