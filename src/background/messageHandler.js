@@ -5,6 +5,7 @@ import {
     CONTENT_MESSAGES,
     POST_INSTALL_MESSAGES,
     OPTIONS_UI_MESSAGES,
+    BACKGROUND_MESSAGES,
 } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
@@ -178,10 +179,29 @@ export const messageHandler = async (message) => {
     }
 };
 
-export const longLivedMessageHandler = (port) => {
-    log.debug(`Connecting to the port "${port.name}"`);
+// FIXME store openedPort in proper place
+let openedPort = null;
 
-    port.onDisconnect.addListener(() => {
-        log.debug(`Disconnected from the port "${port.name}"`);
+/**
+ * Sets opened port
+ * @param {object | null} value
+ */
+const setOpenedPort = (value) => {
+    openedPort = value;
+};
+
+export const longLivedMessageHandler = async (port) => {
+    log.debug(`Popup with id "${port.name}" opened`);
+
+    if (openedPort) {
+        openedPort.postMessage({ type: BACKGROUND_MESSAGES.CLOSE_POPUP, popupId: openedPort.name });
+    }
+    setOpenedPort(port);
+
+    port.onDisconnect.addListener(async () => {
+        log.debug(`Popup with id "${port.name}" closed`);
+        if (port === openedPort) {
+            setOpenedPort(null);
+        }
     });
 };

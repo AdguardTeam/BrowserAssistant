@@ -11,6 +11,7 @@ import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
 import getMessageReceiver from '../../messaging/receiver';
+import { createLongLivedConnection } from '../../messaging/sender';
 import { TermsAgreement, ORIGIN } from '../../../shared/components/TermsAgreement';
 
 Modal.setAppElement('#root');
@@ -24,6 +25,7 @@ const App = observer(() => {
 
     useEffect(() => {
         (async () => {
+            await createLongLivedConnection();
             await settingsStore.getPopupData();
         })();
 
