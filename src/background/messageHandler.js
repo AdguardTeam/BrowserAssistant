@@ -179,7 +179,6 @@ export const messageHandler = async (message) => {
     }
 };
 
-// FIXME store openedPort in proper place
 let openedPort = null;
 
 /**
@@ -190,10 +189,15 @@ const setOpenedPort = (value) => {
     openedPort = value;
 };
 
+/**
+ * This handler used to communicate with popup pages
+ * @param {Runtime.Port} port
+ */
 export const longLivedMessageHandler = async (port) => {
     log.debug(`Popup with id "${port.name}" opened`);
 
     if (openedPort) {
+        // close previously opened popup to avoid situation of two opened popups
         openedPort.postMessage({ type: BACKGROUND_MESSAGES.CLOSE_POPUP, popupId: openedPort.name });
     }
     setOpenedPort(port);
