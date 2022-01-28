@@ -96,7 +96,7 @@
         "message": "Ladda om sidan"
     },
     "reload_to_resume_filtering": {
-        "message": "Ladda om den här sidan för att återuppta filtreringen"
+        "message": "Ladda om denna sida för att återuppta filtrering"
     },
     "not_filtering_https": {
         "message": "Som standard filtrerar vi inte HTTPS-trafik för betalningssystem och bankwebbplatser. Du kan aktivera filtreringen själv: tryck på det gula \"låset\" till vänster."
@@ -120,16 +120,16 @@
         "message": "Utgånget"
     },
     "contact_support": {
-        "message": "Kontakta supporten"
+        "message": "Kontakta support"
     },
     "context_site_filtering_on": {
-        "message": "Aktivera filtrering på den här webbplatsen"
+        "message": "Aktivera filtrering på denna webbplats"
     },
     "context_site_filtering_off": {
-        "message": "Inaktivera filtrering på den här webbplatsen"
+        "message": "Inaktivera filtrering på denna webbplats"
     },
     "context_block_site_ads": {
-        "message": "Blockera annonser på den här webbplatsen ..."
+        "message": "Blockera annonser på denna webbplats..."
     },
     "context_complaint_website": {
         "message": "Rapportera ett problem..."
@@ -141,7 +141,7 @@
         "message": "Pausa AdGuard-skyddet"
     },
     "context_enable_protection": {
-        "message": "Återuppta AdGuard-skyddet"
+        "message": "Återuppta AdGuard-skydd"
     },
     "context_site_protection_disabled": {
         "message": "AdGuard-skyddet är pausat"
