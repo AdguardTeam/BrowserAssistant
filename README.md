@@ -109,7 +109,9 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 
 ###### Step 1:
 * In Browser Assistant extension settings copy extension ID
-* Paste it in `devConfig.json` file in `chrome_extension_id` or `firefox_extension_id` area (see example below)
+* Paste it in `devConfig.json` file
+    * for Chrome or Edge add to `chrome_extension_id` as array (see example below)
+    * for Firefox add to `firefox_extension_id` as array (see example below)
 * Save file in AdGuard folder `/Library/Application Support/com.adguard.mac.adguard/` or `/Library/Application Support/com.adguard.mac.adguard.debug/` depends on build configuration
 
 ###### Step 2:
@@ -130,7 +132,9 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 
 ###### Step 1:
 * In Browser Assistant extension settings copy extension ID
-* Paste it in `devConfig.json` file in `chrome_extension_id` or `firefox_extension_id` area (see example below)
+* Paste it in `devConfig.json` file
+    * for Chrome or Edge add to `chrome_extension_id` as array (see example below)
+    * for Firefox add to `firefox_extension_id` as array (see example below)
 * Save file in AdGuard folder `C:\Program Files (x86)\Adguard`
 
 ###### Step 2:
@@ -141,10 +145,14 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 ```
 {
   "chrome_extension_id": [
-    "biolhaiicomblcmahaljilbdppdnvyib"
+    "biolhaiicomblcmahaljilbdppdnvyib",
+    "dfkjnvdkfvkvdjfnkddksjsdjnfjfdfj"
   ],
   "firefox_extension_id": [
     "extensionid@example.org"
   ]
 }
 ```
+in `chrome_extension_id`
+ * `biolhaiicomblcmahaljilbdppdnvyib` is extension ID for Chrome
+ * `dfkjnvdkfvkvdjfnkddksjsdjnfjfdfj` is extension ID for Edge
