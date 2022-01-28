@@ -155,6 +155,14 @@ const messageHandler = async (message) => {
             return consent.isConsentRequired();
         }
 
+        case POPUP_MESSAGES.GET_CURRENT_TAB: {
+            return tabs.getCurrent();
+        }
+
+        case POPUP_MESSAGES.GET_ACTIVE_AND_SIMILAR_TABS: {
+            return tabs.getActiveAndSimilarTabs();
+        }
+
         case OPTIONS_UI_MESSAGES.GET_SETTING: {
             return settings.getSetting(data.key);
         }

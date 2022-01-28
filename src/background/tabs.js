@@ -84,6 +84,28 @@ class Tabs {
     };
 
     /**
+     * Returns all tabs with hostname similar to current active tab
+     * @returns {Promise<{url: string, id: number}[]>}
+     */
+    getActiveAndSimilarTabs = async () => {
+        const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true });
+
+        if (!activeTab) {
+            log.debug('Unable to get active tab');
+            return [];
+        }
+
+        const { url } = activeTab;
+        const urlObject = new URL(url);
+        const { hostname } = urlObject;
+
+        const allTabs = await browser.tabs.query({});
+        return allTabs
+            .filter((tab) => tab.url.includes(hostname))
+            .map((tab) => this.prepareTab(tab));
+    };
+
+    /**
      * Sends message to the tab, previously executing there content script
      * @param tabId
      * @param type

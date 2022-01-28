@@ -16,7 +16,6 @@ import {
     EXTENSION_DOWNLOAD_LINK,
 } from '../../../lib/consts';
 import messagesSender from '../../messaging/sender';
-import tabs from '../../../background/tabs';
 import {
     getFormattedProtocol,
     getUrlProps,
@@ -139,7 +138,7 @@ class SettingsStore {
 
     @action
     updatePopupData = async (tab) => {
-        const currentTab = tab || await tabs.getCurrent();
+        const currentTab = tab || await this.getCurrentTab();
         const popupData = await messagesSender.getPopupData(currentTab);
         if (popupData.hostError) {
             runInAction(() => {
@@ -195,7 +194,7 @@ class SettingsStore {
         const locale = await messagesSender.getLocale();
         this.rootStore.translationStore.setLocale(locale);
         this.rootStore.uiStore.setExtensionLoading(true);
-        const tab = await tabs.getCurrent();
+        const tab = await this.getCurrentTab();
         await this.updatePopupData(tab);
 
         runInAction(() => {
@@ -212,8 +211,10 @@ class SettingsStore {
     };
 
     reloadPage = async () => {
-        const tab = await this.getCurrentTab();
-        await messagesSender.reload(tab);
+        const tabsToReload = await messagesSender.getActiveAndSimilarTabs();
+        tabsToReload.forEach((tab) => {
+            messagesSender.reload(tab);
+        });
     };
 
     reloadPageAfterSwitcherTransition = () => {
@@ -294,7 +295,7 @@ class SettingsStore {
      * Starts assistant
      */
     initAssistant = async () => {
-        const tab = await tabs.getCurrent();
+        const tab = await this.getCurrentTab();
         await messagesSender.initAssistant(tab.id);
         window.close();
     };
@@ -323,7 +324,7 @@ class SettingsStore {
 
     @action
     getCurrentTab = async () => {
-        const tab = await tabs.getCurrent();
+        const tab = await messagesSender.getCurrentTab();
         runInAction(() => {
             // update current url just in case
             this.currentUrl = tab.url;
@@ -362,13 +363,13 @@ class SettingsStore {
         const { uiStore } = this.rootStore;
         try {
             uiStore.setExtensionPending(true);
-            const tab = await tabs.getCurrent();
+            const tab = await this.getCurrentTab();
             await messagesSender.removeCustomRules(this.currentUrl);
             const urlFilteringState = await messagesSender.getUrlFilteringState(tab);
             runInAction(async () => {
                 this.setUrlFilteringState(urlFilteringState);
                 uiStore.setExtensionPending(false);
-                await messagesSender.reload(tab);
+                await this.reloadPage();
             });
         } catch (error) {
             log.error(error);
@@ -417,7 +418,7 @@ class SettingsStore {
     startApp = async () => {
         try {
             this.rootStore.uiStore.setExtensionPending(true);
-            const tab = await tabs.getCurrent();
+            const tab = await this.getCurrentTab();
             const currentFilteringState = await messagesSender.getUrlFilteringState(tab, true);
             const response = await messagesSender.getAppState();
             runInAction(() => {

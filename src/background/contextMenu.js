@@ -33,36 +33,46 @@ const contextMenuCallbackMappings = {
         await tabs.openPage(reportUrl);
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_on]: async () => {
-        const tab = await tabs.getActiveTab();
-        await state.setFilteringStatus(
-            true,
-            state.urlInfo.isHttpsFilteringEnabled,
-            tab.url
-        );
-        await filteringPause.clearHostnameTimeout(tab.url);
-        await tabs.reload(tab);
+        const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+
+        await Promise.all(tabsToUpdate.map(async (tab) => {
+            await state.setFilteringStatus(
+                true,
+                state.urlInfo.isHttpsFilteringEnabled,
+                tab.url
+            );
+            await filteringPause.clearHostnameTimeout(tab.url);
+            await tabs.reload(tab);
+        }));
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_off]: async () => {
-        const tab = await tabs.getActiveTab();
-        await state.setFilteringStatus(
-            false,
-            state.urlInfo.isHttpsFilteringEnabled,
-            tab.url
-        );
-        await filteringPause.clearHostnameTimeout(tab.url);
-        await tabs.reload(tab);
+        const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+
+        await Promise.all(tabsToUpdate.map(async (tab) => {
+            await state.setFilteringStatus(
+                false,
+                state.urlInfo.isHttpsFilteringEnabled,
+                tab.url
+            );
+            await filteringPause.clearHostnameTimeout(tab.url);
+            await tabs.reload(tab);
+        }));
     },
     [CONTEXT_MENU_ITEMS.context_enable_protection]: async () => {
-        state.setProtectionStatus(true);
+        const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        const tab = await tabs.getActiveTab();
-        await tabs.reload(tab);
+        await Promise.all(tabsToUpdate.map(async (tab) => {
+            await state.setProtectionStatus(true);
+            await tabs.reload(tab);
+        }));
     },
     [CONTEXT_MENU_ITEMS.context_disable_protection]: async () => {
-        state.setProtectionStatus(false);
+        const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        const tab = await tabs.getActiveTab();
-        await tabs.reload(tab);
+        await Promise.all(tabsToUpdate.map(async (tab) => {
+            await state.setProtectionStatus(false);
+            await tabs.reload(tab);
+        }));
     },
     [CONTEXT_MENU_ITEMS.context_open_settings]: () => {
         state.openSettings();
@@ -71,10 +81,12 @@ const contextMenuCallbackMappings = {
         state.openFilteringLog();
     },
     [CONTEXT_MENU_ITEMS.pause_filtering]: async () => {
-        const tab = await tabs.getActiveTab();
+        const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
-        await filteringPause.handleFilteringPause(tab.url);
-        await tabs.reload(tab);
+        await Promise.all(tabsToUpdate.map(async (tab) => {
+            await filteringPause.handleFilteringPause(tab.url);
+            await tabs.reload(tab);
+        }));
     },
 };
 
@@ -107,6 +119,7 @@ const addSeparator = () => {
 
 const updateContextMenu = () => {
     if (!state.isAppWorking()) {
+        addMenuItem(CONTEXT_MENU_ITEMS.context_enable_protection);
         return;
     }
     if (!state.appState.isAuthorized) {
