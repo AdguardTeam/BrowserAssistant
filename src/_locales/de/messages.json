@@ -69,7 +69,7 @@
         "message": "Filter-Protokoll öffnen"
     },
     "report_site": {
-        "message": "Diese Webseite melden …"
+        "message": "Problem melden"
     },
     "reset_custom_rules": {
         "message": "Eigene Regeln für diese Seite zurücksetzen"
@@ -90,7 +90,7 @@
         "message": "Hier gibt es nichts zu blocken"
     },
     "secure_page": {
-        "message": "Sichere Seite"
+        "message": "Geschützte Seite"
     },
     "reload_page": {
         "message": "Seite neu laden"
@@ -102,10 +102,10 @@
         "message": "Standardmäßig filtern wir den HTTPS-Verkehr für Zahlungssysteme und Banken-Websites nicht. Sie können die Filterung selbst aktivieren: Tippen Sie auf das gelbe Schloss auf der linken Seite."
     },
     "disabled": {
-        "message": "Auf dieser Webseite deaktiviert"
+        "message": "Auf dieser Website deaktiviert"
     },
     "enabled": {
-        "message": "Auf dieser Webseite aktiviert"
+        "message": "Auf dieser Website aktiviert"
     },
     "protection_is_enabled": {
         "message": "Schutz ist aktiviert"
@@ -123,7 +123,7 @@
         "message": "Support kontaktieren"
     },
     "context_site_filtering_on": {
-        "message": "Filtern auf dieser Webseite aktivieren"
+        "message": "Filtern auf dieser Website aktivieren"
     },
     "context_site_filtering_off": {
         "message": "Filtern auf dieser Website deaktivieren"
@@ -132,7 +132,7 @@
         "message": "Werbung auf dieser Website sperren …"
     },
     "context_complaint_website": {
-        "message": "Diese Webseite melden …"
+        "message": "Problem melden…"
     },
     "context_site_filtering_disabled": {
         "message": "AdGuard kann auf dieser Domain nicht ausgeführt werden"

@@ -4,6 +4,7 @@ import log from '../lib/logger';
 import { messageHandler, longLivedMessageHandler } from './messageHandler';
 import state from './state';
 import { updateService } from './updateService';
+import { migrationService } from './migrationService';
 import { consent } from './consent';
 import tabs from './tabs';
 import browserApi from '../lib/browserApi';
@@ -17,11 +18,17 @@ browser.runtime.onMessage.addListener(messageHandler);
 browser.runtime.onConnect.addListener(longLivedMessageHandler);
 
 const onInstalled = async (runInfo) => {
-    if (runInfo.isFirstRun) {
-        consent.setConsentRequired(true);
+    if (runInfo.isUpdate) {
+        await migrationService.migrate(runInfo.previousVersion);
     }
 
-    if (consent.isConsentRequired() && browserApi.utils.isFirefoxBrowser) {
+    if (runInfo.isFirstRun) {
+        await consent.setConsentRequired(true);
+    }
+
+    const isConsentRequired = await consent.isConsentRequired();
+
+    if (isConsentRequired && browserApi.utils.isFirefoxBrowser) {
         await tabs.openPostInstallPage();
     }
 };
@@ -29,7 +36,7 @@ const onInstalled = async (runInfo) => {
 (async () => {
     try {
         await settings.init();
-        updateService.init(onInstalled);
+        await updateService.init(onInstalled);
         state.init();
         contextMenu.init();
     } catch (error) {
