@@ -1,4 +1,7 @@
-import { POPUP_MESSAGES } from '../../lib/types';
+import nanoid from 'nanoid';
+import browser from 'webextension-polyfill';
+
+import { POPUP_MESSAGES, BACKGROUND_MESSAGES } from '../../lib/types';
 import browserApi from '../../lib/browserApi';
 
 const sendMessage = async (type, data) => browserApi.runtime.sendMessage({ type, data });
@@ -64,4 +67,19 @@ export default {
     getActiveAndSimilarTabs: () => {
         return sendMessage(POPUP_MESSAGES.GET_ACTIVE_AND_SIMILAR_TABS);
     },
+};
+
+/**
+ * Creates long lived connection between popup and background page
+ */
+export const createLongLivedConnection = async () => {
+    const popupId = `popup_${nanoid(7)}`;
+    const port = browser.runtime.connect({ name: popupId });
+
+    port.onMessage.addListener((message) => {
+        if (message.type === BACKGROUND_MESSAGES.CLOSE_POPUP
+            && message.popupId === popupId) {
+            window.close();
+        }
+    });
 };

@@ -71,3 +71,7 @@ export const HOST_TYPES = {
 export const SETTINGS = {
     CONTEXT_MENU_ENABLED: 'context_menu_enabled',
 };
+
+export const BACKGROUND_MESSAGES = {
+    CLOSE_POPUP: 'close.popup',
+};

@@ -5,6 +5,7 @@ import {
     CONTENT_MESSAGES,
     POST_INSTALL_MESSAGES,
     OPTIONS_UI_MESSAGES,
+    BACKGROUND_MESSAGES,
 } from '../lib/types';
 import tabs from './tabs';
 import state from './state';
@@ -12,6 +13,7 @@ import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
 import { SUPPORT_LINK } from '../lib/consts';
 import { consent } from './consent';
+import log from '../lib/logger';
 import { settings } from './settings';
 
 /**
@@ -22,7 +24,7 @@ import { settings } from './settings';
  * @returns {Promise<*>}
  */
 // eslint-disable-next-line consistent-return
-const messageHandler = async (message) => {
+export const messageHandler = async (message) => {
     const { type, data } = message;
 
     switch (type) {
@@ -177,4 +179,33 @@ const messageHandler = async (message) => {
     }
 };
 
-export default messageHandler;
+let openedPort = null;
+
+/**
+ * Sets opened port
+ * @param {object | null} value
+ */
+const setOpenedPort = (value) => {
+    openedPort = value;
+};
+
+/**
+ * This handler used to communicate with popup pages
+ * @param {Runtime.Port} port
+ */
+export const longLivedMessageHandler = async (port) => {
+    log.debug(`Popup with id "${port.name}" opened`);
+
+    if (openedPort) {
+        // close previously opened popup to avoid situation of two opened popups
+        openedPort.postMessage({ type: BACKGROUND_MESSAGES.CLOSE_POPUP, popupId: openedPort.name });
+    }
+    setOpenedPort(port);
+
+    port.onDisconnect.addListener(async () => {
+        log.debug(`Popup with id "${port.name}" closed`);
+        if (port === openedPort) {
+            setOpenedPort(null);
+        }
+    });
+};
