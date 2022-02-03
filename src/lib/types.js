@@ -75,3 +75,8 @@ export const SETTINGS = {
 export const BACKGROUND_MESSAGES = {
     CLOSE_POPUP: 'close.popup',
 };
+
+export const FEEDBACK_ACTIONS = {
+    UPDATE_FILTERING_STATUS: 'updateFilteringStatus',
+    UPDATE_APPLICATION_APP_ONLY: 'updateApplicationAppOnly',
+};

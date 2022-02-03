@@ -4,12 +4,13 @@ import browser from 'webextension-polyfill';
 import browserApi from '../lib/browserApi';
 import { Api } from './api';
 import versions from './versions';
-import { POPUP_MESSAGES } from '../lib/types';
+import { FEEDBACK_ACTIONS, POPUP_MESSAGES } from '../lib/types';
 import notifier from '../lib/notifier';
 import {
     getFormattedProtocol, getUrlProps, isHttp,
 } from '../lib/helpers';
 import { PROTOCOLS } from '../popup/stores/consts';
+import log from '../lib/logger';
 
 /**
  * This class handles app state
@@ -42,6 +43,12 @@ class State {
          * @type {boolean}
          */
         isAuthorized: true,
+
+        /**
+         *  String that determines what action application wants browser assistant to do
+         *  @type {typeof FEEDBACK_ACTIONS}
+         */
+        feedbackAction: FEEDBACK_ACTIONS.UPDATE_APPLICATION_APP_ONLY,
     };
 
     updateStatusInfo = {
@@ -153,9 +160,19 @@ class State {
             isAuthorized,
         } = appState;
 
+        let { feedbackAction = FEEDBACK_ACTIONS.UPDATE_APPLICATION_APP_ONLY } = appState;
+
         if ([isInstalled, isRunning, isProtectionEnabled].some((state) => state === undefined)) {
             const message = `isInstalled=${isInstalled}, isRunning=${isRunning}, isProtectionEnabled=${isProtectionEnabled}`;
             throw new Error(`All states should be defined: received ${message}`);
+        }
+
+        /**
+         * Validate feedbackAction values, set to default if not found among known actions
+         */
+        if (!Object.values(FEEDBACK_ACTIONS).includes(feedbackAction)) {
+            log.debug(`Extension doesn't know about this feedback action: ${feedbackAction}`);
+            feedbackAction = FEEDBACK_ACTIONS.UPDATE_APPLICATION_APP_ONLY;
         }
 
         const nextAppState = {
@@ -163,6 +180,7 @@ class State {
             isInstalled,
             isRunning,
             isProtectionEnabled,
+            feedbackAction,
         };
 
         if (locale !== undefined) {
@@ -173,9 +191,15 @@ class State {
             nextAppState.isAuthorized = isAuthorized;
         }
 
-        // Notify modules only when appState changes
-        if (!isEqual(this.appState, nextAppState)) {
+        const appStateChanged = !isEqual(this.appState, nextAppState);
+
+        if (appStateChanged) {
             this.appState = { ...this.appState, ...nextAppState };
+        }
+
+        // Notify modules only when appState changes or feedbackAction asks
+        // to update filtering state
+        if (appStateChanged || feedbackAction === FEEDBACK_ACTIONS.UPDATE_FILTERING_STATUS) {
             this.notifyModules();
         }
     };

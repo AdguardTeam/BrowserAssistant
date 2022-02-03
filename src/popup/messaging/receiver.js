@@ -1,4 +1,4 @@
-import { POPUP_MESSAGES } from '../../lib/types';
+import { FEEDBACK_ACTIONS, POPUP_MESSAGES } from '../../lib/types';
 
 const getMessageReceiver = (rootStore) => {
     const { settingsStore } = rootStore;
@@ -8,8 +8,12 @@ const getMessageReceiver = (rootStore) => {
 
         switch (type) {
             case POPUP_MESSAGES.STATE_UPDATED:
-                settingsStore.setCurrentAppState(data.appState);
-                settingsStore.setUpdateStatusInfo(data.updateStatusInfo);
+                if (data.appState.feedbackAction === FEEDBACK_ACTIONS.UPDATE_FILTERING_STATUS) {
+                    await settingsStore.updatePopupData();
+                } else {
+                    settingsStore.setCurrentAppState(data.appState);
+                    settingsStore.setUpdateStatusInfo(data.updateStatusInfo);
+                }
                 break;
             case POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT: {
                 const { currentTabHostname } = settingsStore;

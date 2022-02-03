@@ -34,8 +34,8 @@ const getPopupData = async (tab) => {
     try {
         currentFilteringState = await state.getCurrentFilteringState(tab);
     } catch (e) {
-        const updateStatusInfo = await state.getUpdateStatusInfo();
-        const appState = await state.getAppState();
+        const updateStatusInfo = state.getUpdateStatusInfo();
+        const appState = state.getAppState();
         return {
             referrer,
             updateStatusInfo,
@@ -48,8 +48,8 @@ const getPopupData = async (tab) => {
 
     // For pages without http or https currentFilteringState would be null
     if (!currentFilteringState) {
-        const updateStatusInfo = await state.getUpdateStatusInfo();
-        const appState = await state.getAppState();
+        const updateStatusInfo = state.getUpdateStatusInfo();
+        const appState = state.getAppState();
         return {
             referrer,
             updateStatusInfo,
