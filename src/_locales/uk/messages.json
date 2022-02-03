@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "Видалити"
+    },
+    "options_context_menu_title": {
+        "message": "Показувати у контекстному меню браузера"
     }
 }

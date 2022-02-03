@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "제거"
+    },
+    "options_context_menu_title": {
+        "message": "브라우저 콘텍스트 메뉴에 표시"
     }
 }

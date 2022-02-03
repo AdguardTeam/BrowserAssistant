@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "Odinštalovať"
+    },
+    "options_context_menu_title": {
+        "message": "Zobraziť v kontextovej ponuke prehliadača"
     }
 }

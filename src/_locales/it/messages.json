@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "Disinstalla"
+    },
+    "options_context_menu_title": {
+        "message": "Mostrare nel menu contestuale del browser"
     }
 }

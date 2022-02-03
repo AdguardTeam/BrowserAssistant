@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "アンインストール"
+    },
+    "options_context_menu_title": {
+        "message": "ブラウザの右クリックメニューで表示する"
     }
 }

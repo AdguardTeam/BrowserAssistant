@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "卸载"
+    },
+    "options_context_menu_title": {
+        "message": "在浏览器上下文菜单显示"
     }
 }
