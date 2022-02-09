@@ -1,5 +1,24 @@
+:root {
+    --white: #ffffff;
+    --gray-base: #4d4d4d;
+
+    @media (prefers-color-scheme: dark) {
+        --white: #1e1e1e;
+        --gray-base: #cccccc;
+    }
+}
+
+body {
+    background-color: var(--white);
+    color: var(--gray-base);
+}
+
 @-moz-document url-prefix() {
+    body {
+        min-height: 250px
+    }
+
     .options {
-        padding-top: 24px;
+        padding: 24px;
     }
 }
