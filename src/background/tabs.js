@@ -57,10 +57,9 @@ class Tabs {
      * Call from browser action popup in order to get correct tab
      */
     getCurrent = async () => {
-        const { id: windowId } = await browser.windows.getCurrent();
         const tabs = await browser.tabs.query({
             active: true,
-            windowId,
+            currentWindow: true,
         });
         return this.prepareTab(tabs[0]);
     };
