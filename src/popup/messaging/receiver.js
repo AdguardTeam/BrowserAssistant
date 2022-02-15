@@ -8,6 +8,7 @@ const getMessageReceiver = (rootStore) => {
 
         switch (type) {
             case POPUP_MESSAGES.STATE_UPDATED:
+                // TODO move back status check when windows and mac apps will release these statuses
                 await settingsStore.updatePopupData();
                 if (data.appState.feedbackAction === FEEDBACK_ACTIONS.UPDATE_APPLICATION_APP_ONLY) {
                     settingsStore.setCurrentAppState(data.appState);
