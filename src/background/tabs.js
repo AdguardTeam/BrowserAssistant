@@ -95,6 +95,10 @@ class Tabs {
         }
 
         const { url } = activeTab;
+        if (!url) {
+            log.debug('Active tab has no url');
+            return [];
+        }
         const urlObject = new URL(url);
         const { origin } = urlObject;
 
