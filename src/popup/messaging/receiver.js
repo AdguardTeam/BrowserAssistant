@@ -8,9 +8,8 @@ const getMessageReceiver = (rootStore) => {
 
         switch (type) {
             case POPUP_MESSAGES.STATE_UPDATED:
-                if (data.appState.feedbackAction === FEEDBACK_ACTIONS.UPDATE_FILTERING_STATUS) {
-                    await settingsStore.updatePopupData();
-                } else {
+                await settingsStore.updatePopupData();
+                if (data.appState.feedbackAction === FEEDBACK_ACTIONS.UPDATE_APPLICATION_APP_ONLY) {
                     settingsStore.setCurrentAppState(data.appState);
                     settingsStore.setUpdateStatusInfo(data.updateStatusInfo);
                 }
