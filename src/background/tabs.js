@@ -96,11 +96,11 @@ class Tabs {
 
         const { url } = activeTab;
         const urlObject = new URL(url);
-        const { hostname } = urlObject;
+        const { origin } = urlObject;
 
         const allTabs = await browser.tabs.query({});
         return allTabs
-            .filter((tab) => tab.url.includes(hostname))
+            .filter((tab) => tab.url.startsWith(origin))
             .map((tab) => this.prepareTab(tab));
     };
 
