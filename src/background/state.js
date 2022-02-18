@@ -1,16 +1,16 @@
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 import browser from 'webextension-polyfill';
-import browserApi from '../lib/browserApi';
 import { Api } from './api';
 import versions from './versions';
-import { FEEDBACK_ACTIONS, POPUP_MESSAGES } from '../lib/types';
+import { FEEDBACK_ACTIONS } from '../lib/types';
 import notifier from '../lib/notifier';
 import {
     getFormattedProtocol, getUrlProps, isHttp,
 } from '../lib/helpers';
 import { PROTOCOLS } from '../popup/stores/consts';
 import log from '../lib/logger';
+import { longLivedMessageService } from './longLivedMessageService';
 
 /**
  * This class handles app state
@@ -215,13 +215,10 @@ class State {
         notifier.notifyListeners(notifier.types.STATE_UPDATED, tab);
 
         // Notify popup about changed state
-        await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.STATE_UPDATED,
-            data: {
-                appState: this.getAppState(),
-                updateStatusInfo: this.getUpdateStatusInfo(),
-            },
-        });
+        longLivedMessageService.notifyPopupStateUpdated(
+            this.getAppState(),
+            this.getUpdateStatusInfo()
+        );
     }, this.NOTIFY_TIMEOUT_MS, { leading: false });
 
     /**

@@ -14,8 +14,10 @@ import {
 import {
     DOWNLOAD_LINK,
     EXTENSION_DOWNLOAD_LINK,
+    SUPPORT_LINK,
 } from '../../../lib/consts';
-import messagesSender from '../../messaging/sender';
+import { tabs } from '../../../lib/tabs';
+import { messagesSender } from '../../messageService';
 import {
     getFormattedProtocol,
     getUrlProps,
@@ -207,13 +209,13 @@ class SettingsStore {
 
     @action
     openDownloadPage = async () => {
-        await messagesSender.openPage(DOWNLOAD_LINK);
+        await tabs.openPage(DOWNLOAD_LINK);
     };
 
     reloadPage = async () => {
-        const tabsToReload = await messagesSender.getActiveAndSimilarTabs();
+        const tabsToReload = await tabs.getActiveAndSimilarTabs();
         tabsToReload.forEach((tab) => {
-            messagesSender.reload(tab);
+            tabs.reloadTab(tab);
         });
     };
 
@@ -288,7 +290,7 @@ class SettingsStore {
 
     @action
     updateExtension = () => {
-        messagesSender.openPage(EXTENSION_DOWNLOAD_LINK);
+        tabs.openPage(EXTENSION_DOWNLOAD_LINK);
     };
 
     /**
@@ -324,7 +326,7 @@ class SettingsStore {
 
     @action
     getCurrentTab = async () => {
-        const tab = await messagesSender.getCurrentTab();
+        const tab = await tabs.getCurrentTab();
         runInAction(() => {
             // update current url just in case
             this.currentUrl = tab.url;
@@ -352,7 +354,7 @@ class SettingsStore {
 
     contactSupport = async () => {
         try {
-            await messagesSender.contactSupport();
+            await tabs.openPage(SUPPORT_LINK);
             window.close();
         } catch (error) {
             log.error(error);

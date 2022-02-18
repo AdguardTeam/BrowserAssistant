@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react';
 import Modal from 'react-modal';
-import browser from 'webextension-polyfill';
 import { observer } from 'mobx-react';
 
 import Settings from '../Settings';
@@ -10,8 +9,7 @@ import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
-import getMessageReceiver from '../../messaging/receiver';
-import { createLongLivedConnection } from '../../messaging/sender';
+import { createLongLivedConnection } from '../../messageService';
 import { TermsAgreement, ORIGIN } from '../../../shared/components/TermsAgreement';
 
 Modal.setAppElement('#root');
@@ -21,16 +19,18 @@ const App = observer(() => {
 
     const { settingsStore, uiStore, translationStore } = rootContext;
 
-    const messageHandler = getMessageReceiver(rootContext);
+    useEffect(() => {
+        const onUnload = createLongLivedConnection(rootContext);
+
+        return () => {
+            onUnload();
+        };
+    }, []);
 
     useEffect(() => {
         (async () => {
-            await createLongLivedConnection();
             await settingsStore.getPopupData();
         })();
-
-        browser.runtime.onMessage.addListener(messageHandler);
-        return () => browser.runtime.onMessage.removeListener(messageHandler);
     }, []);
 
     const { isAppWorking } = settingsStore;

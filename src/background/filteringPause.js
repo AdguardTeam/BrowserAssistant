@@ -1,7 +1,6 @@
 import { FILTERING_PAUSE_VERSION_SUPPORT_SINCE } from '../lib/consts';
 import { compareSemver, getUrlProperties } from '../lib/helpers';
-import browserApi from '../lib/browserApi';
-import { POPUP_MESSAGES } from '../lib/types';
+import { longLivedMessageService } from './longLivedMessageService';
 import state from './state';
 
 const FILTERING_PAUSE_TIMEOUT_MS = 30000;
@@ -46,7 +45,7 @@ class FilteringPause {
 
     clearHostnameTimeout = async (url) => {
         this.resetHostnameTimeout(url);
-        await this.notifyPopup();
+        this.notifyPopup();
         this.deleteHostnameTimeout(url);
     };
 
@@ -69,13 +68,8 @@ class FilteringPause {
         return timeout < 0;
     };
 
-    notifyPopup = async () => {
-        await browserApi.runtime.sendMessage({
-            type: POPUP_MESSAGES.UPDATE_FILTERING_PAUSE_TIMEOUT,
-            data: {
-                filteringPauseMap: this.hostnameToTimeoutMap,
-            },
-        });
+    notifyPopup = () => {
+        longLivedMessageService.notifyPopupFilteringPauseTimeout(this.hostnameToTimeoutMap);
     };
 
     handleFilteringPause = async (url) => {
@@ -98,7 +92,7 @@ class FilteringPause {
                 return;
             }
 
-            await this.notifyPopup();
+            this.notifyPopup();
 
             this.setHostnameTimeout(url, timeout - FILTERING_PAUSE_TIMER_TICK_MS);
         }, FILTERING_PAUSE_TIMER_TICK_MS);

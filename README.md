@@ -116,11 +116,11 @@ For a full list of all `npm` packages in use, please take a look at [package.jso
 
 ###### Step 2:
 * Open Terminal
-* Type `cd /Library/Application\ Support/com.adguard.mac.adguard/`
+* Type `cd /Library/Application\ Support/AdGuard\ Software/com.adguard.mac.adguard/`
 * Type `sudo chown root devConfig.json`
 * Type `sudo chmod 444 devConfig.json`
 * Type your Mac password
-* Type `ls -la /Library/Application\ Support/com.adguard.mac.adguard/`
+* Type `ls -la /Library/Application\ Support/AdGuard\ Software/com.adguard.mac.adguard/`
 ###### Result:
 * `devConfig.json` file received root rights
 

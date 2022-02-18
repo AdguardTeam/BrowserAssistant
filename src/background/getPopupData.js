@@ -1,5 +1,5 @@
 import state from './state';
-import tabs from './tabs';
+import { tabsService } from './TabsService';
 import filteringPause from './filteringPause';
 
 const getPopupData = async (tab) => {
@@ -27,7 +27,7 @@ const getPopupData = async (tab) => {
         };
     }
 
-    const referrer = await tabs.getReferrer(tab);
+    const referrer = await tabsService.getReferrer(tab);
     const updateStatusInfo = state.getUpdateStatusInfo();
     const appState = state.getAppState();
     let currentFilteringState;

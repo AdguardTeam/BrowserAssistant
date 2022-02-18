@@ -5,15 +5,13 @@ import {
     CONTENT_MESSAGES,
     POST_INSTALL_MESSAGES,
     OPTIONS_UI_MESSAGES,
-    BACKGROUND_MESSAGES,
 } from '../lib/types';
-import tabs from './tabs';
+import { tabs } from '../lib/tabs';
+import { tabsService } from './TabsService';
 import state from './state';
 import getPopupData from './getPopupData';
 import filteringPause from './filteringPause';
-import { SUPPORT_LINK } from '../lib/consts';
 import { consent } from './consent';
-import log from '../lib/logger';
 import { settings } from './settings';
 
 /**
@@ -91,11 +89,6 @@ export const messageHandler = async (message) => {
             break;
         }
 
-        case POPUP_MESSAGES.CONTACT_SUPPORT: {
-            await tabs.openPage(SUPPORT_LINK);
-            break;
-        }
-
         case POPUP_MESSAGES.OPEN_FILTERING_LOG: {
             await state.openFilteringLog();
             break;
@@ -111,21 +104,9 @@ export const messageHandler = async (message) => {
             break;
         }
 
-        case POPUP_MESSAGES.OPEN_PAGE: {
-            const { url } = data;
-            await tabs.openPage(url);
-            break;
-        }
-
-        case POPUP_MESSAGES.RELOAD: {
-            const { tab } = data;
-            await tabs.reload(tab);
-            break;
-        }
-
         case POPUP_MESSAGES.INIT_ASSISTANT: {
             const { tabId } = data;
-            await tabs.initAssistant(tabId);
+            await tabsService.initAssistant(tabId);
             break;
         }
 
@@ -138,7 +119,7 @@ export const messageHandler = async (message) => {
         case POPUP_MESSAGES.PAUSE_FILTERING: {
             const { tab } = data;
             await filteringPause.handleFilteringPause(tab.url);
-            await tabs.reload(tab);
+            await tabs.reloadTab(tab);
             break;
         }
 
@@ -157,14 +138,6 @@ export const messageHandler = async (message) => {
             return consent.isConsentRequired();
         }
 
-        case POPUP_MESSAGES.GET_CURRENT_TAB: {
-            return tabs.getCurrent();
-        }
-
-        case POPUP_MESSAGES.GET_ACTIVE_AND_SIMILAR_TABS: {
-            return tabs.getActiveAndSimilarTabs();
-        }
-
         case OPTIONS_UI_MESSAGES.GET_SETTING: {
             return settings.getSetting(data.key);
         }
@@ -177,35 +150,4 @@ export const messageHandler = async (message) => {
             throw new Error(`Unknown message type was sent: ${type}`);
         }
     }
-};
-
-let openedPort = null;
-
-/**
- * Sets opened port
- * @param {object | null} value
- */
-const setOpenedPort = (value) => {
-    openedPort = value;
-};
-
-/**
- * This handler used to communicate with popup pages
- * @param {Runtime.Port} port
- */
-export const longLivedMessageHandler = async (port) => {
-    log.debug(`Popup with id "${port.name}" opened`);
-
-    if (openedPort) {
-        // close previously opened popup to avoid situation of two opened popups
-        openedPort.postMessage({ type: BACKGROUND_MESSAGES.CLOSE_POPUP, popupId: openedPort.name });
-    }
-    setOpenedPort(port);
-
-    port.onDisconnect.addListener(async () => {
-        log.debug(`Popup with id "${port.name}" closed`);
-        if (port === openedPort) {
-            setOpenedPort(null);
-        }
-    });
 };

@@ -1,7 +1,8 @@
 import browser from 'webextension-polyfill';
 
 import state from './state';
-import tabs from './tabs';
+import { tabsService } from './TabsService';
+import { tabs } from '../lib/tabs';
 import filteringPause from './filteringPause';
 import { settings } from './settings';
 import notifier from '../lib/notifier';
@@ -24,11 +25,11 @@ const CONTEXT_MENU_ITEMS = {
 const contextMenuCallbackMappings = {
     [CONTEXT_MENU_ITEMS.context_block_site_ads]: async () => {
         const { id } = await tabs.getActiveTab();
-        await tabs.initAssistant(id);
+        await tabsService.initAssistant(id);
     },
     [CONTEXT_MENU_ITEMS.context_complaint_website]: async () => {
         const tab = await tabs.getActiveTab();
-        const referrer = await tabs.getReferrer(tab);
+        const referrer = await tabsService.getReferrer(tab);
         const reportUrl = await state.reportSite(tab.url, referrer);
         await tabs.openPage(reportUrl);
     },
@@ -42,7 +43,7 @@ const contextMenuCallbackMappings = {
                 tab.url
             );
             await filteringPause.clearHostnameTimeout(tab.url);
-            await tabs.reload(tab);
+            await tabs.reloadTab(tab);
         }));
     },
     [CONTEXT_MENU_ITEMS.context_site_filtering_off]: async () => {
@@ -55,7 +56,7 @@ const contextMenuCallbackMappings = {
                 tab.url
             );
             await filteringPause.clearHostnameTimeout(tab.url);
-            await tabs.reload(tab);
+            await tabs.reloadTab(tab);
         }));
     },
     [CONTEXT_MENU_ITEMS.context_enable_protection]: async () => {
@@ -63,7 +64,7 @@ const contextMenuCallbackMappings = {
 
         await Promise.all(tabsToUpdate.map(async (tab) => {
             await state.setProtectionStatus(true);
-            await tabs.reload(tab);
+            await tabs.reloadTab(tab);
         }));
     },
     [CONTEXT_MENU_ITEMS.context_disable_protection]: async () => {
@@ -71,7 +72,7 @@ const contextMenuCallbackMappings = {
 
         await Promise.all(tabsToUpdate.map(async (tab) => {
             await state.setProtectionStatus(false);
-            await tabs.reload(tab);
+            await tabs.reloadTab(tab);
         }));
     },
     [CONTEXT_MENU_ITEMS.context_open_settings]: () => {
@@ -85,7 +86,7 @@ const contextMenuCallbackMappings = {
 
         await Promise.all(tabsToUpdate.map(async (tab) => {
             await filteringPause.handleFilteringPause(tab.url);
-            await tabs.reload(tab);
+            await tabs.reloadTab(tab);
         }));
     },
 };
