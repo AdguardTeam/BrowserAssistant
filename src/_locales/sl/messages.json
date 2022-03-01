@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "Odstrani"
+    },
+    "options_context_menu_title": {
+        "message": "Prikaži v priročnem meniju brskalnika"
     }
 }

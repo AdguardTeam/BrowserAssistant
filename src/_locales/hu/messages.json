@@ -175,5 +175,8 @@
     },
     "post_install_page_uninstall_button": {
         "message": "Eltávolít"
+    },
+    "options_context_menu_title": {
+        "message": "Megjelenítés a böngésző helyi menüjében"
     }
 }

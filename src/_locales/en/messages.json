@@ -72,7 +72,7 @@
         "message": "Report an issue"
     },
     "reset_custom_rules": {
-        "message": "Reset all custom rules for this page"
+        "message": "Remove all user rules for this page"
     },
     "cert_expired": {
         "message": "AdGuard could not verify this website's certificate because the root certificate has expired"

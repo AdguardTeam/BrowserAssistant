@@ -99,7 +99,7 @@
         "message": "Filtrelemeye devam etmek için sayfayı yenile"
     },
     "not_filtering_https": {
-        "message": "Varsayılan olarak, ödeme sistemleri ve banka web sitelerinin kullandığı HTTPS trafiğini filtrelemiyoruz. İsterseniz filtrelemeyi etkinleştirebilirsiniz: soldaki sarı \"kilit\" simgesini tıklayın."
+        "message": "Varsayılan olarak, ödeme sistemleri ve banka web sitelerinin kullandığı HTTPS trafiğini filtrelemiyoruz. İsterseniz filtrelemeyi etkinleştirebilirsiniz: soldaki sarı \"kilit\" simgeye tıklayın."
     },
     "disabled": {
         "message": "Bu sitede devre dışı bırakıldı"
