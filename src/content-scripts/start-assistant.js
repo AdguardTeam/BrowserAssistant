@@ -1,4 +1,4 @@
-import 'adguard-assistant';
+import { adguardAssistant } from '@adguard/assistant';
 
 export const startAssistant = (() => {
     let assistant;
@@ -8,7 +8,7 @@ export const startAssistant = (() => {
         }
 
         if (!assistant) {
-            assistant = global.adguardAssistant();
+            assistant = adguardAssistant();
         } else {
             assistant.close();
         }
