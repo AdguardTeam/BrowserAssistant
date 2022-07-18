@@ -114,6 +114,7 @@ const addMenuItem = (i18key, enabled = true) => {
 
 const addSeparator = () => {
     browser.contextMenus.create({
+        contexts: ['all'],
         type: 'separator',
     });
 };
