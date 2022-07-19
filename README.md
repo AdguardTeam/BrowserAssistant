@@ -7,7 +7,6 @@ This is a replacement for the [legacy assistant](https://github.com/AdguardTeam/
 
 ## Build
 
-- `yarn clear` - removes build and node modules directories
 - `yarn install`
 - `yarn dev` / `yarn beta` / `yarn release`
 
@@ -24,8 +23,8 @@ Builds will be located in the `build` directory.
 ## Localisation
 
 - `setup your project locales, directories in the file tasks/locales.js`
-- `yarn locales:upload` used to upload base `en` locale
-- `yarn locales:download` run to download and save all locales
+- `yarn locales upload` used to upload base `en` locale
+- `yarn locales download` run to download and save all locales
 
 ## CRX Beta and Release Builds
 

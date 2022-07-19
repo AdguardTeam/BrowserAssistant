@@ -15,10 +15,7 @@
         "build:firefox": "BROWSER=firefox webpack --config tasks/webpack.js",
         "test": "jest",
         "test:watch": "jest --watch",
-        "locales:download": "node tasks/translations download",
-        "locales:upload": "node tasks/translations upload",
-        "locales:validate": "node tasks/translations validate",
-        "locales:info": "node tasks/translations/index.js info",
+        "locales": "node tasks/translations",
         "watch": "BUILD_ENV=dev run-s \"build:chrome --watch\"",
         "watch:firefox": "BUILD_ENV=dev run-s \"build:firefox --watch\"",
         "watch:all": "run-s watch watch:firefox",
@@ -27,8 +24,7 @@
         "xpi": "yarn build:firefox && node tasks/xpi.js",
         "increment": "yarn version --patch --no-git-tag-version",
         "artifacts:beta": "export BUILD_ENV=beta; yarn crx:beta && yarn xpi && node tasks/versionInfo.js",
-        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn build:firefox && yarn build:edge && node tasks/versionInfo.js",
-        "clear": "rm -rf build ; rm -rf node_modules"
+        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn build:firefox && yarn build:edge && node tasks/versionInfo.js"
     },
     "husky": {
         "hooks": {
