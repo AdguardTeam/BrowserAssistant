@@ -107,6 +107,9 @@
     "enabled": {
         "message": "이 웹사이트에서 활성화됨"
     },
+    "filtering_exception": {
+        "message": "웹사이트 성능에 영향을 줄 수 있으므로 필터링이 비활성화되었습니다."
+    },
     "protection_is_enabled": {
         "message": "보호 활성화"
     },

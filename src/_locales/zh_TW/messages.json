@@ -72,7 +72,7 @@
         "message": "報告問題"
     },
     "reset_custom_rules": {
-        "message": "重置關於此頁面之所有自訂的規則"
+        "message": "移除關於此頁面之所有的使用者規則"
     },
     "cert_expired": {
         "message": "因為 AdGuard 根憑證已到期，AdGuard 無法確認此網站的憑證"
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "已對此網站啟用"
+    },
+    "filtering_exception": {
+        "message": "過濾被禁用，因為它可能影響此網站的表現。"
     },
     "protection_is_enabled": {
         "message": "防護被啟用"

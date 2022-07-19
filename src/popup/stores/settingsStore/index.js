@@ -45,6 +45,8 @@ class SettingsStore {
 
     @observable isFilteringEnabled = false;
 
+    @observable canChangeFilteringStatus = true;
+
     @observable isInstalled = false;
 
     @observable isRunning = false;
@@ -256,6 +258,7 @@ class SettingsStore {
             originalCertStatus,
             isPageFilteredByUserFilter,
             originalCertIssuer,
+            canChangeFilteringStatus,
         } = currentFilteringState;
 
         this.isFilteringEnabled = isFilteringEnabled;
@@ -263,6 +266,7 @@ class SettingsStore {
         this.originalCertStatus = ORIGINAL_CERT_STATUS[originalCertStatus.toUpperCase()];
         this.originalCertIssuer = originalCertIssuer;
         this.isPageFilteredByUserFilter = isPageFilteredByUserFilter;
+        this.canChangeFilteringStatus = canChangeFilteringStatus;
     };
 
     @action

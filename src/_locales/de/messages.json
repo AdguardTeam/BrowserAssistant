@@ -72,7 +72,7 @@
         "message": "Problem melden"
     },
     "reset_custom_rules": {
-        "message": "Eigene Regeln für diese Seite zurücksetzen"
+        "message": "Eigene Regeln für diese Seite löschen"
     },
     "cert_expired": {
         "message": "AdGuard konnte das Zertifikat dieser Website nicht überprüfen, da das Stammzertifikat abgelaufen ist."
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "Auf dieser Website aktiviert"
+    },
+    "filtering_exception": {
+        "message": "Das Filtern wurde deaktiviert, da es die Leistung der Website beeinträchtigen kann."
     },
     "protection_is_enabled": {
         "message": "Schutz ist aktiviert"

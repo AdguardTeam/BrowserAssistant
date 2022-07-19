@@ -72,7 +72,7 @@
         "message": "Informar de un problema"
     },
     "reset_custom_rules": {
-        "message": "Restablecer todas las reglas personalizadas para esta página"
+        "message": "Eliminar todas las reglas del usuario para esta página"
     },
     "cert_expired": {
         "message": "AdGuard no pudo verificar el certificado de este sitio web porque el certificado raíz ha expirado"
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "Habilitado en este sitio web"
+    },
+    "filtering_exception": {
+        "message": "El filtrado está deshabilitado porque puede afectar el rendimiento del sitio web."
     },
     "protection_is_enabled": {
         "message": "Protección habilitada"

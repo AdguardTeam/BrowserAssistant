@@ -65,4 +65,20 @@
     #https-switcher ~ &__text {
         display: none;
     }
+
+    &--exception {
+        pointer-events: none;
+        cursor: default;
+
+        & .switcher__checkbox ~ .switcher__label {
+            background-color: transparent;
+
+            &:before {
+                box-shadow: var(--switch-btn-shadow);
+                background: var(--const-white) url('../../../../assets/images/icon__exception.svg') no-repeat center;
+                background-size: 3rem;
+                transform: translateX(1.0rem);
+            }
+        }
+    }
 }

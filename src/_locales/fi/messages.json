@@ -72,7 +72,7 @@
         "message": "Ilmoita ongelmasta"
     },
     "reset_custom_rules": {
-        "message": "Tyhjennä sivulle luodut omat säännöt"
+        "message": "Tyhjennä sivulle luodut käyttäjän säännöt"
     },
     "cert_expired": {
         "message": "AdGuard ei voinut vahvistaa sivuston varmennetta, koska juurivarmenne on erääntynyt"
@@ -99,13 +99,16 @@
         "message": "Päivitä sivu jatkaaksesi suodatusta"
     },
     "not_filtering_https": {
-        "message": "Oletuksena HTTPS-liikennettä ei suodateta maksujärjestelmissä eikä pankkisivustoilla. Voit ottaa suodatuksen itse käyttöön klikkaamalla vasemmalla olevaa keltaista \"lukkoa\"."
+        "message": "Oletuksena HTTPS-liikennettä ei suodateta maksujärjestelmissä eikä pankkisivustoilla. Voit ottaa suodatuksen itse käyttöön painamalla vasemmalla olevaa keltaista \"lukkoa\"."
     },
     "disabled": {
         "message": "Sivustoa ei suodateta"
     },
     "enabled": {
         "message": "Sivusto suodatetaan"
+    },
+    "filtering_exception": {
+        "message": "Suodatus on poistettu käytöstä, koska se saattaa vaikuttaa sivuston toimintaan."
     },
     "protection_is_enabled": {
         "message": "Suojaus on käytössä"

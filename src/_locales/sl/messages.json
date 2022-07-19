@@ -72,7 +72,7 @@
         "message": "Prijavi težavo"
     },
     "reset_custom_rules": {
-        "message": "Ponastavi vsa pravila po meri za to stran"
+        "message": "Odstrani vsa uporabniška pravila za to stran"
     },
     "cert_expired": {
         "message": "AdGuard ni mogel preveriti digitalnega potrdila te spletne strani, ker je poteklo korensko digitalno potrdilo"
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "Omogočen na tej spletni strani"
+    },
+    "filtering_exception": {
+        "message": "Filtriranje je onemogočeno, ker lahko vpliva na delovanje spletne strani."
     },
     "protection_is_enabled": {
         "message": "Varovanje je onemogočeno"

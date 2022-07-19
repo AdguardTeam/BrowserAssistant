@@ -12,6 +12,7 @@ const Settings = observer(() => {
             pageProtocol,
             setFiltering,
             isAuthorized,
+            canChangeFilteringStatus,
         },
         translationStore: { translate },
         uiStore: { globalTabIndex },
@@ -21,7 +22,7 @@ const Settings = observer(() => {
 
     const checked = pageProtocol.isSecured ? true : isFilteringEnabled;
 
-    const isDisabled = pageProtocol.isSecured || !isAuthorized;
+    const isDisabled = pageProtocol.isSecured || !isAuthorized || !canChangeFilteringStatus;
 
     return (
         <div className="settings">
@@ -33,6 +34,7 @@ const Settings = observer(() => {
                     isDisabled={isDisabled}
                     tabIndex={globalTabIndex}
                     label={translate(checked ? 'enabled' : 'disabled')}
+                    isException={!canChangeFilteringStatus}
                 />
             </div>
         </div>
