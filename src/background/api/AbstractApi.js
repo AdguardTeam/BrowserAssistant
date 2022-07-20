@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const notImplemented = (functionName) => {
     return new Error(`Method "${functionName}" is not implemented`);
 };

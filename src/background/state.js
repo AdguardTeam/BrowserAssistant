@@ -75,7 +75,7 @@ class State {
         isFilteringEnabled: false,
         isSecured: false,
         canChangeFilteringStatus: true,
-    }
+    };
 
     set isHttpsFilteringEnabled(isHttpsFilteringEnabled) {
         this.urlInfo.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
@@ -97,7 +97,7 @@ class State {
         const { protocol } = getUrlProps(currentUrl);
 
         this.isSecured = getFormattedProtocol(protocol) === PROTOCOLS.SECURED;
-    }
+    };
 
     /**
      * Handles init message response and updates app setup
@@ -222,7 +222,7 @@ class State {
         // Notify popup about changed state
         longLivedMessageService.notifyPopupStateUpdated(
             this.getAppState(),
-            this.getUpdateStatusInfo()
+            this.getUpdateStatusInfo(),
         );
     }, this.NOTIFY_TIMEOUT_MS, { leading: false });
 
@@ -337,7 +337,7 @@ class State {
         const response = await this.api.setFilteringStatus(
             isEnabled,
             isHttpsEnabled,
-            url
+            url,
         );
         this.setAppState(response.appState);
     };

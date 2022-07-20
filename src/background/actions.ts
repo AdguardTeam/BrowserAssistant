@@ -1,12 +1,17 @@
 import browser from 'webextension-polyfill';
-import log from '../lib/logger';
-import { Prefs } from './prefs';
 
-const setIcon = async (details) => {
+import { Prefs } from './prefs';
+// FIXME rewrite to named export
+import log from '../lib/logger';
+import { getErrorMessage } from '../lib/errors';
+
+type SetIconDetailsType = browser.Action.SetIconDetailsType;
+
+const setIcon = async (details: SetIconDetailsType) => {
     try {
         await browser.browserAction.setIcon(details);
     } catch (e) {
-        log.debug(e.message);
+        log.debug(getErrorMessage(e));
     }
 };
 
@@ -17,8 +22,8 @@ const setIcon = async (details) => {
  * @param {number} [tabId]
  * @returns {Promise<void>}
  */
-const setIconEnabled = async (tabId) => {
-    const details = { path: Prefs.ICONS.ENABLED };
+const setIconEnabled = async (tabId: number) => {
+    const details: SetIconDetailsType = { path: Prefs.ICONS.ENABLED };
     await setIcon(details);
     if (tabId) {
         details.tabId = tabId;
@@ -33,8 +38,8 @@ const setIconEnabled = async (tabId) => {
  * @param {number} [tabId]
  * @returns {Promise<void>}
  */
-const setIconDisabled = async (tabId) => {
-    const details = { path: Prefs.ICONS.DISABLED };
+const setIconDisabled = async (tabId: number) => {
+    const details: SetIconDetailsType = { path: Prefs.ICONS.DISABLED };
     await setIcon(details);
     if (tabId) {
         details.tabId = tabId;

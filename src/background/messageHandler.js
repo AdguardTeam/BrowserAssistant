@@ -63,7 +63,7 @@ export const messageHandler = async (message) => {
             await state.setFilteringStatus(
                 isEnabled,
                 isHttpsEnabled,
-                url
+                url,
             );
 
             await filteringPause.clearHostnameTimeout(url);

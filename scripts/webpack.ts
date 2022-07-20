@@ -41,14 +41,14 @@ const plugins = [
             from: '_locales/',
             to: '_locales/',
             // Add build environment suffixes to the extension name in locale files
-            transform: (content, path) => {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            transform: (content: { toString: () => string; }, path: string | string[]) => {
                 // ignore all paths except messages.json
                 if (path.indexOf('messages.json') === -1) {
                     return content;
                 }
                 const messages = JSON.parse(content.toString());
                 if (messages && messages.name) {
-                    // eslint-disable-next-line max-len
                     messages.name.message = appendBuildEnvSuffix(messages.name.message, BUILD_ENV);
                 }
                 return Buffer.from(JSON.stringify(messages, null, 4));
@@ -57,15 +57,14 @@ const plugins = [
         {
             from: path.resolve(__dirname, './manifest.common.json'),
             to: 'manifest.json',
-            // eslint-disable-next-line no-unused-vars
-            transform: (content, path) => {
-                // eslint-disable-next-line global-require,import/no-dynamic-require
+            transform: (content: any) => {
+                // eslint-disable-next-line import/no-dynamic-require,global-require
                 const manifestDiff = require(`./manifest.${BROWSER}`);
                 return updateManifest(content, manifestDiff);
             },
         },
     ]),
-    new webpack.NormalModuleReplacementPlugin(/\.\/ConsentAbstract/, ((resource) => {
+    new webpack.NormalModuleReplacementPlugin(/\.\/ConsentAbstract/, ((resource: { contextInfo: { issuer: string | string[]; }; request: string; }) => {
         if (!resource.contextInfo.issuer.includes('background/consent/index.js')) {
             return;
         }
@@ -129,12 +128,12 @@ const config = {
         filename: '[name].js',
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx'],
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|ts)$/,
                 loader: 'string-replace-loader',
                 options: {
                     multiple: [
@@ -144,7 +143,7 @@ const config = {
                 },
             },
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(ts|js)x?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: { babelrc: true, compact: false },

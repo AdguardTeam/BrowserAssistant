@@ -15,7 +15,7 @@ const {
     XPI_NAME,
     BUILD_ENVS,
 } = require('./consts');
-const config = require('../package');
+const config = require('../package.json');
 
 const { BUILD_ENV } = process.env;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
@@ -26,7 +26,7 @@ const fileDir = path.resolve(buildDir, FIREFOX_UPDATER_FILENAME);
 
 const getFirefoxManifest = async () => {
     const MANIFEST_PATH = path.resolve(
-        __dirname, BUILD_PATH, outputPath, BROWSER_TYPES.FIREFOX, MANIFEST_NAME
+        __dirname, BUILD_PATH, outputPath, BROWSER_TYPES.FIREFOX, MANIFEST_NAME,
     );
     const manifestBuffer = await fs.readFile(MANIFEST_PATH);
     const manifest = JSON.parse(manifestBuffer.toString());
@@ -40,7 +40,7 @@ async function generateXpi() {
     const credentialsPath = path.resolve(__dirname, '../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
     // require called here in order to escape errors, until this module is really necessary
-    // eslint-disable-next-line global-require,import/no-unresolved
+    // eslint-disable-next-line import/extensions
     const cryptor = require('../private/cryptor/dist');
     const credentialsContent = await cryptor(process.env.CREDENTIALS_PASSWORD)
         .getDecryptedContent(credentialsPath);
@@ -71,7 +71,7 @@ const generateUpdateJson = (
     {
         // eslint-disable-next-line camelcase
         id, version, update_link, strict_min_version,
-    }
+    },
 ) => ({
     addons: {
         [id]: {
@@ -92,7 +92,7 @@ const generateUpdateJson = (
 
 const createUpdateJson = async (manifest) => {
     try {
-        // eslint-disable-next-line camelcase
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         const { id, strict_min_version } = manifest.applications.gecko;
 
         const fileContent = generateUpdateJson(
@@ -101,7 +101,7 @@ const createUpdateJson = async (manifest) => {
                 version: config.version,
                 update_link: FIREFOX_UPDATE_XPI,
                 strict_min_version,
-            }
+            },
         );
 
         const fileJson = JSON.stringify(fileContent, null, 4);

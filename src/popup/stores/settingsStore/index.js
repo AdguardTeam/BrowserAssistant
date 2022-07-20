@@ -169,7 +169,7 @@ class SettingsStore {
             this.setFilteringPauseSupported(isFilteringPauseSupported);
             this.setShowReloadButtonFlag(showReloadButtonFlag);
         });
-    }
+    };
 
     @action
     setConsentRequired = (consentRequired) => {
@@ -406,7 +406,7 @@ class SettingsStore {
             await messagesSender.setFilteringStatus(
                 this.currentUrl,
                 this.isFilteringEnabled,
-                this.isHttpsFilteringEnabled
+                this.isHttpsFilteringEnabled,
             );
         } catch (error) {
             log.error(error);

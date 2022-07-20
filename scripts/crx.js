@@ -4,11 +4,18 @@ const path = require('path');
 const Crx = require('crx');
 const chalk = require('chalk');
 const {
-    CHROME_UPDATE_URL, MANIFEST_NAME, BROWSER_TYPES, BUILD_PATH, BUILD_ENVS_MAP, CERTIFICATE_PATHS,
-    CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME, CRX_NAME,
+    CHROME_UPDATE_URL,
+    MANIFEST_NAME,
+    BROWSER_TYPES,
+    BUILD_PATH,
+    BUILD_ENVS_MAP,
+    CERTIFICATE_PATHS,
+    CHROME_UPDATE_CRX,
+    CHROME_UPDATER_FILENAME,
+    CRX_NAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
-const config = require('../package');
+const config = require('../package.json');
 
 const { BUILD_ENV } = process.env;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
@@ -17,7 +24,7 @@ const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath);
 const LOAD_PATH = path
     .resolve(__dirname, BUILD_PATH, outputPath, BROWSER_TYPES.CHROME);
 const MANIFEST_PATH = path.resolve(
-    __dirname, BUILD_PATH, outputPath, BROWSER_TYPES.CHROME, MANIFEST_NAME
+    __dirname, BUILD_PATH, outputPath, BROWSER_TYPES.CHROME, MANIFEST_NAME,
 );
 
 const getPrivateKey = async () => {

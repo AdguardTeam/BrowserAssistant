@@ -29,7 +29,7 @@ class UpdateService {
                 resolve(null);
             }, this.WAIT_FROM_INSTALLED_EVENT_TIMEOUT_MS);
         });
-    }
+    };
 
     getVersionInfoFromStorage = () => {
         const previousVersion = this.getAppVersionFromStorage();
@@ -38,7 +38,7 @@ class UpdateService {
             currentVersion,
             previousVersion,
         };
-    }
+    };
 
     init = async (onInstalled) => {
         let versions = await this.getVersionsFromInstalledEvent();
@@ -65,7 +65,7 @@ class UpdateService {
         };
 
         onInstalled(runInfo);
-    }
+    };
 
     getAppVersionFromStorage = () => {
         return localStorage.get(this.APP_VERSION_KEY);

@@ -3,7 +3,7 @@ const { promises: fs } = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const { BUILD_PATH, BUILD_ENVS_MAP } = require('./consts');
-const config = require('../package');
+const config = require('../package.json');
 
 const content = `version=${config.version}`;
 const { BUILD_ENV } = process.env;

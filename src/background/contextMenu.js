@@ -40,7 +40,7 @@ const contextMenuCallbackMappings = {
             await state.setFilteringStatus(
                 true,
                 state.urlInfo.isHttpsFilteringEnabled,
-                tab.url
+                tab.url,
             );
             await filteringPause.clearHostnameTimeout(tab.url);
             await tabs.reloadTab(tab);
@@ -53,7 +53,7 @@ const contextMenuCallbackMappings = {
             await state.setFilteringStatus(
                 false,
                 state.urlInfo.isHttpsFilteringEnabled,
-                tab.url
+                tab.url,
             );
             await filteringPause.clearHostnameTimeout(tab.url);
             await tabs.reloadTab(tab);
@@ -171,7 +171,7 @@ const customizeContextMenu = () => {
 const init = () => {
     notifier.addSpecifiedListener(
         notifier.types.SETTING_UPDATED,
-        customizeContextMenu
+        customizeContextMenu,
     );
 };
 

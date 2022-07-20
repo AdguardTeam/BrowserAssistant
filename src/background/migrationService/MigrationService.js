@@ -22,7 +22,7 @@ export class MigrationService {
      */
     storageMigrationForFirefox = async () => {
         const isConsentRequired = JSON.parse(
-            localStorage.get(consent.CONSENT_REQUIRED_STORAGE_KEY)
+            localStorage.get(consent.CONSENT_REQUIRED_STORAGE_KEY),
         );
         if (isConsentRequired !== undefined) {
             log.debug('Migrate consent setting from local storage to browser storage');
