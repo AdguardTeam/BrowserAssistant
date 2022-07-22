@@ -3,6 +3,8 @@ const pJson = require('../package.json');
 const twoskyConfig = require('../.twosky.json');
 
 const { BUILD_ENV } = process.env;
+// TODO remove the rule bellow
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IS_DEV = BUILD_ENV === BUILD_ENVS.DEV;
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
@@ -22,12 +24,14 @@ const updateManifest = (manifestJson, browserManifestDiff) => {
     } catch (e) {
         throw new Error('unable to parse json from manifest');
     }
-    const devPolicy = IS_DEV ? { content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'" } : {};
+    // TODO handle content security policy for dev builds in mv3
+    // const devPolicy = IS_DEV ? { content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'" } : {};
 
     const updatedManifest = {
         ...manifest,
         ...browserManifestDiff,
-        ...devPolicy,
+        // TODO fix
+        // ...devPolicy,
         default_locale: baseLocale,
         version: pJson.version,
     };

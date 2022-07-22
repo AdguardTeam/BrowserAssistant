@@ -9,7 +9,7 @@ type SetIconDetailsType = browser.Action.SetIconDetailsType;
 
 const setIcon = async (details: SetIconDetailsType) => {
     try {
-        await browser.browserAction.setIcon(details);
+        await browser.action.setIcon(details);
     } catch (e) {
         log.debug(getErrorMessage(e));
     }

@@ -80,11 +80,6 @@ const plugins = [
         }
     })),
     new HtmlWebpackPlugin({
-        template: path.join(BACKGROUND_PATH, 'index.html'),
-        filename: 'background.html',
-        chunks: ['background'],
-    }),
-    new HtmlWebpackPlugin({
         template: path.join(POPUP_PATH, 'index.html'),
         filename: 'popup.html',
         chunks: ['popup'],
@@ -107,7 +102,9 @@ const plugins = [
 
 const config = {
     mode: IS_DEV ? 'development' : 'production',
-    devtool: IS_DEV ? 'eval-source-map' : false,
+    devtool: IS_DEV ? 'inline-source-map' : false,
+    // TODO fix source map for mv3
+    // devtool: IS_DEV ? 'eval-source-map' : false,
     performance: {
         hints: false,
         maxEntrypointSize: 512000,

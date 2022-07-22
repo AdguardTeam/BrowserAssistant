@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 
-import { localStorage } from './localStorage';
 import log from '../lib/logger';
+import { storage } from './storage';
 
 /**
  * Service with data about current app state
@@ -68,7 +68,7 @@ class UpdateService {
     };
 
     getAppVersionFromStorage = () => {
-        return localStorage.get(this.APP_VERSION_KEY);
+        return storage.get(this.APP_VERSION_KEY);
     };
 
     getAppVersionFromManifest = () => {
@@ -76,7 +76,7 @@ class UpdateService {
     };
 
     setAppVersionInStorage = (appVersion) => {
-        return localStorage.set(this.APP_VERSION_KEY, appVersion);
+        return storage.set(this.APP_VERSION_KEY, appVersion);
     };
 }
 
