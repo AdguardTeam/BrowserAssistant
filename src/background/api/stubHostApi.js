@@ -14,7 +14,7 @@ let hostData = {
     version: '7.3.2496',
     apiVersion: '3',
     isValidatedOnHost: true,
-    reportUrl: 'https://reports.adguard.com/en/new_issue.html?url=http://example.org/',
+    reportUrl: 'https://link.adtidy.org/forward.html?action=report_debug&from=popup&app=browser_assistant',
     appState: {
         isRunning: true,
         isProtectionEnabled: true,
