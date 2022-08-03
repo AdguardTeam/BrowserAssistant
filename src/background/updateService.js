@@ -31,8 +31,8 @@ class UpdateService {
         });
     };
 
-    getVersionInfoFromStorage = () => {
-        const previousVersion = this.getAppVersionFromStorage();
+    getVersionInfoFromStorage = async () => {
+        const previousVersion = await this.getAppVersionFromStorage();
         const currentVersion = this.getAppVersionFromManifest();
         return {
             currentVersion,
@@ -43,7 +43,7 @@ class UpdateService {
     init = async (onInstalled) => {
         let versions = await this.getVersionsFromInstalledEvent();
         if (!versions) {
-            versions = this.getVersionInfoFromStorage();
+            versions = await this.getVersionInfoFromStorage();
             log.debug('Versions retrieved from storage', versions);
         } else {
             log.debug('Versions retrieved from installed event', versions);
@@ -55,7 +55,7 @@ class UpdateService {
         this.isFirstRun = (this.currentVersion !== this.previousVersion && !this.previousVersion);
         this.isUpdate = !!(this.currentVersion !== this.previousVersion && this.previousVersion);
 
-        this.setAppVersionInStorage(this.currentVersion);
+        await this.setAppVersionInStorage(this.currentVersion);
 
         const runInfo = {
             currentVersion: this.currentVersion,
@@ -67,7 +67,7 @@ class UpdateService {
         onInstalled(runInfo);
     };
 
-    getAppVersionFromStorage = () => {
+    getAppVersionFromStorage = async () => {
         return storage.get(this.APP_VERSION_KEY);
     };
 
@@ -75,7 +75,7 @@ class UpdateService {
         return browser.runtime.getManifest().version;
     };
 
-    setAppVersionInStorage = (appVersion) => {
+    setAppVersionInStorage = async (appVersion) => {
         return storage.set(this.APP_VERSION_KEY, appVersion);
     };
 }
