@@ -48,16 +48,16 @@ const { BUILD_ENV } = process.env;
 const deployPath = BUILD_ENVS_MAP[BUILD_ENV].outputPath;
 
 // Update manifest URL for the Chrome extension
-const CHROME_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${CHROME_UPDATER_FILENAME}`;
+const CHROME_UPDATE_URL = `https://static.adtidy.org/extensions/browserassistant/${deployPath}/${CHROME_UPDATER_FILENAME}`;
 
 // Update manifest URL for the Firefox add-on
-const FIREFOX_UPDATE_URL = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${FIREFOX_UPDATER_FILENAME}`;
+const FIREFOX_UPDATE_URL = `https://static.adtidy.org/extensions/browserassistant/${deployPath}/${FIREFOX_UPDATER_FILENAME}`;
 
 // Path to the Chrome CRX (that we'll add to the update manifest)
-const CHROME_UPDATE_CRX = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${CRX_NAME}`;
+const CHROME_UPDATE_CRX = `https://static.adtidy.org/extensions/browserassistant/${deployPath}/${CRX_NAME}`;
 
 // Path to the Firefox XPI (that we'll add to the update manifest)
-const FIREFOX_UPDATE_XPI = `https://static.adguard.com/extensions/browserassistant/${deployPath}/${XPI_NAME}`;
+const FIREFOX_UPDATE_XPI = `https://static.adtidy.org/extensions/browserassistant/${deployPath}/${XPI_NAME}`;
 
 module.exports = {
     LOCALES_PATH,
