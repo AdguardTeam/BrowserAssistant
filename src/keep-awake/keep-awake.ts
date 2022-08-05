@@ -1,5 +1,6 @@
-import { CONTENT_MESSAGES } from '../lib/types';
 import browser from 'webextension-polyfill';
+
+import { CONTENT_MESSAGES } from '../lib/types';
 
 /**
  * TODO: Temporary hack for keeping alive service worker
