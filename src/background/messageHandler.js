@@ -26,6 +26,11 @@ export const messageHandler = async (message) => {
     const { type, data } = message;
 
     switch (type) {
+        // Message used to keep service worker awake
+        case CONTENT_MESSAGES.PING: {
+            break;
+        }
+
         case POPUP_MESSAGES.GET_APP_LOCALE: {
             return state.getLocale();
         }
