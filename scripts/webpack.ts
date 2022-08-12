@@ -17,6 +17,7 @@ const { getOutputPathByBuildEnv, appendBuildEnvSuffix, updateManifest } = requir
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
 const CONTENT_SCRIPTS_PATH = path.resolve(__dirname, SRC_PATH, 'content-scripts');
+const KEEP_AWAKE_PATH = path.resolve(__dirname, SRC_PATH, 'keep-awake');
 const POST_INSTALL_PATH = path.resolve(__dirname, SRC_PATH, 'post-install');
 const OPTIONS_UI_PATH = path.resolve(__dirname, SRC_PATH, 'options-ui');
 
@@ -117,6 +118,7 @@ const config = {
         background: BACKGROUND_PATH,
         popup: POPUP_PATH,
         'content-scripts': CONTENT_SCRIPTS_PATH,
+        'keep-awake': KEEP_AWAKE_PATH,
         'post-install': POST_INSTALL_PATH,
         'options-ui': OPTIONS_UI_PATH,
     },

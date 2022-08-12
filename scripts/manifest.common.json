@@ -24,6 +24,15 @@
         "page": "options-ui.html",
         "browser_style": true
     },
+    "content_scripts": [
+        {
+            "js": ["keep-awake.js"],
+            "run_at": "document_start",
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
     "permissions": [
         "nativeMessaging",
         "tabs",
