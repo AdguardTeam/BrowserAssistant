@@ -47,7 +47,11 @@ class TabsService {
      * @returns {Promise<*>}
      */
     sendMessage = async (tabId, type, data) => {
-        await browser.tabs.executeScript(tabId, { file: CONTENT_SCRIPT_NAME });
+        await browser.scripting.executeScript({
+            target: { tabId },
+            files: [CONTENT_SCRIPT_NAME] },
+        );
+
         const response = await browser.tabs.sendMessage(tabId, {
             type,
             data,
@@ -77,10 +81,9 @@ class TabsService {
     initAssistant = async (tabId) => {
         const data = { addRuleCallbackName: CONTENT_MESSAGES.ADD_RULE };
         try {
-            this.sendMessage(tabId, CONTENT_MESSAGES.INIT_ASSISTANT, data);
+            await this.sendMessage(tabId, CONTENT_MESSAGES.INIT_ASSISTANT, data);
         } catch (e) {
             log.debug(e.message);
-            // ignore errors, which could happen if try to inject on service pages
         }
     };
 }
