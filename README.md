@@ -55,7 +55,7 @@ Respectively creates Chrome and Firefox beta and release builds, zipped builds, 
     version: '7.3.2496',
     apiVersion: '3',
     isValidatedOnHost: true,
-    reportUrl: 'https://reports.adguard.com/en/new_issue.html?url=http://example.org/',
+    reportUrl: 'https://link.adtidy.org/forward.html?action=report&from=popup&app=browser_assistant&url=http://example.org',
     appState: {
         isRunning: true,
         isProtectionEnabled: true,

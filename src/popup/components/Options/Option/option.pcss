@@ -17,6 +17,9 @@
         opacity: 1;
 
         &__item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
             max-width: 27rem;
             height: 2.4rem;
             font-size: 1.3rem;
@@ -27,18 +30,15 @@
         }
 
         &__text {
-            text-indent: 0.8rem;
-            height: 2.4rem;
-            display: inline-block;
+            padding-left: 1.5rem;
+            line-height: 2.4rem;
             text-rendering: geometricPrecision;
         }
 
         &__icon {
-            display: inline-block;
-            height: 2.4rem;
-            width: 2.4rem;
-            flex-basis: 2.4rem;
-            vertical-align: middle;
+            flex-shrink: 0;
+            height: 1.7rem;
+            width: 1.7rem;
 
             &--clock {
                 background: url('../../../../assets/images/icon__option--clock.svg') no-repeat top;

@@ -55,8 +55,14 @@ class TranslationStore {
     @computed
     get i18n() {
         const result = this.getLocale();
+        const defaultMessages = messagesMap[BASE_LOCALE];
+        const currentLocaleMessages = messagesMap[result.matchedKey];
 
-        const messages = messagesMap[result.matchedKey];
+        // messages with fallback to base locale
+        const messages = Object.keys(defaultMessages).reduce((acc, key) => {
+            acc[key] = currentLocaleMessages[key] || defaultMessages[key];
+            return acc;
+        }, {});
 
         // createIntl doesnt accepts locales codes longer than 2 chars
         // and here it is not important, so we left only two chars

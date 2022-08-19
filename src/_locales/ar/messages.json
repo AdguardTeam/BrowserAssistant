@@ -60,7 +60,7 @@
         "message": "إعدادات AdGuard"
     },
     "pause_filtering": {
-        "message": "عدم الفلترة لمده 30 ثانيه"
+        "message": "لا تقوم بالتصفية لمدة 30 ثانية"
     },
     "block_ads": {
         "message": "قم بحظر الإعلانات على هذا الموقع"
@@ -72,13 +72,16 @@
         "message": "الإبلاغ عن مشكلة"
     },
     "reset_custom_rules": {
-        "message": "إعادة تعيين كافة القواعد المخصصة لهذه الصفحة"
+        "message": "ازالة جميع القواعد المخصصة لهذه الصفحة"
     },
     "cert_expired": {
         "message": "تعذر على AdGuard التحقق من شهادة موقع الويب هذا بسبب انتهاء صلاحية شهادة الجذر"
     },
     "cert_absent": {
         "message": "لم يتم تنفيذ تصفية HTTPS لهذا الموقع"
+    },
+    "site_not_using_private_protection": {
+        "message": "الموقع لا يستخدم اتصالاً آمنًا. قد يتمكن شخص ما من رؤية المعلومات التي ترسلها أو تحصل عليها من خلال الموقع أو تغييرها."
     },
     "not_secure": {
         "message": "غير آمن"
@@ -88,6 +91,12 @@
     },
     "secure_page": {
         "message": "صفحة آمنة"
+    },
+    "reload_page": {
+        "message": ".إعادة تحميل الصفحة"
+    },
+    "reload_to_resume_filtering": {
+        "message": "اعادة تحميل الصفحة لاستئناف الفلترة"
     },
     "not_filtering_https": {
         "message": "بشكل افتراضي، لا نقوم بتصفية حركة مرور HTTPS لنظام الدفع ومواقع البنك. يمكنك تمكين التصفية بنفسك:  اضغط على\"القفل\" الأصفر الموجود على اليسار"
@@ -110,31 +119,64 @@
     "expired": {
         "message": "منتهي الصلاحية"
     },
+    "contact_support": {
+        "message": "اتصل بالدعم"
+    },
     "context_site_filtering_on": {
-        "message": "تفعيل الفلترة في هذا الموقع"
+        "message": "تفعيل التصفية في هذا الموقع"
     },
     "context_site_filtering_off": {
-        "message": "تعطيل الفلترة في هذا الموقع"
+        "message": "تعطيل التصفية في هذا الموقع"
     },
     "context_block_site_ads": {
-        "message": "...حظر الإعلانات على هذا الموقع"
+        "message": "حظر الإعلانات في هذا الموقع..."
+    },
+    "context_complaint_website": {
+        "message": "التبليغ عن مشكلة..."
     },
     "context_site_filtering_disabled": {
-        "message": "على هذا النطاق AdGuard  لا يمكن تشغيل"
+        "message": "أدجارد لا يمكن تشغيله على هذا النطاق"
     },
     "context_disable_protection": {
         "message": "إيقاف حماية AdGuard"
     },
     "context_enable_protection": {
-        "message": "AdGuardاستئناف حماية"
+        "message": "استئناف حماية AdGuard"
     },
     "context_site_protection_disabled": {
         "message": "حماية AdGuard متوقفة"
     },
     "context_open_settings": {
-        "message": "AdGuard إعدادات ..."
+        "message": "إعدادات AdGuard..."
     },
     "context_open_log": {
-        "message": "سجل الفلترة"
+        "message": "سجل التصفية ..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "هل انت متأكد من أنك تريد ازالة AdGuard مساعد المتصفح؟"
+    },
+    "post_install_consent_title": {
+        "message": "شكراً لتثبيتك آد جار مساعد المتصفح!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "يوفر ملحق المتصفح المصاحب <link> لتطبيقات AdGuard لسطح المكتب </link> وصولاً داخل المستعرض إلى ميزات مثل حظر العناصر المخصصة، والسماح بقائمة مواقع الويب، وإرسال التقارير."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "في كل مرة تفتح فيها علامة تبويب جديدة، تتواصل الإضافة مع التطبيق المستقل وتطلب معلومات عن حالة الصفحة الحالية. للقيام بذلك، يرسل عنوان URL للصفحة الحالية إلى التطبيق المستقل، يرسل عنوان URL للصفحة الحالية إلى التطبيق المستقل."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "بتثبيت هذه الإضافة، فإنك توافق على <privacy> سياسة الخصوصية</privacy> و <terms> شروط الاستخدام</terms>."
+    },
+    "post_install_page_title": {
+        "message": "شكراً لتثبيتك مساعد AdGuard للمتصفح!"
+    },
+    "post_install_page_agree_button": {
+        "message": "موافق"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "إلغاء التثبيت"
+    },
+    "options_context_menu_title": {
+        "message": "إظهار في قائمة المتصفح"
     }
 }

@@ -72,7 +72,7 @@
         "message": "Zgłoś tę stronę"
     },
     "reset_custom_rules": {
-        "message": "Zresetuj wszystkie niestandardowe reguły dla tej strony"
+        "message": "Usuń wszystkie reguły użytkownika dla tej strony"
     },
     "cert_expired": {
         "message": "AdGuard nie mógł zweryfikować certyfikatu tej witryny, ponieważ certyfikat główny wygasł"

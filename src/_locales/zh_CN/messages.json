@@ -72,7 +72,7 @@
         "message": "报告错误"
     },
     "reset_custom_rules": {
-        "message": "重置该页面的所有自定义规则"
+        "message": "移除用于此网页上的所有用户规则"
     },
     "cert_expired": {
         "message": "因根证书过期，AdGuard无法验证该站点的证书"
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "在此网站上启用"
+    },
+    "filtering_exception": {
+        "message": "由于可能会干扰本网站的正常运行，过滤功能已禁用。"
     },
     "protection_is_enabled": {
         "message": "保护已开启"
@@ -177,6 +180,6 @@
         "message": "卸载"
     },
     "options_context_menu_title": {
-        "message": "在浏览器上下文菜单显示"
+        "message": "在浏览器右键菜单中显示"
     }
 }

@@ -74,6 +74,7 @@ class State {
         isHttpsFilteringEnabled: false,
         isFilteringEnabled: false,
         isSecured: false,
+        canChangeFilteringStatus: true,
     }
 
     set isHttpsFilteringEnabled(isHttpsFilteringEnabled) {
@@ -86,6 +87,10 @@ class State {
 
     set isSecured(isSecured) {
         this.urlInfo.isSecured = isSecured;
+    }
+
+    set canChangeFilteringStatus(canChangeFilteringStatus) {
+        this.urlInfo.canChangeFilteringStatus = canChangeFilteringStatus;
     }
 
     updateSecured = (currentUrl) => {
@@ -296,13 +301,21 @@ class State {
         if (!parameters) {
             return null;
         }
-        const { isFilteringEnabled, isHttpsFilteringEnabled } = parameters;
+        const {
+            isFilteringEnabled,
+            isHttpsFilteringEnabled,
+        } = parameters;
+
+        let { canChangeFilteringStatus } = parameters;
 
         this.setAppState(appState);
         this.isFilteringEnabled = isFilteringEnabled;
         this.isHttpsFilteringEnabled = isHttpsFilteringEnabled;
-
-        return parameters;
+        if (canChangeFilteringStatus === undefined) {
+            canChangeFilteringStatus = true; // by default consider that this flag is true
+        }
+        this.canChangeFilteringStatus = canChangeFilteringStatus;
+        return { ...parameters, canChangeFilteringStatus };
     };
 
     setProtectionStatus = async (isEnabled) => {

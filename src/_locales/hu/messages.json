@@ -72,7 +72,7 @@
         "message": "Probléma bejelentése"
     },
     "reset_custom_rules": {
-        "message": "Egyéni szabályok visszaállítása az oldalon"
+        "message": "Felhasználói szabályok törlése ezen az oldalon"
     },
     "cert_expired": {
         "message": "Az AdGuard nem tudta ellenőrizni a webhely tanúsítványát, mivel a gyökértanúsítvány lejárt"

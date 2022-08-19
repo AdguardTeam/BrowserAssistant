@@ -107,6 +107,9 @@
     "enabled": {
         "message": "Enabled on this website"
     },
+    "filtering_exception": {
+        "message": "Filtering is disabled because it may affect the website's performance."
+    },
     "protection_is_enabled": {
         "message": "Protection is enabled"
     },

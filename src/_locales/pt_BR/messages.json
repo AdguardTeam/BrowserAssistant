@@ -72,7 +72,7 @@
         "message": "Reportar um problema"
     },
     "reset_custom_rules": {
-        "message": "Redefinir todas as regras personalizadas para esta página"
+        "message": "Remover todas as regras do usuário para esta página"
     },
     "cert_expired": {
         "message": "O AdGuard não pôde verificar o certificado deste site, pois o certificado de raiz expirou"
@@ -84,7 +84,7 @@
         "message": "O site não usa uma conexão segura. Alguém pode ser capaz de ver ou alterar as informações que você enviar ou receber através do site."
     },
     "not_secure": {
-        "message": "Não segura"
+        "message": "Não seguro"
     },
     "nothing_to_block_here": {
         "message": "Não para bloquear aqui"
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "Ativado neste site"
+    },
+    "filtering_exception": {
+        "message": "A filtragem está desativada porque pode afetar o desempenho do site."
     },
     "protection_is_enabled": {
         "message": "A proteção está ativada"

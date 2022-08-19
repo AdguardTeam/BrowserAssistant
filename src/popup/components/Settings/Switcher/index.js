@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
+import rootStore from '../../../stores';
 import './switcher.pcss';
 
 const Switcher = ({
-    id, checked, onClick, tabIndex, isDisabled, label,
+    id,
+    checked,
+    onClick,
+    tabIndex,
+    isDisabled,
+    label,
+    isException,
 }) => {
+    const { translationStore: { translate } } = useContext(rootStore);
+
     const switcherClass = classNames('switcher', {
         'switcher--disabled': isDisabled,
+        'switcher--exception': isException,
     });
 
     const buttonClass = classNames('switcher__label', {
@@ -27,6 +37,10 @@ const Switcher = ({
         return undefined;
     };
 
+    const switcherLabel = isException
+        ? translate('filtering_exception')
+        : label;
+
     return (
         <div className={switcherClass}>
             <input
@@ -39,13 +53,13 @@ const Switcher = ({
             <button
                 className={buttonClass}
                 type="button"
-                aria-labelledby={label}
+                aria-labelledby={switcherLabel}
                 tabIndex={tabIndex}
                 onClick={clickHandler}
                 onKeyDown={onKeyDown}
-                title={label}
+                title={switcherLabel}
             />
-            <div className="switcher__text">{label}</div>
+            <div className="switcher__text">{switcherLabel}</div>
         </div>
     );
 };

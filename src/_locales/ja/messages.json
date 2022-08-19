@@ -72,7 +72,7 @@
         "message": "問題・不具合を報告する"
     },
     "reset_custom_rules": {
-        "message": "このページに対するカスタムルールを全部リセット"
+        "message": "このページに対するユーザールールを全部削除する"
     },
     "cert_expired": {
         "message": "ルート証明書の有効期限が切れているため、AdGuardはこのWebサイトの証明書を確認できませんでした。"
@@ -106,6 +106,9 @@
     },
     "enabled": {
         "message": "本ウェブサイトでブロックする: オン"
+    },
+    "filtering_exception": {
+        "message": "このサイトのパフォーマンスに影響を与える可能性があるため、フィルタリングを無効にしています。"
     },
     "protection_is_enabled": {
         "message": "保護が有効になっています。"

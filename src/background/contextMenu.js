@@ -114,6 +114,7 @@ const addMenuItem = (i18key, enabled = true) => {
 
 const addSeparator = () => {
     browser.contextMenus.create({
+        contexts: ['all'],
         type: 'separator',
     });
 };
@@ -141,12 +142,13 @@ const updateContextMenu = () => {
         addMenuItem(CONTEXT_MENU_ITEMS.context_open_log);
         addMenuItem(CONTEXT_MENU_ITEMS.context_open_settings);
     } else {
-        if (state.urlInfo.isFilteringEnabled) {
+        if (state.urlInfo.isFilteringEnabled
+            && state.urlInfo.canChangeFilteringStatus) {
             addMenuItem(CONTEXT_MENU_ITEMS.context_site_filtering_off);
             addSeparator();
             addMenuItem(CONTEXT_MENU_ITEMS.pause_filtering);
             addMenuItem(CONTEXT_MENU_ITEMS.context_block_site_ads);
-        } else {
+        } else if (state.urlInfo.canChangeFilteringStatus) {
             addMenuItem(CONTEXT_MENU_ITEMS.context_site_filtering_on);
             addSeparator();
         }
