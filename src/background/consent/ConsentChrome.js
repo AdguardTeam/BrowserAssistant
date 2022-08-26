@@ -8,7 +8,7 @@ export default class ConsentChrome extends ConsentAbstract {
      * Always returns false for chrome
      * @returns {boolean}
      */
-    isConsentRequired() {
+    async isConsentRequired() {
         return false;
     }
 

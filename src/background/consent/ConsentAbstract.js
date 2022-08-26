@@ -10,7 +10,7 @@ export default class ConsentAbstract {
      * Returns true if consent is required
      * @returns {boolean}
      */
-    isConsentRequired() {
+    async isConsentRequired() {
         throw new Error('Not implemented');
     }
 

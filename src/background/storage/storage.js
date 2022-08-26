@@ -8,7 +8,7 @@ export class Storage {
     }
 
     async get(key) {
-        const storedValue = await this.storage.get([key]);
+        const storedValue = await this.storage.get(key);
         return storedValue[key];
     }
 }

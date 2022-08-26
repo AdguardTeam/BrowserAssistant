@@ -8,7 +8,7 @@ import { updateService } from './updateService';
 import { migrationService } from './migrationService';
 import { consent } from './consent';
 import { tabs } from '../lib/tabs';
-import browserApi from '../lib/browserApi';
+import { browserApi } from '../lib/browserApi';
 import { settings } from './settings';
 import { ContextMenu } from './contextMenu';
 

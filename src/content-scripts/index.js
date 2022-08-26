@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill';
 import { CONTENT_MESSAGES } from '../lib/types';
 import { startAssistant } from './start-assistant';
 import log from '../lib/logger';
-import browserApi from '../lib/browserApi';
+import { browserApi } from '../lib/browserApi';
 
 const initialize = () => {
     // Prevent running content script more than once

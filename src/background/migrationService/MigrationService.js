@@ -3,7 +3,7 @@ import { compare } from 'compare-versions';
 import { localStorage } from '../localStorage';
 import log from '../../lib/logger';
 import { consent } from '../consent';
-import browserApi from '../../lib/browserApi';
+import { browserApi } from '../../lib/browserApi';
 
 const STORAGE_MIGRATION_VERSION = '1.2.2';
 

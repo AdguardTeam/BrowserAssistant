@@ -1,9 +1,9 @@
 import { runtime } from './runtime';
 import { utils } from './utils';
+import { action } from './action';
 
-const browserApi = {
+export const browserApi = {
     runtime,
     utils,
+    action,
 };
-
-export default browserApi;

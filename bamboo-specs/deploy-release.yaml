@@ -27,7 +27,11 @@ Chrome WebStore:
             #!/bin/bash
             set -x
             set -e
-            ls -la
+
+            # Fix mixed logs
+            exec 2>&1
+
+            ls -alt
 
             ./bamboo-deploy-publisher/deploy.sh browser-assistant-webstore-release
   final-tasks: []

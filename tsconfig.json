@@ -10,5 +10,10 @@
         "allowJs": true,
         "noImplicitAny": true,
         "experimentalDecorators": true,
-    }
+        "resolveJsonModule": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types"
+        ]
+    },
 }

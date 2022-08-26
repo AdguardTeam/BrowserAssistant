@@ -1,18 +1,20 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
 const webpack = require('webpack');
-const {
+import {
     SRC_PATH,
     BUILD_PATH,
     CHROME_UPDATE_CRX,
     FIREFOX_UPDATE_XPI,
-    BUILD_ENVS,
-    BROWSER_TYPES,
-} = require('./consts');
-const { getOutputPathByBuildEnv, appendBuildEnvSuffix, updateManifest } = require('./helpers');
+    Browser,
+    BUILD_ENV,
+    BROWSER,
+    BuildEnv,
+} from './consts';
+import { getOutputPathByBuildEnv, appendBuildEnvSuffix, updateManifest } from './helpers';
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');
@@ -21,9 +23,7 @@ const KEEP_AWAKE_PATH = path.resolve(__dirname, SRC_PATH, 'keep-awake');
 const POST_INSTALL_PATH = path.resolve(__dirname, SRC_PATH, 'post-install');
 const OPTIONS_UI_PATH = path.resolve(__dirname, SRC_PATH, 'options-ui');
 
-const { BROWSER, BUILD_ENV } = process.env;
-
-const IS_DEV = BUILD_ENV === BUILD_ENVS.DEV;
+const IS_DEV = BUILD_ENV === BuildEnv.Dev;
 
 const OUTPUT_PATH = getOutputPathByBuildEnv(BUILD_ENV);
 
@@ -42,8 +42,7 @@ const plugins = [
             from: '_locales/',
             to: '_locales/',
             // Add build environment suffixes to the extension name in locale files
-            // eslint-disable-next-line @typescript-eslint/no-shadow
-            transform: (content: { toString: () => string; }, path: string | string[]) => {
+            transform: (content, path) => {
                 // ignore all paths except messages.json
                 if (path.indexOf('messages.json') === -1) {
                     return content;
@@ -58,10 +57,10 @@ const plugins = [
         {
             from: path.resolve(__dirname, './manifest.common.json'),
             to: 'manifest.json',
-            transform: (content: any) => {
+            transform: (content) => {
                 // eslint-disable-next-line import/no-dynamic-require,global-require
                 const manifestDiff = require(`./manifest.${BROWSER}`);
-                return updateManifest(content, manifestDiff);
+                return updateManifest(content.toString(), manifestDiff);
             },
         },
     ]),
@@ -69,15 +68,15 @@ const plugins = [
         if (!resource.contextInfo.issuer.includes('background/consent/index.js')) {
             return;
         }
-        if (process.env.BROWSER === BROWSER_TYPES.FIREFOX) {
+        if (BROWSER === Browser.Firefox) {
             // eslint-disable-next-line no-param-reassign
             resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentFirefox');
-        } else if (process.env.BROWSER === BROWSER_TYPES.CHROME
-            || process.env.BROWSER === BROWSER_TYPES.EDGE) {
+        } else if (BROWSER === Browser.Chrome
+            || BROWSER === Browser.Edge) {
             // eslint-disable-next-line no-param-reassign
             resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentChrome');
         } else {
-            throw new Error(`There is no proxy api for browser: ${process.env.BROWSER}`);
+            throw new Error(`There is no proxy api for browser: ${BROWSER}`);
         }
     })),
     new HtmlWebpackPlugin({
@@ -95,11 +94,21 @@ const plugins = [
         filename: 'options-ui.html',
         chunks: ['options-ui'],
     }),
-    new ZipWebpackPlugin({
-        path: '../',
-        filename: `${BROWSER}.zip`,
-    }),
 ];
+
+if (BROWSER === Browser.Firefox) {
+    plugins.push(new HtmlWebpackPlugin({
+        template: path.join(BACKGROUND_PATH, 'index.html'),
+        filename: 'background.html',
+        chunks: ['background'],
+    }));
+}
+
+// zip plugin should always be the last one
+plugins.push(new ZipWebpackPlugin({
+    path: '../',
+    filename: `${BROWSER}.zip`,
+}));
 
 const config = {
     mode: IS_DEV ? 'development' : 'production',

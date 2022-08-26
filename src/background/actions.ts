@@ -4,12 +4,13 @@ import { Prefs } from './prefs';
 // FIXME rewrite to named export
 import log from '../lib/logger';
 import { getErrorMessage } from '../lib/errors';
+import { browserApi } from '../lib/browserApi';
 
 type SetIconDetailsType = browser.Action.SetIconDetailsType;
 
 const setIcon = async (details: SetIconDetailsType) => {
     try {
-        await browser.action.setIcon(details);
+        await browserApi.action.setIcon(details);
     } catch (e) {
         log.debug(getErrorMessage(e));
     }
