@@ -1,0 +1,152 @@
+{
+    "name": {
+        "message": "অ্যাডগার্ড ব্রাউজার অ্যাসিস্ট্যান্ট"
+    },
+    "description": {
+        "message": "এটি অ্যাডগার্ড ডেস্কটপ অ্যাপের একটি এক্সটেনশন। সরাসরি ব্রাউজার থেকেই ফিল্টারিং পরিচালনা করে, বিরক্তিকর জিনিস দুই ক্লিকেই লোকায়।"
+    },
+    "adg_is_not_installed": {
+        "message": "অ্যাডগার্ড ইন্সটল করা নেই বা সঠিকভাবে কনফিগার করা নেই"
+    },
+    "get_adguard": {
+        "message": "অ্যাডগার্ড পান"
+    },
+    "adg_is_not_updated": {
+        "message": "অ্যাডগার্ড আপডেট করা হয়নি"
+    },
+    "update": {
+        "message": "আপডেট করুন"
+    },
+    "adg_is_not_running": {
+        "message": "অ্যাডগার্ড সক্রিয় করা নেই"
+    },
+    "run_adg": {
+        "message": "অ্যাডগার্ড সক্রিয় করুন"
+    },
+    "adg_is_paused": {
+        "message": "অ্যাডগার্ডের সুরক্ষা বিরতি দেওয়া হয়েছে"
+    },
+    "adg_is_launching": {
+        "message": "অ্যাডগার্ড চালু হচ্ছে..."
+    },
+    "enable": {
+        "message": "সক্রিয় করুন"
+    },
+    "assistant_is_not_updated": {
+        "message": "অ্যাসিস্ট্যান্ট আপডেট করা হয়নি"
+    },
+    "something_went_wrong": {
+        "message": "কিছু সমস্যা হয়েছে"
+    },
+    "reinstall": {
+        "message": "পুনরায় ইনস্টল করুন"
+    },
+    "https_filtering": {
+        "message": "HTTPS ফিল্টারিং"
+    },
+    "increase_ab_block_quality": {
+        "message": "বিজ্ঞাপন অবরুদ্ধ করার মান বাড়ায়"
+    },
+    "verified_by": {
+        "message": "যাছাই করেছেন:"
+    },
+    "more_info": {
+        "message": "আরো তথ্য"
+    },
+    "adg_protection": {
+        "message": "অ্যাডগার্ড সুরক্ষা"
+    },
+    "adg_settings": {
+        "message": "অ্যাডগার্ডের সেটিংস"
+    },
+    "pause_filtering": {
+        "message": "৩০ সেকেন্ডের জন্য ফিল্টার করবেন না"
+    },
+    "block_ads": {
+        "message": "এই ওয়েবসাইটে বিজ্ঞাপন অবরুদ্ধ করুন"
+    },
+    "open_filtering_log": {
+        "message": "ফিল্টারিং লগ দেখুন"
+    },
+    "report_site": {
+        "message": "কোনো সমস্যা জানান"
+    },
+    "cert_expired": {
+        "message": "অ্যাডগার্ড এই ওয়েবসাইটের সার্টিফিকেট যাচাই করতে পারেনি কারণ রুট সার্টিফিকেটের মেয়াদ শেষ হয়ে গেছে"
+    },
+    "cert_absent": {
+        "message": "HTTPS ফিল্টারিং এই ওয়েবসাইটে কার্যকর করা হয়নি"
+    },
+    "site_not_using_private_protection": {
+        "message": "সাইটটি কোন প্রাইভেট কানেকশান ব্যবহার করছে না। আপনি যে তথ্য প্রেরণ করছেন তা যে কেউ চাইলে দেখতে বা পরিবর্তন করতে পারে।."
+    },
+    "not_secure": {
+        "message": "সুরক্ষিত নয়"
+    },
+    "nothing_to_block_here": {
+        "message": "এখানে অবরুদ্ধ করার মতো কিছুই নেই"
+    },
+    "secure_page": {
+        "message": "সুরক্ষিত পাতা"
+    },
+    "reload_page": {
+        "message": "পাতাটি পুনরায় লোড করুন"
+    },
+    "reload_to_resume_filtering": {
+        "message": "ফিল্টারিং পুনরায় সক্রিয় করতে পাতাটি পুনরায় লোড করুন"
+    },
+    "not_filtering_https": {
+        "message": "স্বাভাবিক ভাবে, আমরা পেমেন্ট সিস্টেম ও ব্যাংক সাইটগুলিতে HTTPS ট্রাফিক ফিল্টার করি না। আপনি নিজেই ফিল্টারিং চালু করতে পারেন: বামদিকে হলুদ \"লক\" এ আলতো চাপুন।"
+    },
+    "disabled": {
+        "message": "এই ওয়েবসাইটের জন্য নিষ্ক্রিয় আছে"
+    },
+    "enabled": {
+        "message": "এই ওয়েবসাইটের জন্য সক্রিয় আছে"
+    },
+    "protection_is_enabled": {
+        "message": "সুরক্ষিত"
+    },
+    "protection_is_disabled": {
+        "message": "অসুরক্ষিত"
+    },
+    "website_cert_is_expired": {
+        "message": "ওয়েবসাইটের সার্টিফিকেটের মেয়াদ শেষ হয়ে গেছে"
+    },
+    "expired": {
+        "message": "মেয়াদোত্তীর্ণ"
+    },
+    "contact_support": {
+        "message": "সহায়তার জন্য যোগাযোগ করুন"
+    },
+    "context_site_filtering_on": {
+        "message": "এই ওয়েবসাইটের জন্য ফিল্টারিং চালু করুন"
+    },
+    "context_site_filtering_off": {
+        "message": "এই ওয়েবসাইটের জন্য ফিল্টারিং বন্ধ করুন"
+    },
+    "context_block_site_ads": {
+        "message": "এই ওয়েবসাইটে বিজ্ঞাপন অবরুদ্ধ করুন..."
+    },
+    "context_complaint_website": {
+        "message": "কোনো সমস্যা জানান..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "এই ওয়েবসাইটে অ্যাডগার্ড কাজ করতে পারে না"
+    },
+    "context_disable_protection": {
+        "message": "অ্যাডগার্ড সুরক্ষা বিরতি দিন"
+    },
+    "context_enable_protection": {
+        "message": "অ্যাডগার্ড সুরক্ষা পুনরায় শুরু করুন"
+    },
+    "context_site_protection_disabled": {
+        "message": "অ্যাডগার্ড সুরক্ষা বিরতি দেওয়া হয়েছে"
+    },
+    "context_open_settings": {
+        "message": "অ্যাডগার্ডের সেটিংস..."
+    },
+    "context_open_log": {
+        "message": "ফিল্টারিং লগ..."
+    }
+}

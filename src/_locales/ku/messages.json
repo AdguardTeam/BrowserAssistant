@@ -1,0 +1,185 @@
+{
+    "name": {
+        "message": "Arîkarê Gerokê AdGuard"
+    },
+    "description": {
+        "message": "Plugin ji bo bernameya sermaseya AdGuard. Fîlterkirin bi rêya gerokê, ew tiştên acizker di du tûşan de vedişêre."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard ne çewt hatî saz kirin an sazkirin"
+    },
+    "get_adguard": {
+        "message": "AdGuard Bistînin"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard mêjû ye"
+    },
+    "update": {
+        "message": "Rojanekirin"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard naxebite"
+    },
+    "run_adg": {
+        "message": "AdGuard bixebitînin"
+    },
+    "adg_is_paused": {
+        "message": "Parastina adguard tê sekinandin"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard dest pê dike..."
+    },
+    "enable": {
+        "message": "Çalak bikin"
+    },
+    "assistant_is_not_updated": {
+        "message": "Alîkar mêjû ye"
+    },
+    "something_went_wrong": {
+        "message": "Tiştek xelet çû"
+    },
+    "reinstall": {
+        "message": "Ji nû ve barkirin"
+    },
+    "https_filtering": {
+        "message": "Parzûna HTTPS"
+    },
+    "increase_ab_block_quality": {
+        "message": "Qalîteya astengkirina reklaman çêtir dike"
+    },
+    "verified_by": {
+        "message": "Ji hêla ve hatî rastandin:"
+    },
+    "more_info": {
+        "message": "Zêdetir Agahdarî"
+    },
+    "adg_protection": {
+        "message": "Parastina AdGuard"
+    },
+    "adg_settings": {
+        "message": "Mîhengên AdGuard"
+    },
+    "pause_filtering": {
+        "message": "30 çirkeyan tê parzûn kirin"
+    },
+    "block_ads": {
+        "message": "Reklamên li ser vê malperê asteng bikin"
+    },
+    "open_filtering_log": {
+        "message": "Qeydên parzûnê vekin"
+    },
+    "report_site": {
+        "message": "Çewtiyek ragihînin"
+    },
+    "reset_custom_rules": {
+        "message": "Ji bo vê rûpelê hemî qaîdeyên xwerû ji nû ve bikin"
+    },
+    "cert_expired": {
+        "message": "AdGuard nekaribû ku sertîfîkaya vê rûpelê rast bike ji ber ku sertîfîkaya root qediyaye"
+    },
+    "cert_absent": {
+        "message": "Tu parzûn ji bo vê malperê nayê çêkirin"
+    },
+    "site_not_using_private_protection": {
+        "message": "Di vê malperê de zencîreyek taybetî nayê bikar anîn. Kesên din dikarin agahdariya ku hûn di dema danûstandina we ya bi vê malperê re radigihînin an distînin bibînin an biguherînin."
+    },
+    "not_secure": {
+        "message": "Ewledar nine"
+    },
+    "nothing_to_block_here": {
+        "message": "Li vir tiştek tune ku pêşî lê bigire"
+    },
+    "secure_page": {
+        "message": "Malpera ewle"
+    },
+    "reload_page": {
+        "message": "Malpera nûve bikin"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Refresh ji bo parzûna vê malperê"
+    },
+    "not_filtering_https": {
+        "message": "Wekî standard, em seyrûsefera HTTPS-ê ku ji hêla pergalên dravdan û malperên bankingê ve têne bikar anîn parzûn nakin. Heke hûn bixwazin hûn dikarin parzûnkirinê çalak bikin: Li ser îkona \"berg\" a zer li milê çepê bikirtînin."
+    },
+    "disabled": {
+        "message": "Li ser vê malperê seqet e"
+    },
+    "enabled": {
+        "message": "Li ser vê malperê çalak kirin"
+    },
+    "filtering_exception": {
+        "message": "Parzûnkirin neçalak e ji ber ku dibe ku bandorê li performansa malperê bike."
+    },
+    "protection_is_enabled": {
+        "message": "Parastin çalak e"
+    },
+    "protection_is_disabled": {
+        "message": "Parastin seqet e"
+    },
+    "website_cert_is_expired": {
+        "message": "Sertîfîkaya malperê bidawî bûye"
+    },
+    "expired": {
+        "message": "Ew bidawî bû"
+    },
+    "contact_support": {
+        "message": "Bi piştgiriyê re têkilî daynin"
+    },
+    "context_site_filtering_on": {
+        "message": "Li ser vê malperê parzûnkirinê çalak bikin"
+    },
+    "context_site_filtering_off": {
+        "message": "Fîlterkirina li ser vê malperê neçalak bike"
+    },
+    "context_block_site_ads": {
+        "message": "Reklamên li ser vê malperê asteng bikin..."
+    },
+    "context_complaint_website": {
+        "message": "Pirsgirêkekê ragihînin..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard li ser vê domainê naxebite"
+    },
+    "context_disable_protection": {
+        "message": "Parastina AdGuard rawestînin"
+    },
+    "context_enable_protection": {
+        "message": "Parastina AdGuard biparêzin"
+    },
+    "context_site_protection_disabled": {
+        "message": "Parastina adguard tê sekinandin"
+    },
+    "context_open_settings": {
+        "message": "Mîhengên AdGuard..."
+    },
+    "context_open_log": {
+        "message": "Fîlterkirin tomar..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "Ma hûn pê ewle ne ku hûn dixwazin Arîkarê Geroka AdGuard jêbirin?"
+    },
+    "post_install_consent_title": {
+        "message": "Spas ji bo sazkirina Alîkarê Geroka AdGuard!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "Ev pêveka geroka hevalê ji bo <link>sepanên sermaseyê AdGuard</link> gihandina di gerokê de ji taybetmendiyên wekî astengkirina hêmanên xwerû, navnîşkirina malperan, û şandina raporan pêşkêşî dike."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "Her gava ku hûn tabloyek nû vedikin, pêvek bi sepana serbixwe re diaxive û di derheqê rewşa rûpelê ya heyî de agahdariya daxwaz dike. Ji bo ku wiya bike, ew URL-ya rûpela heyî ji sepana serbixwe re dişîne."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "Bi sazkirina vê pêvekê, hûn bi <privacy>Siyaseta nepenîtiyê</privacy> û <terms>Mercên Bikaranînê</terms>dibin."
+    },
+    "post_install_page_title": {
+        "message": "Spas ji bo sazkirina Alîkarê Geroka AdGuard!"
+    },
+    "post_install_page_agree_button": {
+        "message": "Qebûlkirin"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "Rakirin"
+    },
+    "options_context_menu_title": {
+        "message": "Di menuya çarçoveya gerokê de nîşan bide"
+    }
+}

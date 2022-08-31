@@ -1,0 +1,152 @@
+{
+    "name": {
+        "message": "AdGuard 瀏覽器助理"
+    },
+    "description": {
+        "message": "AdGuard 應用擴充程式桌面版。直接在瀏覽器內管理過濾器，點擊兩下就可將惱人的廣告隱藏起來。"
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard 未安裝或設定不正確"
+    },
+    "get_adguard": {
+        "message": "取得 AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard 未更新"
+    },
+    "update": {
+        "message": "更新"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard 未運作"
+    },
+    "run_adg": {
+        "message": "執行 AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard 防護已暫停"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard 正在啟動..."
+    },
+    "enable": {
+        "message": "啟用"
+    },
+    "assistant_is_not_updated": {
+        "message": "網頁助理未更新"
+    },
+    "something_went_wrong": {
+        "message": "發生錯誤"
+    },
+    "reinstall": {
+        "message": "重新安裝"
+    },
+    "https_filtering": {
+        "message": "HTTPS 過濾"
+    },
+    "increase_ab_block_quality": {
+        "message": "增強廣告過濾效果"
+    },
+    "verified_by": {
+        "message": "驗證單位："
+    },
+    "more_info": {
+        "message": "更多資訊"
+    },
+    "adg_protection": {
+        "message": "AdGuard 保護"
+    },
+    "adg_settings": {
+        "message": "AdGuard 設定"
+    },
+    "pause_filtering": {
+        "message": "暫停過濾 30 秒"
+    },
+    "block_ads": {
+        "message": "封鎖此網站上的廣告"
+    },
+    "open_filtering_log": {
+        "message": "開啟過濾紀錄"
+    },
+    "report_site": {
+        "message": "檢舉此網站"
+    },
+    "cert_expired": {
+        "message": "由於系統根憑證已過期，因此 AdGuard 無法驗證此網站憑證"
+    },
+    "cert_absent": {
+        "message": "HTTPS 過濾未套用於本網站"
+    },
+    "site_not_using_private_protection": {
+        "message": "此網站未使用加密連線。可能會遭受中間人攻擊導致您的資料被竊取或竄改。"
+    },
+    "not_secure": {
+        "message": "不安全"
+    },
+    "nothing_to_block_here": {
+        "message": "沒有可以阻擋的內容"
+    },
+    "secure_page": {
+        "message": "安全頁面"
+    },
+    "reload_page": {
+        "message": "重新載入"
+    },
+    "reload_to_resume_filtering": {
+        "message": "重新載入頁面來恢復過濾功能"
+    },
+    "not_filtering_https": {
+        "message": "在預設情況下 AdGuard 不會過濾付款或銀行相關金融的 HTTPS 流量，你可以點擊左側黃色 \"鎖頭\" 來開啟過濾。"
+    },
+    "disabled": {
+        "message": "在此網站關閉過濾"
+    },
+    "enabled": {
+        "message": "在此網站開啟過濾"
+    },
+    "protection_is_enabled": {
+        "message": "正在保護"
+    },
+    "protection_is_disabled": {
+        "message": "保護未開啟"
+    },
+    "website_cert_is_expired": {
+        "message": "網頁憑證已過期"
+    },
+    "expired": {
+        "message": "已過期"
+    },
+    "contact_support": {
+        "message": "聯繫客服"
+    },
+    "context_site_filtering_on": {
+        "message": "在此網站上啟用過濾"
+    },
+    "context_site_filtering_off": {
+        "message": "在此網站上停用過濾"
+    },
+    "context_block_site_ads": {
+        "message": "封鎖此網站上的廣告..."
+    },
+    "context_complaint_website": {
+        "message": "回報問題..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard 無法過濾此網域的廣告"
+    },
+    "context_disable_protection": {
+        "message": "暫停 AdGuard 防護"
+    },
+    "context_enable_protection": {
+        "message": "恢復 AdGuard 防護"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard 防護已暫停"
+    },
+    "context_open_settings": {
+        "message": "AdGuard 設定"
+    },
+    "context_open_log": {
+        "message": "過濾日誌"
+    }
+}

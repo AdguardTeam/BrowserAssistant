@@ -1,0 +1,182 @@
+{
+    "name": {
+        "message": "AdGuard مدد گار برائے براوزر"
+    },
+    "description": {
+        "message": "AdGuard کی ڈیسک-ٹاپ ایسٹنشن. براوزر کے لیے فلٹر فارمولے سیٹ کرتا ہے، اور صرف دو کلک میں منحوس اشتہار چھپاتا ہے."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard انسٹال نہیں ہے یا پھر ترتیبات میں مسئلے ہیں"
+    },
+    "get_adguard": {
+        "message": "AdGuard حاصل کریں"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard اپڈیٹ نہیں ہے"
+    },
+    "update": {
+        "message": "اپڈیٹ"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard نہیں چل رہا"
+    },
+    "run_adg": {
+        "message": "AdGuard چلائیں"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard کی حفاظت روک دی گئی ہے"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard چلنے لگا ہے..."
+    },
+    "enable": {
+        "message": "چالو کریں"
+    },
+    "assistant_is_not_updated": {
+        "message": "مددگار چل نہیں رہا"
+    },
+    "something_went_wrong": {
+        "message": "کچھ غلط لگ رہا ہے"
+    },
+    "reinstall": {
+        "message": "دوبارہ انسٹال کریں"
+    },
+    "https_filtering": {
+        "message": "HTTPS فلٹر"
+    },
+    "increase_ab_block_quality": {
+        "message": "اشتہار ہٹانے کے معیار کو بڑھاتا ہے"
+    },
+    "verified_by": {
+        "message": "مصدق:"
+    },
+    "more_info": {
+        "message": "مزید معلومات"
+    },
+    "adg_protection": {
+        "message": "AdGuard حفاظت"
+    },
+    "adg_settings": {
+        "message": "AdGuard ترتیبات"
+    },
+    "pause_filtering": {
+        "message": "٣٠ سیکنڈز تک فلٹر مت کریں"
+    },
+    "block_ads": {
+        "message": "اس ویبسائٹ پر اشتہارات نہ ہٹائیں"
+    },
+    "open_filtering_log": {
+        "message": "فلٹر کا تفصیلی کھاتا کھولیں"
+    },
+    "report_site": {
+        "message": "کوئی مسئلہ بتایئں"
+    },
+    "reset_custom_rules": {
+        "message": "ذاتی قوانین کو ریسیٹ کریں"
+    },
+    "cert_expired": {
+        "message": "AdGuard ویبسائٹ کے سرٹیفیکیٹ کی تصدیق نہیں کرسکا کیونکہ روٹ سرٹیفکیٹ ذائد المیعاد ہے"
+    },
+    "cert_absent": {
+        "message": "اس ویبسائٹ کے لیے HTTPS فلٹرنگ نہیں ہوئی"
+    },
+    "site_not_using_private_protection": {
+        "message": "یہ سائٹ محفوظ کنکشن نہیں استعمال کر رہی جس کے باعث کو غیر متعلقہ شخص اس سائٹ کے ذریعے آپکی معلومات دیکھ اور تبدیل کرسکتا ہے."
+    },
+    "not_secure": {
+        "message": "غیر محفوظ"
+    },
+    "nothing_to_block_here": {
+        "message": "یہاں کچھ بلاک نہیں ہوسکتا"
+    },
+    "secure_page": {
+        "message": "محفوظ پیج"
+    },
+    "reload_page": {
+        "message": "پیج دوبارہ لوڈ کریں"
+    },
+    "reload_to_resume_filtering": {
+        "message": "فلٹرنگ بحال کرنے کے لیے اس پیج کو دوبارہ لوڈ کریں"
+    },
+    "not_filtering_https": {
+        "message": "طے شدہ فارمولے پر ہم پیسے اور بینک کی ویبسائٹ کو HTTPS فلٹرنگ میں نہیں لاتے. آپ خود بائیں طرف پیلے تالے کو دبا کر اسے چالو کرسکتے ہیں."
+    },
+    "disabled": {
+        "message": "اس ویبسائٹ پر غیر فعال ہے"
+    },
+    "enabled": {
+        "message": "اس ویبسائٹ پر فعال کریں"
+    },
+    "filtering_exception": {
+        "message": "فلٹرنگ غیر فعال ہے کیونکہ اس سے ویب سائٹ کی کارکردگی متاثر ہو سکتی ہے۔"
+    },
+    "protection_is_enabled": {
+        "message": "پیشن گوئی فعال ہے"
+    },
+    "protection_is_disabled": {
+        "message": "پیشن گوئی غیر فعال ہے۔"
+    },
+    "website_cert_is_expired": {
+        "message": "ویبسائٹ سرٹیفکیٹ ذائد المیعاد ہے"
+    },
+    "expired": {
+        "message": "ذائد المیعاد"
+    },
+    "contact_support": {
+        "message": "مدد کے لیے رابطہ"
+    },
+    "context_site_filtering_on": {
+        "message": "اس ویبسائٹ پر فلٹرنگ بحال کریں"
+    },
+    "context_site_filtering_off": {
+        "message": "اس ویبسائٹ پر فلٹرنگ روک دیں"
+    },
+    "context_block_site_ads": {
+        "message": "اس ویبسائٹ پر اشتہارات ہٹائیں..."
+    },
+    "context_complaint_website": {
+        "message": "کوئی مسئلہ بتایئں..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "اس ویبسائٹ پر adguard نہیں چل سکتا"
+    },
+    "context_disable_protection": {
+        "message": "AdGuard کی حفاظت روک دیں"
+    },
+    "context_enable_protection": {
+        "message": "AdGuard کی حفاظت بحال کریں"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard کی حفاظت روک دی گئی ہے"
+    },
+    "context_open_settings": {
+        "message": "AdGuard ترتیبات..."
+    },
+    "context_open_log": {
+        "message": "فلٹرنگ کا کھاتہ..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "کیا آپ واقعی AdGuard براؤزر اسسٹنٹ کو ہٹانا چاہتے ہیں؟"
+    },
+    "post_install_consent_title": {
+        "message": "AdGuard براؤزر اسسٹنٹ انسٹال کرنے کا شکریہ!"
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "جب بھی آپ کوئی نیا ٹیب کھولتے ہیں، ایڈ آن اسٹینڈ ایلون ایپ کے ساتھ بات چیت کرتا ہے اور صفحہ کی موجودہ صورتحال کے بارے میں معلومات کی درخواست کرتا ہے۔ ایسا کرنے کے لیے، یہ موجودہ صفحہ کا URL اسٹینڈ اسٹون ایپ کو بھیجتا ہے۔"
+    },
+    "post_install_consent_policy_urls": {
+        "message": "اس ایڈ آن کو انسٹال کر کے، آپ ہماری <privacy>پرائیویسی پالیسی</privacy> اور <terms>استعمال کی شرائط</terms>سے اتفاق کرتے ہیں۔"
+    },
+    "post_install_page_title": {
+        "message": "AdGuard براؤزر اسسٹنٹ انسٹال کرنے کا شکریہ!"
+    },
+    "post_install_page_agree_button": {
+        "message": "متفق"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "ان انسٹال کریں۔"
+    },
+    "options_context_menu_title": {
+        "message": "براؤزر کے سیاق و سباق کے مینو میں دکھائیں۔"
+    }
+}

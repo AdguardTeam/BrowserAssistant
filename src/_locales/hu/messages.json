@@ -107,6 +107,9 @@
     "enabled": {
         "message": "Bekapcsolva ezen az oldalon"
     },
+    "filtering_exception": {
+        "message": "A szűrés le van tiltva, mivel befolyásolhatja a weboldal teljesítményét."
+    },
     "protection_is_enabled": {
         "message": "Védelem bekapcsolva"
     },
