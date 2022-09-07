@@ -123,8 +123,12 @@ class SettingsStore {
     };
 
     @action
-    setFilteringPauseTimeout = (filteringPauseTimeout) => {
-        this.filteringPauseTimeout = filteringPauseTimeout;
+    setFilteringPauseTimeout = async (filteringPauseTimeout) => {
+        runInAction(() => {
+            this.filteringPauseTimeout = filteringPauseTimeout;
+        });
+        const tab = await this.getCurrentTab();
+        await this.updatePopupData(tab);
     };
 
     @action
