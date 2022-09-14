@@ -59,6 +59,7 @@ Respectively creates Chrome and Firefox beta and release builds, zipped builds, 
     appState: {
         isRunning: true,
         isProtectionEnabled: true,
+        isLicenseExpired: false,
         isInstalled: true,
         isAuthorized: true,
         locale: 'ru',

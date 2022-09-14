@@ -163,7 +163,7 @@ const updateContextMenu = () => {
 const customizeContextMenu = () => {
     // clear old menu items before updating
     browser.contextMenus.removeAll();
-    if (settings.contextMenuEnabled()) {
+    if (settings.contextMenuEnabled() && !state.appState.isLicenseExpired) {
         updateContextMenu();
     }
 };

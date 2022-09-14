@@ -18,6 +18,7 @@ let hostData = {
     appState: {
         isRunning: true,
         isProtectionEnabled: true,
+        isLicenseExpired: false,
         isInstalled: true,
         isAuthorized: true,
         locale: 'ru',

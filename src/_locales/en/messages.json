@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "Show in the browser context menu"
+    },
+    "popup_trial_expired_title": {
+        "message": "Trial has expired"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Protection is disabled."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Updates are unavailable."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Purchase"
     }
 }

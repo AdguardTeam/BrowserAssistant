@@ -34,6 +34,11 @@ class State {
          */
         isProtectionEnabled: false,
         /**
+         * Required flag determining whether the license has expired
+         * @type {boolean}
+         */
+        isLicenseExpired: false,
+        /**
          * Optional parameter from the app
          * @type {string|null}
          */
@@ -161,6 +166,7 @@ class State {
             isInstalled,
             isRunning,
             isProtectionEnabled,
+            isLicenseExpired,
             locale,
             isAuthorized,
         } = appState;
@@ -185,6 +191,7 @@ class State {
             isInstalled,
             isRunning,
             isProtectionEnabled,
+            isLicenseExpired,
             feedbackAction,
         };
 
