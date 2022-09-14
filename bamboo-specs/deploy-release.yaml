@@ -28,6 +28,10 @@ Chrome WebStore:
             #!/bin/bash
             set -x
             set -e
+
+            # Fix mixed logs
+            exec 2>&1
+
             ls -la
 
             ./bamboo-deploy-publisher/deploy.sh browser-assistant-webstore-release
@@ -59,6 +63,7 @@ Addons Mozilla:
         artifacts:
           - name: build.txt
           - name: firefox.zip
+          - name: source.zip
     - script:
         interpreter: SHELL
         scripts:
@@ -66,6 +71,10 @@ Addons Mozilla:
             #!/bin/bash
             set -x
             set -e
+
+            # Fix mixed logs
+            exec 2>&1
+
             ls -la
 
             ./bamboo-deploy-publisher/deploy.sh browser-assistant-amo
@@ -100,6 +109,10 @@ Edge Addons:
             #!/bin/bash
             set -x
             set -e
+
+            # Fix mixed logs
+            exec 2>&1
+
             ls -la
 
             ./bamboo-deploy-publisher/deploy.sh browser-assistant-edge
