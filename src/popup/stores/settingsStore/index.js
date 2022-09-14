@@ -53,6 +53,8 @@ class SettingsStore {
 
     @observable isProtectionEnabled = false;
 
+    @observable isLicenseExpired = false;
+
     @observable originalCertStatus = ORIGINAL_CERT_STATUS.VALID;
 
     @observable isAppUpToDate = false;
@@ -276,10 +278,16 @@ class SettingsStore {
     @action
     setCurrentAppState = (appState) => {
         const {
-            isInstalled, isRunning, isProtectionEnabled, locale, isAuthorized,
+            isInstalled,
+            isRunning,
+            isProtectionEnabled,
+            isLicenseExpired,
+            locale,
+            isAuthorized,
         } = appState;
         this.isInstalled = isInstalled;
         this.isProtectionEnabled = isProtectionEnabled;
+        this.isLicenseExpired = isLicenseExpired;
         this.isRunning = isRunning;
         this.isAuthorized = isAuthorized;
         this.rootStore.translationStore.setLocale(locale);
