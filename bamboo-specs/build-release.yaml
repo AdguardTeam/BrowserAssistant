@@ -35,6 +35,10 @@ Build:
           - |-
             set -x
             set -e
+
+            # Fix mixed logs
+            exec 2>&1
+
             ls -alt
 
             yarn install ${bamboo.varsYarn}
@@ -42,6 +46,10 @@ Build:
             yarn test
             yarn locales:validate --min
             CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:release
+
+            # build source zip for publishing on AMO
+            git archive --format=zip --output=build/release/source.zip HEAD
+
             rm -rf node_modules
     - inject-variables:
         file: build/release/build.txt
@@ -81,6 +89,11 @@ Build:
     - name: update.xml
       location: build/release
       pattern: update.xml
+      shared: true
+      required: true
+    - name: source.zip
+      location: build/release
+      pattern: source.zip
       shared: true
       required: true
   requirements:
