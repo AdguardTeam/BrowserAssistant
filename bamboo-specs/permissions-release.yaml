@@ -9,12 +9,6 @@ deployment-permissions:
     permissions:
       - view
 environment-permissions:
-  - static.adtidy.org:
-      - groups:
-          - extensions-developers
-        permissions:
-          - view
-          - deploy
   - Chrome WebStore:
       - groups:
           - extensions-developers
