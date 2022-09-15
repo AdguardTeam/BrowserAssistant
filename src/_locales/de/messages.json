@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Im Kontextmenü des Browsers anzeigen"
+    },
+    "popup_trial_expired_title": {
+        "message": "Testversion ist abgelaufen"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Kaufen"
     }
 }

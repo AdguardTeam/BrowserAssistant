@@ -68,9 +68,6 @@
     "report_site": {
         "message": "Laporkan isu"
     },
-    "reset_custom_rules": {
-        "message": "Tetap semula peraturan khusus untuk laman ini"
-    },
     "cert_expired": {
         "message": "AdGuard tidak dapat mengesahkan sijil laman ini disebabkan sijil pentadbir telah luput"
     },

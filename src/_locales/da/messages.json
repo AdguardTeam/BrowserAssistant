@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Vis i browserens kontekstmenu"
+    },
+    "popup_trial_expired_title": {
+        "message": "Prøveperioden er slut"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Køb"
     }
 }

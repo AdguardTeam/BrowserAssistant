@@ -65,9 +65,6 @@
     "report_site": {
         "message": "Rapporteer probleem"
     },
-    "reset_custom_rules": {
-        "message": "Stel alle pasgemaakte reëls vir hierdie bladsy terug"
-    },
     "cert_expired": {
         "message": "AdGuard kon nie die sertifikaat van hierdie webwerf verifieer nie omdat die wortelsertifikaat verval het"
     },

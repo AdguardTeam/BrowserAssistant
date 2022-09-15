@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Zobrazit v kontextové nabídce prohlížeče"
+    },
+    "popup_trial_expired_title": {
+        "message": "Zkušební doba vypršela"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Zakoupit"
     }
 }

@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "הראה בתפריט ההקשר של הדפדפן"
+    },
+    "popup_trial_expired_title": {
+        "message": "הניסיון פג"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "רכוש"
     }
 }

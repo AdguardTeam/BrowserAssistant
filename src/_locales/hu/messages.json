@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Megjelenítés a böngésző helyi menüjében"
+    },
+    "popup_trial_expired_title": {
+        "message": "A próbaverzió lejárt"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Vásárlás"
     }
 }

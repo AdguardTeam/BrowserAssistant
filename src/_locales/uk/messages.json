@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Показувати у контекстному меню браузера"
+    },
+    "popup_trial_expired_title": {
+        "message": "Термін пробної версії минув"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Придбати"
     }
 }

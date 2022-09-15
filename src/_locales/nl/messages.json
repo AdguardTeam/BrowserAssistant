@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Weergeven in het browsercontextmenu"
+    },
+    "popup_trial_expired_title": {
+        "message": "Proefversie is verlopen"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Kopen"
     }
 }

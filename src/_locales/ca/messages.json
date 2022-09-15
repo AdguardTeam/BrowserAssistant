@@ -71,9 +71,6 @@
     "report_site": {
         "message": "Informar d’un problema"
     },
-    "reset_custom_rules": {
-        "message": "Reinicia totes les regles personalitzades per aquesta pàgina"
-    },
     "cert_expired": {
         "message": "AdGuard no ha pogut verificar el certificat d'aquest lloc web perquè el certificat arrel ha caducat"
     },
