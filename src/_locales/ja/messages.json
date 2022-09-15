@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "試用期間が終了しました"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "保護はオフです"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "アップデートは利用できません。"
+    },
     "popup_trial_expired_purchase": {
         "message": "購入する"
     }

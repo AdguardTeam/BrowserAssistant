@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "Testversion ist abgelaufen"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Schutz ist deaktiviert."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Aktualisierungen sind nicht verfügbar."
+    },
     "popup_trial_expired_purchase": {
         "message": "Kaufen"
     }

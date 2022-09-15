@@ -100,5 +100,11 @@
     },
     "expired": {
         "message": "Verval"
+    },
+    "popup_trial_expired_title": {
+        "message": "Toets tydperk is verval"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Aankoop"
     }
 }

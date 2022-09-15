@@ -130,5 +130,11 @@
     },
     "context_open_log": {
         "message": "บันทึกการกรอง..."
+    },
+    "popup_trial_expired_title": {
+        "message": "การทดลองใช้งานหมดอายุ"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "ซื้อ"
     }
 }
