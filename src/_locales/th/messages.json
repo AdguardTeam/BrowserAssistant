@@ -68,9 +68,6 @@
     "report_site": {
         "message": "แจ้งปัญหา"
     },
-    "reset_custom_rules": {
-        "message": "รีเซ็ตกฎที่กำหนดเองทั้งหมดสำหรับหน้านี้"
-    },
     "cert_expired": {
         "message": "AdGuard ไม่สามารถยืนยันใบรับรองของเว็บไซต์นี้ได้เนื่องจากใบรับรองหลักหมดอายุแล้ว"
     },
@@ -133,5 +130,11 @@
     },
     "context_open_log": {
         "message": "บันทึกการกรอง..."
+    },
+    "popup_trial_expired_title": {
+        "message": "การทดลองใช้งานหมดอายุ"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "ซื้อ"
     }
 }

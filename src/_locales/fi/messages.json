@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Näytä selaimen kontekstivalikossa"
+    },
+    "popup_trial_expired_title": {
+        "message": "Kokeilujakso on päättynyt"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Osta"
     }
 }

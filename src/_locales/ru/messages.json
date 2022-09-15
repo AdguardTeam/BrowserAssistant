@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "Показать в контекстном меню браузера"
+    },
+    "popup_trial_expired_title": {
+        "message": "Пробный период истёк"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Защита отключена."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Обновления недоступны."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Купить"
     }
 }

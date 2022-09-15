@@ -148,5 +148,11 @@
     },
     "context_open_log": {
         "message": "Filtravimo logas..."
+    },
+    "popup_trial_expired_title": {
+        "message": "Bandomasis laikotarpis pasibaigė"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Įsigyti"
     }
 }

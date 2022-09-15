@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Afișare în meniul contextual al browserului"
+    },
+    "popup_trial_expired_title": {
+        "message": "Proba a expirat"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Cumpărați"
     }
 }

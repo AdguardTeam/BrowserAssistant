@@ -72,7 +72,7 @@
         "message": "Lapor masalah"
     },
     "reset_custom_rules": {
-        "message": "Reset seluruh aturan custom untuk halaman ini"
+        "message": "Hapus semua aturan pengguna untuk halaman ini"
     },
     "cert_expired": {
         "message": "Adguard tak bisa memverifikasi sertifikat website ini karena sertifikat aslinya telah kadaluarsa"
@@ -151,5 +151,11 @@
     },
     "context_open_log": {
         "message": "Log penyaringan..."
+    },
+    "popup_trial_expired_title": {
+        "message": "Percobaan habis"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Pembelian"
     }
 }

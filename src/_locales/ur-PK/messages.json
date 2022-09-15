@@ -138,7 +138,7 @@
         "message": "کوئی مسئلہ بتایئں..."
     },
     "context_site_filtering_disabled": {
-        "message": "اس ویبسائٹ پر adguard نہیں چل سکتا"
+        "message": "اس ویبسائٹ پر AdGuard نہیں چل سکتا"
     },
     "context_disable_protection": {
         "message": "AdGuard کی حفاظت روک دیں"

@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Prikaži u ikontekstnom izborniku preglednika"
+    },
+    "popup_trial_expired_title": {
+        "message": "Probno razdoblje je isteklo"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Kupi"
     }
 }

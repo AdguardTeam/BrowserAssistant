@@ -71,9 +71,6 @@
     "report_site": {
         "message": "Rapportera ett problem"
     },
-    "reset_custom_rules": {
-        "message": "Återställ alla anpassade regler för den här sidan"
-    },
     "cert_expired": {
         "message": "AdGuard kunde inte verifiera webbplatsens certifikat eftersom rotcertifikatet har gått ut"
     },
@@ -166,5 +163,11 @@
     },
     "post_install_page_uninstall_button": {
         "message": "Avinstallera"
+    },
+    "popup_trial_expired_title": {
+        "message": "Provperioden har gått ut"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Köp"
     }
 }

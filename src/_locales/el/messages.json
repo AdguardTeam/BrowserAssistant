@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Εμφάνιση στο μενού περιβάλλοντος του προγράμματος περιήγησης"
+    },
+    "popup_trial_expired_title": {
+        "message": "Η δοκιμαστική περίοδος έχει λήξει"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Αγορά"
     }
 }

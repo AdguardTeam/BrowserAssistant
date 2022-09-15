@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Паказаць у кантэкстным меню браўзера"
+    },
+    "popup_trial_expired_title": {
+        "message": "Спробавы перыяд мінуў"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Купіць"
     }
 }

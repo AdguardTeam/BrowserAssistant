@@ -178,5 +178,11 @@
     },
     "options_context_menu_title": {
         "message": "Pokaż w menu kontekstowym przeglądarki"
+    },
+    "popup_trial_expired_title": {
+        "message": "Licencja próbna wygasła"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Kup teraz"
     }
 }

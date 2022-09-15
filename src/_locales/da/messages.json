@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "Vis i browserens kontekstmenu"
+    },
+    "popup_trial_expired_title": {
+        "message": "Prøveperiode udløbet"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Beskyttelse er deaktiveret."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Opdateringer er utilgængelige."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Køb"
     }
 }

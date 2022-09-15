@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "Показувати у контекстному меню браузера"
+    },
+    "popup_trial_expired_title": {
+        "message": "Пробний період завершився"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Захист вимкнено."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Оновлення недоступні."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Придбати"
     }
 }
