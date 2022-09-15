@@ -48,7 +48,7 @@ Build:
             CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta
 
             # build source zip for publishing on AMO
-            git archive --format=zip --output=build/beta/source.zip HEAD
+            git archive --format=zip --output=build/beta/source.zip "${bamboo.planRepository.revision}"
 
             rm -rf node_modules
     - inject-variables:
