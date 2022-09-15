@@ -80,3 +80,5 @@ export const FEEDBACK_ACTIONS = {
     UPDATE_FILTERING_STATUS: 'updateFilteringStatus',
     UPDATE_APPLICATION_APP_ONLY: 'updateApplicationAppOnly',
 };
+
+export const APP_VERSION_KEY = 'update.service.app.version';

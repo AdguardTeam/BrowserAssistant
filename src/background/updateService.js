@@ -1,14 +1,13 @@
 import browser from 'webextension-polyfill';
 
-import { localStorage } from './localStorage';
+import { storage } from './storage';
 import log from '../lib/logger';
+import { APP_VERSION_KEY } from '../lib/types';
 
 /**
  * Service with data about current app state
  */
 class UpdateService {
-    APP_VERSION_KEY = 'update.service.app.version';
-
     WAIT_FROM_INSTALLED_EVENT_TIMEOUT_MS = 50;
 
     /**
@@ -31,8 +30,8 @@ class UpdateService {
         });
     }
 
-    getVersionInfoFromStorage = () => {
-        const previousVersion = this.getAppVersionFromStorage();
+    getVersionInfoFromStorage = async () => {
+        const previousVersion = await this.getAppVersionFromStorage();
         const currentVersion = this.getAppVersionFromManifest();
         return {
             currentVersion,
@@ -43,7 +42,7 @@ class UpdateService {
     init = async (onInstalled) => {
         let versions = await this.getVersionsFromInstalledEvent();
         if (!versions) {
-            versions = this.getVersionInfoFromStorage();
+            versions = await this.getVersionInfoFromStorage();
             log.debug('Versions retrieved from storage', versions);
         } else {
             log.debug('Versions retrieved from installed event', versions);
@@ -55,7 +54,7 @@ class UpdateService {
         this.isFirstRun = (this.currentVersion !== this.previousVersion && !this.previousVersion);
         this.isUpdate = !!(this.currentVersion !== this.previousVersion && this.previousVersion);
 
-        this.setAppVersionInStorage(this.currentVersion);
+        await this.setAppVersionInStorage(this.currentVersion);
 
         const runInfo = {
             currentVersion: this.currentVersion,
@@ -67,16 +66,16 @@ class UpdateService {
         onInstalled(runInfo);
     }
 
-    getAppVersionFromStorage = () => {
-        return localStorage.get(this.APP_VERSION_KEY);
+    getAppVersionFromStorage = async () => {
+        return storage.get(APP_VERSION_KEY);
     };
 
     getAppVersionFromManifest = () => {
         return browser.runtime.getManifest().version;
     };
 
-    setAppVersionInStorage = (appVersion) => {
-        return localStorage.set(this.APP_VERSION_KEY, appVersion);
+    setAppVersionInStorage = async (appVersion) => {
+        return storage.set(APP_VERSION_KEY, appVersion);
     };
 }
 
