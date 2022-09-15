@@ -10,11 +10,13 @@
             "ar": "Arabic",
             "be": "Belarusian",
             "bg": "Bulgarian",
+            "bn-IN": "Bengali (India)",
             "bn": "Bengali (India)",
             "ca": "Catalan",
             "cs": "Czech",
             "da": "Danish",
             "de": "German",
+            "el": "Greek",
             "en": "English",
             "es": "Spanish",
             "et": "Estonian",
@@ -30,11 +32,14 @@
             "iw": "Hebrew",
             "ja": "Japanese",
             "ko": "Korean",
+            "ku": "Kurdish",
+            "lt": "Lithuanian",
             "ms": "Malay",
             "nl": "Dutch",
             "nb": "Norwegian",
             "pl": "Polish",
             "pt_BR": "Portuguese (Brazilian)",
+            "pt-PT": "Portuguese",
             "ro": "Romanian",
             "ru": "Russian",
             "sk": "Slovak",
@@ -45,9 +50,11 @@
             "th": "Thai",
             "tr": "Turkish",
             "uk": "Ukrainian",
+            "ur-PK": "Urdu (Pakistan)",
             "vi": "Vietnamese",
             "zh_CN": "Chinese Simplified",
-            "zh_TW": "Chinese Traditional"
+            "zh_TW": "Chinese Traditional",
+            "zh-HK": "Chinese Hong Kong"
         }
     }
 ]
