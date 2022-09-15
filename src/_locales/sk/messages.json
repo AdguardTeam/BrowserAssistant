@@ -185,7 +185,13 @@
     "popup_trial_expired_title": {
         "message": "Skúšobná doba vypršala"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Ochrana je vypnutá."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Aktualizácie nie sú k dispozícii."
+    },
     "popup_trial_expired_purchase": {
-        "message": "Kúpiť"
+        "message": "Nákup"
     }
 }

@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "試用已到期"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "防護被禁用。"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "更新為不可用的。"
+    },
     "popup_trial_expired_purchase": {
         "message": "購買"
     }

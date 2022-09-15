@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "Periodo di prova scaduto"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "La protezione è disattivata."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Gli aggiornamenti non sono disponibili."
+    },
     "popup_trial_expired_purchase": {
         "message": "Acquista"
     }
