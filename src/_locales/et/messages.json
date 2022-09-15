@@ -71,6 +71,9 @@
     "report_site": {
         "message": "Teatage sellest veebisaidist"
     },
+    "reset_custom_rules": {
+        "message": "Eemalda kõik selle lehe kasutajareeglid"
+    },
     "cert_expired": {
         "message": "AdGuard ei saanud selle veebisaidi sertifikaati kinnitada, kuna juursertifikaat on aegunud"
     },

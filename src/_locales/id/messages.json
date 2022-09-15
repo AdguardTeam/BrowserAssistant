@@ -71,6 +71,9 @@
     "report_site": {
         "message": "Lapor masalah"
     },
+    "reset_custom_rules": {
+        "message": "Hapus semua aturan pengguna untuk halaman ini"
+    },
     "cert_expired": {
         "message": "Adguard tak bisa memverifikasi sertifikat website ini karena sertifikat aslinya telah kadaluarsa"
     },
