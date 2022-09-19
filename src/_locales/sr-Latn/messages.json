@@ -168,7 +168,7 @@
         "message": "Svaki put kada otvorite novu karticu, dodatak komunicira sa samostalnom aplikacijom i zahteva informacije o trenutnom statusu stranice. Da bi to uradila, šalje URL adresu trenutne stranice samostalnoj aplikaciji."
     },
     "post_install_consent_policy_urls": {
-        "message": "Instaliranjem ovog proširenja, slažete se sa našom <privacy>politikom privatnosti</privacy> i <terms>uslovima korišćenja</terms>."
+        "message": "Instaliranjem ovog proširenja, slažete se sa našom <privacy>politikom privatnosti<\/privacy> i <terms>uslovima korišćenja<\/terms>."
     },
     "post_install_page_title": {
         "message": "Hvala vam što ste instalirali AdGuard pomoćnika za preglednike!"

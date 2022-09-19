@@ -162,13 +162,13 @@
         "message": "Hvala, ker ste namestili AdGuard Pomočnika brskalnika!"
     },
     "post_install_consent_short_app_desc": {
-        "message": "Ta spremljevalna razširitev brskalnika za <link>Namizne aplikacije AdGuard</link> nudi dostop v brskalniku do funkcij, kot so zaviranje elementov po meri, seznam dovoljenih spletnih strani in pošiljanje poročil."
+        "message": "Ta spremljevalna razširitev brskalnika za <link>Namizne aplikacije AdGuard<\/link> nudi dostop v brskalniku do funkcij, kot so zaviranje elementov po meri, seznam dovoljenih spletnih strani in pošiljanje poročil."
     },
     "post_install_consent_sent_info_desc": {
         "message": "Vsakič, ko odprete nov zavihek, dodatek komunicira s samostojno aplikacijo in zahteva informacije o trenutnem stanju strani. Da bi to naredil, pošlje URL trenutne strani v samostojno aplikacijo."
     },
     "post_install_consent_policy_urls": {
-        "message": "Z namestitvijo tega dodatka se strinjate z našo <privacy>Politiko zasebnosti</privacy> in <terms>Pogoji uporabe</terms>."
+        "message": "Z namestitvijo tega dodatka se strinjate z našo <privacy>Politiko zasebnosti<\/privacy> in <terms>Pogoji uporabe<\/terms>."
     },
     "post_install_page_title": {
         "message": "Hvala, ker ste namestili AdGuard Pomočnika brskalnika!"
@@ -184,6 +184,12 @@
     },
     "popup_trial_expired_title": {
         "message": "Preizkus je potekel"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Zaščita je onemogočena."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Posodobitve niso na voljo."
     },
     "popup_trial_expired_purchase": {
         "message": "Nakup"
