@@ -7,6 +7,7 @@ import Options from '../Options';
 import CurrentSite from '../CurrentSite';
 import AppClosed from './AppClosed';
 import AppWrapper from './AppWrapper';
+import TrialExpired from './TrialExpired';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
 import { createLongLivedConnection } from '../../messageService';
@@ -33,7 +34,7 @@ const App = observer(() => {
         })();
     }, []);
 
-    const { isAppWorking } = settingsStore;
+    const { isAppWorking, isLicenseExpired } = settingsStore;
 
     const onAgreement = async () => {
         await settingsStore.getPopupData();
@@ -57,6 +58,12 @@ const App = observer(() => {
     if (!translationStore.isReadyToDisplayMessages) {
         return (
             <AppWrapper />
+        );
+    }
+
+    if (isLicenseExpired) {
+        return (
+            <TrialExpired />
         );
     }
 

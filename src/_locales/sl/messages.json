@@ -181,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Prikaži v priročnem meniju brskalnika"
+    },
+    "popup_trial_expired_title": {
+        "message": "Preizkus je potekel"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Nakup"
     }
 }

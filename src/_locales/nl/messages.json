@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "Weergeven in het browsercontextmenu"
+    },
+    "popup_trial_expired_title": {
+        "message": "Proefversie is verlopen"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Bescherming is uitgeschakeld."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Updates zijn niet beschikbaar."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Kopen"
     }
 }

@@ -107,6 +107,9 @@
     "enabled": {
         "message": "Bekapcsolva ezen az oldalon"
     },
+    "filtering_exception": {
+        "message": "A szűrés le van tiltva, mivel befolyásolhatja a weboldal teljesítményét."
+    },
     "protection_is_enabled": {
         "message": "Védelem bekapcsolva"
     },
@@ -178,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Megjelenítés a böngésző helyi menüjében"
+    },
+    "popup_trial_expired_title": {
+        "message": "A próbaverzió lejárt"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Vásárlás"
     }
 }

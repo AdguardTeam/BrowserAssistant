@@ -72,7 +72,7 @@
         "message": "Teatage sellest veebisaidist"
     },
     "reset_custom_rules": {
-        "message": "Lähtestage selle lehe kõik kohandatud reeglid"
+        "message": "Eemalda kõik selle lehe kasutajareeglid"
     },
     "cert_expired": {
         "message": "AdGuard ei saanud selle veebisaidi sertifikaati kinnitada, kuna juursertifikaat on aegunud"

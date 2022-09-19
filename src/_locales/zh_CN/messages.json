@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "在浏览器右键菜单中显示"
+    },
+    "popup_trial_expired_title": {
+        "message": "试用期已满"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "保护已禁用"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "更新不可用。"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "购买"
     }
 }

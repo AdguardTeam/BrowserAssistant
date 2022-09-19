@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "브라우저 콘텍스트 메뉴에 표시"
+    },
+    "popup_trial_expired_title": {
+        "message": "체험판이 만료되었습니다!"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "보호가 비활성화되었습니다."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "업데이트를 사용할 수 없습니다."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "구입"
     }
 }

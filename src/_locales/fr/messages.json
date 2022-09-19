@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "Afficher dans le menu contextuel du navigateur"
+    },
+    "popup_trial_expired_title": {
+        "message": "La période d'essai est expirée"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "La protection est désactivée."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Les mises à jour ne sont pas disponibles."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Acheter"
     }
 }

@@ -181,5 +181,14 @@
     },
     "options_context_menu_title": {
         "message": "Tarayıcı sağ tık menüsünde göster"
+    },
+    "popup_trial_expired_title": {
+        "message": "Deneme süresi sona erdi"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Güncellemeler kullanılamıyor."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Satın al"
     }
 }

@@ -107,6 +107,9 @@
     "enabled": {
         "message": "Đã được bật ở trang này"
     },
+    "filtering_exception": {
+        "message": "Tính năng lọc bị vô hiệu hóa vì nó có thể ảnh hưởng đến hiệu suất của trang web."
+    },
     "protection_is_enabled": {
         "message": "Bảo vệ được khởi động"
     },
@@ -178,5 +181,11 @@
     },
     "options_context_menu_title": {
         "message": "Hiện trong menu ngữ cảnh trình duyệt"
+    },
+    "popup_trial_expired_title": {
+        "message": "Bản dùng thử đã hết hạn"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Mua"
     }
 }

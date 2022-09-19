@@ -181,5 +181,17 @@
     },
     "options_context_menu_title": {
         "message": "在該瀏覽器內容功能表裡顯示"
+    },
+    "popup_trial_expired_title": {
+        "message": "試用已到期"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "防護被禁用。"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "更新為不可用的。"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "購買"
     }
 }

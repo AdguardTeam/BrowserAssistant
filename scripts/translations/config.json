@@ -22,7 +22,9 @@
         "zh_CN",
         "zh_TW",
         "it",
-        "es"
+        "es",
+        "pt_BR",
+        "pt-PT"
     ],
     "threshold_percentage": 100
 }

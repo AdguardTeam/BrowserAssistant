@@ -178,5 +178,11 @@
     },
     "options_context_menu_title": {
         "message": "إظهار في قائمة المتصفح"
+    },
+    "popup_trial_expired_title": {
+        "message": "انتهت صلاحية النسخة التجريبية"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "شراء"
     }
 }
