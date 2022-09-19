@@ -1,4 +1,7 @@
 /* eslint-disable no-await-in-loop */
+import { getLocaleTranslations } from './helpers';
+import { BASE_LOCALE, PERSISTENT_MESSAGES } from './locales-constants';
+
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -44,10 +47,7 @@ function saveFile(filePath, data) {
     return fs.promises.writeFile(filePath, formattedData);
 }
 
-/**
- * Entry point for downloading translations
- */
-export const downloadAndSave = async (locales) => {
+const downloadAndSaveLocales = async (locales) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const lang of locales) {
         const downloadUrl = `${API_DOWNLOAD_URL}?${getQueryString(lang)}`;
@@ -68,4 +68,44 @@ export const downloadAndSave = async (locales) => {
             throw new Error(`Error occurred: ${errorMessage}, while downloading: ${downloadUrl}`);
         }
     }
+};
+
+const checkRequiredFields = (locale, messages, baseMessages) => {
+    const requiredFields = PERSISTENT_MESSAGES;
+    const resultMessages = { ...messages };
+    requiredFields.forEach((requiredField) => {
+        const fieldData = resultMessages[requiredField];
+        if (!fieldData) {
+            log.info(` - "${locale}" locale doesn't have required field: "${requiredField}"`);
+            log.info('   Will be added message from base locale');
+            resultMessages[requiredField] = baseMessages[requiredField];
+        }
+    });
+    return resultMessages;
+};
+
+const validateRequiredFields = async (locales) => {
+    const baseMessages = await getLocaleTranslations(
+        LOCALES_DIR,
+        BASE_LOCALE,
+        LOCALE_DATA_FILENAME
+    );
+
+    const promises = locales.map(async (locale) => {
+        const pathToLocale = path.join(LOCALES_DIR, locale, LOCALE_DATA_FILENAME);
+        const messages = JSON.parse(await fs.promises.readFile(pathToLocale, 'utf-8'));
+        const checkedMessages = checkRequiredFields(locale, messages, baseMessages);
+        const checkedMessagesString = JSON.stringify(checkedMessages, null, 4).replace(/\//g, '\\/');
+        await fs.promises.writeFile(pathToLocale, checkedMessagesString);
+    });
+
+    await Promise.all(promises);
+};
+
+/**
+ * Entry point for downloading translations
+ */
+export const downloadAndSave = async (locales) => {
+    await downloadAndSaveLocales(locales);
+    await validateRequiredFields(locales);
 };

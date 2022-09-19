@@ -156,7 +156,7 @@
         "message": "Tack för att du installerar AdGuard Browser Assistant!"
     },
     "post_install_consent_policy_urls": {
-        "message": "Genom att installera detta tillägg godkänner du vår <privacy>Integritetspolicy</privacy> och våra <terms>Användarvillkor</terms>."
+        "message": "Genom att installera detta tillägg godkänner du vår <privacy>Integritetspolicy<\/privacy> och våra <terms>Användarvillkor<\/terms>."
     },
     "post_install_page_title": {
         "message": "Tack för att du installerar AdGuard Browser Assistant!"

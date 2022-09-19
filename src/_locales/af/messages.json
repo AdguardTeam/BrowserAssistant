@@ -106,5 +106,8 @@
     },
     "popup_trial_expired_purchase": {
         "message": "Aankoop"
+    },
+    "description": {
+        "message": "Extension for the AdGuard desktop app. Manages filtering right from the browser, hides annoying elements in two clicks."
     }
 }

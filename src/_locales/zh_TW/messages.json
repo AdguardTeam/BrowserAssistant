@@ -162,13 +162,13 @@
         "message": "感謝安裝 AdGuard 瀏覽器助理！"
     },
     "post_install_consent_short_app_desc": {
-        "message": "此款用於 <link>AdGuard 桌面應用程式</link>的夥伴擴充功能對於例如自訂的元件封鎖、將網站列入允許清單和提交報告的這類功能提供在瀏覽器內的存取權限。"
+        "message": "此款用於 <link>AdGuard 桌面應用程式<\/link>的夥伴擴充功能對於例如自訂的元件封鎖、將網站列入允許清單和提交報告的這類功能提供在瀏覽器內的存取權限。"
     },
     "post_install_consent_sent_info_desc": {
         "message": "每次您開啟一個新分頁，此附加元件與該獨立的應用程式交流，並請求有關現行頁面狀態的資訊。為了實行前述，它傳送現行頁面的網址給該獨立的應用程式。"
     },
     "post_install_consent_policy_urls": {
-        "message": "透過安裝此附加元件，您同意我們的<privacy>隱私政策</privacy>和<terms>使用條款</terms>。"
+        "message": "透過安裝此附加元件，您同意我們的<privacy>隱私政策<\/privacy>和<terms>使用條款<\/terms>。"
     },
     "post_install_page_title": {
         "message": "感謝安裝 AdGuard 瀏覽器助理！"
