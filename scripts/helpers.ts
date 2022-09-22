@@ -42,3 +42,11 @@ export const getOutputPathByBuildEnv = (buildEnv: BuildEnv) => {
     }
     return buildEnvData.outputPath;
 };
+
+export const getEnvConf = (env: BuildEnv) => {
+    const envConfig = BUILD_ENVS_MAP[env];
+    if (!envConfig) {
+        throw new Error(`No env config for: "${env}"`);
+    }
+    return envConfig;
+};
