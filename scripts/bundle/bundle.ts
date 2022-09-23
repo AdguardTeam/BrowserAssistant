@@ -2,6 +2,7 @@ import { program } from 'commander';
 
 import { Browser, BuildEnv } from '../consts';
 import { cliLog } from '../cli-log';
+import { createBuildVersion } from '../versionInfo';
 
 import { bundleRunner } from './bundle-runner';
 import { getWebpackConfig } from '../webpack';
@@ -32,18 +33,21 @@ export const bundle = () => {
         bundleChrome,
         bundleFirefox,
         bundleEdge,
+        createBuildVersion,
     ];
 
     const betaPlan = [
         bundleChrome,
         bundleFirefox,
         bundleEdge,
+        createBuildVersion,
     ];
 
     const releasePlan = [
         bundleChrome,
         bundleFirefox,
         bundleEdge,
+        createBuildVersion,
     ];
 
     const runBuild = async (tasks: Task[], watch: boolean) => {
