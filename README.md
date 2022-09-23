@@ -8,7 +8,8 @@ This is a replacement for the [legacy assistant](https://github.com/AdguardTeam/
 ## Build
 
 - `yarn install`
-- `yarn dev` / `yarn beta` / `yarn release`
+- `yarn dev` / `yarn beta` / `yarn release` (specify chrome | firefox | edge | all by default)
+- `yarn dev --watch` prepare the dev build and monitor the files for changes.
 
 Builds will be located in the `build` directory.
 
