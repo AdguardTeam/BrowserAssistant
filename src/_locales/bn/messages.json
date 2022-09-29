@@ -22,5 +22,11 @@
     },
     "reset_custom_rules": {
         "message": "এই পেজের সকল কাস্টম নিয়ম পুন:স্থাপন করুন"
+    },
+    "name": {
+        "message": "AdGuard Browser Assistant"
+    },
+    "description": {
+        "message": "Extension for the AdGuard desktop app. Manages filtering right from the browser, hides annoying elements in two clicks."
     }
 }

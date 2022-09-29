@@ -162,13 +162,13 @@
         "message": "Cảm ơn bạn đã cài đặt Hỗ trợ trình duyệt AdGuard!"
     },
     "post_install_consent_short_app_desc": {
-        "message": "Tiện ích mở rộng trình duyệt đồng hành này dành cho <link>ứng dụng AdGuard trên máy tính để bàn</link> cung cấp quyền truy cập trong trình duyệt vào các tính năng như chặn phần tử tùy chỉnh, cho phép trang web và gửi báo cáo."
+        "message": "Tiện ích mở rộng trình duyệt đồng hành này dành cho <link>ứng dụng AdGuard trên máy tính để bàn<\/link> cung cấp quyền truy cập trong trình duyệt vào các tính năng như chặn phần tử tùy chỉnh, cho phép trang web và gửi báo cáo."
     },
     "post_install_consent_sent_info_desc": {
         "message": "Mỗi khi bạn mở một tab mới, tiện ích bổ sung sẽ giao tiếp với ứng dụng độc lập và yêu cầu thông tin về trạng thái trang hiện tại. Để làm điều đó, nó sẽ gửi URL của trang hiện tại đến ứng dụng độc lập."
     },
     "post_install_consent_policy_urls": {
-        "message": "Bằng cách cài đặt tiện ích bổ sung này, bạn đồng ý với <privacy>Chính sách Bảo mật</privacy> và <terms>Điều khoản Sử dụng</terms> của chúng tôi."
+        "message": "Bằng cách cài đặt tiện ích bổ sung này, bạn đồng ý với <privacy>Chính sách Bảo mật<\/privacy> và <terms>Điều khoản Sử dụng<\/terms> của chúng tôi."
     },
     "post_install_page_title": {
         "message": "Cảm ơn bạn đã cài đặt Hỗ trợ trình duyệt AdGuard!"
@@ -184,6 +184,12 @@
     },
     "popup_trial_expired_title": {
         "message": "Bản dùng thử đã hết hạn"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Bảo vệ bị vô hiệu hóa."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Cập nhật không có sẵn."
     },
     "popup_trial_expired_purchase": {
         "message": "Mua"

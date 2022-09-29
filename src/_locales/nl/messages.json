@@ -162,13 +162,13 @@
         "message": "Bedankt voor het installeren van de AdGuard-browserassistent!"
     },
     "post_install_consent_short_app_desc": {
-        "message": "Deze begeleidende browseruitbreiding voor <link>AdGuard desktop-apps</link> biedt in-browser toegang tot functies zoals het blokkeren van aangepaste elementen, het toelaten van websites en het indienen van rapporten."
+        "message": "Deze begeleidende browseruitbreiding voor <link>AdGuard desktop-apps<\/link> biedt in-browser toegang tot functies zoals het blokkeren van aangepaste elementen, het toelaten van websites en het indienen van rapporten."
     },
     "post_install_consent_sent_info_desc": {
         "message": "Elke keer dat je een nieuw tabblad opent, communiceert de uitbreiding met de zelfstandige app en vraagt om informatie over de huidige paginastatus. Om dat te doen, stuurt het de URL van de huidige pagina naar de zelfstandige app."
     },
     "post_install_consent_policy_urls": {
-        "message": "Door deze uitbreiding te installeren, ga je akkoord met ons <privacy>Privacybeleid</privacy> en de <terms>Gebruiksvoorwaarden</terms>."
+        "message": "Door deze uitbreiding te installeren, ga je akkoord met ons <privacy>Privacybeleid<\/privacy> en de <terms>Gebruiksvoorwaarden<\/terms>."
     },
     "post_install_page_title": {
         "message": "Bedankt voor het installeren van de AdGuard-browserassistent!"
