@@ -18,3 +18,5 @@ export const FILTERING_PAUSE_VERSION_SUPPORT_SINCE = {
 };
 
 export const SUPPORT_LINK = 'https://link.adtidy.org/forward.html?action=support&from=popup&app=browser_assistant';
+
+export const PURCHASE_TRIAL_EXPIRED = 'https://link.adtidy.org/forward.html?action=purchase&from=popup_trial_expired_screen&app=browser_assistant';

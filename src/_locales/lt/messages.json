@@ -1,0 +1,158 @@
+{
+    "name": {
+        "message": "AdGuard Naršyklės Pagalbininkas"
+    },
+    "description": {
+        "message": "AdGuard programos plėtinys. Valdo filtravimą tiesiai iš naršyklės, slepia erzinančius elementus per pora paspaudimų."
+    },
+    "adg_is_not_installed": {
+        "message": "AdGuard neįdiegtas arba neteisingai sukonfigūruotas"
+    },
+    "get_adguard": {
+        "message": "Gauti AdGuard"
+    },
+    "adg_is_not_updated": {
+        "message": "AdGuard neatnaujintas"
+    },
+    "update": {
+        "message": "Atnaujinti"
+    },
+    "adg_is_not_running": {
+        "message": "AdGuard nepaleistas"
+    },
+    "run_adg": {
+        "message": "Paleisti AdGuard"
+    },
+    "adg_is_paused": {
+        "message": "AdGuard apsauga laikinai sustabdyta"
+    },
+    "adg_is_launching": {
+        "message": "AdGuard paleidžiamas..."
+    },
+    "enable": {
+        "message": "Įjungti"
+    },
+    "assistant_is_not_updated": {
+        "message": "Pagalbininkas neatnaujintas"
+    },
+    "something_went_wrong": {
+        "message": "Kažkas negerai"
+    },
+    "reinstall": {
+        "message": "Iš naujo įdiegti"
+    },
+    "https_filtering": {
+        "message": "HTTPS filtravimas"
+    },
+    "increase_ab_block_quality": {
+        "message": "Pagerina blokavimo kokybę"
+    },
+    "verified_by": {
+        "message": "Patvirtino:"
+    },
+    "more_info": {
+        "message": "Daugiau informacijos"
+    },
+    "adg_protection": {
+        "message": "AdGuard apsauga"
+    },
+    "adg_settings": {
+        "message": "AdGuard nustatymai"
+    },
+    "pause_filtering": {
+        "message": "Nefiltruoti 30 sekundžių"
+    },
+    "block_ads": {
+        "message": "Blokuoti reklamą šioje svetainėje"
+    },
+    "open_filtering_log": {
+        "message": "Atidaryti filtravimo žurnalą"
+    },
+    "report_site": {
+        "message": "Pranešti apie problemą"
+    },
+    "cert_expired": {
+        "message": "AdGuard negalėjo patvirtinti šios svetainės sertifikato nes Root sertifikatas baigėsi"
+    },
+    "cert_absent": {
+        "message": "HTTPS filtravimas neatliktas šiai svetainei"
+    },
+    "site_not_using_private_protection": {
+        "message": "Ši svetainė nenaudoja saugaus ryšio. Kas nors gali pamatyti arba pakeisti informaciją kurią siunčiate ar gaunate per svetainę."
+    },
+    "not_secure": {
+        "message": "Nesaugu"
+    },
+    "nothing_to_block_here": {
+        "message": "Nėra ką blokuoti"
+    },
+    "secure_page": {
+        "message": "Saugus puslapis"
+    },
+    "reload_page": {
+        "message": "Įkelti puslapį iš naujo"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Įkelkite puslapį iš naujo, jei norint tęsti filtravimą"
+    },
+    "not_filtering_https": {
+        "message": "Pagal nutylėjimą, mes nefiltruojame HTTPS srauto apmokėjimų sistemoms ir bankų svetainėms. Jūs galite įjungti filtravimą rankiniu būdu: spauskite geltoną \"užraktą\" kairėje."
+    },
+    "disabled": {
+        "message": "Išjungta šioje svetainėje"
+    },
+    "enabled": {
+        "message": "Įjungta šioje svetainėje"
+    },
+    "protection_is_enabled": {
+        "message": "Apsauga įjungta"
+    },
+    "protection_is_disabled": {
+        "message": "Apsauga išjungta"
+    },
+    "website_cert_is_expired": {
+        "message": "Svetainės sertifikatas pasibaigęs"
+    },
+    "expired": {
+        "message": "Pasibaigęs"
+    },
+    "contact_support": {
+        "message": "Susisiekti su pagalba"
+    },
+    "context_site_filtering_on": {
+        "message": "Įjungti filtravimą šioje svetainėje"
+    },
+    "context_site_filtering_off": {
+        "message": "Išjungti filtravimą šioje svetainėje"
+    },
+    "context_block_site_ads": {
+        "message": "Blokuoti reklamą šioje svetainėje..."
+    },
+    "context_complaint_website": {
+        "message": "Pranešti apie problemą..."
+    },
+    "context_site_filtering_disabled": {
+        "message": "AdGuard neveikia su šiuo domenu"
+    },
+    "context_disable_protection": {
+        "message": "Pristabdyti AdGuard apsaugą"
+    },
+    "context_enable_protection": {
+        "message": "Atnaujinti AdGuard apsaugą"
+    },
+    "context_site_protection_disabled": {
+        "message": "AdGuard apsauga laikinai sustabdyta"
+    },
+    "context_open_settings": {
+        "message": "AdGuard nustatymai..."
+    },
+    "context_open_log": {
+        "message": "Filtravimo logas..."
+    },
+    "popup_trial_expired_title": {
+        "message": "Bandomasis laikotarpis pasibaigė"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Įsigyti"
+    }
+}

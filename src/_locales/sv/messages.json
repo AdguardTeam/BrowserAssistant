@@ -71,9 +71,6 @@
     "report_site": {
         "message": "Rapportera ett problem"
     },
-    "reset_custom_rules": {
-        "message": "Återställ alla anpassade regler för den här sidan"
-    },
     "cert_expired": {
         "message": "AdGuard kunde inte verifiera webbplatsens certifikat eftersom rotcertifikatet har gått ut"
     },
@@ -159,12 +156,18 @@
         "message": "Tack för att du installerar AdGuard Browser Assistant!"
     },
     "post_install_consent_policy_urls": {
-        "message": "Genom att installera detta tillägg godkänner du vår <privacy>Integritetspolicy</privacy> och våra <terms>Användarvillkor</terms>."
+        "message": "Genom att installera detta tillägg godkänner du vår <privacy>Integritetspolicy<\/privacy> och våra <terms>Användarvillkor<\/terms>."
     },
     "post_install_page_title": {
         "message": "Tack för att du installerar AdGuard Browser Assistant!"
     },
     "post_install_page_uninstall_button": {
         "message": "Avinstallera"
+    },
+    "popup_trial_expired_title": {
+        "message": "Provperioden har gått ut"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Köp"
     }
 }

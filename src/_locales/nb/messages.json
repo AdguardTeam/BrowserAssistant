@@ -71,9 +71,6 @@
     "report_site": {
         "message": "Rapporter inn dette nettstedet"
     },
-    "reset_custom_rules": {
-        "message": "Tilbakestill alle tilpassede regler for denne siden"
-    },
     "cert_expired": {
         "message": "AdGuard kunne ikke bekrefte dette nettstedets sertifikat fordi rotsertifikatet har utløpt"
     },
@@ -151,5 +148,11 @@
     },
     "context_open_log": {
         "message": "Filtreringslogg …"
+    },
+    "popup_trial_expired_title": {
+        "message": "Prøveperioden har utløpt"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Kjøp"
     }
 }

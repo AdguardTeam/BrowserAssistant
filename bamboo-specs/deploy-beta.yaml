@@ -22,13 +22,12 @@ static.adtidy.org:
         interpreter: SHELL
         scripts:
           - |-
-            set -x
-            set -e
+            set -e -x
 
             # Fix mixed logs
             exec 2>&1
 
-            ls -alt
+            ls -la
 
             ./bamboo-deploy-publisher/deploy.sh browser-assistant-beta
   final-tasks: []
@@ -58,13 +57,12 @@ Chrome WebStore:
         interpreter: SHELL
         scripts:
           - |-
-              set -x
-              set -e
+              set -e-x
 
               # Fix mixed logs
               exec 2>&1
 
-              ls -alt
+              ls -la
 
               ./bamboo-deploy-publisher/deploy.sh browser-assistant-webstore-beta
   final-tasks: []

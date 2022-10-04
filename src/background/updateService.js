@@ -1,14 +1,14 @@
 import browser from 'webextension-polyfill';
 
-import log from '../lib/logger';
 import { storage } from './storage';
+import log from '../lib/logger';
+import { APP_VERSION_KEY } from '../lib/types';
+import { localStorage } from './localStorage';
 
 /**
  * Service with data about current app state
  */
 class UpdateService {
-    APP_VERSION_KEY = 'update.service.app.version';
-
     WAIT_FROM_INSTALLED_EVENT_TIMEOUT_MS = 50;
 
     /**
@@ -68,7 +68,9 @@ class UpdateService {
     };
 
     getAppVersionFromStorage = async () => {
-        return storage.get(this.APP_VERSION_KEY);
+        // TODO remove localStorage fallback after some time,
+        //  we use it because in the previous version 1.3.13 we used localStorage
+        return await storage.get(APP_VERSION_KEY) ?? localStorage.get(APP_VERSION_KEY);
     };
 
     getAppVersionFromManifest = () => {
@@ -76,7 +78,7 @@ class UpdateService {
     };
 
     setAppVersionInStorage = async (appVersion) => {
-        return storage.set(this.APP_VERSION_KEY, appVersion);
+        return storage.set(APP_VERSION_KEY, appVersion);
     };
 }
 

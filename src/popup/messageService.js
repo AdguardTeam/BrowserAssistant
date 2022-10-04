@@ -93,7 +93,7 @@ export const createLongLivedConnection = (rootStore) => {
                 }
 
                 if (filteringPauseTimeout >= 0) {
-                    settingsStore.setFilteringPauseTimeout(filteringPauseTimeout);
+                    await settingsStore.setFilteringPauseTimeout(filteringPauseTimeout);
                 } else {
                     await settingsStore.updatePopupData();
                 }
