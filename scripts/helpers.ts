@@ -10,11 +10,16 @@ const IS_DEV = BUILD_ENV === BuildEnv.Dev;
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
 
-export const appendBuildEnvSuffix = (name: string, buildEnv: BuildEnv) => {
-    const buildEnvData = BUILD_ENVS_MAP[buildEnv];
-    if (!buildEnvData) {
-        throw new Error(`Wrong build environment: ${buildEnv}`);
+export const getEnvConf = (env: BuildEnv) => {
+    const envConfig = BUILD_ENVS_MAP[env];
+    if (!envConfig) {
+        throw new Error(`No env config for: "${env}"`);
     }
+    return envConfig;
+};
+
+export const appendBuildEnvSuffix = (name: string, buildEnv: BuildEnv) => {
+    const buildEnvData = getEnvConf(buildEnv);
     return buildEnvData.name ? `${name} ${buildEnvData.name}` : name;
 };
 
@@ -36,9 +41,6 @@ export const updateManifest = (manifestJson: string, browserManifestDiff?: Parti
 };
 
 export const getOutputPathByBuildEnv = (buildEnv: BuildEnv) => {
-    const buildEnvData = BUILD_ENVS_MAP[buildEnv];
-    if (!buildEnvData) {
-        throw new Error(`Wrong build environment: ${buildEnv}`);
-    }
+    const buildEnvData = getEnvConf(buildEnv);
     return buildEnvData.outputPath;
 };

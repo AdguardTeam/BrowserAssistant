@@ -63,26 +63,6 @@ export const enum Browser {
     Edge = 'edge',
 }
 
-/**
- * Validates BUILD_ENV value
- * @param browser
- */
-const getBrowser = (browser: unknown): Browser => {
-    switch (browser) {
-        case Browser.Firefox:
-            return Browser.Firefox;
-        case Browser.Edge:
-            return Browser.Edge;
-        case Browser.Chrome:
-            return Browser.Chrome;
-        default:
-            console.log(chalk.yellowBright(`\nBROWSER is not set, defaulting to ${Browser.Chrome}`));
-            return Browser.Chrome;
-    }
-};
-
-export const BROWSER = getBrowser(process.env.BROWSER);
-
 const deployPath = BUILD_ENVS_MAP[BUILD_ENV].outputPath;
 
 // Update manifest URL for the Chrome extension
