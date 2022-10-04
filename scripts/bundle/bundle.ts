@@ -122,7 +122,7 @@ export const bundle = () => {
         .action(() => {
             chrome(program.opts().watch);
         });
-        
+
     program
         .command('firefox')
         .description('Builds extension for firefox browser')

@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
 const webpack = require('webpack');
 import { Configuration, WebpackPluginInstance } from 'webpack';
+
 import {
     SRC_PATH,
     BUILD_PATH,
@@ -25,7 +26,7 @@ const OPTIONS_UI_PATH = path.resolve(__dirname, SRC_PATH, 'options-ui');
 
 export const getWebpackConfig = (
     browser: Browser = Browser.Chrome,
-    isWatchMode?: boolean,
+    isWatchMode: boolean = false,
 ): Configuration => {
     const IS_DEV = BUILD_ENV === BuildEnv.Dev;
     const OUTPUT_PATH = getOutputPathByBuildEnv(BUILD_ENV);
