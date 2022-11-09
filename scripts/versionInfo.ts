@@ -11,7 +11,7 @@ const FILENAME = 'build.txt';
 
 const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath, FILENAME);
 
-const createBuildVersion = async () => {
+export const createBuildVersion = async () => {
     try {
         await fs.writeFile(WRITE_PATH, content);
         console.log(chalk.greenBright(`${FILENAME} saved in ${WRITE_PATH}\n`));
@@ -20,5 +20,3 @@ const createBuildVersion = async () => {
         throw error;
     }
 };
-
-createBuildVersion();
