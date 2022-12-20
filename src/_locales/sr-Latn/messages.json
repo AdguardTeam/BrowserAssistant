@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "Probni period je istekao"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Zaštita je isključena."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Ažuriranja nisu dostupna."
+    },
     "popup_trial_expired_purchase": {
         "message": "Kupi"
     }

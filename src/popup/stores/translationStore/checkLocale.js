@@ -4,10 +4,15 @@ const checkPartialKeyMatch = (keysToCheck, key) => {
     });
 };
 
+/**
+ * Finds suitable locale key in messagesMap and returns it
+ * @param {object} messagesMap
+ * @param {string} locale
+ * @returns {{suitable: boolean, locale: string}}
+ */
 const checkLocale = (messagesMap, locale) => {
     const result = {
         suitable: false,
-        matchedKey: locale,
         locale,
     };
 
@@ -22,6 +27,7 @@ const checkLocale = (messagesMap, locale) => {
     // strict match
     if (messagesMap[locale]) {
         result.suitable = true;
+        result.locale = locale;
         return result;
     }
 
@@ -31,7 +37,6 @@ const checkLocale = (messagesMap, locale) => {
         if (messagesMap[underscored]) {
             result.suitable = true;
             result.locale = underscored;
-            result.matchedKey = underscored;
             return result;
         }
 
@@ -40,7 +45,6 @@ const checkLocale = (messagesMap, locale) => {
         if (messagesMap[hyphened]) {
             result.suitable = true;
             result.locale = hyphened;
-            result.matchedKey = hyphened;
             return result;
         }
 
@@ -50,10 +54,10 @@ const checkLocale = (messagesMap, locale) => {
     }
 
     // check partial key match, e.g "zh" when in messagesMap we have "zh_cn" and "zh_tw"
-    const matchedKey = checkPartialKeyMatch(Object.keys(messagesMap), locale);
-    if (matchedKey) {
+    const matchedLocale = checkPartialKeyMatch(Object.keys(messagesMap), locale);
+    if (matchedLocale) {
         result.suitable = true;
-        result.matchedKey = matchedKey;
+        result.locale = matchedLocale;
         return result;
     }
 
