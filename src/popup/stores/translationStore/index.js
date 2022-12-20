@@ -37,34 +37,33 @@ class TranslationStore {
      * 1. Returns application locale if has translations
      * 2. Returns browser locale if has translations
      * 3. Returns base locale
-     * @returns {{locale: string, matchedKey: string}} locale
+     * @returns {{locale: string}} locale
      */
     getLocale = () => {
         let result = checkLocale(messagesMap, this.locale);
 
         if (result.suitable) {
-            return { locale: result.locale, matchedKey: result.matchedKey };
+            return { locale: result.locale };
         }
 
         result = checkLocale(messagesMap, browserLocale);
-        return result.suitable
-            ? { locale: result.locale, matchedKey: result.matchedKey }
-            : { locale: BASE_LOCALE, matchedKey: BASE_LOCALE };
+        return result.suitable ? { locale: result.locale } : { locale: BASE_LOCALE };
     };
 
     @computed
     get i18n() {
         const result = this.getLocale();
+
         const defaultMessages = messagesMap[BASE_LOCALE];
-        const currentLocaleMessages = messagesMap[result.matchedKey];
+        const currentLocaleMessages = messagesMap[result.locale];
 
         // messages with fallback to base locale
         const messages = Object.keys(defaultMessages).reduce((acc, key) => {
-            acc[key] = currentLocaleMessages[key] || defaultMessages[key];
+            acc[key] = currentLocaleMessages?.[key] || defaultMessages[key];
             return acc;
         }, {});
 
-        // createIntl doesnt accepts locales codes longer than 2 chars
+        // createIntl doesn't accept locales codes longer than 2 chars
         // and here it is not important, so we left only two chars
         const locale = result.locale.slice(0, 2);
         return createIntl({

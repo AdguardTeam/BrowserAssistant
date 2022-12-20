@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "Спробавы перыяд мінуў"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Абарона адключана."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Абнаўленні недаступныя."
+    },
     "popup_trial_expired_purchase": {
         "message": "Купіць"
     }

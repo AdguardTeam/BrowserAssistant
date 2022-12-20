@@ -162,7 +162,7 @@
         "message": "Obrigado por instalar o Assistente do AdGuard para navegador!"
     },
     "post_install_consent_short_app_desc": {
-        "message": "Esta extensão de navegador complementar para <link>aplicativos para computador do AdGuard<\/link> oferece acesso no navegador a recursos como bloqueio de elemento personalizado, lista de permissões de sites e envio de relatórios."
+        "message": "Esta extensão de navegador complementar para <link>aplicações para computador do AdGuard<\/link> oferece acesso no navegador a recursos como bloqueio de elemento personalizado, lista de permissões de sites e envio de relatórios."
     },
     "post_install_consent_sent_info_desc": {
         "message": "Cada vez que você abre uma nova guia, o complemento se comunica com o aplicativo independente e solicita informações sobre o status da página atual. Para fazer isso, ele envia a URL da página atual para o aplicativo independente."
@@ -186,10 +186,10 @@
         "message": "A versão de experimentação expirou"
     },
     "popup_trial_expired_protection_disabled": {
-        "message": "A protecção está desactivada."
+        "message": "A proteção está desativada."
     },
     "popup_trial_expired_updates_unavailable": {
-        "message": "As actualizações não estão disponíveis."
+        "message": "As atualizações não estão disponíveis."
     },
     "popup_trial_expired_purchase": {
         "message": "Comprar"
