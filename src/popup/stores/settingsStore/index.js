@@ -220,7 +220,11 @@ class SettingsStore {
         await tabs.openPage(DOWNLOAD_LINK);
     };
 
-    reloadPage = async () => {
+    /**
+     * Reloads active and similar tabs
+     * @returns {Promise<void>}
+     */
+    reloadActiveAndSimilarTabs = async () => {
         const tabsToReload = await tabs.getActiveAndSimilarTabs();
         tabsToReload.forEach((tab) => {
             tabs.reloadTab(tab);
@@ -229,7 +233,7 @@ class SettingsStore {
 
     reloadPageAfterSwitcherTransition = () => {
         setTimeout(async () => {
-            await this.reloadPage();
+            await this.reloadActiveAndSimilarTabs();
         }, SWITCHER_TRANSITION_TIME);
     };
 
@@ -384,11 +388,10 @@ class SettingsStore {
             const tab = await this.getCurrentTab();
             await messagesSender.removeCustomRules(this.currentUrl);
             const urlFilteringState = await messagesSender.getUrlFilteringState(tab);
-            runInAction(async () => {
-                this.setUrlFilteringState(urlFilteringState);
-                uiStore.setExtensionPending(false);
-                await this.reloadPage();
-            });
+            this.setUrlFilteringState(urlFilteringState);
+            uiStore.setExtensionPending(false);
+
+            await this.reloadActiveAndSimilarTabs();
         } catch (error) {
             log.error(error);
         }
