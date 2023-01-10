@@ -21,6 +21,14 @@
     },
 
     "rules": {
+        "max-len": ["error", {
+            "code": 120,
+            "comments": 120,
+            "tabWidth": 4,
+            "ignoreUrls": true,
+            "ignoreTrailingComments": false,
+            "ignoreComments": false
+        }],
         "no-shadow": "off",
         "react/jsx-filename-extension": [1, { "extensions": [ ".js", ".jsx" ]}],
         "import/no-extraneous-dependencies": 0,

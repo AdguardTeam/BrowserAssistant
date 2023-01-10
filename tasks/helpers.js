@@ -1,5 +1,5 @@
 const { BUILD_ENVS, BUILD_ENVS_MAP } = require('./consts');
-const pJson = require('../package');
+const pJson = require('../package.json');
 const twoskyConfig = require('../.twosky.json');
 
 const { BUILD_ENV } = process.env;

@@ -8,7 +8,7 @@ const {
     CHROME_UPDATE_CRX, CHROME_UPDATER_FILENAME, CRX_NAME,
 } = require('./consts');
 const { updateManifest } = require('./helpers');
-const config = require('../package');
+const config = require('../package.json');
 
 const { BUILD_ENV } = process.env;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
@@ -27,6 +27,7 @@ const getPrivateKey = async () => {
         console.log(chalk.greenBright(`\nThe certificate is read from ${certificatePath}\n`));
         return privateKey;
     } catch (error) {
+        // eslint-disable-next-line max-len
         console.error(chalk.redBright(`Can not create ${CRX_NAME} - the valid certificate is not found in ${certificatePath} - ${error.message}\n`));
         throw error;
     }

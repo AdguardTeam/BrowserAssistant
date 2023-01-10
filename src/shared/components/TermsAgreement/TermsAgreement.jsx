@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React from 'react';
 import cn from 'classnames';
 
@@ -6,7 +5,7 @@ import browserApi from '../../../lib/browserApi';
 import { POST_INSTALL_MESSAGES } from '../../../lib/types';
 import { translator } from '../../translators/translator';
 import { reactTranslator } from '../../translators/reactTranslator';
-import { DESKTOP_APPS_URL, PRIVACY_URL, TERMS_URL } from '../../url-constants';
+import { DESKTOP_APPS_URL, PRIVACY_URL, TERMS_URL } from '../../../lib/consts';
 
 import './terms-agreement.pcss';
 
@@ -24,6 +23,7 @@ export const TermsAgreement = ({ origin = ORIGIN.POST_INSTALL, onAgreement = () 
     };
 
     const handleUninstallClick = async () => {
+        // eslint-disable-next-line no-alert
         const confirmed = window.confirm(translator.getMessage('post_install_confirm_uninstall'));
         if (confirmed) {
             await browserApi.runtime.sendMessage({
@@ -83,10 +83,18 @@ export const TermsAgreement = ({ origin = ORIGIN.POST_INSTALL, onAgreement = () 
                 </p>
             </div>
             <div className="controls">
-                <button className="controls__btn button button--middle button--green" type="button" onClick={handleAgreeClick}>
+                <button
+                    className="controls__btn button button--middle button--green"
+                    type="button"
+                    onClick={handleAgreeClick}
+                >
                     {reactTranslator.getMessage('post_install_page_agree_button')}
                 </button>
-                <button className="controls__btn button button--middle button--transparent" type="button" onClick={handleUninstallClick}>
+                <button
+                    className="controls__btn button button--middle button--transparent"
+                    type="button"
+                    onClick={handleUninstallClick}
+                >
                     {reactTranslator.getMessage('post_install_page_uninstall_button')}
                 </button>
             </div>

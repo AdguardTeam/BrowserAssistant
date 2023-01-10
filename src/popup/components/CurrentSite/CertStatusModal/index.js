@@ -87,7 +87,12 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                         <div className="modal__text modal__text--notion">{translate('verified_by')}</div>
                         <div className="modal__header modal__header--issuer">{originalCertIssuer}</div>
                         <div className="modal__text--container">
-                            {certStatus.isInvalid && <div className="modal__text modal__text--red modal__text--expired">{translate('expired')}</div>}
+                            {certStatus.isInvalid
+                                && (
+                                <div className="modal__text modal__text--red modal__text--expired">
+                                    {translate('expired')}
+                                </div>
+                                )}
                             <div
                                 className="modal__text modal__text--link"
                                 role="button"

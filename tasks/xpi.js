@@ -15,7 +15,7 @@ const {
     XPI_NAME,
     BUILD_ENVS,
 } = require('./consts');
-const config = require('../package');
+const config = require('../package.json');
 
 const { BUILD_ENV } = process.env;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
@@ -40,7 +40,7 @@ async function generateXpi() {
     const credentialsPath = path.resolve(__dirname, '../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
     // require called here in order to escape errors, until this module is really necessary
-    // eslint-disable-next-line global-require,import/no-unresolved
+    // eslint-disable-next-line global-require,import/no-unresolved,import/extensions
     const cryptor = require('../private/cryptor/dist');
     const credentialsContent = await cryptor(process.env.CREDENTIALS_PASSWORD)
         .getDecryptedContent(credentialsPath);
@@ -115,7 +115,12 @@ const createUpdateJson = async (manifest) => {
 };
 
 const updateFirefoxManifest = async () => {
-    const manifestPath = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, BROWSER_TYPES.FIREFOX, 'manifest.json');
+    const manifestPath = path.resolve(
+        BUILD,
+        BUILD_ENVS_MAP[BUILD_ENV].outputPath,
+        BROWSER_TYPES.FIREFOX,
+        'manifest.json'
+    );
     const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
     // TODO stop building xpi for next versions
     // build xpi for release without update url, so firefox would search extension in the amo store
