@@ -174,6 +174,7 @@ class State {
         let { feedbackAction = FEEDBACK_ACTIONS.UPDATE_APPLICATION_APP_ONLY } = appState;
 
         if ([isInstalled, isRunning, isProtectionEnabled].some((state) => state === undefined)) {
+            // eslint-disable-next-line max-len
             const message = `isInstalled=${isInstalled}, isRunning=${isRunning}, isProtectionEnabled=${isProtectionEnabled}`;
             throw new Error(`All states should be defined: received ${message}`);
         }

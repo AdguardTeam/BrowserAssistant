@@ -70,7 +70,8 @@ const CurrentSite = observer(() => {
 
     const secureStatusClass = classNames('current-site__secure-status', {
         'current-site__secure-status--gray': pageProtocol.isSecured || isFilteringEnabled,
-        'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || certStatus.isInvalid)) || pageProtocol.isHttp,
+        'current-site__secure-status--red': (pageProtocol.isHttps && (!isFilteringEnabled || certStatus.isInvalid))
+            || pageProtocol.isHttp,
         'current-site__secure-status--modal': modalId,
     });
 
