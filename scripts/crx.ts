@@ -18,6 +18,7 @@ import {
     MANIFEST_NAME,
 } from './consts';
 import { Manifest, updateManifest } from './helpers';
+import { getErrorMessage } from '../src/lib/errors';
 
 const config = require('../package.json');
 
@@ -40,8 +41,11 @@ const getPrivateKey = async () => {
         const privateKey = await fs.readFile(certificatePath);
         console.log(chalk.greenBright(`\nThe certificate is read from ${certificatePath}\n`));
         return privateKey;
-    } catch (error: any) {
-        console.error(chalk.redBright(`Can not create ${CRX_NAME} - the valid certificate is not found in ${certificatePath} - ${error.message}\n`));
+    } catch (error: unknown) {
+        console.error(
+            // eslint-disable-next-line max-len
+            chalk.redBright(`Can not create ${CRX_NAME} - the valid certificate is not found in ${certificatePath} - ${getErrorMessage(error)}\n`),
+        );
         throw error;
     }
 };
@@ -62,8 +66,8 @@ const updateChromeManifest = async (chromeManifest: Buffer, additionalProps?: Pa
             : 'is reset';
 
         console.log(chalk.greenBright(`${MANIFEST_NAME} ${info}\n`));
-    } catch (error: any) {
-        console.error(chalk.redBright(`Error: Can not update ${MANIFEST_NAME} - ${error.message}\n`));
+    } catch (error: unknown) {
+        console.error(chalk.redBright(`Error: Can not update ${MANIFEST_NAME} - ${getErrorMessage(error)}\n`));
         throw error;
     }
 };
@@ -74,8 +78,8 @@ const createCrx = async (loadedFile: { pack: () => any; }) => {
         const writePath = path.resolve(WRITE_PATH, CRX_NAME);
         await fs.writeFile(writePath, crxBuffer);
         console.log(chalk.greenBright(`${CRX_NAME} saved to ${WRITE_PATH}\n`));
-    } catch (error: any) {
-        console.error(chalk.redBright(`Error: Can not create ${CRX_NAME} - ${error.message}\n`));
+    } catch (error: unknown) {
+        console.error(chalk.redBright(`Error: Can not create ${CRX_NAME} - ${getErrorMessage(error)}\n`));
         throw error;
     }
 };
@@ -107,8 +111,8 @@ const generateChromeFiles = async () => {
         // Delete from the chrome manifest `update_url` property
         // after the crx file has been created - reset the manifest
         await updateChromeManifest(rawManifest);
-    } catch (error: any) {
-        console.error(chalk.redBright(error.message));
+    } catch (error: unknown) {
+        console.error(chalk.redBright(getErrorMessage(error)));
         console.error(error);
 
         // Fail the task execution

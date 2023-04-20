@@ -23,7 +23,7 @@ Builds will be located in the `build` directory.
 
 ## Localisation
 
-- `setup your project locales, directories in the file scripts/locales.js`
+- `setup your project locales, directories in the file scripts/translations/config.json`
 - `yarn locales upload` used to upload base `en` locale
 - `yarn locales download` run to download and save all locales
 

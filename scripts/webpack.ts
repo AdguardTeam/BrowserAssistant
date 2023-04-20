@@ -66,21 +66,23 @@ export const getWebpackConfig = (
                 },
             },
         ]),
-        new webpack.NormalModuleReplacementPlugin(/\.\/ConsentAbstract/, ((resource: { contextInfo: { issuer: string | string[]; }; request: string; }) => {
-            if (!resource.contextInfo.issuer.includes('background/consent/index.js')) {
-                return;
-            }
-            if (browser === Browser.Firefox) {
+        new webpack.NormalModuleReplacementPlugin(
+            /\.\/ConsentAbstract/,
+            ((resource: { contextInfo: { issuer: string | string[]; }; request: string; }) => {
+                if (!resource.contextInfo.issuer.includes('background/consent/index.js')) {
+                    return;
+                }
+                if (browser === Browser.Firefox) {
                 // eslint-disable-next-line no-param-reassign
-                resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentFirefox');
-            } else if (browser === Browser.Chrome
+                    resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentFirefox');
+                } else if (browser === Browser.Chrome
                 || browser === Browser.Edge) {
                 // eslint-disable-next-line no-param-reassign
-                resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentChrome');
-            } else {
-                throw new Error(`There is no proxy api for browser: ${browser}`);
-            }
-        })),
+                    resource.request = resource.request.replace(/\.\/ConsentAbstract/, './ConsentChrome');
+                } else {
+                    throw new Error(`There is no proxy api for browser: ${browser}`);
+                }
+            })),
         new HtmlWebpackPlugin({
             template: path.join(BACKGROUND_PATH, 'index.html'),
             filename: 'background.html',

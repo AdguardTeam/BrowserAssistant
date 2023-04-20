@@ -8,12 +8,11 @@ import filteringPause from './filteringPause';
 import { settings } from './settings';
 import notifier from '../lib/notifier';
 
-// TODO ask qa to test if context menu is working correctly
 export type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
 type CreateProps = RequiredField<browser.Menus.CreateCreatePropertiesType, 'id'>;
 
-// Context menu items names and translations keys
+// Context menu items names and translation keys
 enum ContextMenuItem {
     SiteProtectionDisabled = 'context_site_protection_disabled',
     SiteFilteringDisabled = 'context_site_filtering_disabled',

@@ -20,6 +20,7 @@ import {
     BuildEnv,
 } from './consts';
 import WebExtensionManifest = Manifest.WebExtensionManifest;
+import { getErrorMessage } from '../src/lib/errors';
 
 const config = require('../package.json');
 
@@ -143,8 +144,9 @@ const createUpdateJson = async (manifest: WebExtensionManifest) => {
 
         await fs.writeFile(fileDir, fileJson);
         console.log(chalk.greenBright(`${FIREFOX_UPDATER_FILENAME} saved in ${buildDir}\n`));
-    } catch (error: any) {
-        console.error(chalk.redBright(`Error: cannot create ${FIREFOX_UPDATER_FILENAME} - ${error.message}\n`));
+    } catch (error: unknown) {
+        // eslint-disable-next-line max-len
+        console.error(chalk.redBright(`Error: cannot create ${FIREFOX_UPDATER_FILENAME} - ${getErrorMessage(error)}\n`));
         throw error;
     }
 };
@@ -167,8 +169,8 @@ const generateFirefoxArtifacts = async () => {
         await generateXpi();
         const manifest = await getFirefoxManifest();
         await createUpdateJson(manifest);
-    } catch (error: any) {
-        console.error(chalk.redBright(error.message));
+    } catch (error: unknown) {
+        console.error(chalk.redBright(getErrorMessage(error)));
         console.error(error);
         // Fail the task execution
         process.exit(1);

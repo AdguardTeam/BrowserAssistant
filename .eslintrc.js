@@ -21,6 +21,7 @@ module.exports = {
     },
     rules: {
         indent: ['error', 4, { SwitchCase: 1 }],
+        'max-len': ['error', { code: 120, ignoreUrls: true }],
         '@typescript-eslint/indent': ['error', 4],
         'import/prefer-default-export': 0,
         'import/no-extraneous-dependencies': [

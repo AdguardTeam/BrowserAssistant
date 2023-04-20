@@ -1,4 +1,5 @@
 // TODO remove local storage because there is no localStorage in the service worker
+// Make it after a few versions after 1.4 released
 const localStorageMock = {
     setItem: () => {
 
