@@ -107,6 +107,9 @@
     "enabled": {
         "message": "Włączone na tej stronie"
     },
+    "filtering_exception": {
+        "message": "Filtrowanie jest wyłączone, ponieważ może wpłynąć na wydajność strony."
+    },
     "protection_is_enabled": {
         "message": "Ochrona jest włączona"
     },
@@ -181,6 +184,12 @@
     },
     "popup_trial_expired_title": {
         "message": "Licencja próbna wygasła"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Ochrona jest wyłączona."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Aktualizacje są niedostępne."
     },
     "popup_trial_expired_purchase": {
         "message": "Kup teraz"

@@ -24,7 +24,7 @@
         "message": "Käynnistä AdGuard"
     },
     "adg_is_paused": {
-        "message": "AdGuardin suojaus on pysäytetty"
+        "message": "AdGuardin suojaus on keskeytetty"
     },
     "adg_is_launching": {
         "message": "AdGuard käynnistyy..."
@@ -75,7 +75,7 @@
         "message": "Tyhjennä sivulle luodut käyttäjän säännöt"
     },
     "cert_expired": {
-        "message": "AdGuard ei voinut vahvistaa sivuston varmennetta, koska juurivarmenne on erääntynyt"
+        "message": "AdGuard ei voinut vahvistaa verkkosivuston varmennetta, koska juurivarmenne on erääntynyt."
     },
     "cert_absent": {
         "message": "HTTPS-suodatusta ei suoritettu tälle sivustolle"
@@ -117,7 +117,7 @@
         "message": "Suojaus ei ole käytössä"
     },
     "website_cert_is_expired": {
-        "message": "Sivuston varmenne on erääntynyt"
+        "message": "Verkkosivuston varmenne on erääntynyt"
     },
     "expired": {
         "message": "Erääntynyt"
@@ -144,10 +144,10 @@
         "message": "Pysäytä AdGuardin suojaus"
     },
     "context_enable_protection": {
-        "message": "Käynnistä AdGuardin suojaus"
+        "message": "Palauta AdGuardin suojaus"
     },
     "context_site_protection_disabled": {
-        "message": "AdGuardin suojaus on pysäytetty"
+        "message": "AdGuardin suojaus on keskeytetty"
     },
     "context_open_settings": {
         "message": "AdGuardin asetukset..."

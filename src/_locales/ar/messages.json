@@ -3,7 +3,7 @@
         "message": "مساعد المتصفح AdGuard"
     },
     "description": {
-        "message": "امتداد لتطبيق AdGuard لسطح المكتب. إدارة التصفية مباشرة من المتصفح لإخفاء العناصر المزعجة بنقرتين."
+        "message": "امتداد لتطبيق AdGuard لسطح المكتب. إدارة التصفية من المتصفح مباشرة لإخفاء العناصر المزعجة بنقرتين."
     },
     "adg_is_not_installed": {
         "message": "AdGuard غير مثبت أو تم تكوينه بشكل غير صحيح"
@@ -12,7 +12,7 @@
         "message": "أحصل على AdGuard"
     },
     "adg_is_not_updated": {
-        "message": "لم يتم تحديث AdGuard"
+        "message": "إن AdGuard غير محدث"
     },
     "update": {
         "message": "تحديث"

@@ -185,6 +185,12 @@
     "popup_trial_expired_title": {
         "message": "A próbaverzió lejárt"
     },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Védelem kikapcsolva."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "A frissítések nem érhetők el."
+    },
     "popup_trial_expired_purchase": {
         "message": "Vásárlás"
     }
