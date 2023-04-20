@@ -82,6 +82,11 @@ export const getWebpackConfig = (
             }
         })),
         new HtmlWebpackPlugin({
+            template: path.join(BACKGROUND_PATH, 'index.html'),
+            filename: 'background.html',
+            chunks: ['background'],
+        }),
+        new HtmlWebpackPlugin({
             template: path.join(POPUP_PATH, 'index.html'),
             filename: 'popup.html',
             chunks: ['popup'],

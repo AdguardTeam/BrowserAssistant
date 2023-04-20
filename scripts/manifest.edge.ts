@@ -1,8 +1,9 @@
 module.exports = {
     'background': {
-        'service_worker': 'background.js',
+        'page': 'background.html',
+        'persistent': true,
     },
-    'action': {
+    'browser_action': {
         'default_icon': {
             '19': 'assets/images/icons/green-19.png',
             '38': 'assets/images/icons/green-38.png',
