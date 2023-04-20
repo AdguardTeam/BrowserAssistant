@@ -47,10 +47,7 @@ class TabsService {
      * @returns {Promise<*>}
      */
     sendMessage = async (tabId, type, data) => {
-        await browser.scripting.executeScript({
-            target: { tabId },
-            files: [CONTENT_SCRIPT_NAME] },
-        );
+        await browser.tabs.executeScript(tabId, { file: CONTENT_SCRIPT_NAME });
 
         const response = await browser.tabs.sendMessage(tabId, {
             type,

@@ -11,23 +11,14 @@
     },
     "options_ui": {
         "page": "options-ui.html",
+        "chrome_style": true,
         "browser_style": true
     },
-    "content_scripts": [
-        {
-            "js": ["keep-awake.js"],
-            "run_at": "document_start",
-            "matches": [
-                "*://*/*"
-            ]
-        }
-    ],
     "permissions": [
         "nativeMessaging",
         "tabs",
         "activeTab",
         "contextMenus",
         "storage",
-        "scripting"
     ]
 }

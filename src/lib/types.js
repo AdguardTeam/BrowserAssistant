@@ -45,7 +45,6 @@ export const CONTENT_MESSAGES = {
     GET_REFERRER: 'content.get.referrer',
     INIT_ASSISTANT: 'content.init.assistant',
     ADD_RULE: 'content.add.rule',
-    PING: 'content.ping', // message used to keep service worker awake
 };
 
 export const POST_INSTALL_MESSAGES = {

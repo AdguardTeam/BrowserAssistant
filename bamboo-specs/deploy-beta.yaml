@@ -57,7 +57,7 @@ Chrome WebStore:
         interpreter: SHELL
         scripts:
           - |-
-              set -e-x
+              set -e -x
 
               # Fix mixed logs
               exec 2>&1

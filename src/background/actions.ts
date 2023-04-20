@@ -17,7 +17,7 @@ const setIcon = async (details: SetIconDetailsType) => {
 };
 
 /**
- * Sets icon enabled. In order to remove blinking we set icon twice:
+ * Sets icon enabled. In order to remove blinking, we set the icon twice:
  * 1. for general browser action
  * 2. for tab browser action if tabId is provided
  * @param {number} [tabId]
@@ -33,7 +33,7 @@ const setIconEnabled = async (tabId: number) => {
 };
 
 /**
- * Sets browser cation icon disabled. In order to remove blinking we set icon twice:
+ * Sets browser cation icon disabled. In order to remove blinking, we set the icon twice:
  * 1. for general browser action
  * 2. for tab browser action if tabId is provided
  * @param {number} [tabId]
