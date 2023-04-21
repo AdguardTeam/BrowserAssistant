@@ -20,7 +20,7 @@ const CurrentSite = observer(() => {
         pageInfo,
         shouldShowFilteringPauseTimer,
         filteringPauseTimer,
-        reloadPage,
+        reloadCurrentTab,
         showReloadButtonFlag,
         setShowReloadButtonFlag,
     } = settingsStore;
@@ -96,7 +96,7 @@ const CurrentSite = observer(() => {
     };
 
     const handlePageReload = () => {
-        reloadPage();
+        reloadCurrentTab();
         setShowReloadButtonFlag(false);
     };
 

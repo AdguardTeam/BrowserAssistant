@@ -221,6 +221,15 @@ class SettingsStore {
     };
 
     /**
+     * Reloads current tab
+     * @returns {Promise<void>}
+     */
+    reloadCurrentTab = async () => {
+        const tab = await tabs.getCurrentTab();
+        await tabs.reloadTab(tab);
+    };
+
+    /**
      * Reloads active and similar tabs
      * @returns {Promise<void>}
      */
