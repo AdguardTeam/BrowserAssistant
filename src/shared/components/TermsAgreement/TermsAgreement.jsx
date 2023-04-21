@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import browserApi from '../../../lib/browserApi';
+import { browserApi } from '../../../lib/browserApi';
 import { POST_INSTALL_MESSAGES } from '../../../lib/types';
 import { translator } from '../../translators/translator';
 import { reactTranslator } from '../../translators/reactTranslator';

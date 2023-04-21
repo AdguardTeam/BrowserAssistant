@@ -4,7 +4,7 @@ import { localStorage } from '../localStorage';
 import { storage } from '../storage';
 import log from '../../lib/logger';
 import { consent } from '../consent';
-import browserApi from '../../lib/browserApi';
+import { browserApi } from '../../lib/browserApi';
 import { APP_VERSION_KEY } from '../../lib/types';
 
 const FIREFOX_CONSENT_MIGRATION_VERSION = '1.2.2';
@@ -29,7 +29,7 @@ export class MigrationService {
      */
     storageMigrationForFirefox = async () => {
         const isConsentRequired = JSON.parse(
-            localStorage.get(consent.CONSENT_REQUIRED_STORAGE_KEY)
+            localStorage.get(consent.CONSENT_REQUIRED_STORAGE_KEY),
         );
         if (isConsentRequired !== undefined) {
             log.debug('Migrate consent setting from local storage to browser storage');

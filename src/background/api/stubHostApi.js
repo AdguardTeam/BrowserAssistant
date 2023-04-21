@@ -1,4 +1,4 @@
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import AbstractApi from './AbstractApi';
 import log from '../../lib/logger';
 import versions from '../versions';

@@ -88,7 +88,7 @@ const validateRequiredFields = async (locales) => {
     const baseMessages = await getLocaleTranslations(
         LOCALES_DIR,
         BASE_LOCALE,
-        LOCALE_DATA_FILENAME
+        LOCALE_DATA_FILENAME,
     );
 
     const promises = locales.map(async (locale) => {

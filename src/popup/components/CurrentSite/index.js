@@ -156,7 +156,6 @@ const CurrentSite = observer(() => {
             {showReloadButtonFlag
                 ? <div className="current-site__secure-status">{translate('reload_to_resume_filtering')}</div>
                 : (
-                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                     <div
                         role="status"
                         tabIndex={uiStore.globalTabIndex}

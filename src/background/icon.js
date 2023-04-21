@@ -4,7 +4,7 @@ import actions from './actions';
 import state from './state';
 import notifier from '../lib/notifier';
 import { tabs } from '../lib/tabs';
-import { contextMenu } from './contextMenu';
+import { ContextMenu } from './contextMenu';
 
 /**
  * This class handles browser action icon updates
@@ -38,12 +38,12 @@ class Icon {
     updateIcon = async (tab) => {
         if (!state.isAppWorking()) {
             await actions.setIconDisabled(tab.id);
-            contextMenu.customizeContextMenu();
+            await ContextMenu.update();
             return;
         }
 
         const currentFilteringState = await state.getCurrentFilteringState(tab);
-        contextMenu.customizeContextMenu();
+        await ContextMenu.update();
 
         const isFilteringEnabled = currentFilteringState
             ? currentFilteringState.isFilteringEnabled

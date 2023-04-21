@@ -22,8 +22,7 @@ static.adtidy.org:
         interpreter: SHELL
         scripts:
           - |-
-            set -x
-            set -e
+            set -e -x
 
             # Fix mixed logs
             exec 2>&1
@@ -58,8 +57,7 @@ Chrome WebStore:
         interpreter: SHELL
         scripts:
           - |-
-              set -x
-              set -e
+              set -e -x
 
               # Fix mixed logs
               exec 2>&1

@@ -8,7 +8,7 @@ export default class ConsentChrome extends ConsentAbstract {
      * Always returns false for chrome
      * @returns {boolean}
      */
-    isConsentRequired() {
+    async isConsentRequired() {
         return false;
     }
 
@@ -17,7 +17,7 @@ export default class ConsentChrome extends ConsentAbstract {
      * @param {boolean} value
      * @returns {void}
      */
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setConsentRequired(value) {
     }
 }

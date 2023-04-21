@@ -1,8 +1,8 @@
-import nanoid from 'nanoid';
 import browser from 'webextension-polyfill';
+import { nanoid } from 'nanoid';
 
 import { POPUP_MESSAGES, BACKGROUND_MESSAGES, FEEDBACK_ACTIONS } from '../lib/types';
-import browserApi from '../lib/browserApi';
+import { browserApi } from '../lib/browserApi';
 
 const sendMessage = async (type, data) => {
     return browserApi.runtime.sendMessage({ type, data });

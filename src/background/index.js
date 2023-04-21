@@ -8,9 +8,9 @@ import { updateService } from './updateService';
 import { migrationService } from './migrationService';
 import { consent } from './consent';
 import { tabs } from '../lib/tabs';
-import browserApi from '../lib/browserApi';
+import { browserApi } from '../lib/browserApi';
 import { settings } from './settings';
-import { contextMenu } from './contextMenu';
+import { ContextMenu } from './contextMenu';
 
 import './icon';
 
@@ -39,7 +39,7 @@ const onInstalled = async (runInfo) => {
         await settings.init();
         await updateService.init(onInstalled);
         state.init();
-        contextMenu.init();
+        ContextMenu.init();
     } catch (error) {
         log.error(error);
     }

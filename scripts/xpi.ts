@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
+
+import { Manifest } from 'webextension-polyfill';
+
 const webExt = require('web-ext');
 const path = require('path');
 const fs = require('fs').promises;
 const chalk = require('chalk');
 
-const {
-    BROWSER_TYPES,
+import {
     BUILD_PATH,
     BUILD_ENVS_MAP,
     FIREFOX_UPDATER_FILENAME,
@@ -13,11 +15,15 @@ const {
     FIREFOX_UPDATE_XPI,
     MANIFEST_NAME,
     XPI_NAME,
-    BUILD_ENVS,
-} = require('./consts');
+    BUILD_ENV,
+    Browser,
+    BuildEnv,
+} from './consts';
+import WebExtensionManifest = Manifest.WebExtensionManifest;
+import { getErrorMessage } from '../src/lib/errors';
+
 const config = require('../package.json');
 
-const { BUILD_ENV } = process.env;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
 const BUILD = 'build';
 
@@ -26,7 +32,7 @@ const fileDir = path.resolve(buildDir, FIREFOX_UPDATER_FILENAME);
 
 const getFirefoxManifest = async () => {
     const MANIFEST_PATH = path.resolve(
-        __dirname, BUILD_PATH, outputPath, BROWSER_TYPES.FIREFOX, MANIFEST_NAME
+        __dirname, BUILD_PATH, outputPath, Browser.Firefox, MANIFEST_NAME,
     );
     const manifestBuffer = await fs.readFile(MANIFEST_PATH);
     const manifest = JSON.parse(manifestBuffer.toString());
@@ -34,13 +40,12 @@ const getFirefoxManifest = async () => {
 };
 
 async function generateXpi() {
-    const sourceDir = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath,
-        BROWSER_TYPES.FIREFOX);
+    const sourceDir = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, Browser.Firefox);
 
     const credentialsPath = path.resolve(__dirname, '../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
     // require called here in order to escape errors, until this module is really necessary
-    // eslint-disable-next-line global-require,import/no-unresolved,import/extensions
+    // eslint-disable-next-line import/extensions
     const cryptor = require('../private/cryptor/dist');
     const credentialsContent = await cryptor(process.env.CREDENTIALS_PASSWORD)
         .getDecryptedContent(credentialsPath);
@@ -67,65 +72,92 @@ async function generateXpi() {
     }
 }
 
-const generateUpdateJson = (
-    {
-        // eslint-disable-next-line camelcase
-        id, version, update_link, strict_min_version,
-    }
-) => ({
+type GenerateUpdateJsonProps = {
+    id: string;
+    version: string;
+    updateLink: string;
+    strictMinVersion: string;
+};
+
+type UpdateJson = {
     addons: {
-        [id]: {
+        [id: string]: {
             updates: [
                 {
-                    version,
-                    update_link,
+                    version: string;
+                    update_link: string;
                     applications: {
                         gecko: {
-                            strict_min_version,
+                            strict_min_version: string;
+                        }
+                    }
+                },
+            ]
+        }
+    }
+};
+
+const generateUpdateJson = ({
+    id,
+    version,
+    updateLink,
+    strictMinVersion,
+}: GenerateUpdateJsonProps): UpdateJson => {
+    return ({
+        addons: {
+            [id]: {
+                updates: [
+                    {
+                        version,
+                        update_link: updateLink,
+                        applications: {
+                            gecko: {
+                                strict_min_version: strictMinVersion,
+                            },
                         },
                     },
-                },
-            ],
+                ],
+            },
         },
-    },
-});
+    });
+};
 
-const createUpdateJson = async (manifest) => {
+const createUpdateJson = async (manifest: WebExtensionManifest) => {
+    if (!manifest?.applications?.gecko) {
+        throw new Error('Manifest is missing gecko section');
+    }
+
+    const { id, strict_min_version: strictMinVersion } = manifest.applications.gecko;
+    if (!id || !strictMinVersion) {
+        throw new Error('Manifest is missing id or strict_min_version');
+    }
+
     try {
-        // eslint-disable-next-line camelcase
-        const { id, strict_min_version } = manifest.applications.gecko;
-
-        const fileContent = generateUpdateJson(
-            {
-                id,
-                version: config.version,
-                update_link: FIREFOX_UPDATE_XPI,
-                strict_min_version,
-            }
-        );
+        const fileContent = generateUpdateJson({
+            id,
+            version: config.version,
+            updateLink: FIREFOX_UPDATE_XPI,
+            strictMinVersion,
+        });
 
         const fileJson = JSON.stringify(fileContent, null, 4);
 
         await fs.writeFile(fileDir, fileJson);
         console.log(chalk.greenBright(`${FIREFOX_UPDATER_FILENAME} saved in ${buildDir}\n`));
-    } catch (error) {
-        console.error(chalk.redBright(`Error: cannot create ${FIREFOX_UPDATER_FILENAME} - ${error.message}\n`));
+    } catch (error: unknown) {
+        // eslint-disable-next-line max-len
+        console.error(chalk.redBright(`Error: cannot create ${FIREFOX_UPDATER_FILENAME} - ${getErrorMessage(error)}\n`));
         throw error;
     }
 };
 
 const updateFirefoxManifest = async () => {
-    const manifestPath = path.resolve(
-        BUILD,
-        BUILD_ENVS_MAP[BUILD_ENV].outputPath,
-        BROWSER_TYPES.FIREFOX,
-        'manifest.json'
-    );
+    const manifestPath = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, Browser.Firefox, 'manifest.json');
     const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
     // TODO stop building xpi for next versions
     // build xpi for release without update url, so firefox would search extension in the amo store
     // https://discourse.mozilla.org/t/migrate-from-self-hosted-to-add-ons-store/5403
-    if (BUILD_ENV !== BUILD_ENVS.RELEASE) {
+    if (BUILD_ENV !== BuildEnv.Release) {
         manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
     }
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
@@ -137,8 +169,8 @@ const generateFirefoxArtifacts = async () => {
         await generateXpi();
         const manifest = await getFirefoxManifest();
         await createUpdateJson(manifest);
-    } catch (error) {
-        console.error(chalk.redBright(error.message));
+    } catch (error: unknown) {
+        console.error(chalk.redBright(getErrorMessage(error)));
         console.error(error);
         // Fail the task execution
         process.exit(1);

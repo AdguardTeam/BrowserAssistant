@@ -26,8 +26,7 @@ Chrome WebStore:
         scripts:
           - |-
             #!/bin/bash
-            set -x
-            set -e
+            set -e -x
 
             # Fix mixed logs
             exec 2>&1
@@ -103,8 +102,7 @@ Edge Addons:
         scripts:
           - |-
             #!/bin/bash
-            set -x
-            set -e
+            set -e -x
 
             # Fix mixed logs
             exec 2>&1

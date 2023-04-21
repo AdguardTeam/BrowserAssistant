@@ -1,28 +1,49 @@
-import React from 'react';
+import React, { KeyboardEventHandler } from 'react';
 import classNames from 'classnames';
+
 import './option.pcss';
 
-const Option = ({
-    iconName, text, onClick, isDisabled, tabIndex,
-}) => {
+interface OptionProps {
+    iconName: string
+    text: string
+    onClick: () => void
+    isDisabled: boolean
+    tabIndex: number
+}
+
+export const Option = ({
+    iconName,
+    text,
+    onClick,
+    isDisabled,
+    tabIndex,
+}: OptionProps) => {
     const actionClass = classNames({
         action: true,
         'action--disabled': isDisabled,
     });
 
-    const onKeyDown = (e) => {
+    const handleClick = () => {
+        if (isDisabled) {
+            return;
+        }
+        onClick();
+    };
+
+    const handleKeyDown: KeyboardEventHandler = (e) => {
+        if (isDisabled) {
+            return;
+        }
         if (e.key === 'Enter') {
             onClick();
         }
     };
 
-    const handleWhileEnabled = (handler) => (isDisabled ? undefined : handler);
-
     return (
         <div
             className={actionClass}
-            onClick={handleWhileEnabled(onClick)}
-            onKeyDown={handleWhileEnabled(onKeyDown)}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
             title={text}
             role="menuitem"
             tabIndex={tabIndex}
@@ -34,5 +55,3 @@ const Option = ({
         </div>
     );
 };
-
-export default Option;

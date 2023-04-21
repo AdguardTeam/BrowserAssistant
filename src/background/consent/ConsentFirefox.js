@@ -21,12 +21,12 @@ export default class ConsentFirefox extends ConsentAbstract {
             this.consentRequired = await this.getFromStorage();
         }
         return !!this.consentRequired;
-    }
+    };
 
     setConsentRequired = async (value) => {
         this.consentRequired = value;
         await storage.set(this.CONSENT_REQUIRED_STORAGE_KEY, value);
-    }
+    };
 
     getFromStorage = async () => {
         let result;

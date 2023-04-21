@@ -89,9 +89,9 @@ const CertStatusModal = observer(({ onRequestClose, isOpen }) => {
                         <div className="modal__text--container">
                             {certStatus.isInvalid
                                 && (
-                                <div className="modal__text modal__text--red modal__text--expired">
-                                    {translate('expired')}
-                                </div>
+                                    <div className="modal__text modal__text--red modal__text--expired">
+                                        {translate('expired')}
+                                    </div>
                                 )}
                             <div
                                 className="modal__text modal__text--link"

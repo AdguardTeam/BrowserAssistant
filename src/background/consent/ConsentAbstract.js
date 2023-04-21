@@ -10,7 +10,7 @@ export default class ConsentAbstract {
      * Returns true if consent is required
      * @returns {boolean}
      */
-    isConsentRequired() {
+    async isConsentRequired() {
         throw new Error('Not implemented');
     }
 
@@ -19,7 +19,7 @@ export default class ConsentAbstract {
      * @param {boolean} value
      * @returns {void}
      */
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setConsentRequired(value) {
         throw new Error('Not implemented');
     }

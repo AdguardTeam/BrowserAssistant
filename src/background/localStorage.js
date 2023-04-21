@@ -1,10 +1,20 @@
+// TODO remove local storage because there is no localStorage in the service worker
+// Make it after a few versions after 1.4 released
+const localStorageMock = {
+    setItem: () => {
+
+    },
+    getItem: () => {
+
+    },
+};
 /**
  * Wrapper around localStorage api
  * Used to set and get data from the storage
  */
 class LocalStorage {
     constructor() {
-        this.storage = window.localStorage;
+        this.storage = localStorageMock;
     }
 
     /**

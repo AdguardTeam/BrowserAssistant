@@ -30,7 +30,7 @@ export class Settings {
 
     persist = throttle(async () => {
         await this.storage.set(this.STORAGE_KEY, this.settings);
-    }, this.SAVE_TIMEOUT)
+    }, this.SAVE_TIMEOUT);
 
     setSetting(key, value) {
         this.settings[key] = value;
