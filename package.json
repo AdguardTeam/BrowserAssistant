@@ -13,12 +13,11 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "locales": "ts-node scripts/translations",
-        "crx:beta": "export BUILD_ENV=beta; yarn build:chrome && ts-node scripts/crx.ts",
-        "crx:release": "export BUILD_ENV=release; yarn build:chrome && ts-node scripts/crx.ts",
-        "xpi": "yarn build:firefox && ts-node scripts/xpi.ts",
+        "crx": "ts-node scripts/crx.ts",
+        "xpi": "ts-node scripts/xpi.ts",
         "increment": "yarn version --patch --no-git-tag-version",
-        "artifacts:beta": "export BUILD_ENV=beta; yarn crx:beta && yarn xpi && ts-node scripts/versionInfo.ts",
-        "artifacts:release": "export BUILD_ENV=release; yarn crx:release && yarn build:firefox && yarn build:edge && ts-node scripts/versionInfo.ts"
+        "artifacts:beta": "export BUILD_ENV=beta; yarn beta && yarn crx && yarn xpi && ts-node scripts/versionInfo.ts",
+        "artifacts:release": "export BUILD_ENV=release; yarn release && yarn crx && ts-node scripts/versionInfo.ts"
     },
     "husky": {
         "hooks": {
