@@ -43,7 +43,7 @@ Build:
             yarn install ${bamboo.varsYarn}
             yarn lint
             yarn test
-            yarn locales:validate --min
+            yarn locales validate --min
             CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta
 
             # zip source for publishing on AMO
