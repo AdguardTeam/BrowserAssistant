@@ -58,16 +58,16 @@ class State {
 
     updateStatusInfo = {
         /**
-         * Parameter that determines if extension api version is up to date with app api version
+         * Parameter that determines if the extension API version is up-to-date with the app API version
          * @type {boolean}
          */
-        isAppUpToDate: false,
+        isAppUpToDate: true,
         /**
-         * Flag, that determines whether the extensions api, specified by request's parameters
+         * Flag that determines whether the extension's API, specified by request's parameters,
          * is successfully validated on the host's side
          * @type {boolean}
          */
-        isValidatedOnHost: false,
+        isValidatedOnHost: true,
     };
 
     hostInfo = {
