@@ -81,7 +81,8 @@ export const bundle = () => {
         try {
             await mainBuild(watch);
         } catch (e) {
-            cliLog.error(JSON.stringify(e));
+            // @ts-ignore
+            cliLog.error(e);
             process.exit(1);
         }
     };

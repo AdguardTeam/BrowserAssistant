@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
 const webpack = require('webpack');
@@ -33,7 +33,7 @@ export const getWebpackConfig = (
 
     const plugins: WebpackPluginInstance[] = [
         new CleanWebpackPlugin(cleanOptions),
-        new CopyWebpackPlugin([
+        new CopyWebpackPlugin({ patterns: [
             {
                 context: 'src',
                 from: 'assets/',
@@ -44,7 +44,7 @@ export const getWebpackConfig = (
                 from: '_locales/',
                 to: '_locales/',
                 // Add build environment suffixes to the extension name in locale files
-                transform: (content, path) => {
+                transform: (content: Buffer, path: string) => {
                     // ignore all paths except messages.json
                     if (path.indexOf('messages.json') === -1) {
                         return content;
@@ -59,13 +59,13 @@ export const getWebpackConfig = (
             {
                 from: path.resolve(__dirname, './manifest.common.json'),
                 to: 'manifest.json',
-                transform: (content) => {
+                transform: (content: Buffer) => {
                     // eslint-disable-next-line import/no-dynamic-require,global-require
                     const manifestDiff = require(`./manifest.${browser}`);
                     return updateManifest(content.toString(), manifestDiff);
                 },
             },
-        ]),
+        ] }),
         new webpack.NormalModuleReplacementPlugin(
             /\.\/ConsentAbstract/,
             ((resource: { contextInfo: { issuer: string | string[]; }; request: string; }) => {
@@ -169,7 +169,10 @@ export const getWebpackConfig = (
                 {
                     test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/,
                     exclude: /node_modules/,
-                    loader: 'url-loader?limit=100000',
+                    loader: 'url-loader',
+                    options: {
+                        limit: 100000,
+                    },
                 },
                 {
                     test: /\.(css|pcss)$/,
