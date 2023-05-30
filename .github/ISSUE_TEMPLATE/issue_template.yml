@@ -1,0 +1,100 @@
+---
+
+name: 🐞 Bug report
+description: Create a bug report to help us improve AdGuard Browser Assistant.
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    attributes:
+      label: Please answer the following questions for yourself before submitting an issue.
+      description:
+      options:
+        - label: I am running the latest version of the extension
+        - label: I checked to make sure that this issue has not already been filed
+    validations:
+      required: true
+  - type: textarea
+    id: app_version
+    attributes:
+      label: AdGuard version
+      description: |
+        Examples:
+          - **AdGuard Browser Assistant version**: 1.3.36
+          - **AdGuard Desktop Application**: AdGuard for Windows 7.11.2
+      value: |
+          - AdGuard Assistant version:
+          - AdGuard Desktop application:
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        Examples:
+          - **OS**: Windows 11, 21H2, build 22000.1219
+          - **Browser**: Chrome 106
+      value: |
+          - OS:
+          - Browser:
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Issue Details
+      description: Please provide a set of steps to reproduce the issue.
+      placeholder:
+      value: |
+        Steps to reproduce:
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: how_it_should_be
+    attributes:
+      label: Expected Behavior
+      description:
+      placeholder: A clear and concise description of what you expected to happen.
+    validations:
+      required: false
+  - type: textarea
+    id: result
+    attributes:
+      label: Actual Behavior
+      description:
+      placeholder: A clear description of what happened.
+    validations:
+      required: false
+  - type: textarea
+    id: screens
+    attributes:
+      label: Screenshots
+      description: |
+        If applicable add screenshots explaining your problem.
+        You can drag and drop images or paste them from clipboard.
+        Use `<details> </details>` tag to hide screenshots under the spoiler.
+      placeholder: If applicable add screenshots explaining your problem.
+      value: |
+          <details><summary>Screenshot 1:</summary>
+
+          <!-- paste screenshot here -->
+
+          </details>
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description:
+      placeholder: Add any other context about the problem here.
+    validations:
+      required: false
