@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const { log, getLocaleTranslations } = require('./helpers');
-
 const {
     BASE_LOCALE,
     SRC_RELATIVE_PATH,

@@ -1,9 +1,11 @@
 import browser from 'webextension-polyfill';
+
 import { CONTENT_MESSAGES } from '../lib/types';
 import log from '../lib/logger';
 import { CONTENT_SCRIPT_NAME } from '../lib/consts';
 import { tabs } from '../lib/tabs';
 import notifier from '../lib/notifier';
+
 import filteringPause from './filteringPause';
 
 /**

@@ -1,15 +1,19 @@
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 import browser from 'webextension-polyfill';
-import { Api } from './api';
-import versions from './versions';
+
 import { FEEDBACK_ACTIONS } from '../lib/types';
 import notifier from '../lib/notifier';
 import {
-    getFormattedProtocol, getUrlProps, isHttp,
+    getFormattedProtocol,
+    getUrlProps,
+    isHttp,
 } from '../lib/helpers';
 import { PROTOCOLS } from '../popup/stores/consts';
 import log from '../lib/logger';
+
+import versions from './versions';
+import { Api } from './api';
 import { longLivedMessageService } from './longLivedMessageService';
 
 /**

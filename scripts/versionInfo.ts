@@ -1,9 +1,16 @@
 /* eslint-disable no-console */
 import { promises as fs } from 'fs';
 import path from 'path';
+
 import chalk from 'chalk';
-import { BUILD_PATH, BUILD_ENVS_MAP, BUILD_ENV } from './consts';
+
 import config from '../package.json';
+
+import {
+    BUILD_PATH,
+    BUILD_ENVS_MAP,
+    BUILD_ENV,
+} from './consts';
 
 const content = `version=${config.version}`;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];

@@ -1,17 +1,17 @@
 import browser from 'webextension-polyfill';
 
 import log from '../lib/logger';
+import { tabs } from '../lib/tabs';
+import { browserApi } from '../lib/browserApi';
+
 import { messageHandler } from './messageHandler';
 import { longLivedMessageService } from './longLivedMessageService';
 import state from './state';
 import { updateService } from './updateService';
 import { migrationService } from './migrationService';
 import { consent } from './consent';
-import { tabs } from '../lib/tabs';
-import { browserApi } from '../lib/browserApi';
 import { settings } from './settings';
 import { ContextMenu } from './contextMenu';
-
 import './icon';
 
 // add listener on the upper level

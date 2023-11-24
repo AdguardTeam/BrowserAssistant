@@ -1,12 +1,15 @@
 import browser from 'webextension-polyfill';
 import { nanoid } from 'nanoid';
 
+import { tabs } from '../lib/tabs';
+import notifier from '../lib/notifier';
+import { utils } from '../lib/browserApi/utils';
+
 import state from './state';
 import { tabsService } from './TabsService';
-import { tabs } from '../lib/tabs';
 import filteringPause from './filteringPause';
 import { settings } from './settings';
-import notifier from '../lib/notifier';
+
 
 export type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
@@ -205,19 +208,42 @@ export class ContextMenu {
             enabled,
         };
 
-        await browser.contextMenus.create(menuItem);
+        await ContextMenu.createMenu(menuItem);
     };
 
     /**
-     * Creates context menu separator
+     * Creates a context menu separator unless the browser is Vivaldi, which does not support
+     * separators in context menus triggered via the extension button.
      */
     static addSeparator = async () => {
+        const isVivaldi = await utils.isVivaldiBrowser();
+        // Vivaldi browser does not support separators in context menus for browser actions, so we do not add them.
+        if (isVivaldi) {
+            return;
+        }
+
         const menuItem: CreateProps = {
             id: nanoid(),
             contexts: ['all'],
             type: 'separator',
         };
 
-        await browser.contextMenus.create(menuItem);
+        await ContextMenu.createMenu(menuItem);
     };
+
+    /**
+     * Promisifying wrapper for the browser.contextMenus.create method
+     * @param props
+     */
+    static createMenu(props: browser.Menus.CreateCreatePropertiesType): Promise<void> {
+        return new Promise((resolve, reject) => {
+            browser.contextMenus.create(props, () => {
+                if (browser.runtime.lastError) {
+                    reject(browser.runtime.lastError);
+                    return;
+                }
+                resolve();
+            });
+        });
+    }
 }

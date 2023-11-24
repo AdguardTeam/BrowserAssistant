@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
-import Switcher from './Switcher';
+
 import rootStore from '../../stores';
 import { SWITCHER_IDS } from '../../stores/consts';
+
+import Switcher from './Switcher';
+
 import './settings.pcss';
 
 const Settings = observer(() => {

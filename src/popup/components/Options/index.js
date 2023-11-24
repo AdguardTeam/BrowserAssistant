@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
-import { Option } from './Option';
+
 import rootStore from '../../stores';
+
+import { Option } from './Option';
 
 const Options = observer(() => {
     const {

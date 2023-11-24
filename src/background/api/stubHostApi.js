@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import AbstractApi from './AbstractApi';
+
 import log from '../../lib/logger';
 import versions from '../versions';
 import {
@@ -8,6 +8,8 @@ import {
     CUSTOM_REQUEST_PREFIX,
     REQUEST_TYPES,
 } from '../../lib/types';
+
+import AbstractApi from './AbstractApi';
 
 let hostData = {
     result: 'ok',

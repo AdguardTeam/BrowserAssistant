@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import { nanoid } from 'nanoid';
-import AbstractApi from './AbstractApi';
+
 import log from '../../lib/logger';
 import versions from '../versions';
 import {
@@ -11,6 +11,8 @@ import {
     REQUEST_TYPES,
 } from '../../lib/types';
 import { consent } from '../consent';
+
+import AbstractApi from './AbstractApi';
 
 /**
  * Module implements methods used to communicate with native host via native messaging

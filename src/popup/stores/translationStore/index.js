@@ -1,13 +1,15 @@
+import { createIntl } from 'react-intl';
+
 import {
     action,
     computed,
     makeObservable,
     observable,
 } from 'mobx';
-import { createIntl } from 'react-intl';
 import browser from 'webextension-polyfill';
 
 import messagesMap from '../../../_locales';
+
 import checkLocale from './checkLocale';
 
 const { BASE_LOCALE } = require('../../../_locales/langConstants');

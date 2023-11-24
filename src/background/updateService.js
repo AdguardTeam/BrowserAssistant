@@ -1,8 +1,9 @@
 import browser from 'webextension-polyfill';
 
-import { storage } from './storage';
 import log from '../lib/logger';
 import { APP_VERSION_KEY } from '../lib/types';
+
+import { storage } from './storage';
 import { localStorage } from './localStorage';
 
 /**

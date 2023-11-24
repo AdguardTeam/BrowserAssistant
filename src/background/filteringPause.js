@@ -1,6 +1,7 @@
 import { FILTERING_PAUSE_VERSION_SUPPORT_SINCE } from '../lib/consts';
 import { compareSemver, getUrlProperties } from '../lib/helpers';
 import notifier from '../lib/notifier';
+
 import { longLivedMessageService } from './longLivedMessageService';
 import state from './state';
 

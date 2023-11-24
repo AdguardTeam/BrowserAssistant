@@ -5,13 +5,14 @@ import { observer } from 'mobx-react';
 import Settings from '../Settings';
 import Options from '../Options';
 import CurrentSite from '../CurrentSite';
-import AppClosed from './AppClosed';
-import AppWrapper from './AppWrapper';
-import TrialExpired from './TrialExpired';
 import rootStore from '../../stores';
 import Loading from '../ui/Loading';
 import { createLongLivedConnection } from '../../messageService';
 import { TermsAgreement, ORIGIN } from '../../../shared/components/TermsAgreement';
+
+import TrialExpired from './TrialExpired';
+import AppWrapper from './AppWrapper';
+import AppClosed from './AppClosed';
 
 Modal.setAppElement('#root');
 

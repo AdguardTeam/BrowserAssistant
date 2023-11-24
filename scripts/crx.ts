@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import { promises as fs } from 'fs';
 import path from 'path';
+
 import chalk from 'chalk';
-const Crx = require('crx');
+
+import { getErrorMessage } from '../src/lib/errors';
 
 import {
     Browser,
@@ -18,7 +20,10 @@ import {
     MANIFEST_NAME,
 } from './consts';
 import { Manifest, updateManifest } from './helpers';
-import { getErrorMessage } from '../src/lib/errors';
+
+const Crx = require('crx');
+
+
 
 const config = require('../package.json');
 

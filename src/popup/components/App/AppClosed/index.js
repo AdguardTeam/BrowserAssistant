@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
+
 import rootStore from '../../../stores';
-import './AppClosed.pcss';
+
 import ClosedApp from './ClosedApp';
+
+import './AppClosed.pcss';
 
 const AppClosed = observer(() => {
     const { settingsStore, uiStore } = useContext(rootStore);

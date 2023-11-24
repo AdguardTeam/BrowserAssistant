@@ -1,10 +1,11 @@
 import browser from 'webextension-polyfill';
 
-import { Prefs } from './prefs';
 // FIXME rewrite to named export
 import log from '../lib/logger';
 import { getErrorMessage } from '../lib/errors';
 import { browserApi } from '../lib/browserApi';
+
+import { Prefs } from './prefs';
 
 type SetIconDetailsType = browser.Action.SetIconDetailsType;
 

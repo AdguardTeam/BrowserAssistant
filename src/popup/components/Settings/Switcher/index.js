@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
+
 import classNames from 'classnames';
+
 import rootStore from '../../../stores';
+
 import './switcher.pcss';
 
 const Switcher = ({

@@ -1,7 +1,4 @@
-import {
-    PROTOCOLS,
-    PROTOCOL_TO_PORT_MAP,
-} from '../popup/stores/consts';
+import { PROTOCOLS, PROTOCOL_TO_PORT_MAP } from '../popup/stores/consts';
 
 /**
  * @typedef {Object} urlObj

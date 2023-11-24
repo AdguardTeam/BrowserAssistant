@@ -1,5 +1,7 @@
-import classnames from 'classnames';
 import React, { useContext } from 'react';
+
+import classnames from 'classnames';
+
 import rootStore from '../../../stores';
 
 const ClosedApp = ({

@@ -39,6 +39,8 @@ Test:
 
             yarn install ${bamboo.varsYarn}
             yarn dev
+            yarn lint
+            yarn test
             rm -rf node_modules
   artifacts:
     - name: build.txt

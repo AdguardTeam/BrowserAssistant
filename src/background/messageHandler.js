@@ -7,6 +7,7 @@ import {
     OPTIONS_UI_MESSAGES,
 } from '../lib/types';
 import { tabs } from '../lib/tabs';
+
 import { tabsService } from './TabsService';
 import state from './state';
 import getPopupData from './getPopupData';

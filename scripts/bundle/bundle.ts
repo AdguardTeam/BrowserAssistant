@@ -3,9 +3,9 @@ import { program } from 'commander';
 import { Browser, BuildEnv } from '../consts';
 import { cliLog } from '../cli-log';
 import { createBuildVersion } from '../versionInfo';
+import { getWebpackConfig } from '../webpack';
 
 import { bundleRunner } from './bundle-runner';
-import { getWebpackConfig } from '../webpack';
 
 type Task = (options: TaskOptions) => Promise<void> | void;
 

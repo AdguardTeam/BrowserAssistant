@@ -4,11 +4,11 @@ import { BASE_LOCALE, PERSISTENT_MESSAGES } from './locales-constants';
 
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
 const querystring = require('querystring');
 
-const { log } = require('./helpers');
+const axios = require('axios');
 
+const { log } = require('./helpers');
 const {
     PROJECT_ID,
     API_URL,

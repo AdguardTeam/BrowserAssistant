@@ -1,4 +1,5 @@
 import { storage } from '../storage';
+
 import ConsentAbstract from './ConsentAbstract';
 
 /**

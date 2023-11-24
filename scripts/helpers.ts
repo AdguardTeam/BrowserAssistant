@@ -1,4 +1,9 @@
-import { BUILD_ENVS_MAP, BUILD_ENV, BuildEnv } from './consts';
+import {
+    BUILD_ENVS_MAP,
+    BUILD_ENV,
+    BuildEnv,
+} from './consts';
+
 const pJson = require('../package.json');
 const twoskyConfig = require('../.twosky.json');
 

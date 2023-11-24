@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
+
 import classNames from 'classnames';
+
+import rootStore from '../../stores';
+import { MODAL_STATES_NAMES, SHOW_MODAL_TIME } from '../../stores/consts';
+
 import CertStatusModal from './CertStatusModal';
 import SecureStatusModal from './SecureStatusModal';
-import rootStore from '../../stores';
-import {
-    MODAL_STATES_NAMES,
-    SHOW_MODAL_TIME,
-} from '../../stores/consts';
+
 import './currentSite.pcss';
 
 const CurrentSite = observer(() => {

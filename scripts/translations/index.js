@@ -7,9 +7,7 @@ const { downloadAndSave } = require('./download');
 const { uploadBaseLocale } = require('./upload');
 const { checkTranslations } = require('./validate');
 const { checkUnusedMessages } = require('./unused');
-
 const { log } = require('./helpers');
-
 const {
     LANGUAGES,
     REQUIRED_LOCALES,

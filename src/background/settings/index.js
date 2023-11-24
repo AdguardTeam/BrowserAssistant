@@ -1,4 +1,5 @@
-import { Settings } from './Settings';
 import { storage } from '../storage';
+
+import { Settings } from './Settings';
 
 export const settings = new Settings(storage);

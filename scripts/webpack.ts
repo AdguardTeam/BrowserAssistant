@@ -1,9 +1,3 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ZipWebpackPlugin = require('zip-webpack-plugin');
-const webpack = require('webpack');
 import { Configuration, WebpackPluginInstance } from 'webpack';
 
 import {
@@ -15,7 +9,20 @@ import {
     BUILD_ENV,
     BuildEnv,
 } from './consts';
-import { getOutputPathByBuildEnv, appendBuildEnvSuffix, updateManifest } from './helpers';
+import {
+    getOutputPathByBuildEnv,
+    appendBuildEnvSuffix,
+    updateManifest,
+} from './helpers';
+
+const path = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ZipWebpackPlugin = require('zip-webpack-plugin');
+const webpack = require('webpack');
+
 
 const BACKGROUND_PATH = path.resolve(__dirname, SRC_PATH, 'background');
 const POPUP_PATH = path.resolve(__dirname, SRC_PATH, 'popup');

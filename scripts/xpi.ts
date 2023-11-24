@@ -1,11 +1,15 @@
 /* eslint-disable no-console */
 
-import { Manifest } from 'webextension-polyfill';
+import path from 'path';
+import { promises as fs } from 'fs';
 
-const webExt = require('web-ext');
-const path = require('path');
-const fs = require('fs').promises;
-const chalk = require('chalk');
+import { Manifest } from 'webextension-polyfill';
+// @ts-ignore
+import webExt from 'web-ext';
+import chalk from 'chalk';
+
+import { getErrorMessage } from '../src/lib/errors';
+import config from '../package.json';
 
 import {
     BUILD_PATH,
@@ -19,10 +23,8 @@ import {
     Browser,
     BuildEnv,
 } from './consts';
-import WebExtensionManifest = Manifest.WebExtensionManifest;
-import { getErrorMessage } from '../src/lib/errors';
 
-const config = require('../package.json');
+import WebExtensionManifest = Manifest.WebExtensionManifest;
 
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
 const BUILD = 'build';

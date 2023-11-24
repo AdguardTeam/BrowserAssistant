@@ -1,7 +1,6 @@
 const path = require('path');
 
 const { log, getLocaleTranslations, areArraysEqual } = require('./helpers');
-
 const {
     BASE_LOCALE,
     LANGUAGES,
