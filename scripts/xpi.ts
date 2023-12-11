@@ -46,14 +46,14 @@ async function generateXpi() {
 
     const credentialsPath = path.resolve(__dirname, '../private/AdguardBrowserAssistant/mozilla_credentials.json');
 
-    // require called here in order to escape errors, until this module is really necessary
+    // require called here to escape errors, until this module is really necessary
     // eslint-disable-next-line import/extensions
     const cryptor = require('../private/cryptor/dist');
     const credentialsContent = await cryptor(process.env.CREDENTIALS_PASSWORD)
         .getDecryptedContent(credentialsPath);
     const { apiKey, apiSecret } = JSON.parse(credentialsContent);
 
-    const { downloadedFiles } = await webExt.default.cmd.sign({
+    const { downloadedFiles } = await webExt.cmd.sign({
         apiKey,
         apiSecret,
         sourceDir,

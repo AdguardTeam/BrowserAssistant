@@ -5,7 +5,7 @@ plan:
   key: BABETASPECS
   name: browser assistant - build beta
 variables:
-  dockerNode: adguard/node-ssh:14.18--2
+  dockerNode: adguard/node-ssh:18.13--1
 
 stages:
   - Build:
