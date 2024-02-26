@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 import { tabs } from '../lib/tabs';
 import { browserApi } from '../lib/browserApi';
 

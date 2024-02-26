@@ -1,7 +1,6 @@
 import browser from 'webextension-polyfill';
 
-// FIXME rewrite to named export
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 import { getErrorMessage } from '../lib/errors';
 import { browserApi } from '../lib/browserApi';
 

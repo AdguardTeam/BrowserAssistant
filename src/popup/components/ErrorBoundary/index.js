@@ -1,6 +1,6 @@
 import React from 'react';
 
-import log from '../../../lib/logger';
+import { log } from '../../../lib/logger';
 import ClosedApp from '../App/AppClosed/ClosedApp';
 import Header from '../Header';
 import { StoreConsumer } from '../../stores';

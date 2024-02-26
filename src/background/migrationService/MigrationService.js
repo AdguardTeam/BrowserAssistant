@@ -2,7 +2,7 @@ import { compare } from 'compare-versions';
 
 import { localStorage } from '../localStorage';
 import { storage } from '../storage';
-import log from '../../lib/logger';
+import { log } from '../../lib/logger';
 import { consent } from '../consent';
 import { browserApi } from '../../lib/browserApi';
 import { APP_VERSION_KEY } from '../../lib/types';

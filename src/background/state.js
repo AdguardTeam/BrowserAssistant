@@ -10,7 +10,7 @@ import {
     isHttp,
 } from '../lib/helpers';
 import { PROTOCOLS } from '../popup/stores/consts';
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 
 import versions from './versions';
 import { Api } from './api';
@@ -292,7 +292,7 @@ class State {
 
     /**
      * Returns current filtering state or null if url is not http
-     * @param {{id: number, url: string}} tab
+     * @param {chrome.tabs.Tab} tab
      * @param {boolean} forceStart
      * @returns {Promise<null|*>}
      */
@@ -300,7 +300,7 @@ class State {
         const url = tab?.url;
         this.updateSecured(url);
 
-        // Do not send empty urls or non http urls, see - AG-2360
+        // Do not send empty urls or non http urls, see - AG-2360, except for forceStart
         if (!forceStart && !(url && isHttp(url))) {
             return null;
         }
@@ -327,6 +327,7 @@ class State {
             canChangeFilteringStatus = true; // by default consider that this flag is true
         }
         this.canChangeFilteringStatus = canChangeFilteringStatus;
+
         return { ...parameters, canChangeFilteringStatus };
     };
 

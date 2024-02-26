@@ -1,5 +1,5 @@
 import { BACKGROUND_MESSAGES, POPUP_MESSAGES } from '../../lib/types';
-import log from '../../lib/logger';
+import { log } from '../../lib/logger';
 
 let openedPort = null;
 

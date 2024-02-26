@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 import { APP_VERSION_KEY } from '../lib/types';
 
 import { storage } from './storage';

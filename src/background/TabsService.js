@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 
 import { CONTENT_MESSAGES } from '../lib/types';
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 import { CONTENT_SCRIPT_NAME } from '../lib/consts';
 import { tabs } from '../lib/tabs';
 import notifier from '../lib/notifier';
@@ -49,7 +49,10 @@ class TabsService {
      * @returns {Promise<*>}
      */
     sendMessage = async (tabId, type, data) => {
-        await browser.tabs.executeScript(tabId, { file: CONTENT_SCRIPT_NAME });
+        await browser.scripting.executeScript({
+            target: { tabId },
+            files: [CONTENT_SCRIPT_NAME] },
+        );
 
         const response = await browser.tabs.sendMessage(tabId, {
             type,

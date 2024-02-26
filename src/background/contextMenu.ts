@@ -44,11 +44,11 @@ export class ContextMenu {
      */
     static clickHandlers: ClickHandlersType = {
         [ContextMenuItem.BlockSiteAds]: async () => {
-            const { id } = await tabs.getActiveTab();
+            const { id } = await tabs.getCurrentTab();
             await tabsService.initAssistant(id);
         },
         [ContextMenuItem.ComplaintWebsite]: async () => {
-            const tab = await tabs.getActiveTab();
+            const tab = await tabs.getCurrentTab();
             const referrer = await tabsService.getReferrer(tab);
             const reportUrl = await state.reportSite(tab.url, referrer);
             await tabs.openPage(reportUrl);
@@ -79,19 +79,23 @@ export class ContextMenu {
                 await tabs.reloadTab(tab);
             }));
         },
-        [ContextMenuItem.EnableProtection]: async () => {
-            const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
-
-            await Promise.all(tabsToUpdate.map(async (tab) => {
+        [ContextMenuItem.EnableProtection]: async (_, tab) => {
+            if (!state.appState.isRunning && tab) {
+                await state.getCurrentFilteringState(tab, true);
+            } else if (!state.appState.isProtectionEnabled) {
                 await state.setProtectionStatus(true);
+            }
+
+            const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
+            await Promise.all(tabsToUpdate.map(async (tab) => {
                 await tabs.reloadTab(tab);
             }));
         },
         [ContextMenuItem.DisableProtection]: async () => {
             const tabsToUpdate = await tabs.getActiveAndSimilarTabs();
 
+            await state.setProtectionStatus(false);
             await Promise.all(tabsToUpdate.map(async (tab) => {
-                await state.setProtectionStatus(false);
                 await tabs.reloadTab(tab);
             }));
         },
@@ -124,6 +128,35 @@ export class ContextMenu {
 
         chrome.contextMenus.onClicked.addListener(ContextMenu.onClicked);
     }
+
+    /**
+     * Ensures sequential execution of the `update` method within the ContextMenu class, preventing concurrent updates.
+     * If called while an update is in progress, it queues a single subsequent update for after the current one
+     * completes, ensuring the latest request is processed.
+     * Utilizes a closure to maintain state across invocations.
+     */
+    public static controlledUpdate = (() => {
+        let hasPendingUpdate = false;
+        let isUpdating = false;
+        return async () => {
+            if (isUpdating) {
+                hasPendingUpdate = true;
+                return;
+            }
+
+            isUpdating = true;
+
+            try {
+                await ContextMenu.update();
+            } finally {
+                isUpdating = false;
+                if (hasPendingUpdate) {
+                    hasPendingUpdate = false;
+                    ContextMenu.controlledUpdate();
+                }
+            }
+        };
+    })();
 
     /**
      * Updates context menu

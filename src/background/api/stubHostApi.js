@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import log from '../../lib/logger';
+import { log } from '../../lib/logger';
 import versions from '../versions';
 import {
     ADG_PREFIX,

@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 
 import { CONTENT_MESSAGES } from '../lib/types';
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 import { browserApi } from '../lib/browserApi';
 
 import { startAssistant } from './start-assistant';

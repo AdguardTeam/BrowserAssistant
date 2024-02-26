@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 
 import App from './components/App';
-import log from '../lib/logger';
+import { log } from '../lib/logger';
 import ErrorBoundary from './components/ErrorBoundary';
 import '../shared/styles/main.pcss';
 import './popup.pcss';

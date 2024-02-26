@@ -39,12 +39,12 @@ class Icon {
     updateIcon = async (tab) => {
         if (!state.isAppWorking()) {
             await actions.setIconDisabled(tab.id);
-            await ContextMenu.update();
+            await ContextMenu.controlledUpdate();
             return;
         }
 
         const currentFilteringState = await state.getCurrentFilteringState(tab);
-        await ContextMenu.update();
+        await ContextMenu.controlledUpdate();
 
         const isFilteringEnabled = currentFilteringState
             ? currentFilteringState.isFilteringEnabled

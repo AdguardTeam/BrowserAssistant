@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 
-import log from './logger';
+import { log } from './logger';
 
 /**
  * Extracts only usable data from tab

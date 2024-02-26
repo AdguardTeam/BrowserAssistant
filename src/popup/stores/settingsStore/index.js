@@ -23,7 +23,7 @@ import {
     getUrlProps,
     isExtensionProtocol,
 } from '../../../lib/helpers';
-import log from '../../../lib/logger';
+import { log } from '../../../lib/logger';
 
 class SettingsStore {
     constructor(rootStore) {

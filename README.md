@@ -76,12 +76,12 @@ Respectively creates Chrome and Firefox beta and release builds, zipped builds, 
 ```
 
 ## Minimum supported browser versions
-| Browser                 	| Version 	|
-|-------------------------	|:-------:	|
-| Chromium Based Browsers 	|    55   	|
-| Firefox                 	|    54   	|
-| Opera                   	|    42   	|
-| Edge                    	|    79   	|
+| Browser                 | Version |
+|-------------------------|:-------:|
+| Chromium Based Browsers |   88    |
+| Firefox                 |   109   |
+| Opera                   |   74    |
+| Edge                    |   88    |
 
 ## Permissions
 - Permission `tabs` allows to indicate the status of websites by changing the icon color

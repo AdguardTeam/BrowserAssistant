@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 import { nanoid } from 'nanoid';
 
-import log from '../../lib/logger';
+import { log } from '../../lib/logger';
 import versions from '../versions';
 import {
     ADG_PREFIX,
@@ -105,6 +105,7 @@ export class NativeHostApi extends AbstractApi {
      */
     connect = async () => {
         log.info('Connecting to the native host');
+        // if the extension was connected to the native host in mv3 then it will not die after 30 seconds as usually
         this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
 
         this.port.onMessage.addListener(this.incomingMessageHandler);

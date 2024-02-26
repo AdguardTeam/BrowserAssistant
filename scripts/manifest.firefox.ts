@@ -7,14 +7,14 @@ const IDS_MAP = {
 };
 
 module.exports = {
-    manifest_version: 2,
-    applications: {
+    manifest_version: 3,
+    browser_specific_settings: {
         gecko: {
             id: IDS_MAP[BUILD_ENV],
-            strict_min_version: '54.0',
+            strict_min_version: '109',
         },
     },
-    'browser_action': {
+    'action': {
         'default_icon': {
             '19': 'assets/images/icons/green-19.png',
             '38': 'assets/images/icons/green-38.png',

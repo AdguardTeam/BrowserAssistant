@@ -91,11 +91,6 @@ export const getWebpackConfig = (
                 }
             })),
         new HtmlWebpackPlugin({
-            template: path.join(BACKGROUND_PATH, 'index.html'),
-            filename: 'background.html',
-            chunks: ['background'],
-        }),
-        new HtmlWebpackPlugin({
             template: path.join(POPUP_PATH, 'index.html'),
             filename: 'popup.html',
             chunks: ['popup'],
@@ -132,7 +127,8 @@ export const getWebpackConfig = (
 
     return {
         mode: IS_DEV ? 'development' : 'production',
-        devtool: IS_DEV ? 'eval-source-map' : false,
+        // mv3 doesn't support eval-source-map
+        devtool: IS_DEV ? 'inline-source-map' : false,
         performance: {
             hints: false,
             maxEntrypointSize: 512000,
