@@ -11,7 +11,7 @@ module.exports = {
     browser_specific_settings: {
         gecko: {
             id: IDS_MAP[BUILD_ENV],
-            strict_min_version: '109',
+            strict_min_version: '109.0',
         },
     },
     'action': {
