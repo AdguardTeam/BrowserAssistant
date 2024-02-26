@@ -1,4 +1,12 @@
-import { BUILD_ENV, BuildEnv } from './consts';
+import { Manifest } from 'webextension-polyfill';
+
+import {
+    BUILD_ENV,
+    BuildEnv,
+    FIREFOX_UPDATE_URL,
+} from './consts';
+
+import WebExtensionManifest = Manifest.WebExtensionManifest;
 
 const IDS_MAP = {
     [BuildEnv.Dev]: 'browserassistantdev@adguard.com',
@@ -6,7 +14,23 @@ const IDS_MAP = {
     [BuildEnv.Release]: 'browserassistant@adguard.com',
 };
 
-module.exports = {
+// Define a new type that picks only the properties you're using from WebExtensionManifest
+type CustomManifestType = Pick<WebExtensionManifest,
+'manifest_version' |
+'browser_specific_settings' |
+'action' |
+'background'> & {
+    // Include any additional properties used conditionally or optionally here
+    browser_specific_settings: {
+        gecko: {
+            id: string;
+            strict_min_version: string;
+            update_url?: string; // Since update_url is conditionally added, make it optional
+        };
+    };
+};
+
+const manifest: CustomManifestType = {
     manifest_version: 3,
     browser_specific_settings: {
         gecko: {
@@ -26,3 +50,9 @@ module.exports = {
         page: 'background.html',
     },
 };
+
+if (BUILD_ENV === BuildEnv.Beta) {
+    manifest.browser_specific_settings.gecko.update_url = FIREFOX_UPDATE_URL;
+}
+
+module.exports = manifest;

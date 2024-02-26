@@ -5,7 +5,7 @@ plan:
   key: BABETASPECS
   name: browser assistant - build beta
 variables:
-  dockerNode: adguard/node-ssh:18.13--1
+  dockerNode: adguard/extension-builder:18.17.1--0.1.2
 
 stages:
   - Build:
@@ -48,6 +48,17 @@ Build:
 
             # zip source for publishing on AMO
             git ls-files | zip -@ build/beta/source.zip
+
+            # Move to the build/beta directory and sign the Firefox extension
+            cd ./build/beta
+
+            # Set environment variables and run go-webext to sign the Firefox extension
+            FIREFOX_CLIENT_ID="${bamboo_firefoxAmoClientId}" \
+            FIREFOX_CLIENT_SECRET="${bamboo_firefoxAmoClientSecret}" \
+            go-webext -v sign firefox -f 'firefox.zip' -s 'source.zip' -o 'firefox.xpi'
+
+            # Return to the previous directory
+            cd -
 
             rm -rf node_modules
     - inject-variables:

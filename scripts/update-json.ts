@@ -4,8 +4,6 @@ import path from 'path';
 import { promises as fs } from 'fs';
 
 import { Manifest } from 'webextension-polyfill';
-// @ts-ignore
-import webExt from 'web-ext';
 import chalk from 'chalk';
 
 import { getErrorMessage } from '../src/lib/errors';
@@ -15,13 +13,10 @@ import {
     BUILD_PATH,
     BUILD_ENVS_MAP,
     FIREFOX_UPDATER_FILENAME,
-    FIREFOX_UPDATE_URL,
     FIREFOX_UPDATE_XPI,
     MANIFEST_NAME,
-    XPI_NAME,
     BUILD_ENV,
     Browser,
-    BuildEnv,
 } from './consts';
 
 import WebExtensionManifest = Manifest.WebExtensionManifest;
@@ -40,39 +35,6 @@ const getFirefoxManifest = async (): Promise<WebExtensionManifest> => {
     const manifest = JSON.parse(manifestBuffer.toString());
     return manifest;
 };
-
-async function generateXpi() {
-    const sourceDir = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, Browser.Firefox);
-
-    const credentialsPath = path.resolve(__dirname, '../private/AdguardBrowserAssistant/mozilla_credentials.json');
-
-    // require called here to escape errors, until this module is really necessary
-    // eslint-disable-next-line import/extensions
-    const cryptor = require('../private/cryptor/dist');
-    const credentialsContent = await cryptor(process.env.CREDENTIALS_PASSWORD)
-        .getDecryptedContent(credentialsPath);
-    const { apiKey, apiSecret } = JSON.parse(credentialsContent);
-
-    const { downloadedFiles } = await webExt.cmd.sign({
-        apiKey,
-        apiSecret,
-        sourceDir,
-        artifactsDir: buildDir,
-    }, {
-        shouldExitProgram: false,
-    });
-
-    if (downloadedFiles) {
-        const [downloadedXpi] = downloadedFiles;
-
-        // Rename
-        const basePath = path.dirname(downloadedXpi);
-        const xpiPath = path.join(basePath, XPI_NAME);
-        await fs.rename(downloadedXpi, xpiPath);
-
-        console.log(chalk.greenBright(`File saved to ${xpiPath}\n`));
-    }
-}
 
 type GenerateUpdateJsonProps = {
     id: string;
@@ -153,27 +115,8 @@ const createUpdateJson = async (manifest: WebExtensionManifest) => {
     }
 };
 
-const updateFirefoxManifest = async () => {
-    const manifestPath = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, Browser.Firefox, 'manifest.json');
-    const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8')) as WebExtensionManifest;
-
-    if (!manifest?.browser_specific_settings?.gecko) {
-        throw new Error('Manifest is missing gecko section');
-    }
-
-    // TODO stop building xpi for next versions
-    // build xpi for release without update url, so firefox would search extension in the amo store
-    // https://discourse.mozilla.org/t/migrate-from-self-hosted-to-add-ons-store/5403
-    if (BUILD_ENV !== BuildEnv.Release) {
-        manifest.browser_specific_settings.gecko.update_url = FIREFOX_UPDATE_URL;
-    }
-    await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
-};
-
-const generateFirefoxArtifacts = async () => {
+const updateJson = async () => {
     try {
-        await updateFirefoxManifest();
-        await generateXpi();
         const manifest = await getFirefoxManifest();
         await createUpdateJson(manifest);
     } catch (error: unknown) {
@@ -184,4 +127,4 @@ const generateFirefoxArtifacts = async () => {
     }
 };
 
-generateFirefoxArtifacts();
+updateJson();
