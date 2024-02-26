@@ -32,7 +32,7 @@ const BUILD = 'build';
 const buildDir = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath);
 const fileDir = path.resolve(buildDir, FIREFOX_UPDATER_FILENAME);
 
-const getFirefoxManifest = async () => {
+const getFirefoxManifest = async (): Promise<WebExtensionManifest> => {
     const MANIFEST_PATH = path.resolve(
         __dirname, BUILD_PATH, outputPath, Browser.Firefox, MANIFEST_NAME,
     );
@@ -88,7 +88,7 @@ type UpdateJson = {
                 {
                     version: string;
                     update_link: string;
-                    applications: {
+                    browser_specific_settings: {
                         gecko: {
                             strict_min_version: string;
                         }
@@ -112,7 +112,7 @@ const generateUpdateJson = ({
                     {
                         version,
                         update_link: updateLink,
-                        applications: {
+                        browser_specific_settings: {
                             gecko: {
                                 strict_min_version: strictMinVersion,
                             },
@@ -125,11 +125,11 @@ const generateUpdateJson = ({
 };
 
 const createUpdateJson = async (manifest: WebExtensionManifest) => {
-    if (!manifest?.applications?.gecko) {
+    if (!manifest?.browser_specific_settings?.gecko) {
         throw new Error('Manifest is missing gecko section');
     }
 
-    const { id, strict_min_version: strictMinVersion } = manifest.applications.gecko;
+    const { id, strict_min_version: strictMinVersion } = manifest.browser_specific_settings.gecko;
     if (!id || !strictMinVersion) {
         throw new Error('Manifest is missing id or strict_min_version');
     }
@@ -155,12 +155,17 @@ const createUpdateJson = async (manifest: WebExtensionManifest) => {
 
 const updateFirefoxManifest = async () => {
     const manifestPath = path.resolve(BUILD, BUILD_ENVS_MAP[BUILD_ENV].outputPath, Browser.Firefox, 'manifest.json');
-    const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8'));
+    const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf-8')) as WebExtensionManifest;
+
+    if (!manifest?.browser_specific_settings?.gecko) {
+        throw new Error('Manifest is missing gecko section');
+    }
+
     // TODO stop building xpi for next versions
     // build xpi for release without update url, so firefox would search extension in the amo store
     // https://discourse.mozilla.org/t/migrate-from-self-hosted-to-add-ons-store/5403
     if (BUILD_ENV !== BuildEnv.Release) {
-        manifest.applications.gecko.update_url = FIREFOX_UPDATE_URL;
+        manifest.browser_specific_settings.gecko.update_url = FIREFOX_UPDATE_URL;
     }
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 4));
 };
