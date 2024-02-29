@@ -2,8 +2,8 @@
 version: 2
 plan:
   project-key: ADGEXT
-  key: BABETASPECS
-  name: browser assistant - build beta
+  key: BABETAFFSPECS
+  name: browser assistant - build beta firefox
 variables:
   dockerNode: adguard/extension-builder:18.19.0--0.1.3
 
@@ -25,10 +25,6 @@ Build:
   tasks:
     - checkout:
         force-clean-build: 'true'
-    - checkout:
-        repository: extensions-private
-        path: private
-        force-clean-build: 'true'
     - script:
         interpreter: SHELL
         scripts:
@@ -46,25 +42,34 @@ Build:
             yarn locales validate --min
             CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta
 
+            # zip source for publishing on AMO
+            git ls-files | zip -@ build/beta/source.zip
+
+            # Move to the build/beta directory and sign the Firefox extension
+            cd ./build/beta
+
+            # Set environment variables and run go-webext to sign the Firefox extension
+            FIREFOX_CLIENT_ID="${bamboo_firefoxAmoClientId}" \
+            FIREFOX_CLIENT_SECRET="${bamboo_firefoxAmoClientSecret}" \
+            go-webext -v sign firefox -f 'firefox.zip' -s 'source.zip' -o 'firefox.xpi'
+
+            # Return to the previous directory
+            cd -
+
             rm -rf node_modules
     - inject-variables:
         file: build/beta/build.txt
         scope: RESULT
         namespace: inject
-    - any-task:
-        plugin-key: com.atlassian.bamboo.plugins.vcs:task.vcs.tagging
-        configuration:
-          selectedRepository: defaultRepository
-          tagName: v${bamboo.inject.version}-beta
   artifacts:
-    - name: chrome.crx
+    - name: firefox.xpi
       location: build/beta
-      pattern: chrome.crx
+      pattern: firefox.xpi
       shared: true
       required: true
-    - name: update.xml
+    - name: update.json
       location: build/beta
-      pattern: update.xml
+      pattern: update.json
       shared: true
       required: true
     - name: build.txt
@@ -72,9 +77,14 @@ Build:
       pattern: build.txt
       shared: true
       required: true
-    - name: chrome.zip
+    - name: firefox.zip
       location: build/beta
-      pattern: chrome.zip
+      pattern: firefox.zip
+      shared: true
+      required: true
+    - name: source.zip
+      location: build/beta
+      pattern: source.zip
       shared: true
       required: true
   requirements:
