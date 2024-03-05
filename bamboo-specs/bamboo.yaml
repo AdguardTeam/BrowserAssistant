@@ -26,4 +26,7 @@
 !include 'permissions-beta.yaml'
 
 ---
+!include 'permissions-beta-firefox.yaml'
+
+---
 !include 'permissions-release.yaml'
