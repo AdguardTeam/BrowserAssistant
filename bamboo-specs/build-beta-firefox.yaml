@@ -40,7 +40,7 @@ Build:
             yarn lint
             yarn test
             yarn locales validate --min
-            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta
+            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta-firefox
 
             # zip source for publishing on AMO
             git ls-files | zip -@ build/beta/source.zip

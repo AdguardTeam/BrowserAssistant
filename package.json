@@ -16,7 +16,8 @@
         "crx": "ts-node scripts/crx.ts",
         "update-json": "ts-node scripts/update-json.ts",
         "increment": "yarn version --patch --no-git-tag-version",
-        "artifacts:beta": "export BUILD_ENV=beta; yarn beta && yarn crx && yarn update-json && ts-node scripts/versionInfo.ts",
+        "artifacts:beta": "export BUILD_ENV=beta; yarn beta && yarn crx && ts-node scripts/versionInfo.ts",
+        "artifacts:beta-firefox": "export BUILD_ENV=beta; yarn beta firefox && yarn update-json && ts-node scripts/versionInfo.ts",
         "artifacts:release": "export BUILD_ENV=release; yarn release && yarn crx && ts-node scripts/versionInfo.ts"
     },
     "husky": {
