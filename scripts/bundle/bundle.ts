@@ -2,7 +2,7 @@ import { program } from 'commander';
 
 import { Browser, BuildEnv } from '../consts';
 import { cliLog } from '../cli-log';
-import { createBuildVersion } from '../versionInfo';
+import { createBuildVersion } from '../version-info/versionInfo';
 import { getWebpackConfig } from '../webpack';
 
 import { bundleRunner } from './bundle-runner';

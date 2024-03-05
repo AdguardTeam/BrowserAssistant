@@ -4,19 +4,18 @@ import path from 'path';
 
 import chalk from 'chalk';
 
-import config from '../package.json';
-
+import config from '../../package.json';
 import {
     BUILD_PATH,
     BUILD_ENVS_MAP,
     BUILD_ENV,
-} from './consts';
+} from '../consts';
 
 const content = `version=${config.version}`;
 const { outputPath } = BUILD_ENVS_MAP[BUILD_ENV];
 const FILENAME = 'build.txt';
 
-const WRITE_PATH = path.resolve(__dirname, BUILD_PATH, outputPath, FILENAME);
+const WRITE_PATH = path.resolve(__dirname, '..', BUILD_PATH, outputPath, FILENAME);
 
 export const createBuildVersion = async () => {
     try {
