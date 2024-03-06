@@ -8,4 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Changed
+- Switched to mv3 manifest format
+
+### Changed
 - Do not add context menu separators in Vivaldi browser
