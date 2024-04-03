@@ -11,6 +11,7 @@ import {
     REQUEST_TYPES,
 } from '../../lib/types';
 import { consent } from '../consent';
+import { getErrorMessage } from '../../lib/errors';
 
 import AbstractApi from './AbstractApi';
 
@@ -154,13 +155,21 @@ export class NativeHostApi extends AbstractApi {
         try {
             return await this.makeRequestOnce(params);
         } catch (e) {
-            if (tryReconnect) {
-                log.debug('Was unable to send request');
+            // Prevent reconnection for init requests, to avoid infinite loop, since reconnect calls init request
+            // https://github.com/AdguardTeam/BrowserAssistant/issues/115
+            if (tryReconnect && params.type !== REQUEST_TYPES.init) {
+                log.debug(
+                    'Was unable to send request with params:',
+                    params,
+                    'due to error:',
+                    getErrorMessage(e),
+                );
                 try {
                     await this.reconnect();
+                    // After reconnection, retry the request without attempting further reconnections.
                     return await this.makeRequestOnce(params);
                 } catch (e) {
-                    log.debug('Was unable to reconnect to the native host');
+                    log.debug('Was unable to reconnect to the native host due to error:', getErrorMessage(e));
                     throw e;
                 }
             }
