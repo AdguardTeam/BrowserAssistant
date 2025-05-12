@@ -5,12 +5,12 @@ plan:
   key: BAINCRSPECS
   name: browser assistant - increment version
 variables:
-  dockerNode: adguard/extension-builder:18.19.0--0.1.3
+  dockerNode: adguard/extension-builder:22.14--0.2--0
 
 stages:
   - Increment:
-      manual: 'false'
-      final: 'false'
+      manual: false
+      final: false
       jobs:
         - Increment
 
@@ -21,10 +21,10 @@ Increment:
   docker:
     image: ${bamboo.dockerNode}
     volumes:
-      ${system.YARN_DIR}: "${bamboo.cacheYarn}"
+      ${system.PNPM_DIR}: "${bamboo.cachePnpm}"
   tasks:
     - checkout:
-        force-clean-build: 'true'
+        force-clean-build: true
     - script:
         interpreter: SHELL
         scripts:
@@ -37,7 +37,7 @@ Increment:
 
             ls -alt
 
-            yarn increment
+            pnpm increment
     - any-task:
         plugin-key: com.atlassian.bamboo.plugins.vcs:task.vcs.commit
         configuration:
@@ -49,7 +49,7 @@ Increment:
 branches:
   create: manually
   delete: never
-  link-to-jira: 'true'
+  link-to-jira: true
 
 notifications: []
 labels: []

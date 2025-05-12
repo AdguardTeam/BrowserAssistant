@@ -10,6 +10,7 @@
         "allowJs": true,
         "noImplicitAny": true,
         "experimentalDecorators": true,
+        "incremental": true,
         "resolveJsonModule": true,
         "typeRoots": [
             "./node_modules/@types",

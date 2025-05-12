@@ -5,5 +5,5 @@ import { OptionsUi } from './components/OptionsUi';
 
 ReactDOM.render(
     <OptionsUi />,
-    document.getElementById('root')
+    document.getElementById('root'),
 );

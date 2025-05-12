@@ -4,8 +4,10 @@ deployment:
   name: browser assistant - deploy beta firefox
   source-plan: ADGEXT-BABETAFFSPECS
 release-naming: ${bamboo.inject.version}-beta
+
 environments:
   - static.adtidy.org
+
 static.adtidy.org:
   triggers: []
   tasks:
@@ -13,7 +15,7 @@ static.adtidy.org:
     - checkout:
         repository: bamboo-deploy-publisher
         path: bamboo-deploy-publisher
-        force-clean-build: 'true'
+        force-clean-build: true
     - artifact-download:
         artifacts:
           - {}

@@ -14,15 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.1...HEAD
 [#115]: https://github.com/AdguardTeam/BrowserAssistant/issues/115
 
-
 ## [1.4.1] - 2024-03-14
 
 ### Changed
 
 - Switched to mv3 manifest format
-
-### Changed
-
 - Do not add context menu separators in Vivaldi browser
 
 [1.4.1]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.3.49...v1.4.1

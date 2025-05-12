@@ -1,6 +1,12 @@
-node_modules
-build
+node_modules/
+build/
 .DS_Store
 .idea/
-/yarn-error.log
-/private
+private/
+pnpm-debug.log
+.pnpm-store/
+
+# eslint cache
+.eslintcache
+# types check cache
+tsconfig.tsbuildinfo

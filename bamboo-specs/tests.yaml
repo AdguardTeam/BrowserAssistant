@@ -5,12 +5,12 @@ plan:
   key: BATESTSPECS
   name: browser assistant - test
 variables:
-  dockerNode: adguard/extension-builder:18.19.0--0.1.3
+  dockerNode: adguard/extension-builder:22.14--0.2--0
 
 stages:
   - Test:
-      manual: 'false'
-      final: 'false'
+      manual: false
+      final: false
       jobs:
         - Test
 
@@ -21,10 +21,10 @@ Test:
   docker:
     image: ${bamboo.dockerNode}
     volumes:
-      ${system.YARN_DIR}: "${bamboo.cacheYarn}"
+      ${system.PNPM_DIR}: "${bamboo.cachePnpm}"
   tasks:
     - checkout:
-        force-clean-build: 'true'
+        force-clean-build: true
     - script:
         interpreter: SHELL
         scripts:
@@ -37,10 +37,15 @@ Test:
 
             ls -alt
 
-            yarn install ${bamboo.varsYarn}
-            yarn dev
-            yarn lint
-            yarn test
+            # Set cache directory
+            pnpm config set store-dir ${bamboo.cachePnpm}
+
+            pnpm install ${bamboo.varsPnpm}
+
+            pnpm dev
+
+            pnpm lint
+            pnpm test
   final-tasks:
     - script:
         interpreter: SHELL
@@ -86,7 +91,7 @@ branches:
   delete:
     after-deleted-days: '1'
     after-inactive-days: '5'
-  link-to-jira: 'true'
+  link-to-jira: true
 
 notifications: []
 labels: []

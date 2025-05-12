@@ -4,6 +4,7 @@ deployment:
   name: browser assistant - deploy release
   source-plan: ADGEXT-BARELEASESPECS
 release-naming: ${bamboo.inject.version}
+
 environments:
   - Chrome WebStore
   - Addons Mozilla
@@ -16,7 +17,7 @@ Chrome WebStore:
     - checkout:
         repository: bamboo-deploy-publisher
         path: bamboo-deploy-publisher
-        force-clean-build: 'true'
+        force-clean-build: true
     - artifact-download:
         artifacts:
           - name: build.txt
@@ -53,7 +54,7 @@ Addons Mozilla:
     - checkout:
         repository: bamboo-deploy-publisher
         path: bamboo-deploy-publisher
-        force-clean-build: 'true'
+        force-clean-build: true
     - artifact-download:
         artifacts:
           - name: build.txt
@@ -92,7 +93,7 @@ Edge Addons:
     - checkout:
         repository: bamboo-deploy-publisher
         path: bamboo-deploy-publisher
-        force-clean-build: 'true'
+        force-clean-build: true
     - artifact-download:
         artifacts:
           - name: build.txt

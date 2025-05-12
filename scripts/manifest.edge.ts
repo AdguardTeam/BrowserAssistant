@@ -1,3 +1,5 @@
+import { MIN_SUPPORTED_VERSION } from '../constants';
+
 module.exports = {
     'background': {
         'service_worker': 'background.js',
@@ -10,5 +12,5 @@ module.exports = {
         'default_title': '__MSG_name__',
         'default_popup': 'popup.html',
     },
-    minimum_edge_version: '88',
+    minimum_edge_version: String(MIN_SUPPORTED_VERSION.CHROMIUM),
 };

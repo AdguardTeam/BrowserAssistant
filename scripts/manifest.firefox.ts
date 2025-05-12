@@ -1,5 +1,7 @@
 import { Manifest } from 'webextension-polyfill';
 
+import { MIN_SUPPORTED_VERSION } from '../constants';
+
 import {
     BUILD_ENV,
     BuildEnv,
@@ -35,16 +37,16 @@ const manifest: CustomManifestType = {
     browser_specific_settings: {
         gecko: {
             id: IDS_MAP[BUILD_ENV],
-            strict_min_version: '109.0',
+            strict_min_version: `${MIN_SUPPORTED_VERSION.FIREFOX}.0`,
         },
     },
-    'action': {
-        'default_icon': {
+    action: {
+        default_icon: {
             '19': 'assets/images/icons/green-19.png',
             '38': 'assets/images/icons/green-38.png',
         },
-        'default_title': '__MSG_name__',
-        'default_popup': 'popup.html',
+        default_title: '__MSG_name__',
+        default_popup: 'popup.html',
     },
     background: {
         page: 'background.html',

@@ -5,12 +5,12 @@ plan:
   key: BABETAFFSPECS
   name: browser assistant - build beta firefox
 variables:
-  dockerNode: adguard/extension-builder:18.19.0--0.1.3
+  dockerNode: adguard/extension-builder:22.14--0.2--0
 
 stages:
   - Build:
-      manual: 'false'
-      final: 'false'
+      manual: false
+      final: false
       jobs:
         - Build
 
@@ -21,26 +21,33 @@ Build:
   docker:
     image: ${bamboo.dockerNode}
     volumes:
-      ${system.YARN_DIR}: "${bamboo.cacheYarn}"
+      ${system.PNPM_DIR}: "${bamboo.cachePnpm}"
   tasks:
     - checkout:
-        force-clean-build: 'true'
+        force-clean-build: true
     - script:
         interpreter: SHELL
         scripts:
           - |-
-            set -e -x
+            set -x
+            set -e
 
             # Fix mixed logs
             exec 2>&1
 
             ls -alt
 
-            yarn install ${bamboo.varsYarn}
-            yarn lint
-            yarn test
-            yarn locales validate --min
-            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta-firefox
+            # Set cache directory
+            pnpm config set store-dir ${bamboo.cachePnpm}
+
+            # Install dependencies
+            pnpm install ${bamboo.varsPnpm}
+
+            pnpm lint
+            pnpm test
+
+            pnpm locales validate --min
+            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" pnpm artifacts:beta-firefox
 
             # zip source for publishing on AMO
             git ls-files | zip -@ build/beta/source.zip
@@ -106,7 +113,7 @@ triggers: []
 branches:
   create: manually
   delete: never
-  link-to-jira: 'true'
+  link-to-jira: true
 
 notifications:
   - events:

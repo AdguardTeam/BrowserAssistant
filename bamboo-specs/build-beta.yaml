@@ -5,12 +5,12 @@ plan:
   key: BABETASPECS
   name: browser assistant - build beta
 variables:
-  dockerNode: adguard/extension-builder:18.19.0--0.1.3
+  dockerNode: adguard/extension-builder:22.14--0.2--0
 
 stages:
   - Build:
-      manual: 'false'
-      final: 'false'
+      manual: false
+      final: false
       jobs:
         - Build
 
@@ -21,14 +21,14 @@ Build:
   docker:
     image: ${bamboo.dockerNode}
     volumes:
-      ${system.YARN_DIR}: "${bamboo.cacheYarn}"
+      ${system.PNPM_DIR}: "${bamboo.cachePnpm}"
   tasks:
     - checkout:
-        force-clean-build: 'true'
+        force-clean-build: true
     - checkout:
         repository: extensions-private
         path: private
-        force-clean-build: 'true'
+        force-clean-build: true
     - script:
         interpreter: SHELL
         scripts:
@@ -40,11 +40,17 @@ Build:
 
             ls -alt
 
-            yarn install ${bamboo.varsYarn}
-            yarn lint
-            yarn test
-            yarn locales validate --min
-            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" yarn artifacts:beta
+            # Set cache directory
+            pnpm config set store-dir ${bamboo.cachePnpm}
+
+            pnpm install ${bamboo.varsPnpm}
+
+            pnpm lint
+            pnpm test
+
+            pnpm locales validate --min
+
+            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" pnpm artifacts:beta
     - inject-variables:
         file: build/beta/build.txt
         scope: RESULT
@@ -99,7 +105,7 @@ triggers: []
 branches:
   create: manually
   delete: never
-  link-to-jira: 'true'
+  link-to-jira: true
 
 notifications:
   - events:
