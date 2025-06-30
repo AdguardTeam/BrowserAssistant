@@ -3,7 +3,7 @@
         "message": "AdGuard asistent prehliadača"
     },
     "description": {
-        "message": "Rozšírenie programu AdGuard pre stolné počítače. Spravuje filtrovanie priamo z prehliadača, skrýva obťažujúce prvky dvomi klikmi."
+        "message": "Rozšírenie programu AdGuard pre stolné počítače. Spravuje filtráciu priamo z prehliadača, skrýva obťažujúce prvky dvomi klikmi."
     },
     "adg_is_not_installed": {
         "message": "AdGuard nie je nainštalovaný alebo korektne nakonfigurovaný"
@@ -99,7 +99,7 @@
         "message": "Znovu načítajte túto stránku a obnovte filtráciu"
     },
     "not_filtering_https": {
-        "message": "Štandardne nefiltrujeme HTTPS prevádzku pre stránky platobných systémov a bánk. Filtráciu môžete zapnúť nasledovne: kliknite vľavo na žlté \"zamknúť\"."
+        "message": "Štandardne nefiltrujeme HTTPS komunikáciu pre stránky platobných systémov a bánk. Filtráciu môžete zapnúť nasledovne: kliknite vľavo na žlté \"zamknúť\"."
     },
     "disabled": {
         "message": "Vypnuté na tejto stránke"

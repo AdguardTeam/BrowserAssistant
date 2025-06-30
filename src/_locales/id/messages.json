@@ -1,81 +1,81 @@
 {
     "name": {
-        "message": "Asisten AdGuard untuk Browser"
+        "message": "Asisten Peramban AdGuard"
     },
     "description": {
-        "message": "Ekstensi yang Berguna dari program desktop pemblokir iklan Adguard. Atur proses filtering iklan tepat dari dalam browser anda, sembunyikan elemen yang mengganggu hanya dalam dua klik."
+        "message": "Ekstensi untuk aplikasi desktop. Mengelola pemfilteran langsung dari peramban, menyembunyikan elemen yang mengganggu dalam dua klik."
     },
     "adg_is_not_installed": {
-        "message": "Adguard tidak di install atau di konfigurasi dengan tidak benar"
+        "message": "Adguard tidak terpasang atau terkonfigurasi dengan tidak benar"
     },
     "get_adguard": {
-        "message": "Unduh AdGuard"
+        "message": "Dapatkan AdGuard"
     },
     "adg_is_not_updated": {
-        "message": "Adguard tidak di update"
+        "message": "AdGuard tidak diperbarui"
     },
     "update": {
-        "message": "Perbaharui"
+        "message": "Perbarui"
     },
     "adg_is_not_running": {
-        "message": "Adguard sedang tidak berjalan"
+        "message": "AdGuard tidak berjalan"
     },
     "run_adg": {
-        "message": "Jalankan Adguard"
+        "message": "Jalankan AdGuard"
     },
     "adg_is_paused": {
-        "message": "Proteksi Adguard sedang di jeda"
+        "message": "Perlindungan AdGuard dijeda"
     },
     "adg_is_launching": {
-        "message": "Membuka AdGuard..."
+        "message": "Menjalankan AdGuard..."
     },
     "enable": {
         "message": "Aktifkan"
     },
     "assistant_is_not_updated": {
-        "message": "Asisten Browser tidak di update"
+        "message": "Asisten tidak diperbarui"
     },
     "something_went_wrong": {
-        "message": "Sesuatu hal sedang ada yang salah"
+        "message": "Terjadi kesalahan"
     },
     "reinstall": {
-        "message": "Install ulang"
+        "message": "Pasang ulang"
     },
     "https_filtering": {
         "message": "Pemfilteran HTTPS"
     },
     "increase_ab_block_quality": {
-        "message": "Tingkatkan kualitas dari Ad-Blocking"
+        "message": "Meningkatkan kualitas pemblokiran iklan"
     },
     "verified_by": {
         "message": "Di verifikasi oleh:"
     },
     "more_info": {
-        "message": "Informasi lebih banyak"
+        "message": "Informasi lebih lanjut"
     },
     "adg_protection": {
-        "message": "Proteksi Adguard"
+        "message": "Perlindungan AdGuard"
     },
     "adg_settings": {
-        "message": "Pengaturan Adguard"
+        "message": "Pengaturan AdGuard"
     },
     "pause_filtering": {
-        "message": "Jangan saring selama 30 detik"
+        "message": "Jangan memfilter selama 30 detik"
     },
     "block_ads": {
-        "message": "Blok iklan di website ini"
+        "message": "Blokir iklan di situs web ini"
     },
     "open_filtering_log": {
-        "message": "Buka catatan filtering"
+        "message": "Buka catatan pemfilteran"
     },
     "report_site": {
-        "message": "Lapor masalah"
+        "message": "Laporkan masalah"
     },
     "reset_custom_rules": {
         "message": "Hapus semua aturan pengguna untuk halaman ini"
     },
     "cert_expired": {
-        "message": "Adguard tak bisa memverifikasi sertifikat website ini karena sertifikat aslinya telah kadaluarsa"
+        "message": "AdGuard tidak dapat memverifikasi sertifikat situs web ini karena sertifikat root telah kedaluwarsa"
     },
     "cert_absent": {
         "message": "Pemfilteran HTTPS tidak dilakukan untuk situs web ini"
@@ -87,25 +87,28 @@
         "message": "Tidak aman"
     },
     "nothing_to_block_here": {
-        "message": "Tak ada yang dapat di blok di sini"
+        "message": "Tidak ada yang perlu diblokir di sini"
     },
     "secure_page": {
-        "message": "Halaman ini aman"
+        "message": "Halaman aman"
     },
     "reload_page": {
         "message": "Muat ulang halaman"
     },
     "reload_to_resume_filtering": {
-        "message": "Muat ulang halaman untuk mengulang penyaringan"
+        "message": "Muat ulang halaman ini untuk melanjutkan pemfilteran"
     },
     "not_filtering_https": {
-        "message": "Pada pengaturan bawaan, kami tak memfilter arus aliran data HTTPS untuk sistem pembayaran dan website bank. Kamu bisa mengaktifkan sendiri filteringnya: cukup tekan tombol kuning \"kunci\" di sebelah kiri."
+        "message": "Secara standar, kami tidak memfilter lalu lintas HTTPS untuk sistem pembayaran dan situs web milik bank. Anda dapat mengaktifkan pemfilteran sendiri: ketuk \"gembok\" kuning di sebelah kiri."
     },
     "disabled": {
-        "message": "Non-aktifkan di website ini"
+        "message": "Dinonaktifkan di situs web ini"
     },
     "enabled": {
-        "message": "Aktifkan pada website ini"
+        "message": "Diaktifkan di situs web ini"
+    },
+    "filtering_exception": {
+        "message": "Pemfilteran dinonaktifkan karena dapat memengaruhi kinerja situs web ini."
     },
     "protection_is_enabled": {
         "message": "Perlindungan aktif"
@@ -120,16 +123,16 @@
         "message": "Kedaluwarsa"
     },
     "contact_support": {
-        "message": "Hubungi bantuan"
+        "message": "Hubungi dukungan"
     },
     "context_site_filtering_on": {
-        "message": "Aktifkan penyaring pada situs ini"
+        "message": "Aktifkan pemfilteran di situs web ini"
     },
     "context_site_filtering_off": {
-        "message": "Nonaktifkan penyaring pada situs ini"
+        "message": "Nonaktifkan pemfilteran di situs web ini"
     },
     "context_block_site_ads": {
-        "message": "Blok iklan pada situs ini..."
+        "message": "Blokir iklan di situs web ini..."
     },
     "context_complaint_website": {
         "message": "Laporkan masalah..."
@@ -150,10 +153,43 @@
         "message": "Pengaturan AdGuard..."
     },
     "context_open_log": {
-        "message": "Log penyaringan..."
+        "message": "Memfilter catatan..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "Apakah Anda yakin ingin menghapus Asisten Peramban AdGuard?"
+    },
+    "post_install_consent_title": {
+        "message": "Terima kasih telah memasang Asisten Peramban AdGuard!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "Ekstensi peramban pendamping untuk <link>aplikasi dekstop AdGuard<\/link> ini menawarkan akses dalam peramban ke fitur-fitur seperti pemblokiran elemen khusus, situs web yang diizinkan, dan mengirimkan laporan."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "Setiap kali Anda membuka tab baru, komunikasi tambahan dengan aplikasi mandiri dan meminta informasi tentang status halaman saat ini. Untuk melakukan itu, ia mengirimkan URL halaman saat ini ke aplikasi mandiri."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "Dengan memasang tambahan ini, Anda menyetujui <privacy>Kebijakan Privasi<\/privacy> dan <terms>Ketentuan Penggunaan<\/terms> kami."
+    },
+    "post_install_page_title": {
+        "message": "Terima kasih telah memasang Asisten Peramban AdGuard!"
+    },
+    "post_install_page_agree_button": {
+        "message": "Setuju"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "Copot pemasangan"
+    },
+    "options_context_menu_title": {
+        "message": "Tampilkan di menu konteks peramban"
     },
     "popup_trial_expired_title": {
-        "message": "Percobaan habis"
+        "message": "Uji coba telah berakhir"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Perlindungan nonaktif."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Pembaruan tidak tersedia."
     },
     "popup_trial_expired_purchase": {
         "message": "Pembelian"

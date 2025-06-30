@@ -1,6 +1,6 @@
 {
     "name": {
-        "message": "AdGuardブラウザアシスタント"
+        "message": "AdGuard ブラウザアシスタント"
     },
     "description": {
         "message": "AdGuardデスクトップアプリの拡張機能。ブラウザから直接フィルタリングを管理できるようにし、迷惑な要素を数クリックすで隠すことができます。"
@@ -159,7 +159,7 @@
         "message": "AdGuardブラウザアシスタントを削除しておよろしいですか？"
     },
     "post_install_consent_title": {
-        "message": "AdGuardブラウザアシスタントをインストールいただきありがとうございます！"
+        "message": "AdGuard ブラウザアシスタントをインストールいただきありがとうございます！"
     },
     "post_install_consent_short_app_desc": {
         "message": "この<link>AdGuardデスクトップアプリ<\/link>用補助ブラウザー拡張機能は、ページ上要素の手動ブロック、ホワイトリストへのサイト登録、不具合報告の送信などといった機能に直接ブラウザーからアクセスできるようにします。"
@@ -171,7 +171,7 @@
         "message": "このアドオンをインストールすると、<privacy>プライバシーポリシー<\/privacy>と<terms>利用規約<\/terms>に同意いただいたことになります。"
     },
     "post_install_page_title": {
-        "message": "AdGuardブラウザアシスタントをインストールいただきありがとうございます！"
+        "message": "AdGuard ブラウザアシスタントをインストールいただきありがとうございます！"
     },
     "post_install_page_agree_button": {
         "message": "同意する"

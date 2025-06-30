@@ -114,7 +114,7 @@
         "message": "Захист увімкнено"
     },
     "protection_is_disabled": {
-        "message": "Захист вимкнено. Оновлення недоступні."
+        "message": "Захист вимкнено"
     },
     "website_cert_is_expired": {
         "message": "Термін дії сертифіката вебсайту завершився"

@@ -30,7 +30,7 @@
         "message": "AdGuard başlatılıyor..."
     },
     "enable": {
-        "message": "Etkinleştir"
+        "message": "ETKİNLEŞTİR"
     },
     "assistant_is_not_updated": {
         "message": "Asistan güncel değil"
@@ -180,7 +180,7 @@
         "message": "Kaldır"
     },
     "options_context_menu_title": {
-        "message": "Tarayıcı sağ tık menüsünde göster"
+        "message": "Tarayıcının sağ tık menüsünde göster"
     },
     "popup_trial_expired_title": {
         "message": "Deneme süresi sona erdi"

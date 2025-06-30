@@ -1,7 +1,4 @@
 {
-    "name": {
-        "message": "Асістэнт AdGuard для браўзара"
-    },
     "description": {
         "message": "Пашырэнне праграмы блакавання рэкламы AdGuard для настольных камп'ютараў. Дапамагае кіраваць фільтрамі, хаваць элементы у 2 націскі."
     },
@@ -50,9 +47,6 @@
     "verified_by": {
         "message": "Праверана:"
     },
-    "more_info": {
-        "message": "Даведацца больш"
-    },
     "adg_protection": {
         "message": "Абарона AdGuard"
     },
@@ -65,12 +59,6 @@
     "block_ads": {
         "message": "Блакаваць рэкламу на гэтым сайце"
     },
-    "open_filtering_log": {
-        "message": "Адкрыць часопіс фільтрацыі"
-    },
-    "report_site": {
-        "message": "Паведаміць пра праблему"
-    },
     "reset_custom_rules": {
         "message": "Скінуць правілы на старонцы"
     },
@@ -80,17 +68,11 @@
     "cert_absent": {
         "message": "Фільтрацыя HTTPS для гэтага сайта не выконвалася"
     },
-    "site_not_using_private_protection": {
-        "message": "Гэты сайт не выкарыстоўвае абароненае падлучэнне. Хто-небудзь можа ўбачыць ці змяніць дадзеныя, якімі вы мяняецеся з гэтым сайтам."
-    },
-    "not_secure": {
-        "message": "Не абаронены"
-    },
     "nothing_to_block_here": {
         "message": "Блакаваць няма чаго"
     },
     "secure_page": {
-        "message": "Абароненая старонка"
+        "message": "Бяспечная старонка"
     },
     "reload_page": {
         "message": "Перазагрузіць старонку"
@@ -98,17 +80,11 @@
     "reload_to_resume_filtering": {
         "message": "Перазагрузіце старонку, каб аднавіць фільтрацыю"
     },
-    "not_filtering_https": {
-        "message": "Па змаўчанні мы не фільтруем HTTPS-трафік аплатных сістэм і банкаўскіх ўэб-сайтаў. Вы можаце ўключыць фільтрацыю самастойна: націсніце на жоўты значок замка злева."
-    },
     "disabled": {
         "message": "Абарона выключана\nна гэтым сайце"
     },
     "enabled": {
         "message": "Абарона ўлучана\nна гэтым сайце"
-    },
-    "filtering_exception": {
-        "message": "Фільтраванне адключана, таму што гэта можа паўплываць на прадукцыйнасць вэб-сайта."
     },
     "protection_is_enabled": {
         "message": "Абарона ўлучана"
@@ -118,9 +94,6 @@
     },
     "website_cert_is_expired": {
         "message": "Тэрмін дзеяння сертыфіката сайта мінуў"
-    },
-    "expired": {
-        "message": "Мінуў"
     },
     "contact_support": {
         "message": "Звярнуцца ў падтрымку"
@@ -133,9 +106,6 @@
     },
     "context_block_site_ads": {
         "message": "Блакаваць рэкламу на гэтым сайце..."
-    },
-    "context_complaint_website": {
-        "message": "Паведаміць пра праблему..."
     },
     "context_site_filtering_disabled": {
         "message": "AdGuard не працуе на гэтым дамене"
@@ -182,9 +152,6 @@
     "options_context_menu_title": {
         "message": "Паказаць у кантэкстным меню браўзера"
     },
-    "popup_trial_expired_title": {
-        "message": "Спробавы перыяд мінуў"
-    },
     "popup_trial_expired_protection_disabled": {
         "message": "Абарона адключана."
     },
@@ -193,5 +160,8 @@
     },
     "popup_trial_expired_purchase": {
         "message": "Купіць"
+    },
+    "name": {
+        "message": "AdGuard Browser Assistant"
     }
 }

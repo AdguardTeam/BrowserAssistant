@@ -1,18 +1,18 @@
 {
     "name": {
-        "message": "مساعد المتصفح AdGuard"
+        "message": "مساعد متصفح AdGuard"
     },
     "description": {
-        "message": "امتداد لتطبيق AdGuard لسطح المكتب. إدارة التصفية من المتصفح مباشرة لإخفاء العناصر المزعجة بنقرتين."
+        "message": "ملحق لتطبيق AdGuard خاص بسطح المكتب. يسمح بتصفية العناصر مباشرًة من المتصفح، ويخفي العناصر المزعجة بنقرتين."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard غير مثبت أو تم تكوينه بشكل غير صحيح"
+        "message": "لم يتم تثبيت AdGuard أو تم تكوينه بشكل غير صحيح"
     },
     "get_adguard": {
-        "message": "أحصل على AdGuard"
+        "message": "احصل على AdGuard"
     },
     "adg_is_not_updated": {
-        "message": "إن AdGuard غير محدث"
+        "message": "لم يتم تحديث AdGuard"
     },
     "update": {
         "message": "تحديث"
@@ -24,34 +24,34 @@
         "message": "تشغيل AdGuard"
     },
     "adg_is_paused": {
-        "message": "تم إيقاف حماية AdGuard مؤقتًا"
+        "message": "حماية AdGuard متوقفة مؤقتاً"
     },
     "adg_is_launching": {
-        "message": "يتم إطلاق AdGuard..."
+        "message": "جاري تحميل AdGuard..."
     },
     "enable": {
-        "message": "تفعيل"
+        "message": "تمكين"
     },
     "assistant_is_not_updated": {
-        "message": "لم يتم تحديث المساعد"
+        "message": "المساعد غير محدث"
     },
     "something_went_wrong": {
-        "message": "حصل خطأ ما"
+        "message": "حدث خطأ ما"
     },
     "reinstall": {
-        "message": "إعادة تثبيت"
+        "message": "إعادة التثبيت"
     },
     "https_filtering": {
-        "message": "تصفيه HTTPS"
+        "message": "تصفية HTTPS"
     },
     "increase_ab_block_quality": {
-        "message": "زيادة جودة حظر الإعلانات"
+        "message": "يزيد من جودة حظر الإعلانات"
     },
     "verified_by": {
         "message": "تم التحقق بواسطة:"
     },
     "more_info": {
-        "message": "معلومات اكثر"
+        "message": "المزيد من المعلومات"
     },
     "adg_protection": {
         "message": "حماية AdGuard"
@@ -60,10 +60,10 @@
         "message": "إعدادات AdGuard"
     },
     "pause_filtering": {
-        "message": "لا تقوم بالتصفية لمدة 30 ثانية"
+        "message": "إيقاف التصفية لمدة 30 ثانية"
     },
     "block_ads": {
-        "message": "قم بحظر الإعلانات على هذا الموقع"
+        "message": "منع الإعلانات على هذا الموقع"
     },
     "open_filtering_log": {
         "message": "فتح سجل التصفية"
@@ -72,103 +72,106 @@
         "message": "الإبلاغ عن مشكلة"
     },
     "reset_custom_rules": {
-        "message": "ازالة جميع القواعد المخصصة لهذه الصفحة"
+        "message": "حذف جميع القواعد المستخدم لهذه الصفحة"
     },
     "cert_expired": {
-        "message": "تعذر على AdGuard التحقق من شهادة موقع الويب هذا بسبب انتهاء صلاحية شهادة الجذر"
+        "message": "تعذر على AdGuard التحقق من شهادة موقع الويب بسبب انتهاء صلاحية الشهادة الـ Root"
     },
     "cert_absent": {
-        "message": "لم يتم تنفيذ تصفية HTTPS لهذا الموقع"
+        "message": "لم يتم إجراء تصفية HTTPS لهذا الموقع"
     },
     "site_not_using_private_protection": {
-        "message": "الموقع لا يستخدم اتصالاً آمنًا. قد يتمكن شخص ما من رؤية المعلومات التي ترسلها أو تحصل عليها من خلال الموقع أو تغييرها."
+        "message": "الموقع لا يستخدم اتصال أمن. قد يتمكن شخص ما من رؤية أو تغيير المعلومات التي ترسلها أو تحصل عليها من خلال الموقع."
     },
     "not_secure": {
         "message": "غير آمن"
     },
     "nothing_to_block_here": {
-        "message": "لا يوجد شيء يمكن حظره هنا"
+        "message": "لا يوجد شيء لكي يتم حظره"
     },
     "secure_page": {
-        "message": "صفحة آمنة"
+        "message": "الصفحة آمنة"
     },
     "reload_page": {
-        "message": ".إعادة تحميل الصفحة"
+        "message": "إعادة تحميل الصفحة"
     },
     "reload_to_resume_filtering": {
-        "message": "اعادة تحميل الصفحة لاستئناف الفلترة"
+        "message": "أعد تحميل هذه الصفحة لاستئناف التصفية"
     },
     "not_filtering_https": {
-        "message": "بشكل افتراضي، لا نقوم بتصفية حركة مرور HTTPS لنظام الدفع ومواقع البنك. يمكنك تمكين التصفية بنفسك:  اضغط على\"القفل\" الأصفر الموجود على اليسار"
+        "message": "بشكل افتراضي، لا نقوم بتصفية حركة مرور HTTPS لنظام المدفوعات ومواقع المصارف والبنوك. يمكنك تمكين التصفية بنفسك: اضغط على القفل الأصفر الموجود على اليسار."
     },
     "disabled": {
-        "message": "مُعطَّلة على هذا الموقع"
+        "message": "قيد الإيقاف على هذا الموقع"
     },
     "enabled": {
-        "message": "تَعمل على هذا الموقع"
+        "message": "قيد التشغيل على هذا الموقع"
+    },
+    "filtering_exception": {
+        "message": "تم تعطيل التصفية لأنها قد تؤثر على أداء الموقع الإلكتروني."
     },
     "protection_is_enabled": {
-        "message": "الحماية فعالة"
+        "message": "الحماية قيد التشغيل"
     },
     "protection_is_disabled": {
-        "message": "الحماية معطَّلة"
+        "message": "الحماية قيد الإيقاف"
     },
     "website_cert_is_expired": {
         "message": "شهادة الموقع منتهية الصلاحية"
     },
     "expired": {
-        "message": "منتهي الصلاحية"
+        "message": "منتهية الصلاحية"
     },
     "contact_support": {
         "message": "اتصل بالدعم"
     },
     "context_site_filtering_on": {
-        "message": "تفعيل التصفية في هذا الموقع"
+        "message": "تمكين التصفية على هذا الموقع"
     },
     "context_site_filtering_off": {
-        "message": "تعطيل التصفية في هذا الموقع"
+        "message": "تعطيل التصفية على هذا الموقع"
     },
     "context_block_site_ads": {
-        "message": "حظر الإعلانات في هذا الموقع..."
+        "message": "حظر الإعلانات على هذا الموقع..."
     },
     "context_complaint_website": {
-        "message": "التبليغ عن مشكلة..."
+        "message": "الإبلاغ عن مشكلة..."
     },
     "context_site_filtering_disabled": {
-        "message": "أدجارد لا يمكن تشغيله على هذا النطاق"
+        "message": "لا يمكن تشغيل AdGuard على هذا النطاق"
     },
     "context_disable_protection": {
-        "message": "إيقاف حماية AdGuard"
+        "message": "إيقاف حماية AdGuard مؤقتاً"
     },
     "context_enable_protection": {
         "message": "استئناف حماية AdGuard"
     },
     "context_site_protection_disabled": {
-        "message": "حماية AdGuard متوقفة"
+        "message": "تم إيقاف حماية AdGuard مؤقتاً"
     },
     "context_open_settings": {
         "message": "إعدادات AdGuard..."
     },
     "context_open_log": {
-        "message": "سجل التصفية ..."
+        "message": "سجل التصفية..."
     },
     "post_install_confirm_uninstall": {
-        "message": "هل انت متأكد من أنك تريد ازالة AdGuard مساعد المتصفح؟"
+        "message": "هل أنت متأكد من أنك تريد إزالة مساعد متصفح AdGuard؟"
     },
     "post_install_consent_title": {
-        "message": "شكراً لتثبيتك آد جار مساعد المتصفح!"
+        "message": "شكراً لتثبيتك مساعد متصفح AdGuard!"
     },
     "post_install_consent_short_app_desc": {
-        "message": "يوفر ملحق المتصفح المصاحب <link> لتطبيقات AdGuard لسطح المكتب <\/link> وصولاً داخل المستعرض إلى ميزات مثل حظر العناصر المخصصة، والسماح بقائمة مواقع الويب، وإرسال التقارير."
+        "message": "يسمح هذا الملحق<link>لتطبيقات AdGuard الخاص بسطح المكتب <\/link> الدخول إلى المتصفح لكي يحجب العناصر، ويضع قائمة بالمواقع الإلكترونية المسموح بها، ويرسل التقارير."
     },
     "post_install_consent_sent_info_desc": {
-        "message": "في كل مرة تفتح فيها علامة تبويب جديدة، تتواصل الإضافة مع التطبيق المستقل وتطلب معلومات عن حالة الصفحة الحالية. للقيام بذلك، يرسل عنوان URL للصفحة الحالية إلى التطبيق المستقل، يرسل عنوان URL للصفحة الحالية إلى التطبيق المستقل."
+        "message": "في كل مرة تفتح فيها علامة تبويب جديدة، تتواصل الإضافة مع التطبيق المستقل وتطلب معلومات عن حالة الصفحة الحالية. للقيام بذلك، يرسل عنوان URL للصفحة الحالية إلى التطبيق المستقل."
     },
     "post_install_consent_policy_urls": {
         "message": "بتثبيت هذه الإضافة، فإنك توافق على <privacy> سياسة الخصوصية<\/privacy> و <terms> شروط الاستخدام<\/terms>."
     },
     "post_install_page_title": {
-        "message": "شكراً لتثبيتك مساعد AdGuard للمتصفح!"
+        "message": "شكراً لتثبيتك مساعد متصفح AdGuard!"
     },
     "post_install_page_agree_button": {
         "message": "موافق"
@@ -177,10 +180,16 @@
         "message": "إلغاء التثبيت"
     },
     "options_context_menu_title": {
-        "message": "إظهار في قائمة المتصفح"
+        "message": "إظهار في قائمة سياق المتصفح"
     },
     "popup_trial_expired_title": {
-        "message": "انتهت صلاحية النسخة التجريبية"
+        "message": "انتهت صلاحية الإصدار التجريبي"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "الحماية معطلة"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "التحديثات غير متوفرة."
     },
     "popup_trial_expired_purchase": {
         "message": "شراء"

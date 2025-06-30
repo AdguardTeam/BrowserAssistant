@@ -54,7 +54,7 @@
         "message": "Meer informatie"
     },
     "adg_protection": {
-        "message": "AdGuard Bescherming"
+        "message": "AdGuard-bescherming"
     },
     "adg_settings": {
         "message": "AdGuard Instellingen"
@@ -111,10 +111,10 @@
         "message": "Filteren is uitgeschakeld omdat dit de prestaties van de website kan beïnvloeden."
     },
     "protection_is_enabled": {
-        "message": "Bescherming aan"
+        "message": "Bescherming is ingeschakeld"
     },
     "protection_is_disabled": {
-        "message": "Bescherming uit"
+        "message": "Bescherming is uitgeschakeld"
     },
     "website_cert_is_expired": {
         "message": "Website certificaat is niet meer geldig"
@@ -183,7 +183,7 @@
         "message": "Weergeven in het browsercontextmenu"
     },
     "popup_trial_expired_title": {
-        "message": "Proefversie is verlopen"
+        "message": "Proefperiode is verlopen"
     },
     "popup_trial_expired_protection_disabled": {
         "message": "Bescherming is uitgeschakeld."

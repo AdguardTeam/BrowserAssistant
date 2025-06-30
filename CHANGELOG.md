@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated [@adguard/assistant] to `v4.3.74`.
+
 ### Fixed
 
 - Infinite loop triggers multiple native host processes [#115]
@@ -22,3 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Do not add context menu separators in Vivaldi browser
 
 [1.4.1]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.3.49...v1.4.1
+
+[@adguard/assistant]: https://github.com/AdguardTeam/AdguardAssistant/blob/master/CHANGELOG.md

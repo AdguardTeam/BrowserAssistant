@@ -107,6 +107,9 @@
     "enabled": {
         "message": "Activat en aquest lloc web"
     },
+    "filtering_exception": {
+        "message": "El filtratge està desactivat perquè pot afectar el rendiment del lloc web."
+    },
     "protection_is_enabled": {
         "message": "La protecció està habilitada"
     },
@@ -151,5 +154,44 @@
     },
     "context_open_log": {
         "message": "Registre del filtratge..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "Esteu segur que voleu eliminar l'Assistent del navegador AdGuard?"
+    },
+    "post_install_consent_title": {
+        "message": "Gràcies per instal·lar AdGuard Browser Assistant!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "Aquesta extensió de navegador complementària per a <link>aplicacions d'escriptori d'AdGuard<\/link> ofereix accés des del navegador a funcions com ara el bloqueig d'elements personalitzats, l'enregistrament de llocs web permès i l'enviament d'informes."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "Cada vegada que obriu una pestanya nova, el complement es comunica amb l'aplicació autònoma i sol·licita informació sobre l'estat actual de la pàgina. Per fer-ho, envia l'URL de la pàgina actual a l'aplicació independent."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "En instal·lar aquest complement, accepteu la nostra <privacy>Política de privadesa<\/privacy> i <terms>Condicions d'ús<\/terms>."
+    },
+    "post_install_page_title": {
+        "message": "Gràcies per instal·lar AdGuard Browser Assistant!"
+    },
+    "post_install_page_agree_button": {
+        "message": "Acceptar"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "Desinstal·lar"
+    },
+    "options_context_menu_title": {
+        "message": "Mostra al menú contextual del navegador"
+    },
+    "popup_trial_expired_title": {
+        "message": "Periode de prova finalitzat"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "La protecció està desactivada."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Les actualitzacions no estan disponibles."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Compra"
     }
 }

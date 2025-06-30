@@ -71,11 +71,17 @@
     "report_site": {
         "message": "گزارش یک مشکل"
     },
+    "reset_custom_rules": {
+        "message": "حذف تمام رویه‌های کاربر برای این صفحه"
+    },
     "cert_expired": {
         "message": "AdGuard نمیتواند گواهینامه این سایت را تایید کند چون ریشه گواهینامه منقضی شده است"
     },
     "cert_absent": {
         "message": "فیلترینگ HTTPS برای این سایت اجرا نشده است"
+    },
+    "site_not_using_private_protection": {
+        "message": "این تارنما از اتصال امن استفاده نمی‌کند. ممکن است شخصی بتواند اطلاعاتی را که از طریق این تارنما ارسال یا دریافت می‌کنید، دیده یا تغییر دهد."
     },
     "not_secure": {
         "message": "امن نیست"
@@ -85,6 +91,12 @@
     },
     "secure_page": {
         "message": "صفحه امن"
+    },
+    "reload_page": {
+        "message": "بارگیری مجدد صفحه"
+    },
+    "reload_to_resume_filtering": {
+        "message": "برای از سرگیری پالایش، این صفحه را مجددا بارگیری کنید"
     },
     "not_filtering_https": {
         "message": "به طور پیش‌فرض، ما انتقال اطلاعات از طریق شیوه‌نامه‌ی انتقال فرامتن ایمن (شافما) [HTTPS] را برای سامانه‌ی پرداخت و وب‌گاه‌های بانکی تفکیک نمی‌کنیم. شما می‌توانید تفکیک اطلاعات را خودتان فعال نمایید: روی «قفل» زرد در سمت چپ ضربه بزنید."
@@ -107,38 +119,62 @@
     "expired": {
         "message": "منقضی شده"
     },
+    "contact_support": {
+        "message": "تماس با پشتیبانی"
+    },
     "context_site_filtering_on": {
-        "message": "فعالسازی فیلترینگ در این وبسایت"
+        "message": "فعال‌سازی پالایش در این تارنما"
     },
     "context_site_filtering_off": {
-        "message": "غیرفعالسازی فیلترینگ در این وبسایت"
-    },
-    "context_block_site_ads": {
-        "message": "مسدودسازی تبلیغات در این وبسایت..."
+        "message": "غیر فعال‌سازی پالایش در این تارنما"
     },
     "context_complaint_website": {
         "message": "گزارش یک مشکل..."
-    },
-    "context_site_filtering_disabled": {
-        "message": "AdGuard نمیتواند در این دامنه اِجرا شود"
     },
     "context_disable_protection": {
         "message": "وقفه حفاظت AdGuard"
     },
     "context_enable_protection": {
-        "message": "ادامه حفاظت AdGuard"
+        "message": "ادامه محافظت اَدگارد"
     },
     "context_site_protection_disabled": {
-        "message": "حفاظت AdGuard متوقف شده است"
+        "message": "محافظت اَدگارد متوقف شده است"
     },
     "context_open_settings": {
-        "message": "تنظیمات AdGuard..."
+        "message": "تنظیمات اَدگارد..."
     },
     "context_open_log": {
-        "message": "وقایع فیلترینگ..."
+        "message": "رویدادنگاری پالایش..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "آیا بابت حذف دستیار مرورگر اَدگارد اطمینان دارید؟"
+    },
+    "post_install_consent_title": {
+        "message": "بابت نصب دستیار مرورگر اَدگارد سپاس‌گزاریم!"
+    },
+    "post_install_consent_policy_urls": {
+        "message": "با نصب این افزونه، شما با <privacy>سیاست حریم خصوصی<\/privacy> و <terms>شرایط استفاده<\/terms> ما موافقت می‌نمایید."
+    },
+    "post_install_page_title": {
+        "message": "بابت نصب دستیار مرورگر اَدگارد سپاس‌گزاریم!"
+    },
+    "post_install_page_agree_button": {
+        "message": "موافقت می‌کنم"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "حذف برنامه"
+    },
+    "options_context_menu_title": {
+        "message": "نمایش در منوی زمینه مرورگر"
     },
     "popup_trial_expired_title": {
         "message": "ارزیابی منقضی شده است"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "محافظت غیرفعال است."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "به‌روزرسانی‌ها در دسترس نیستند."
     },
     "popup_trial_expired_purchase": {
         "message": "خرید"

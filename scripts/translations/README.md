@@ -1,27 +1,29 @@
-## Locales script
+# Locales script
 
-### Synopsis
-```
+## Synopsis
+
+```text
 pnpm locales [download | upload | validate | info]
 ```
 
 - `download` — download and save translations; defaults to **all** locales but can be specified
-  - **-l**, **--locales** — for specific list of space-separated locales
-    - **<list_of_locales>...** — locales to download
+    - **-l**, **--locales** — for specific list of space-separated locales
+        - **<list_of_locales>...** — locales to download
 
 - `upload` — upload base locale
 
 - `validate` — validate locales translations (defaults to **all** locales):
-  - **-R**, **--min** — for only our required locales
-  - **-l**, **--locales** — for specific list of space-separated locales
-    - **<list_of_locales>...** — locales to validate
+    - **-R**, **--min** — for only our required locales
+    - **-l**, **--locales** — for specific list of space-separated locales
+        - **<list_of_locales>...** — locales to validate
 
 - `info` — shows info about unused base-lang strings and all locales translations readiness; in other words, defaults to `-N -s` which can be used separately:
-  - **-N**, **--unused** — for unused base-lang strings
-  - **-s**, **--summary** — for all locales translations readiness
+    - **-N**, **--unused** — for unused base-lang strings
+    - **-s**, **--summary** — for all locales translations readiness
 
-### Examples
-```
+## Examples
+
+```text
 // to download and save all locales
 pnpm locales download
 // or just 'ja' and 'ru' locales
@@ -44,6 +46,7 @@ pnpm locales info
 After download you'll find the locales in the `src/_locales/` folder.
 
 List of minimum required locales and other input data are in `config.json`. There are such properties defined:
+
 - `twosky_config_path` — relative path to twosky config file
 - `api_url` — twosky api url
 - `source_relative_path` — relative path to source files — where translation strings are used

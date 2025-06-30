@@ -1,30 +1,30 @@
 {
     "name": {
-        "message": "AdGuard Naršyklės Pagalbininkas"
+        "message": "AdGuard naršyklės asistentas"
     },
     "description": {
-        "message": "AdGuard programos plėtinys. Valdo filtravimą tiesiai iš naršyklės, slepia erzinančius elementus per pora paspaudimų."
+        "message": "AdGuard darbalaukio programos plėtinys. Valdo filtravimą tiesiai iš naršyklės, paslepia erzinančius elementus dviem paspaudimais."
     },
     "adg_is_not_installed": {
-        "message": "AdGuard neįdiegtas arba neteisingai sukonfigūruotas"
+        "message": "AdGuard neįdiegta arba neteisingai sukonfigūruota"
     },
     "get_adguard": {
         "message": "Gauti AdGuard"
     },
     "adg_is_not_updated": {
-        "message": "AdGuard neatnaujintas"
+        "message": "AdGuard nėra atnaujintas"
     },
     "update": {
         "message": "Atnaujinti"
     },
     "adg_is_not_running": {
-        "message": "AdGuard nepaleistas"
+        "message": "AdGuard nėra paleidžiamas"
     },
     "run_adg": {
         "message": "Paleisti AdGuard"
     },
     "adg_is_paused": {
-        "message": "AdGuard apsauga laikinai sustabdyta"
+        "message": "AdGuard apsauga pristabdyta"
     },
     "adg_is_launching": {
         "message": "AdGuard paleidžiamas..."
@@ -33,10 +33,10 @@
         "message": "Įjungti"
     },
     "assistant_is_not_updated": {
-        "message": "Pagalbininkas neatnaujintas"
+        "message": "Asistentas nėra atnaujintas"
     },
     "something_went_wrong": {
-        "message": "Kažkas negerai"
+        "message": "Kažkas nutiko negerai"
     },
     "reinstall": {
         "message": "Iš naujo įdiegti"
@@ -45,7 +45,7 @@
         "message": "HTTPS filtravimas"
     },
     "increase_ab_block_quality": {
-        "message": "Pagerina blokavimo kokybę"
+        "message": "Padidina reklamų blokavimo kokybę"
     },
     "verified_by": {
         "message": "Patvirtino:"
@@ -63,46 +63,52 @@
         "message": "Nefiltruoti 30 sekundžių"
     },
     "block_ads": {
-        "message": "Blokuoti reklamą šioje svetainėje"
+        "message": "Blokuoti reklamus šioje svetainėje"
     },
     "open_filtering_log": {
-        "message": "Atidaryti filtravimo žurnalą"
+        "message": "Atidaryti filtravimo įrašą"
     },
     "report_site": {
         "message": "Pranešti apie problemą"
+    },
+    "reset_custom_rules": {
+        "message": "Pašalinti visus naudotojo taisykles šitame puslapyje"
     },
     "cert_expired": {
         "message": "AdGuard negalėjo patvirtinti šios svetainės sertifikato nes Root sertifikatas baigėsi"
     },
     "cert_absent": {
-        "message": "HTTPS filtravimas neatliktas šiai svetainei"
+        "message": "HTTPS filtravimas šioje svetainėje nebuvo atlikta"
     },
     "site_not_using_private_protection": {
-        "message": "Ši svetainė nenaudoja saugaus ryšio. Kas nors gali pamatyti arba pakeisti informaciją kurią siunčiate ar gaunate per svetainę."
+        "message": "Ši svetainė nenaudoja saugaus ryšio. Kas nors gali pamatyti arba pakeisti informaciją kurią siunti ar gauni per svetainę."
     },
     "not_secure": {
         "message": "Nesaugu"
     },
     "nothing_to_block_here": {
-        "message": "Nėra ką blokuoti"
+        "message": "Nėra čia ką blokuoti"
     },
     "secure_page": {
         "message": "Saugus puslapis"
     },
     "reload_page": {
-        "message": "Įkelti puslapį iš naujo"
+        "message": "Perkrauti puslapį"
     },
     "reload_to_resume_filtering": {
-        "message": "Įkelkite puslapį iš naujo, jei norint tęsti filtravimą"
+        "message": "Perkrauk šį puslapį, kad tęstum filtravimą"
     },
     "not_filtering_https": {
-        "message": "Pagal nutylėjimą, mes nefiltruojame HTTPS srauto apmokėjimų sistemoms ir bankų svetainėms. Jūs galite įjungti filtravimą rankiniu būdu: spauskite geltoną \"užraktą\" kairėje."
+        "message": "Pagal numatytasius nustatymus, mes nefiltruojame HTTPS srauto apmokėjimų sistemoms ir bankų svetainėms. Tu gali įjungti filtravimą rankiniu būdu: paspausk geltoną „užraktą“ kairėje."
     },
     "disabled": {
         "message": "Išjungta šioje svetainėje"
     },
     "enabled": {
         "message": "Įjungta šioje svetainėje"
+    },
+    "filtering_exception": {
+        "message": "Filtravimas išjungtas, nes tai gali turėti įtakos svetainės veikimui."
     },
     "protection_is_enabled": {
         "message": "Apsauga įjungta"
@@ -126,33 +132,66 @@
         "message": "Išjungti filtravimą šioje svetainėje"
     },
     "context_block_site_ads": {
-        "message": "Blokuoti reklamą šioje svetainėje..."
+        "message": "Blokuoti reklamus šioje svetainėje..."
     },
     "context_complaint_website": {
         "message": "Pranešti apie problemą..."
     },
     "context_site_filtering_disabled": {
-        "message": "AdGuard neveikia su šiuo domenu"
+        "message": "AdGuard negali veikti šitame domene"
     },
     "context_disable_protection": {
         "message": "Pristabdyti AdGuard apsaugą"
     },
     "context_enable_protection": {
-        "message": "Atnaujinti AdGuard apsaugą"
+        "message": "Pratęsti AdGuard apsaugą"
     },
     "context_site_protection_disabled": {
-        "message": "AdGuard apsauga laikinai sustabdyta"
+        "message": "AdGuard apsauga pristabdyta"
     },
     "context_open_settings": {
         "message": "AdGuard nustatymai..."
     },
     "context_open_log": {
-        "message": "Filtravimo logas..."
+        "message": "Įrašo filtravimas..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "Ar tikrai nori pašalinti AdGuard naršyklės asistentą?"
+    },
+    "post_install_consent_title": {
+        "message": "Ačiū, kad įsidiegei AdGuard naršyklės asistentą!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "Šis papildomas naršyklės plėtinys, skirtas <link>AdGuard darbalaukio programoms<\/link>, teikia naršyklės prieigą prie tokių funkcijų kaip pasirenkamųjų elementų blokavimą, svetainių įtraukimas į leidžiamų svetainių sąrašus ir ataskaitų pateikimus."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "Kiekvieną kartą, kai atidarai naują skirtuką, papildinys susisiekia su atskira programa ir prašo informacijos apie dabartinę puslapio būseną. Kad tai padarytų, jis siunčia dabartinio puslapio URL adresą į atskirą programą."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "Įdiegdamas (-a) šį priedą sutinki su mūsų <privacy>Privatumo politika<\/privacy> ir <terms>Naudojimo sąlygomis<\/terms>."
+    },
+    "post_install_page_title": {
+        "message": "Ačiū, kad įsidiegei AdGuard naršyklės asistentą!"
+    },
+    "post_install_page_agree_button": {
+        "message": "Sutinku"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "Pašalinti"
+    },
+    "options_context_menu_title": {
+        "message": "Rodyti naršyklės kontekstiniame meniu"
     },
     "popup_trial_expired_title": {
-        "message": "Bandomasis laikotarpis pasibaigė"
+        "message": "Bandomasis laikotarpis baigėsi"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Apsauga išjungta."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Atnaujinimai nepasiekiami."
     },
     "popup_trial_expired_purchase": {
-        "message": "Įsigyti"
+        "message": "Nusipirkti"
     }
 }

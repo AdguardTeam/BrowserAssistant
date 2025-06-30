@@ -59,6 +59,9 @@
     "adg_settings": {
         "message": "Tetapan AdGuard"
     },
+    "pause_filtering": {
+        "message": "Jangan tapis selama 30 saat"
+    },
     "block_ads": {
         "message": "Halang iklan di laman ini"
     },
@@ -68,11 +71,17 @@
     "report_site": {
         "message": "Laporkan isu"
     },
+    "reset_custom_rules": {
+        "message": "Tetap semula peraturan khusus untuk laman ini"
+    },
     "cert_expired": {
         "message": "AdGuard tidak dapat mengesahkan sijil laman ini disebabkan sijil pentadbir telah luput"
     },
     "cert_absent": {
         "message": "Saringan HTTPS tidak dilakukan pada laman ini"
+    },
+    "site_not_using_private_protection": {
+        "message": "Laman ini tidak menggunakan sambungan peribadi. Seseorang mungkin boleh lihat atau ubah maklumat yang anda hantar atau terima melalui laman ini."
     },
     "not_secure": {
         "message": "Tidak selamat"
@@ -83,6 +92,12 @@
     "secure_page": {
         "message": "Laman selamat"
     },
+    "reload_page": {
+        "message": "Muat semula halaman"
+    },
+    "reload_to_resume_filtering": {
+        "message": "Muat semula halaman ini untuk meneruskan penapisan"
+    },
     "not_filtering_https": {
         "message": "Secara lalai, kami tidak menyaring trafik HTTPS untuk sistem pembayaran dan laman bank. Anda boleh aktifkan saringan ini sendiri: tekan \"kunci\" kuning di sebelah kiri."
     },
@@ -91,6 +106,9 @@
     },
     "enabled": {
         "message": "Aktifkan di laman ini"
+    },
+    "filtering_exception": {
+        "message": "Penapisan_pengecualian."
     },
     "protection_is_enabled": {
         "message": "Perlindungan diaktifkan"
@@ -111,27 +129,69 @@
         "message": "Aktifkan penyaringan di laman web ini"
     },
     "context_site_filtering_off": {
-        "message": "Nyahktifkan penyaringan di laman web ini"
+        "message": "Nyahaktifkan penapisan di laman web ini"
     },
     "context_block_site_ads": {
-        "message": "Halang iklan di laman ini..."
+        "message": "Sekat iklan di laman web ini..."
+    },
+    "context_complaint_website": {
+        "message": "Laporkan sebarang masalah..."
     },
     "context_site_filtering_disabled": {
-        "message": "AdGuard tidak dapat dijalankan di domain ini"
+        "message": "AdGuard tidak dapat dijalankan di laman web ini"
     },
     "context_disable_protection": {
-        "message": "Henti sebentar perlindungan AdGuard"
+        "message": "Hentikan perlindungan Adguard"
     },
     "context_enable_protection": {
-        "message": "Mula kembali perlindungan AdGuard"
+        "message": "Mulakan perlindungan AdGuard"
     },
     "context_site_protection_disabled": {
-        "message": "Perlindungan AdGuard dihentikan sebentar"
+        "message": "Perlindungan AdGuard dihentikan"
     },
     "context_open_settings": {
         "message": "Tetapan AdGuard..."
     },
     "context_open_log": {
-        "message": "Log penyaringan..."
+        "message": "Log penapis..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "Adakah anda pasti mahu mengalih keluar Pembantu Penyemak Imbas AdGuard?"
+    },
+    "post_install_consent_title": {
+        "message": "Terima Kasih kerana telah memasang AdGuard Browser Assistant!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "Penyambung pelayar ini untuk <link>aplikasi desktop AdGuard<\/link> menawarkan akses dalam pelayar kepada ciri-ciri seperti penyekatan unsur tersuai, membenarkan laman web, dan menghantar laporan."
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "Setiap kali anda membuka tab baharu, add-on ini berkomunikasi dengan app kendiri dan membuat request maklumat tentang status page semasa. Untuk melakukannya, ia akan send URL page semasa kepada app kendiri."
+    },
+    "post_install_consent_policy_urls": {
+        "message": "Dengan memasang alat tambahan ini, anda bersetuju dengan <privacy>Dasar Privasi<\/privacy> dan <terms>Syarat Penggunaan<\/terms> kami."
+    },
+    "post_install_page_title": {
+        "message": "Terima Kasih kerana telah memasang AdGuard Browser Assistant!"
+    },
+    "post_install_page_agree_button": {
+        "message": "Bersetuju"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "Nyahpasang"
+    },
+    "options_context_menu_title": {
+        "message": "Tunjukkan dalam menu konteks pelayar"
+    },
+    "popup_trial_expired_title": {
+        "message": "Tempoh percubaan telah tamat"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "Perlindungan telah dinyahaktifkan."
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Kemas kini tidak tersedia."
+    },
+    "popup_trial_expired_purchase": {
+        "message": "Pembelian"
     }
 }

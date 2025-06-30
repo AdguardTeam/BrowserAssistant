@@ -6,19 +6,19 @@
         "message": "Rozszerzenie aplikacji komputerowej AdGuard. Zarządza filtrowaniem w przeglądarce, ukrywa irytujące elementy za pomocą 2 kliknięć."
     },
     "adg_is_not_installed": {
-        "message": "Adguard nie jest zainstalowany"
+        "message": "AdGuard nie jest zainstalowany lub jest nieprawidłowo skonfigurowany"
     },
     "get_adguard": {
         "message": "Uzyskaj AdGuard"
     },
     "adg_is_not_updated": {
-        "message": "Adguard jest nieaktualny"
+        "message": "AdGuard jest nieaktualny"
     },
     "update": {
         "message": "Aktualizuj"
     },
     "adg_is_not_running": {
-        "message": "AdGuard nie działa"
+        "message": "AdGuard nie jest uruchomiony"
     },
     "run_adg": {
         "message": "Włącz AdGuard"
@@ -63,13 +63,13 @@
         "message": "Nie filtruj przez 30 sekund"
     },
     "block_ads": {
-        "message": "Blokuj reklamy na tej stronie"
+        "message": "Zablokuj reklamy na tej stronie"
     },
     "open_filtering_log": {
         "message": "Otwórz dziennik filtrowania"
     },
     "report_site": {
-        "message": "Zgłoś tę stronę"
+        "message": "Zgłoś problem"
     },
     "reset_custom_rules": {
         "message": "Usuń wszystkie reguły użytkownika dla tej strony"
@@ -99,7 +99,7 @@
         "message": "Załaduj ponownie stronę, aby wznowić filtrowanie"
     },
     "not_filtering_https": {
-        "message": "Domyślnie nie filtrujemy połączeń HTTPS dla systemów płatniczych i stron bankowych. Możesz włączyć tą opcję, klikając na żółtą kłódkę po lewej stronie."
+        "message": "Domyślnie nie filtrujemy połączeń HTTPS dla systemów płatniczych i stron bankowych. Możesz włączyć tą opcję, klikając żółtą kłódkę po lewej stronie."
     },
     "disabled": {
         "message": "Wyłączone na tej stronie"
@@ -132,7 +132,7 @@
         "message": "Wyłącz filtrowanie na tej stronie"
     },
     "context_block_site_ads": {
-        "message": "Zablokuj reklamę na tej stronie..."
+        "message": "Zablokuj reklamy na tej stronie..."
     },
     "context_complaint_website": {
         "message": "Zgłoś problem..."

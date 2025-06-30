@@ -152,6 +152,9 @@
     "popup_trial_expired_title": {
         "message": "Prøveperioden har utløpt"
     },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "Oppdateringer er utilgjengelige."
+    },
     "popup_trial_expired_purchase": {
         "message": "Kjøp"
     }

@@ -59,11 +59,17 @@
     "adg_settings": {
         "message": "Adguard समायोजन"
     },
+    "pause_filtering": {
+        "message": "30 सेकंड के लिए फ़िल्टर न करें"
+    },
     "block_ads": {
         "message": "वेबसाइट पर विज्ञापनों को अवरुद्ध करें"
     },
     "open_filtering_log": {
         "message": "फ़िल्टरिंग लॉग खोलें"
+    },
+    "report_site": {
+        "message": "इस वेबसाइट की रिपोर्ट करें"
     },
     "reset_custom_rules": {
         "message": "इस पेज के लिए उपयोगकर्ता नियम रिसेट करें"
@@ -74,6 +80,9 @@
     "cert_absent": {
         "message": "इस वेबसाइट के लिए HTTPS फ़िल्टरिंग का प्रदर्शन नहीं किया गया था"
     },
+    "site_not_using_private_protection": {
+        "message": "साइट सुरक्षित कनेक्शन का उपयोग नहीं कर रही है. कोई व्यक्ति आपके द्वारा साइट के माध्यम से भेजी या प्राप्त की गई जानकारी को देख या बदल सकता है।"
+    },
     "not_secure": {
         "message": "सुरक्षित नहीं है"
     },
@@ -83,6 +92,12 @@
     "secure_page": {
         "message": "सुरक्षित पृष्ठ"
     },
+    "reload_page": {
+        "message": "पृष्ठ पुनः लोड करें"
+    },
+    "reload_to_resume_filtering": {
+        "message": "फ़िल्टरिंग को फिर से शुरू करने के लिए पुनः लोड करें"
+    },
     "not_filtering_https": {
         "message": "डिफ़ॉल्ट रूप से, हम भुगतान प्रणाली और बैंक वेबसाइटों के लिए HTTPS ट्रैफ़िक को फ़िल्टर नहीं करते हैं। आप अपने आप को फ़िल्टर करने में सक्षम कर सकते हैं: बाईं ओर पीले \"लॉक\" पर टैप करें।"
     },
@@ -91,6 +106,9 @@
     },
     "enabled": {
         "message": "इस वेबसाइट पर सक्षम है"
+    },
+    "filtering_exception": {
+        "message": "फ़िल्टरिंग अक्षम है क्योंकि यह वेबसाइट के कार्य को प्रभावित कर सकता है।"
     },
     "protection_is_enabled": {
         "message": "संरक्षण क्रियाशील है"
@@ -104,26 +122,29 @@
     "expired": {
         "message": "समय सीमा समाप्त"
     },
+    "contact_support": {
+        "message": "सहयोग टीम से संपर्क करें"
+    },
     "context_site_filtering_on": {
-        "message": "\tइस वेबसाइट पर फ़िल्टरिंग सक्षम करें"
+        "message": "इस वेबसाइट पर फ़िल्टरिंग सक्षम करें"
     },
     "context_site_filtering_off": {
-        "message": "\tइस वेबसाइट पर फ़िल्टरिंग सक्षम करें"
+        "message": "इस वेबसाइट पर फ़िल्टरिंग अक्षम करें"
     },
     "context_block_site_ads": {
-        "message": "विज्ञापनों को किसी वेबसाइट पर ब्लॉक करें"
+        "message": "इस वेबसाइट पर विज्ञापन ब्लॉक करें..."
     },
     "context_complaint_website": {
-        "message": "मामले का विवरण करें..."
+        "message": "समस्या की रिपोर्ट करें..."
     },
     "context_site_filtering_disabled": {
-        "message": "एडगार्ड  इस डोमेन पर नहीं चल सकता है"
+        "message": "AdGuard इस डोमेन पर नहीं चल सकता है"
     },
     "context_disable_protection": {
-        "message": "एडगार्ड सुरक्षा रोकें"
+        "message": "AdGuard सुरक्षा रोकें"
     },
     "context_enable_protection": {
-        "message": "एडगार्ड सुरक्षा रोकें"
+        "message": "AdGuard सुरक्षा फिर से शुरू करें"
     },
     "context_site_protection_disabled": {
         "message": "AdGuard सुरक्षा रोक दी गई है"
@@ -132,6 +153,45 @@
         "message": "AdGuard सेटिंग्स..."
     },
     "context_open_log": {
-        "message": "लॉग फ़िल्टर किया जा रहा है"
+        "message": "फ़िल्टरिंग लॉग..."
+    },
+    "post_install_confirm_uninstall": {
+        "message": "क्या आप वास्तव में AdGuard Browser Assistant को हटाना चाहते हैं?"
+    },
+    "post_install_consent_title": {
+        "message": "AdGuard Browser Assistant इंस्टॉल करने के लिए धन्यवाद!"
+    },
+    "post_install_consent_short_app_desc": {
+        "message": "<link>AdGuard डेस्कटॉप ऐप<\/link> के लिए यह सहयोगी ब्राउज़र एक्सटेंशन कस्टम एलिमेंट ब्लॉकिंग, वेबसाइटों को अनुमति देने और रिपोर्ट सबमिट करने जैसी सुविधाओं के लिए इन-ब्राउज़र एक्सेस प्रदान करता है।"
+    },
+    "post_install_consent_sent_info_desc": {
+        "message": "हर बार जब आप एक नया टैब खोलते हैं, तो ऐड-ऑन स्टैंडअलोन ऐप के साथ संचार करता है और वर्तमान पृष्ठ स्थिति के बारे में जानकारी का अनुरोध करता है। ऐसा करने के लिए, यह स्टैंडअलोन ऐप को वर्तमान पृष्ठ के यूआरएल को भेजता है।"
+    },
+    "post_install_consent_policy_urls": {
+        "message": "इस ऐड-ऑन को स्थापित करके, आप हमारे <privacy>गोपनीयता नीति<\/privacy> और <terms>उपयोग की शर्तों<\/terms>से सहमत हैं।"
+    },
+    "post_install_page_title": {
+        "message": "AdGuard Browser Assistant इंस्टॉल करने के लिए धन्यवाद!"
+    },
+    "post_install_page_agree_button": {
+        "message": "सहमत"
+    },
+    "post_install_page_uninstall_button": {
+        "message": "स्थापना रद्द करें"
+    },
+    "options_context_menu_title": {
+        "message": "ब्राउज़र संदर्भ मेनू में दिखाएं"
+    },
+    "popup_trial_expired_title": {
+        "message": "ट्रायल समाप्त हो गया हैं"
+    },
+    "popup_trial_expired_protection_disabled": {
+        "message": "प्रोटेक्शन बंद है"
+    },
+    "popup_trial_expired_updates_unavailable": {
+        "message": "अद्यतन अनुपलब्ध हैं।"
+    },
+    "popup_trial_expired_purchase": {
+        "message": "खरीदें"
     }
 }

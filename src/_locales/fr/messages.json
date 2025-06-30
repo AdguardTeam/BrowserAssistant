@@ -99,13 +99,13 @@
         "message": "Actualisez cette page pour reprendre le filtrage"
     },
     "not_filtering_https": {
-        "message": "Par défaut, nous ne filtrons pas le trafic HTTPS pour le système de paiement et les sites Web bancaires. Vous pouvez activer le filtrage vous-même : appuyez sur le « cadenas » jaune à gauche."
+        "message": "Par défaut, nous ne filtrons pas le trafic HTTPS pour un système de paiement et des sites Web bancaires. Vous pouvez activer le filtrage en appuyant sur le « cadenas » jaune à gauche."
     },
     "disabled": {
-        "message": "Désactivé sur ce site"
+        "message": "Désactivé sur ce site Web"
     },
     "enabled": {
-        "message": "Activé sur ce site"
+        "message": "Activé sur ce site Web"
     },
     "filtering_exception": {
         "message": "Le filtrage est désactivé car il peut perturber le fonctionnement du site web."
