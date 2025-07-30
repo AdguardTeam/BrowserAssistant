@@ -5,18 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.4.7] - 2024-07-30
 
 ### Changed
 
-- Updated [@adguard/assistant] to `v4.3.74`.
+- Updated [@adguard/assistant] to `v4.3.75`.
 
 ### Fixed
 
-- Infinite loop triggers multiple native host processes [#115]
+- Infinite loop triggers multiple native host processes [#115].
+- Icon and text alignment [PR#129].
 
-[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.1...HEAD
+[1.4.7]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.1...v1.4.7
 [#115]: https://github.com/AdguardTeam/BrowserAssistant/issues/115
+[PR#129]: https://github.com/AdguardTeam/BrowserAssistant/pull/129
 
 ## [1.4.1] - 2024-03-14
 
