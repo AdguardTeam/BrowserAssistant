@@ -19,5 +19,8 @@
         "contextMenus",
         "storage",
         "scripting"
+    ],
+    "host_permissions": [
+        "*://*/*"
     ]
 }
