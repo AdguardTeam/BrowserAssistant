@@ -36,6 +36,7 @@ static.adtidy.org:
   variables: {}
   requirements:
     - adg-docker: 'true'
+    - extension: 'true'
   notifications:
     - events:
         - deployment-started-and-finished
@@ -71,6 +72,7 @@ Chrome WebStore:
   variables: {}
   requirements:
     - adg-docker: 'true'
+    - extension: 'true'
   notifications:
     - events:
         - deployment-started-and-finished

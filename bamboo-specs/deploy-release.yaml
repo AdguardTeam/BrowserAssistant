@@ -39,6 +39,7 @@ Chrome WebStore:
   variables: {}
   requirements:
     - adg-docker: 'true'
+    - extension: 'true'
   notifications:
     - events:
         - deployment-started-and-finished
@@ -78,6 +79,7 @@ Addons Mozilla:
   variables: {}
   requirements:
     - adg-docker: 'true'
+    - extension: 'true'
   notifications:
     - events:
         - deployment-started-and-finished
@@ -115,6 +117,7 @@ Edge Addons:
   variables: {}
   requirements:
     - adg-docker: 'true'
+    - extension: 'true'
   notifications:
     - events:
         - deployment-started-and-finished
