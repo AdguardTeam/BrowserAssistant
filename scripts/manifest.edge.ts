@@ -12,5 +12,5 @@ module.exports = {
         'default_title': '__MSG_name__',
         'default_popup': 'popup.html',
     },
-    minimum_edge_version: String(MIN_SUPPORTED_VERSION.CHROMIUM),
+    minimum_chrome_version: `${MIN_SUPPORTED_VERSION.CHROMIUM}.0`,
 };
