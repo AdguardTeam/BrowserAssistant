@@ -39,14 +39,6 @@ Chrome WebStore:
   variables: {}
   requirements:
     - extension: 'true'
-  notifications:
-    - events:
-        - deployment-started-and-finished
-      recipients:
-        - webhook:
-            name: Deploy webhook
-            url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo?channel=adguard-qa-extensions-builds
-
 Addons Mozilla:
   triggers: []
   tasks:
@@ -78,14 +70,6 @@ Addons Mozilla:
   variables: {}
   requirements:
     - extension: 'true'
-  notifications:
-    - events:
-        - deployment-started-and-finished
-      recipients:
-        - webhook:
-            name: Deploy webhook
-            url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo?channel=adguard-qa-extensions-builds
-
 Edge Addons:
   triggers: []
   tasks:
@@ -115,10 +99,3 @@ Edge Addons:
   variables: {}
   requirements:
     - extension: 'true'
-  notifications:
-    - events:
-        - deployment-started-and-finished
-      recipients:
-        - webhook:
-            name: Deploy webhook
-            url: http://prod.jirahub.service.eu.consul/v1/webhook/bamboo?channel=adguard-qa-extensions-builds
