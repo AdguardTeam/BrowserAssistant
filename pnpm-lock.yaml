@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@adguard/assistant':
-        specifier: ^4.3.75
-        version: 4.3.75
+        specifier: ^4.4.3
+        version: 4.4.3
       '@adguard/translate':
         specifier: ^0.2.5
         version: 0.2.6
@@ -234,8 +234,8 @@ importers:
 
 packages:
 
-  '@adguard/assistant@4.3.75':
-    resolution: {integrity: sha512-TI2L7/oEaTLeHS8nSb1PoIC1139b2+tQJJeNH55JSAb4oOc6AOOFq/mHM/+JgtS2T5JR3EgB2vy/HvI9jmqN9g==}
+  '@adguard/assistant@4.4.3':
+    resolution: {integrity: sha512-MQ0h3UI+ksAFFm/InhAvEE5TcMpMqegvugQFc9d8y8LDxfBhdpQcEM6z56p5tQTSiewbq2BSdK3zBe9Gwv9ecA==}
 
   '@adguard/translate@0.2.6':
     resolution: {integrity: sha512-0i351ZZ9AcAm2Jy5lxbvXUGAX82QmEU9NiIu4s0k4J0hvC3tWR1m9yypgqgpR8ig67Fj/+i4deXfKL8jDRiM8g==}
@@ -5213,7 +5213,7 @@ packages:
 
 snapshots:
 
-  '@adguard/assistant@4.3.75': {}
+  '@adguard/assistant@4.4.3': {}
 
   '@adguard/translate@0.2.6': {}
 
