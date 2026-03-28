@@ -169,6 +169,7 @@ class SettingsStore {
 
         runInAction(() => {
             this.referrer = referrer;
+            this.hostError = null;
             this.setUrlFilteringState(currentFilteringState);
             this.setCurrentAppState(appState);
             this.setUpdateStatusInfo(updateStatusInfo);

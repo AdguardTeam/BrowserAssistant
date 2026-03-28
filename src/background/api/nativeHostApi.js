@@ -11,9 +11,35 @@ import {
     REQUEST_TYPES,
 } from '../../lib/types';
 import { consent } from '../consent';
+import { browserApi } from '../../lib/browserApi';
 import { getErrorMessage } from '../../lib/errors';
 
 import AbstractApi from './AbstractApi';
+
+/** Retries help Firefox Nightly on macOS where native messaging can be briefly unavailable (see AG #145). */
+const NATIVE_HOST_CONNECT_ATTEMPTS_DEFAULT = 6;
+/** Fewer, shorter backoffs when the native manifest is missing (avoids multi-minute “loading”). */
+const NATIVE_HOST_CONNECT_ATTEMPTS_FIREFOX = 5;
+const NATIVE_HOST_CONNECT_BASE_DELAY_MS_DEFAULT = 75;
+const NATIVE_HOST_CONNECT_BASE_DELAY_MS_FIREFOX = 100;
+const NATIVE_HOST_CONNECT_BACKOFF_CAP_MS_DEFAULT = 4000;
+const NATIVE_HOST_CONNECT_BACKOFF_CAP_MS_FIREFOX = 1500;
+
+const delay = (ms) => new Promise((resolve) => {
+    setTimeout(resolve, ms);
+});
+
+const getNativeConnectAttempts = () => (
+    browserApi.utils.isFirefoxBrowser
+        ? NATIVE_HOST_CONNECT_ATTEMPTS_FIREFOX
+        : NATIVE_HOST_CONNECT_ATTEMPTS_DEFAULT
+);
+
+const getNativeConnectBaseDelayMs = () => (
+    browserApi.utils.isFirefoxBrowser
+        ? NATIVE_HOST_CONNECT_BASE_DELAY_MS_FIREFOX
+        : NATIVE_HOST_CONNECT_BASE_DELAY_MS_DEFAULT
+);
 
 /**
  * Module implements methods used to communicate with native host via native messaging
@@ -91,29 +117,104 @@ export class NativeHostApi extends AbstractApi {
      * @param {object} port
      * @returns {string | null | undefined} chrome or firefox error
      */
-    getError = (port) => browser.runtime.lastError?.message || port.error;
+    getError = (port) => browser.runtime.lastError?.message || port?.error;
+
+    /**
+     * Host closed the pipe; port is already dead — do not call disconnect().
+     * Without this, Firefox keeps a stale port and later postMessage fails while "connected".
+     */
+    releaseDisconnectedPort = (disconnectedPort) => {
+        if (!disconnectedPort || this.port !== disconnectedPort) {
+            return;
+        }
+        try {
+            this.port.onMessage.removeListener(this.incomingMessageHandler);
+            this.port.onDisconnect.removeListener(this.disconnectHandler);
+        } catch (e) {
+            log.debug(e);
+        }
+        this.port = null;
+        log.info('Native host port released after disconnect; next request will reconnect.');
+    };
 
     disconnectHandler = (port) => {
         const error = this.getError(port);
 
         if (error) {
-            log.error(error);
+            log.error(`Native host disconnected: ${error}`);
         }
+        this.releaseDisconnectedPort(port);
+    };
+
+    /**
+     * Drops the native port and listeners. Safe when the port never fully connected.
+     */
+    destroyNativePort = () => {
+        if (!this.port) {
+            return;
+        }
+        try {
+            this.port.onMessage.removeListener(this.incomingMessageHandler);
+            this.port.onDisconnect.removeListener(this.disconnectHandler);
+        } catch (e) {
+            log.debug(e);
+        }
+        try {
+            this.port.disconnect();
+        } catch (e) {
+            log.debug(e);
+        }
+        this.port = null;
     };
 
     /**
      * Connect to the native host
      */
     connect = async () => {
-        log.info('Connecting to the native host');
-        // if the extension was connected to the native host in mv3 then it will not die after 30 seconds as usually
-        this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
+        const maxAttempts = getNativeConnectAttempts();
+        const baseDelayMs = getNativeConnectBaseDelayMs();
+        const backoffCapMs = browserApi.utils.isFirefoxBrowser
+            ? NATIVE_HOST_CONNECT_BACKOFF_CAP_MS_FIREFOX
+            : NATIVE_HOST_CONNECT_BACKOFF_CAP_MS_DEFAULT;
+        const extensionId = browser.runtime.id;
 
-        this.port.onMessage.addListener(this.incomingMessageHandler);
+        log.info(
+            'Connecting to native host',
+            HOST_TYPES.browserExtensionHost,
+            `extensionId=${extensionId}`,
+        );
 
-        this.port.onDisconnect.addListener(this.disconnectHandler);
+        if (browserApi.utils.isFirefoxBrowser) {
+            await delay(baseDelayMs);
+        }
 
-        await this.sendInitialRequest(false);
+        let lastError;
+        for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+            this.destroyNativePort();
+            try {
+                // MV3: once connected, the port stays alive (unlike the usual ~30s native messaging limit).
+                this.port = browser.runtime.connectNative(HOST_TYPES.browserExtensionHost);
+                this.port.onMessage.addListener(this.incomingMessageHandler);
+                this.port.onDisconnect.addListener(this.disconnectHandler);
+                await this.sendInitialRequest(false);
+                if (attempt > 1) {
+                    log.info(`Native host connected on attempt ${attempt}/${maxAttempts}`);
+                }
+                return;
+            } catch (e) {
+                lastError = e;
+                log.warn(
+                    `Native host connect attempt ${attempt}/${maxAttempts} failed:`,
+                    getErrorMessage(e),
+                );
+                if (attempt < maxAttempts) {
+                    const backoff = baseDelayMs * (2 ** (attempt - 1));
+                    await delay(Math.min(backoff, backoffCapMs));
+                }
+            }
+        }
+        this.destroyNativePort();
+        throw lastError;
     };
 
     sendInitialRequest = async (shouldReconnect) => {
@@ -127,8 +228,7 @@ export class NativeHostApi extends AbstractApi {
      */
     disconnect = () => {
         log.debug('Disconnecting from native host');
-        this.port.disconnect();
-        this.port.onMessage.removeListener(this.incomingMessageHandler);
+        this.destroyNativePort();
     };
 
     /**
@@ -150,6 +250,17 @@ export class NativeHostApi extends AbstractApi {
         const isConsentRequired = await consent.isConsentRequired();
         if (isConsentRequired && params.type !== REQUEST_TYPES.init) {
             throw new Error('Requests to native host can be send only after consent agreement received');
+        }
+
+        // Startup connect may fail on Firefox Nightly; establish port when the popup first talks to the host.
+        if (params.type !== REQUEST_TYPES.init && !this.port) {
+            try {
+                await this.connect();
+            } catch (e) {
+                log.warn('Deferred native connect before request failed:', getErrorMessage(e));
+                // Do not fall through: null port + makeRequestOnce caused long hangs and a second full reconnect().
+                throw e;
+            }
         }
 
         try {
