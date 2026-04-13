@@ -5,7 +5,7 @@ plan:
   key: BARELEASESPECS
   name: browser assistant - build release
 variables:
-  dockerNode: adguard/extension-builder:22.17--0.2--0
+  dockerNode: adguard/extension-builder:22.17--0.4.1--0
 
 stages:
   - Build:
@@ -54,6 +54,9 @@ Build:
 
             # zip source for publishing on AMO
             git ls-files | zip -@ build/release/source.zip
+
+            # Generate approval notes for AMO reviewers
+            ./bamboo-specs/scripts/generate-approval-notes.sh build/release
     - inject-variables:
         file: build/release/build.txt
         scope: RESULT
@@ -113,6 +116,11 @@ Build:
     - name: source.zip
       location: build/release
       pattern: source.zip
+      shared: true
+      required: true
+    - name: approval-notes.txt
+      location: build/release
+      pattern: approval-notes.txt
       shared: true
       required: true
   requirements:
