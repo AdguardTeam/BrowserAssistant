@@ -4,8 +4,6 @@ plan:
   project-key: ADGEXT
   key: BARELEASESPECS
   name: browser assistant - build release
-variables:
-  dockerNode: adguard/extension-builder:22.17--0.2--0
 
 stages:
   - Build:
@@ -18,10 +16,6 @@ Build:
   key: BUILD
   other:
     clean-working-dir: true
-  docker:
-    image: ${bamboo.dockerNode}
-    volumes:
-      ${system.PNPM_DIR}: "${bamboo.cachePnpm}"
   tasks:
     - checkout:
         force-clean-build: true
@@ -33,29 +27,33 @@ Build:
         interpreter: SHELL
         scripts:
           - |-
-            set -e -x
+            # 'set' should be added to the beginning of each script to ensure that it runs with the correct options.
+            #  -e: Exit immediately if any command exits with a non-zero status (i.e., if a command fails).
+            #  -x: Print each command to the terminal as it is executed, which is useful for debugging.
+            set -ex
 
             # Fix mixed logs
             exec 2>&1
 
-            ls -alt
+            export DOCKER_BUILDKIT=1
 
-            # Set cache directory
-            pnpm config set store-dir ${bamboo.cachePnpm}
+            # Generate find-compatible .gitignore exclusions on the host (where .git is available).
+            # The gitignore-excludes.txt file is included in the Docker context and consumed by
+            # archive-source.sh inside Docker (where .git is not available).
+            ./bamboo-specs/scripts/generate-find-excludes.sh gitignore-excludes.txt
 
-            pnpm install ${bamboo.varsPnpm}
-
-            pnpm lint
-            pnpm test
-
-            pnpm locales validate --min
-
-            CREDENTIALS_PASSWORD="${bamboo.extensionsPassphrase}" pnpm artifacts:release
-
-            # zip source for publishing on AMO
-            git ls-files | zip -@ build/release/source.zip
+            # source.zip is created inside Docker via archive-source.sh.
+            docker build \
+              --file Dockerfile \
+              --progress plain \
+              --build-arg TEST_RUN_ID=${bamboo.buildNumber} \
+              --build-context private=private \
+              --secret id=CREDENTIALS_PASSWORD,env=bamboo_extensionsPassphrase \
+              --target build-release-output \
+              --output type=local,dest=output \
+              .
     - inject-variables:
-        file: build/release/build.txt
+        file: output/artifacts/build.txt
         scope: RESULT
         namespace: inject
     - any-task:
@@ -67,51 +65,40 @@ Build:
     - script:
         interpreter: SHELL
         scripts:
-          - |-
-            set -x
-            set -e
-
-            # Fix mixed logs
-            exec 2>&1
-
-            ls -la
-
-            echo "Size before cleanup:" && du -h | tail -n 1
-            rm -rf node_modules
-            echo "Size after cleanup:" && du -h | tail -n 1
+          - "./bamboo-specs/scripts/cleanup.sh output/artifacts/build.txt,output/artifacts/chrome.crx,output/artifacts/chrome.zip,output/artifacts/edge.zip,output/artifacts/firefox.zip,output/artifacts/update.xml,output/artifacts/source.zip"
   artifacts:
     - name: edge.zip
-      location: build/release
+      location: output/artifacts
       pattern: edge.zip
       shared: true
       required: true
     - name: build.txt
-      location: build/release
+      location: output/artifacts
       pattern: build.txt
       shared: true
       required: true
     - name: chrome.crx
-      location: build/release
+      location: output/artifacts
       pattern: chrome.crx
       shared: true
       required: true
     - name: chrome.zip
-      location: build/release
+      location: output/artifacts
       pattern: chrome.zip
       shared: true
       required: true
     - name: firefox.zip
-      location: build/release
+      location: output/artifacts
       pattern: firefox.zip
       shared: true
       required: true
     - name: update.xml
-      location: build/release
+      location: output/artifacts
       pattern: update.xml
       shared: true
       required: true
     - name: source.zip
-      location: build/release
+      location: output/artifacts
       pattern: source.zip
       shared: true
       required: true

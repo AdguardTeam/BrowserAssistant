@@ -4,8 +4,6 @@ plan:
   project-key: ADGEXT
   key: BATESTSPECS
   name: browser assistant - test
-variables:
-  dockerNode: adguard/extension-builder:22.17--0.2--0
 
 stages:
   - Test:
@@ -18,10 +16,6 @@ Test:
   key: TEST
   other:
     clean-working-dir: true
-  docker:
-    image: ${bamboo.dockerNode}
-    volumes:
-      ${system.PNPM_DIR}: "${bamboo.cachePnpm}"
   tasks:
     - checkout:
         force-clean-build: true
@@ -29,57 +23,46 @@ Test:
         interpreter: SHELL
         scripts:
           - |-
-            set -x
-            set -e
+            # 'set' should be added to the beginning of each script to ensure that it runs with the correct options.
+            #  -e: Exit immediately if any command exits with a non-zero status (i.e., if a command fails).
+            #  -x: Print each command to the terminal as it is executed, which is useful for debugging.
+            set -ex
 
             # Fix mixed logs
             exec 2>&1
 
-            ls -alt
+            export DOCKER_BUILDKIT=1
 
-            # Set cache directory
-            pnpm config set store-dir ${bamboo.cachePnpm}
-
-            pnpm install ${bamboo.varsPnpm}
-
-            pnpm dev
-
-            pnpm lint
-            pnpm test
+            docker build \
+              --file Dockerfile \
+              --progress plain \
+              --build-arg TEST_RUN_ID=${bamboo.buildNumber} \
+              --target test-output \
+              --output type=local,dest=output \
+              .
   final-tasks:
     - script:
         interpreter: SHELL
         scripts:
-          - |-
-            set -x
-            set -e
-
-            # Fix mixed logs
-            exec 2>&1
-
-            ls -la
-
-            echo "Size before cleanup:" && du -h | tail -n 1
-            rm -rf node_modules
-            echo "Size after cleanup:" && du -h | tail -n 1
+          - "./bamboo-specs/scripts/cleanup.sh output/artifacts/build.txt,output/artifacts/chrome.zip,output/artifacts/firefox.zip,output/artifacts/edge.zip"
   artifacts:
     - name: build.txt
-      location: build/dev
+      location: output/artifacts
       pattern: build.txt
       shared: true
       required: true
     - name: chrome.zip
-      location: build/dev
+      location: output/artifacts
       pattern: chrome.zip
       shared: true
       required: true
     - name: firefox.zip
-      location: build/dev
+      location: output/artifacts
       pattern: firefox.zip
       shared: true
       required: true
     - name: edge.zip
-      location: build/dev
+      location: output/artifacts
       pattern: edge.zip
       shared: true
       required: true
