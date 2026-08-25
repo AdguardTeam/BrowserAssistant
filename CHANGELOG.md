@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.13] - Unreleased
+## [Unreleased]
+
+## [1.4.25] - 2026-08-24
 
 ### Changed
 
-- Updated [@adguard/assistant] to `v4.4.3`.
+- Migrated CI/CD from Bamboo to GitHub Actions.
+- Updated [@adguard/assistant] to `v4.4.3` (included in the Bamboo-era
+  1.4.x line; intermediate auto-increments were not individually
+  documented).
 
-[1.4.13]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.8...v1.4.13
+[1.4.25]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.8...v1.4.25
 
 ## [1.4.8] - 2024-07-30
 

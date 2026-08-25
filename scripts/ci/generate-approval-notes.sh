@@ -41,7 +41,7 @@ To build the RELEASE version:
   docker run --rm \
       -v "$(pwd)":/workspace \
       -w /workspace \
-      adguard/extension-builder:22.17--0.4.1--0 \
+      adguard/extension-builder:22.22--0.4.1--0 \
       bash -c "pnpm install && pnpm release firefox"
 
 Output: ./build/release/firefox directory.
@@ -52,7 +52,7 @@ To build the BETA version:
   docker run --rm \
       -v "$(pwd)":/workspace \
       -w /workspace \
-      adguard/extension-builder:22.17--0.4.1--0 \
+      adguard/extension-builder:22.22--0.4.1--0 \
       bash -c "pnpm install && pnpm beta firefox"
 
 Output: ./build/beta/firefox directory.

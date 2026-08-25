@@ -44,25 +44,25 @@ Builds will be located in the `build` directory.
 
 ## CRX Beta and Release Builds
 
-- Put the repository with the `certificate-beta.pem`, `certificate-release.pem` files to the project root directory.
-- `pnpm crx:beta` and `pnpm crx:release` create web extension files for Chromium and Google Chrome browsers —
-  build, zipped build, and update manifest XML document.
-  You must have the `certificate-beta.pem` or `certificate-release.pem` to run the corresponding command.
+- Place PEM certificates under
+  `private/AdguardBrowserAssistant/certificate-beta.pem` and
+  `certificate-release.pem` (directory is gitignored).
+- `pnpm crx` (with `BUILD_ENV=beta|release`) packs the Chromium build
+  into a signed CRX and writes `update.xml`.
 
-## XPI Builds
+## Artifacts (local)
 
-- Put the repository with the `mozilla_credentials.json` file containing `apiKey` and `apiSecret` properties
-  with the values of type string to the project root directory.
-- `pnpm xpi` create web extension files for Mozilla Firefox browser — build, zipped build
-  and update manifest JSON document. You must have the `mozilla_credentials.json` to run this commands.
+- `pnpm artifacts:beta` — Chrome beta zip + CRX + `update.xml` +
+  `build.txt` (needs beta certificate).
+- `pnpm artifacts:beta-firefox` — Firefox beta zip + `update.json` +
+  `build.txt` (signing for static distribution is done in CI via
+  `go-webext`).
+- `pnpm artifacts:release` — Chrome/Edge/Firefox release zips + CRX +
+  `update.xml` + `build.txt` (needs release certificate).
 
-## Artifacts
-
-- `CREDENTIALS_PASSWORD=<password> pnpm artifacts:beta`
-- `CREDENTIALS_PASSWORD=<password> pnpm artifacts:release`
-
-Respectively creates Chrome and Firefox beta and release builds, zipped builds, documents for update
-and text file containing current version, signs the Firefox build.
+CI/CD packaging, store submit, and static deploy are documented in
+`DEPLOYMENT.md`. Do not use Bamboo; pipelines live under
+`.github/workflows/`.
 
 ## How to debug without AdGuard application
 

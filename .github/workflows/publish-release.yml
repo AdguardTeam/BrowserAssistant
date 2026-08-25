@@ -1,0 +1,551 @@
+name: Publish release
+
+# Tags the release commit, builds Chrome/Edge (and release Firefox zip) artifacts,
+# deploys beta static builds to static.adtidy.org, submits store listings
+# (Chrome Web Store always; AMO + Edge Add-ons on release), and creates a
+# GitHub Release. Firefox beta is signed via AMO in a separate job that may
+# take a long time; Chrome/Edge/stores/GitHub Release are never blocked by it.
+# Beta tags (e.g. v1.0.0-beta.1) deploy to the beta channel.
+# Stable tags (e.g. v1.0.0) deploy to the release channel.
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Ref to publish manually
+        required: false
+        type: string
+
+# Serialize all publishes for this repo. Two release-bump PRs merged close
+# together (or a merged PR racing a manual workflow_dispatch) would otherwise
+# run in parallel and race on the same beta/production environments and the
+# same store listings. An in-flight release is never cancelled.
+concurrency:
+  group: publish-release-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    # Tag only on manual dispatch or a merged release-bump/* PR from the
+    # release bot (matched by immutable user id, so renames can't break it).
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true &&
+       startsWith(github.event.pull_request.head.ref, 'release-bump/') &&
+       github.event.pull_request.user.id == 285975488)
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/tag-from-changelog.yml@master
+    with:
+      ref: ${{ inputs.ref || github.event.pull_request.merge_commit_sha || github.ref_name }}
+      team: extensions
+    # `contents: write` — create the git tag
+    permissions:
+      contents: write
+
+  build:
+    name: Build extension artifacts
+    needs: tag
+    runs-on: team-extensions
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      id-token: write   # Vault JWT/OIDC auth for signing material
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.event.pull_request.merge_commit_sha || github.ref_name }}
+
+      # Version is parsed from CHANGELOG by the tag job and injected
+      # here so the compiled extension carries the release tag.
+      # The value is passed via env (never interpolated into the shell
+      # command) so a tag-derived value can never run as shell code.
+      - name: Inject version into package.json
+        run: npm pkg set version="$VERSION"
+        env:
+          VERSION: ${{ needs.tag.outputs.version }}
+
+      # Channel-specific CRX certificate (beta vs release PEMs).
+      - name: Fetch beta CRX certificate from Vault
+        id: vault-ext-beta
+        if: needs.tag.outputs.release-channel == 'beta'
+        uses: hashicorp/vault-action@v4
+        with:
+          url: ${{ vars.VAULT_URL }}
+          method: jwt
+          path: jwt
+          role: extensions-private-adguard-assistant
+          secrets: |
+            secret/data/ci-secrets/extensions-private-adguard-assistant certificate-beta | CERTIFICATE_PEM ;
+
+      - name: Fetch release CRX certificate from Vault
+        id: vault-ext-release
+        if: needs.tag.outputs.release-channel == 'release'
+        uses: hashicorp/vault-action@v4
+        with:
+          url: ${{ vars.VAULT_URL }}
+          method: jwt
+          path: jwt
+          role: extensions-private-adguard-assistant
+          secrets: |
+            secret/data/ci-secrets/extensions-private-adguard-assistant certificate-release | CERTIFICATE_PEM ;
+
+      - name: Generate gitignore excludes for source archive
+        # Host has .git; Docker context does not. Needed for release source.zip
+        # and beta-firefox archive-source.sh.
+        if: needs.tag.outputs.release-channel == 'release'
+        run: ./scripts/ci/generate-find-excludes.sh gitignore-excludes.txt
+
+      - name: Build Chrome/Edge artifacts
+        shell: bash
+        env:
+          CHANNEL: ${{ needs.tag.outputs.release-channel }}
+          CERTIFICATE_PEM: ${{ steps.vault-ext-beta.outputs.CERTIFICATE_PEM || steps.vault-ext-release.outputs.CERTIFICATE_PEM }}
+        run: |
+          set -euo pipefail
+          stage="build-${CHANNEL}-output"
+          mkdir -p artifacts/out
+          DOCKER_BUILDKIT=1 docker build --progress plain \
+            --target "${stage}" \
+            --secret id=CERTIFICATE_PEM,env=CERTIFICATE_PEM \
+            --build-arg TEST_RUN_ID="${GITHUB_RUN_ID}" \
+            --output type=local,dest=artifacts/out .
+          mkdir -p artifacts/files
+          if [[ -d artifacts/out/artifacts ]]; then
+            mv artifacts/out/artifacts/* artifacts/files/
+          else
+            echo "::error::Build artifacts not found in Docker output"
+            exit 1
+          fi
+
+      - name: Stage static Chrome artifacts (beta)
+        if: needs.tag.outputs.release-channel == 'beta'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/static-chrome
+          cp artifacts/files/chrome.crx artifacts/static-chrome/
+          cp artifacts/files/chrome.zip artifacts/static-chrome/
+          cp artifacts/files/update.xml artifacts/static-chrome/
+
+      - name: Stage Chrome Web Store artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/chrome-webstore
+          cp artifacts/files/chrome.zip artifacts/chrome-webstore/
+
+      - name: Stage AMO + Edge artifacts (release)
+        if: needs.tag.outputs.release-channel == 'release'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/amo artifacts/edge
+          cp artifacts/files/firefox.zip artifacts/amo/
+          cp artifacts/files/source.zip artifacts/amo/
+          cp artifacts/files/edge.zip artifacts/edge/
+
+      - name: Stage release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/release-assets
+          # GitHub Release gets everything produced by the channel build.
+          # Beta Firefox (signed XPI) is attached later by create-release-firefox.
+          cp artifacts/files/* artifacts/release-assets/
+
+      - name: Upload static Chrome artifact
+        if: needs.tag.outputs.release-channel == 'beta'
+        uses: actions/upload-artifact@v7
+        with:
+          name: static-chrome-${{ needs.tag.outputs.release-channel }}
+          path: artifacts/static-chrome/
+
+      - name: Upload Chrome Web Store artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: chrome-webstore-${{ needs.tag.outputs.release-channel }}
+          path: artifacts/chrome-webstore/chrome.zip
+
+      - name: Upload AMO artifact
+        if: needs.tag.outputs.release-channel == 'release'
+        uses: actions/upload-artifact@v7
+        with:
+          name: amo-${{ needs.tag.outputs.release-channel }}
+          path: artifacts/amo/
+
+      - name: Upload Edge artifact
+        if: needs.tag.outputs.release-channel == 'release'
+        uses: actions/upload-artifact@v7
+        with:
+          name: edge-${{ needs.tag.outputs.release-channel }}
+          path: artifacts/edge/edge.zip
+
+      - name: Upload release assets artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-assets-${{ needs.tag.outputs.release-channel }}
+          path: artifacts/release-assets/
+
+      - name: Read AMO approval notes
+        if: needs.tag.outputs.release-channel == 'release'
+        id: approval-notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo 'notes<<EOF'
+            cat artifacts/files/approval-notes.txt
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+    outputs:
+      channel: ${{ needs.tag.outputs.release-channel }}
+      approval-notes: ${{ steps.approval-notes.outputs.notes }}
+
+  build-firefox-beta:
+    # Builds and signs the Firefox beta extension via AMO (go-webext) for
+    # static.adtidy.org distribution. Separated because AMO signing can take
+    # a long time. Release Firefox is uploaded to the AMO store listing via
+    # deploy-to-firefox-addons instead (no XPI in this job).
+    name: Build Firefox beta artifacts (AMO sign)
+    needs: tag
+    if: needs.tag.outputs.release-channel == 'beta'
+    runs-on: team-extensions
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      id-token: write   # Vault JWT/OIDC auth for AMO credentials
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.event.pull_request.merge_commit_sha || github.ref_name }}
+
+      - name: Inject version into package.json
+        run: npm pkg set version="$VERSION"
+        env:
+          VERSION: ${{ needs.tag.outputs.version }}
+
+      - name: Fetch shared AMO credentials from Vault
+        id: vault-amo
+        uses: hashicorp/vault-action@v4
+        with:
+          url: ${{ vars.VAULT_URL }}
+          method: jwt
+          path: jwt
+          role: firefox-amo-deployer
+          secrets: |
+            secret/data/ci-secrets/firefox-amo-deployer client-id | FIREFOX_CLIENT_ID ;
+            secret/data/ci-secrets/firefox-amo-deployer client-secret | FIREFOX_CLIENT_SECRET ;
+
+      - name: Generate gitignore excludes for source archive
+        run: ./scripts/ci/generate-find-excludes.sh gitignore-excludes.txt
+
+      - name: Build and sign Firefox beta
+        shell: bash
+        env:
+          FIREFOX_CLIENT_ID: ${{ steps.vault-amo.outputs.FIREFOX_CLIENT_ID }}
+          FIREFOX_CLIENT_SECRET: ${{ steps.vault-amo.outputs.FIREFOX_CLIENT_SECRET }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/ff
+          DOCKER_BUILDKIT=1 docker build --progress plain \
+            --target build-beta-firefox-output \
+            --secret id=FIREFOX_CLIENT_ID,env=FIREFOX_CLIENT_ID \
+            --secret id=FIREFOX_CLIENT_SECRET,env=FIREFOX_CLIENT_SECRET \
+            --build-arg TEST_RUN_ID="${GITHUB_RUN_ID}" \
+            --output type=local,dest=artifacts/ff .
+          mkdir -p artifacts/ff-files
+          if [[ -d artifacts/ff/artifacts ]]; then
+            mv artifacts/ff/artifacts/* artifacts/ff-files/
+          else
+            echo "::error::Firefox beta artifacts not found in Docker output"
+            exit 1
+          fi
+
+      - name: Stage static Firefox artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/static-ff
+          cp artifacts/ff-files/firefox.xpi artifacts/static-ff/
+          cp artifacts/ff-files/firefox.zip artifacts/static-ff/
+          cp artifacts/ff-files/update.json artifacts/static-ff/
+
+      - name: Upload Firefox static artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: static-ff-beta
+          path: artifacts/static-ff/
+
+      - name: Upload Firefox release assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-assets-ff-beta
+          path: artifacts/ff-files/
+
+    outputs:
+      channel: ${{ needs.tag.outputs.release-channel }}
+
+  deploy-static-chrome:
+    # Beta only — matches Bamboo deploy-beta (static.adtidy.org).
+    # Release Chrome is store-only (CWS); no static upload on release.
+    needs: build
+    if: needs.build.outputs.channel == 'beta'
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/deploy-to-static.yml@master
+    with:
+      team: extensions
+      deployer-module: browser-assistant-webext-chrome-beta
+      artifact-name: static-chrome-beta
+      environment: beta-static
+    permissions:
+      contents: read
+      id-token: write
+
+  deploy-static-firefox:
+    # Beta only — signed XPI + update.json for static.adtidy.org.
+    needs: build-firefox-beta
+    if: needs.build-firefox-beta.result == 'success'
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/deploy-to-static.yml@master
+    with:
+      team: extensions
+      deployer-module: browser-assistant-webext-firefox-beta
+      artifact-name: static-ff-beta
+      environment: beta-static
+    permissions:
+      contents: read
+      id-token: write
+
+  publish-chrome-webstore:
+    needs: [tag, build]
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/deploy-to-chrome-web-store.yml@master
+    with:
+      team: extensions
+      environment: chrome-webstore-${{ needs.build.outputs.channel }}
+      artifact-name: chrome-webstore-${{ needs.build.outputs.channel }}
+      # Public CWS listing IDs (same constants the Bamboo deployer used).
+      item-id: ${{ needs.build.outputs.channel == 'beta' && 'hhaeiccdiaojoofohjiennalnphobkaf' || 'fbohpolgemkbfphodcfgnpjcmedcjhpn' }}
+      slack-channel: ''
+      product: AdGuard Browser Assistant
+      version-title: ${{ needs.tag.outputs.tag }}
+    permissions:
+      contents: read
+      id-token: write
+
+  publish-amo:
+    # Release only — listed AMO upload (Bamboo browser-assistant-amo).
+    needs: [tag, build]
+    if: needs.build.outputs.channel == 'release'
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/deploy-to-firefox-addons.yml@master
+    with:
+      team: extensions
+      environment: firefox-amo-release
+      artifact-name: amo-release
+      addon-id: browserassistant@adguard.com
+      channel-type: listed
+      approval-notes: ${{ needs.build.outputs.approval-notes }}
+      slack-channel: ''
+      product: AdGuard Browser Assistant
+      version-title: ${{ needs.tag.outputs.tag }}
+      listing-url: https://addons.mozilla.org/firefox/addon/adguard-assistant/
+    permissions:
+      contents: read
+      id-token: write
+
+  publish-edge:
+    # Release only — Edge Add-ons (Bamboo browser-assistant-edge).
+    needs: [tag, build]
+    if: needs.build.outputs.channel == 'release'
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/deploy-to-edge-addons.yml@master
+    with:
+      team: extensions
+      environment: edge-addons-release
+      artifact-name: edge-release
+      product-id: 20976acd-ba42-4cbe-a4f2-250ca870c696
+      slack-channel: ''
+      product: AdGuard Browser Assistant
+      version-title: ${{ needs.tag.outputs.tag }}
+    permissions:
+      contents: read
+      id-token: write
+
+  create-release:
+    # Creates a GitHub Release on this repo with build artifacts attached.
+    needs: [tag, build]
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/create-gh-release.yml@master
+    with:
+      team: extensions
+      tag_name: ${{ needs.tag.outputs.tag }}
+      body: ${{ needs.tag.outputs.changelog }}
+      artifact_name: release-assets-${{ needs.build.outputs.channel }}
+      prerelease: ${{ needs.build.outputs.channel == 'beta' }}
+    permissions:
+      contents: write
+
+  create-release-firefox:
+    # Attaches Firefox beta artifacts to the GitHub Release after AMO signing.
+    needs: [tag, build-firefox-beta, create-release]
+    if: needs.build-firefox-beta.result == 'success'
+    uses: AdGuardSoftwareLimited/actions/.github/workflows/create-gh-release.yml@master
+    with:
+      team: extensions
+      tag_name: ${{ needs.tag.outputs.tag }}
+      body: ${{ needs.tag.outputs.changelog }}
+      artifact_name: release-assets-ff-beta
+      prerelease: true
+    permissions:
+      contents: write
+
+  notify-success:
+    name: Notify (success)
+    needs:
+      - tag
+      - build
+      - create-release
+      - publish-chrome-webstore
+      - deploy-static-chrome
+      - publish-amo
+      - publish-edge
+    if: >-
+      always() &&
+      needs.tag.result == 'success' &&
+      needs.build.result == 'success' &&
+      needs.create-release.result == 'success' &&
+      needs.publish-chrome-webstore.result == 'success' &&
+      (needs.deploy-static-chrome.result == 'success' ||
+       needs.deploy-static-chrome.result == 'skipped') &&
+      (needs.publish-amo.result == 'success' ||
+       needs.publish-amo.result == 'skipped') &&
+      (needs.publish-edge.result == 'success' ||
+       needs.publish-edge.result == 'skipped')
+    runs-on: team-extensions
+    permissions:
+      contents: read
+    steps:
+      - name: Send Slack notification
+        uses: AdGuardSoftwareLimited/actions/actions/slack@master
+        with:
+          channel: '#adguard-extension-vcs'
+          message: >-
+            :white_check_mark: *assistant-extension* *${{ needs.tag.outputs.tag }}*
+            published (channel: ${{ needs.build.outputs.channel }}) —
+            <${{ needs.create-release.outputs.release-url }}|release> |
+            <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>
+          color: good
+
+  notify-failure:
+    name: Notify (failure)
+    needs:
+      - tag
+      - build
+      - create-release
+      - publish-chrome-webstore
+      - deploy-static-chrome
+      - publish-amo
+      - publish-edge
+    if: >-
+      always() && needs.tag.result == 'success' && (
+        needs.build.result != 'success' ||
+        needs.create-release.result != 'success' ||
+        needs.publish-chrome-webstore.result != 'success' ||
+        (needs.deploy-static-chrome.result != 'success' &&
+         needs.deploy-static-chrome.result != 'skipped') ||
+        (needs.publish-amo.result != 'success' &&
+         needs.publish-amo.result != 'skipped') ||
+        (needs.publish-edge.result != 'success' &&
+         needs.publish-edge.result != 'skipped')
+      )
+    runs-on: team-extensions
+    permissions:
+      contents: read
+    steps:
+      - name: Send Slack notification
+        uses: AdGuardSoftwareLimited/actions/actions/slack@master
+        with:
+          channel: '#adguard-extension-vcs'
+          message: >-
+            :cross-mark: *assistant-extension* *${{ needs.tag.outputs.tag }}*
+            deploy failed (build: ${{ needs.build.result }},
+            cws: ${{ needs.publish-chrome-webstore.result }},
+            static-chrome: ${{ needs.deploy-static-chrome.result }},
+            amo: ${{ needs.publish-amo.result }},
+            edge: ${{ needs.publish-edge.result }},
+            release: ${{ needs.create-release.result }}) —
+            <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>
+          color: danger
+
+  notify-tag-failure:
+    name: Notify (tag failure)
+    needs: [tag]
+    if: always() && needs.tag.result == 'failure'
+    runs-on: team-extensions
+    permissions:
+      contents: read
+    steps:
+      - name: Send Slack notification
+        uses: AdGuardSoftwareLimited/actions/actions/slack@master
+        with:
+          channel: '#adguard-extension-vcs'
+          message: >-
+            :cross-mark: *assistant-extension* release failed at the tag step
+            (result: ${{ needs.tag.result }}) —
+            <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>
+          color: danger
+
+  notify-firefox-beta-success:
+    name: Notify Firefox beta (success)
+    needs: [tag, build-firefox-beta, deploy-static-firefox]
+    if: >-
+      always() && needs.tag.result == 'success' &&
+      needs.build-firefox-beta.result == 'success' &&
+      needs.deploy-static-firefox.result == 'success'
+    runs-on: team-extensions
+    permissions:
+      contents: read
+    steps:
+      - name: Send Slack notification
+        uses: AdGuardSoftwareLimited/actions/actions/slack@master
+        with:
+          channel: '#adguard-extension-vcs'
+          message: >-
+            :fox_face: *assistant-extension* *${{ needs.tag.outputs.tag }}*
+            Firefox beta signed via AMO and deployed to static.adtidy.org —
+            <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>
+          color: good
+
+  notify-firefox-beta-failure:
+    name: Notify Firefox beta (failure)
+    needs: [tag, build-firefox-beta, deploy-static-firefox]
+    if: >-
+      always() && needs.tag.result == 'success' &&
+      needs.build-firefox-beta.result != 'skipped' && (
+        needs.build-firefox-beta.result != 'success' ||
+        needs.deploy-static-firefox.result != 'success'
+      )
+    runs-on: team-extensions
+    permissions:
+      contents: read
+    steps:
+      - name: Send Slack notification
+        uses: AdGuardSoftwareLimited/actions/actions/slack@master
+        with:
+          channel: '#adguard-extension-vcs'
+          message: >-
+            :fox_face: *assistant-extension* *${{ needs.tag.outputs.tag }}*
+            Firefox beta signing incomplete
+            (build-ff: ${{ needs.build-firefox-beta.result }},
+            deploy-ff: ${{ needs.deploy-static-firefox.result }}).
+            AMO may still be processing. Re-run failed jobs later —
+            <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>
+          color: warning
+      - name: Re-run instructions
+        shell: bash
+        run: |
+          {
+            echo "### Firefox beta signing incomplete"
+            echo ""
+            echo "AMO can take a long time to return a signed XPI."
+            echo "Click **Re-run failed jobs** on this workflow run once AMO finishes."
+          } >> "$GITHUB_STEP_SUMMARY"

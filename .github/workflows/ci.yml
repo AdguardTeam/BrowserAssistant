@@ -1,0 +1,70 @@
+name: CI
+
+# Lints, tests, and builds on pull requests and pushes to master.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+# Cancel superseded runs of the same workflow/ref so the shared self-hosted
+# runner is never tied up by stale in-flight builds.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint, test, build
+    runs-on: team-extensions
+    timeout-minutes: 30
+    # Least privilege — this job never writes to repo contents.
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # Stamp a -dev version (next patch after the latest CHANGELOG release)
+      # into package.json so the dev build artifacts carry it.
+      - name: Set dev version
+        uses: >-
+          AdGuardSoftwareLimited/ext-shared-actions/.github/actions/set-dev-version@master
+
+      - name: Build, lint, and test via Docker
+        run: >-
+          DOCKER_BUILDKIT=1 docker build
+          --progress plain
+          --build-arg TEST_RUN_ID="${GITHUB_RUN_ID}"
+          --target test-output
+          --output ./output
+          .
+
+      - name: Upload build.txt
+        uses: actions/upload-artifact@v7
+        with:
+          name: build.txt
+          path: output/artifacts/build.txt
+          archive: false
+
+      - name: Upload Chrome extension archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: chrome.zip
+          path: output/artifacts/chrome.zip
+          archive: false
+
+      - name: Upload Firefox extension archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: firefox.zip
+          path: output/artifacts/firefox.zip
+          archive: false
+
+      - name: Upload Edge extension archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: edge.zip
+          path: output/artifacts/edge.zip
+          archive: false

@@ -51,21 +51,40 @@ FROM scratch AS test-output
 COPY --from=test /out/ /
 
 # ============================================================================
+# Stage: sign-src-beta
+# Symlinks the beta CRX certificate from a BuildKit secret (never copied into
+# an image layer). Requires CERTIFICATE_PEM at build time.
+# ============================================================================
+FROM source-deps AS sign-src-beta
+
+RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
+    mkdir -p private/AdguardBrowserAssistant && \
+    ln -sf /run/secrets/CERTIFICATE_PEM \
+        private/AdguardBrowserAssistant/certificate-beta.pem
+
+# ============================================================================
+# Stage: sign-src-release
+# Symlinks the release CRX certificate from a BuildKit secret.
+# ============================================================================
+FROM source-deps AS sign-src-release
+
+RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
+    mkdir -p private/AdguardBrowserAssistant && \
+    ln -sf /run/secrets/CERTIFICATE_PEM \
+        private/AdguardBrowserAssistant/certificate-release.pem
+
+# ============================================================================
 # Stage: build-beta
 # Runs: pnpm lint + pnpm test + pnpm locales validate + pnpm artifacts:beta
-# Requires private repo (extensions-private) for CRX signing
 # Output: chrome.crx, update.xml, build.txt, chrome.zip
 # ============================================================================
-FROM source-deps AS build-beta
-
-COPY --from=private . /browser-assistant/private
+FROM sign-src-beta AS build-beta
 
 ARG TEST_RUN_ID
 
 RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
-    --mount=type=secret,id=CREDENTIALS_PASSWORD \
+    --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
     echo "${TEST_RUN_ID}" > /tmp/.test-run-id && \
-    export CREDENTIALS_PASSWORD="$(cat /run/secrets/CREDENTIALS_PASSWORD)" && \
     pnpm lint && \
     pnpm test && \
     pnpm locales validate --min && \
@@ -83,24 +102,22 @@ COPY --from=build-beta /out/ /
 # Stage: build-beta-firefox
 # Runs: pnpm lint + pnpm test + pnpm locales validate + pnpm artifacts:beta-firefox
 # + creates source.zip via archive-source.sh
-# + signs with go-webext
-# No private repo needed
-# Output: firefox.xpi, update.json, build.txt, firefox.zip, source.zip, approval-notes.txt
+# + signs with go-webext (static.adtidy.org distribution)
+# Output: firefox.xpi, update.json, build.txt, firefox.zip, source.zip,
+#         approval-notes.txt
 # ============================================================================
 FROM source-deps AS build-beta-firefox-base
 
 ARG TEST_RUN_ID
 
 RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
-    --mount=type=secret,id=CREDENTIALS_PASSWORD \
     echo "${TEST_RUN_ID}" > /tmp/.test-run-id && \
-    export CREDENTIALS_PASSWORD="$(cat /run/secrets/CREDENTIALS_PASSWORD)" && \
     pnpm lint && \
     pnpm test && \
     pnpm locales validate --min && \
     pnpm artifacts:beta-firefox && \
-    ./bamboo-specs/scripts/archive-source.sh beta && \
-    ./bamboo-specs/scripts/generate-approval-notes.sh build/beta
+    ./scripts/ci/archive-source.sh beta && \
+    ./scripts/ci/generate-approval-notes.sh build/beta
 
 FROM build-beta-firefox-base AS build-beta-firefox
 
@@ -131,26 +148,23 @@ COPY --from=build-beta-firefox /out/ /
 # ============================================================================
 # Stage: build-release
 # Runs: pnpm lint + pnpm test + pnpm locales validate + pnpm artifacts:release
-# Requires private repo (extensions-private) for CRX signing
 # + creates source.zip via archive-source.sh
-# Output: edge.zip, build.txt, chrome.crx, chrome.zip, firefox.zip, update.xml, source.zip, approval-notes.txt
+# Output: edge.zip, build.txt, chrome.crx, chrome.zip, firefox.zip,
+#         update.xml, source.zip, approval-notes.txt
 # ============================================================================
-FROM source-deps AS build-release
-
-COPY --from=private . /browser-assistant/private
+FROM sign-src-release AS build-release
 
 ARG TEST_RUN_ID
 
 RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
-    --mount=type=secret,id=CREDENTIALS_PASSWORD \
+    --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
     echo "${TEST_RUN_ID}" > /tmp/.test-run-id && \
-    export CREDENTIALS_PASSWORD="$(cat /run/secrets/CREDENTIALS_PASSWORD)" && \
     pnpm lint && \
     pnpm test && \
     pnpm locales validate --min && \
     pnpm artifacts:release && \
-    ./bamboo-specs/scripts/archive-source.sh release && \
-    ./bamboo-specs/scripts/generate-approval-notes.sh build/release && \
+    ./scripts/ci/archive-source.sh release && \
+    ./scripts/ci/generate-approval-notes.sh build/release && \
     mkdir -p /out/artifacts && \
     cp build/release/build.txt /out/artifacts/ && \
     cp build/release/chrome.crx /out/artifacts/ && \

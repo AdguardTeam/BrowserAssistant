@@ -146,7 +146,8 @@ For a full list of all `npm` packages in use, please take a look at
 
 ## Documentation
 
-- [Development](DEVELOPMENT.md) — build, test, and release workflows
+- [Development](DEVELOPMENT.md) — build, test, and local release workflows
+- [Deployment](DEPLOYMENT.md) — GitHub Actions CI/CD and store publish
 - [Changelog](CHANGELOG.md) — version history
-- [Firefox beta signing](FIREFOX_BETA.md) — signing Firefox beta builds
+- [Firefox beta](FIREFOX_BETA.md) — install link for Firefox beta XPI
 - [LLM agent rules](AGENTS.md) — AI-assisted development guidelines

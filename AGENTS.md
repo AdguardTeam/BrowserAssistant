@@ -65,10 +65,12 @@ source of truth for all filtering state.
 ├── tsconfig.json           # TypeScript config (type checking only)
 ├── .eslintrc.js            # ESLint: airbnb-typescript, 4-space indent
 ├── .twosky.json            # Translation service config (base locale: en)
-├── Dockerfile              # CI build environment
-├── bamboo-specs/           # Bamboo CI/CD pipeline specs
+├── Dockerfile              # Multi-stage Docker build used by CI
+├── DEPLOYMENT.md           # Deployment / CI reference
+├── .github/workflows/      # GitHub Actions: ci, prepare-release,
+│                           # publish-release, mirror
 ├── scripts/                # Build tooling: rspack, manifests, CRX,
-                            # translations
+│                           # translations; scripts/ci/ for Docker helpers
 ├── metadata/               # Store listing text and screenshots
 ├── types/                  # Global TypeScript declarations
 ├── src/
@@ -99,8 +101,10 @@ source of truth for all filtering state.
   the twosky service (see `scripts/translations/README.md`)
 - `pnpm crx` — pack a Chromium build (requires certificate files)
 - `pnpm artifacts:beta` / `pnpm artifacts:release` — full signed release
-  artifacts (requires credentials; see `README.md`)
-- `pnpm increment` — bump the patch version
+  artifacts (requires certificates; see `DEVELOPMENT.md` /
+  `DEPLOYMENT.md`)
+- `pnpm increment` — bump the patch version (local only; releases use
+  prepare-release + CHANGELOG)
 
 ## Contribution Instructions
 
@@ -350,21 +354,22 @@ package versions in `pnpm-workspace.yaml` (excluding `@adguard/*`).
 - Build behavior is configured via the `BUILD_ENV` environment variable
   (`dev` | `beta` | `release`), set by the npm scripts; the browser
   target is a positional argument to the bundle script.
-- Signing and packing credentials (`certificate-beta.pem`,
-  `certificate-release.pem`, `mozilla_credentials.json`) are local
-  secrets — never commit them; the gitignored `private/` directory is
-  the place for such files.
+- Signing credentials (`certificate-beta.pem`,
+  `certificate-release.pem`) are local secrets for manual builds —
+  never commit them; the gitignored `private/AdguardBrowserAssistant/`
+  directory is the place for such files. CI loads PEMs from Vault (see
+  `DEPLOYMENT.md`).
 - Translations are configured in `.twosky.json` (project id, base locale
   `en`, language list) and `scripts/translations/config.json`.
 - Keep documentation in sync with code:
-    - Build/development workflow changes → `README.md`
+    - Build/development workflow changes → `DEVELOPMENT.md` / `README.md`
+    - CI/CD or deploy changes → `DEPLOYMENT.md`
     - Minimum browser versions in `constants.js` → browser compatibility
       section in `README.md`
     - Project structure, commands, conventions → `AGENTS.md`
     - Notable user-facing changes → `CHANGELOG.md`
-    - Firefox beta signing process → `FIREFOX_BETA.md`
-- Do not hardcode secrets or environment-specific values in source; pass
-  them via environment variables (e.g. `CREDENTIALS_PASSWORD`).
+    - Firefox beta install link → `FIREFOX_BETA.md`
+- Do not hardcode secrets or environment-specific values in source.
 
 ### Markdown Formatting
 
