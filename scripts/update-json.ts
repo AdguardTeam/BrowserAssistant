@@ -10,7 +10,6 @@ import { Manifest } from 'webextension-polyfill';
 import chalk from 'chalk';
 
 import { getErrorMessage } from '../src/lib/errors';
-import config from '../package.json';
 
 import {
     BUILD_PATH,
@@ -98,11 +97,15 @@ const createUpdateJson = async (manifest: WebExtensionManifest) => {
     if (!id || !strictMinVersion) {
         throw new Error('Manifest is missing id or strict_min_version');
     }
+    if (!manifest.version) {
+        throw new Error('Manifest is missing version');
+    }
 
     try {
         const fileContent = generateUpdateJson({
             id,
-            version: String(config.version).split('-')[0],
+            // Must match the signed XPI (Firefox beta stamps `x.y.zbetaN`).
+            version: String(manifest.version),
             updateLink: FIREFOX_UPDATE_XPI,
             strictMinVersion,
         });

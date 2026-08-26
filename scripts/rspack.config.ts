@@ -127,7 +127,7 @@ export const getRspackConfig = (
                     transform: (content: Buffer) => {
                         // eslint-disable-next-line import/no-dynamic-require, global-require
                         const manifestDiff = require(`./manifest.${browser}`);
-                        return updateManifest(content.toString(), manifestDiff);
+                        return updateManifest(content.toString(), manifestDiff, browser);
                     },
                 },
             ],

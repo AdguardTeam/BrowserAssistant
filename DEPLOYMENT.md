@@ -71,7 +71,7 @@ DOCKER_BUILDKIT=1 docker build --target test-output --output ./output .
 ```
 
 Uploads unsigned dev archives (`chrome.zip`, `firefox.zip`, `edge.zip`)
-and `build.txt` as workflow artifacts.
+as workflow artifacts.
 
 ### Release Preparation
 
@@ -183,9 +183,11 @@ Exact file lists live in the Dockerfile `*-output` stages and
 
 - **Beta:** `v<version>-beta.N` (e.g. `v1.2.0-beta.1`)
 - **Release:** `v<version>` (e.g. `v1.2.0`)
-- Version is parsed from `CHANGELOG.md`. The numeric core (suffix
-  stripped) is injected into `package.json` / `manifest.json` because
-  CWS and AMO reject `-beta.N` / `-dev` version strings.
+- Version is parsed from `CHANGELOG.md`. Chrome/Edge/CWS/AMO listed get
+  the numeric core (suffix stripped) because stores reject `-beta.N`.
+  Firefox beta stamps a toolkit version (`1.2.0-beta.1` → `1.2.0beta1`)
+  into the XPI and `update.json` so successive betas auto-update, and
+  the eventual `1.2.0` release still supersedes them.
 
 ## Secrets
 

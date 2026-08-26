@@ -56,6 +56,10 @@ COPY --from=test /out/ /
 # ============================================================================
 FROM source-deps AS sign-src-beta
 
+# sha256 of the PEM. BuildKit secret *content* is not in the RUN cache
+# key; ARG values are. Echoing CERT_DIGEST here busts the signed layers
+# when the certificate rotates (including re-runs of the same RUN_ID).
+# The file is not read later — it exists only to bind the ARG to this layer.
 ARG CERT_DIGEST
 
 RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
@@ -70,6 +74,7 @@ RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
 # ============================================================================
 FROM source-deps AS sign-src-release
 
+# See sign-src-beta: ARG is the cert-rotation cache key.
 ARG CERT_DIGEST
 
 RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \

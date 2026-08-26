@@ -1,7 +1,12 @@
 /**
  * @file Shared helpers and the manifest type of the build scripts.
  */
-import { BUILD_ENVS_MAP, BuildEnv } from './consts';
+import {
+    Browser,
+    BUILD_ENV,
+    BUILD_ENVS_MAP,
+    BuildEnv,
+} from './consts';
 
 const pJson = require('../package.json');
 const twoskyConfig = require('../.twosky.json');
@@ -23,16 +28,42 @@ export const appendBuildEnvSuffix = (name: string, buildEnv: BuildEnv) => {
     return buildEnvData.name ? `${name} ${buildEnvData.name}` : name;
 };
 
-export const updateManifest = (manifestJson: string, browserManifestDiff?: Partial<Manifest>) => {
+/**
+ * Store-compatible version: CWS / AMO listed / Edge reject `-beta.N`.
+ * `1.2.0-beta.1` → `1.2.0`.
+ */
+export const toStoreVersion = (version: string): string => String(version).split('-')[0];
+
+/**
+ * Firefox toolkit version for self-hosted beta XPIs.
+ * `1.2.0-beta.1` → `1.2.0beta1`, which sorts beta.1 < beta.2 < 1.2.0 so
+ * `update.json` can offer successive betas and the eventual release still
+ * supersedes them. Chrome/CWS cannot use this form.
+ */
+export const toFirefoxBetaVersion = (version: string): string => {
+    const match = String(version).match(/^(\d+\.\d+\.\d+(?:\.\d+)?)-beta\.(\d+)$/);
+    if (!match) {
+        return toStoreVersion(version);
+    }
+    return `${match[1]}beta${match[2]}`;
+};
+
+export const updateManifest = (
+    manifestJson: string,
+    browserManifestDiff?: Partial<Manifest>,
+    browser: Browser = Browser.Chrome,
+) => {
     const manifest: Manifest = JSON.parse(manifestJson);
+    const rawVersion = String(pJson.version);
+    const version = browser === Browser.Firefox && BUILD_ENV === BuildEnv.Beta
+        ? toFirefoxBetaVersion(rawVersion)
+        : toStoreVersion(rawVersion);
 
     const updatedManifest = {
         ...manifest,
         ...browserManifestDiff,
         default_locale: baseLocale,
-        // Stores reject pre-release suffixes (`-beta.N`, `-dev`). Extra strips
-        // these in its manifest helper; keep the numeric core here.
-        version: String(pJson.version).split('-')[0],
+        version,
     };
 
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));

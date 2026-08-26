@@ -79,6 +79,10 @@ jobs:
   build:
     name: Build extension artifacts
     needs: [resolve, tag]
+    # `on.pull_request.types: [closed]` fires on every master merge.
+    # Without this, a skipped `tag` still leaves `build` running with
+    # empty version / channel (and notify-failure stays silent).
+    if: needs.tag.result == 'success'
     runs-on: team-extensions
     timeout-minutes: 45
     permissions:
@@ -126,6 +130,8 @@ jobs:
           set -euo pipefail
           stage="build-${CHANNEL}-output"
           mkdir -p artifacts/out
+          # Cache-bust signed Docker layers on cert rotation. ARG is the
+          # cache key (secret content is not); nothing later reads the file.
           CERT_DIGEST="$(printf '%s' "${CERTIFICATE_PEM}" | sha256sum | awk '{print $1}')"
           DOCKER_BUILDKIT=1 docker build --progress plain \
             --target "${stage}" \
@@ -207,7 +213,7 @@ jobs:
     # deploy-to-firefox-addons instead (no XPI in this job).
     name: Build Firefox beta artifacts (AMO sign)
     needs: [resolve, tag]
-    if: needs.tag.outputs.release-channel == 'beta'
+    if: needs.tag.result == 'success' && needs.tag.outputs.release-channel == 'beta'
     runs-on: team-extensions
     timeout-minutes: 180
     permissions:
@@ -219,8 +225,10 @@ jobs:
         with:
           ref: ${{ needs.resolve.outputs.ref }}
 
+      # Keep `-beta.N` so the Firefox helper can stamp a toolkit version
+      # (`1.2.0beta1`) into the XPI / update.json. Chrome/CWS stay numeric.
       - name: Inject version into package.json
-        run: npm pkg set version="${VERSION%%-*}"
+        run: npm pkg set version="$VERSION"
         env:
           VERSION: ${{ needs.tag.outputs.version }}
 
@@ -309,6 +317,7 @@ jobs:
 
   publish-chrome-webstore:
     needs: [tag, build]
+    if: needs.tag.result == 'success' && needs.build.result == 'success'
     uses: AdGuardSoftwareLimited/actions/.github/workflows/deploy-to-chrome-web-store.yml@master
     with:
       team: extensions
@@ -363,6 +372,7 @@ jobs:
   create-release:
     # GitHub Release on the public mirror (Octopass), not this private repo.
     needs: [tag, build]
+    if: needs.tag.result == 'success' && needs.build.result == 'success'
     uses: AdGuardSoftwareLimited/actions/.github/workflows/create-gh-release.yml@master
     with:
       team: extensions
