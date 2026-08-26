@@ -3,7 +3,8 @@
 AdGuard Browser Assistant is deployed via GitHub Actions. There is no
 server infrastructure — deployment means publishing build artifacts
 (signed CRX/XPI/ZIP files) to static file servers, submitting to browser
-stores, and creating a GitHub Release on this repository.
+stores, and creating a GitHub Release on the public
+`AdguardTeam/BrowserAssistant` mirror.
 
 > **Channel model:** Tags containing `-beta` (e.g. `v1.2.0-beta.1`) go
 > through the **beta** pipeline. Tags without a pre-release suffix
@@ -35,7 +36,7 @@ stores, and creating a GitHub Release on this repository.
 | **Chrome Web Store** | `chrome.zip` | beta, release |
 | **Firefox AMO** (listed) | `firefox.zip` + `source.zip` | release only |
 | **Edge Add-ons** | `edge.zip` | release only |
-| **GitHub Release** (this repo) | Channel build assets | beta, release |
+| **GitHub Release** (`AdguardTeam/BrowserAssistant`) | Channel build assets | beta, release |
 | **Opera add-ons** | Manual upload (no store API) | release |
 
 Static uploads use the internal **deployer** service
@@ -103,7 +104,8 @@ manually via `workflow_dispatch`.
 5. **Release AMO** — `deploy-to-firefox-addons.yml` (listed) with
    `firefox.zip` + `source.zip` + approval notes.
 6. **Release Edge** — `deploy-to-edge-addons.yml`.
-7. **GitHub Release** — `create-gh-release.yml`.
+7. **GitHub Release** — `create-gh-release.yml` on
+   `AdguardTeam/BrowserAssistant` (Octopass).
 8. **Beta Firefox (isolated)** — Docker `build-beta-firefox-output`
    signs via `go-webext`, then static deploy
    `browser-assistant-webext-firefox-beta`, then attaches assets to the
@@ -155,11 +157,9 @@ Release PR merged to master
 
 ## Docker Image
 
-Build and test jobs use:
-
-```text
-adguard/extension-builder:22.22--0.4.1--0
-```
+Build and test jobs use the image in the Dockerfile `FROM … AS base`
+line. AMO approval notes parse that same line so the reviewer pin cannot
+drift.
 
 The pnpm store is a BuildKit cache
 (`--mount=type=cache,target=/pnpm-store`). Signing secrets are BuildKit
@@ -214,7 +214,8 @@ and keys before the first publish.**
 | `edge-addons-deployer` | (via reusable workflow) | `deploy-to-edge-addons` |
 | Chrome Web Store deployer | (via reusable workflow) | `deploy-to-chrome-web-store` |
 
-GitHub Release uses `GITHUB_TOKEN` (`contents: write`).
+The public GitHub Release uses Octopass (`id-token: write`) against
+`AdguardTeam/BrowserAssistant`, not `GITHUB_TOKEN` on this private repo.
 
 ### Former Bamboo secret names (reference)
 
@@ -240,6 +241,8 @@ GitHub Release uses `GITHUB_TOKEN` (`contents: write`).
 - After the first beta static deploy, confirm existing update URLs still
   resolve (`https://static.adtidy.org/extensions/browserassistant/beta/update.xml`
   and `update.json`). Deployer module names changed; paths must not.
+- Disable the old Bamboo plans only after a green GHA CI run and a
+  successful beta publish.
 
 ## Additional Resources
 

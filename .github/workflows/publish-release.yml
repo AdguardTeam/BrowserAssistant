@@ -28,45 +28,49 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  guard:
-    name: Validate manual ref
-    if: github.event_name == 'workflow_dispatch'
+  resolve:
+    name: Resolve publish ref
     runs-on: team-extensions
     timeout-minutes: 5
     permissions:
       contents: read
+    outputs:
+      ref: ${{ steps.out.outputs.ref }}
     steps:
-      - name: Restrict workflow_dispatch ref
+      - name: Resolve and validate ref
+        id: out
         env:
-          REF: ${{ inputs.ref }}
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_REF: ${{ inputs.ref }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           set -euo pipefail
-          # Empty = the UI-selected branch (must be master). Also allow an
-          # existing vX.Y.Z[-beta.N] tag. Arbitrary SHAs/branches would run
-          # unreviewed Dockerfiles with CRX/AMO secrets mounted.
-          if [[ -z "${REF}" || "${REF}" == "master" || "${REF}" == "refs/heads/master" ]]; then
-            exit 0
+          if [ "${EVENT_NAME}" = "workflow_dispatch" ]; then
+            REF="${INPUT_REF:-master}"
+            # Arbitrary SHAs/branches would run unreviewed Dockerfiles with
+            # CRX/AMO secrets mounted.
+            if [[ "${REF}" != "master" && "${REF}" != "refs/heads/master" && ! "${REF}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+\.[0-9]+)?$ ]]; then
+              echo "::error::workflow_dispatch ref must be empty, master, or a vX.Y.Z[-beta.N] tag (got '${REF}')"
+              exit 1
+            fi
+          else
+            REF="${MERGE_SHA:-${REF_NAME}}"
           fi
-          if [[ "${REF}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+\.[0-9]+)?$ ]]; then
-            exit 0
-          fi
-          echo "::error::workflow_dispatch ref must be empty, master, or a vX.Y.Z[-beta.N] tag (got '${REF}')"
-          exit 1
+          echo "ref=${REF}" >> "$GITHUB_OUTPUT"
 
   tag:
     # Tag only on manual dispatch or a merged release-bump/* PR from the
     # release bot (matched by immutable user id, so renames can't break it).
-    needs: [guard]
+    needs: [resolve]
     if: >-
-      always() && !cancelled() &&
-      (needs.guard.result == 'success' || needs.guard.result == 'skipped') &&
-      (github.event_name == 'workflow_dispatch' ||
-       (github.event.pull_request.merged == true &&
-        startsWith(github.event.pull_request.head.ref, 'release-bump/') &&
-        github.event.pull_request.user.id == 285975488))
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true &&
+       startsWith(github.event.pull_request.head.ref, 'release-bump/') &&
+       github.event.pull_request.user.id == 285975488)
     uses: AdGuardSoftwareLimited/actions/.github/workflows/tag-from-changelog.yml@master
     with:
-      ref: ${{ inputs.ref || github.event.pull_request.merge_commit_sha || github.ref_name }}
+      ref: ${{ needs.resolve.outputs.ref }}
       team: extensions
     # `contents: write` — create the git tag
     permissions:
@@ -74,7 +78,7 @@ jobs:
 
   build:
     name: Build extension artifacts
-    needs: tag
+    needs: [resolve, tag]
     runs-on: team-extensions
     timeout-minutes: 45
     permissions:
@@ -84,7 +88,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.ref || github.event.pull_request.merge_commit_sha || github.ref_name }}
+          ref: ${{ needs.resolve.outputs.ref }}
 
       # Version is parsed from CHANGELOG by the tag job and injected
       # here so the compiled extension carries the release tag.
@@ -202,7 +206,7 @@ jobs:
     # a long time. Release Firefox is uploaded to the AMO store listing via
     # deploy-to-firefox-addons instead (no XPI in this job).
     name: Build Firefox beta artifacts (AMO sign)
-    needs: tag
+    needs: [resolve, tag]
     if: needs.tag.outputs.release-channel == 'beta'
     runs-on: team-extensions
     timeout-minutes: 180
@@ -213,7 +217,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.ref || github.event.pull_request.merge_commit_sha || github.ref_name }}
+          ref: ${{ needs.resolve.outputs.ref }}
 
       - name: Inject version into package.json
         run: npm pkg set version="${VERSION%%-*}"
@@ -273,9 +277,6 @@ jobs:
           name: release-assets-firefox-beta
           path: artifacts/ff-files/
           if-no-files-found: error
-
-    outputs:
-      channel: ${{ needs.tag.outputs.release-channel }}
 
   deploy-static-chrome:
     # Beta only — matches Bamboo deploy-beta (static.adtidy.org).
@@ -360,31 +361,35 @@ jobs:
       id-token: write
 
   create-release:
-    # Creates a GitHub Release on this repo with build artifacts attached.
+    # GitHub Release on the public mirror (Octopass), not this private repo.
     needs: [tag, build]
     uses: AdGuardSoftwareLimited/actions/.github/workflows/create-gh-release.yml@master
     with:
       team: extensions
+      target_repo: AdguardTeam/BrowserAssistant
       tag_name: ${{ needs.tag.outputs.tag }}
       body: ${{ needs.tag.outputs.changelog }}
       artifact_name: release-assets-${{ needs.build.outputs.channel }}
       prerelease: ${{ needs.build.outputs.channel == 'beta' }}
     permissions:
       contents: write
+      id-token: write
 
   create-release-firefox:
-    # Attaches Firefox beta artifacts to the GitHub Release after AMO signing.
+    # Attaches Firefox beta artifacts to the public GitHub Release after AMO signing.
     needs: [tag, build-firefox-beta, create-release]
     if: needs.build-firefox-beta.result == 'success'
     uses: AdGuardSoftwareLimited/actions/.github/workflows/create-gh-release.yml@master
     with:
       team: extensions
+      target_repo: AdguardTeam/BrowserAssistant
       tag_name: ${{ needs.tag.outputs.tag }}
       body: ${{ needs.tag.outputs.changelog }}
       artifact_name: release-assets-firefox-beta
       prerelease: true
     permissions:
       contents: write
+      id-token: write
 
   notify-success:
     name: Notify (success)

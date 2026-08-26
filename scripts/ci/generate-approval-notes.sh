@@ -28,9 +28,17 @@ fi
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DOCKERFILE="${SCRIPT_DIR}/../../Dockerfile"
+IMAGE="$(sed -nE 's/^FROM[[:space:]]+([^[:space:]]+)[[:space:]]+AS[[:space:]]+base$/\1/p' "${DOCKERFILE}" | head -n 1)"
+if [ -z "${IMAGE}" ]; then
+  echo "Error: could not parse 'FROM ... AS base' from ${DOCKERFILE}"
+  exit 1
+fi
+
 APPROVAL_NOTES_FILE="$OUTPUT_DIR/approval-notes.txt"
 
-cat > "$APPROVAL_NOTES_FILE" << 'APPROVAL_EOF'
+cat > "$APPROVAL_NOTES_FILE" << EOF
 Build reproduction instructions for Firefox Add-ons Review Team.
 
 Prerequisites: Docker (https://docs.docker.com/get-docker/)
@@ -38,10 +46,10 @@ All build tools (Node.js v22, pnpm v10) are pre-installed in the Docker image.
 
 To build the RELEASE version:
 
-  docker run --rm \
-      -v "$(pwd)":/workspace \
-      -w /workspace \
-      adguard/extension-builder:22.22--0.4.1--0 \
+  docker run --rm \\
+      -v "\$(pwd)":/workspace \\
+      -w /workspace \\
+      ${IMAGE} \\
       bash -c "pnpm install && pnpm release firefox"
 
 Output: ./build/release/firefox directory.
@@ -49,15 +57,15 @@ Compare build/release/firefox.zip with the uploaded add-on.
 
 To build the BETA version:
 
-  docker run --rm \
-      -v "$(pwd)":/workspace \
-      -w /workspace \
-      adguard/extension-builder:22.22--0.4.1--0 \
+  docker run --rm \\
+      -v "\$(pwd)":/workspace \\
+      -w /workspace \\
+      ${IMAGE} \\
       bash -c "pnpm install && pnpm beta firefox"
 
 Output: ./build/beta/firefox directory.
 Compare build/beta/firefox.zip with the uploaded add-on.
-APPROVAL_EOF
+EOF
 
 echo "approval-notes.txt created at $APPROVAL_NOTES_FILE"
 
