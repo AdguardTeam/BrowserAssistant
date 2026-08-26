@@ -31,6 +31,8 @@ export const appendBuildEnvSuffix = (name: string, buildEnv: BuildEnv) => {
 /**
  * Store-compatible version: CWS / AMO listed / Edge reject `-beta.N`.
  * `1.2.0-beta.1` → `1.2.0`.
+ * @param version Version from package.json or CHANGELOG.
+ * @returns Numeric core without a pre-release suffix.
  */
 export const toStoreVersion = (version: string): string => String(version).split('-')[0];
 
@@ -39,6 +41,8 @@ export const toStoreVersion = (version: string): string => String(version).split
  * `1.2.0-beta.1` → `1.2.0beta1`, which sorts beta.1 < beta.2 < 1.2.0 so
  * `update.json` can offer successive betas and the eventual release still
  * supersedes them. Chrome/CWS cannot use this form.
+ * @param version Version from package.json or CHANGELOG.
+ * @returns Toolkit version for Firefox beta, or the store version otherwise.
  */
 export const toFirefoxBetaVersion = (version: string): string => {
     const match = String(version).match(/^(\d+\.\d+\.\d+(?:\.\d+)?)-beta\.(\d+)$/);
