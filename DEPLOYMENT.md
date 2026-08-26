@@ -201,8 +201,8 @@ CI secrets are **organization-level** (HashiCorp Vault). Org variable:
 
 | Key | Used by | Purpose |
 | --- | --- | --- |
-| `certificate-beta` | `publish-release.yml` (beta build) | Chrome CRX signing PEM |
-| `certificate-release` | `publish-release.yml` (release build) | Chrome CRX signing PEM |
+| `UNTRUSTED_certificate-beta` | `publish-release.yml` (beta build) | Chrome CRX signing PEM |
+| `UNTRUSTED_certificate-release` | `publish-release.yml` (release build) | Chrome CRX signing PEM |
 
 These replace the former Bamboo `extensions-private` checkout +
 `bamboo_extensionsPassphrase` flow. **DevOps must create the Vault role
@@ -232,11 +232,11 @@ The public GitHub Release uses Octopass (`id-token: write`) against
 
 - Provision Vault path/role
   `extensions-private-adguard-assistant` with
-  `certificate-beta` and `certificate-release`.
+  `UNTRUSTED_certificate-beta` and `UNTRUSTED_certificate-release`.
 - Ensure GitHub Environments exist with protection rules:
   `beta-static`, `chrome-webstore-beta`, `chrome-webstore-release`,
-  `firefox-amo-release`, `edge-addons-release` (and any team terraform
-  gates you use for required approvals).
+  `firefox-amo-release`, `edge-addons-release`, `github-release` (and any
+  team terraform gates you use for required approvals).
 - Octopass / deployer OIDC grants for the static modules if not already
   present for this repository.
 - Confirm public mirror credentials for `AdguardTeam/BrowserAssistant`.

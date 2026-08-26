@@ -113,7 +113,7 @@ jobs:
           path: jwt
           role: extensions-private-adguard-assistant
           secrets: |
-            secret/data/ci-secrets/extensions-private-adguard-assistant certificate-${{ needs.tag.outputs.release-channel }} | CERTIFICATE_PEM ;
+            secret/data/ci-secrets/extensions-private-adguard-assistant UNTRUSTED_certificate-${{ needs.tag.outputs.release-channel }} | CERTIFICATE_PEM ;
 
       - name: Generate gitignore excludes for source archive
         # Host has .git; Docker context does not. Release source.zip is built
@@ -381,6 +381,7 @@ jobs:
       body: ${{ needs.tag.outputs.changelog }}
       artifact_name: release-assets-${{ needs.build.outputs.channel }}
       prerelease: ${{ needs.build.outputs.channel == 'beta' }}
+      environment: github-release
     permissions:
       contents: write
       id-token: write
@@ -397,6 +398,7 @@ jobs:
       body: ${{ needs.tag.outputs.changelog }}
       artifact_name: release-assets-firefox-beta
       prerelease: true
+      environment: github-release
     permissions:
       contents: write
       id-token: write
