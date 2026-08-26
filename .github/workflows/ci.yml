@@ -33,20 +33,7 @@ jobs:
           AdGuardSoftwareLimited/ext-shared-actions/.github/actions/set-dev-version@master
 
       - name: Build, lint, and test via Docker
-        run: >-
-          DOCKER_BUILDKIT=1 docker build
-          --progress plain
-          --build-arg TEST_RUN_ID="${GITHUB_RUN_ID}"
-          --target test-output
-          --output ./output
-          .
-
-      - name: Upload build.txt
-        uses: actions/upload-artifact@v7
-        with:
-          name: build.txt
-          path: output/artifacts/build.txt
-          archive: false
+        run: DOCKER_BUILDKIT=1 docker build --progress plain --target test-output --output ./output .
 
       - name: Upload Chrome extension archive
         uses: actions/upload-artifact@v7

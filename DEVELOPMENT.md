@@ -10,8 +10,7 @@ code guidelines see `AGENTS.md`.
 - [Tests](#tests)
 - [Localization](#localization)
 - [CRX Beta and Release Builds](#crx-beta-and-release-builds)
-- [XPI Builds](#xpi-builds)
-- [Artifacts](#artifacts)
+- [Artifacts (local)](#artifacts-local)
 - [How to debug without AdGuard application](#how-to-debug-without-adguard-application)
 - [Testing Browser Assistant build with AdGuard](#testing-browser-assistant-build-with-adguard)
 
@@ -52,13 +51,12 @@ Builds will be located in the `build` directory.
 
 ## Artifacts (local)
 
-- `pnpm artifacts:beta` — Chrome beta zip + CRX + `update.xml` +
-  `build.txt` (needs beta certificate).
-- `pnpm artifacts:beta-firefox` — Firefox beta zip + `update.json` +
-  `build.txt` (signing for static distribution is done in CI via
-  `go-webext`).
+- `pnpm artifacts:beta` — Chrome beta zip + CRX + `update.xml`
+  (needs beta certificate).
+- `pnpm artifacts:beta-firefox` — Firefox beta zip + `update.json`
+  (signing for static distribution is done in CI via `go-webext`).
 - `pnpm artifacts:release` — Chrome/Edge/Firefox release zips + CRX +
-  `update.xml` + `build.txt` (needs release certificate).
+  `update.xml` (needs release certificate).
 
 CI/CD packaging, store submit, and static deploy are documented in
 `DEPLOYMENT.md`. Do not use Bamboo; pipelines live under

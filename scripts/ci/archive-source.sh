@@ -26,14 +26,19 @@ OUTPUT_ZIP="$OUTPUT_DIR/source.zip"
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
 
-# Build exclusion patterns via shared script.
-# Prefers gitignore-excludes.txt (generated on host by generate-find-excludes.sh),
-# falls back to .gitignore parsing if gitignore-excludes.txt is not available.
+# gitignore-excludes.txt is generated on the host (where .git exists) and
+# copied into the Docker context. Fail loud if it is missing — a silent
+# fallback would zip node_modules and other junk into the AMO source archive.
+if [ ! -f gitignore-excludes.txt ]; then
+  echo "Error: gitignore-excludes.txt is missing; run scripts/ci/generate-find-excludes.sh on the host first"
+  exit 1
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/parse-gitignore.sh" gitignore-excludes.txt
 
-# Find all files, excluding .git and .gitignore patterns
-find . -type f ! -path './.git/*' "${GITIGNORE_EXCLUDE_ARGS[@]}" -print0 \
+# Find all files, excluding .git, .github (CI topology), and .gitignore patterns
+find . -type f ! -path './.git/*' ! -path './.github/*' "${GITIGNORE_EXCLUDE_ARGS[@]}" -print0 \
   | xargs -0 zip "$OUTPUT_ZIP"
 
 echo "source.zip created at $OUTPUT_ZIP"

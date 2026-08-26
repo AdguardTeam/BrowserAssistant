@@ -42,7 +42,6 @@ RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
     pnpm lint && \
     pnpm test && \
     mkdir -p /out/artifacts && \
-    cp build/dev/build.txt /out/artifacts/ && \
     cp build/dev/chrome.zip /out/artifacts/ && \
     cp build/dev/firefox.zip /out/artifacts/ && \
     cp build/dev/edge.zip /out/artifacts/
@@ -57,7 +56,10 @@ COPY --from=test /out/ /
 # ============================================================================
 FROM source-deps AS sign-src-beta
 
+ARG CERT_DIGEST
+
 RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
+    echo "${CERT_DIGEST}" > /tmp/.cert-digest && \
     mkdir -p private/AdguardBrowserAssistant && \
     ln -sf /run/secrets/CERTIFICATE_PEM \
         private/AdguardBrowserAssistant/certificate-beta.pem
@@ -68,7 +70,10 @@ RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
 # ============================================================================
 FROM source-deps AS sign-src-release
 
+ARG CERT_DIGEST
+
 RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
+    echo "${CERT_DIGEST}" > /tmp/.cert-digest && \
     mkdir -p private/AdguardBrowserAssistant && \
     ln -sf /run/secrets/CERTIFICATE_PEM \
         private/AdguardBrowserAssistant/certificate-release.pem
@@ -76,21 +81,22 @@ RUN --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
 # ============================================================================
 # Stage: build-beta
 # Runs: pnpm lint + pnpm test + pnpm locales validate + pnpm artifacts:beta
-# Output: chrome.crx, update.xml, build.txt, chrome.zip
+# Output: chrome.crx, update.xml, chrome.zip
 # ============================================================================
 FROM sign-src-beta AS build-beta
 
 ARG TEST_RUN_ID
+ARG CERT_DIGEST
 
 RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
     --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
     echo "${TEST_RUN_ID}" > /tmp/.test-run-id && \
+    echo "${CERT_DIGEST}" > /tmp/.cert-digest && \
     pnpm lint && \
     pnpm test && \
     pnpm locales validate --min && \
     pnpm artifacts:beta && \
     mkdir -p /out/artifacts && \
-    cp build/beta/build.txt /out/artifacts/ && \
     cp build/beta/chrome.crx /out/artifacts/ && \
     cp build/beta/update.xml /out/artifacts/ && \
     cp build/beta/chrome.zip /out/artifacts/
@@ -103,7 +109,7 @@ COPY --from=build-beta /out/ /
 # Runs: pnpm lint + pnpm test + pnpm locales validate + pnpm artifacts:beta-firefox
 # + creates source.zip via archive-source.sh
 # + signs with go-webext (static.adtidy.org distribution)
-# Output: firefox.xpi, update.json, build.txt, firefox.zip, source.zip,
+# Output: firefox.xpi, update.json, firefox.zip, source.zip,
 #         approval-notes.txt
 # ============================================================================
 FROM source-deps AS build-beta-firefox-base
@@ -135,7 +141,6 @@ RUN --mount=type=secret,id=FIREFOX_CLIENT_ID \
       -o 'firefox.xpi' \
       -n "$(cat approval-notes.txt)" && \
     mkdir -p /out/artifacts && \
-    cp /browser-assistant/build/beta/build.txt /out/artifacts/ && \
     cp /browser-assistant/build/beta/firefox.xpi /out/artifacts/ && \
     cp /browser-assistant/build/beta/firefox.zip /out/artifacts/ && \
     cp /browser-assistant/build/beta/update.json /out/artifacts/ && \
@@ -149,16 +154,18 @@ COPY --from=build-beta-firefox /out/ /
 # Stage: build-release
 # Runs: pnpm lint + pnpm test + pnpm locales validate + pnpm artifacts:release
 # + creates source.zip via archive-source.sh
-# Output: edge.zip, build.txt, chrome.crx, chrome.zip, firefox.zip,
+# Output: edge.zip, chrome.crx, chrome.zip, firefox.zip,
 #         update.xml, source.zip, approval-notes.txt
 # ============================================================================
 FROM sign-src-release AS build-release
 
 ARG TEST_RUN_ID
+ARG CERT_DIGEST
 
 RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
     --mount=type=secret,id=CERTIFICATE_PEM,mode=0444 \
     echo "${TEST_RUN_ID}" > /tmp/.test-run-id && \
+    echo "${CERT_DIGEST}" > /tmp/.cert-digest && \
     pnpm lint && \
     pnpm test && \
     pnpm locales validate --min && \
@@ -166,7 +173,6 @@ RUN --mount=type=cache,target=/pnpm-store,id=browser-assistant-pnpm \
     ./scripts/ci/archive-source.sh release && \
     ./scripts/ci/generate-approval-notes.sh build/release && \
     mkdir -p /out/artifacts && \
-    cp build/release/build.txt /out/artifacts/ && \
     cp build/release/chrome.crx /out/artifacts/ && \
     cp build/release/chrome.zip /out/artifacts/ && \
     cp build/release/edge.zip /out/artifacts/ && \

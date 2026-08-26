@@ -1,4 +1,4 @@
-# AdGuard Assistant Beta For Firefox
+# AdGuard Browser Assistant Beta for Firefox
 
 The beta version of AdGuard Browser Assistant for Firefox is distributed
 as a standalone XPI on `static.adtidy.org` (not the AMO store listing).

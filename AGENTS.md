@@ -103,8 +103,9 @@ source of truth for all filtering state.
 - `pnpm artifacts:beta` / `pnpm artifacts:release` — full signed release
   artifacts (requires certificates; see `DEVELOPMENT.md` /
   `DEPLOYMENT.md`)
-- `pnpm increment` — bump the patch version (local only; releases use
-  prepare-release + CHANGELOG)
+- `pnpm increment` — local-only patch bump of `package.json`. CI stamps
+  a `-dev` version and publish injects the changelog version; nothing
+  commits increment results anymore.
 
 ## Contribution Instructions
 

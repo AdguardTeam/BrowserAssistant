@@ -30,7 +30,9 @@ export const updateManifest = (manifestJson: string, browserManifestDiff?: Parti
         ...manifest,
         ...browserManifestDiff,
         default_locale: baseLocale,
-        version: pJson.version,
+        // Stores reject pre-release suffixes (`-beta.N`, `-dev`). Extra strips
+        // these in its manifest helper; keep the numeric core here.
+        version: String(pJson.version).split('-')[0],
     };
 
     return Buffer.from(JSON.stringify(updatedManifest, null, 4));

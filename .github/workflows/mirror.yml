@@ -6,6 +6,14 @@ on:
   push:
     branches:
       - master
+    tags:
+      - 'v*'
+
+# Serialize force-pushes to the public mirror so two close master/tag
+# events cannot rewind public master if an older run finishes last.
+concurrency:
+  group: mirror-${{ github.repository }}
+  cancel-in-progress: false
 
 # `contents: read` — checkout source repo
 # `actions: write` — disable workflows in the public mirror
@@ -21,4 +29,3 @@ jobs:
     with:
       team: extensions
       target_repo: git@github.com:AdguardTeam/BrowserAssistant.git
-    secrets: inherit

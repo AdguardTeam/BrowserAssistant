@@ -1,7 +1,0 @@
-# actionlint configuration
-# https://github.com/rhysd/actionlint/blob/main/docs/config.md
-
-self-hosted-runner:
-  # Labels of the self-hosted runner group used by all jobs in this repo.
-  labels:
-    - team-extensions

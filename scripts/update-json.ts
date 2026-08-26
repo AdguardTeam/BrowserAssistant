@@ -102,7 +102,7 @@ const createUpdateJson = async (manifest: WebExtensionManifest) => {
     try {
         const fileContent = generateUpdateJson({
             id,
-            version: config.version,
+            version: String(config.version).split('-')[0],
             updateLink: FIREFOX_UPDATE_XPI,
             strictMinVersion,
         });

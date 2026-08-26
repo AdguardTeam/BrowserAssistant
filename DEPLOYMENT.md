@@ -36,6 +36,7 @@ stores, and creating a GitHub Release on this repository.
 | **Firefox AMO** (listed) | `firefox.zip` + `source.zip` | release only |
 | **Edge Add-ons** | `edge.zip` | release only |
 | **GitHub Release** (this repo) | Channel build assets | beta, release |
+| **Opera add-ons** | Manual upload (no store API) | release |
 
 Static uploads use the internal **deployer** service
 (`vars.DEPLOYER_BASE_URL`). Modules:
@@ -109,11 +110,26 @@ manually via `workflow_dispatch`.
    GitHub Release.
 9. **Slack** — `#adguard-extension-vcs`.
 
+### Failure recovery
+
+- Prefer **Re-run failed jobs**, not **Re-run all jobs**. Re-running
+  everything force-retags and re-uploads store packages (CWS/AMO/Edge
+  reject duplicate versions).
+- AMO listed/sign can stay pending after a job timeout. Re-run the
+  Firefox job later; a duplicate-version rejection usually means the
+  first submission is still in review.
+- Publish runs are serialized (`cancel-in-progress: false`). A hung
+  Firefox sign holds the next publish until it finishes or times out
+  (job cap 180 minutes).
+- The green “published” Slack message waits for Firefox beta static +
+  GitHub Release assets on beta tags; release-channel Firefox jobs are
+  skipped.
+
 ### Mirror
 
 **File:** `.github/workflows/mirror.yml`
 
-On every push to `master`, mirrors to the public
+On every push to `master` and on `v*` tags, mirrors to the public
 `AdguardTeam/BrowserAssistant` repository.
 
 ## Pipeline Flow
@@ -154,26 +170,22 @@ notes, gitignore excludes for Docker).
 
 ## Build Artifacts
 
-### Production
+Exact file lists live in the Dockerfile `*-output` stages and
+`publish-release.yml` upload steps. Conceptually:
 
-| Artifact | Stage | Channel |
-| --- | --- | --- |
-| `chrome.crx`, `chrome.zip`, `update.xml`, `build.txt` | `build-beta-output` | beta |
-| `firefox.xpi`, `firefox.zip`, `update.json`, `source.zip`, … | `build-beta-firefox-output` | beta |
-| `chrome.crx`, `chrome.zip`, `edge.zip`, `firefox.zip`, `update.xml`, `source.zip`, `approval-notes.txt`, `build.txt` | `build-release-output` | release |
-
-### Dev (CI)
-
-| Artifact | Location |
-| --- | --- |
-| `build.txt`, `chrome.zip`, `firefox.zip`, `edge.zip` | `output/artifacts/` |
+- **Beta Chrome** — `chrome.crx`, `chrome.zip`, `update.xml`
+- **Beta Firefox** — `firefox.xpi`, `firefox.zip`, `update.json`
+- **Release** — `chrome.zip` / `chrome.crx`, `edge.zip`, `firefox.zip`,
+  `source.zip`, `approval-notes.txt`
+- **CI** — unsigned `chrome.zip`, `firefox.zip`, `edge.zip`
 
 ## Version Tagging
 
 - **Beta:** `v<version>-beta.N` (e.g. `v1.2.0-beta.1`)
 - **Release:** `v<version>` (e.g. `v1.2.0`)
-- Version is parsed from `CHANGELOG.md` and injected into `package.json`
-  before the Docker build
+- Version is parsed from `CHANGELOG.md`. The numeric core (suffix
+  stripped) is injected into `package.json` / `manifest.json` because
+  CWS and AMO reject `-beta.N` / `-dev` version strings.
 
 ## Secrets
 
@@ -182,8 +194,8 @@ CI secrets are **organization-level** (HashiCorp Vault). Org variable:
 
 ### Extension-specific Vault secrets
 
-Path: `secret/data/ci-secrets/extensions-private-adguard-assistant`  
-Role: `extensions-private-adguard-assistant`
+- Path: `secret/data/ci-secrets/extensions-private-adguard-assistant`
+- Role: `extensions-private-adguard-assistant`
 
 | Key | Used by | Purpose |
 | --- | --- | --- |
@@ -225,6 +237,9 @@ GitHub Release uses `GITHUB_TOKEN` (`contents: write`).
 - Octopass / deployer OIDC grants for the static modules if not already
   present for this repository.
 - Confirm public mirror credentials for `AdguardTeam/BrowserAssistant`.
+- After the first beta static deploy, confirm existing update URLs still
+  resolve (`https://static.adtidy.org/extensions/browserassistant/beta/update.xml`
+  and `update.json`). Deployer module names changed; paths must not.
 
 ## Additional Resources
 
