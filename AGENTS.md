@@ -418,8 +418,7 @@ humans and AI agents that consume project documentation.
 ### Other
 
 - Commit messages are prefixed with the Jira issue key, with no colon
-  after it (e.g. `AG-53631 Add docker build to browser-assistant`);
-  automated version bumps use `skipci: Automatic increment build number`.
+  after it (e.g. `AG-53631 Add docker build to browser-assistant`).
 - Husky hooks: `pre-commit` runs `pnpm lint`, `pre-push` runs
   `pnpm test`.
 - Localization workflow: edit only the base locale

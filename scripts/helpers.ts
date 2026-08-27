@@ -37,6 +37,23 @@ export const appendBuildEnvSuffix = (name: string, buildEnv: BuildEnv) => {
 export const toStoreVersion = (version: string): string => String(version).split('-')[0];
 
 /**
+ * Chrome/Edge beta version: stores reject `-beta.N`, but stripping it
+ * entirely collides successive betas (CWS duplicate version) and stops
+ * `update.xml` from offering beta.2 to beta.1. The manifest version scheme
+ * allows a fourth numeric component, so `1.2.0-beta.1` → `1.2.0.1` and the
+ * eventual `1.2.0` release still supersedes the betas.
+ * @param version Version from package.json or CHANGELOG.
+ * @returns Store-compatible numeric beta, or the store version otherwise.
+ */
+export const toChromeBetaVersion = (version: string): string => {
+    const match = String(version).match(/^(\d+\.\d+\.\d+)-beta\.(\d+)$/);
+    if (!match) {
+        return toStoreVersion(version);
+    }
+    return `${match[1]}.${match[2]}`;
+};
+
+/**
  * Firefox toolkit version for self-hosted beta XPIs.
  * `1.2.0-beta.1` → `1.2.0beta1`, which sorts beta.1 < beta.2 < 1.2.0 so
  * `update.json` can offer successive betas and the eventual release still
@@ -45,7 +62,7 @@ export const toStoreVersion = (version: string): string => String(version).split
  * @returns Toolkit version for Firefox beta, or the store version otherwise.
  */
 export const toFirefoxBetaVersion = (version: string): string => {
-    const match = String(version).match(/^(\d+\.\d+\.\d+(?:\.\d+)?)-beta\.(\d+)$/);
+    const match = String(version).match(/^(\d+\.\d+\.\d+)-beta\.(\d+)$/);
     if (!match) {
         return toStoreVersion(version);
     }
@@ -59,9 +76,12 @@ export const updateManifest = (
 ) => {
     const manifest: Manifest = JSON.parse(manifestJson);
     const rawVersion = String(pJson.version);
-    const version = browser === Browser.Firefox && BUILD_ENV === BuildEnv.Beta
-        ? toFirefoxBetaVersion(rawVersion)
-        : toStoreVersion(rawVersion);
+    let version = toStoreVersion(rawVersion);
+    if (BUILD_ENV === BuildEnv.Beta) {
+        version = browser === Browser.Firefox
+            ? toFirefoxBetaVersion(rawVersion)
+            : toChromeBetaVersion(rawVersion);
+    }
 
     const updatedManifest = {
         ...manifest,

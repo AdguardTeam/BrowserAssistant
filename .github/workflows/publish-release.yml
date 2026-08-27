@@ -49,8 +49,8 @@ jobs:
           if [ "${EVENT_NAME}" = "workflow_dispatch" ]; then
             REF="${INPUT_REF:-master}"
             # Arbitrary SHAs/branches would run unreviewed Dockerfiles with
-            # CRX/AMO secrets mounted.
-            if [[ "${REF}" != "master" && "${REF}" != "refs/heads/master" && ! "${REF}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+\.[0-9]+)?$ ]]; then
+            # CRX/AMO secrets mounted. Beta-or-release only: no rc/alpha.
+            if [[ "${REF}" != "master" && "${REF}" != "refs/heads/master" && ! "${REF}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-beta\.[0-9]+)?$ ]]; then
               echo "::error::workflow_dispatch ref must be empty, master, or a vX.Y.Z[-beta.N] tag (got '${REF}')"
               exit 1
             fi

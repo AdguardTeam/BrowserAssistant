@@ -5,7 +5,6 @@ import { program } from 'commander';
 
 import { Browser, BuildEnv } from '../consts';
 import { cliLog } from '../cli-log';
-import { createBuildVersion } from '../version-info/versionInfo';
 import { getRspackConfig } from '../rspack.config';
 
 import { bundleRspack } from './bundle-runner';
@@ -36,21 +35,18 @@ export const bundle = () => {
         bundleChrome,
         bundleFirefox,
         bundleEdge,
-        createBuildVersion,
     ];
 
     const betaPlan = [
         bundleChrome,
         bundleFirefox,
         bundleEdge,
-        createBuildVersion,
     ];
 
     const releasePlan = [
         bundleChrome,
         bundleFirefox,
         bundleEdge,
-        createBuildVersion,
     ];
 
     const runBuild = async (tasks: Task[], watch: boolean) => {

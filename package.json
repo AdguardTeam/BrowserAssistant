@@ -18,9 +18,9 @@
         "crx": "ts-node scripts/crx.ts",
         "update-json": "ts-node scripts/update-json.ts",
         "increment": "pnpm version patch --no-git-tag-version",
-        "artifacts:beta": "export BUILD_ENV=beta; pnpm beta && pnpm crx && ts-node scripts/version-info",
-        "artifacts:beta-firefox": "export BUILD_ENV=beta; pnpm beta firefox && pnpm update-json && ts-node scripts/version-info",
-        "artifacts:release": "export BUILD_ENV=release; pnpm release && pnpm crx && ts-node scripts/version-info"
+        "artifacts:beta": "export BUILD_ENV=beta; pnpm beta && pnpm crx",
+        "artifacts:beta-firefox": "export BUILD_ENV=beta; pnpm beta firefox && pnpm update-json",
+        "artifacts:release": "export BUILD_ENV=release; pnpm release && pnpm crx"
     },
     "husky": {
         "hooks": {
