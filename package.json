@@ -1,6 +1,5 @@
 {
     "name": "browser-assistant",
-    "version": "1.4.25",
     "apiVersion": "1",
     "description": "AdGuard browser extension",
     "author": "adguard@adguard.com",
@@ -17,7 +16,6 @@
         "locales": "ts-node scripts/translations",
         "crx": "ts-node scripts/crx.ts",
         "update-json": "ts-node scripts/update-json.ts",
-        "increment": "pnpm version patch --no-git-tag-version",
         "artifacts:beta": "export BUILD_ENV=beta; pnpm beta && pnpm crx",
         "artifacts:beta-firefox": "export BUILD_ENV=beta; pnpm beta firefox && pnpm update-json",
         "artifacts:release": "export BUILD_ENV=release; pnpm release && pnpm crx"

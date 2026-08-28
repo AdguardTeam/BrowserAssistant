@@ -11,6 +11,15 @@ import {
 const pJson = require('../package.json');
 const twoskyConfig = require('../.twosky.json');
 
+/**
+ * Version from package.json, or the dev fallback when the field is absent.
+ * The version is intentionally not committed (same model as AGLint): CI
+ * stamps it before every build (set-dev-version / publish tag), so only
+ * local dev builds see the fallback.
+ * @returns Package version string.
+ */
+export const getPackageVersion = (): string => String(pJson.version || '0.0.0');
+
 export type Manifest = chrome.runtime.ManifestV2 | chrome.runtime.ManifestV3;
 
 const [{ base_locale: baseLocale }] = twoskyConfig;
@@ -75,7 +84,7 @@ export const updateManifest = (
     browser: Browser = Browser.Chrome,
 ) => {
     const manifest: Manifest = JSON.parse(manifestJson);
-    const rawVersion = String(pJson.version);
+    const rawVersion = getPackageVersion();
     let version = toStoreVersion(rawVersion);
     if (BUILD_ENV === BuildEnv.Beta) {
         version = browser === Browser.Firefox
