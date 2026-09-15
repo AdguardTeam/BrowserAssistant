@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Migrated CI/CD from Bamboo to GitHub Actions.
+- Updated [@adguard/assistant] to `v4.4.15`.
+
 ### Deprecated
 
 ### Removed
@@ -21,16 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.26] - 2026-08-27
 
-## [1.4.25] - 2026-08-24
-
-### Changed
-
-- Migrated CI/CD from Bamboo to GitHub Actions.
-- Updated [@adguard/assistant] to `v4.4.3` (included in the Bamboo-era
-  1.4.x line; intermediate auto-increments were not individually
-  documented).
-
-[1.4.25]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.8...v1.4.25
+[1.4.26]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.8...v1.4.26
 
 ## [1.4.8] - 2024-07-30
 
@@ -56,6 +50,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [1.4.1]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.3.49...v1.4.1
 
-[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.26...HEAD
-[1.4.26]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.25...v1.4.26
+[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.8...HEAD
 [@adguard/assistant]: https://github.com/AdguardTeam/AdguardAssistant/blob/master/CHANGELOG.md

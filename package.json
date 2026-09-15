@@ -27,7 +27,7 @@
         }
     },
     "dependencies": {
-        "@adguard/assistant": "^4.4.3",
+        "@adguard/assistant": "^4.4.15",
         "@adguard/translate": "^0.2.5",
         "classnames": "^2.3.1",
         "compare-versions": "^4.1.3",
