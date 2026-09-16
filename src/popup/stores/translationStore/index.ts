@@ -45,6 +45,11 @@ class TranslationStore {
             i18n: computed,
         });
         this.rootStore = rootStore;
+        // Initialize the document language with the best-known locale
+        // (browser UI language until the app locale arrives) so :lang()
+        // selectors and screen readers see the correct language on screens
+        // rendered before setLocale is called, e.g. the consent view.
+        this.updateDocumentLang();
     }
 
     /**
@@ -53,10 +58,16 @@ class TranslationStore {
      */
     setLocale = (locale: string): void => {
         this.locale = locale;
-        // Reflect the resolved display locale on the document so CSS :lang()
-        // selectors (e.g. locale-specific line-breaking rules) match the
-        // actually rendered language. Underscores are hyphenated to form a
-        // valid BCP 47 tag (e.g. 'zh_cn' -> 'zh-cn').
+        this.updateDocumentLang();
+    };
+
+    /**
+     * Reflects the resolved display locale on the document so CSS :lang()
+     * selectors (e.g. locale-specific line-breaking rules) match the
+     * actually rendered language. Underscores are hyphenated to form a
+     * valid BCP 47 tag (e.g. 'zh_cn' -> 'zh-cn').
+     */
+    private updateDocumentLang = (): void => {
         const { locale: resolvedLocale } = this.getLocale();
         document.documentElement.setAttribute('lang', resolvedLocale.replace(/_/g, '-'));
     };

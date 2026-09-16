@@ -1,27 +1,35 @@
 /**
  * @file Exports the trial expired notice view.
  */
-import React from 'react';
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react';
 
-import { translator } from '../../../../shared/translators/translator';
+import rootStore from '../../../stores';
 import { PURCHASE_TRIAL_EXPIRED } from '../../../../lib/consts';
 
 import './TrialExpired.pcss';
 
 const closePopup = () => window.close();
 
-const TrialExpired = () => {
+// Uses translationStore (not the shared browser.i18n translator) so the
+// rendered language always matches the document lang attribute, which is
+// derived from the same store.
+const TrialExpired = observer(() => {
+    const { translationStore } = useContext(rootStore);
+
+    const { translate } = translationStore;
+
     return (
         <div className="trial-expired">
             <div className="trial-expired__title">
-                {translator.getMessage('popup_trial_expired_title')}
+                {translate('popup_trial_expired_title')}
             </div>
             <div className="trial-expired__desc">
                 <div>
-                    {translator.getMessage('popup_trial_expired_protection_disabled')}
+                    {translate('popup_trial_expired_protection_disabled')}
                 </div>
                 <div>
-                    {translator.getMessage('popup_trial_expired_updates_unavailable')}
+                    {translate('popup_trial_expired_updates_unavailable')}
                 </div>
             </div>
             <a
@@ -31,10 +39,10 @@ const TrialExpired = () => {
                 className="button button--wide button--green"
                 onClick={closePopup}
             >
-                {translator.getMessage('popup_trial_expired_purchase')}
+                {translate('popup_trial_expired_purchase')}
             </a>
         </div>
     );
-};
+});
 
 export default TrialExpired;
