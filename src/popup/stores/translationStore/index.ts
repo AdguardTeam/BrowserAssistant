@@ -53,6 +53,12 @@ class TranslationStore {
      */
     setLocale = (locale: string): void => {
         this.locale = locale;
+        // Reflect the resolved display locale on the document so CSS :lang()
+        // selectors (e.g. locale-specific line-breaking rules) match the
+        // actually rendered language. Underscores are hyphenated to form a
+        // valid BCP 47 tag (e.g. 'zh_cn' -> 'zh-cn').
+        const { locale: resolvedLocale } = this.getLocale();
+        document.documentElement.setAttribute('lang', resolvedLocale.replace(/_/g, '-'));
     };
 
     /**

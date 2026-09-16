@@ -20,6 +20,16 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
+        /*
+         * Korean: break lines at spaces only, otherwise words like "일시"
+         * get split mid-word. Other CJK locales (ja/zh) intentionally keep
+         * default break-anywhere behavior, since their messages often
+         * contain no spaces to break at.
+         */
+        &:lang(ko) {
+            word-break: keep-all;
+        }
+
         &-container {
             min-height: 27.2rem;
             max-height: 27.2rem;
