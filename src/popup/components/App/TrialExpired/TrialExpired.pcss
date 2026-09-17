@@ -12,6 +12,11 @@
         font-size: 24px;
         line-height: 27px;
         margin-bottom: 16px;
+
+        /* Korean only: break at spaces, not mid-word (see AppClosed.pcss) */
+        &:lang(ko) {
+            word-break: keep-all;
+        }
     }
 
     &__desc {
@@ -19,5 +24,10 @@
         font-size: 16px;
         line-height: 20px;
         margin-bottom: 16px;
+
+        /* Korean only: break at spaces, not mid-word (see AppClosed.pcss) */
+        &:lang(ko) {
+            word-break: keep-all;
+        }
     }
 }
