@@ -68,6 +68,10 @@ class TranslationStore {
      * valid BCP 47 tag (e.g. 'zh_cn' -> 'zh-cn').
      */
     private updateDocumentLang = (): void => {
+        // Keep the store constructible without a DOM (e.g. node test env).
+        if (typeof document === 'undefined') {
+            return;
+        }
         const { locale: resolvedLocale } = this.getLocale();
         document.documentElement.setAttribute('lang', resolvedLocale.replace(/_/g, '-'));
     };

@@ -52,4 +52,11 @@ describe('TranslationStore document lang', () => {
         // 'xx' has no translations; browser UI locale is 'ko-KR'
         expect(setAttribute).toHaveBeenCalledWith('lang', 'ko');
     });
+
+    it('is constructible without a DOM', () => {
+        vi.unstubAllGlobals();
+
+        expect(() => createStore()).not.toThrow();
+        expect(setAttribute).not.toHaveBeenCalled();
+    });
 });
