@@ -11,8 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated [@adguard/assistant] to `v4.4.15`.
-
 ### Deprecated
 
 ### Removed
@@ -20,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [1.4.27] - 2026-09-18
+
+### Changed
+
+- Updated [@adguard/assistant] to `v4.4.15`.
 
 ## [1.4.26] - 2026-08-27
 
@@ -49,5 +53,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [1.4.1]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.3.49...v1.4.1
 
-[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.8...HEAD
+[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.27...HEAD
+[1.4.27]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.26...v1.4.27
 [@adguard/assistant]: https://github.com/AdguardTeam/AdguardAssistant/blob/master/CHANGELOG.md
