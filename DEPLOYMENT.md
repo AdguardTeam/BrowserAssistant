@@ -3,8 +3,8 @@
 AdGuard Browser Assistant is deployed via GitHub Actions. There is no
 server infrastructure — deployment means publishing build artifacts
 (signed CRX/XPI/ZIP files) to static file servers, submitting to browser
-stores, and creating a GitHub Release on the public
-`AdguardTeam/BrowserAssistant` mirror.
+stores, and preparing a GitHub Release draft on the public
+`AdguardTeam/BrowserAssistant` mirror for manual publication.
 
 > **Channel model:** Tags containing `-beta` (e.g. `v1.2.0-beta.1`) go
 > through the **beta** pipeline. Tags without a pre-release suffix
@@ -36,7 +36,7 @@ stores, and creating a GitHub Release on the public
 | **Chrome Web Store** | `chrome.zip` | beta, release |
 | **Firefox AMO** (listed) | `firefox.zip` + `source.zip` | release only |
 | **Edge Add-ons** | `edge.zip` | release only |
-| **GitHub Release** (`AdguardTeam/BrowserAssistant`) | Channel build assets | beta, release |
+| **GitHub Release draft** (`AdguardTeam/BrowserAssistant`) | Channel build assets (published manually) | beta, release |
 | **Opera add-ons** | Manual upload (no store API) | release |
 
 Static uploads use the internal **deployer** service
@@ -104,13 +104,18 @@ manually via `workflow_dispatch`.
 5. **Release AMO** — `deploy-to-firefox-addons.yml` (listed) with
    `firefox.zip` + `source.zip` + approval notes.
 6. **Release Edge** — `deploy-to-edge-addons.yml`.
-7. **GitHub Release** — `create-gh-release.yml` on
-   `AdguardTeam/BrowserAssistant` (Octopass).
+7. **GitHub Release draft** — `create-gh-release.yml` on
+   `AdguardTeam/BrowserAssistant` (Octopass), published manually after
+   review.
 8. **Beta Firefox (isolated)** — Docker `build-beta-firefox-output`
    signs via `go-webext`, then static deploy
    `browser-assistant-webext-firefox-beta`, then attaches assets to the
-   GitHub Release.
+   GitHub Release draft.
 9. **Slack** — `#adguard-extension-vcs`.
+10. **Manual publication** — review the notes and assets in the
+    `AdguardTeam/BrowserAssistant` GitHub Release draft and publish it
+    manually. Both channels stay in draft until this step; attaching the
+    signed Firefox beta assets preserves the draft state.
 
 ### Failure recovery
 
