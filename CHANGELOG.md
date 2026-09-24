@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [1.4.27-beta.1] - 2026-09-24
+
 ## [1.4.27] - 2026-09-18
 
 ### Changed
@@ -53,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [1.4.1]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.3.49...v1.4.1
 
-[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.27...HEAD
+[Unreleased]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.27-beta.1...HEAD
+[1.4.27-beta.1]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.27...v1.4.27-beta.1
 [1.4.27]: https://github.com/AdguardTeam/BrowserAssistant/compare/v1.4.26...v1.4.27
 [@adguard/assistant]: https://github.com/AdguardTeam/AdguardAssistant/blob/master/CHANGELOG.md
