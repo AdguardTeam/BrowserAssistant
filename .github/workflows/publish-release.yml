@@ -99,8 +99,9 @@ jobs:
       # The value is passed via env (never interpolated into the shell
       # command) so a tag-derived value can never run as shell code.
       - name: Inject version into package.json
-        # Stores reject pre-release suffixes; stamp the numeric core only.
-        run: npm pkg set version="${VERSION%%-*}"
+        # Keep `-beta.N`: the manifest helpers strip it for stores and map
+        # the beta number to a fourth numeric component (`1.4.27.1`).
+        run: npm pkg set version="$VERSION"
         env:
           VERSION: ${{ needs.tag.outputs.version }}
 
@@ -225,8 +226,9 @@ jobs:
         with:
           ref: ${{ needs.resolve.outputs.ref }}
 
-      # Keep `-beta.N` so the Firefox helper can stamp a toolkit version
-      # (`1.2.0beta1`) into the XPI / update.json. Chrome/CWS stay numeric.
+      # Keep `-beta.N` so the Firefox helper can stamp the beta number as a
+      # fourth numeric component (`1.2.0.1`) into the XPI / update.json
+      # (Chrome/Edge do the same in the main build).
       - name: Inject version into package.json
         run: npm pkg set version="$VERSION"
         env:

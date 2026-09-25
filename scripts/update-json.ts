@@ -104,7 +104,7 @@ const createUpdateJson = async (manifest: WebExtensionManifest) => {
     try {
         const fileContent = generateUpdateJson({
             id,
-            // Must match the signed XPI (Firefox beta stamps `x.y.zbetaN`).
+            // Must match the signed XPI (Firefox beta stamps `x.y.z.N`).
             version: String(manifest.version),
             updateLink: FIREFOX_UPDATE_XPI,
             strictMinVersion,
