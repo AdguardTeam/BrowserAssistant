@@ -225,8 +225,9 @@ jobs:
         with:
           ref: ${{ needs.resolve.outputs.ref }}
 
-      # Keep `-beta.N` so the Firefox helper can stamp a toolkit version
-      # (`1.2.0beta1`) into the XPI / update.json. Chrome/CWS stay numeric.
+      # Keep `-beta.N` so the Firefox helper can stamp the beta number as a
+      # fourth numeric component (`1.2.0.1`) into the XPI / update.json.
+      # Chrome/CWS stay numeric.
       - name: Inject version into package.json
         run: npm pkg set version="$VERSION"
         env:
